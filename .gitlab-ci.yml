@@ -12,6 +12,7 @@ stages:
   - lint
   - build
   - test
+  - analysis
   - build-docker-image
   - cms
   - dev-deployment
