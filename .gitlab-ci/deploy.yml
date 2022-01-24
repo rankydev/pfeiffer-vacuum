@@ -1,6 +1,6 @@
 # general deployment configuration
 # environment.name has to be set in extending configurations
-deploy:
+deployment:
   variables:
     DOCKER_HOST: ""
   before_script:
