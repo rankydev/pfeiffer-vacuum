@@ -1,0 +1,34 @@
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_SERVICE_NAME: pvac-web-app-server
+
+image: node:16-alpine
+
+services:
+  - docker:dind
+
+stages:
+  - lint
+  - build
+  - test
+  - sonar-qube
+  - build-docker-image
+  - cms
+  - dev-deployment
+  - uat-deployment
+  - uat-cms-migration
+  - prd-deployment
+  - prd-cms-migration
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .npm/
+    - .nuxt/
+    - node_modules/
+
+include:
+  - local: '/.gitlab-ci/build.yml'
+  - local: '/.gitlab-ci/cms.yml'
+  - local: '/.gitlab-ci/deploy.yml'

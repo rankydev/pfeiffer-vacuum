@@ -1,0 +1,40 @@
+.cms-migrate:
+  stage: cms
+  script:
+    - npm run cms:migrate-components
+    - npm run cms:migrate-content
+  tags:
+    - docker_runner
+  except:
+    - schedules
+    - tags
+
+cms-migrate-develop:
+  extends: .cms-migrate
+  before_script:
+    - cp ./cms/storyblok.develop.env ./cms/storyblok.env
+  environment:
+    name: dev-cms
+    url: https://dev-vacuum.westeurope.cloudapp.azure.com
+  when: manual
+  only:
+    - master
+
+cms-migrate-uat:
+  extends: .cms-migrate
+  stage: uat-cms-migration
+  before_script:
+    - cp ./cms/storyblok.uat.env ./cms/storyblok.env
+  only:
+    - tags
+  allow_failure: true
+  except: []
+
+cms-migrate-production:
+  extends: .cms-migrate
+  stage: prd-cms-migration
+  before_script:
+    - cp ./cms/storyblok.production.env ./cms/storyblok.env
+  only:
+    - tags
+  except: []

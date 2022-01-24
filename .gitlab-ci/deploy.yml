@@ -1,0 +1,58 @@
+# general deployment configuration
+# environment.name has to be set in extending configurations
+deploy:
+  variables:
+    DOCKER_HOST: ""
+  before_script:
+    - docker login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" ${CI_REGISTRY}
+  script:
+    - docker pull ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:latest
+    - docker-compose down
+    - docker-compose up -d --no-deps --build
+  environment:
+    name: dev
+    url: https://${CI_ENVIRONMENT_NAME}-vacuum.westeurope.cloudapp.azure.com
+  tags:
+    - pvacviewer-${CI_ENVIRONMENT_NAME}-deployment
+
+# scheduled deployment for nightly dev
+deploy-dev:
+  stage: dev-deployment
+  environment:
+    name: dev
+  only:
+    - schedules
+  extends: deployment
+
+# scheduled deployment for nightly dev
+deploy-dev-manually:
+  stage: dev-deployment
+  environment:
+    name: dev
+  only:
+    - tags
+  extends: deployment
+
+deploy-uat:
+  stage: uat-deployment
+  script:
+    - docker service update --with-registry-auth --image ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:$CI_COMMIT_TAG ${DOCKER_SERVICE_NAME}
+  environment:
+    name: uat
+  when: manual
+  allow_failure: false
+  only:
+    - tags
+  extends: deployment
+
+deploy-prd:
+  stage: prd-deployment
+  script:
+    - docker service update --with-registry-auth --image ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:$CI_COMMIT_TAG ${DOCKER_SERVICE_NAME}
+  environment:
+    name: prd
+  when: manual
+  allow_failure: false
+  only:
+    - tags
+  extends: deployment
