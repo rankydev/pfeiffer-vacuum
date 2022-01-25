@@ -1,16 +1,15 @@
 
 FROM node:16-alpine
 
+# TODO: Dies muss noch in das docker-compose file wandern
 ARG NODE_PROFILE=ci
+# TODO: Dies wird noch aufgelöst in die entsprechenden Variablen
 ENV NODE_PROFILE="${NODE_PROFILE}"
-ENV NODE_ENV="production"
-
-ARG CI_COMMIT_SHA
-ARG CI_COMMIT_SHORT_SHA
-ARG CI_COMMIT_REF_NAME
+# port of frontend application
+ENV PORT=3000
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /opt/pvac-frontend
 
 # Bundle app source
 COPY .npm/ .
