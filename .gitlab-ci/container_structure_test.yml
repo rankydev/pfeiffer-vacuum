@@ -1,0 +1,35 @@
+include:
+  - local: '/.gitlab-ci/container-structure-test.template.yml'
+
+audit_frontend:
+  stage: audit
+  extends: .container-structure-test
+  variables:
+    # Basic for git ci runner setup (docker in docker)
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_DRIVER: overlay2
+    DOCKER_BUILDKIT: 1
+    # Project
+    IMAGE_REF: "frontend:${COMMIT_REF}"
+  cache: {}
+  only:
+    - tags
+    - main
+    - develop
+  tags:
+    - docker
+  script:
+    - |
+      # Posix shell
+      if echo "$CI_COMMIT_TAG" | grep -Eq  '^v[0-9]+\.[0-9]+\.[0-9]+$' ; then
+        export IMAGE="$CI_REGISTRY_IMAGE/$IMAGE_NAME_FRONTEND:${CI_COMMIT_TAG}"
+      else
+        export IMAGE="$CI_REGISTRY_IMAGE/$IMAGE_NAME_FRONTEND:${CI_COMMIT_SHORT_SHA}"
+      fi
+    - echo "Run container structure test for image ${IMAGE}"
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker pull ${IMAGE}
+    - container-structure-test test --image ${IMAGE} --config .gitlab-ci/.container-structure-test.config.yml
+
+
+

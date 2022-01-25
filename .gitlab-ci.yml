@@ -9,13 +9,13 @@ services:
   - docker:dind
 
 stages:
-  - lint
   - build
   - test
   - analysis
   - build-docker-image
+  - audit
   - cms
-  - dev-deployment
+  - deployment
   - uat-deployment
   - uat-cms-migration
   - prd-deployment
@@ -29,6 +29,7 @@ cache:
     - node_modules/
 
 include:
+  - local: '/.gitlab-ci/container-structure-test.yml'
   - local: '/.gitlab-ci/build.yml'
   - local: '/.gitlab-ci/cms.yml'
   - local: '/.gitlab-ci/deploy.yml'
