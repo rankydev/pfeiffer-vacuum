@@ -29,7 +29,7 @@ cache:
     - node_modules/
 
 include:
-  - local: '/.gitlab-ci/container-structure-test.yml'
+  - local: '/.gitlab-ci/container_structure_test.yml'
   - local: '/.gitlab-ci/build.yml'
   - local: '/.gitlab-ci/cms.yml'
   - local: '/.gitlab-ci/deploy.yml'
