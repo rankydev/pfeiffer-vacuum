@@ -13,6 +13,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@nuxtjs/composition-api": "^0.31.0",
     "core-js": "^3.8.3",
     "nuxt": "^2.14.12"
   },
