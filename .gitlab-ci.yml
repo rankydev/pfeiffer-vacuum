@@ -14,8 +14,8 @@ stages:
   - analysis
   - build-docker-image
   - audit
-  - cms
   - deployment
+  - cms
   - uat-deployment
   - uat-cms-migration
   - prd-deployment
