@@ -3,6 +3,7 @@
     <div>
       <Logo />
       <h1 class="title">pvweb</h1>
+      <h3 class="subtitle">Website for Pfeiffer Vacuum</h3>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -26,7 +27,12 @@
 </template>
 
 <script>
-export default {}
+import Vue from 'vue'
+import Logo from '~/components/atoms/Logo/Logo.vue'
+
+export default Vue.extend({
+  components: { Logo },
+})
 </script>
 
 <style>
