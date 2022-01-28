@@ -11,10 +11,15 @@ ENV PORT=3000
 # Create app directory
 WORKDIR /opt/pvac-frontend
 
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+
 # Bundle app source
-COPY .npm/ .
-COPY .nuxt/ .
-COPY node_modules/ .
+COPY .npm/ ./.npm/
+COPY .nuxt/ ./.nuxt/
+COPY node_modules/ ./node_modules/
 
 EXPOSE 3000
 
