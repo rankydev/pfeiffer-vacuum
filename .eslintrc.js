@@ -16,5 +16,11 @@ module.exports = {
   ],
   plugins: ['prettier'],
   // add your custom rules here
-  rules: {},
+  rules: {
+    'import/order': 'off',
+    'no-trailing-spaces': 'warn',
+    'space-before-function-paren': 'warn',
+    quotes: ['warn', 'single'],
+    semi: ['warn', 'never'],
+  },
 }
