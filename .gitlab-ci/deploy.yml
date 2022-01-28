@@ -20,7 +20,8 @@ deploy-dev:
   environment:
     name: dev2
   only:
-    - schedules
+    refs:
+      - develop
 
 # manual deployment for dev2
 deploy-dev-manually:
