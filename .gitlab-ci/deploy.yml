@@ -14,9 +14,9 @@
 deploy-dev:
   extends: .deployment
   script:
-    - docker pull ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:${$CI_COMMIT_REF_SLUG}
+    - docker pull ${IMAGE_NAME}:${$CI_COMMIT_REF_SLUG}
     - docker-compose down
-    - docker-compose up -d --no-deps --build
+    - docker-compose up -d --no-deps --build ${CI_ENVIRONMENT_NAME}
   environment:
     name: dev2
   only:
@@ -27,7 +27,7 @@ deploy-dev:
 deploy-dev-manually:
   extends: .deployment
   script:
-    - docker pull ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:${CI_COMMIT_TAG}
+    - docker pull ${IMAGE_NAME}:${CI_COMMIT_TAG}
     - docker-compose down
     - docker-compose up -d --no-deps --build
   environment:
@@ -40,7 +40,7 @@ deploy-uat:
   extends: .deployment
   stage: uat-deployment
   script:
-    - docker service update --with-registry-auth --image ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:main ${DOCKER_SERVICE_NAME}
+    - docker service update --with-registry-auth --image ${IMAGE_NAME}:main ${DOCKER_SERVICE_NAME}
   environment:
     name: uat
   when: manual
@@ -53,7 +53,7 @@ deploy-uat-manually:
   extends: .deployment
   stage: uat-deployment
   script:
-    - docker service update --with-registry-auth --image ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
+    - docker service update --with-registry-auth --image ${IMAGE_NAME}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
   environment:
     name: uat
   when: manual
@@ -65,7 +65,7 @@ deploy-prd-manually:
   extends: .deployment
   stage: prd-deployment
   script:
-    - docker service update --with-registry-auth --image ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
+    - docker service update --with-registry-auth --image ${IMAGE_NAME}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
   environment:
     name: prd
   when: manual
