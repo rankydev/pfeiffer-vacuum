@@ -1,5 +1,5 @@
 .cms-migrate:
-  stage: cms
+  stage: cms-migration
   before_script:
     - cp ./cms/storyblok.${CI_ENVIRONMENT_NAME}.env ./cms/storyblok.env
   script:
@@ -32,7 +32,6 @@ cms-migrate-develop-manuel:
 
 cms-migrate-uat:
   extends: .cms-migrate
-  stage: uat-cms-migration
   environment:
     name: uat
   only:
@@ -42,7 +41,6 @@ cms-migrate-uat:
 
 cms-migrate-production:
   extends: .cms-migrate
-  stage: prd-cms-migration
   environment:
     name: prd
   only:

@@ -16,11 +16,7 @@ stages:
   - build-docker-image
   - audit
   - deployment
-  - cms
-  - uat-deployment
-  - uat-cms-migration
-  - prd-deployment
-  - prd-cms-migration
+  - cms-migration
 
 cache:
   key: "${CI_COMMIT_SHORT_SHA}"
