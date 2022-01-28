@@ -1,5 +1,5 @@
-import { parameters as nuxtParameters } from '~~/.nuxt-storybook/storybook/preview.js'
-import '~~/assets/scss/storybook.scss'
+import { parameters as nuxtParameters } from '~/.nuxt-storybook/storybook/preview.js'
+import '~/assets/scss/storybook.scss'
 
 export const parameters = {
   ...nuxtParameters,
