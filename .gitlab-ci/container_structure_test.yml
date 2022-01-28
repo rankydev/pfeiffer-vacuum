@@ -27,9 +27,9 @@ audit_frontend:
         export IMAGE="$CI_REGISTRY_IMAGE/$IMAGE_NAME_FRONTEND:${CI_COMMIT_SHORT_SHA}"
       fi
     - echo "Run container structure test for image ${IMAGE}"
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - docker pull ${IMAGE}
-    - container-structure-test test --image ${IMAGE} --config .gitlab-ci/.container_structure_test.config.yml
+    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+    - docker pull ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG}
+    - container-structure-test test --image ${DOCKER_IMAGE_NAME} --config .gitlab-ci/.container_structure_test.config.yml
 
 
 

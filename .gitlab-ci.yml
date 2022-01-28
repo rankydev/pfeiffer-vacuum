@@ -2,7 +2,7 @@ variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_TLS_CERTDIR: ""
   DOCKER_SERVICE_NAME: pvac-web-app-server
-  IMAGE_NAME: ${CI_REGISTRY}/${CI_PROJECT_PATH}
+  DOCKER_IMAGE_NAME: ${CI_REGISTRY}/${CI_PROJECT_PATH}
 
 image: node:16-alpine
 

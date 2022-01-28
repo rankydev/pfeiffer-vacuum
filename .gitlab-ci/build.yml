@@ -36,7 +36,7 @@ test:
 sonar-qube:
   stage: analysis
   script:
-    - npm test
+    - echo "sonar-qube"
   tags:
     - docker_runner
 
@@ -48,28 +48,19 @@ sonar-qube:
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
   after_script:
     - # here we will push ALL created tags of an image
-      docker push --all-tags ${IMAGE_NAME}
+      docker push --all-tags ${DOCKER_IMAGE_NAME}
   tags:
     - dind_runner
 
-build-docker-image-branch:
+build-docker-image:
   extends: .docker-image
   script:
-    - docker build -t ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} .
-  except:
-    - tags
+    - docker build -t ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} .
 
-build-docker-image-tag:
+tag-docker-image-latest:
   extends: .docker-image
   script:
-    - docker build -t ${IMAGE_NAME}:${CI_COMMIT_TAG} .
-  only:
-    - tags
-
-tag-latest-docker-image:
-  extends: .docker-image
-  script:
-    - docker pull ${IMAGE_NAME}:main
-    - docker tag ${IMAGE_NAME}:main ${IMAGE_NAME}:latest
+    - docker pull ${DOCKER_IMAGE_NAME}:main
+    - docker tag ${DOCKER_IMAGE_NAME}:main ${DOCKER_IMAGE_NAME}:latest
   only:
     - main
