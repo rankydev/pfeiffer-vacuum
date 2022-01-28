@@ -55,7 +55,7 @@ sonar-qube:
 build-docker-image-branch:
   extends: .docker-image
   script:
-    - docker build -t ${IMAGE_NAME}:${$CI_COMMIT_REF_SLUG} .
+    - docker build -t ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} .
   except:
     - tags
 
