@@ -27,6 +27,7 @@ cache:
     - .npm/
     - .nuxt/
     - node_modules/
+    - coverage/
 
 include:
   - local: '/.gitlab-ci/container_structure_test.yml'

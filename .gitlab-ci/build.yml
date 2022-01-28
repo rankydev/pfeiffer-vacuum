@@ -11,6 +11,7 @@ build:
   tags:
     - docker_runner
 
+
 lint:
   stage: test
   script:
@@ -24,6 +25,13 @@ test:
     - npm test
   tags:
     - docker_runner
+  artifacts:
+    when: always
+    reports:
+      junit: coverage/clover.xml
+    paths:
+      - coverage/
+    expire_in: 3 week
 
 sonar-qube:
   stage: analysis
