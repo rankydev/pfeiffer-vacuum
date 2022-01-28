@@ -4,7 +4,7 @@ build:
     - npm ci --cache .npm --prefer-offline
     - npm run build
   artifacts:
-    when: always
+    when: on_failure
     paths:
       - .npm/_logs
     expire_in: 3 week
@@ -44,7 +44,8 @@ sonar-qube:
   image: docker:git
   stage: build-docker-image
   before_script:
-    - docker login -u "${CI_REGISTRY_USER}" -p "${CI_REGISTRY_PASSWORD}" ${CI_REGISTRY}
+    - # disable gitlab warning for docker login
+      echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
   after_script:
     - # here we will push ALL created tags of an image
       docker push --all-tags ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}
@@ -54,7 +55,7 @@ sonar-qube:
 build-docker-image-branch:
   extends: .docker-image
   script:
-    - docker build -t ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:${CI_COMMIT_BRANCH} .
+    - docker build -t ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:${$CI_COMMIT_REF_SLUG} .
   except:
     - tags
 
@@ -68,7 +69,7 @@ build-docker-image-tag:
 tag-latest-docker-image:
   extends: .docker-image
   script:
-    - docker pull ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:${CI_COMMIT_BRANCH}
-    - docker tag ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:${CI_COMMIT_BRANCH} ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:latest
+    - docker pull ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:main
+    - docker tag ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:main ${CI_REGISTRY}/${CI_PROJECT_PATH_SLUG}:latest
   only:
     - main
