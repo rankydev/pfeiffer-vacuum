@@ -1,12 +1,19 @@
-import '~~/.nuxt-storybook/storybook/preview.js'
+import { parameters as nuxtParameters } from '~~/.nuxt-storybook/storybook/preview.js'
 import '~~/assets/scss/storybook.scss'
 
 export const parameters = {
+  ...nuxtParameters,
   viewMode: 'story',
   options: {
     storySort: {
       method: 'alphabetical',
-      order: ['Generic UI', 'Atoms', 'Molecules', 'Organisms', 'Templates']
+      order: [
+        'Generic UI',
+        'Atoms',
+        'Molecules',
+        'Organisms',
+        'Templates'
+      ]
     }
   },
   /*
@@ -16,16 +23,20 @@ export const parameters = {
   backgrounds: {
     values: [
       {
+        name: 'white',
+        value: '#FFFFFF'
+      },
+      {
+        name: 'light grey (pv-grey-96)',
+        value: '#F5F5F5'
+      },
+      {
+        name: 'dark grey (pv-grey-16)',
+        value: '#292929'
+      },
+      {
         name: 'pfeiffer red',
-        value: '#c03'
-      },
-      {
-        name: 'pfeiffer darkblue',
-        value: '#c03'
-      },
-      {
-        name: 'dark',
-        value: '#333333'
+        value: '#DD1541'
       }
     ]
   },
@@ -35,53 +46,60 @@ export const parameters = {
    */
   viewport: {
     viewports: {
-      S_MIN: {
-        name: 'S Min (Samsung Galaxy S9)',
+      SM_MIN: {
+        name: 'SM Min',
         styles: {
-          width: '360px',
+          width: '320px',
           height: '740px'
         }
       },
-      S_MAX: {
-        name: 'S Max',
+      SM_MAX: {
+        name: 'SM Max',
         styles: {
-          width: '599px',
+          width: '767px',
           height: '740px'
         }
       },
-      M_MIN: {
-        name: 'M Min (Nexus 7)',
+      MD_MIN: {
+        name: 'MD Min',
         styles: {
-          width: '601px',
+          width: '768px',
           height: '960px'
         }
       },
-      M_MAX: {
-        name: 'M Max',
+      MD_MAX: {
+        name: 'MD Max',
         styles: {
-          width: '1023px',
+          width: '1079px',
           height: '960px'
         }
       },
-      L_MIN: {
-        name: 'L Min (Desktop)',
+      LG_MIN: {
+        name: 'LG Min (Desktop)',
         styles: {
-          width: '1025px',
+          width: '1080px',
           height: '800px'
         }
       },
-      L_MAX: {
-        name: 'L Max',
+      LG_MAX: {
+        name: 'LG Max',
         styles: {
           width: '1439px',
           height: '1024px'
         }
       },
-      WIDE: {
-        name: 'Wide (16:9)',
+      XL_MIN: {
+        name: 'XLG MIN',
         styles: {
-          width: '1920px',
-          height: '1080px'
+          width: '1440px',
+          height: '1440px'
+        }
+      },
+      XL_MAX: {
+        name: 'XLG MAX',
+        styles: {
+          width: '2560px',
+          height: '1440px'
         }
       }
     }
