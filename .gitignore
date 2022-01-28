@@ -92,4 +92,4 @@ sw.*
 # Storybook
 .nuxt-storybook
 storybook-static
-storybook-public
+lsg-public

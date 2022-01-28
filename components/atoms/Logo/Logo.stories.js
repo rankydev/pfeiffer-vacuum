@@ -6,7 +6,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Simple wrapper for text with html markup',
+        component:
+          'Example Story to be removed after starting with PVWEB components',
       },
     },
   },
