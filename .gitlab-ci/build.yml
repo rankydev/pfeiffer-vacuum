@@ -15,7 +15,7 @@ build-lsg:
   stage: build
   script:
     - npm ci --cache .npm --prefer-offline
-    - npm run lsg
+    - npm run lsg:build
   artifacts:
     when: on_failure
     paths:
