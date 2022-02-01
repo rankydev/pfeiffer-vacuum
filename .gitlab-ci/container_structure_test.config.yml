@@ -4,19 +4,19 @@ commandTests:
   - name: 'node'
     command: 'node'
     args: ['--version']
-    expectedOutput: ["v16.*.*"]
+    expectedOutput: [ "v16\.[0-9]+\.[0-9]+" ]
     exitCode: 0
   - name: 'npm'
     command: 'npm'
     args: ['-v']
-    expectedOutput: ["6.14"]
+    expectedOutput: ["8\.[0-9]+\.[0-9]+"]
     exitCode: 0
 
 metadataTest:
   env:
-    - key: NUXT_HOST
-      value: "0.0.0.0"
-    - key: NUXT_PORT
+    - key: NODE_PROFILE
+      value: "ci"
+    - key: PORT
       value: "3000"
   exposedPorts: ["3000"]
   cmd: ["npm","start"]
