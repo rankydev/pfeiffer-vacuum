@@ -1,0 +1,28 @@
+{
+  "name": "Page",
+  "display_name": null,
+  "schema": {
+    "text": {
+      "type": "text",
+      "pos": 1
+    },
+    "body": {
+      "type": "bloks",
+      "restrict_components": true,
+      "restrict_type": "",
+      "component_whitelist": [],
+      "pos": 2
+    }
+  },
+  "image": null,
+  "preview_field": null,
+  "is_root": true,
+  "preview_tmpl": null,
+  "is_nestable": false,
+  "all_presets": [],
+  "preset_id": null,
+  "real_name": "Page",
+  "component_group_uuid": null,
+  "color": null,
+  "icon": null
+}

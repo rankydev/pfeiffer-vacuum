@@ -12,14 +12,17 @@
     "lint": "npm run lint:js && npm run lint:style",
     "lsg": "nuxt storybook -s .storybook/static",
     "lsg:build": "nuxt storybook build -s .storybook/static --output-dir ./lsg-public",
-    "test": "jest"
+    "test": "jest",
+    "storyblok:sync": "env-cmd nuxt storyblok sync"
   },
   "dependencies": {
     "@nuxtjs/composition-api": "^0.31.0",
     "@nuxtjs/storybook": "^4.2.0",
     "@txp-cms/storyblok": "^1.5.4",
     "core-js": "^3.8.3",
-    "nuxt": "^2.14.12"
+    "env-cmd": "^10.1.0",
+    "nuxt": "^2.14.12",
+    "storyblok-js-client": "^4.2.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^5.0.0",

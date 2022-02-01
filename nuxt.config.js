@@ -1,4 +1,5 @@
 export default {
+  srcDir: '',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'pvweb',
@@ -20,7 +21,13 @@ export default {
   plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  //components: true,
+
+  components: [
+    // Equivalent to { path: '~/components' }
+    '~/components',
+    { path: '~/components/templates/Page', extensions: ['vue'] }
+  ],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
