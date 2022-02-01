@@ -23,6 +23,8 @@ cache:
   paths:
     - .npm/
     - .nuxt/
+    - .nuxt-storybook/
+    - lsg-public/
     - node_modules/
     - coverage/
 

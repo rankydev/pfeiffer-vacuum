@@ -1,4 +1,4 @@
-build:
+build-frontend:
   stage: build
   script:
     - npm ci --cache .npm --prefer-offline
@@ -11,6 +11,18 @@ build:
   tags:
     - docker_runner
 
+build-lsg:
+  stage: build
+  script:
+    - npm ci --cache .npm --prefer-offline
+    - npm run lsg
+  artifacts:
+    when: on_failure
+    paths:
+      - .npm/_logs
+    expire_in: 3 week
+  tags:
+    - docker_runner
 
 lint:
   stage: test
