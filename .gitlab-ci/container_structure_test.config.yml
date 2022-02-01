@@ -4,12 +4,12 @@ commandTests:
   - name: 'node'
     command: 'node'
     args: ['--version']
-    expectedOutput: [ "v16\.[0-9]+\.[0-9]+" ]
+    expectedOutput: [ "v16\\.[0-9]+\\.[0-9]+" ]
     exitCode: 0
   - name: 'npm'
     command: 'npm'
     args: ['-v']
-    expectedOutput: ["8\.[0-9]+\.[0-9]+"]
+    expectedOutput: ["8\\.[0-9]+\\.[0-9]+"]
     exitCode: 0
 
 metadataTest:
