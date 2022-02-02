@@ -31,6 +31,10 @@ export const parameters = {
         value: '#F5F5F5'
       },
       {
+        name: 'mid grey (pv-grey-32)',
+        value: '#515151'
+      },
+      {
         name: 'dark grey (pv-grey-16)',
         value: '#292929'
       },
@@ -89,14 +93,14 @@ export const parameters = {
         }
       },
       XL_MIN: {
-        name: 'XLG MIN',
+        name: 'XL MIN',
         styles: {
           width: '1440px',
           height: '1440px'
         }
       },
       XL_MAX: {
-        name: 'XLG MAX',
+        name: 'XL MAX',
         styles: {
           width: '2560px',
           height: '1440px'

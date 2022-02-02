@@ -1,13 +1,14 @@
 const plugin = require('tailwindcss/plugin')
 const colors = require('tailwindcss/colors')
-const { fontFamily } = require('tailwindcss/defaultTheme')
 
 module.exports = {
   important: false,
   content: {
     layers: ['components', 'utilities'],
     content: [
+      './components/**/*.{js,vue,ts}',
       './layouts/**/*.vue',
+      './pages/**/*.vue',
       './plugins/**/*.{js,ts}',
       './nuxt.config.{js,ts}',
     ],
@@ -34,20 +35,18 @@ module.exports = {
         purple: colors.violet,
       },
       fontFamily: {
-        ...fontFamily,
-        sans: ['Roboto', 'ui-sans-serif', 'system-ui'],
+        sans: ['UniversLTStd', 'Helvetica Neue'],
       },
       gridTemplateColumns: {
         desktop: 'repeat(12, minmax(0, 1fr))',
-        tablet: 'repeat(12, minmax(0, 1fr))',
-        mobile: 'repeat(6, minmax(0, 1fr))',
+        tablet: 'repeat(8, minmax(0, 1fr))',
+        mobile: 'repeat(4, minmax(0, 1fr))',
       },
     },
     screens: {
-      xs: '0px',
-      sm: '480px',
-      md: '720px',
-      lg: '992px',
+      sm: '0px',
+      md: '768px',
+      lg: '1280px',
       xl: '1440px',
     },
     container: {
@@ -66,30 +65,6 @@ module.exports = {
       sans: ['UniversLTStd', 'Helvetica Neue'],
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-    plugin(function ({ addUtilities }) {
-      const newUtilities = {
-        '.stretch-to-viewport': {
-          position: 'relative',
-          left: '50%',
-          right: '50%',
-          marginLeft: '-50vw',
-          marginRight: '-50vw',
-          width: '100vw',
-        },
-        '.stretch-to-viewport-reset': {
-          position: 'initial',
-          left: 'initial',
-          right: 'initial',
-          marginLeft: 'initial',
-          marginRight: 'initial',
-          width: 'initial',
-        },
-      }
-
-      addUtilities(newUtilities, { variants: ['responsive'] })
-    }),
-  ],
+  plugins: [require('@tailwindcss/forms')],
   prefix: 'tw-',
 }

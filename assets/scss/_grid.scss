@@ -1,0 +1,25 @@
+@tailwind utilities;
+
+@import "variables";
+
+@layer utilities {
+  .tw-grid-container {
+    @apply tw-grid tw-grid-cols-mobile;
+    grid-gap: $grid-gutter-phone;
+
+    @screen md {
+      @apply tw-grid-cols-tablet;
+      grid-gap: $grid-gutter-tablet;
+    }
+
+    @screen lg {
+      @apply tw-grid-cols-desktop;
+      grid-gap: $grid-gutter-desktop;
+    }
+  }
+
+  .tw-container-fluid {
+    @apply tw-w-screen;
+    @apply tw-px-4;
+  }
+}
