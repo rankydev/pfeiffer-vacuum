@@ -1,10 +1,10 @@
 .cms-migrate:
   stage: cms-migration
   before_script:
-    - cp ./cms/storyblok.${CI_ENVIRONMENT_NAME}.env ./cms/storyblok.env
+    - # cp ./cms/storyblok.${CI_ENVIRONMENT_NAME}.env ./cms/storyblok.env
   script:
-    - npm run cms:migrate-components
-    - npm run cms:migrate-content
+    - # npm run cms:migrate-components
+    - # npm run cms:migrate-content
   tags:
     - docker_runner
   environment:
