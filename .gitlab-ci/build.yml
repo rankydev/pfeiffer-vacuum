@@ -14,6 +14,7 @@ build:
 
 lint:
   stage: test
+  needs: [ "build" ]
   script:
     - npm run lint
   tags:
@@ -21,6 +22,7 @@ lint:
 
 test:
   stage: test
+  needs: [ "build" ]
   script:
     - npm test
   tags:
@@ -35,6 +37,7 @@ test:
 
 sonar-qube:
   stage: analysis
+  needs: [ "test", "lint" ]
   script:
     - echo "sonar-qube"
   tags:
@@ -56,11 +59,13 @@ sonar-qube:
 
 build-docker-image-frontend:
   extends: .docker-image
+  needs: [ "sonar-qube" ]
   script:
     - docker build -t ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} .
 
 build-docker-image-lsg:
   extends: .docker-image
+  needs: [ "sonar-qube" ]
   variables:
     FULL_IMAGE_NAME: ${DOCKER_IMAGE_NAME}/lsg
   script:
@@ -68,6 +73,7 @@ build-docker-image-lsg:
 
 tag-docker-image-latest:
   extends: .docker-image
+  needs: [ "build-docker-image-frontend" ]
   script:
     - docker pull ${DOCKER_IMAGE_NAME}:main
     - docker tag ${DOCKER_IMAGE_NAME}:main ${DOCKER_IMAGE_NAME}:latest

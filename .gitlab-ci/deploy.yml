@@ -2,6 +2,7 @@
 # environment.name has to be set in extending configurations
 .deployment:
   stage: deployment
+  needs: [ "audit_frontend" ]
   before_script:
     - # disable gitlab warning for docker login
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}

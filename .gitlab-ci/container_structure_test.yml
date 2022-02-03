@@ -3,6 +3,7 @@ include:
 
 audit_frontend:
   stage: audit
+  needs: [ "build-docker-image-frontend" ]
   extends: .container-structure-test
   variables:
     # Basic for git ci runner setup (docker in docker)

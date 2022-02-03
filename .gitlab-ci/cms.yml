@@ -26,7 +26,7 @@ cms-migrate-develop:
     refs:
       - develop
 
-cms-migrate-develop-manuel:
+cms-migrate-develop-manually:
   extends: .cms-migrate
   needs: [ "deploy-dev-manually" ]
   environment:
