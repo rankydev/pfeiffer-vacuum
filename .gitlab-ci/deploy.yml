@@ -48,7 +48,7 @@ deploy-lsg:
   extends: .deployment
   needs: [ "build-docker-image-lsg" ]
   script:
-    - docker pull ${DOCKER_IMAGE_NAME}/lsg:${$CI_COMMIT_REF_SLUG}
+    - docker pull ${DOCKER_IMAGE_NAME}:lsg-${$CI_COMMIT_REF_SLUG}
     - #docker-compose down
       echo "hier soll der service geupdatd werden"
     - # docker-compose up -d --no-deps --build ${CI_ENVIRONMENT_NAME}
@@ -67,7 +67,7 @@ deploy-lsg-manually:
   extends: .deployment
   needs: [ "build-docker-image-lsg" ]
   script:
-    - docker pull ${DOCKER_IMAGE_NAME}/lsg:${CI_COMMIT_TAG}
+    - docker pull ${DOCKER_IMAGE_NAME}:lsg-${CI_COMMIT_TAG}
     - #docker-compose down
       echo "hier soll der service geupdatd werden"
     - # docker-compose up -d --no-deps --build ${CI_ENVIRONMENT_NAME}
