@@ -33,8 +33,6 @@ deploy-dev-manually:
   environment:
     name: dev2
   when: manual
-  only:
-    - tags
 
 deploy-uat:
   extends: .deployment

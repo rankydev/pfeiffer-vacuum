@@ -31,9 +31,6 @@ cms-migrate-develop-manuel:
   needs: [ "deploy-dev-manually" ]
   environment:
     name: dev2
-  when: manual
-  only:
-    - tags
 
 cms-migrate-uat-scheduled:
   extends: .cms-migrate
