@@ -2,9 +2,12 @@
   stage: cms-migration
   before_script:
     - # cp ./cms/storyblok.${CI_ENVIRONMENT_NAME}.env ./cms/storyblok.env
+      echo "Laeuft davor..."
   script:
     - # npm run cms:migrate-components
+      echo "Laeuft 1"
     - # npm run cms:migrate-content
+      echo "Laeuft 2"
   tags:
     - docker_runner
   environment:
@@ -16,6 +19,7 @@
 
 cms-migrate-develop:
   extends: .cms-migrate
+  needs: [ "deploy-dev" ]
   environment:
     name: dev2
   only:
@@ -24,14 +28,27 @@ cms-migrate-develop:
 
 cms-migrate-develop-manuel:
   extends: .cms-migrate
+  needs: [ "deploy-dev-manually" ]
   environment:
     name: dev2
   when: manual
   only:
     - tags
 
+cms-migrate-uat-scheduled:
+  extends: .cms-migrate
+  needs: [ "deploy-uat" ]
+  environment:
+    name: uat
+  allow_failure: true
+  only:
+    refs:
+      - main
+  except: []
+
 cms-migrate-uat:
   extends: .cms-migrate
+  needs: [ "deploy-uat-manually" ]
   environment:
     name: uat
   only:
@@ -41,6 +58,7 @@ cms-migrate-uat:
 
 cms-migrate-production:
   extends: .cms-migrate
+  needs: [ "deploy-prd-manually" ]
   environment:
     name: prd
   only:
