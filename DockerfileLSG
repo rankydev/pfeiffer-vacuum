@@ -1,0 +1,8 @@
+
+FROM nginx:alpine
+
+# port of frontend application
+ENV NGINX_PORT=3003
+
+# copy lsg bundle
+COPY lsg-public/ /usr/share/nginx/html
