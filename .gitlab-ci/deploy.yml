@@ -8,8 +8,6 @@
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
   environment:
     url: https://${CI_ENVIRONMENT_NAME}-vacuum.westeurope.cloudapp.azure.com
-  tags:
-    - pvacviewer-${CI_ENVIRONMENT_NAME}-deployment
 
 # scheduled deployment for nightly dev2
 deploy-dev:
@@ -26,6 +24,8 @@ deploy-dev:
   only:
     refs:
       - develop
+  tags:
+    - pvac-frontend-dev-deployment
 
 # manual deployment for dev2
 deploy-dev-manually:
@@ -40,6 +40,8 @@ deploy-dev-manually:
   environment:
     name: dev2
   when: manual
+  tags:
+    - docker
 
 # scheduled deployment for nightly lsg
 deploy-lsg:
@@ -52,12 +54,13 @@ deploy-lsg:
     - # docker-compose up -d --no-deps --build ${CI_ENVIRONMENT_NAME}
       echo "2. Schritt?"
     - echo "URL ${CI_ENVIRONMENT_URL}"
-
   environment:
     name: dev2
   only:
     refs:
       - develop
+  tags:
+    - pvac-frontend-dev-deployment
 
 # manual deployment for lsg
 deploy-lsg-manually:
@@ -73,6 +76,8 @@ deploy-lsg-manually:
   environment:
     name: dev2
   when: manual
+  tags:
+    - pvac-frontend-dev-deployment
 
 deploy-uat:
   extends: .deployment
@@ -85,6 +90,8 @@ deploy-uat:
   only:
     refs:
       - main
+  tags:
+    - pvac-frontend-uat-deployment
 
 deploy-uat-manually:
   extends: .deployment
@@ -96,6 +103,8 @@ deploy-uat-manually:
   allow_failure: false
   only:
     - tags
+  tags:
+    - pvac-frontend-uat-deployment
 
 deploy-prd-manually:
   extends: .deployment
@@ -107,3 +116,5 @@ deploy-prd-manually:
   allow_failure: false
   only:
     - tags
+  tags:
+    - pvac-frontend-uat-deployment
