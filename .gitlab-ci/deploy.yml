@@ -20,7 +20,7 @@
   environment:
     name: dev2
   tags:
-    - pvac-frontend-dev-deployment
+    - pvac-frontend-dev2-deployment
 
 # scheduled deployment for nightly dev2
 deploy-dev:
