@@ -4,6 +4,7 @@
 
 @layer utilities {
   .tw-grid-container {
+    @apply tw-w-11/12;
     @apply tw-grid tw-grid-cols-mobile;
     grid-gap: $grid-gutter-phone;
 
@@ -18,8 +19,8 @@
     }
   }
 
+  // TODO: Will be implemented in ticket PVWEB-405
   .tw-container-fluid {
-    @apply tw-w-screen;
-    @apply tw-px-4;
+    position: relative;
   }
 }
