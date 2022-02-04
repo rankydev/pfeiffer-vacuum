@@ -45,8 +45,6 @@ deploy-dev-manually:
     - echo "URL ${CI_ENVIRONMENT_URL}"
     - echo "URL ${DOCKER_SERVICE_NAME}"
   when: manual
-  tags:
-    - dind_runner
 
 # scheduled deployment for nightly lsg
 deploy-lsg:
@@ -72,8 +70,6 @@ deploy-lsg-manually:
     - echo "URL ${CI_ENVIRONMENT_URL}"
     - echo "URL ${DOCKER_SERVICE_NAME}"
   when: manual
-  tags:
-    - dind_runner
 
 deploy-uat:
   extends: .deployment
