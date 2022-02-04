@@ -59,13 +59,13 @@ build-docker-image-frontend:
   extends: .docker-image
   needs: [ "sonar-qube" ]
   script:
-    - docker build -t ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} .
+    - docker build -t ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} -f docker/Dockerfile .
 
 build-docker-image-lsg:
   extends: .docker-image
   needs: [ "sonar-qube" ]
   script:
-    - docker build -t ${DOCKER_IMAGE_NAME}:lsg-${CI_COMMIT_REF_SLUG} -f DockerfileLSG .
+    - docker build -t ${DOCKER_IMAGE_NAME}:lsg-${CI_COMMIT_REF_SLUG} -f docker/DockerfileLSG .
 
 tag-docker-image-latest:
   extends: .docker-image

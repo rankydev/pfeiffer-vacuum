@@ -17,9 +17,9 @@ WORKDIR /opt/pvac-frontend
 COPY package*.json ./
 
 # Bundle app source
-COPY .npm/ ./.npm/
-COPY .nuxt/ ./.nuxt/
-COPY node_modules/ ./node_modules/
+COPY ../.npm ./.npm/
+COPY ../.nuxt ./.nuxt/
+COPY ../node_modules ./node_modules/
 
 EXPOSE 3000
 
