@@ -13,10 +13,11 @@
   extends: .deployment
   variables:
     DOCKER_COMPOSE_FILENAME: ""
+    DOCKER_SERVICE_NAME: ""
   script:
     - docker pull ${DOCKER_IMAGE_NAME}:${$CI_COMMIT_REF_SLUG}
-    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} down ${CI_ENVIRONMENT_NAME}
-    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up -d --no-deps --build ${CI_ENVIRONMENT_NAME}
+    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} down ${DOCKER_SERVICE_NAME}
+    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up -d --no-deps --build ${DOCKER_SERVICE_NAME}
   environment:
     name: dev2
   tags:
@@ -27,6 +28,7 @@ deploy-dev:
   extends: .deploy-on-dev-machine
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
+    DOCKER_SERVICE_NAME: "dev2"
   only:
     refs:
       - develop
@@ -36,10 +38,12 @@ deploy-dev-manually:
   extends: .deploy-on-dev-machine
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
+    DOCKER_SERVICE_NAME: "dev2"
   script:
     - echo "hier soll der service geupdatd werden"
     - echo "COMPOSE mit ${DOCKER_COMPOSE_FILENAME}"
     - echo "URL ${CI_ENVIRONMENT_URL}"
+    - echo "URL ${DOCKER_SERVICE_NAME}"
   when: manual
   tags:
     - dind_runner
@@ -50,6 +54,7 @@ deploy-lsg:
   needs: [ "build-docker-image-lsg" ]
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
+    DOCKER_SERVICE_NAME: "lsg"
   only:
     refs:
       - develop
@@ -60,10 +65,12 @@ deploy-lsg-manually:
   needs: [ "build-docker-image-lsg" ]
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
+    DOCKER_SERVICE_NAME: "lsg"
   script:
     - echo "hier soll der service geupdatd werden"
     - echo "COMPOSE mit ${DOCKER_COMPOSE_FILENAME}"
     - echo "URL ${CI_ENVIRONMENT_URL}"
+    - echo "URL ${DOCKER_SERVICE_NAME}"
   when: manual
   tags:
     - dind_runner
