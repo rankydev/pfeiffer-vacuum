@@ -1,4 +1,5 @@
 export default {
+  srcDir: '',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'pvweb',
@@ -20,7 +21,12 @@ export default {
   plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: [
+    '~/components/templates',
+    '~/components/atoms',
+    '~/components/molecules',
+    '~/components/organisms'
+  ],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -34,7 +40,9 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: [
+    '@txp-cms/storyblok'
+  ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -50,4 +58,17 @@ export default {
   storybook: {
     port: 4000,
   },
+
+  // TXP-CMS Storyblok Configuration, see: https://txp-cms.dev/integrations/storyblok
+  storyblok: {
+      accessToken: process.env.STORYBLOK_ACCESS_TOKEN,
+      version: process.env.STORYBLOK_VERSION,
+      defaultLanguage: process.env.DEFAULT_LANGUAGE_CODE,
+      resolveRelations: process.env.STORYBLOK_RESOLVE_RELATIONS,
+      resolveLinks: process.env.STORYBLOK_RESOLVE_LINKS,
+      resolveAssets: process.env.STORYBLOK_RESOLVE_ASSETS,
+      spaceId: process.env.STORYBLOK_SPACE_ID,
+      contentTypes: process.env.STORYBLOK_CONTENT_TYPES,
+      exclude: process.env.STORYBLOK_EXCLUDE_ROUTES && process.env.STORYBLOK_EXCLUDE_ROUTES.split(',')
+    }
 }

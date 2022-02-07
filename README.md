@@ -24,3 +24,15 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 ## Node version
 16.x
+
+## Create or update Storyblok Components from schema.json
+
+### Sync all components
+```bash
+yarn storyblok:sync
+```
+
+### Sync one component
+```bash
+yarn storyblok:sync ./components/atoms/YourComponent
+```
