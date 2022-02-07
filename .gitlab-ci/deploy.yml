@@ -19,7 +19,8 @@
     DOCKER_SERVICE_NAME: ""
   script:
     - docker pull ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG}
-    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} down ${DOCKER_SERVICE_NAME}
+    - docker-compose stop ${DOCKER_SERVICE_NAME}
+    - docker-compose rm ${DOCKER_SERVICE_NAME}
     - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up -d --no-deps --build ${DOCKER_SERVICE_NAME}
   environment:
     name: dev2
