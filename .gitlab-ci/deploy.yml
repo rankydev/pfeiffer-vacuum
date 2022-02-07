@@ -3,6 +3,7 @@
 .deployment:
   stage: deployment
   needs: [ "audit_frontend" ]
+  cache: {}
   before_script:
     - # disable gitlab warning for docker login
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
@@ -39,11 +40,6 @@ deploy-dev-manually:
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
     DOCKER_SERVICE_NAME: "dev2"
-  script:
-    - echo "hier soll der service geupdatd werden"
-    - echo "COMPOSE mit ${DOCKER_COMPOSE_FILENAME}"
-    - echo "URL ${CI_ENVIRONMENT_URL}"
-    - echo "URL ${DOCKER_SERVICE_NAME}"
   when: manual
 
 # scheduled deployment for nightly lsg
