@@ -29,7 +29,7 @@
 
     <main class="js-page-wrapper flex-grow">
       <slot>
-        <NuxtDynamic
+        <nuxt-dynamic
           v-for="item in body"
           :key="item._uid"
           v-editable="item"
