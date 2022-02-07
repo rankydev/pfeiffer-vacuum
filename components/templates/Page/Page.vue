@@ -3,7 +3,7 @@
     <div class="container">
       <div>
         <Logo />
-        <h1 class="title">pvweb</h1>
+        <h1>pvweb</h1>
         <h3 class="subtitle">Website for Pfeiffer Vacuum</h3>
         <p>{{ text }}</p>
         <div class="links">
@@ -79,16 +79,6 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
 }
 
 .subtitle {
