@@ -19,7 +19,7 @@
     DOCKER_SERVICE_NAME: ""
   script:
     - docker pull ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG}
-    - export container_running=docker container list | grep ${DOCKER_SERVICE_NAME}
+    - export container_running=`docker container list | grep ${DOCKER_SERVICE_NAME}`
     - # check if container is running. stop and remove if so.
       if [ -n container_running ] then
         docker-compose -f ${DOCKER_COMPOSE_FILENAME} stop ${DOCKER_SERVICE_NAME}
