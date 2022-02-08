@@ -23,7 +23,7 @@
     - # check if container is running. stop and remove if so.
       if [ -n container_running ]; then
         docker-compose -f ${DOCKER_COMPOSE_FILENAME} stop ${DOCKER_SERVICE_NAME};
-        docker-compose -f ${DOCKER_COMPOSE_FILENAME} rm ${DOCKER_SERVICE_NAME};
+        docker-compose -f ${DOCKER_COMPOSE_FILENAME} rm --force ${DOCKER_SERVICE_NAME};
       fi;
     - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up --detach --no-deps --build ${DOCKER_SERVICE_NAME}
   environment:
