@@ -2,7 +2,7 @@ version: "3"
 
 services:
   dev2:
-    image: "${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_ROMMIT_REF_SLUG}"
+    image: "${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_REF_SLUG}"
     restart: always
     ports:
       - "3000:3000"

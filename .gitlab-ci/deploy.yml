@@ -67,14 +67,6 @@ deploy-lsg-manually:
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
     DOCKER_SERVICE_NAME: "lsg"
-  script:
-    - echo "hier soll der service geupdatd werden"
-    - echo "pull ${DOCKER_IMAGE_NAME}"
-    - echo "pull ${CI_COMMIT_REF_SLUG}"
-    - echo "pull ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG}"
-    - echo "COMPOSE mit ${DOCKER_COMPOSE_FILENAME}"
-    - echo "URL ${CI_ENVIRONMENT_URL}"
-    - echo "URL ${DOCKER_SERVICE_NAME}"
   when: manual
 
 deploy-uat:
