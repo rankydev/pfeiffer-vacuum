@@ -20,7 +20,6 @@ COPY package*.json ./
 COPY .npm .npm/
 COPY .nuxt .nuxt/
 COPY node_modules node_modules/
-COPY dist dist/
 
 EXPOSE 3000
 

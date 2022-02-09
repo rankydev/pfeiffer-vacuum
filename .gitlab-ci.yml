@@ -18,7 +18,6 @@ cache:
     - .nuxt/
     - .nuxt-storybook/
     - lsg-public/
-    - dist
     - node_modules/
     - coverage/
 
