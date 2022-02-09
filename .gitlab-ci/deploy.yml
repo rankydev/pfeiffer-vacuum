@@ -1,22 +1,14 @@
 # general deployment configuration
-# environment.name has to be set in extending configurations
-.deployment:
+.deploy-on-dev-machine:
   stage: deployment
-  needs: [ "audit_frontend" ]
   cache: {}
   variables:
     DOCKER_IMAGE_NAME: ${CI_REGISTRY}/${CI_PROJECT_PATH}
+    DOCKER_COMPOSE_FILENAME: ""
+    DOCKER_SERVICE_NAME: ""
   before_script:
     - # disable gitlab warning for docker login
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
-  environment:
-    url: https://${CI_ENVIRONMENT_NAME}-vacuum.westeurope.cloudapp.azure.com
-
-.deploy-on-dev-machine:
-  extends: .deployment
-  variables:
-    DOCKER_COMPOSE_FILENAME: ""
-    DOCKER_SERVICE_NAME: ""
   script:
     - docker pull ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG}
     - export container_running=`docker container list | grep ${DOCKER_SERVICE_NAME}`
@@ -27,13 +19,15 @@
       fi;
     - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up --detach --no-deps --build ${DOCKER_SERVICE_NAME}
   environment:
-    name: dev2
+    name: ${DOCKER_SERVICE_NAME}
+    url: https://dev-vacuum.westeurope.cloudapp.azure.com/${DOCKER_SERVICE_NAME}
   tags:
     - pvac-frontend-dev2-deployment
 
 # scheduled deployment for nightly dev2
 deploy-dev:
   extends: .deploy-on-dev-machine
+  needs: [ "audit_frontend" ]
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
     DOCKER_SERVICE_NAME: "dev2"
@@ -44,6 +38,7 @@ deploy-dev:
 # manual deployment for dev2
 deploy-dev-manually:
   extends: .deploy-on-dev-machine
+  needs: [ "audit_frontend" ]
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
     DOCKER_SERVICE_NAME: "dev2"
