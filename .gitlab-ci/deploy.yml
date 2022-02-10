@@ -6,6 +6,7 @@
   cache: {}
   variables:
     DOCKER_IMAGE_NAME: ${CI_REGISTRY}/${CI_PROJECT_PATH}
+    DOCKER_IMAGE_TAG: ${CI_COMMIT_REF_SLUG}
   before_script:
     - # disable gitlab warning for docker login
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
@@ -16,7 +17,7 @@
     DOCKER_COMPOSE_FILENAME: ""
     DOCKER_SERVICE_NAME: ""
   script:
-    - docker pull ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG}
+    - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
     - export container_running=`docker container list | grep ${DOCKER_SERVICE_NAME}`
     - # check if container is running. stop and remove if so.
       if [ -n container_running ]; then
@@ -54,6 +55,7 @@ deploy-lsg:
   needs: [ "build-docker-image-lsg" ]
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
+    DOCKER_IMAGE_TAG: "lsg-${CI_COMMIT_REF_SLUG}"
     DOCKER_SERVICE_NAME: "lsg"
   only:
     refs:
@@ -65,6 +67,7 @@ deploy-lsg-manually:
   needs: [ "build-docker-image-lsg" ]
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
+    DOCKER_IMAGE_TAG: "lsg-${CI_COMMIT_REF_SLUG}"
     DOCKER_SERVICE_NAME: "lsg"
   when: manual
 
