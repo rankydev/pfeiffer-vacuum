@@ -71,4 +71,10 @@ export default {
       process.env.STORYBLOK_EXCLUDE_ROUTES &&
       process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
   },
+
+  server: {
+    // for local change add 'environments/local.js'
+    port: process.env.PORT,
+    host: process.env.HOST
+  }
 }
