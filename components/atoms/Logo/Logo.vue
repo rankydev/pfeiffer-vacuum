@@ -40,6 +40,10 @@
   </svg>
 </template>
 
+<script lang="js">
+export default {}
+</script>
+
 <style>
 .pv-logo {
   animation: 1s appear;

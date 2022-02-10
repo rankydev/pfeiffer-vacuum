@@ -1,0 +1,4 @@
+FROM nginx:alpine
+
+# copy lsg bundle
+COPY lsg-public/ /usr/share/nginx/html

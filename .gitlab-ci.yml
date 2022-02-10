@@ -1,0 +1,28 @@
+variables:
+  DOCKER_SERVICE_NAME: pvac-web-app-server
+  DOCKER_IMAGE_NAME: ${CI_REGISTRY}/${CI_PROJECT_PATH}
+
+stages:
+  - build
+  - test
+  - analysis
+  - build-docker-image
+  - audit
+  - deployment
+  - cms-migration
+
+cache:
+  key: "${CI_COMMIT_SHORT_SHA}"
+  paths:
+    - .npm/
+    - .nuxt/
+    - .nuxt-storybook/
+    - lsg-public/
+    - node_modules/
+    - coverage/
+
+include:
+  - local: '/.gitlab-ci/container_structure_test.yml'
+  - local: '/.gitlab-ci/build.yml'
+  - local: '/.gitlab-ci/cms.yml'
+  - local: '/.gitlab-ci/deploy.yml'

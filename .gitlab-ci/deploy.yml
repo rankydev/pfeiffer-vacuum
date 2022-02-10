@@ -1,0 +1,109 @@
+# general deployment configuration
+# environment.name has to be set in extending configurations
+.deployment:
+  stage: deployment
+  needs: [ "audit_frontend" ]
+  cache: {}
+  variables:
+    DOCKER_IMAGE_NAME: ${CI_REGISTRY}/${CI_PROJECT_PATH}
+  before_script:
+    - # disable gitlab warning for docker login
+      echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
+
+.deploy-on-dev-machine:
+  extends: .deployment
+  variables:
+    DOCKER_COMPOSE_FILENAME: ""
+    DOCKER_SERVICE_NAME: ""
+  script:
+    - docker pull ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG}
+    - export container_running=`docker container list | grep ${DOCKER_SERVICE_NAME}`
+    - # check if container is running. stop and remove if so.
+      if [ -n container_running ]; then
+        docker-compose -f ${DOCKER_COMPOSE_FILENAME} stop ${DOCKER_SERVICE_NAME};
+        docker-compose -f ${DOCKER_COMPOSE_FILENAME} rm --force ${DOCKER_SERVICE_NAME};
+      fi;
+    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up --detach --no-deps --build ${DOCKER_SERVICE_NAME}
+  environment:
+    name: ${DOCKER_SERVICE_NAME}
+    url: https://dev-vacuum.westeurope.cloudapp.azure.com/${DOCKER_SERVICE_NAME}
+  tags:
+    - pvac-frontend-dev2-deployment
+
+# scheduled deployment for nightly dev2
+deploy-dev:
+  extends: .deploy-on-dev-machine
+  variables:
+    DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
+    DOCKER_SERVICE_NAME: "dev2"
+  only:
+    refs:
+      - develop
+
+# manual deployment for dev2
+deploy-dev-manually:
+  extends: .deploy-on-dev-machine
+  variables:
+    DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
+    DOCKER_SERVICE_NAME: "dev2"
+  when: manual
+
+# scheduled deployment for nightly lsg
+deploy-lsg:
+  extends: .deploy-on-dev-machine
+  needs: [ "build-docker-image-lsg" ]
+  variables:
+    DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
+    DOCKER_SERVICE_NAME: "lsg"
+  only:
+    refs:
+      - develop
+
+# manual deployment for lsg
+deploy-lsg-manually:
+  extends: .deploy-on-dev-machine
+  needs: [ "build-docker-image-lsg" ]
+  variables:
+    DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
+    DOCKER_SERVICE_NAME: "lsg"
+  when: manual
+
+deploy-uat:
+  extends: .deployment
+  script:
+    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:main ${DOCKER_SERVICE_NAME}
+  environment:
+    name: uat
+  when: manual
+  allow_failure: false
+  only:
+    refs:
+      - main
+  tags:
+    - pvac-frontend-uat-deployment
+
+deploy-uat-manually:
+  extends: .deployment
+  script:
+    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
+  environment:
+    name: uat
+  when: manual
+  allow_failure: false
+  only:
+    - tags
+  tags:
+    - pvac-frontend-uat-deployment
+
+deploy-prd-manually:
+  extends: .deployment
+  script:
+    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
+  environment:
+    name: prd
+  when: manual
+  allow_failure: false
+  only:
+    - tags
+  tags:
+    - pvac-frontend-uat-deployment
