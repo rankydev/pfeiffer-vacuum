@@ -1,7 +1,8 @@
 import ContentWrapper from '@/components/molecules/ContentWrapper/ContentWrapper'
+import contentWrapper from '@/components/molecules/ContentWrapper/ContentWrapper.stories.content'
 
 const props = {
-  items: [],
+  items: contentWrapper.content,
 }
 
 export default {
