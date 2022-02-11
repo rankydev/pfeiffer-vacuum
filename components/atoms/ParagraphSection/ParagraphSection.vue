@@ -1,5 +1,5 @@
 <template>
-  <div class="paragraph-section">
+  <div v-editable="content" class="paragraph-section">
     <div v-html="paragraph"></div>
   </div>
 </template>
