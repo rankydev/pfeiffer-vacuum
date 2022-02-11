@@ -56,9 +56,10 @@ export default defineComponent({
   },
   setup (props) {
     const { content } = toRefs(props)
-    const { text, body } = content.value
+    const { name, text, body } = content.value
 
     return {
+      name,
       text,
       body
     }

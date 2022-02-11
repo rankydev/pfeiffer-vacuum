@@ -2,16 +2,20 @@
   "name": "Page",
   "display_name": null,
   "schema": {
-    "text": {
+    "name": {
       "type": "text",
       "pos": 1
+    },
+    "text": {
+      "type": "text",
+      "pos": 2
     },
     "body": {
       "type": "bloks",
       "restrict_components": true,
       "restrict_type": "",
       "component_whitelist": [],
-      "pos": 2
+      "pos": 3
     }
   },
   "image": null,
