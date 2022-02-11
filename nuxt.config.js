@@ -75,6 +75,6 @@ export default {
   server: {
     // for local change add 'environments/local.js'
     port: process.env.PORT,
-    host: process.env.HOST
-  }
+    host: process.env.HOST,
+  },
 }
