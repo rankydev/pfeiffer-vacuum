@@ -1,7 +1,7 @@
 <template>
-  <div class="content-wrapper">
+  <div class="content-wrapper" v-editable="items">
     <NuxtDynamic
-      v-for="item in content.items"
+      v-for="item in items"
       :key="item._uid"
       v-editable="true"
       :name="item.component"
@@ -14,9 +14,9 @@
 export default {
   name: 'ContentWrapper',
   props: {
-    content: {
-      type: Object,
-      default: () => {},
+    items: {
+      type: Array,
+      default: () => [],
       required: true,
     },
   },
