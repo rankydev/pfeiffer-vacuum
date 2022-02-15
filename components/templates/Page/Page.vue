@@ -54,7 +54,7 @@ export default defineComponent({
       default: () => {}
     }
   },
-  setup (props) {
+  setup(props) {
     const { content } = toRefs(props)
     const { text, body } = content.value
 
