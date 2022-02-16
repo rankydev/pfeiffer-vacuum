@@ -3,91 +3,94 @@ export default {
   props: {
     slug: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     language: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     region: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     merge: {
       type: Boolean,
-      default: false
+      default: false,
     },
     options: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     update: {
       type: Function,
-      default: data => data
+      default: (data) => data,
     },
     tag: {
       type: String,
-      default: 'div'
+      default: 'div',
     },
     handlePreviewEvents: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
-  data () {
+  data() {
     return {
       result: {
         data: null,
         loading: false,
-        error: null
-      }
+        error: null,
+      },
     }
   },
   computed: {
-    cmsOptions () {
+    cmsOptions() {
       return {
         resolve_relations: this.$cms.relationsToResolve,
         resolve_links: this.$cms.resolveLinks,
         resolve_assets: this.$cms.resolveAssets,
-        ...this.options
+        ...this.options,
       }
-    }
+    },
   },
-  mounted () {
+  mounted() {
     if (!this.handlePreviewEvents) {
       return
     }
 
     this.$cmsbridge.onChange(this.cmsOptions.resolve_relations, (data) => {
       if (data.story.id === this.result.data.id) {
-        const content = Object.assign({}, this.result.data.content, data.story.content)
+        const content = Object.assign(
+          {},
+          this.result.data.content,
+          data.story.content
+        )
         this.result.data.content = this.$cms.resolveContent(content)
       }
     })
   },
-  async fetch () {
+  async fetch() {
     try {
       this.result.loading = true
-      console.log(this.$route)
-      const slugFromRoute = await this.$cms.getSlugFromRoute({ route: this.$route })
+      // Route is cut at the wrong route section here (getSlugFromRoute() | node_modules/@txp-cms/storyblok/src/templates/storyblok.plugin.js)
+      // e.g. /de/en/home will be cut to /en/home
+      // region will be fetched from the wrong cut slug (see line 94)
+      const slugFromRoute = await this.$cms.getSlugFromRoute({
+        route: this.$route,
+      })
       console.log('slugFromRoute')
       console.log(slugFromRoute)
       const slug = this.slug || slugFromRoute
-      console.log('slug')
-      console.log(slug)
-      const language = this.language || await this.$cms.getLanguageFromRoute({ route: this.$route }) || this.$cms.defaultLanguageCode
+      const language =
+        this.language ||
+        // Language will be get from wrong route section here (getLanguageFromRoute() | node_modules/@txp-cms/storyblok/src/templates/storyblok.plugin.js)
+        (await this.$cms.getLanguageFromRoute({
+          route: this.$route,
+        })) ||
+        this.$cms.defaultLanguageCode
 
       const region = this.region || this.getRegionFromSlug(slugFromRoute)
       let slugWithoutRegion = slug.replace(new RegExp('^\\/' + region), '')
-      console.log('region')
-      console.log(region)
-
-      console.log('slugWithoutRegion')
-      console.log(slugWithoutRegion)
-
-
-      console.log('defaultRegion')
-      console.log(this.$cms.defaultRegion)
 
       let bySlugs = null
       if (region === this.$cms.defaultRegion) {
@@ -96,19 +99,13 @@ export default {
         bySlugs = `${this.$cms.defaultRegion}${slugWithoutRegion},${region}${slugWithoutRegion}`
       }
 
-      console.log('language')
-      console.log(language)
-
-      console.log('bySlugs')
-      console.log(bySlugs)
-
       const response = await this.$cms.query({
         slug: '',
         options: {
           by_slugs: bySlugs,
           language,
-          ...this.cmsOptions
-        }
+          ...this.cmsOptions,
+        },
       })
 
       if (response.error) {
@@ -120,7 +117,10 @@ export default {
         data = response.data
       } else {
         const alternativeStory = response.data.find((story) => {
-          const regionOfCurrentStory = this.getRegionFromSlug(story.full_slug, 1)
+          const regionOfCurrentStory = this.getRegionFromSlug(
+            story.full_slug,
+            1
+          )
           return regionOfCurrentStory === region
         })
 
@@ -129,7 +129,7 @@ export default {
 
       this.result = {
         loading: false,
-        data: this.update(data)
+        data: this.update(data),
       }
     } catch (error) {
       if (process.server) {
@@ -139,10 +139,10 @@ export default {
       this.$nuxt.error({ statusCode: 404, message: error && error.message })
     }
   },
-  render (h) {
+  render(h) {
     let result = this.$scopedSlots.default({
       result: this.result,
-      error: this.result && this.result.error
+      error: this.result && this.result.error,
     })
     if (Array.isArray(result)) {
       result = result.concat(this.$slots.default)
@@ -152,7 +152,7 @@ export default {
     return this.tag ? h(this.tag, result) : result[0]
   },
   methods: {
-    getRegionFromSlug (slug, index = 0) {
+    getRegionFromSlug(slug, index = 0) {
       const pathSegments = slug.split('/').filter(String)
       const pathSegment = pathSegments[index]
 
@@ -162,8 +162,8 @@ export default {
         return this.$cms.defaultRegion
       }
     },
-    cleanupSlug (slug) {
+    cleanupSlug(slug) {
       return slug.replace(/^\/+|\/+$/g, '')
-    }
-  }
+    },
+  },
 }
