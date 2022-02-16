@@ -4,23 +4,15 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { computed } from '@nuxtjs/composition-api'
 
-export default {
-  name: 'ParagraphSection',
-  props: {
-    content: {
-      type: Object,
-      default: () => {},
-    },
+const props = defineProps({
+  content: {
+    type: Object,
+    default: () => {},
   },
-  setup(props) {
-    const paragraph = computed(() => props.content.paragraph)
+})
 
-    return {
-      paragraph,
-    }
-  },
-}
+const paragraph = computed(() => props.content.paragraph)
 </script>
