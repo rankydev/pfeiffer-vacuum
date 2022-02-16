@@ -26,6 +26,7 @@ export default {
     '~/components/atoms',
     '~/components/molecules',
     '~/components/organisms',
+    '~/components/util',
   ],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -70,5 +71,7 @@ export default {
     exclude:
       process.env.STORYBLOK_EXCLUDE_ROUTES &&
       process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
+    regions: process.env.STORYBLOK_REGIONS,
+    defaultRegion: process.env.STORYBLOK_DEFAULT_REGION,
   },
 }
