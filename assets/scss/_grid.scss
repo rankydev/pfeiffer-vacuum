@@ -4,8 +4,6 @@
 
 @layer utilities {
   .tw-grid-container {
-    //TODO: Why does the container have a width of 11/12 and isn't using the full width?
-    @apply tw-w-11/12;
     @apply tw-grid tw-grid-cols-mobile;
     grid-gap: $grid-gutter-phone;
 

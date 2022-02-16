@@ -12,17 +12,14 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'FluidContainer',
-  props: {
-    items: {
-      type: Array,
-      default: () => [],
-      required: true,
-    },
+<script setup>
+defineProps({
+  items: {
+    type: Array,
+    default: () => [],
+    required: true,
   },
-}
+})
 </script>
 
 <style lang="scss">

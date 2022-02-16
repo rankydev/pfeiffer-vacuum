@@ -2,7 +2,7 @@ import ContentWrapper from '@/components/molecules/ContentWrapper/ContentWrapper
 import contentWrapper from '@/components/molecules/ContentWrapper/ContentWrapper.stories.content'
 
 const props = {
-  items: contentWrapper.content,
+  content: contentWrapper.content,
 }
 
 export default {

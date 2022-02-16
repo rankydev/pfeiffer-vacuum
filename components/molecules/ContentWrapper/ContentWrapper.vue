@@ -1,5 +1,5 @@
 <template>
-  <div class="content-wrapper" v-editable="content">
+  <div v-editable="content" class="content-wrapper">
     <NuxtDynamic
       v-for="item in content.items"
       :key="item._uid"
@@ -10,15 +10,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ContentWrapper',
-  props: {
-    content: {
-      type: Object,
-      default: () => {},
-      required: true,
-    },
+<script setup>
+defineProps({
+  content: {
+    type: Object,
+    default: () => {},
+    required: true,
   },
-}
+})
 </script>
