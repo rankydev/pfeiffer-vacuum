@@ -1,95 +1,95 @@
 <template>
-  <div>
-    <div class="container">
+  <div v-editable="content">
+    <slot name="header">
       <div>
-        <Logo />
-        <h1>pvweb</h1>
-        <h3 class="subtitle">Website for Pfeiffer Vacuum</h3>
-        <p>{{ text }}</p>
-        <div class="links">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="button--green"
-          >
-            Documentation
-          </a>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="button--grey"
-          >
-            GitHub
-          </a>
-        </div>
+        <component
+          :is="item.component"
+          v-for="item in header"
+          :key="item._uid"
+          v-editable="hasCustomHeader && item"
+          :content="item"
+        />
       </div>
-    </div>
+    </slot>
 
-    <main class="js-page-wrapper flex-grow">
+    <div>
       <slot>
-        <nuxt-dynamic
-          v-for="item in body"
+        <component
+          :is="item.component"
+          v-for="item in content.body"
           :key="item._uid"
           v-editable="item"
-          :name="item.component"
-          v-bind="item"
+          :content="item"
         />
       </slot>
-    </main>
+    </div>
+
+    <slot name="footer">
+      <div>
+        <component
+          :is="item.component"
+          v-for="item in footer"
+          :key="item._uid"
+          v-editable="hasCustomFooter && item"
+          :content="item"
+        />
+      </div>
+    </slot>
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent, toRefs } from '@nuxtjs/composition-api'
-import Logo from '~/components/atoms/Logo/Logo.vue'
+import { defineComponent, toRefs, computed, useMeta } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'Page',
-  components: { Logo },
   props: {
     content: {
       type: Object,
-      default: () => {}
+      default: () => ({})
     }
   },
-  setup (props) {
-    const { content } = toRefs(props)
-    const { text, body } = content.value
+  setup(props) {
+    let { content } = toRefs(props)
 
-    return {
-      text,
-      body
-    }
-  }
+    const pageTemplate = computed(() => {
+      const template = content.value.template
+      const isObject = typeof template === 'object' && template
+      const hasContent = isObject && template.content
+
+      return hasContent ? template.content : null
+    })
+
+    const hasCustomHeader = computed(() => {
+      return content.value.header?.length > 0
+    })
+
+    const hasCustomFooter = computed(() => {
+      return content.value.footer?.length > 0
+    })
+
+    const header = computed(() => {
+      if (!hasCustomHeader && pageTemplate) {
+        return pageTemplate.header
+      }
+      return content.value.header
+    })
+
+    const footer = computed(() => {
+      if (!hasCustomFooter && pageTemplate) {
+        return pageTemplate.footer
+      }
+      return content.value.footer
+    })
+
+    const title = content.value.title
+    const description = content.value.description
+    const meta = []
+    meta.push({ hid: 'description', name: 'description', content: description })
+    useMeta(() => ({ title, meta }))
+
+    return {hasCustomHeader, hasCustomFooter, header, footer}
+  },
+  head: {},
 })
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>

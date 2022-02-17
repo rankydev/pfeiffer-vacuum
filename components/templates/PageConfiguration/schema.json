@@ -1,0 +1,30 @@
+{
+  "name": "PageConfiguration",
+  "display_name": "Page Configuration",
+  "schema": {
+    "header": {
+      "type": "bloks",
+      "maximum": "1",
+      "restrict_components": true,
+      "component_whitelist": [
+        "Header"
+      ]
+    },
+    "footer": {
+      "type": "bloks",
+      "maximum": "1",
+      "restrict_components": true,
+      "component_whitelist": [
+      ]
+    }
+  },
+  "image": null,
+  "preview_field": null,
+  "is_root": true,
+  "preview_tmpl": null,
+  "is_nestable": false,
+  "all_presets": [],
+  "preset_id": null,
+  "real_name": "PageConfiguration",
+  "component_group_uuid": null
+}
