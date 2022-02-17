@@ -11,7 +11,7 @@ module.exports = {
     colors: {
       'pv-red': '#dd1541',
       'pv-red-darker': '#c01238',
-      'pv-red-lighter': '#e13258',
+      'pv-red-lighter': '#ff184b',
       'pv-yellow': '#f2e600',
       'pv-yellow-darker': '#e6d200',
       'pv-yellow-lighter': '#f9f300',
@@ -24,6 +24,7 @@ module.exports = {
       'pv-grey-80': '#cccccc',
       'pv-grey-96': '#f5f5f5',
       'pv-black': '#000000',
+      'pv-white': '#ffffff',
     },
     fontFamily: {
       sans: ['UniversLTStd', 'Helvetica Neue'],

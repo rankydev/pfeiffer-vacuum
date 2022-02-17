@@ -61,6 +61,7 @@ const internalValue = ref(props.value)
     @apply tw-px-3;
     @apply tw-py-2;
     @apply tw-border-2;
+    @apply tw-rounded;
     @apply tw-border-pv-grey-80;
 
     &:focus {

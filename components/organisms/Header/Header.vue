@@ -1,10 +1,8 @@
 <template>
   <div class="header">
-    <div class="header__logo">
-      <Logo />
-    </div>
-    <SearchInput class="header__search-input" />
-    <TopNavigation class="header__top-navigation" />
+    <NuxtLink to="/" class="header__logo"><Logo /></NuxtLink>
+    <SearchHeader :has-opacity="active" class="header__search-input" />
+    <TopNavigation v-model="active" class="header__top-navigation" />
     <ShopNavigation class="header__shop-navigation" />
     <div class="header__break-column" />
     <MainNavigation class="header__main-navigation" />
@@ -12,11 +10,15 @@
 </template>
 
 <script setup>
+import { ref } from '@vue/composition-api'
+
 import Logo from '~/components/atoms/Logo/Logo.vue'
-import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
-import TopNavigation from '~/components/molecules/TopNavigation/TopNavigation.vue'
-import MainNavigation from '~/components/molecules/MainNavigation/MainNavigation.vue'
-import ShopNavigation from '~/components/molecules/ShopNavigation/ShopNavigation.vue'
+import SearchHeader from './partials/SearchHeader/SearchHeader.vue'
+import TopNavigation from './partials/TopNavigation/TopNavigation.vue'
+import MainNavigation from './partials/MainNavigation/MainNavigation.vue'
+import ShopNavigation from './partials/ShopNavigation/ShopNavigation.vue'
+
+const active = ref(false)
 </script>
 
 <style lang="scss">
