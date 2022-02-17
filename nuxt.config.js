@@ -71,4 +71,7 @@ export default {
       process.env.STORYBLOK_EXCLUDE_ROUTES &&
       process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
   },
+  publicRuntimeConfig: {
+    baseUrl: process.env.BASE_URL,
+  },
 }
