@@ -1,15 +1,12 @@
 module.exports = {
   important: false,
-  content: {
-    layers: ['components', 'utilities'],
-    content: [
-      './components/**/*.{js,vue,ts}',
-      './layouts/**/*.vue',
-      './pages/**/*.vue',
-      './plugins/**/*.{js,ts}',
-      './nuxt.config.{js,ts}',
-    ],
-  },
+  content: [
+    './components/**/*.{js,vue,ts}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './nuxt.config.{js,ts}',
+  ],
   theme: {
     colors: {
       'pv-red': '#dd1541',
@@ -26,9 +23,33 @@ module.exports = {
       'pv-grey-64': '#a3a3a3',
       'pv-grey-80': '#cccccc',
       'pv-grey-96': '#f5f5f5',
+      'pv-black': '#000000',
     },
     fontFamily: {
       sans: ['UniversLTStd', 'Helvetica Neue'],
+    },
+    fontSize: {
+      xs: '.75rem',
+      sm: '.875rem',
+      base: '1rem',
+      lg: '1.125rem',
+      xl: '1.25rem',
+      '2xl': '1.5rem',
+      '3xl': '1.875rem',
+      '4xl': '2.25rem',
+      '5xl': '3rem',
+      '6xl': '4rem',
+      '7xl': '5rem',
+    },
+    lineHeight: {
+      3: '.75rem',
+      4: '1rem',
+      5: '1.25rem',
+      6: '1.5rem',
+      7: '1.75rem',
+      8: '2rem',
+      9: '2.25rem',
+      10: '2.5rem',
     },
     gridTemplateColumns: {
       desktop: 'repeat(12, minmax(0, 1fr))',

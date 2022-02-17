@@ -1,166 +1,90 @@
 <template>
-  <div class="pv-input" :class="classes">
-    <div class="pv-input__control" :title="attrs$.title">
-      <div ref="input-slot" class="pv-input__slot" :on="onHandlers">
-        <!-- <pv-label v-if="hasLabel" :for="computedId">
-          <slot name="label">
-            {{ label }}
-          </slot>
-        </pv-label> -->
-        <slot />
-      </div>
-    </div>
-    <div class="pv-input__append">
-      <slot name="append">
-        <div class="pv-input__icon">
-          <pv-icon v-if="icon" :on="onIconHandlers" :icon="icon" />
-        </div>
-      </slot>
-    </div>
+  <div class="pv-input">
+    <input
+      v-model="internalValue"
+      class="pv-input__element"
+      :class="{ 'pv-input__element--icon': icon }"
+      :placeholder="placeholder"
+      @keypress.enter="$emit('submit', $event)"
+      @focus="$emit('focus', true)"
+      @blur="$emit('focus', false)"
+      @input="$emit('change', value)"
+    />
+    <PvIcon
+      v-if="icon"
+      class="pv-input__icon"
+      :icon="icon"
+      @click="$emit('click:icon', $event)"
+    />
   </div>
 </template>
 
-<script>
-import { nanoid } from 'nanoid'
+<script setup>
+import PvIcon from '~/components/atoms/Icon/Icon.vue'
+import { ref } from '@vue/composition-api'
 
-// import PvIcon from '../Icon'
-// import PvLabel from '../Label'
+defineEmits(['focus', 'change', 'click:icon', 'submit'])
 
-// Mixins
-import BindsAttrs from '~/mixins/bind-attrs'
-
-export default {
-  name: 'Input',
-
-  // components: {
-  //   PvIcon,
-  //   PvLabel,
-  // },
-
-  mixins: {
-    BindsAttrs,
+const props = defineProps({
+  value: {
+    type: String,
+    default: '',
   },
-
-  inheritAttrs: false,
-
-  props: {
-    id: {
-      type: String,
-      default: null,
-    },
-    label: {
-      type: String,
-      default: null,
-    },
-    icon: {
-      type: String,
-      default: null,
-    },
-    value: {
-      type: [String, Number, Boolean],
-      required: true,
-    },
+  icon: {
+    type: String,
+    default: null,
   },
-
-  data() {
-    return {
-      lazyValue: this.value,
-      hasMouseDown: false,
-    }
+  placeholder: {
+    type: String,
+    default: '',
   },
+})
 
-  computed: {
-    classes() {
-      return {
-        'pv-input--is-dirty': this.isDirty,
-        'pv-input--is-readonly': this.isReadonly,
-      }
-    },
-    onHandlers() {
-      return {
-        click: this.onClick,
-        mousedown: this.onMouseDown,
-        mouseup: this.onMouseUp,
-      }
-    },
-    omIconHandlers() {
-      const eventName = 'click:append'
-
-      if (!this.listeners$[eventName]) return undefined
-
-      return {
-        click: (e) => {
-          e.preventDefault()
-          e.stopPropagation()
-
-          this.$emit(eventName, e)
-        },
-        // Container has g event that will
-        // trigger menu open if enclosed
-        mouseup: (e) => {
-          e.preventDefault()
-          e.stopPropagation()
-        },
-      }
-    },
-    computedId() {
-      return this.id || `pv-input__${nanoid()}`
-    },
-    hasLabel() {
-      return !!(this.$slots.label || this.label)
-    },
-    // Proxy for `lazyValue`
-    // This allows an input
-    // to function without
-    // a provided model
-    internalValue: {
-      get() {
-        return this.lazyValue
-      },
-      set(val) {
-        this.lazyValue = val
-        this.$emit(this.$_modelEvent, val)
-      },
-    },
-    isDirty() {
-      return !!this.lazyValue
-    },
-    isLabelActive() {
-      return this.isDirty
-    },
-  },
-
-  watch: {
-    value(val) {
-      this.lazyValue = val
-    },
-  },
-
-  beforeCreate() {
-    // v-radio-group needs to emit a different event
-    // https://github.com/vuetifyjs/vuetify/issues/4752
-    this.$_modelEvent =
-      (this.$options.model && this.$options.model.event) || 'input'
-  },
-
-  methods: {
-    onClick(e) {
-      this.$emit('click', e)
-    },
-    onMouseDown(e) {
-      this.hasMouseDown = true
-      this.$emit('mousedown', e)
-    },
-    onMouseUp(e) {
-      this.hasMouseDown = false
-      this.$emit('mouseup', e)
-    },
-  },
-}
+const internalValue = ref(props.value)
 </script>
 
-<style scoped>
-.input {
-  color: red;
+<style lang="scss">
+.pv-input {
+  @apply tw-relative;
+
+  &__icon {
+    @apply tw-absolute;
+    @apply tw-top-1/2 tw-right-2;
+    @apply tw-cursor-pointer tw-text-pv-grey-64;
+    transform: translateY(-50%);
+  }
+
+  &__element {
+    @apply tw-block;
+    @apply tw-w-full;
+    @apply tw-text-pv-grey-64;
+    @apply tw-px-3;
+    @apply tw-py-2;
+    @apply tw-border-2;
+    @apply tw-border-pv-grey-80;
+
+    &:focus {
+      @apply tw-border-pv-black;
+      @apply tw-ring-0;
+      @apply tw-text-pv-black;
+    }
+
+    &:disabled {
+      @apply tw-bg-pv-grey-96;
+      @apply tw-cursor-not-allowed;
+    }
+
+    &::placeholder {
+      @apply tw-text-pv-grey-64;
+    }
+
+    &:focus + .pv-input__icon {
+      @apply tw-text-pv-black;
+    }
+
+    &--icon {
+      @apply tw-pr-10;
+    }
+  }
 }
 </style>
