@@ -1,7 +1,7 @@
 include:
   - local: '/.gitlab-ci/container_structure_test.template.yml'
 
-audit_frontend:
+.audit_frontend:
   stage: audit
   needs: [ "build-docker-image-frontend" ]
   extends: .container-structure-test
@@ -19,5 +19,15 @@ audit_frontend:
     - docker pull ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG}
     - container-structure-test test --image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} --config .gitlab-ci/container_structure_test.config.yml
 
+audit_frontend:
+  extends: .audit_frontend
+  needs: [ "build-docker-image-frontend" ]
+  except:
+    - develop
 
+audit_frontend_develop:
+  extends: .audit_frontend
+  needs: [ "build-docker-image-frontend-develop" ]
+  only:
+    - develop
 
