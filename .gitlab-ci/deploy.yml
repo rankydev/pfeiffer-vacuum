@@ -2,7 +2,6 @@
 # environment.name has to be set in extending configurations
 .deployment:
   stage: deployment
-  needs: [ "audit-frontend" ]
   cache: {}
   variables:
     DOCKER_IMAGE_NAME: ${CI_REGISTRY}/${CI_PROJECT_PATH}
@@ -13,6 +12,7 @@
 
 .deploy-on-dev-machine:
   extends: .deployment
+  needs: [ "audit-frontend" ]
   variables:
     DOCKER_COMPOSE_FILENAME: ""
     DOCKER_SERVICE_NAME: ""
@@ -32,7 +32,7 @@
     - pvac-frontend-dev2-deployment
 
 # scheduled deployment for nightly dev2
-deploy-dev:
+deploy-dev-automatically:
   extends: .deploy-on-dev-machine
   needs: [ "audit-frontend-develop" ]
   variables:
@@ -41,8 +41,13 @@ deploy-dev:
   only:
     - develop
 
+# manual deployment for dev2
+deploy-dev-manually-develop:
+  extends: deploy-dev-automatically
+  when: manual
+
 # scheduled deployment for nightly lsg
-deploy-lsg:
+deploy-lsg-automatically:
   extends: .deploy-on-dev-machine
   needs: [ "build-docker-image-lsg-develop" ]
   variables:
@@ -52,6 +57,10 @@ deploy-lsg:
   only:
     - develop
 
+deploy-lsg-manually-develop:
+  extends: deploy-lsg-automatically
+  when: manual
+
 # manual deployment for dev2
 deploy-dev-manually:
   extends: .deploy-on-dev-machine
@@ -59,6 +68,8 @@ deploy-dev-manually:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
     DOCKER_SERVICE_NAME: "dev2"
   when: manual
+  except:
+    - develop
 
 # manual deployment for lsg
 deploy-lsg-manually:
@@ -69,8 +80,10 @@ deploy-lsg-manually:
     DOCKER_IMAGE_TAG: "lsg-${CI_COMMIT_REF_SLUG}"
     DOCKER_SERVICE_NAME: "lsg"
   when: manual
+  except:
+    - develop
 
-deploy-uat:
+deploy-uat-automatically:
   extends: .deployment
   script:
     - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:main ${DOCKER_SERVICE_NAME}
