@@ -46,7 +46,7 @@ sonar-qube:
   tags:
     - docker_runner
   only:
-    - master
+    - develop
 
 .build-docker-image:
   variables:
@@ -67,17 +67,37 @@ sonar-qube:
 
 build-docker-image-frontend:
   extends: .build-docker-image
+  needs: [ "test", "lint" ]
+  script:
+    - docker build -t ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} -f docker/Dockerfile .
+  except:
+    - develop
+
+build-docker-image-lsg:
+  extends: .build-docker-image
+  needs: [ "test", "lint" ]
+  script:
+    - docker build -t ${DOCKER_IMAGE_NAME}:lsg-${CI_COMMIT_REF_SLUG} -f docker/DockerfileLSG .
+  except:
+    - develop
+
+build-docker-image-frontend-develop:
+  extends: .build-docker-image
   needs: [ "sonar-qube" ]
   script:
     - docker build -t ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} -f docker/Dockerfile .
+  only:
+    - develop
 
-build-docker-image-lsg:
+build-docker-image-lsg-develop:
   extends: .build-docker-image
   needs: [ "sonar-qube" ]
   script:
     - docker build -t ${DOCKER_IMAGE_NAME}:lsg-${CI_COMMIT_REF_SLUG} -f docker/DockerfileLSG .
+  only:
+    - develop
 
-tag-docker-image-latest:
+tag-docker-image-latest-main:
   extends: .build-docker-image
   needs: [ "build-docker-image-frontend" ]
   script:
