@@ -23,8 +23,7 @@ cms-migrate-develop:
   environment:
     name: dev2
   only:
-    refs:
-      - develop
+    - develop
 
 cms-migrate-develop-manually:
   extends: .cms-migrate
@@ -39,8 +38,7 @@ cms-migrate-uat-scheduled:
     name: uat
   allow_failure: true
   only:
-    refs:
-      - main
+    - main
   except: []
 
 cms-migrate-uat:

@@ -3,7 +3,6 @@ include:
 
 .audit_frontend:
   stage: audit
-  needs: [ "build-docker-image-frontend" ]
   extends: .container-structure-test
   variables:
     # Basic for git ci runner setup (docker in docker)
@@ -19,13 +18,13 @@ include:
     - docker pull ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG}
     - container-structure-test test --image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} --config .gitlab-ci/container_structure_test.config.yml
 
-audit_frontend:
+audit-frontend:
   extends: .audit_frontend
   needs: [ "build-docker-image-frontend" ]
   except:
     - develop
 
-audit_frontend_develop:
+audit-frontend-develop:
   extends: .audit_frontend
   needs: [ "build-docker-image-frontend-develop" ]
   only:
