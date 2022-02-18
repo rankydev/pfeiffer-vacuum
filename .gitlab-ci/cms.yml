@@ -25,11 +25,21 @@ cms-migrate-dev-automatically-develop:
   only:
     - develop
 
-cms-migrate-dev:
+cms-migrate-dev-develop:
   extends: .cms-migrate
   needs: [ "deploy-dev-manually-develop" ]
   environment:
     name: dev2
+  only:
+    - develop
+
+cms-migrate-dev:
+  extends: .cms-migrate
+  needs: [ "deploy-dev-manually" ]
+  environment:
+    name: dev2
+  except:
+    - develop
 
 cms-migrate-uat-automatically:
   extends: .cms-migrate
