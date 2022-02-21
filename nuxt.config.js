@@ -2,9 +2,9 @@ export default {
   srcDir: '',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'pvweb',
+    title: 'pvweb', // @todo make dynamic
     htmlAttrs: {
-      lang: 'en',
+      lang: 'en-EN', // @todo make dynamic
     },
     meta: [
       { charset: 'utf-8' },
@@ -12,10 +12,19 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    // @todo add link alternate href lang
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/scss/style.scss'],
+
+  router: {
+    extendRoutes(routes) {
+      for (const key in routes) {
+        routes[key].caseSensitive = true
+      }
+    },
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],

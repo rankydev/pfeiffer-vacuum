@@ -1,9 +1,20 @@
 <template>
-  <CustomCmsInternationalizationQuery :handle-preview-events="true">
+  <custom-cms-internationalization-query :handle-preview-events="true">
     <template #default="{ result: { data } }">
       <CmsRootComponent v-bind="data" />
     </template>
-  </CustomCmsInternationalizationQuery>
+  </custom-cms-internationalization-query>
+  <!--
+  <CmsQuery
+    :handle-preview-events="true"
+    :slug="$route"
+    :fallback-slug="createUrlPattern()"
+  >
+    <template #default="{ result: { data } }">
+      <CmsRootComponent v-bind="data" />
+    </template>
+  </CmsQuery>
+  -->
 </template>
 
 <script>

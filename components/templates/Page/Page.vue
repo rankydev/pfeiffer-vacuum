@@ -1,68 +1,103 @@
 <template>
-  <div>
-    <div class="container">
-      <div>
-        <Logo />
-        <h1>pvweb</h1>
-        <h3 class="subtitle">Website for Pfeiffer Vacuum</h3>
-        <p>{{ text }}</p>
-        <div class="links">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="button--green"
-          >
-            Documentation
-          </a>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="button--grey"
-          >
-            GitHub
-          </a>
-        </div>
-      </div>
-    </div>
+  <div class="flex flex-col min-h-screen overflow-x-hidden antialiased">
+    <slot name="header">
+      <nuxt-dynamic
+        v-for="item in top"
+        :key="item._uid"
+        v-editable="item"
+        :name="item.uiComponent || item.component"
+        v-bind="item"
+      />
 
-    <main class="js-page-wrapper flex-grow">
-      <slot>
+      <nuxt-dynamic
+        v-for="item in header"
+        :key="item._uid"
+        v-editable="item"
+        :name="item.uiComponent || item.component"
+        v-bind="item"
+      />
+    </slot>
+
+    <h3>{{ body[0].text }}</h3>
+    <pre>{{ body }}</pre>
+
+    <slot>
+      <main class="flex-grow z-10 space-y-7 lg:space-y-32 mb-10 lg:mb-32">
+        <nuxt-dynamic
+          v-for="item in stage"
+          :key="item._uid"
+          v-editable="item"
+          :name="item.uiComponent || item.component"
+          v-bind="item"
+        />
         <nuxt-dynamic
           v-for="item in body"
           :key="item._uid"
           v-editable="item"
-          :name="item.component"
+          :name="item.uiComponent || item.component"
           v-bind="item"
         />
-      </slot>
-    </main>
+      </main>
+    </slot>
+
+    <slot name="footer">
+      <nuxt-dynamic
+        v-for="item in bottom"
+        :key="item._uid"
+        v-editable="item"
+        :name="item.uiComponent || item.component"
+        v-bind="item"
+      />
+
+      <nuxt-dynamic
+        v-for="item in footer"
+        :key="item._uid"
+        v-editable="item"
+        :name="item.uiComponent || item.component"
+        v-bind="item"
+      />
+    </slot>
   </div>
 </template>
 
 <script lang="js">
-import { defineComponent, toRefs } from '@nuxtjs/composition-api'
-import Logo from '~/components/atoms/Logo/Logo.vue'
+import { defineComponent, inject, toRefs } from '@nuxtjs/composition-api'
+import useMeta from '~/composables/useMeta'
+import useTemplating from '~/composables/useTemplating'
 
 export default defineComponent({
   name: 'Page',
-  components: { Logo },
+  inject: [
+    'getTranslatedSlugs',
+    'getDefaultFullSlug'
+  ],
   props: {
     content: {
       type: Object,
       default: () => {}
     }
   },
-  setup (props) {
+  setup (props, context) {
     const { content } = toRefs(props)
-    const { text, body } = content.value
+    const translatedSlugs = inject('getTranslatedSlugs')()
+    const defaultFullSlug = inject('getDefaultFullSlug')()
+    const { top, stage, header, body, bottom, footer, titleTemplate } = useTemplating(content)
+    // const { top, stage, header, text, body, bottom, footer, titleTemplate } = content.value
+    const { getMetaData } = useMeta(content, defaultFullSlug, translatedSlugs, context, titleTemplate)
 
     return {
-      text,
-      body
+      top,
+      stage,
+      header,
+      body,
+      bottom,
+      footer,
+      metaData: getMetaData(),
     }
-  }
+  },
+  head () {
+    return this.metaData
+  },
 })
 </script>
 
@@ -72,24 +107,4 @@ export default defineComponent({
 @apply min-h-screen flex justify-center items-center text-center mx-auto;
 }
 */
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>

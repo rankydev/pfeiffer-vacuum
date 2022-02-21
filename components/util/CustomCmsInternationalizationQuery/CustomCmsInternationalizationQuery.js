@@ -78,9 +78,8 @@ export default {
       const slugFromRoute = await this.$cms.getSlugFromRoute({
         route: this.$route,
       })
-      console.log('slugFromRoute')
-      console.log(slugFromRoute)
       const slug = this.slug || slugFromRoute
+      console.log('slugFromRoute', slugFromRoute)
       const language =
         this.language ||
         // Language will be get from wrong route section here (getLanguageFromRoute() | node_modules/@txp-cms/storyblok/src/templates/storyblok.plugin.js)
@@ -88,9 +87,14 @@ export default {
           route: this.$route,
         })) ||
         this.$cms.defaultLanguageCode
-
       const region = this.region || this.getRegionFromSlug(slugFromRoute)
       let slugWithoutRegion = slug.replace(new RegExp('^\\/' + region), '')
+
+      console.log('language ', language)
+      console.log('this.$cms.defaultRegion ', this.$cms.defaultRegion)
+      console.log('this.$cms.urlPattern ', this.$cms.urlPattern)
+      console.log('region ', region)
+      console.log('slugWithoutRegion ', slugWithoutRegion)
 
       let bySlugs = null
       if (region === this.$cms.defaultRegion) {
@@ -98,6 +102,8 @@ export default {
       } else {
         bySlugs = `${this.$cms.defaultRegion}${slugWithoutRegion},${region}${slugWithoutRegion}`
       }
+
+      console.log('request options: ', bySlugs, language, this.cmsOptions)
 
       const response = await this.$cms.query({
         slug: '',
@@ -107,6 +113,8 @@ export default {
           ...this.cmsOptions,
         },
       })
+
+      console.log('response', response)
 
       if (response.error) {
         throw response.error
@@ -155,6 +163,9 @@ export default {
     getRegionFromSlug(slug, index = 0) {
       const pathSegments = slug.split('/').filter(String)
       const pathSegment = pathSegments[index]
+
+      console.log('getRegionFromSlug: ', pathSegment)
+      console.log('cms region: ', this.$cms.regions, this.$cms.defaultRegion)
 
       if (this.$cms.regions.split(',').includes(pathSegment)) {
         return pathSegment
