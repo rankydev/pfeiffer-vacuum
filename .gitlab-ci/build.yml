@@ -22,11 +22,16 @@ lint:
   needs: [ "build" ]
   script:
     - npm run lint
+  artifacts:
+    when: always
+    paths:
+      - reports/
+    expire_in: 3 week
 
 test:
   extends: .node-image
   stage: test
-  needs: [ "build" ]
+  needs: [ "lint" ]
   script:
     - npm test
   artifacts:
