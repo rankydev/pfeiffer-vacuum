@@ -21,11 +21,11 @@ lint:
   stage: test
   needs: [ "build" ]
   script:
-    - npm run lint
+    - npm run lint:ci
   artifacts:
     when: always
     paths:
-      - reports/
+      - report/
     expire_in: 3 week
 
 test:

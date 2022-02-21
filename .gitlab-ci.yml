@@ -20,7 +20,7 @@ cache:
     - lsg-public/
     - node_modules/
     - coverage/
-    - reports/
+    - report/
 
 include:
   - local: '/.gitlab-ci/container_structure_test.yml'
