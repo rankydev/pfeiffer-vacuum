@@ -1,6 +1,5 @@
-import { StoryblokApiClient } from '../plugins/storyblok-api-client'
+import { StoryblokApiClient } from './storyblok-api-client'
 
-// eslint-disable-next-line
 export default ({ app }, inject) => {
   const storyblokApiClient = new StoryblokApiClient('pvweb')
 

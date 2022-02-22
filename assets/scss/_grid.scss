@@ -18,8 +18,21 @@
     }
   }
 
-  // TODO: Will be implemented in ticket PVWEB-405
   .tw-container-fluid {
     position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+  }
+
+  .tw-fluid-reset {
+    position: initial;
+    left: initial;
+    right: initial;
+    margin-left: initial;
+    margin-right: initial;
+    width: initial;
   }
 }

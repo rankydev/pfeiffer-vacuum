@@ -1,6 +1,6 @@
 <template>
   <div v-editable="content" class="content-wrapper">
-    <NuxtDynamic
+    <nuxt-dynamic
       v-for="item in content.items"
       :key="item._uid"
       v-editable="true"
@@ -10,12 +10,15 @@
   </div>
 </template>
 
-<script setup>
-defineProps({
-  content: {
-    type: Object,
-    default: () => {},
-    required: true,
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  props: {
+    content: {
+      type: Object,
+      required: true,
+    },
   },
 })
 </script>

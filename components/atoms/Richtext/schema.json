@@ -1,12 +1,12 @@
 {
-  "name": "ParagraphSection",
-  "display_name": "ParagraphSection",
+  "name": "Richtext",
+  "display_name": "Richtext",
   "schema": {
     "paragraph": {
       "type": "richtext",
       "pos": 2,
       "translatable": true,
-      "display_name": "Paragraph"
+      "display_name": "Richtext"
     }
   },
   "image": null,
@@ -16,6 +16,6 @@
   "is_nestable": true,
   "all_presets": [],
   "preset_id": null,
-  "real_name": "ParagraphSection",
+  "real_name": "Richtext",
   "component_group_uuid": null
 }
