@@ -79,7 +79,7 @@ export default defineComponent({
     const { content } = toRefs(props)
     const translatedSlugs = inject('getTranslatedSlugs')()
     const defaultFullSlug = inject('getDefaultFullSlug')()
-    const { top, stage, header, body, bottom, footer, titleTemplate } = useTemplating(content)
+    const { top, stage, header, body, bottom, footer } = useTemplating(content)
     const { getMetaData } = useMeta(content, defaultFullSlug, translatedSlugs, context)
 
     return {

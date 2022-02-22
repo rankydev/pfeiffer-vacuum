@@ -69,7 +69,7 @@ export default {
       default: () => ({}),
     },
   },
-  setup (props) {
+  setup(props) {
     const { content } = toRefs(props)
     const { top, stage, header, body, bottom, footer } = content.value
 
