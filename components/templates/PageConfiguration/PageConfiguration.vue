@@ -4,27 +4,58 @@
     class="flex flex-col min-h-screen overflow-x-hidden"
   >
     <slot name="header">
-      <div class="flex-grow screen-margin">
-        <component
-          :is="item.component"
-          v-for="item in content.header"
+      <nuxt-dynamic
+        v-for="item in top"
+        :key="item._uid"
+        v-editable="item"
+        :name="item.uiComponent || item.component"
+        v-bind="item"
+      />
+
+      <nuxt-dynamic
+        v-for="item in header"
+        :key="item._uid"
+        v-editable="item"
+        :name="item.uiComponent || item.component"
+        v-bind="item"
+      />
+    </slot>
+
+    <slot>
+      <main class="flex-grow z-10 space-y-7 lg:space-y-32 mb-10 lg:mb-32">
+        <nuxt-dynamic
+          v-for="item in stage"
           :key="item._uid"
           v-editable="item"
-          :content="item"
+          :name="item.uiComponent || item.component"
+          v-bind="item"
         />
-      </div>
+        <nuxt-dynamic
+          v-for="item in body"
+          :key="item._uid"
+          v-editable="item"
+          :name="item.uiComponent || item.component"
+          v-bind="item"
+        />
+      </main>
     </slot>
 
     <slot name="footer">
-      <div class="flex-grow screen-margin">
-        <component
-          :is="item.component"
-          v-for="item in content.footer"
-          :key="item._uid"
-          v-editable="item"
-          :content="item"
-        />
-      </div>
+      <nuxt-dynamic
+        v-for="item in bottom"
+        :key="item._uid"
+        v-editable="item"
+        :name="item.uiComponent || item.component"
+        v-bind="item"
+      />
+
+      <nuxt-dynamic
+        v-for="item in footer"
+        :key="item._uid"
+        v-editable="item"
+        :name="item.uiComponent || item.component"
+        v-bind="item"
+      />
     </slot>
   </div>
 </template>
@@ -37,6 +68,19 @@ export default {
       type: Object,
       default: () => ({}),
     },
+  },
+  setup (props) {
+    const { content } = toRefs(props)
+    const { top, stage, header, body, bottom, footer } = content.value
+
+    return {
+      top,
+      stage,
+      header,
+      body,
+      bottom,
+      footer,
+    }
   },
 }
 </script>
