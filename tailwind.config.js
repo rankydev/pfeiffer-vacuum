@@ -21,7 +21,7 @@ module.exports = {
       'pv-green': '#66cc77',
       'pv-warning': '#ffa64d',
       'pv-grey-16': '#292929',
-      'pv-grey-32': '#515151',
+      'pv-grey-32': '#525252',
       'pv-grey-48': '#7a7a7a',
       'pv-grey-64': '#a3a3a3',
       'pv-grey-80': '#cccccc',
