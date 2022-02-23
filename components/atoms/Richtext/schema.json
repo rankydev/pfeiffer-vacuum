@@ -2,7 +2,7 @@
   "name": "Richtext",
   "display_name": "Richtext",
   "schema": {
-    "paragraph": {
+    "richtext": {
       "type": "richtext",
       "pos": 2,
       "translatable": true,

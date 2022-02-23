@@ -14,7 +14,10 @@ export default {
         code:
           '<div class="tw-grid-container">\n\n' +
           '// Fluid container that breaks out of the grid\n' +
-          ' <div class="tw-container-fluid">.tw-container-fluid</div>\n\n' +
+          '// Must be padded into a wrapping container with tw-col-span-full\n' +
+          ' <div class="tw-col-span-full">\n' +
+          '  <div class="tw-container-fluid">.tw-container-fluid</div>\n' +
+          ' </div>\n\n' +
           '// Desktop: 12 | Tablet: 8 | Mobile: 4\n' +
           ' <div class="tw-col-span-4 md:tw-col-span-8 lg:tw-col-span-12">.tw-col-span-12</div>\n\n' +
           '// Desktop: 6-6 | Tablet: 4-4 | Mobile: 2-2\n' +
@@ -46,8 +49,10 @@ const defaultClasses = 'tw-p-3 tw-text-center tw-font-bold tw-rounded'
 
 export const GridLayout = (args) => ({
   template: `
-  <div class="documentation-preview tw-grid-container tw-p-1 md:tw-p-6 tw-text-white">
-    <div class="${defaultClasses} tw-bg-pv-red-darker tw-container-fluid">.tw-container-fluid</div>
+  <div class="tw-grid-container tw-p-1 md:tw-p-6 tw-text-white">
+    <div class="tw-col-span-full">
+        <div class="${defaultClasses} tw-bg-pv-red-darker tw-container-fluid">.tw-container-fluid</div>
+    </div>
 
     <div class="${defaultClasses} tw-bg-pv-red-lighter tw-col-span-4 md:tw-col-span-8 lg:tw-col-span-12">.tw-col-span-12</div>
 

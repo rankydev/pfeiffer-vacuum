@@ -1,5 +1,5 @@
 <template>
-  <div v-editable="content" class="paragraph-section" v-html="paragraph"></div>
+  <div v-editable="content" class="paragraph-section" v-html="richtext"></div>
 </template>
 
 <script>
@@ -13,9 +13,9 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const paragraph = computed(() => props.content.paragraph)
+    const richtext = computed(() => props.content.richtext)
 
-    return { paragraph }
+    return { richtext }
   },
 })
 </script>
