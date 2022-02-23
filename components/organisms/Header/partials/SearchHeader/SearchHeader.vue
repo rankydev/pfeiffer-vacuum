@@ -5,14 +5,22 @@
   </div>
 </template>
 
-<script setup>
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
 import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
-defineProps({
-  hasOpacity: {
-    type: Boolean,
-    default: false,
+export default defineComponent({
+  components: {
+    SearchInput,
+    Icon,
+  },
+  props: {
+    hasOpacity: {
+      type: Boolean,
+      default: false,
+    },
   },
 })
 </script>

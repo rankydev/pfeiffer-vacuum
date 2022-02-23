@@ -1,26 +1,34 @@
 <template>
   <div class="shop-navigation">
     <NuxtLink to="#" class="shop-navigation__account">
-      <PvIcon class="shop-navigation__icon" icon="person" />
+      <Icon class="shop-navigation__icon" icon="person" />
       <span class="shop-navigation__account-name">Sign In</span>
     </NuxtLink>
 
     <NuxtLink to="#" class="shop-navigation__comparhension">
-      <PvIcon class="shop-navigation__icon" icon="compare_arrows" />
+      <Icon class="shop-navigation__icon" icon="compare_arrows" />
     </NuxtLink>
 
     <NuxtLink to="#" class="shop-navigation__shopping-list">
-      <PvIcon class="shop-navigation__icon" icon="assignment" />
+      <Icon class="shop-navigation__icon" icon="assignment" />
     </NuxtLink>
 
     <NuxtLink to="#" class="shop-navigation__shopping-cart">
-      <PvIcon class="shop-navigation__icon" icon="shopping_cart" />
+      <Icon class="shop-navigation__icon" icon="shopping_cart" />
     </NuxtLink>
   </div>
 </template>
 
-<script setup>
-import PvIcon from '~/components/atoms/Icon/Icon.vue'
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
+import Icon from '~/components/atoms/Icon/Icon.vue'
+
+export default defineComponent({
+  components: {
+    Icon,
+  },
+})
 </script>
 
 <style lang="scss">

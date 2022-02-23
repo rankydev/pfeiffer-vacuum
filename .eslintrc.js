@@ -15,5 +15,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     'import/order': 'off',
+    // vue 2 still requires native modifier
+    'vue/no-deprecated-v-on-native-modifier': 'off',
   },
 }

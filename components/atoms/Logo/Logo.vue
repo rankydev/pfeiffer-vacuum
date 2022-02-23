@@ -38,7 +38,11 @@
   </svg>
 </template>
 
-<script setup></script>
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({})
+</script>
 
 <style lang="scss">
 .pv-logo {

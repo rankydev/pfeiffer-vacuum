@@ -3,7 +3,7 @@
     <Icon icon="menu" class="main-navigation__trigger" />
     <div class="main-navigation__items">
       <div
-        v-for="(item, idx) in items"
+        v-for="(item, idx) in mockItems"
         :key="idx"
         class="main-navigation__item"
       >
@@ -13,17 +13,28 @@
   </div>
 </template>
 
-<script setup>
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
-const items = [
-  'Produkte',
-  'Märkte',
-  'Knowledge',
-  'Blog',
-  'Service & Support',
-  'Kontakt',
-]
+export default defineComponent({
+  components: {
+    Icon,
+  },
+  setup() {
+    const mockItems = [
+      'Produkte',
+      'Märkte',
+      'Knowledge',
+      'Blog',
+      'Service & Support',
+      'Kontakt',
+    ]
+
+    return { mockItems }
+  },
+})
 </script>
 
 <style lang="scss">

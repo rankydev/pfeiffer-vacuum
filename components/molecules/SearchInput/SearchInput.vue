@@ -1,13 +1,15 @@
 <template>
-  <InputField
-    icon="search"
-    placeholder="Suche ..."
-    @submit="() => alert('Enter hit')"
-    @click:icon="() => alert('Icon clicked')"
-  />
+  <InputField icon="search" placeholder="Suche ..." />
 </template>
 
-<script setup>
-import InputField from '~/components/atoms/Input/Input.vue'
-import Icon from '~/components/atoms/Icon/Icon.vue'
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
+import InputField from '~/components/atoms/InputField/InputField.vue'
+
+export default defineComponent({
+  components: {
+    InputField,
+  },
+})
 </script>

@@ -8,39 +8,50 @@
       @keypress.enter="$emit('submit', $event)"
       @focus="$emit('focus', true)"
       @blur="$emit('focus', false)"
-      @input="$emit('change', value)"
+      @input="$emit('change', internalValue)"
     />
-    <PvIcon
+    <Icon
       v-if="icon"
       class="pv-input__icon"
       :icon="icon"
-      @click="$emit('click:icon', $event)"
+      @click.native="$emit('click:icon', $event)"
     />
   </div>
 </template>
 
-<script setup>
-import PvIcon from '~/components/atoms/Icon/Icon.vue'
-import { ref } from '@vue/composition-api'
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
 
-defineEmits(['focus', 'change', 'click:icon', 'submit'])
+import Icon from '~/components/atoms/Icon/Icon.vue'
+import { ref } from '@nuxtjs/composition-api'
 
-const props = defineProps({
-  value: {
-    type: String,
-    default: '',
+export default defineComponent({
+  components: {
+    Icon,
   },
-  icon: {
-    type: String,
-    default: null,
+  props: {
+    value: {
+      type: String,
+      default: '',
+    },
+    icon: {
+      type: String,
+      default: null,
+    },
+    placeholder: {
+      type: String,
+      default: '',
+    },
   },
-  placeholder: {
-    type: String,
-    default: '',
+  emits: ['focus', 'change', 'click:icon', 'submit'],
+  setup(props) {
+    const internalValue = ref(props.value)
+
+    return {
+      internalValue,
+    }
   },
 })
-
-const internalValue = ref(props.value)
 </script>
 
 <style lang="scss">

@@ -13,8 +13,10 @@
   </transition>
 </template>
 
-<script>
-export default {
+<script setup>
+import { computed, defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   props: {
     direction: {
       type: String,
@@ -27,57 +29,69 @@ export default {
       validator: (val) => ['slow', 'medium', 'fast'].includes(val),
     },
   },
-  computed: {
-    cssValue() {
-      return this.vertical ? 'height' : 'width'
-    },
-    cssValueCapitalised() {
-      return this.cssValue.charAt(0).toUpperCase() + this.cssValue.slice(1)
-    },
-  },
-  methods: {
-    beforeEnter(element) {
+  setup(props) {
+    const cssValue = computed(() => {
+      return props.direction === 'vertical' ? 'height' : 'width'
+    })
+
+    const cssValueCapitalised = computed(() => {
+      return cssValue.value.charAt(0).toUpperCase() + cssValue.value.slice(1)
+    })
+
+    function beforeEnter(element) {
       requestAnimationFrame(() => {
-        if (!element.style[this.cssValue]) {
-          element.style[this.cssValue] = '0px'
+        if (!element.style[cssValue.value]) {
+          element.style[cssValue.value] = '0px'
         }
 
         element.style.display = null
-        console.log('style')
       })
-    },
-    enter(element) {
+    }
+
+    function enter(element) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          const scrollOffset = element[`scroll${this.cssValueCapitalised}`]
-          console.log('enter', element, element[`scroll${this.cssValue}`])
-          element.style[this.cssValue] = `${scrollOffset}px`
+          const scrollOffset = element[`scroll${cssValueCapitalised.value}`]
+          element.style[cssValue.value] = `${scrollOffset}px`
         })
       })
-    },
-    afterEnter(element) {
-      element.style[this.cssValue] = null
-    },
-    beforeLeave(element) {
+    }
+
+    function afterEnter(element) {
+      element.style[cssValue.value] = null
+    }
+
+    function beforeLeave(element) {
       requestAnimationFrame(() => {
-        if (!element.style[this.cssValue]) {
-          const offset = element[`offset${this.cssValueCapitalised}`]
-          element.style[this.cssValue] = `${offset}px`
+        if (!element.style[cssValue.value]) {
+          const offset = element[`offset${cssValueCapitalised.value}`]
+          element.style[cssValue.value] = `${offset}px`
         }
       })
-    },
-    leave(element) {
+    }
+
+    function leave(element) {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          element.style[this.cssValue] = '0px'
+          element.style[cssValue.value] = '0px'
         })
       })
-    },
-    afterLeave(element) {
-      element.style[this.cssValue] = null
-    },
+    }
+
+    function afterLeave(element) {
+      element.style[cssValue.value] = null
+    }
+
+    return {
+      beforeEnter,
+      enter,
+      afterEnter,
+      beforeLeave,
+      leave,
+      afterLeave,
+    }
   },
-}
+})
 </script>
 
 <style lang="scss">

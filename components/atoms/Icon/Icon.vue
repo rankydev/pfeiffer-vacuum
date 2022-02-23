@@ -2,16 +2,20 @@
   <span :class="['material-icons', `icon-${size}`]">{{ icon }}</span>
 </template>
 
-<script setup>
-defineProps({
-  icon: {
-    type: String,
-    required: true,
-  },
-  size: {
-    type: String,
-    default: 'base',
-    validator: (val) => ['small', 'base', 'large'].includes(val),
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  props: {
+    icon: {
+      type: String,
+      required: true,
+    },
+    size: {
+      type: String,
+      default: 'base',
+      validator: (val) => ['small', 'base', 'large'].includes(val),
+    },
   },
 })
 </script>

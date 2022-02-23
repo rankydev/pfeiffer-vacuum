@@ -1,54 +1,67 @@
 <template>
-  <div
-    class="top-navigation"
-    @mouseover="active = true"
-    @mouseleave="active = false"
-  >
+  <div class="top-navigation">
     <div
       class="top-navigation__spacer"
       :class="`top-navigation__spacer--length-${elementCount}`"
+      @focus.capture="active = true"
+      @blur.capture="active = false"
+      @mouseenter="active = true"
+      @mouseleave="active = false"
     >
-      <div class="top-navigation__flyout">
-        <Flyout
+      <div class="top-navigation__flyouts">
+        <a
           v-for="(ele, idx) in elements"
           :key="idx"
-          :icon="ele.icon"
-          :label="ele.label"
-          :active="active"
-        />
+          href="#"
+          class="top-navigation__flyout"
+        >
+          <Flyout :icon="ele.icon" :label="ele.label" :active="active" />
+        </a>
       </div>
     </div>
     <LanguageSwitcher />
   </div>
 </template>
 
-<script setup>
-import { reactive, computed } from '@vue/composition-api'
+<script>
+import { reactive, computed, defineComponent } from '@nuxtjs/composition-api'
 import Flyout from '~/components/molecules/Flyout/Flyout.vue'
 import LanguageSwitcher from '~/components/molecules/LanguageSwitcher/LanguageSwitcher.vue'
 
-const props = defineProps({
-  value: {
-    type: Boolean,
-    default: false,
+export default defineComponent({
+  components: {
+    Flyout,
+    LanguageSwitcher,
   },
-})
+  props: {
+    value: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  emits: ['input'],
+  setup(props, { emit }) {
+    const elements = reactive([
+      { icon: 'work', label: 'Karriere' },
+      { icon: 'business', label: 'Unternehmen' },
+      { icon: 'group', label: 'Investor Relations' },
+    ])
 
-const emit = defineEmits(['input'])
+    const active = computed({
+      get: () => props.value,
+      set: (value) => emit('input', value),
+    })
 
-const elements = reactive([
-  { icon: 'work', label: 'Karriere' },
-  { icon: 'business', label: 'Unternehmen' },
-  { icon: 'group', label: 'Investor Relations' },
-])
+    const elementCount = computed(() => {
+      return elements.length < 4 ? elements.length : 4
+    })
 
-const active = computed({
-  get: () => props.value,
-  set: (value) => emit('input', value),
-})
-
-const elementCount = computed(() => {
-  return elements.length < 4 ? elements.length : 4
+    return {
+      elements,
+      active,
+      elementCount,
+    }
+  },
 })
 </script>
 
@@ -78,7 +91,7 @@ const elementCount = computed(() => {
     }
   }
 
-  &__flyout {
+  &__flyouts {
     @apply tw-flex;
     @apply tw-overflow-hidden;
     @apply tw-absolute;
@@ -86,6 +99,10 @@ const elementCount = computed(() => {
     @apply tw-bg-pv-white;
     @apply tw-py-3;
     @apply tw-pl-3;
+  }
+
+  &__flyout {
+    @apply tw-mr-6;
   }
 }
 </style>

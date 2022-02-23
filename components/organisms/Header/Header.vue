@@ -9,8 +9,8 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from '@vue/composition-api'
+<script>
+import { ref, defineComponent } from '@nuxtjs/composition-api'
 
 import Logo from '~/components/atoms/Logo/Logo.vue'
 import SearchHeader from './partials/SearchHeader/SearchHeader.vue'
@@ -18,7 +18,20 @@ import TopNavigation from './partials/TopNavigation/TopNavigation.vue'
 import MainNavigation from './partials/MainNavigation/MainNavigation.vue'
 import ShopNavigation from './partials/ShopNavigation/ShopNavigation.vue'
 
-const active = ref(false)
+export default defineComponent({
+  components: {
+    Logo,
+    SearchHeader,
+    TopNavigation,
+    MainNavigation,
+    ShopNavigation,
+  },
+  setup() {
+    const active = ref(false)
+
+    return { active }
+  },
+})
 </script>
 
 <style lang="scss">

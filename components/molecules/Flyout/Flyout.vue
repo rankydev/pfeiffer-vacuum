@@ -8,30 +8,37 @@
 </template>
 
 <script setup>
+import { defineComponent } from '@nuxtjs/composition-api'
+
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
 
-defineProps({
-  label: {
-    type: String,
-    required: true,
-    default: 'Label missing',
+export default defineComponent({
+  components: {
+    Icon,
+    AnimatedCollapse,
   },
-  icon: {
-    type: String,
-    required: true,
-    default: 'question_mark',
-  },
-  active: {
-    type: Boolean,
-    default: false,
+  props: {
+    label: {
+      type: String,
+      required: true,
+      default: 'Label missing',
+    },
+    icon: {
+      type: String,
+      required: true,
+      default: 'question_mark',
+    },
+    active: {
+      type: Boolean,
+      default: false,
+    },
   },
 })
 </script>
 
 <style lang="scss">
 .flyout {
-  @apply tw-mr-6;
   @apply tw-flex;
   @apply tw-items-center;
   @apply tw-text-pv-grey-48;
