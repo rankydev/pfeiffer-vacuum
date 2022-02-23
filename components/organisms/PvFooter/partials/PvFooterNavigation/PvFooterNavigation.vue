@@ -1,34 +1,41 @@
 <template>
   <section class="footer-navigation tw-grid-container">
-    <div class="footer-navigation__block">
-      <h3 class="tw-text-inverse">Menu 1</h3>
-    </div>
-    <div class="footer-navigation__block">
-      <h3 class="tw-text-inverse">Menu 2</h3>
-    </div>
-    <div class="footer-navigation__block">
-      <h3 class="tw-text-inverse">Menu 3</h3>
+    <div
+      v-for="(menu, index) in footerNavigation.footerNavigation.footerMenus"
+      :key="index"
+      class="footer-navigation__block"
+    >
+      <link-list :link-list="menu" />
     </div>
     <div class="footer-navigation__block footer-navigation__block--newsletter">
-      <h3 class="tw-text-inverse">Newsletter</h3>
+      <h5 class="tw-text-inverse">
+        {{ footerNavigation.footerNavigation.newsletter.title }}
+      </h5>
       <p class="tw-text-inverse tw-teaser">
-        Sie möchten über aktuelle News von Pfeiffer Vacuum informiert werden?
-        Dann abonnieren Sie unseren Newsletter.
+        {{ footerNavigation.footerNavigation.newsletter.text }}
       </p>
+      <input type="text" placeholder="E-Mail" />
+      <button>Send</button>
     </div>
   </section>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
+import LinkList from '~/components/molecules/LinkList/LinkList'
 
 export default defineComponent({
   name: 'PvFooterNavigation',
-  props: {},
-  setup() {
-    return {}
+  components: { LinkList },
+  props: {
+    footerNavigation: {
+      type: Object,
+      default: () => {},
+    },
   },
 })
+
+const footerNavigation = computed(() => props.footerNavigation)
 </script>
 
 <style lang="scss">

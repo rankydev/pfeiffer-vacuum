@@ -26,6 +26,7 @@ module.exports = {
       'pv-grey-64': '#a3a3a3',
       'pv-grey-80': '#cccccc',
       'pv-grey-96': '#f5f5f5',
+      'pv-white': '#ffffff',
     },
     fontFamily: {
       sans: ['UniversLTStd', 'Helvetica Neue'],

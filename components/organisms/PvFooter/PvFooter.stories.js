@@ -1,21 +1,18 @@
 import PvFooter from '~/components/organisms/PvFooter/PvFooter.vue'
-import {
-  footerMenus,
-  newsletter,
-} from './partials/PvFooterNavigation/PvFooterNavigation.stories.content'
+import { footerNavigation } from './partials/PvFooterNavigation/PvFooterNavigation.stories.content'
 import { copyright } from './partials/PvFooterBottom/PvFooterBottom.stories.content'
+import { socialMediaChannels } from '../../molecules/SocialMedia/SocialMedia.content'
 
 const argTypes = {
   footerTop: {
     defaultValue: {
-      socialMedia: true,
+      socialMedia: socialMediaChannels,
     },
     control: { type: 'object' },
   },
   footerNavigation: {
     defaultValue: {
-      footerMenus,
-      newsletter,
+      footerNavigation,
     },
     control: { type: 'object' },
   },

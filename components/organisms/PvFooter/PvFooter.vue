@@ -3,12 +3,11 @@
     <social-media
       v-if="footerTop.socialMedia"
       class="footer__top"
-      :social-media="footerTop.socialMedia"
+      :social-media-channels="footerTop.socialMedia"
     />
     <pv-footer-navigation
       class="footer__middle"
-      :menus="footerNavigation.menus"
-      :newsletter="footerNavigation.newsletter"
+      :footer-navigation="footerNavigation"
     />
     <pv-footer-bottom
       class="footer__bottom"
@@ -37,12 +36,7 @@ export default defineComponent({
     },
     footerNavigation: {
       type: Object,
-      default() {
-        return {
-          menus: {},
-          newsletter: {},
-        }
-      },
+      default() {},
     },
     footerBottom: {
       type: Object,
@@ -71,7 +65,11 @@ export default defineComponent({
 
   &__middle {
     @apply tw-bg-pv-grey-32;
-    @apply tw-items-center;
+    @apply tw-text-pv-white;
+
+    .link-list__title {
+      @apply tw-text-pv-white;
+    }
   }
 
   &__bottom {
