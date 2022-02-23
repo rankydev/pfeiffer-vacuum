@@ -1,18 +1,34 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import LinkList from '~/components/molecules/LinkList/LinkList.vue'
 import { footerMenuOne } from '~/components/molecules/LinkList/LinkList.stories.content'
 
-const defaultProps = () => footerMenuOne
+const defaultProps = () => ({ linkList: footerMenuOne })
 
 describe('LinkList', () => {
   describe('initial state', () => {
     it('should render a list with a title', () => {
       const propsData = { ...defaultProps() }
-      const wrapper = shallowMount(LinkList, { propsData })
+      const wrapper = shallowMount(LinkList, {
+        propsData,
+        stubs: {
+          NuxtLink: RouterLinkStub,
+        },
+      })
       const linkListTitle = wrapper.find('.link-list__title')
-      console.log('##', linkListTitle)
+      expect(linkListTitle.text()).toBe('Pfeiffer Vacuum')
+    })
 
-      expect(linkListTitle.text()).toBe(propsData.title)
+    it('should render a list of 5 entries', () => {
+      const propsData = { ...defaultProps() }
+      const wrapper = shallowMount(LinkList, {
+        propsData,
+        stubs: {
+          NuxtLink: RouterLinkStub,
+        },
+      })
+
+      const linkList = wrapper.findAll('.link-list__item')
+      expect(linkList).toHaveLength(5)
     })
   })
 })
