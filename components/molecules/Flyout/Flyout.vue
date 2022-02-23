@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
