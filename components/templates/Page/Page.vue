@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen overflow-x-hidden antialiased">
+  <div>
     <slot name="header">
       <nuxt-dynamic
         v-for="item in top"
@@ -19,7 +19,7 @@
     </slot>
 
     <slot>
-      <main class="flex-grow z-10 space-y-7 lg:space-y-32 mb-10 lg:mb-32">
+      <main>
         <nuxt-dynamic
           v-for="item in stage"
           :key="item._uid"

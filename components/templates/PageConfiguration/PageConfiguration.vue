@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-editable="content"
-    class="flex flex-col min-h-screen overflow-x-hidden"
-  >
+  <div v-editable="content">
     <slot name="header">
       <nuxt-dynamic
         v-for="item in top"
@@ -22,7 +19,7 @@
     </slot>
 
     <slot>
-      <main class="flex-grow z-10 space-y-7 lg:space-y-32 mb-10 lg:mb-32">
+      <main>
         <nuxt-dynamic
           v-for="item in stage"
           :key="item._uid"
@@ -60,8 +57,9 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="js">
+import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+export default defineComponent({
   name: 'PageConfiguration',
   props: {
     content: {
@@ -72,7 +70,6 @@ export default {
   setup(props) {
     const { content } = toRefs(props)
     const { top, stage, header, body, bottom, footer } = content.value
-
     return {
       top,
       stage,
@@ -82,5 +79,5 @@ export default {
       footer,
     }
   },
-}
+})
 </script>
