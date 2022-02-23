@@ -13,7 +13,7 @@
   </transition>
 </template>
 
-<script setup>
+<script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
