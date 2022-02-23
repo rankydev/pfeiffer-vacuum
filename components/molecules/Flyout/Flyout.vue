@@ -19,16 +19,26 @@ export default defineComponent({
     AnimatedCollapse,
   },
   props: {
+    /**
+     * The label which will be shown on active
+     */
     label: {
       type: String,
       required: true,
-      default: 'Label missing',
+      default: 'Please specify a label',
     },
+    /**
+     * The icon to display
+     * @see [Icon List] (https://fonts.google.com/icons?selected=Material+Icons)
+     */
     icon: {
       type: String,
       required: true,
       default: 'question_mark',
     },
+    /**
+     * State if label will be shown or not
+     */
     active: {
       type: Boolean,
       default: false,

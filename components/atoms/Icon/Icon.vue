@@ -7,14 +7,22 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
+    /**
+     * The icon to display
+     * @see [Icon List] (https://fonts.google.com/icons?selected=Material+Icons)
+     */
     icon: {
       type: String,
       required: true,
     },
+    /**
+     * The size of the icon
+     * @values small, base, large, xlarge
+     */
     size: {
       type: String,
       default: 'base',
-      validator: (val) => ['small', 'base', 'large'].includes(val),
+      validator: (val) => ['small', 'base', 'large', 'xlarge'].includes(val),
     },
   },
 })

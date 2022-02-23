@@ -18,11 +18,19 @@ import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
+    /**
+     * The direction of the collapse animation
+     * @values vertical, horizontal
+     */
     direction: {
       type: String,
       default: 'vertical',
       validator: (val) => ['vertical', 'horizontal'].includes(val),
     },
+    /**
+     * The speed of the animation
+     * @values slow, medium, fast
+     */
     speed: {
       type: String,
       default: 'medium',

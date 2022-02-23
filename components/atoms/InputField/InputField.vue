@@ -30,20 +30,60 @@ export default defineComponent({
     Icon,
   },
   props: {
+    /**
+     * The input value
+     * @model
+     */
     value: {
       type: String,
       default: '',
     },
+    /**
+     * An optional icon that can be shown
+     * @see [Icon List] (https://fonts.google.com/icons?selected=Material+Icons)
+     */
     icon: {
       type: String,
       default: null,
     },
+    /**
+     * A text which is displayed if no value given
+     */
     placeholder: {
       type: String,
       default: '',
     },
   },
-  emits: ['focus', 'change', 'click:icon', 'submit'],
+  emits: [
+    /**
+     * Fired on focus and blur.
+     *
+     * @event focus
+     * @property {boolean} isFocused
+     */
+    'focus',
+    /**
+     * Fired on keystroke.
+     *
+     * @event change
+     * @property {string} value
+     */
+    'change',
+    /**
+     * Fired on icon clicked.
+     *
+     * @event click:icon
+     * @property {object} $event
+     */
+    'click:icon',
+    /**
+     * Fired on enter key.
+     *
+     * @event submit
+     * @property {string} value
+     */
+    'submit',
+  ],
   setup(props) {
     const internalValue = ref(props.value)
 
