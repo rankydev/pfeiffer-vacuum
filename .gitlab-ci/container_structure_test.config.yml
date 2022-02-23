@@ -14,10 +14,12 @@ commandTests:
 
 metadataTest:
   env:
-    - key: NODE_PROFILE
-      value: "ci"
+    - key: NODE_ENV
+      value: "development"
     - key: PORT
       value: "3000"
+    - key: HOST
+      value: "0.0.0.0"
   exposedPorts: ["3000"]
   cmd: ["npm","start"]
   workdir: "/opt/pvac-frontend"

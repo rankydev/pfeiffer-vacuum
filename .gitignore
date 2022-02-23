@@ -94,3 +94,6 @@ sw.*
 .nuxt-storybook
 storybook-static
 lsg-public
+
+# linting output
+report

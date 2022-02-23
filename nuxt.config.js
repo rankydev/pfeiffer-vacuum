@@ -74,4 +74,8 @@ export default {
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL,
   },
+  server: {
+    // for local change add 'environments/local.js'
+    port: process.env.PORT,
+  },
 }
