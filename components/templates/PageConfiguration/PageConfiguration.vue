@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-editable="content">
     <slot name="header">
       <nuxt-dynamic
         v-for="item in top"
@@ -58,30 +58,18 @@
 </template>
 
 <script lang="js">
-import { defineComponent, inject, toRefs } from '@nuxtjs/composition-api'
-import useMeta from '~/composables/useMeta'
-import useTemplating from '~/composables/useTemplating'
-
+import { defineComponent, toRefs } from '@nuxtjs/composition-api'
 export default defineComponent({
-  name: 'Page',
-    inject: [
-    'getTranslatedSlugs',
-    'getDefaultFullSlug'
-  ],
-
+  name: 'PageConfiguration',
   props: {
     content: {
       type: Object,
-      default: () => {}
-    }
+      default: () => ({}),
+    },
   },
-  setup (props, context) {
+  setup(props) {
     const { content } = toRefs(props)
-    const translatedSlugs = inject('getTranslatedSlugs')()
-    const defaultFullSlug = inject('getDefaultFullSlug')()
-    const { top, stage, header, body, bottom, footer } = useTemplating(content)
-    const { getMetaData } = useMeta(content, defaultFullSlug, translatedSlugs, context)
-
+    const { top, stage, header, body, bottom, footer } = content.value
     return {
       top,
       stage,
@@ -89,11 +77,7 @@ export default defineComponent({
       body,
       bottom,
       footer,
-      metaData: getMetaData(),
     }
-  },
-  head () {
-    return this.metaData
   },
 })
 </script>
