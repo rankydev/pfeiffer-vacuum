@@ -1,5 +1,12 @@
 <template>
   <div>
+    <NuxtDynamic
+      v-for="item in header"
+      :key="item._uid"
+      v-editable="item"
+      :name="item.uiComponent || item.component"
+      v-bind="item"
+    />
     <div class="container">
       <div>
         <Logo />
@@ -54,24 +61,26 @@ export default defineComponent({
       default: () => {}
     }
   },
-  setup (props) {
+  setup(props) {
     const { content } = toRefs(props)
-    const { text, body } = content.value
+    const { text, body, header } = content.value
 
     return {
       text,
-      body
+      body,
+      header,
     }
   }
 })
 </script>
 
-<style>
+<style lang="scss">
 /* Sample `apply` at-rules with Tailwind CSS
 .container {
 @apply min-h-screen flex justify-center items-center text-center mx-auto;
 }
 */
+
 .container {
   margin: 0 auto;
   min-height: 100vh;
@@ -91,5 +100,36 @@ export default defineComponent({
 
 .links {
   padding-top: 15px;
+}
+
+.button {
+  &--green {
+    display: inline-block;
+    border-radius: 4px;
+    border: 1px solid #3b8070;
+    color: #3b8070;
+    text-decoration: none;
+    padding: 10px 30px;
+
+    &:hover {
+      color: #fff;
+      background-color: #3b8070;
+    }
+  }
+
+  &--grey {
+    display: inline-block;
+    border-radius: 4px;
+    border: 1px solid #35495e;
+    color: #35495e;
+    text-decoration: none;
+    padding: 10px 30px;
+    margin-left: 15px;
+
+    &:hover {
+      color: #fff;
+      background-color: #35495e;
+    }
+  }
 }
 </style>
