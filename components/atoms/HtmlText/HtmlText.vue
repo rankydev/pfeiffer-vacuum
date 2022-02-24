@@ -12,7 +12,7 @@ export default {
     }
   },
   methods: {
-    handleClick (event) {
+    handleClick(event) {
       // non <a> elements
       if (!event.target || !event.target.attributes || !event.target.attributes.href) {
         return
