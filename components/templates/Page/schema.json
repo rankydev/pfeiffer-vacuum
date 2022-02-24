@@ -2,20 +2,24 @@
   "name": "Page",
   "display_name": null,
   "schema": {
-    "name": {
-      "type": "text",
-      "pos": 1
+    "header": {
+      "type": "bloks",
+      "maximum": "1",
+      "restrict_components": true,
+      "component_whitelist": [
+        "Header"
+      ]
     },
     "text": {
       "type": "text",
-      "pos": 2
+      "pos": 1
     },
     "body": {
       "type": "bloks",
       "restrict_components": true,
       "restrict_type": "",
       "component_whitelist": [],
-      "pos": 3
+      "pos": 2
     }
   },
   "image": null,

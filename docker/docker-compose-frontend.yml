@@ -7,26 +7,37 @@ services:
     ports:
       - "3000:3000"
     environment:
+      # must match with the second entry in ports section
       - PORT=3000
-      # node setup
-      - REJECT_UNAUTHORIZED=true #don't trust all certificates
-      #Storefront
-      - STOREFRONT_BASE_URL=${CI_ENVIRONMENT_URL}
+      - NODE_ENV=${CI_NODE_ENVIRONMENT}
+      # Sprach
+      - DEFAULT_LANGUAGE_CODE=en
+      #- LANGUAGES='en,de'
       # storyblok
-      #- STORYBLOK_API_PUBLIC_KEY= # dev public key
-      #- STORYBLOK_API_PREVIEW_KEY= # dev preview key
+      - STORYBLOK_ACCESS_TOKEN=${STORYBLOK_ACCESS_TOKEN}
+      - STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
+      - STORYBLOK_VERSION=${STORYBLOK_VERSION}
+      - STORYBLOK_RESOLVE_RELATIONS=${STORYBLOK_RESOLVE_RELATIONS}
+      - STORYBLOK_RESOLVE_LINKS=''
+      - STORYBLOK_RESOLVE_ASSETS=''
+      - STORYBLOK_CONTENT_TYPES=${STORYBLOK_CONTENT_TYPES}
+      - STORYBLOK_EXCLUDE_ROUTES=${STORYBLOK_EXCLUDE_ROUTES}
+      - STORYBLOK_OAUTH_TOKEN=${STORYBLOK_OAUTH_TOKEN}
+      # node setup
+      #- REJECT_UNAUTHORIZED=true #don't trust all certificates
+      #Storefront
+      #- STOREFRONT_BASE_URL=${CI_ENVIRONMENT_URL}
       # hybris
       #- SHOP_BASE_URL=
       #- SHOP_IMAGE_URL=,
       #- SHOP_CLIENT_ID=pfeiffer_viewer
       #- SHOP_SECRET=secret,
       # vsm
-      - VSM_BASE_URL=https://testing-pv.vsm-cloud.com
-      - VSM_TECHNICAL_USER_TOKEN=10fff01e72e34e4fe33fbc84e5c6aa80017aac08
+      #- VSM_BASE_URL=https://testing-pv.vsm-cloud.com
+      #- VSM_TECHNICAL_USER_TOKEN=10fff01e72e34e4fe33fbc84e5c6aa80017aac08
       # determines whether all service features (VSM) are shown or not
-      - SERVICE_PORTAL_ACTIVE=true
+      #- SERVICE_PORTAL_ACTIVE=true
       # logging
-      - CONSOLA_LEVEL=3 # { 0: 'error', 1: 'warn', 2: 'log', 3: 'info', 4: 'debug', 5: 'trace', Infinite: silent }
-      - LANGUAGES='en,de'
+      #- CONSOLA_LEVEL=3 # { 0: 'error', 1: 'warn', 2: 'log', 3: 'info', 4: 'debug', 5: 'trace', Infinite: silent }
       # Google Tag Manager for Google Analytics
-      - GOOGLE_TAG_MANAGER_ID=${CI_GOOGLE_TAG_MANAGER_ID}
+      #- GOOGLE_TAG_MANAGER_ID=${CI_GOOGLE_TAG_MANAGER_ID}

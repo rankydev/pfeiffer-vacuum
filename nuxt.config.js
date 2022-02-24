@@ -34,7 +34,7 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
+    ['@nuxtjs/eslint-module', { cache: false }],
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
     // https://composition-api.nuxtjs.org/
@@ -73,5 +73,11 @@ export default {
     exclude:
       process.env.STORYBLOK_EXCLUDE_ROUTES &&
       process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
+  },
+
+  server: {
+    // for local change add 'environments/local.js'
+    port: process.env.PORT,
+    host: process.env.HOST,
   },
 }

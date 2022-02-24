@@ -17,30 +17,38 @@
     - schedules
     - tags
 
-cms-migrate-develop:
+cms-migrate-dev-automatically-develop:
   extends: .cms-migrate
-  needs: [ "deploy-dev" ]
+  needs: [ "deploy-dev-automatically" ]
   environment:
     name: dev2
   only:
-    refs:
-      - develop
+    - develop
 
-cms-migrate-develop-manually:
+cms-migrate-dev-develop:
+  extends: .cms-migrate
+  needs: [ "deploy-dev-manually-develop" ]
+  environment:
+    name: dev2
+  only:
+    - develop
+
+cms-migrate-dev:
   extends: .cms-migrate
   needs: [ "deploy-dev-manually" ]
   environment:
     name: dev2
+  except:
+    - develop
 
-cms-migrate-uat-scheduled:
+cms-migrate-uat-automatically:
   extends: .cms-migrate
-  needs: [ "deploy-uat" ]
+  needs: [ "deploy-uat-automatically" ]
   environment:
     name: uat
   allow_failure: true
   only:
-    refs:
-      - main
+    - main
   except: []
 
 cms-migrate-uat:
