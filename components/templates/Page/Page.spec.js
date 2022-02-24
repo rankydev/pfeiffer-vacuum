@@ -33,6 +33,9 @@ describe('Page', () => {
         },
         ...mocks,
       },
+      stubs: {
+        NuxtDynamic: true,
+      },
       provide: {
         getTranslatedSlugs() {
           return ''
@@ -47,8 +50,7 @@ describe('Page', () => {
 
   describe('initial state', () => {
     describe('given content is set', () => {
-      // TODO [Vue warn]: Unknown custom element: <nuxt-dynamic> - did you register the component correctly? For recursive components, make sure to provide the "name" option.
-      fit('should render components', () => {
+      it('should render components', () => {
         const propsData = {
           content: {
             top: [
@@ -84,7 +86,8 @@ describe('Page', () => {
           },
         }
         createComponent(propsData)
-        const sections = wrapper.findAll('nuxt-dynamic')
+        const sections = wrapper.findAll('nuxtdynamic-stub')
+
         expect(sections.at(0).attributes('name')).toBe(
           propsData.content.top[0].component
         )
