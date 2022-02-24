@@ -18,10 +18,10 @@ export default {
   css: ['~/assets/scss/style.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-   plugins: [
-     { src: '~/plugins/storyblok-api-client', mode: 'client' },
-     { src: '~/plugins/service.plugin', mode: 'client' }
-   ],
+  plugins: [
+    { src: '~/plugins/storyblok-api-client', mode: 'client' },
+    { src: '~/plugins/service.plugin', mode: 'client' },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [

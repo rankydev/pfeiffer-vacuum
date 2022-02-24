@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 
 import Richtext from './Richtext.vue'
-import richtext from './Richtext.stories.content'
+import RichtextContent from './Richtext.stories.content'
 
 const localVue = createLocalVue()
 localVue.directive('editable', (el, key) => {
@@ -14,11 +14,11 @@ describe('Richtext', () => {
       const wrapper = shallowMount(Richtext, {
         localVue,
         propsData: {
-          content: richtext.content,
+          content: RichtextContent.content,
         },
       })
 
-      expect(wrapper.html()).toContain(richtext.content.paragraph)
+      expect(wrapper.html()).toContain(RichtextContent.content.richtext)
     })
   })
 })
