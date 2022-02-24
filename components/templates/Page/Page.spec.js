@@ -47,53 +47,62 @@ describe('Page', () => {
 
   describe('initial state', () => {
     describe('given content is set', () => {
-      // TODO Test html
-      xit('should render components', () => {
+      // TODO [Vue warn]: Unknown custom element: <nuxt-dynamic> - did you register the component correctly? For recursive components, make sure to provide the "name" option.
+      fit('should render components', () => {
         const propsData = {
           content: {
-            template: {
-              content: {
-                top: [
-                  {
-                    component: 'Top',
-                  },
-                ],
-                header: [
-                  {
-                    component: 'Header',
-                  },
-                ],
-                stage: [
-                  {
-                    component: 'Stage',
-                  },
-                ],
-                body: [
-                  {
-                    component: 'Body',
-                  },
-                ],
-                bottom: [
-                  {
-                    component: 'Bottom',
-                  },
-                ],
-                footer: [
-                  {
-                    component: 'Footer',
-                  },
-                ],
+            top: [
+              {
+                component: 'Top',
               },
-            },
+            ],
+            header: [
+              {
+                component: 'Header',
+              },
+            ],
+            stage: [
+              {
+                component: 'Stage',
+              },
+            ],
+            body: [
+              {
+                component: 'Body',
+              },
+            ],
+            bottom: [
+              {
+                component: 'Bottom',
+              },
+            ],
+            footer: [
+              {
+                component: 'Footer',
+              },
+            ],
           },
         }
         createComponent(propsData)
-        expect(wrapper.vm.top).toBeDefined()
-        expect(wrapper.vm.header).toBeDefined()
-        expect(wrapper.vm.stage).toBeDefined()
-        expect(wrapper.vm.body).toBeDefined()
-        expect(wrapper.vm.bottom).toBeDefined()
-        expect(wrapper.vm.footer).toBeDefined()
+        const sections = wrapper.findAll('nuxt-dynamic')
+        expect(sections.at(0).attributes('name')).toBe(
+          propsData.content.top[0].component
+        )
+        expect(sections.at(1).attributes('name')).toBe(
+          propsData.content.header[0].component
+        )
+        expect(sections.at(2).attributes('name')).toBe(
+          propsData.content.stage[0].component
+        )
+        expect(sections.at(3).attributes('name')).toBe(
+          propsData.content.body[0].component
+        )
+        expect(sections.at(4).attributes('name')).toBe(
+          propsData.content.bottom[0].component
+        )
+        expect(sections.at(5).attributes('name')).toBe(
+          propsData.content.footer[0].component
+        )
       })
     })
 
