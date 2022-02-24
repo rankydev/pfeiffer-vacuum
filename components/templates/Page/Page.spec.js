@@ -1,10 +1,12 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import VueMeta from 'vue-meta'
 import Page from './Page.vue'
 
 const localVue = createLocalVue()
 localVue.directive('editable', (el, key) => {
   el.innerText = key.value
 })
+localVue.use(VueMeta, { keyName: 'head' })
 
 describe('Page', () => {
   let wrapper
@@ -24,6 +26,11 @@ describe('Page', () => {
         $route: {
           fullPath: '',
         },
+        $imageService: {
+          getResponsiveImageUrl: function () {
+            return ''
+          },
+        },
         ...mocks,
       },
       provide: {
@@ -39,18 +46,43 @@ describe('Page', () => {
   }
 
   describe('initial state', () => {
-    describe('given template is set', () => {
-      it('should inherit template values', () => {
+    describe('given content is set', () => {
+      // TODO Test html
+      xit('should render components', () => {
         const propsData = {
           content: {
             template: {
               content: {
-                top: {},
-                header: {},
-                stage: {},
-                body: {},
-                bottom: {},
-                footer: {},
+                top: [
+                  {
+                    component: 'Top',
+                  },
+                ],
+                header: [
+                  {
+                    component: 'Header',
+                  },
+                ],
+                stage: [
+                  {
+                    component: 'Stage',
+                  },
+                ],
+                body: [
+                  {
+                    component: 'Body',
+                  },
+                ],
+                bottom: [
+                  {
+                    component: 'Bottom',
+                  },
+                ],
+                footer: [
+                  {
+                    component: 'Footer',
+                  },
+                ],
               },
             },
           },
@@ -64,258 +96,74 @@ describe('Page', () => {
         expect(wrapper.vm.footer).toBeDefined()
       })
     })
+
     describe('given header information are set', () => {
-      it('should create title and description', () => {
+      it('should use composable and set head tags', () => {
         const propsData = {
           content: {
             title: 'title',
             seoDescription: 'seoDescription',
+            ogTitle: 'ogTitle',
+            ogDescription: 'ogDescription',
+            ogImage: {
+              filename: '',
+            },
+            twitterTitle: 'twitterTitle',
+            twitterDescription: 'twitterDescription',
+            twitterImage: {
+              filename: '',
+            },
+            noindex: true,
+            nofollow: true,
+            canonical: 'canonical',
           },
         }
         createComponent(propsData)
-        expect(wrapper.vm.metaData.title).toBe('title')
-        expect(wrapper.vm.metaData.meta).toContainEqual({
+        const metaInfo = wrapper.vm.$meta().refresh().metaInfo
+        expect(metaInfo.title).toBe('title')
+        expect(metaInfo.meta).toContainEqual({
           hid: 'description',
           name: 'description',
           content: 'seoDescription',
         })
-      })
-      it('should overwrite title by set seoTitle', () => {
-        const propsData = {
-          content: {
-            title: 'title',
-            seoTitle: 'seoTitle',
-          },
-        }
-        createComponent(propsData)
-      })
-      it('should set twitter information', () => {
-        const propsData = {
-          content: {
-            twitterTitle: 'twitterTitle',
-            twitterDescription: 'twitterDescription',
-            twitterImage: {
-              filename: 'filename',
-            },
-          },
-        }
-        const mocks = {
-          mocks: {
-            $imageService: {
-              getResponsiveImageUrl: function () {
-                return 'twitterImage'
-              },
-            },
-          },
-        }
-        createComponent(propsData, mocks)
-        expect(wrapper.vm.metaData.meta).toContainEqual({
+        expect(metaInfo.meta).toContainEqual({
           hid: 'twitter:title',
           name: 'twitter:title',
           content: 'twitterTitle',
         })
-        expect(wrapper.vm.metaData.meta).toContainEqual({
+        expect(metaInfo.meta).toContainEqual({
           hid: 'twitter:description',
           name: 'twitter:description',
           content: 'twitterDescription',
         })
-        expect(wrapper.vm.metaData.meta).toContainEqual({
+        expect(metaInfo.meta).toContainEqual({
           hid: 'twitter:image',
           name: 'twitter:image',
-          content: 'https:twitterImage',
+          content: '/twitter_image.png',
         })
-      })
-      it('should overwrite twitter information', () => {
-        const propsData = {
-          content: {
-            title: 'title',
-            seoDescription: 'seoDescription',
-          },
-        }
-        createComponent(propsData)
-        expect(wrapper.vm.metaData.meta).toContainEqual({
-          hid: 'twitter:title',
-          name: 'twitter:title',
-          content: 'title',
-        })
-        expect(wrapper.vm.metaData.meta).toContainEqual({
-          hid: 'twitter:description',
-          name: 'twitter:description',
-          content: 'seoDescription',
-        })
-      })
-      it('should set open graph information', () => {
-        const propsData = {
-          content: {
-            ogTitle: 'ogTitle',
-            ogDescription: 'ogDescription',
-            ogImage: {
-              filename: 'filename',
-            },
-          },
-        }
-        const mocks = {
-          mocks: {
-            $imageService: {
-              getResponsiveImageUrl: function () {
-                return 'ogImage'
-              },
-            },
-          },
-        }
-        createComponent(propsData, mocks)
-        expect(wrapper.vm.metaData.meta).toContainEqual({
+        expect(metaInfo.meta).toContainEqual({
           hid: 'og:title',
           name: 'og:title',
           content: 'ogTitle',
         })
-        expect(wrapper.vm.metaData.meta).toContainEqual({
+        expect(metaInfo.meta).toContainEqual({
           hid: 'og:description',
           name: 'og:description',
           content: 'ogDescription',
         })
-        expect(wrapper.vm.metaData.meta).toContainEqual({
+        expect(metaInfo.meta).toContainEqual({
           hid: 'og:image',
           name: 'og:image',
-          content: 'https:ogImage',
+          content: '/og_image.png',
         })
-      })
-      it('should overwrite open graph information', () => {
-        const propsData = {
-          content: {
-            title: 'title',
-            seoDescription: 'seoDescription',
-          },
-        }
-        createComponent(propsData)
-        expect(wrapper.vm.metaData.meta).toContainEqual({
-          hid: 'og:title',
-          name: 'og:title',
-          content: 'title',
-        })
-        expect(wrapper.vm.metaData.meta).toContainEqual({
-          hid: 'og:description',
-          name: 'og:description',
-          content: 'seoDescription',
-        })
-      })
-      it('should use twitter and open graph fallback images', () => {
-        const mocks = {
-          mocks: {
-            $config: {
-              baseURL: 'fallback',
-            },
-          },
-        }
-        createComponent({}, mocks)
-        expect(wrapper.vm.metaData.meta).toContainEqual({
-          hid: 'og:image',
-          name: 'og:image',
-          content: 'fallback/og_image.png',
-        })
-      })
-      it('should set no-index and no-follow to robots', () => {
-        const propsData = {
-          content: {
-            noindex: true,
-            nofollow: true,
-          },
-        }
-        createComponent(propsData)
-        expect(wrapper.vm.metaData.meta).toContainEqual({
+        expect(metaInfo.meta).toContainEqual({
           hid: 'robots',
           name: 'robots',
           content: 'noindex,nofollow',
         })
-      })
-      it('should add canonical', () => {
-        const propsData = {
-          content: {
-            canonical: 'canonicalLink',
-          },
-        }
-        createComponent(propsData)
-        expect(wrapper.vm.metaData.link).toContainEqual({
+        expect(metaInfo.link).toContainEqual({
           rel: 'canonical',
-          href: 'canonicalLink',
-        })
-      })
-      it('should get canonical from route', () => {
-        const mocks = {
-          mocks: {
-            $config: {
-              baseURL: 'local',
-            },
-            $route: {
-              fullPath: '/full/path',
-            },
-          },
-        }
-        createComponent(undefined, mocks)
-        expect(wrapper.vm.metaData.link).toContainEqual({
-          rel: 'canonical',
-          href: 'local/full/path',
-        })
-      })
-      it('should get canonical for internal page', () => {
-        const propsData = {
-          content: {
-            canonical: '/internal/path',
-          },
-        }
-        const mocks = {
-          mocks: {
-            $config: {
-              baseURL: 'local',
-            },
-          },
-        }
-        createComponent(propsData, mocks)
-        expect(wrapper.vm.metaData.link).toContainEqual({
-          rel: 'canonical',
-          href: 'local/internal/path',
-        })
-      })
-      it('should add hreflang for each language and default', () => {
-        const conf = {
-          mocks: {
-            $config: {
-              baseURL: 'local',
-            },
-          },
-          provide: {
-            getTranslatedSlugs() {
-              return [
-                {
-                  lang: 'de',
-                  path: 'de/slug',
-                },
-                {
-                  lang: 'it',
-                  path: 'it/slug',
-                },
-              ]
-            },
-            getDefaultFullSlug() {
-              return 'default/full/slug'
-            },
-          },
-        }
-        createComponent(undefined, conf)
-        expect(wrapper.vm.metaData.link).toContainEqual({
-          rel: 'alternate',
-          hreflang: 'de',
-          href: 'local/de/slug',
-        })
-        expect(wrapper.vm.metaData.link).toContainEqual({
-          rel: 'alternate',
-          hreflang: 'it',
-          href: 'local/it/slug',
-        })
-        expect(wrapper.vm.metaData.link).toContainEqual({
-          rel: 'alternate',
-          hreflang: 'x-default',
-          href: 'local/default/full/slug',
+          href: 'canonical',
         })
       })
     })

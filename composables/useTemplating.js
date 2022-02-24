@@ -9,16 +9,12 @@ const useTemplating = (content) => {
   const footer = ref(undefined)
 
   const getTemplateContentByName = (name) => {
-    return (
-      content.value.template &&
-      content.value.template.content &&
-      content.value.template.content[name]
-    )
+    return content?.value?.template?.content?.[name]
   }
 
   const getCustomContentByName = (name) => {
     const customContent = content.value[name]
-    const hasCustomContent = customContent && customContent.length > 0
+    const hasCustomContent = customContent?.length > 0
 
     return hasCustomContent && customContent
   }
