@@ -30,7 +30,7 @@
     "material-design-icons-iconfont": "^6.1.1",
     "nanoid": "^3.3.0",
     "nuxt": "^2.14.12",
-    "storyblok-js-client": "^4.2.0",
+    "storyblok-js-client": "^4.2.1",
     "stylelint-config-standard-scss": "^3.0.0",
     "ufo": "^0.7.10"
   },
