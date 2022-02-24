@@ -1,26 +1,26 @@
-import Flyout from '~/components/molecules/Flyout/Flyout.vue'
+import FlyoutEntry from '~/components/molecules/FlyoutEntry/FlyoutEntry.vue'
 
 export default {
-  title: 'Molecules/Flyout',
-  component: Flyout,
+  title: 'Molecules/FlyoutEntry',
+  component: FlyoutEntry,
   parameters: {
     docs: {
       description: {
         component:
-          'An Flyout element displaying an icon which can extend text beneath it',
+          'An flyout element displaying an icon which can extend text beneath it',
       },
     },
   },
 }
 
 const Template = (args) => ({
-  components: { Flyout },
+  components: { FlyoutEntry },
   setup() {
     return { args }
   },
   template: `
   <div class="documentation-preview">
-    <Flyout v-bind="args" />
+    <FlyoutEntry v-bind="args" />
   </div>
 `,
 })

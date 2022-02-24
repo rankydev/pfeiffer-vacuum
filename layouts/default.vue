@@ -3,25 +3,11 @@
     <a href="#main-content" class="layout-default__skip-navigation">
       skip navigation
     </a>
-    <PvHeader />
-    <hr />
     <div id="main-content">
       <Nuxt />
     </div>
   </div>
 </template>
-
-<script>
-import { defineComponent } from '@nuxtjs/composition-api'
-
-import PvHeader from '~/components/organisms/Header/Header.vue'
-
-export default defineComponent({
-  components: {
-    PvHeader,
-  },
-})
-</script>
 
 <style lang="scss">
 html {

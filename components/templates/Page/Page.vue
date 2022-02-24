@@ -1,5 +1,12 @@
 <template>
   <div>
+    <NuxtDynamic
+      v-for="item in header"
+      :key="item._uid"
+      v-editable="item"
+      :name="item.uiComponent || item.component"
+      v-bind="item"
+    />
     <div class="container">
       <div>
         <Logo />
@@ -56,11 +63,12 @@ export default defineComponent({
   },
   setup(props) {
     const { content } = toRefs(props)
-    const { text, body } = content.value
+    const { text, body, header } = content.value
 
     return {
       text,
-      body
+      body,
+      header,
     }
   }
 })

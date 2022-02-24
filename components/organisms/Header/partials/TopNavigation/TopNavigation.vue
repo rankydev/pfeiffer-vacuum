@@ -2,21 +2,21 @@
   <div class="top-navigation">
     <div
       class="top-navigation__spacer"
-      :class="`top-navigation__spacer--length-${elementCount}`"
+      :class="`top-navigation__spacer--length-${flyoutCount}`"
       @focus.capture="active = true"
       @blur.capture="active = false"
       @mouseenter="active = true"
       @mouseleave="active = false"
     >
       <div class="top-navigation__flyouts">
-        <a
-          v-for="(ele, idx) in elements"
-          :key="idx"
-          href="#"
+        <FlyoutEntry
+          v-for="item in flyoutLinks"
+          :key="item._uid"
+          v-editable="item"
           class="top-navigation__flyout"
-        >
-          <Flyout :icon="ele.icon" :label="ele.label" :active="active" />
-        </a>
+          v-bind="item"
+          :active="active"
+        />
       </div>
     </div>
     <LanguageSwitcher />
@@ -24,42 +24,46 @@
 </template>
 
 <script>
-import { reactive, computed, defineComponent } from '@nuxtjs/composition-api'
-import Flyout from '~/components/molecules/Flyout/Flyout.vue'
+import { toRefs, computed, defineComponent } from '@nuxtjs/composition-api'
 import LanguageSwitcher from '~/components/molecules/LanguageSwitcher/LanguageSwitcher.vue'
+import FlyoutEntry from '~/components/molecules/FlyoutEntry/FlyoutEntry.vue'
 
 export default defineComponent({
   components: {
-    Flyout,
     LanguageSwitcher,
+    FlyoutEntry,
   },
   props: {
+    /**
+     * The active value for flyout links
+     * @model
+     */
     value: {
       type: Boolean,
       default: false,
     },
+    /**
+     * A list of flyout links
+     */
+    flyoutLinks: {
+      type: Array,
+      default: () => [],
+    },
   },
   emits: ['input'],
   setup(props, { emit }) {
-    const elements = reactive([
-      { icon: 'work', label: 'Karriere' },
-      { icon: 'business', label: 'Unternehmen' },
-      { icon: 'group', label: 'Investor Relations' },
-    ])
+    const flyoutCount = computed(() => {
+      return props.flyoutLinks.length < 4 ? props.flyoutLinks.length : 4
+    })
 
     const active = computed({
       get: () => props.value,
       set: (value) => emit('input', value),
     })
 
-    const elementCount = computed(() => {
-      return elements.length < 4 ? elements.length : 4
-    })
-
     return {
-      elements,
       active,
-      elementCount,
+      flyoutCount,
     }
   },
 })

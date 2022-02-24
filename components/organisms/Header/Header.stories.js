@@ -1,4 +1,5 @@
-import Header from '~/components/organisms/Header/Header.vue'
+import HeaderContent from './Header.stories.content.js'
+import Header from './Header.vue'
 
 export default {
   title: 'Organisms/Header',
@@ -15,11 +16,13 @@ export default {
 const Template = (args) => ({
   components: { Header },
   setup() {
-    return { args }
+    const flyoutLinks = HeaderContent.flyoutLinks
+    const navigationEntries = HeaderContent.navigationEntries
+    return { args, flyoutLinks, navigationEntries }
   },
   template: `
   <div class="documentation-preview">
-    <Header/>
+    <Header v-bind="{ flyoutLinks, navigationEntries }" />
   </div>
 `,
 })

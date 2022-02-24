@@ -2,7 +2,11 @@
   <div class="header">
     <NuxtLink to="/" class="header__logo"><Logo /></NuxtLink>
     <SearchHeader :has-opacity="active" class="header__search-input" />
-    <TopNavigation v-model="active" class="header__top-navigation" />
+    <TopNavigation
+      v-model="active"
+      :flyout-links="flyoutLinks"
+      class="header__top-navigation"
+    />
     <ShopNavigation class="header__shop-navigation" />
     <div class="header__break-column" />
     <MainNavigation class="header__main-navigation" />
@@ -25,6 +29,22 @@ export default defineComponent({
     TopNavigation,
     MainNavigation,
     ShopNavigation,
+  },
+  props: {
+    /**
+     * A list of flyout links for the top navigation
+     */
+    flyoutLinks: {
+      type: Array,
+      default: () => [],
+    },
+    /**
+     * A list of navgation entries for the main navigation
+     */
+    navigationEntries: {
+      type: Array,
+      default: () => [],
+    },
   },
   setup() {
     const active = ref(false)
