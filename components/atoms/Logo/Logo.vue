@@ -1,8 +1,6 @@
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="473.958"
-    height="81.392"
     viewBox="0 0 473.958 81.392"
     class="pv-logo"
   >
@@ -40,14 +38,24 @@
   </svg>
 </template>
 
-<script lang="js">
-export default {}
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({})
 </script>
 
-<style>
+<style lang="scss">
 .pv-logo {
   animation: 1s appear;
-  margin: auto;
+  width: 138px;
+
+  @screen md {
+    width: 234px;
+  }
+
+  @screen lg {
+    width: 280px;
+  }
 }
 
 @keyframes appear {
