@@ -1,0 +1,32 @@
+{
+  "name": "SocialMediaEntry",
+  "display_name": "Social Media Entry",
+  "schema": {
+    "link": {
+      "type": "bloks",
+      "maximum": 1,
+      "restrict_components": true,
+      "component_whitelist": [
+        "Link"
+      ],
+      "display_name": "Link"
+    },
+    "image": {
+      "type": "asset",
+      "description": "Should be a interlaced image (png) with social media icon",
+      "display_name": "Image",
+      "filetypes": [
+        "images"
+      ]
+    },
+  },
+  "image": null,
+  "preview_field": null,
+  "is_root": false,
+  "preview_tmpl": null,
+  "is_nestable": true,
+  "all_presets": [],
+  "preset_id": null,
+  "real_name": "SocialMediaEntry",
+  "component_group_uuid": null
+}
