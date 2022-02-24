@@ -1,9 +1,4 @@
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import contentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper.stories.content'
-
-const props = {
-  content: contentWrapper.content,
-}
 
 export default {
   title: 'Molecules/ContentWrapper',
@@ -12,7 +7,14 @@ export default {
     docs: {
       description: {
         component:
-          'The ContentWrapper is a component, which allows the content manager to group specific content items inside Storyblok.',
+          'The ContentWrapper can be used to display given slot content. <br> ' +
+          'Currently it handles max-width only, but if needed it should handle grid breakouts/fluid via a prop too.',
+      },
+      source: {
+        code:
+          '<content-wrapper>\n' +
+          '  Lorem ipsum dolor sit amet \n' +
+          '</content-wrapper>',
       },
     },
   },
@@ -20,12 +22,13 @@ export default {
 
 const template = `
       <div class="documentation-preview">
-        <ContentWrapper v-bind="props" />
+        <content-wrapper>
+            Lorem ipsum dolor sit amet
+        </content-wrapper>
       </div>
     `
 
 export const Default = () => ({
   components: { ContentWrapper },
   template,
-  data: () => ({ props }),
 })
