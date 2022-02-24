@@ -1,6 +1,6 @@
-import { footerNavigation } from './partials/PvFooterNavigation/PvFooterNavigation.stories.content'
+import { footerNavigation } from './partials/FooterNavigation/FooterNavigation.stories.content'
 import { socialMediaChannels } from '../../molecules/SocialMedia/SocialMedia.content'
-import { copyright } from './partials/PvFooterBottom/PvFooterBottom.stories.content'
+import { copyright } from './partials/FooterBottom/FooterBottom.stories.content'
 
 export const footerContent = {
   socialMediaChannels,

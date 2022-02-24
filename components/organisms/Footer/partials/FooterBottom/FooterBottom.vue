@@ -1,6 +1,6 @@
 <template>
   <section class="footer-bottom tw-grid-container">
-    <div class="footer-bottom__language tw-text-inverse">Language Switch</div>
+    <language-switcher class="footer-bottom__language" />
     <div class="footer-bottom__copyright tw-text-inverse">
       <p>{{ copyright }}</p>
     </div>
@@ -9,10 +9,15 @@
 
 <script>
 import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import LanguageSwitcher from '../../../../molecules/LanguageSwitcher/LanguageSwitcher'
 
 export default defineComponent({
   name: 'PvFooterBottom',
+  components: { LanguageSwitcher },
   props: {
+    /**
+     * Copyright text
+     */
     copyright: {
       type: String,
       default: '© 2021 Pfeiffer Vacuum GmbH',
@@ -30,7 +35,9 @@ export default defineComponent({
 
   &__language {
     @apply tw-col-span-12 md:tw-col-span-1 lg:tw-col-span-2;
+    @apply tw-text-pv-white;
   }
+
   &__copyright {
     @apply tw-col-span-12 md:tw-col-span-3 lg:tw-col-span-8;
   }

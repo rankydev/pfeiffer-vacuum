@@ -7,7 +7,9 @@
         :key="index"
         class="link-list__item"
       >
-        <nuxt-link :to="linkItem.link.href">{{ linkItem.label }}</nuxt-link>
+        <Link v-bind="linkItem.link.href">
+          {{ linkItem.label }}
+        </Link>
       </li>
     </ul>
   </div>
@@ -15,10 +17,15 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import Link from '~/components/atoms/Link/Link'
 
 export default defineComponent({
   name: 'LinkList',
+  components: { Link },
   props: {
+    /**
+     * A title and list of navigation entries
+     */
     linkList: {
       type: Object,
       require: true,

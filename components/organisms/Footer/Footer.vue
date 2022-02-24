@@ -19,13 +19,16 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
-import PvFooterNavigation from './partials/PvFooterNavigation/PvFooterNavigation'
-import PvFooterBottom from './partials/PvFooterBottom/PvFooterBottom'
+import PvFooterNavigation from './partials/FooterNavigation/FooterNavigation'
+import PvFooterBottom from './partials/FooterBottom/FooterBottom'
 
 export default defineComponent({
   name: 'Footer',
   components: { SocialMedia, PvFooterNavigation, PvFooterBottom },
   props: {
+    /**
+     * Social Media Channels on top of the footer.
+     */
     footerTop: {
       type: Object,
       default() {
@@ -34,10 +37,16 @@ export default defineComponent({
         }
       },
     },
+    /**
+     * List of LinkLists with titles and newsletter block
+     */
     footerNavigation: {
       type: Object,
       default() {},
     },
+    /**
+     *
+     */
     footerBottom: {
       type: Object,
       default() {

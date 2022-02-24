@@ -1,6 +1,6 @@
-import PvFooter from '~/components/organisms/PvFooter/PvFooter.vue'
-import { footerNavigation } from './partials/PvFooterNavigation/PvFooterNavigation.stories.content'
-import { copyright } from './partials/PvFooterBottom/PvFooterBottom.stories.content'
+import PvFooter from '~/components/organisms/Footer/Footer.vue'
+import { footerNavigation } from './partials/FooterNavigation/FooterNavigation.stories.content'
+import { copyright } from './partials/FooterBottom/FooterBottom.stories.content'
 import { socialMediaChannels } from '../../molecules/SocialMedia/SocialMedia.content'
 
 const argTypes = {

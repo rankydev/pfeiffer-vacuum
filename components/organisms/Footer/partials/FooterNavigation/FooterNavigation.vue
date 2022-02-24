@@ -11,9 +11,10 @@
       <h5 class="tw-text-inverse">
         {{ footerNavigation.footerNavigation.newsletter.title }}
       </h5>
-      <p class="tw-text-inverse tw-teaser">
-        {{ footerNavigation.footerNavigation.newsletter.text }}
-      </p>
+      <HtmlText
+        :html="footerNavigation.footerNavigation.newsletter.text"
+        class="tw-text-inverse tw-teaser"
+      />
       <input type="text" placeholder="E-Mail" />
       <button>Send</button>
     </div>
@@ -23,10 +24,11 @@
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 import LinkList from '~/components/molecules/LinkList/LinkList'
+import HtmlText from '~/components/atoms//HtmlText/HtmlText'
 
 export default defineComponent({
   name: 'PvFooterNavigation',
-  components: { LinkList },
+  components: { LinkList, HtmlText },
   props: {
     footerNavigation: {
       type: Object,
