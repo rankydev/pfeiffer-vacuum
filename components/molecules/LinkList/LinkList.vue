@@ -1,13 +1,13 @@
 <template>
   <div class="link-list">
-    <h5 class="link-list__title">{{ linkList.title }}</h5>
+    <h5 class="link-list__title">{{ title }}</h5>
     <ul class="link-list__list">
       <li
-        v-for="(linkItem, index) in linkList.links"
+        v-for="(linkItem, index) in linkList"
         :key="index"
         class="link-list__item"
       >
-        <Link v-bind="linkItem.link.href">
+        <Link :href="linkItem.link.href">
           {{ linkItem.label }}
         </Link>
       </li>
@@ -24,12 +24,19 @@ export default defineComponent({
   components: { Link },
   props: {
     /**
-     * A title and list of navigation entries
+     * title
+     */
+    title: {
+      type: String,
+      default: '',
+    },
+    /**
+     * list of navigation entries
      */
     linkList: {
-      type: Object,
+      type: Array,
       require: true,
-      default: () => {},
+      default: () => [],
     },
   },
 })

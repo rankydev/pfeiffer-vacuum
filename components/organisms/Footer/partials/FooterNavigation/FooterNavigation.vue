@@ -5,30 +5,25 @@
       :key="index"
       class="footer-navigation__block"
     >
-      <link-list :link-list="menu" />
+      <link-list :title="menu.title" :link-list="menu.links" />
     </div>
-    <div class="footer-navigation__block footer-navigation__block--newsletter">
-      <h5 class="tw-text-inverse">
-        {{ footerNavigation.footerNavigation.newsletter.title }}
-      </h5>
-      <HtmlText
-        :html="footerNavigation.footerNavigation.newsletter.text"
-        class="tw-text-inverse tw-teaser"
-      />
-      <input type="text" placeholder="E-Mail" />
-      <button>Send</button>
-    </div>
+    <newsletter-input
+      class="footer-navigation__block footer-navigation__block--newsletter"
+      :title="footerNavigation.footerNavigation.newsletter.title"
+      :text="footerNavigation.footerNavigation.newsletter.text"
+      :form="{ placeholder: 'E-Mail', buttonText: 'Absenden' }"
+    />
   </section>
 </template>
 
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 import LinkList from '~/components/molecules/LinkList/LinkList'
-import HtmlText from '~/components/atoms//HtmlText/HtmlText'
+import NewsletterInput from '~/components/molecules/NewsletterInput/NewsletterInput'
 
 export default defineComponent({
   name: 'PvFooterNavigation',
-  components: { LinkList, HtmlText },
+  components: { NewsletterInput, LinkList },
   props: {
     footerNavigation: {
       type: Object,
@@ -45,10 +40,24 @@ const footerNavigation = computed(() => props.footerNavigation)
   @apply tw-p-1 md:tw-p-6;
 
   &__block {
-    @apply tw-col-span-12 md:tw-col-span-4 lg:tw-col-span-3;
+    @apply tw-col-span-12;
+
+    @screen md {
+      @apply tw-col-span-4;
+    }
+
+    @screen lg {
+      @apply tw-col-span-3;
+    }
 
     &--newsletter {
-      @apply md:tw-col-span-12 lg:tw-col-span-3;
+      @screen md {
+        @apply tw-col-span-12;
+      }
+
+      @screen lg {
+        @apply tw-col-span-3;
+      }
     }
   }
 }

@@ -33,13 +33,21 @@ export default defineComponent({
 .footer-bottom {
   @apply tw-p-1 md:tw-p-6;
 
-  &__language {
-    @apply tw-col-span-12 md:tw-col-span-1 lg:tw-col-span-2;
-    @apply tw-text-pv-white;
-  }
-
   &__copyright {
     @apply tw-col-span-12 md:tw-col-span-3 lg:tw-col-span-8;
+  }
+
+  &__language {
+    @apply tw-col-span-12;
+    @apply tw-text-pv-white;
+
+    @screen md {
+      @apply tw-col-span-1;
+    }
+
+    @screen lg {
+      @apply tw-hidden;
+    }
   }
 }
 </style>
