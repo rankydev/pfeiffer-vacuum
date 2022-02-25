@@ -2,10 +2,10 @@
   <section class="social-media tw-grid-container">
     <div class="social-media__container">
       <h3>social media</h3>
-      <span v-for="(channel, index) in socialMediaChannels" :key="index">
-        <nuxt-link :to="channel.link.url">
+      <span v-for="(channel, index) in socialMedia" :key="index">
+        <Link :href="channel.link.url">
           {{ channel.title }}
-        </nuxt-link>
+        </Link>
       </span>
     </div>
   </section>
@@ -17,13 +17,10 @@ import { defineComponent } from '@nuxtjs/composition-api'
 export default defineComponent({
   name: 'SocialMedia',
   props: {
-    socialMediaChannels: {
+    socialMedia: {
       type: Array,
       default: () => [],
     },
-  },
-  setup() {
-    return {}
   },
 })
 </script>

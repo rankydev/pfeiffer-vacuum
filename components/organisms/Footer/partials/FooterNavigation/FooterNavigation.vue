@@ -1,7 +1,7 @@
 <template>
   <section class="footer-navigation tw-grid-container">
     <div
-      v-for="(menu, index) in footerNavigation.footerNavigation.footerMenus"
+      v-for="(menu, index) in footerMenus.footerMenus"
       :key="index"
       class="footer-navigation__block"
     >
@@ -9,8 +9,8 @@
     </div>
     <newsletter-input
       class="footer-navigation__block footer-navigation__block--newsletter"
-      :title="footerNavigation.footerNavigation.newsletter.title"
-      :text="footerNavigation.footerNavigation.newsletter.text"
+      :title="newsletter.newsletterContent.title"
+      :text="newsletter.newsletterContent.text"
       :form="{ placeholder: 'E-Mail', buttonText: 'Absenden' }"
     />
   </section>
@@ -25,7 +25,11 @@ export default defineComponent({
   name: 'PvFooterNavigation',
   components: { NewsletterInput, LinkList },
   props: {
-    footerNavigation: {
+    footerMenus: {
+      type: Object,
+      default: () => {},
+    },
+    newsletter: {
       type: Object,
       default: () => {},
     },
@@ -40,20 +44,18 @@ const footerNavigation = computed(() => props.footerNavigation)
   @apply tw-p-1 md:tw-p-6;
 
   &__block {
-    @apply tw-col-span-12;
+    @apply tw-col-span-full;
 
     @screen md {
-      @apply tw-col-span-4;
+      @apply tw-col-span-2;
     }
 
     @screen lg {
-      @apply tw-col-span-3;
+      @apply tw-col-span-4;
     }
 
     &--newsletter {
-      @screen md {
-        @apply tw-col-span-12;
-      }
+      @apply tw-col-span-full;
 
       @screen lg {
         @apply tw-col-span-3;

@@ -1,4 +1,4 @@
-export const socialMediaChannels = [
+export default [
   {
     icon: 'facebook',
     title: 'Facebook',
@@ -36,5 +36,3 @@ export const socialMediaChannels = [
     },
   },
 ]
-
-export default {}

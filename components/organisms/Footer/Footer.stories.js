@@ -1,18 +1,31 @@
 import PvFooter from '~/components/organisms/Footer/Footer.vue'
-import { footerNavigation } from './partials/FooterNavigation/FooterNavigation.stories.content'
+import {
+  footerMenus,
+  footerNavigation,
+} from './partials/FooterNavigation/FooterNavigation.stories.content'
 import { copyright } from './partials/FooterBottom/FooterBottom.stories.content'
-import { socialMediaChannels } from '../../molecules/SocialMedia/SocialMedia.content'
+import channels from '../../molecules/SocialMedia/SocialMedia.content'
+import newsletterContent from '~/components/molecules/NewsletterInput/Newsletter.stories.content'
 
 const argTypes = {
-  footerTop: {
+  /**
+   *
+   */
+  socialMedia: {
     defaultValue: {
-      socialMedia: socialMediaChannels,
+      channels,
     },
     control: { type: 'object' },
   },
   footerNavigation: {
     defaultValue: {
-      footerNavigation,
+      footerMenus,
+    },
+    control: { type: 'object' },
+  },
+  newsletter: {
+    defaultValue: {
+      newsletterContent,
     },
     control: { type: 'object' },
   },
@@ -39,7 +52,12 @@ export default {
 
 const template = `
       <div class="documentation-preview">
-        <pv-footer :footerTop="footerTop" :footerNavigation="footerNavigation" :footerBottom="footerBottom" />
+        <pv-footer
+        :socialMedia="socialMedia"
+        :newsletter="newsletter"
+        :footerNavigation="footerNavigation"
+        :footerBottom="footerBottom"
+        />
       </div>
     `
 

@@ -1,13 +1,14 @@
 <template>
   <footer class="footer">
     <social-media
-      v-if="footerTop.socialMedia"
+      v-if="socialMedia.channels"
       class="footer__top"
-      :social-media-channels="footerTop.socialMedia"
+      :social-media="socialMedia.channels"
     />
     <pv-footer-navigation
       class="footer__middle"
-      :footer-navigation="footerNavigation"
+      :footer-menus="footerNavigation"
+      :newsletter="newsletter"
     />
     <pv-footer-bottom
       class="footer__bottom"
@@ -24,18 +25,18 @@ import PvFooterBottom from './partials/FooterBottom/FooterBottom'
 
 export default defineComponent({
   name: 'Footer',
-  components: { SocialMedia, PvFooterNavigation, PvFooterBottom },
+  components: {
+    SocialMedia,
+    PvFooterNavigation,
+    PvFooterBottom,
+  },
   props: {
     /**
-     * Social Media Channels on top of the footer.
+     * Social Media Channels on top of the footer
      */
-    footerTop: {
+    socialMedia: {
       type: Object,
-      default() {
-        return {
-          socialMedia: true,
-        }
-      },
+      default() {},
     },
     /**
      * List of LinkLists with titles and newsletter block
@@ -45,7 +46,14 @@ export default defineComponent({
       default() {},
     },
     /**
-     *
+     * Newsletter sign up form
+     */
+    newsletter: {
+      type: Object,
+      default() {},
+    },
+    /**
+     * Legal text and copyright
      */
     footerBottom: {
       type: Object,
@@ -55,12 +63,15 @@ export default defineComponent({
         }
       },
       copyright: {
-        type: String,
-        default: '',
+        type: Object,
+        default() {
+          return {
+            copyright: '',
+          }
+        },
       },
     },
   },
-  setup(props) {},
 })
 </script>
 
