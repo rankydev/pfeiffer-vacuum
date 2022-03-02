@@ -1,6 +1,6 @@
 import PvFooter from '~/components/organisms/Footer/Footer.vue'
 import {
-  footerMenus,
+  footerNavigationColumn,
   footerNavigation,
 } from './partials/FooterNavigation/FooterNavigation.stories.content'
 import { copyright } from './partials/FooterBottom/FooterBottom.stories.content'
@@ -17,11 +17,11 @@ const argTypes = {
     },
     control: { type: 'object' },
   },
-  footerNavigation: {
+  footerNavigationColumn: {
     defaultValue: {
-      footerMenus,
+      footerNavigationColumn,
     },
-    control: { type: 'object' },
+    control: { type: 'array' },
   },
   newsletter: {
     defaultValue: {
@@ -50,19 +50,26 @@ export default {
   argTypes: argTypes,
 }
 
-const template = `
-      <div class="documentation-preview">
-        <pv-footer
-        :socialMedia="socialMedia"
-        :newsletter="newsletter"
-        :footerNavigation="footerNavigation"
-        :footerBottom="footerBottom"
-        />
-      </div>
-    `
-
-export const PageFooter = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { PvFooter },
-  props: Object.keys(argTypes),
-  template,
+  setup() {
+    const socialMedia = channels
+    const newsletter = newsletterContent
+    const footerNavigationColumn = footerNavigation.footerNavigationColumn
+    const footerBottom = copyright
+    return {
+      args,
+      socialMedia,
+      newsletter,
+      footerNavigationColumn,
+      footerBottom,
+    }
+  },
+  template: `
+  <div class="documentation-preview">
+    <pv-footer v-bind="{ socialMedia, newsletter, footerNavigationColumn, footerBottom }" />
+  </div>
+`,
 })
+
+export const Default = Template.bind({})

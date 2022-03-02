@@ -7,7 +7,7 @@
         :key="index"
         class="link-list__item"
       >
-        <Link :href="linkItem.link.href">
+        <Link :href="linkItem.href">
           {{ linkItem.label }}
         </Link>
       </li>

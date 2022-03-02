@@ -25,6 +25,11 @@
             ],
             "default_value": "_self",
             "display_name": "Open linked page in"
+        },
+        "label": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Label"
         }
     },
     "image": null,

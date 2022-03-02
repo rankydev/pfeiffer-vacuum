@@ -1,5 +1,5 @@
 import {
-  footerMenus,
+  footerNavigationColumn,
   footerNavigation,
   newsletter,
 } from './partials/FooterNavigation/FooterNavigation.stories.content'
@@ -14,7 +14,7 @@ export const footerContent = {
 
 export const footerContent2 = {
   socialMedia,
-  footerNavigationColumn: footerMenus,
+  footerNavigationColumn: footerNavigationColumn,
   newsletter: newsletter,
   legalText: copyright,
 }

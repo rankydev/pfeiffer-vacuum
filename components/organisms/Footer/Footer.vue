@@ -1,19 +1,22 @@
 <template>
-  <footer class="footer">
-    <social-media
-      v-if="socialMedia.channels"
-      class="footer__top"
-      :social-media="socialMedia.channels"
-    />
-    <pv-footer-navigation
-      class="footer__middle"
-      :footer-menus="footerNavigation"
-      :newsletter="newsletter"
-    />
-    <pv-footer-bottom
-      class="footer__bottom"
-      :copyright="footerBottom.copyright"
-    />
+  <footer class="footer tw-col-span-full">
+    <div class="tw-container-fluid">
+      <social-media
+        v-if="socialMedia.channels"
+        class="footer__top"
+        :social-media="socialMedia.channels"
+      />
+
+      <pv-footer-navigation
+        class="footer__middle"
+        :footer-menus="footerNavigationColumn"
+        :newsletter="newsletter"
+      />
+      <pv-footer-bottom
+        class="footer__bottom"
+        :copyright="footerBottom.copyright"
+      />
+    </div>
   </footer>
 </template>
 
@@ -41,9 +44,9 @@ export default defineComponent({
     /**
      * List of LinkLists with titles and newsletter block
      */
-    footerNavigation: {
-      type: Object,
-      default() {},
+    footerNavigationColumn: {
+      type: Array,
+      default: () => [],
     },
     /**
      * Newsletter sign up form
@@ -81,19 +84,8 @@ export default defineComponent({
 
   &__top {
     @apply tw-items-center;
-  }
-
-  &__middle {
-    @apply tw-bg-pv-grey-32;
-    @apply tw-text-pv-white;
-
-    .link-list__title {
-      @apply tw-text-pv-white;
-    }
-  }
-
-  &__bottom {
-    @apply tw-bg-pv-grey-32;
+    max-width: 1440px;
+    margin: 0 auto;
   }
 }
 </style>

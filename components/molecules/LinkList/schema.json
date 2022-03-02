@@ -11,7 +11,7 @@
       "type": "bloks",
       "restrict_components": true,
       "component_whitelist": [
-        "Link (tbd)"
+        "Link"
       ],
       "display_name": "Links"
     }

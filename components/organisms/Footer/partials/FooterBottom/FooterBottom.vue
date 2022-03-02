@@ -1,8 +1,10 @@
 <template>
-  <section class="footer-bottom tw-grid-container">
-    <language-switcher class="footer-bottom__language" />
-    <div class="footer-bottom__copyright tw-text-inverse">
-      <p>{{ copyright }}</p>
+  <section class="footer-bottom">
+    <div class="footer-bottom__wrapper tw-grid-container">
+      <language-switcher class="footer-bottom__language" />
+      <div class="footer-bottom__copyright tw-text-inverse">
+        <p>{{ copyright }}</p>
+      </div>
     </div>
   </section>
 </template>
@@ -31,7 +33,13 @@ export default defineComponent({
 
 <style lang="scss">
 .footer-bottom {
-  @apply tw-p-1 md:tw-p-6;
+  @apply tw-bg-pv-grey-32;
+
+  &__wrapper {
+    @apply tw-p-1 md:tw-p-6;
+    max-width: 1440px;
+    margin: 0 auto;
+  }
 
   &__copyright {
     @apply tw-col-span-12 md:tw-col-span-3 lg:tw-col-span-8;
