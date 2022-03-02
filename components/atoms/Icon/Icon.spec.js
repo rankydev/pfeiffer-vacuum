@@ -22,6 +22,15 @@ describe('Icon', () => {
         })
       })
     })
+
+    describe('given custom svg name', () => {
+      it('should render svg-icon component with correct name', () => {
+        const propsData = { custom: true, icon: 'someIcon' }
+        const wrapper = shallowMount(Icon, { propsData })
+
+        expect(wrapper.find('svg-icon').attributes('name')).toBe(propsData.icon)
+      })
+    })
   })
 
   // describe('during interaction', () => {})

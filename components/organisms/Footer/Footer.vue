@@ -1,10 +1,7 @@
 <template>
   <footer class="footer">
-    <social-media
-      v-if="socialMedia.channels"
-      class="footer__top"
-      :social-media="socialMedia.channels"
-    />
+    <social-media v-if="socialMedia" class="footer__top" :media="socialMedia" />
+    <!--
     <pv-footer-navigation
       class="footer__middle"
       :footer-menus="footerNavigation"
@@ -14,6 +11,7 @@
       class="footer__bottom"
       :copyright="footerBottom.copyright"
     />
+    -->
   </footer>
 </template>
 
@@ -27,16 +25,14 @@ export default defineComponent({
   name: 'Footer',
   components: {
     SocialMedia,
-    PvFooterNavigation,
-    PvFooterBottom,
   },
   props: {
     /**
      * Social Media Channels on top of the footer
      */
     socialMedia: {
-      type: Object,
-      default() {},
+      type: Array,
+      default: () => [],
     },
     /**
      * List of LinkLists with titles and newsletter block
