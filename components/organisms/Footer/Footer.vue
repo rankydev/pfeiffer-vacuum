@@ -2,9 +2,9 @@
   <footer class="footer tw-col-span-full">
     <div class="tw-container-fluid">
       <social-media
-        v-if="socialMedia.channels"
+        v-if="socialMedia"
         class="footer__top"
-        :social-media="socialMedia.channels"
+        :social-media="socialMedia"
       />
 
       <pv-footer-navigation
@@ -38,8 +38,8 @@ export default defineComponent({
      * Social Media Channels on top of the footer
      */
     socialMedia: {
-      type: Object,
-      default() {},
+      type: Array,
+      default: () => [],
     },
     /**
      * List of LinkLists with titles and newsletter block

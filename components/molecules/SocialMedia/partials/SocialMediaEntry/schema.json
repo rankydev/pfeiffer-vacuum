@@ -1,0 +1,80 @@
+{
+  "name": "SocialMediaEntry",
+  "display_name": "Social Media Entry",
+  "schema": {
+    "link": {
+      "type": "multilink",
+      "display_name": "Link",
+      "translatable": true,
+      "restrict_content_types": true,
+      "component_whitelist": [
+        "Page"
+      ]
+    },
+    "target": {
+      "type": "option",
+      "use_uuid": true,
+      "options": [
+        {
+          "value": "_blank",
+          "name": "New tab / window"
+        },
+        {
+          "value": "_self",
+          "name": "Same window"
+        }
+      ],
+      "default_value": "_self",
+      "display_name": "Open linked page in"
+    },
+    "title": {
+      "type": "text",
+      "display_name": "Title",
+      "translatable": true
+    },
+    "icon": {
+      "type": "option",
+      "use_uuid": true,
+      "required": true,
+      "options": [
+        {
+          "value": "facebook",
+          "name": "Facebook"
+        },
+        {
+          "value": "twitter",
+          "name": "Twitter"
+        },
+        {
+          "value": "linkedin",
+          "name": "LinkedIn"
+        },
+        {
+          "value": "youtube",
+          "name": "Youtube"
+        },
+        {
+          "value": "xing",
+          "name": "Xing"
+        },
+        {
+          "value": "wechat",
+          "name": "WeChat"
+        },
+        {
+          "value": "zhihu",
+          "name": "Zhihu"
+        }
+      ]
+    }
+  },
+  "image": null,
+  "preview_field": null,
+  "is_root": false,
+  "preview_tmpl": null,
+  "is_nestable": true,
+  "all_presets": [],
+  "preset_id": null,
+  "real_name": "SocialMediaEntry",
+  "component_group_uuid": null
+}
