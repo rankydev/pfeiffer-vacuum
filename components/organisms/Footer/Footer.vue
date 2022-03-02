@@ -52,8 +52,8 @@ export default defineComponent({
      * Newsletter sign up form
      */
     newsletter: {
-      type: Object,
-      default() {},
+      type: Array,
+      default: () => [],
     },
     /**
      * Legal text and copyright
