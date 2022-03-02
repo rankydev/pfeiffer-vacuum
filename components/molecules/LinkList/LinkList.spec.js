@@ -2,7 +2,9 @@ import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import LinkList from '~/components/molecules/LinkList/LinkList.vue'
 import { footerMenuOne } from '~/components/molecules/LinkList/LinkList.stories.content'
 
-const defaultProps = () => ({ linkList: footerMenuOne })
+const { links, title } = footerMenuOne
+
+const defaultProps = () => ({ linkList: links, title })
 
 describe('LinkList', () => {
   describe('initial state', () => {

@@ -4,7 +4,7 @@
       <social-media
         v-if="socialMedia"
         class="footer__top"
-        :social-media="socialMedia"
+        :media="socialMedia"
       />
 
       <pv-footer-navigation
