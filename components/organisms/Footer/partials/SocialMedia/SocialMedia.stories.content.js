@@ -27,4 +27,14 @@ export default [
       { href: 'https://www.twitter.com/pfeiffer-vacuum', target: '_blank' },
     ],
   },
+  {
+    _uid: 'loremipsum6',
+    icon: 'xing',
+    links: [
+      {
+        href: 'https://www.xing.com/pages/pfeiffervacuumgmbh',
+        target: '_blank',
+      },
+    ],
+  },
 ]
