@@ -1,20 +1,16 @@
 import {
-  footerNavigationColumns,
-  newsletter,
-} from './partials/FooterNavigation/FooterNavigation.stories.content'
+  footerMenuOne,
+  footerMenuThree,
+  footerMenuTwo,
+} from '~/components/molecules/LinkList/LinkList.stories.content'
 import socialMedia from './partials/SocialMedia/SocialMedia.content'
-import { copyright } from './partials/FooterBottom/FooterBottom.stories.content'
+
+const navigationColumns = [footerMenuOne, footerMenuTwo, footerMenuThree]
+const copyright = '© 2021 Pfeiffer Vacuum GmbH'
 
 export const footerContent = {
   socialMedia,
-  footerNavigationColumns,
-  copyright,
-}
-
-export const footerContent2 = {
-  socialMedia,
-  footerNavigationColumns,
-  newsletter,
+  navigationColumns,
   copyright,
 }
 

@@ -3,13 +3,11 @@
     <h5 class="link-list__title">{{ title }}</h5>
     <ul class="link-list__list">
       <li
-        v-for="(linkItem, index) in linkList"
+        v-for="(linkItem, index) in links"
         :key="index"
         class="link-list__item"
       >
-        <Link :href="linkItem.href">
-          {{ linkItem.label }}
-        </Link>
+        <TextLink v-bind="linkItem" />
       </li>
     </ul>
   </div>
@@ -17,11 +15,11 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import Link from '~/components/atoms/Link/Link'
+import TextLink from '~/components/molecules/TextLink/TextLink'
 
 export default defineComponent({
   name: 'LinkList',
-  components: { Link },
+  components: { TextLink },
   props: {
     /**
      * title
@@ -33,7 +31,7 @@ export default defineComponent({
     /**
      * list of navigation entries
      */
-    linkList: {
+    links: {
       type: Array,
       require: true,
       default: () => [],
@@ -45,18 +43,18 @@ export default defineComponent({
 <style lang="scss">
 .link-list {
   &__title {
-    @apply tw-mb-4;
+    @apply tw-mb-2;
+
+    @screen lg {
+      @apply tw-mb-4;
+    }
   }
 
   &__item {
-    @apply tw-transition-colors;
-    @apply tw-duration-300;
-    @apply tw-ease-out;
-    @apply tw-leading-6;
-    @apply tw-mb-2;
+    @apply tw-mb-1;
 
-    &:hover {
-      @apply tw-text-pv-red;
+    @screen lg {
+      @apply tw-mb-2;
     }
   }
 }

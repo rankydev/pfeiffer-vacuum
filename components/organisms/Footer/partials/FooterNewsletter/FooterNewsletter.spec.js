@@ -1,15 +1,15 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import FooterBottom from './FooterBottom'
+import FooterNewsletter from './FooterNewsletter'
 
 const localVue = createLocalVue()
 localVue.directive('editable', (el, key) => {
   el.innerText = key.value
 })
 
-describe('FooterBotton', () => {
+describe('FooterNewsletter', () => {
   describe('initial state', () => {
     it('should...', () => {
-      const wrapper = shallowMount(FooterBottom)
+      const wrapper = shallowMount(FooterNewsletter)
     })
   })
 })

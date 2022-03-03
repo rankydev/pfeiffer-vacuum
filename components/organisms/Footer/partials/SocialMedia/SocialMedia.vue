@@ -1,23 +1,28 @@
 <template>
-  <section class="social-media tw-grid-container">
-    <div class="social-media__container">
+  <ContentWrapper class="tw-grid-container">
+    <section class="social-media">
       <SocialMediaIconLink
         v-for="item in socialMedia"
         :key="item._uid"
         class="social-media__icon"
         v-bind="item"
       />
-    </div>
-  </section>
+    </section>
+  </ContentWrapper>
 </template>
 
 <script>
 import SocialMediaIconLink from '~/components/molecules/SocialMediaIconLink/SocialMediaIconLink'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'SocialMedia',
+  components: {
+    SocialMediaIconLink,
+    ContentWrapper,
+  },
   props: {
     socialMedia: {
       type: Array,
@@ -29,16 +34,12 @@ export default defineComponent({
 
 <style lang="scss">
 .social-media {
-  @apply tw-bg-pv-white;
+  @apply tw-col-span-full;
+  @apply tw-py-6;
+  @apply tw-flex tw-justify-center tw-gap-6;
 
-  &__container {
-    @apply tw-col-span-full;
-    @apply tw-py-6;
-    @apply tw-flex tw-justify-center tw-gap-6;
-
-    @screen md {
-      @apply tw-py-10;
-    }
+  @screen md {
+    @apply tw-py-10;
   }
 
   &__icon {

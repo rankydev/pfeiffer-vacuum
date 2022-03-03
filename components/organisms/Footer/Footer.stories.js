@@ -1,35 +1,23 @@
 import PvFooter from '~/components/organisms/Footer/Footer.vue'
-import { footerContent, footerContent2 } from './Footer.stories.content'
+import { footerContent } from './Footer.stories.content'
 
-// const argTypes = {
-//   /**
-//    *
-//    */
-//   socialMedia: {
-//     defaultValue: {
-//       channels,
-//     },
-//     control: { type: 'object' },
-//   },
-//   footerNavigationColumn: {
-//     defaultValue: {
-//       footerNavigationColumn,
-//     },
-//     control: { type: 'array' },
-//   },
-//   newsletter: {
-//     defaultValue: {
-//       newsletterContent,
-//     },
-//     control: { type: 'object' },
-//   },
-//   footerBottom: {
-//     defaultValue: {
-//       copyright,
-//     },
-//     control: { type: 'object' },
-//   },
-// }
+const argTypes = {
+  socialMedia: {
+    defaultValue: footerContent.socialMedia,
+    control: { type: 'array' },
+  },
+  navigationColumns: {
+    defaultValue: footerContent.navigationColumns,
+    control: { type: 'array' },
+  },
+  newsletter: {
+    // defaultValue: footerContent.newsletterContent,
+    control: { type: 'object' },
+  },
+  copyright: {
+    defaultValue: footerContent.copyright,
+  },
+}
 
 export default {
   title: 'Organisms/Footer',
@@ -41,7 +29,7 @@ export default {
       },
     },
   },
-  // argTypes: argTypes,
+  argTypes: argTypes,
 }
 
 const Template = (args) => ({
@@ -49,12 +37,11 @@ const Template = (args) => ({
   setup() {
     return {
       args,
-      footerContent,
     }
   },
   template: `
   <div class="documentation-preview">
-    <PvFooter v-bind="footerContent" />
+    <PvFooter v-bind="args" />
   </div>
 `,
 })

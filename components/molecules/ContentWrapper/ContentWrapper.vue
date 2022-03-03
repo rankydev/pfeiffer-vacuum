@@ -4,11 +4,24 @@
   </div>
 </template>
 
-<script></script>
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
 
-<style>
+export default defineComponent({})
+</script>
+
+<style lang="scss">
 .content-wrapper {
-  margin: 0 auto;
+  @apply tw-px-4;
+  @apply tw-mx-auto;
   max-width: 1440px;
+
+  @screen md {
+    @apply tw-px-6;
+  }
+
+  @screen lg {
+    @apply tw-px-8;
+  }
 }
 </style>

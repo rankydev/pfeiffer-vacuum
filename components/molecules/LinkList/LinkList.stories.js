@@ -2,9 +2,12 @@ import { footerMenuOne } from './LinkList.stories.content'
 import LinkList from '~/components/molecules/LinkList/LinkList.vue'
 
 const argTypes = {
-  linkList: {
+  links: {
     control: { type: 'object' },
-    defaultValue: footerMenuOne,
+    defaultValue: footerMenuOne.links,
+  },
+  title: {
+    defaultValue: footerMenuOne.title,
   },
 }
 
@@ -24,7 +27,7 @@ export default {
 
 const template = `
       <div class="documentation-preview">
-        <link-list :linkList="linkList" />
+        <LinkList :links="links" :title="title" />
       </div>
     `
 

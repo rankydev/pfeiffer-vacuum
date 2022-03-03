@@ -6,11 +6,11 @@
       "type": "bloks",
       "restrict_components": true,
       "component_whitelist": [
-        "SocialMediaEntry"
+        "SocialMediaIconLink"
       ],
       "display_name": "Social Media Entries"
     },
-    "footerNavigationColumn": {
+    "navigationColumns": {
       "type": "bloks",
       "maximum": 3,
       "restrict_components": true,
@@ -28,7 +28,7 @@
       ],
       "display_name": "Footer Newsletter"
     },
-    "legalText": {
+    "copyright": {
       "type": "text",
       "translatable": true,
       "display_name": "Copyright Text"

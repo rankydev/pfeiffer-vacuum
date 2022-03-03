@@ -6,27 +6,41 @@
       :social-media="socialMedia"
     />
 
-    <FooterNavigation
-      class="footer__middle"
-      :footer-navigation-columns="footerNavigationColumns"
-      :newsletter="newsletter"
-    />
-    <FooterBottom class="footer__bottom" :copyright="copyright" />
+    <section class="footer__bottom tw-text-inverse">
+      <ContentWrapper class="footer__bottom-content tw-grid-container">
+        <div class="footer__menu">
+          <LinkList
+            v-for="(menu, index) in navigationColumns"
+            v-bind="menu"
+            :key="index"
+            class="footer__menu-element"
+          />
+        </div>
+
+        <FooterNewsletter class="footer__newsletter" />
+
+        <hr class="footer__ruler" />
+
+        <language-switcher class="footer__language" />
+
+        <div class="footer__copyright">
+          <p>{{ copyright }}</p>
+        </div>
+      </ContentWrapper>
+    </section>
   </footer>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import SocialMedia from './partials/SocialMedia/SocialMedia'
-import FooterNavigation from './partials/FooterNavigation/FooterNavigation'
-import FooterBottom from './partials/FooterBottom/FooterBottom'
+import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter'
 
 export default defineComponent({
   name: 'Footer',
   components: {
     SocialMedia,
-    FooterNavigation,
-    FooterBottom,
+    FooterNewsletter,
   },
   props: {
     /**
@@ -39,7 +53,7 @@ export default defineComponent({
     /**
      * List of LinkLists with titles and newsletter block
      */
-    footerNavigationColumns: {
+    navigationColumns: {
       type: Array,
       default: () => [],
     },
@@ -61,4 +75,76 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.footer {
+  &__bottom {
+    @apply tw-bg-pv-grey-32;
+  }
+
+  &__bottom-content {
+    @apply tw-py-6;
+
+    @screen lg {
+      @apply tw-py-8;
+    }
+  }
+
+  &__menu {
+    @apply tw-grid tw-gap-4;
+    @apply tw-col-span-full;
+    grid-template-columns: repeat(3, 1fr);
+
+    @screen lg {
+      @apply tw-col-span-8;
+    }
+  }
+
+  &__menu-element {
+    @apply tw-col-span-full;
+
+    @screen md {
+      @apply tw-col-span-1;
+    }
+
+    .link-list__title {
+      @apply tw-text-pv-white;
+    }
+  }
+
+  &__newsletter {
+    @apply tw-col-span-full;
+
+    @screen lg {
+      @apply tw-col-span-4;
+    }
+  }
+
+  &__ruler {
+    @apply tw-col-span-full;
+  }
+
+  &__language {
+    @apply tw-col-span-full;
+
+    @screen md {
+      @apply tw-col-span-1;
+    }
+
+    @screen lg {
+      @apply tw-hidden;
+    }
+  }
+
+  &__copyright {
+    @apply tw-col-span-3;
+
+    @screen md {
+      @apply tw-col-span-3;
+    }
+
+    @screen lg {
+      @apply tw-col-span-8;
+    }
+  }
+}
+</style>

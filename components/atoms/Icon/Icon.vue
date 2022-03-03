@@ -1,12 +1,12 @@
 <template>
-  <svg-icon
+  <SvgIcon
     v-if="type === 'svg'"
     :name="icon"
     :class="['icon__svg', `icon--${size}`]"
   />
   <span
     v-else
-    class="material-icon"
+    class="material-icons"
     :class="['icon__material', `icon--${size}`]"
   >
     {{ icon }}

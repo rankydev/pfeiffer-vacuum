@@ -1,4 +1,5 @@
 import SocialMediaIconLink from './SocialMediaIconLink.vue'
+import LinkContent from '~/components/atoms/Link/Link.stories.content'
 
 export default {
   title: 'Atoms/SocialMediaIconLink',
@@ -40,5 +41,6 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {
+  ...LinkContent,
   icon: 'facebook',
 }

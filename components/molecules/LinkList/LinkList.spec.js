@@ -4,7 +4,7 @@ import { footerMenuOne } from '~/components/molecules/LinkList/LinkList.stories.
 
 const { links, title } = footerMenuOne
 
-const defaultProps = () => ({ linkList: links, title })
+const defaultProps = () => ({ links, title })
 
 describe('LinkList', () => {
   describe('initial state', () => {
@@ -29,8 +29,8 @@ describe('LinkList', () => {
         },
       })
 
-      const linkList = wrapper.findAll('.link-list__item')
-      expect(linkList).toHaveLength(5)
+      const links = wrapper.findAll('.link-list__item')
+      expect(links).toHaveLength(5)
     })
   })
 })
