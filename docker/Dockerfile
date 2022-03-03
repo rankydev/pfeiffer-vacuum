@@ -41,7 +41,7 @@ COPY nuxt.config.js ./
 # Bundle app source
 COPY .nuxt .nuxt/
 COPY node_modules/ ./node_modules/
-COPY static ./
+COPY static ./static/
 
 EXPOSE 3000
 
