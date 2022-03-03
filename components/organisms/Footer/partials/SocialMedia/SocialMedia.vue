@@ -1,25 +1,25 @@
 <template>
   <section class="social-media tw-grid-container">
     <div class="social-media__container">
-      <Link
-        v-for="link in media"
-        :key="link._uid"
-        :href="link.link"
-        :target="link.target"
-      >
-        <Icon class="social-media__icon" :icon="link.icon" custom />
-      </Link>
+      <SocialMediaIconLink
+        v-for="item in socialMedia"
+        :key="item._uid"
+        class="social-media__icon"
+        v-bind="item"
+      />
     </div>
   </section>
 </template>
 
 <script>
+import SocialMediaIconLink from '~/components/molecules/SocialMediaIconLink/SocialMediaIconLink'
+
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'SocialMedia',
   props: {
-    media: {
+    socialMedia: {
       type: Array,
       default: () => [],
     },
@@ -33,17 +33,19 @@ export default defineComponent({
 
   &__container {
     @apply tw-col-span-full;
-    @apply tw-p-6 md:tw-p-10;
+    @apply tw-py-6;
     @apply tw-flex tw-justify-center tw-gap-6;
+
+    @screen md {
+      @apply tw-py-10;
+    }
   }
 
   &__icon {
     @apply tw-text-pv-grey-64;
-    @apply tw-h-10 tw-w-10;
     @apply tw-p-1;
 
     @screen md {
-      @apply tw-h-16 tw-w-16;
       @apply tw-p-3;
     }
   }

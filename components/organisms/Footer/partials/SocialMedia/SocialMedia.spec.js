@@ -1,19 +1,20 @@
 import { shallowMount } from '@vue/test-utils'
 import SocialMedia from './SocialMedia.vue'
-import SocialMediaContent from './SocialMedia.content'
+import SocialMediaContent from './SocialMedia.js'
+import SocialMediaIconLink from '~/components/molecules/SocialMediaIconLink/SocialMediaIconLink.vue'
 
 describe('SocialMedia', () => {
   describe('initial state', () => {
-    describe('given entry objects', () => {
+    describe('given an array of media objects', () => {
       it('should render', () => {
         const propsData = { media: SocialMediaContent }
         const wrapper = shallowMount(SocialMedia, { propsData })
 
-        const links = wrapper.findAll('link')
+        const links = wrapper.findAllComponents(SocialMediaIconLink)
 
         SocialMediaContent.forEach((item, index) => {
-          expect(links.at(index).attributes('href')).toBe(item.link)
-          expect(links.at(index).attributes('target')).toBe(item.target)
+          expect(links.at(index).vm.href).toBe(item.link)
+          expect(links.at(index).vm.href).toBe(item.target)
         })
       })
     })

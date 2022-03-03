@@ -1,6 +1,16 @@
 <template>
-  <svg-icon v-if="custom" :name="icon" />
-  <span v-else :class="['material-icons', `icon-${size}`]">{{ icon }}</span>
+  <svg-icon
+    v-if="type === 'svg'"
+    :name="icon"
+    :class="['icon__svg', `icon--${size}`]"
+  />
+  <span
+    v-else
+    class="material-icon"
+    :class="['icon__material', `icon--${size}`]"
+  >
+    {{ icon }}
+  </span>
 </template>
 
 <script>
@@ -26,42 +36,48 @@ export default defineComponent({
       validator: (val) => ['small', 'base', 'large', 'xlarge'].includes(val),
     },
     /**
-     * Used for custom svg from svgSource folder
+     * Set the type of icon
+     * @values small, base, large, xlarge
      */
-    custom: {
-      type: Boolean,
-      default: false,
+    type: {
+      type: String,
+      default: 'material-icon',
+      validator: (val) => ['material-icon', 'svg'].includes(val),
     },
   },
 })
 </script>
 
 <style lang="scss">
-// Setting default size for custom svg's
-.sprite-icons {
-  height: 1rem;
-  width: 1rem;
-}
+.icon {
+  &__svg {
+    @apply tw-h-10 tw-w-10;
 
-.material-icons {
-  &.icon-xsmall {
-    font-size: 1rem;
+    @screen md {
+      @apply tw-h-16 tw-w-16;
+    }
   }
 
-  &.icon-small {
-    font-size: 1.125rem;
-  }
+  &__material {
+    &.icon--xsmall {
+      font-size: 1rem;
+    }
 
-  &.icon-base {
-    font-size: 1.5rem;
-  }
+    &.icon--small {
+      font-size: 1.125rem;
+    }
 
-  &.icon-large {
-    font-size: 2rem;
-  }
+    &.icon--base {
+      font-size: 1.5rem;
+    }
 
-  &.icon-xlarge {
-    font-size: 4rem;
+    &.icon--large {
+      font-size: 2rem;
+    }
+
+    &.icon--xlarge {
+      font-size: 4rem;
+    }
   }
 }
 </style>

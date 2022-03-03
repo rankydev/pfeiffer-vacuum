@@ -1,11 +1,11 @@
 <template>
   <section class="footer-bottom">
-    <div class="footer-bottom__wrapper tw-grid-container">
+    <ContentWrapper class="footer-bottom__wrapper">
       <language-switcher class="footer-bottom__language" />
       <div class="footer-bottom__copyright tw-text-inverse">
         <p>{{ copyright }}</p>
       </div>
-    </div>
+    </ContentWrapper>
   </section>
 </template>
 
@@ -25,9 +25,6 @@ export default defineComponent({
       default: '© 2021 Pfeiffer Vacuum GmbH',
     },
   },
-  setup(props) {
-    const {} = toRefs(props)
-  },
 })
 </script>
 
@@ -36,13 +33,20 @@ export default defineComponent({
   @apply tw-bg-pv-grey-32;
 
   &__wrapper {
+    @layer tw-grid-container;
     @apply tw-p-1 md:tw-p-6;
-    max-width: 1440px;
-    margin: 0 auto;
   }
 
   &__copyright {
-    @apply tw-col-span-12 md:tw-col-span-3 lg:tw-col-span-8;
+    @apply tw-col-span-12;
+
+    @screen md {
+      @apply tw-col-span-3;
+    }
+
+    @screen lg {
+      @apply tw-col-span-8;
+    }
   }
 
   &__language {

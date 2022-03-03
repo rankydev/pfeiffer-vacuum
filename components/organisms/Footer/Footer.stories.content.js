@@ -1,22 +1,21 @@
 import {
-  footerNavigationColumn,
-  footerNavigation,
+  footerNavigationColumns,
   newsletter,
 } from './partials/FooterNavigation/FooterNavigation.stories.content'
-import socialMedia from '../../molecules/SocialMedia/SocialMedia.content'
+import socialMedia from './partials/SocialMedia/SocialMedia.content'
 import { copyright } from './partials/FooterBottom/FooterBottom.stories.content'
 
 export const footerContent = {
   socialMedia,
-  footerNavigation,
+  footerNavigationColumns,
   copyright,
 }
 
 export const footerContent2 = {
   socialMedia,
-  footerNavigationColumn: footerNavigationColumn,
-  newsletter: newsletter,
-  legalText: copyright,
+  footerNavigationColumns,
+  newsletter,
+  copyright,
 }
 
 export default {}

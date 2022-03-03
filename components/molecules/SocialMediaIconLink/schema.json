@@ -1,36 +1,14 @@
 {
-  "name": "SocialMediaEntry",
+  "name": "SocialMediaIconLink",
   "display_name": "Social Media Entry",
   "schema": {
-    "link": {
-      "type": "multilink",
-      "display_name": "Link",
-      "translatable": true,
-      "restrict_content_types": true,
+    "links": {
+      "type": "bloks",
+      "restrict_components": true,
       "component_whitelist": [
-        "Page"
-      ]
-    },
-    "target": {
-      "type": "option",
-      "use_uuid": true,
-      "options": [
-        {
-          "value": "_blank",
-          "name": "New tab / window"
-        },
-        {
-          "value": "_self",
-          "name": "Same window"
-        }
+        "Link"
       ],
-      "default_value": "_self",
-      "display_name": "Open linked page in"
-    },
-    "title": {
-      "type": "text",
-      "display_name": "Title",
-      "translatable": true
+      "display_name": "Links"
     },
     "icon": {
       "type": "option",
@@ -75,6 +53,6 @@
   "is_nestable": true,
   "all_presets": [],
   "preset_id": null,
-  "real_name": "SocialMediaEntry",
+  "real_name": "SocialMediaIconLink",
   "component_group_uuid": null
 }

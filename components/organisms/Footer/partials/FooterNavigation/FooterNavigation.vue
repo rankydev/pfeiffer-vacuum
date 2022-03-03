@@ -3,7 +3,7 @@
     <div class="footer-navigation__content tw-grid-container">
       <div class="footer-navigation__content-menu">
         <div
-          v-for="(menu, index) in footerMenus"
+          v-for="(menu, index) in footerNavigationColumns"
           :key="index"
           class="footer-navigation__menu-element"
         >
@@ -32,7 +32,7 @@ export default defineComponent({
   name: 'PvFooterNavigation',
   components: { LinkList },
   props: {
-    footerMenus: {
+    footerNavigationColumns: {
       type: Array,
       default: () => [],
     },

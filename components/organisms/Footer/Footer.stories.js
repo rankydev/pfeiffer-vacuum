@@ -1,41 +1,35 @@
 import PvFooter from '~/components/organisms/Footer/Footer.vue'
-import {
-  footerNavigationColumn,
-  footerNavigation,
-} from './partials/FooterNavigation/FooterNavigation.stories.content'
-import { copyright } from './partials/FooterBottom/FooterBottom.stories.content'
-import channels from '../../molecules/SocialMedia/SocialMedia.content'
-import newsletterContent from '~/components/molecules/NewsletterInput/Newsletter.stories.content'
+import { footerContent, footerContent2 } from './Footer.stories.content'
 
-const argTypes = {
-  /**
-   *
-   */
-  socialMedia: {
-    defaultValue: {
-      channels,
-    },
-    control: { type: 'object' },
-  },
-  footerNavigationColumn: {
-    defaultValue: {
-      footerNavigationColumn,
-    },
-    control: { type: 'array' },
-  },
-  newsletter: {
-    defaultValue: {
-      newsletterContent,
-    },
-    control: { type: 'object' },
-  },
-  footerBottom: {
-    defaultValue: {
-      copyright,
-    },
-    control: { type: 'object' },
-  },
-}
+// const argTypes = {
+//   /**
+//    *
+//    */
+//   socialMedia: {
+//     defaultValue: {
+//       channels,
+//     },
+//     control: { type: 'object' },
+//   },
+//   footerNavigationColumn: {
+//     defaultValue: {
+//       footerNavigationColumn,
+//     },
+//     control: { type: 'array' },
+//   },
+//   newsletter: {
+//     defaultValue: {
+//       newsletterContent,
+//     },
+//     control: { type: 'object' },
+//   },
+//   footerBottom: {
+//     defaultValue: {
+//       copyright,
+//     },
+//     control: { type: 'object' },
+//   },
+// }
 
 export default {
   title: 'Organisms/Footer',
@@ -47,27 +41,20 @@ export default {
       },
     },
   },
-  argTypes: argTypes,
+  // argTypes: argTypes,
 }
 
 const Template = (args) => ({
   components: { PvFooter },
   setup() {
-    const socialMedia = channels
-    const newsletter = newsletterContent
-    const footerNavigationColumn = footerNavigation.footerNavigationColumn
-    const footerBottom = copyright
     return {
       args,
-      socialMedia,
-      newsletter,
-      footerNavigationColumn,
-      footerBottom,
+      footerContent,
     }
   },
   template: `
   <div class="documentation-preview">
-    <pv-footer v-bind="{ socialMedia, newsletter, footerNavigationColumn, footerBottom }" />
+    <PvFooter v-bind="footerContent" />
   </div>
 `,
 })

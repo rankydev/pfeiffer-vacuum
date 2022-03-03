@@ -1,37 +1,32 @@
 <template>
   <footer class="footer tw-col-span-full">
-    <div class="tw-container-fluid">
-      <social-media
-        v-if="socialMedia"
-        class="footer__top"
-        :media="socialMedia"
-      />
+    <SocialMedia
+      v-if="socialMedia"
+      class="footer__top"
+      :social-media="socialMedia"
+    />
 
-      <pv-footer-navigation
-        class="footer__middle"
-        :footer-menus="footerNavigationColumn"
-        :newsletter="newsletter"
-      />
-      <pv-footer-bottom
-        class="footer__bottom"
-        :copyright="footerBottom.copyright"
-      />
-    </div>
+    <FooterNavigation
+      class="footer__middle"
+      :footer-navigation-columns="footerNavigationColumns"
+      :newsletter="newsletter"
+    />
+    <FooterBottom class="footer__bottom" :copyright="copyright" />
   </footer>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
-import PvFooterNavigation from './partials/FooterNavigation/FooterNavigation'
-import PvFooterBottom from './partials/FooterBottom/FooterBottom'
+import SocialMedia from './partials/SocialMedia/SocialMedia'
+import FooterNavigation from './partials/FooterNavigation/FooterNavigation'
+import FooterBottom from './partials/FooterBottom/FooterBottom'
 
 export default defineComponent({
   name: 'Footer',
   components: {
     SocialMedia,
-    PvFooterNavigation,
-    PvFooterBottom,
+    FooterNavigation,
+    FooterBottom,
   },
   props: {
     /**
@@ -44,7 +39,7 @@ export default defineComponent({
     /**
      * List of LinkLists with titles and newsletter block
      */
-    footerNavigationColumn: {
+    footerNavigationColumns: {
       type: Array,
       default: () => [],
     },
@@ -58,34 +53,12 @@ export default defineComponent({
     /**
      * Legal text and copyright
      */
-    footerBottom: {
-      type: Object,
-      default() {
-        return {
-          copyright: '',
-        }
-      },
-      copyright: {
-        type: Object,
-        default() {
-          return {
-            copyright: '',
-          }
-        },
-      },
+    copyright: {
+      type: String,
+      default: null,
     },
   },
 })
 </script>
 
-<style lang="scss">
-.footer {
-  @apply tw-container;
-
-  &__top {
-    @apply tw-items-center;
-    max-width: 1440px;
-    margin: 0 auto;
-  }
-}
-</style>
+<style lang="scss"></style>
