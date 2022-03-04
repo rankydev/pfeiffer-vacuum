@@ -3,43 +3,28 @@ export const footerMenuOne = {
   links: [
     {
       label: 'Standorte',
-      link: {
-        href: '/de/standorte',
-        target: '_self',
-        type: 'INTERNAL',
-      },
+      href: '/de/standorte',
+      target: '_self',
     },
     {
       label: 'Unternehmen',
-      link: {
-        href: '/de/unternehmen',
-        target: '_self',
-        type: 'INTERNAL',
-      },
+      href: '/de/unternehmen',
+      target: '_self',
     },
     {
       label: 'Investor Relations',
-      link: {
-        href: '/de/investor-relations',
-        target: '_self',
-        type: 'INTERNAL',
-      },
+      href: '/de/investor-relations',
+      target: '_self',
     },
     {
       label: 'Presse',
-      link: {
-        href: '/de/presse',
-        target: '_self',
-        type: 'INTERNAL',
-      },
+      href: '/de/presse',
+      target: '_self',
     },
     {
       label: 'Karriere',
-      link: {
-        href: '/de/karriere',
-        target: '_self',
-        type: 'INTERNAL',
-      },
+      href: '/de/karriere',
+      target: '_self',
     },
   ],
 }
@@ -49,35 +34,23 @@ export const footerMenuTwo = {
   links: [
     {
       label: 'Geschäftsbedingungen',
-      link: {
-        href: '/de/geschaeftsbedingungen',
-        target: '_self',
-        type: 'INTERNAL',
-      },
+      href: '/de/geschaeftsbedingungen',
+      target: '_self',
     },
     {
       label: 'Impressum',
-      link: {
-        href: '/de/impressum',
-        target: '_self',
-        type: 'INTERNAL',
-      },
+      href: '/de/impressum',
+      target: '_self',
     },
     {
       label: 'Datenschutz',
-      link: {
-        href: '/de/datenschutz',
-        target: '_self',
-        type: 'INTERNAL',
-      },
+      href: '/de/datenschutz',
+      target: '_self',
     },
     {
       label: 'Presse',
-      link: {
-        href: '/de/presse',
-        target: '_self',
-        type: 'INTERNAL',
-      },
+      href: '/de/presse',
+      target: '_self',
     },
   ],
 }
@@ -87,19 +60,13 @@ export const footerMenuThree = {
   links: [
     {
       label: 'Kontakt',
-      link: {
-        href: '/de/kontakt',
-        target: '_self',
-        type: 'INTERNAL',
-      },
+      href: '/de/kontakt',
+      target: '_self',
     },
     {
       label: 'Mein Konto',
-      link: {
-        href: '/de/mein-konto',
-        target: '_self',
-        type: 'INTERNAL',
-      },
+      href: '/de/mein-konto',
+      target: '_self',
     },
   ],
 }
