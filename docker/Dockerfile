@@ -10,10 +10,10 @@ FROM node:16-alpine  as frontend-build
 #   - orchestrating environment, i.e., kubernetes
 
 # port of frontend application
-ARG PORT
-ARG HOST
+ARG PORT=3000
+ARG HOST='0.0.0.0'
 
-ARG BASE_URL
+ARG BASE_URL='https://localhost:3000'
 
 # please read the note above
 ARG NODE_ENV

@@ -90,7 +90,31 @@ deploy-dev-manually:
   extends: .deploy-on-dev-machine
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
+    DOCKER_IMAGE_TAG: "dev2"
     DOCKER_SERVICE_NAME: "dev2"
+  script:
+    - docker build
+      -t ${DOCKER_IMAGE_NAME}:${DOCKER_SERVICE_NAME}
+      --build-arg NODE_ENV=${NODE_ENV}
+      --build-arg DEFAULT_LANGUAGE_CODE='${DEFAULT_LANGUAGE_CODE}'
+      --build-arg STORYBLOK_OAUTH_TOKEN='${STORYBLOK_OAUTH_TOKEN}'
+      --build-arg STORYBLOK_ACCESS_TOKEN
+      --build-arg STORYBLOK_SPACE_ID='${STORYBLOK_SPACE_ID}'
+      --build-arg STORYBLOK_VERSION='${STORYBLOK_VERSION}'
+      --build-arg STORYBLOK_RESOLVE_RELATIONS='${STORYBLOK_RESOLVE_RELATIONS}'
+      --build-arg STORYBLOK_RESOLVE_LINKS='${STORYBLOK_RESOLVE_LINKS}'
+      --build-arg STORYBLOK_RESOLVE_ASSETS='${STORYBLOK_RESOLVE_ASSETS}'
+      --build-arg STORYBLOK_CONTENT_TYPES='${STORYBLOK_CONTENT_TYPES}'
+      --build-arg STORYBLOK_EXCLUDE_ROUTES='${STORYBLOK_EXCLUDE_ROUTES}'
+      -f docker/Dockerfile .
+    - docker push ${DOCKER_IMAGE_NAME}:${DOCKER_SERVICE_NAME}
+    - export container_running=`docker container list | grep ${DOCKER_SERVICE_NAME}`
+    - # check if container is running. stop and remove if so.
+      if [ -n container_running ]; then
+      docker-compose -f ${DOCKER_COMPOSE_FILENAME} stop ${DOCKER_SERVICE_NAME};
+      docker-compose -f ${DOCKER_COMPOSE_FILENAME} rm --force ${DOCKER_SERVICE_NAME};
+      fi;
+    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up --detach --no-deps --build ${DOCKER_SERVICE_NAME}
   when: manual
   except:
     - develop
