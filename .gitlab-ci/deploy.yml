@@ -91,6 +91,7 @@ deploy-lsg-manually:
 
 deploy-uat-automatically:
   extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-uat" ]
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
@@ -102,6 +103,7 @@ deploy-uat-automatically:
 
 deploy-uat-manually:
   extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-uat" ]
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
@@ -114,6 +116,7 @@ deploy-uat-manually:
 
 deploy-prd-manually:
   extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-prd" ]
   variables:
     DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
   environment:
