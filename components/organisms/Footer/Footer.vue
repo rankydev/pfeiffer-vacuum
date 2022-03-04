@@ -1,23 +1,23 @@
 <template>
-  <footer class="footer tw-col-span-full">
-    <SocialMedia
+  <footer v-editable="$attrs" class="footer tw-col-span-full">
+    <social-media
       v-if="socialMedia"
       class="footer__top"
       :social-media="socialMedia"
     />
 
     <section class="footer__bottom tw-text-inverse">
-      <ContentWrapper class="footer__bottom-content tw-grid-container">
+      <content-wrapper class="footer__bottom-content tw-grid-container">
         <div class="footer__menu">
-          <LinkList
-            v-for="(menu, index) in navigationColumns"
+          <link-list
+            v-for="menu in navigationColumns"
             v-bind="menu"
-            :key="index"
+            :key="menu._uid"
             class="footer__menu-element"
           />
         </div>
 
-        <FooterNewsletter class="footer__newsletter" />
+        <footer-newsletter class="footer__newsletter" />
 
         <hr class="footer__ruler" />
 
@@ -26,15 +26,15 @@
         <div class="footer__copyright">
           <p>{{ copyright }}</p>
         </div>
-      </ContentWrapper>
+      </content-wrapper>
     </section>
   </footer>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import SocialMedia from './partials/SocialMedia/SocialMedia'
 import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter'
+import SocialMedia from '@/components/molecules/SocialMedia/SocialMedia'
 
 export default defineComponent({
   name: 'Footer',
@@ -121,10 +121,12 @@ export default defineComponent({
 
   &__ruler {
     @apply tw-col-span-full;
+    @apply tw-text-pv-grey-48;
   }
 
   &__language {
     @apply tw-col-span-full;
+    @apply tw-text-pv-white;
 
     @screen md {
       @apply tw-col-span-1;

@@ -11,15 +11,31 @@
             "type": "text",
             "description": "Use an icon from https://jossef.github.io/material-design-icons-iconfont/ here (e.g. calculate)"
         },
-        "link": {
-            "type": "bloks",
-            "restrict_components": true,
+        "href": {
+            "type": "multilink",
+            "display_name": "Link",
+            "restrict_content_types": true,
+            "required": true,
+            "translatable": true,
             "component_whitelist": [
-                "Link"
+                "Page"
+            ]
+        },
+        "target": {
+            "type": "option",
+            "use_uuid": true,
+            "options": [
+                {
+                    "value": "_blank",
+                    "name": "New tab / window"
+                },
+                {
+                    "value": "_self",
+                    "name": "Same window"
+                }
             ],
-            "pos": 1,
-            "maximum": 1,
-            "description": "Link for the entry"
+            "default_value": "_self",
+            "display_name": "Open linked page in"
         }
     },
     "image": null,

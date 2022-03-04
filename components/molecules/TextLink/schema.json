@@ -11,6 +11,8 @@
             "type": "multilink",
             "display_name": "TextLink",
             "restrict_content_types": true,
+            "required": true,
+            "translatable": true,
             "component_whitelist": [
                 "Page"
             ]

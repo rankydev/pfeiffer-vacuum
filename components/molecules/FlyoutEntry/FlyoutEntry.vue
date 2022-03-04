@@ -2,12 +2,12 @@
   <component
     :is="hasLink ? 'Link' : 'div'"
     class="flyout-entry"
-    v-bind="hasLink ? link[0] : {}"
+    v-bind="hasLink ? link : {}"
   >
-    <Icon class="flyout-entry__icon" :icon="icon" />
-    <AnimatedCollapse direction="horizontal" speed="fast">
+    <icon class="flyout-entry__icon" :icon="icon" />
+    <animated-collapse direction="horizontal" speed="fast">
       <div v-show="active" class="flyout-entry__label">{{ label }}</div>
-    </AnimatedCollapse>
+    </animated-collapse>
   </component>
 </template>
 
@@ -43,11 +43,18 @@ export default defineComponent({
       default: 'question_mark',
     },
     /**
-     * Link
+     * href of link
      */
-    link: {
-      type: Array,
-      default: () => [],
+    href: {
+      type: String,
+      default: undefined,
+    },
+    /**
+     * target of link
+     */
+    target: {
+      type: String,
+      default: undefined,
     },
     /**
      * State if label will be shown or not
@@ -58,9 +65,13 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const hasLink = computed(() => props.link[0] !== undefined)
+    const hasLink = computed(() => props.href !== undefined)
+    const link = {
+      href: props.href,
+      target: props.target,
+    }
 
-    return { hasLink }
+    return { hasLink, link }
   },
 })
 </script>

@@ -9,7 +9,7 @@
       @mouseleave="active = false"
     >
       <div class="top-navigation__flyouts">
-        <FlyoutEntry
+        <flyout-entry
           v-for="item in flyoutLinks"
           :key="item._uid"
           v-editable="item"

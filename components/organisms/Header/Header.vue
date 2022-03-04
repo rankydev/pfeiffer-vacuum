@@ -1,15 +1,15 @@
 <template>
   <div class="header">
-    <NuxtLink to="/" class="header__logo"><Logo /></NuxtLink>
-    <SearchHeader :has-opacity="active" class="header__search-input" />
-    <TopNavigation
+    <nuxt-link to="/" class="header__logo"><logo /></nuxt-link>
+    <search-header :has-opacity="active" class="header__search-input" />
+    <top-navigation
       v-model="active"
       :flyout-links="flyoutLinks"
       class="header__top-navigation"
     />
-    <ShopNavigation class="header__shop-navigation" />
+    <shop-navigation class="header__shop-navigation" />
     <div class="header__break-column" />
-    <MainNavigation class="header__main-navigation" />
+    <main-navigation class="header__main-navigation" />
   </div>
 </template>
 

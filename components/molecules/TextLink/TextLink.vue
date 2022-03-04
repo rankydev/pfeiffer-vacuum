@@ -1,5 +1,5 @@
 <template>
-  <Link class="text-link" v-bind="$attrs">
+  <Link v-editable="label" class="text-link" v-bind="$attrs">
     {{ label }}
   </Link>
 </template>

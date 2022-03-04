@@ -1,5 +1,5 @@
 <template>
-  <div class="link-list">
+  <div v-editable="$attrs" class="link-list">
     <h5 class="link-list__title">{{ title }}</h5>
     <ul class="link-list__list">
       <li
@@ -7,7 +7,7 @@
         :key="index"
         class="link-list__item"
       >
-        <TextLink v-bind="linkItem" />
+        <text-link v-bind="linkItem" />
       </li>
     </ul>
   </div>

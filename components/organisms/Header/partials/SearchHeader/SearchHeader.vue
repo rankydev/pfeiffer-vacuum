@@ -1,7 +1,7 @@
 <template>
   <div class="search-header" :class="{ 'search-header--opacity': hasOpacity }">
-    <Icon icon="search" class="search-header__trigger" />
-    <SearchInput class="search-header__field" />
+    <icon icon="search" class="search-header__trigger" />
+    <search-input class="search-header__field" />
   </div>
 </template>
 

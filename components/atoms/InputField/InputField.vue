@@ -10,7 +10,7 @@
       @blur="$emit('focus', false)"
       @input="$emit('change', internalValue)"
     />
-    <Icon
+    <icon
       v-if="icon"
       class="pv-input__icon"
       :icon="icon"
