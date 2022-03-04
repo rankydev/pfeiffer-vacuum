@@ -14,9 +14,10 @@ ARG PORT=3000
 ARG HOST='0.0.0.0'
 
 ARG BASE_URL='https://localhost:3000'
+ARG DOMAIN='https://localhost:3000'
 
 # please read the note above
-ARG NODE_ENV
+ARG NODE_ENV=development
 
 # please read the note above
 ARG DEFAULT_LANGUAGE_CODE
@@ -41,14 +42,16 @@ RUN \
 
 WORKDIR /src/
 
-ADD package.json ./
 ADD . ./
 
 RUN cat .env.template | envsubst >> .env
+
+RUN mkdir -p build_logs
+
 RUN \
-  npm install  \
-  && npm ci  \
-  && npm run build
+  npm install &> build_logs/npm_install.log \
+  && npm ci  &> build_logs/npm_ci.log \
+  && npm run build &> build_logs/npm_build.log
 
 ########################################################################################################################
 # end frontend-build image
@@ -93,12 +96,14 @@ ENV STORYBLOK_EXCLUDE_ROUTES=^\/[a-z]{2}\/home$
 # Create app directory
 WORKDIR /opt/pvac-frontend
 
+COPY --from=frontend-build /src/build_logs ./build_logs/
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY --from=frontend-build /src/package*.json ./
 COPY --from=frontend-build /src/nuxt.config.js ./
+#COPY --from=frontend-build /src/.env ./
 
 # Bundle app source
 COPY --from=frontend-build /src/.nuxt .nuxt/
