@@ -66,7 +66,7 @@ FROM node:16-alpine
 
 # port of frontend application
 ENV PORT=3000
-ENV HOST='0'
+ENV HOST='0.0.0.0'
 
 ENV BASE_URL='https://localhost:3000'
 
