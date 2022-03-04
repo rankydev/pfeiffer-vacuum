@@ -57,7 +57,7 @@ sonar-qube:
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
-    DOCKER_IMAGE_TAG: ${COMMIT_REF_SLUG}
+    DOCKER_IMAGE_TAG: ${CI_COMMIT_REF_SLUG}
   image: docker:git
   stage: build-docker-image
   services:
