@@ -131,7 +131,7 @@ tag-docker-image-latest-main:
 
 build-docker-image-frontend-uat-tags:
   extends: .build-docker-image
-  needs: [ "build-docker-image-frontend" ]
+  needs: [ "test", "lint" ]
   variables:
     DOCKER_IMAGE_TAG: uat-${COMMIT_REF_SLUG}
   environment:
@@ -141,7 +141,7 @@ build-docker-image-frontend-uat-tags:
 
 build-docker-image-frontend-prd-tags:
   extends: .build-docker-image
-  needs: [ "build-docker-image-frontend" ]
+  needs: [ "test", "lint" ]
   variables:
     DOCKER_IMAGE_TAG: prd-${COMMIT_REF_SLUG}
   environment:
