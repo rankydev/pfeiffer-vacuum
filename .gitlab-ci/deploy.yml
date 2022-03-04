@@ -37,31 +37,7 @@ deploy-dev-automatically:
   needs: [ "audit-frontend-develop" ]
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
-    DOCKER_IMAGE_TAG: "dev2"
     DOCKER_SERVICE_NAME: "dev2"
-  script:
-    - docker build
-      -t ${DOCKER_IMAGE_NAME}:${DOCKER_SERVICE_NAME}
-      --build-arg NODE_ENV=${NODE_ENV}
-      --build-arg DEFAULT_LANGUAGE_CODE='${DEFAULT_LANGUAGE_CODE}'
-      --build-arg STORYBLOK_OAUTH_TOKEN='${STORYBLOK_OAUTH_TOKEN}'
-      --build-arg STORYBLOK_ACCESS_TOKEN
-      --build-arg STORYBLOK_SPACE_ID='${STORYBLOK_SPACE_ID}'
-      --build-arg STORYBLOK_VERSION='${STORYBLOK_VERSION}'
-      --build-arg STORYBLOK_RESOLVE_RELATIONS='${STORYBLOK_RESOLVE_RELATIONS}'
-      --build-arg STORYBLOK_RESOLVE_LINKS='${STORYBLOK_RESOLVE_LINKS}'
-      --build-arg STORYBLOK_RESOLVE_ASSETS='${STORYBLOK_RESOLVE_ASSETS}'
-      --build-arg STORYBLOK_CONTENT_TYPES='${STORYBLOK_CONTENT_TYPES}'
-      --build-arg STORYBLOK_EXCLUDE_ROUTES='${STORYBLOK_EXCLUDE_ROUTES}'
-      -f docker/Dockerfile .
-    - docker push ${DOCKER_IMAGE_NAME}:${DOCKER_SERVICE_NAME}
-    - export container_running=`docker container list | grep ${DOCKER_SERVICE_NAME}`
-    - # check if container is running. stop and remove if so.
-      if [ -n container_running ]; then
-      docker-compose -f ${DOCKER_COMPOSE_FILENAME} stop ${DOCKER_SERVICE_NAME};
-      docker-compose -f ${DOCKER_COMPOSE_FILENAME} rm --force ${DOCKER_SERVICE_NAME};
-      fi;
-    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up --detach --no-deps --build ${DOCKER_SERVICE_NAME}
   only:
     - develop
 
@@ -90,33 +66,7 @@ deploy-dev-manually:
   extends: .deploy-on-dev-machine
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
-    DOCKER_IMAGE_TAG: "dev2"
     DOCKER_SERVICE_NAME: "dev2"
-  script:
-    - docker build
-      -t ${DOCKER_IMAGE_NAME}:${DOCKER_SERVICE_NAME}
-      --build-arg NODE_ENV=${NODE_ENV}
-      --build-arg BASE_URL=${CI_ENVIRONMENT_URL}
-      --build-arg DOMAIN=${CI_ENVIRONMENT_URL}
-      --build-arg DEFAULT_LANGUAGE_CODE='${DEFAULT_LANGUAGE_CODE}'
-      --build-arg STORYBLOK_OAUTH_TOKEN='${STORYBLOK_OAUTH_TOKEN}'
-      --build-arg STORYBLOK_ACCESS_TOKEN=${STORYBLOK_ACCESS_TOKEN}
-      --build-arg STORYBLOK_SPACE_ID='${STORYBLOK_SPACE_ID}'
-      --build-arg STORYBLOK_VERSION='${STORYBLOK_VERSION}'
-      --build-arg STORYBLOK_RESOLVE_RELATIONS='${STORYBLOK_RESOLVE_RELATIONS}'
-      --build-arg STORYBLOK_RESOLVE_LINKS='${STORYBLOK_RESOLVE_LINKS}'
-      --build-arg STORYBLOK_RESOLVE_ASSETS='${STORYBLOK_RESOLVE_ASSETS}'
-      --build-arg STORYBLOK_CONTENT_TYPES='${STORYBLOK_CONTENT_TYPES}'
-      --build-arg STORYBLOK_EXCLUDE_ROUTES='${STORYBLOK_EXCLUDE_ROUTES}'
-      -f docker/Dockerfile .
-    - docker push ${DOCKER_IMAGE_NAME}:${DOCKER_SERVICE_NAME}
-    - export container_running=`docker container list | grep ${DOCKER_SERVICE_NAME}`
-    - # check if container is running. stop and remove if so.
-      if [ -n container_running ]; then
-      docker-compose -f ${DOCKER_COMPOSE_FILENAME} stop ${DOCKER_SERVICE_NAME};
-      docker-compose -f ${DOCKER_COMPOSE_FILENAME} rm --force ${DOCKER_SERVICE_NAME};
-      fi;
-    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up --detach --no-deps --build ${DOCKER_SERVICE_NAME}
   when: manual
   except:
     - develop
@@ -133,14 +83,18 @@ deploy-lsg-manually:
   except:
     - develop
 
-deploy-uat-automatically:
+.deploy_to_docker_swarm:
   extends: .deployment
   script:
-    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:main ${DOCKER_SERVICE_NAME}
+    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_SERVICE_NAME}
+  allow_failure: falses
+
+deploy-uat-automatically:
+  extends: .deploy_to_docker_swarm
+  variables:
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
     name: uat
-  when: manual
-  allow_failure: false
   only:
     - main
   tags:
@@ -148,12 +102,11 @@ deploy-uat-automatically:
 
 deploy-uat-manually:
   extends: .deployment
-  script:
-    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
+  variables:
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
     name: uat
   when: manual
-  allow_failure: false
   only:
     - tags
   tags:
@@ -161,12 +114,11 @@ deploy-uat-manually:
 
 deploy-prd-manually:
   extends: .deployment
-  script:
-    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
+  variables:
+    DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
   environment:
     name: prd
   when: manual
-  allow_failure: false
   only:
     - tags
   tags:
