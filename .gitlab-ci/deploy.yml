@@ -87,7 +87,7 @@ deploy-lsg-manually:
   extends: .deployment
   script:
     - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_SERVICE_NAME}
-  allow_failure: falses
+  allow_failure: false
 
 deploy-uat-automatically:
   extends: .deploy_to_docker_swarm
@@ -101,7 +101,7 @@ deploy-uat-automatically:
     - pvac-frontend-uat-deployment
 
 deploy-uat-manually:
-  extends: .deployment
+  extends: .deploy_to_docker_swarm
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
@@ -113,7 +113,7 @@ deploy-uat-manually:
     - pvac-frontend-uat-deployment
 
 deploy-prd-manually:
-  extends: .deployment
+  extends: .deploy_to_docker_swarm
   variables:
     DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
   environment:
