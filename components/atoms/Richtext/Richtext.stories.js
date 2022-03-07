@@ -22,6 +22,9 @@ export default {
       },
     },
   },
+  argTypes: {
+    content: props.content,
+  },
 }
 
 const template = `
