@@ -30,7 +30,7 @@ export default defineComponent({
   @apply tw-leading-6;
 
   &:hover {
-    @apply tw-text-pv-red;
+    @apply tw-underline;
   }
 }
 </style>

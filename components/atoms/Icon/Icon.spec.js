@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Icon from './Icon.vue'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 
 describe('Icon', () => {
   describe('initial state', () => {

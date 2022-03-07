@@ -45,6 +45,11 @@ export default defineComponent({
   &__icon {
     @apply tw-text-pv-grey-64;
     @apply tw-p-1;
+    @apply tw-transition-colors tw-delay-300 tw-ease-out;
+
+    &:hover {
+      @apply tw-text-pv-grey-32;
+    }
 
     @screen md {
       @apply tw-p-3;
