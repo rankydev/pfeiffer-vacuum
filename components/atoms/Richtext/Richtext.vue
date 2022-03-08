@@ -1,24 +1,23 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <div
-    v-editable="content"
+    v-editable="richtext"
     class="paragraph-section"
     @click="handleClick"
     v-html="richtext"
   ></div>
 </template>
 <script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
-    content: {
+    richtext: {
       type: Object,
       default: () => {},
     },
   },
-  setup(props) {
-    const richtext = computed(() => props.content.richtext)
+  setup() {
     const handleClick = (event) => {
       // non <a> elements
       if (
@@ -56,7 +55,7 @@ export default defineComponent({
       event.preventDefault()
       this.$router.push(targetUrl)
     }
-    return { richtext, handleClick }
+    return { handleClick }
   },
 })
 </script>
