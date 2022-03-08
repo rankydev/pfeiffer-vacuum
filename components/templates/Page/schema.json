@@ -46,7 +46,9 @@
       "display_name": "Footer",
       "maximum": "1",
       "restrict_components": true,
-      "component_whitelist": []
+      "component_whitelist": [
+        "Footer"
+      ]
     },
     "tab-seo": {
       "type": "tab",
