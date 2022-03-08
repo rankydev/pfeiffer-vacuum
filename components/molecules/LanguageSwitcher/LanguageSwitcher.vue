@@ -1,6 +1,6 @@
 <template>
   <div class="language-switcher">
-    <icon class="language-switcher__icon" icon="language" />
+    <Icon class="language-switcher__icon" icon="language" />
     <span class="language-switcher__label">DE</span>
   </div>
 </template>

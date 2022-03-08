@@ -33,9 +33,11 @@ describe('FlyoutEntry', () => {
     })
 
     it('should render a Link component when given as a link array with an entry', () => {
-      const propsData = { ...defaultProps(), link: [{ href: '/someUrl' }] }
+      const propsData = {
+        ...defaultProps(),
+        link: { href: '/someUrl', target: '_blank' },
+      }
       const wrapper = shallowMount(FlyoutEntry, { propsData })
-
       const link = wrapper.findComponent(Link)
 
       expect(link.exists()).toBeTruthy()

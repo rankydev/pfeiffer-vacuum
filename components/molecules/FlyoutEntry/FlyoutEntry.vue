@@ -4,10 +4,10 @@
     class="flyout-entry"
     v-bind="hasLink ? link : {}"
   >
-    <icon class="flyout-entry__icon" :icon="icon" />
-    <animated-collapse direction="horizontal" speed="fast">
+    <Icon class="flyout-entry__icon" :icon="icon" />
+    <AnimatedCollapse direction="horizontal" speed="fast">
       <div v-show="active" class="flyout-entry__label">{{ label }}</div>
-    </animated-collapse>
+    </AnimatedCollapse>
   </component>
 </template>
 

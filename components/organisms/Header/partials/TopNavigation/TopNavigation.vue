@@ -9,7 +9,7 @@
       @mouseleave="active = false"
     >
       <div class="top-navigation__flyouts">
-        <flyout-entry
+        <FlyoutEntry
           v-for="item in flyoutLinks"
           :key="item._uid"
           v-editable="item"
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { toRefs, computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 import LanguageSwitcher from '~/components/molecules/LanguageSwitcher/LanguageSwitcher.vue'
 import FlyoutEntry from '~/components/molecules/FlyoutEntry/FlyoutEntry.vue'
 

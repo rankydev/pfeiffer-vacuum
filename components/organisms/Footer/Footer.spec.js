@@ -1,7 +1,6 @@
 import { RouterLinkStub, shallowMount } from '@vue/test-utils'
 import Footer from './Footer'
-
-import SocialMedia from './partials/SocialMedia/SocialMedia'
+import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter'
 
 describe('Footer', () => {

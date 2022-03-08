@@ -1,6 +1,6 @@
 <template>
   <div class="main-navigation">
-    <icon icon="menu" class="main-navigation__trigger" />
+    <Icon icon="menu" class="main-navigation__trigger" />
     <div class="main-navigation__items">
       <div
         v-for="(item, idx) in mockItems"

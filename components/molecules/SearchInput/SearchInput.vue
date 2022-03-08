@@ -1,5 +1,5 @@
 <template>
-  <input-field icon="search" placeholder="Suche ..." />
+  <InputField icon="search" placeholder="Suche ..." />
 </template>
 
 <script>

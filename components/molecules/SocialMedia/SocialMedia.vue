@@ -1,14 +1,14 @@
 <template>
-  <content-wrapper class="tw-grid-container">
+  <ContentWrapper class="tw-grid-container">
     <section class="social-media">
-      <social-media-icon-link
+      <SocialMediaIconLink
         v-for="item in socialMedia"
         :key="item._uid"
         class="social-media__icon"
         v-bind="item"
       />
     </section>
-  </content-wrapper>
+  </ContentWrapper>
 </template>
 
 <script>

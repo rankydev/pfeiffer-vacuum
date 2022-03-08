@@ -1,6 +1,6 @@
 <template>
   <Link v-editable="$attrs" v-bind="$attrs">
-    <icon class="social-media__icon" :icon="icon" type="svg" />
+    <Icon class="social-media__icon" :icon="icon" type="svg" />
   </Link>
 </template>
 

@@ -7,7 +7,7 @@
         :key="index"
         class="link-list__item"
       >
-        <text-link v-bind="linkItem" />
+        <TextLink v-bind="linkItem" />
       </li>
     </ul>
   </div>

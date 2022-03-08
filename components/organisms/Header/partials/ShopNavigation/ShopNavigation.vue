@@ -1,21 +1,21 @@
 <template>
   <div class="shop-navigation">
-    <nuxt-link to="#" class="shop-navigation__account">
-      <icon class="shop-navigation__icon" icon="person" />
+    <NuxtLink to="#" class="shop-navigation__account">
+      <Icon class="shop-navigation__icon" icon="person" />
       <span class="shop-navigation__account-name">Sign In</span>
-    </nuxt-link>
+    </NuxtLink>
 
-    <nuxt-link to="#" class="shop-navigation__comparhension">
-      <icon class="shop-navigation__icon" icon="compare_arrows" />
-    </nuxt-link>
+    <NuxtLink to="#" class="shop-navigation__comparhension">
+      <Icon class="shop-navigation__icon" icon="compare_arrows" />
+    </NuxtLink>
 
-    <nuxt-link to="#" class="shop-navigation__shopping-list">
-      <icon class="shop-navigation__icon" icon="assignment" />
-    </nuxt-link>
+    <NuxtLink to="#" class="shop-navigation__shopping-list">
+      <Icon class="shop-navigation__icon" icon="assignment" />
+    </NuxtLink>
 
-    <nuxt-link to="#" class="shop-navigation__shopping-cart">
-      <icon class="shop-navigation__icon" icon="shopping_cart" />
-    </nuxt-link>
+    <NuxtLink to="#" class="shop-navigation__shopping-cart">
+      <Icon class="shop-navigation__icon" icon="shopping_cart" />
+    </NuxtLink>
   </div>
 </template>
 

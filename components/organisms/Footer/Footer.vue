@@ -1,15 +1,15 @@
 <template>
   <footer v-editable="$attrs" class="footer tw-col-span-full">
-    <social-media
+    <SocialMedia
       v-if="socialMedia"
       class="footer__top"
       :social-media="socialMedia"
     />
 
     <section class="footer__bottom tw-text-inverse">
-      <content-wrapper class="footer__bottom-content tw-grid-container">
+      <ContentWrapper class="footer__bottom-content tw-grid-container">
         <div class="footer__menu">
-          <link-list
+          <LinkList
             v-for="menu in navigationColumns"
             v-bind="menu"
             :key="menu._uid"
@@ -17,16 +17,16 @@
           />
         </div>
 
-        <footer-newsletter class="footer__newsletter" />
+        <FooterNewsletter class="footer__newsletter" />
 
         <hr class="footer__ruler" />
 
-        <language-switcher class="footer__language" />
+        <LanguageSwitcher class="footer__language" />
 
         <div class="footer__copyright">
           <p>{{ copyright }}</p>
         </div>
-      </content-wrapper>
+      </ContentWrapper>
     </section>
   </footer>
 </template>
@@ -34,13 +34,19 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter'
-import SocialMedia from '@/components/molecules/SocialMedia/SocialMedia'
+import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import LinkList from '~/components/molecules/LinkList/LinkList'
+import LanguageSwitcher from '~/components/molecules/LanguageSwitcher/LanguageSwitcher'
 
 export default defineComponent({
   name: 'Footer',
   components: {
     SocialMedia,
     FooterNewsletter,
+    ContentWrapper,
+    LinkList,
+    LanguageSwitcher,
   },
   props: {
     /**
