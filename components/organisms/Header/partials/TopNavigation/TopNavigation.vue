@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { toRefs, computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 import LanguageSwitcher from '~/components/molecules/LanguageSwitcher/LanguageSwitcher.vue'
 import FlyoutEntry from '~/components/molecules/FlyoutEntry/FlyoutEntry.vue'
 

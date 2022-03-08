@@ -1,19 +1,15 @@
 {
-    "name": "FlyoutEntry",
-    "display_name": "FlyoutEntry",
+    "name": "TextLink",
+    "display_name": "TextLink",
     "schema": {
         "label": {
             "type": "text",
-            "description": "Visible text on hover",
-            "max_length": "30"
-        },
-        "icon": {
-            "type": "text",
-            "description": "Use an icon from https://jossef.github.io/material-design-icons-iconfont/ here (e.g. calculate)"
+            "translatable": true,
+            "display_name": "Label"
         },
         "href": {
             "type": "multilink",
-            "display_name": "Link",
+            "display_name": "TextLink",
             "restrict_content_types": true,
             "required": true,
             "translatable": true,
@@ -41,9 +37,9 @@
     "image": null,
     "preview_field": null,
     "is_root": false,
-    "preview_tmpl": null,
     "is_nestable": true,
     "all_presets": [],
     "preset_id": null,
-    "real_name": "Flyout Entry"
+    "real_name": "TextLink",
+    "component_group_uuid": null
 }

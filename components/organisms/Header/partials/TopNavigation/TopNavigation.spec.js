@@ -7,19 +7,22 @@ const flyoutLinks = () => [
   {
     _uid: nanoid(),
     icon: 'work',
-    link: [{ href: '#' }],
+    href: '/someUrl',
+    target: '_blank',
     label: 'Karriere',
   },
   {
     _uid: nanoid(),
     icon: 'business',
-    link: [{ href: '#' }],
+    href: '/someUrl',
+    target: '_blank',
     label: 'Business',
   },
   {
     _uid: nanoid(),
     icon: 'group',
-    link: [{ href: '#' }],
+    href: '/someUrl',
+    target: '_blank',
     label: 'Investor Relation',
   },
 ]
@@ -56,7 +59,10 @@ describe('TopNavigation', () => {
       flyoutEntries.wrappers.forEach((eleWrapper, idx) => {
         expect(eleWrapper.vm.label).toBe(flyoutLinks()[idx].label)
         expect(eleWrapper.vm.icon).toBe(flyoutLinks()[idx].icon)
-        expect(eleWrapper.vm.link).toEqual(flyoutLinks()[idx].link)
+        expect(eleWrapper.attributes('href')).toEqual(flyoutLinks()[idx].href)
+        expect(eleWrapper.attributes('target')).toEqual(
+          flyoutLinks()[idx].target
+        )
       })
     })
 
