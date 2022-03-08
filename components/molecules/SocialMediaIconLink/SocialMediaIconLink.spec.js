@@ -1,13 +1,18 @@
-import { shallowMount, RouterLinkStub } from '@vue/test-utils'
+import { shallowMount, RouterLinkStub, createLocalVue } from '@vue/test-utils'
 import SocialMediaIconLink from './SocialMediaIconLink.vue'
 import LinkContent from '~/components/atoms/Link/Link.stories.content'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+
+const localVue = createLocalVue()
+localVue.directive('editable', (el, key) => {
+  el.innerText = key.value
+})
 
 let wrapper
 
 function createComponent(propsData = {}) {
   const stubs = { NuxtLink: RouterLinkStub }
-  wrapper = shallowMount(SocialMediaIconLink, { propsData, stubs })
+  wrapper = shallowMount(SocialMediaIconLink, { propsData, stubs, localVue })
 }
 
 describe('SocialMediaIconLink', () => {

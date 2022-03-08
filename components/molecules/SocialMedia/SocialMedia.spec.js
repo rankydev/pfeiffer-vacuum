@@ -13,8 +13,9 @@ describe('SocialMedia', () => {
         const links = wrapper.findAllComponents(SocialMediaIconLink)
 
         SocialMediaContent.forEach((item, index) => {
-          expect(links.at(index).vm.href).toBe(item.link)
-          expect(links.at(index).vm.target).toBe(item.target)
+          expect(links.length).toBe(SocialMediaContent.length)
+          expect(links.at(index).attributes('href')).toBe(item.href)
+          expect(links.at(index).attributes('target')).toBe(item.target)
         })
       })
     })
