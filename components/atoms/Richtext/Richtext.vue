@@ -13,8 +13,8 @@ import { defineComponent } from '@nuxtjs/composition-api'
 export default defineComponent({
   props: {
     richtext: {
-      type: Object,
-      default: () => {},
+      type: String,
+      default: '',
     },
   },
   setup() {
