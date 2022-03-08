@@ -1,19 +1,14 @@
 <template>
-  <component
-    :is="hasLink ? 'Link' : 'div'"
-    class="flyout-entry"
-    v-bind="hasLink ? link[0] : {}"
-  >
+  <Link class="flyout-entry" v-bind="$attrs">
     <Icon class="flyout-entry__icon" :icon="icon" />
     <AnimatedCollapse direction="horizontal" speed="fast">
       <div v-show="active" class="flyout-entry__label">{{ label }}</div>
     </AnimatedCollapse>
-  </component>
+  </Link>
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
-
+import { defineComponent } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
 import Link from '~/components/atoms/Links/Link/Link.vue'
@@ -43,24 +38,12 @@ export default defineComponent({
       default: 'question_mark',
     },
     /**
-     * Link
-     */
-    link: {
-      type: Array,
-      default: () => [],
-    },
-    /**
      * State if label will be shown or not
      */
     active: {
       type: Boolean,
       default: false,
     },
-  },
-  setup(props) {
-    const hasLink = computed(() => props.link[0] !== undefined)
-
-    return { hasLink }
   },
 })
 </script>

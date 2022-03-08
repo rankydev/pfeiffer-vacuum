@@ -1,4 +1,5 @@
 import Link from '@/components/atoms/Links/Link/Link.vue'
+import LinkContent from './Link.stories.content'
 
 export default {
   title: 'Atoms/Links/Link',
@@ -33,7 +34,4 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
-Default.args = {
-  href: 'https://www.pfeiffer-vacuum.com/de/',
-  target: '_blank',
-}
+Default.args = LinkContent

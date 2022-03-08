@@ -1,5 +1,16 @@
 <template>
-  <span :class="['material-icons', `icon-${size}`]">{{ icon }}</span>
+  <SvgIcon
+    v-if="type === 'svg'"
+    :name="icon"
+    :class="['icon__svg', `icon--${size}`]"
+  />
+  <span
+    v-else
+    class="material-icons"
+    :class="['icon__material', `icon--${size}`]"
+  >
+    {{ icon }}
+  </span>
 </template>
 
 <script>
@@ -25,30 +36,49 @@ export default defineComponent({
       validator: (val) =>
         ['xsmall', 'small', 'base', 'large', 'xlarge'].includes(val),
     },
+    /**
+     * Set the type of icon
+     * @values small, base, large, xlarge
+     */
+    type: {
+      type: String,
+      default: 'material-icon',
+      validator: (val) => ['material-icon', 'svg'].includes(val),
+    },
   },
 })
 </script>
 
 <style lang="scss">
-.material-icons {
-  &.icon-xsmall {
-    font-size: 1rem;
+.icon {
+  &__svg {
+    @apply tw-h-10 tw-w-10;
+
+    @screen md {
+      @apply tw-h-16 tw-w-16;
+    }
   }
 
-  &.icon-small {
-    font-size: 1.125rem;
-  }
+  &__material {
+    &.icon--xsmall {
+      font-size: 1rem;
+    }
 
-  &.icon-base {
-    font-size: 1.5rem;
-  }
+    &.icon--small {
+      font-size: 1.125rem;
+    }
 
-  &.icon-large {
-    font-size: 2rem;
-  }
+    &.icon--base {
+      font-size: 1.5rem;
+    }
 
-  &.icon-xlarge {
-    font-size: 4rem;
+    &.icon--large {
+      font-size: 2rem;
+    }
+
+    &.icon--xlarge {
+      font-size: 4rem;
+    }
   }
 }
 </style>
