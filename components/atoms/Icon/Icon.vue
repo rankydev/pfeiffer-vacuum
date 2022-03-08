@@ -33,7 +33,8 @@ export default defineComponent({
     size: {
       type: String,
       default: 'base',
-      validator: (val) => ['small', 'base', 'large', 'xlarge'].includes(val),
+      validator: (val) =>
+        ['xsmall', 'small', 'base', 'large', 'xlarge'].includes(val),
     },
     /**
      * Set the type of icon
