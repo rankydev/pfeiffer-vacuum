@@ -13,7 +13,7 @@ const defaultProps = () => ({ links, title })
 
 describe('LinkList', () => {
   describe('initial state', () => {
-    it('should render a list with a title', () => {
+    it('should render a list with a title given example links', () => {
       const propsData = { ...defaultProps() }
       const wrapper = shallowMount(LinkList, {
         propsData,
@@ -26,7 +26,7 @@ describe('LinkList', () => {
       expect(linkListTitle.text()).toBe('Pfeiffer Vacuum')
     })
 
-    it('should render a list of 5 entries', () => {
+    it('should render a list of 5 entries given an array of 5 links', () => {
       const propsData = { ...defaultProps() }
       const wrapper = shallowMount(LinkList, {
         propsData,
