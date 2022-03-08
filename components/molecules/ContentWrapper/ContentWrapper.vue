@@ -14,7 +14,7 @@ export default defineComponent({})
 .content-wrapper {
   @apply tw-px-4;
   @apply tw-mx-auto;
-  max-width: 1440px;
+  @apply tw-container;
 
   @screen md {
     @apply tw-px-6;
