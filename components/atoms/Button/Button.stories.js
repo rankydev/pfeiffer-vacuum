@@ -1,4 +1,12 @@
 import Button from '~/components/atoms/Button/Button.vue'
+import {
+  buttonVariants,
+  variants,
+  shapes,
+  sizes,
+  icon,
+  label,
+} from '~/components/atoms/Button/Button.stories.content'
 
 export default {
   title: 'Atoms/Button',
@@ -13,13 +21,15 @@ export default {
   },
   argTypes: {
     variant: {
-      options: ['primary', 'secondary', 'inverted'],
+      options: variants,
       control: { type: 'inline-radio' },
     },
-    outlined: { control: { type: 'boolean' } },
-    plain: { control: { type: 'boolean' } },
+    shape: {
+      options: shapes,
+      control: { type: 'inline-radio' },
+    },
     size: {
-      options: ['xsmall', 'small', 'normal'],
+      options: sizes,
       control: { type: 'inline-radio' },
     },
     prependIcon: { control: { type: 'boolean' } },
@@ -43,6 +53,38 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {
-  icon: 'arrow_forward',
-  label: 'Button text',
+  variant: variants[0],
+  shape: shapes[0],
+  size: sizes[sizes.length - 1],
+  icon: icon,
+  label: label,
 }
+
+const OverviewTemplate = (args) => ({
+  components: { Button },
+  setup() {
+    return { buttonVariants }
+  },
+  template: `
+  <div class="documentation-preview">
+    <div style="display: flex;">
+      <div
+        v-for="(col, index) in buttonVariants"
+        :key="index" 
+        :style="col[0].variant === 'inverted' && 'background-color: #000;'"
+      >
+        <template  v-for="(ele, idx) in col">
+          <Button 
+            :key="'button-' + index"
+            v-bind="ele"
+            style="margin:10px;"
+          />
+          <br :key="'linebreak-' + index" />
+      </template>
+      </div>
+    </div>
+  </div>
+`,
+})
+
+export const Overview = OverviewTemplate.bind({})

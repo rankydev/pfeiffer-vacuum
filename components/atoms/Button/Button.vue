@@ -4,10 +4,8 @@
     :class="[
       `button--${variant}`,
       `button--${size}`,
+      `button--${isPrimary ? 'filled' : shape}`,
       {
-        'button--filled': !outlined && !plain,
-        'button--outlined': outlined && !plain,
-        'button--plain': plain,
         'button--disabled': disabled,
         'button--icon-only': !label,
       },
@@ -29,8 +27,10 @@
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
+  components: { Icon },
   props: {
     /**
      * The text displayed at the button
@@ -62,19 +62,14 @@ export default defineComponent({
       default: 'primary',
       validator: (val) => ['primary', 'secondary', 'inverted'].includes(val),
     },
-    /*
-     * Button displayed as a border button
+    /**
+     * Defines the button shape
+     * * @values filled, outlined, plain
      */
-    outlined: {
-      type: Boolean,
-      default: false,
-    },
-    /*
-     * Button displayed without any border
-     */
-    plain: {
-      type: Boolean,
-      default: false,
+    shape: {
+      type: String,
+      default: 'filled',
+      validator: (val) => ['filled', 'outlined', 'plain'].includes(val),
     },
     /**
      * The size of the component
@@ -98,7 +93,10 @@ export default defineComponent({
       props.size === 'xsmall' ? 'xsmall' : 'base'
     )
 
+    const isPrimary = computed(() => props.variant === 'primary')
+
     return {
+      isPrimary,
       iconSize,
     }
   },
@@ -109,13 +107,12 @@ export default defineComponent({
 .button {
   all: unset;
 
-  @apply tw-border-2;
-  @apply tw-border-solid;
   @apply tw-rounded-md;
-  @apply tw-flex;
+  @apply tw-inline-flex;
   @apply tw-items-center;
   @apply tw-cursor-pointer;
   @apply tw-font-bold;
+  @apply tw-whitespace-nowrap;
 
   &--disabled {
     @apply tw-cursor-default;
@@ -133,7 +130,7 @@ export default defineComponent({
 
   &--small {
     @apply tw-py-2 tw-px-3;
-    @apply tw-leading-5;
+    @apply tw-leading-6;
     @apply tw-text-sm;
 
     &.button--icon-only {
@@ -154,71 +151,59 @@ export default defineComponent({
   &--filled {
     &.button--primary {
       @apply tw-bg-pv-yellow;
-      @apply tw-border-pv-yellow;
       @apply tw-text-pv-grey-16;
 
-      &:hover {
+      &:hover,
+      &:focus {
         @apply tw-bg-pv-yellow-lighter;
-        @apply tw-border-pv-yellow-lighter;
       }
     }
 
     &.button--secondary {
       @apply tw-bg-pv-red;
-      @apply tw-border-pv-red;
       @apply tw-text-pv-white;
 
-      &:hover {
+      &:hover,
+      &:focus {
         @apply tw-bg-pv-red-lighter;
-        @apply tw-border-pv-red-lighter;
       }
     }
 
     &.button--inverted {
       @apply tw-bg-pv-white;
-      @apply tw-border-pv-white;
       @apply tw-text-pv-black;
 
-      &:hover {
+      &:hover,
+      &:focus {
         @apply tw-text-pv-grey-32;
       }
     }
 
     &.button--disabled,
-    &.button--disabled:hover {
+    &.button--disabled:hover,
+    &.button--disabled:focus {
       @apply tw-bg-pv-grey-80;
-      @apply tw-border-pv-grey-80;
       @apply tw-text-pv-grey-96;
 
       &.button--inverted {
         @apply tw-bg-pv-grey-64;
-        @apply tw-border-pv-grey-64;
         @apply tw-text-pv-grey-80;
       }
     }
   }
 
   &--outlined {
-    &.button--primary {
-      @apply tw-border-pv-yellow;
-      @apply tw-text-pv-yellow;
-
-      &:hover {
-        @apply tw-border-pv-yellow-lighter;
-        @apply tw-text-pv-yellow-lighter;
-        @apply tw-bg-pv-yellow-lighter;
-        @apply tw-bg-opacity-10;
-
-        // background-color: rgba($pv-yellow-lighter, 10%);
-      }
-    }
+    @apply tw-outline;
+    @apply tw-outline-2;
+    @apply tw--outline-offset-2;
 
     &.button--secondary {
-      @apply tw-border-pv-red;
+      @apply tw-outline-pv-red;
       @apply tw-text-pv-red;
 
-      &:hover {
-        @apply tw-border-pv-red-lighter;
+      &:hover,
+      &:focus {
+        @apply tw-outline-pv-red-lighter;
         @apply tw-text-pv-red-lighter;
         @apply tw-bg-pv-red-lighter;
         @apply tw-bg-opacity-10;
@@ -226,11 +211,12 @@ export default defineComponent({
     }
 
     &.button--inverted {
-      @apply tw-border-pv-grey-96;
+      @apply tw-outline-pv-grey-96;
       @apply tw-text-pv-grey-96;
 
-      &:hover {
-        @apply tw-border-pv-white;
+      &:hover,
+      &:focus {
+        @apply tw-outline-pv-white;
         @apply tw-text-pv-white;
         @apply tw-bg-pv-white;
         @apply tw-bg-opacity-10;
@@ -238,35 +224,29 @@ export default defineComponent({
     }
 
     &.button--disabled,
-    &.button--disabled:hover {
-      @apply tw-border-pv-grey-80;
+    &.button--disabled:hover,
+    &.button--disabled:focus {
+      @apply tw-outline-pv-grey-80;
+      @apply tw-bg-pv-transparent;
       @apply tw-text-pv-grey-80;
 
       &.button--inverted {
-        @apply tw-border-pv-grey-48;
+        @apply tw-outline-pv-grey-48;
+        @apply tw-bg-pv-transparent;
         @apply tw-text-pv-grey-48;
       }
     }
   }
 
   &--plain {
-    @apply tw-border-pv-transparent;
     @apply tw-bg-pv-transparent;
     @apply tw-px-0;
-    @apply tw-border-l-0 tw-border-r-0;
-
-    &.button--primary {
-      @apply tw-text-pv-yellow;
-
-      &:hover {
-        @apply tw-text-pv-yellow-lighter;
-      }
-    }
 
     &.button--secondary {
       @apply tw-text-pv-red;
 
-      &:hover {
+      &:hover,
+      &:focus {
         @apply tw-text-pv-red-lighter;
       }
     }
@@ -274,23 +254,21 @@ export default defineComponent({
     &.button--inverted {
       @apply tw-text-pv-grey-96;
 
-      &:hover {
+      &:hover,
+      &:focus {
         @apply tw-text-pv-white;
       }
     }
 
     &.button--disabled,
-    &.button--disabled:hover {
+    &.button--disabled:hover,
+    &.button--disabled:focus {
       @apply tw-text-pv-grey-80;
 
       &.button--inverted {
         @apply tw-text-pv-grey-48;
       }
     }
-  }
-
-  &__label {
-    @apply tw--mt-0.5;
   }
 
   &__icon {

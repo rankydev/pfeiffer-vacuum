@@ -58,6 +58,9 @@ module.exports = {
       10: '0.1',
       20: '0.2',
     },
+    outlineOffset: {
+      '-2': '-2px',
+    },
     gridTemplateColumns: {
       desktop: 'repeat(12, minmax(0, 1fr))',
       tablet: 'repeat(8, minmax(0, 1fr))',
