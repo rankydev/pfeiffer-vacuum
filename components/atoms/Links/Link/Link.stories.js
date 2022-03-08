@@ -1,7 +1,7 @@
-import Link from '~/components/atoms/Link/Link.vue'
+import Link from '@/components/atoms/Links/Link/Link.vue'
 
 export default {
-  title: 'Atoms/Link',
+  title: 'Atoms/Links/Link',
   component: Link,
   parameters: {
     docs: {

@@ -16,7 +16,7 @@ import { defineComponent, computed } from '@nuxtjs/composition-api'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
-import Link from '~/components/atoms/Link/Link.vue'
+import Link from '~/components/atoms/Links/Link/Link.vue'
 
 export default defineComponent({
   components: {
