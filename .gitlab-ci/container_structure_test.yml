@@ -6,13 +6,14 @@ include:
   extends: .container-structure-test
   variables:
     # Basic for git ci runner setup (docker in docker)
+    DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
     DOCKER_DRIVER: overlay2
     DOCKER_BUILDKIT: 1
     DOCKER_IMAGE_TAG: ${CI_COMMIT_REF_SLUG}
   cache: {}
   tags:
-    - docker
+    - dind_runner
   script:
     - echo "Run container structure test for image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
