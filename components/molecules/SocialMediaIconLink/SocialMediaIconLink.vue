@@ -1,0 +1,38 @@
+<template>
+  <Link v-editable="$attrs" v-bind="$attrs">
+    <Icon class="social-media__icon" :icon="icon" type="svg" />
+  </Link>
+</template>
+
+<script>
+import { defineComponent } from '@nuxtjs/composition-api'
+import Icon from '~/components/atoms/Icon/Icon.vue'
+import Link from '~/components/atoms/Link/Link.vue'
+
+export default defineComponent({
+  components: {
+    Link,
+    Icon,
+  },
+  props: {
+    /**
+     * The icon to display
+     * @values facebook, twitter, linkedin, youtube, xing, wechat, zhihu
+     */
+    icon: {
+      type: String,
+      required: true,
+      validator: (val) =>
+        [
+          'facebook',
+          'twitter',
+          'linkedin',
+          'youtube',
+          'xing',
+          'wechat',
+          'zhihu',
+        ].includes(val),
+    },
+  },
+})
+</script>
