@@ -16,7 +16,8 @@ include:
     - dind_runner
   script:
     - echo "Run container structure test for image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+    - # disable gitlab warning for docker login
+      echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
     - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
     - container-structure-test test --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} --config .gitlab-ci/container_structure_test.config.yml
 
