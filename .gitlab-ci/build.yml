@@ -133,7 +133,7 @@ build-docker-image-frontend-uat-tags:
   extends: .build-docker-image
   needs: [ "test", "lint" ]
   variables:
-    DOCKER_IMAGE_TAG: uat-${COMMIT_REF_SLUG}
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
     name: uat
   only:
@@ -143,7 +143,7 @@ build-docker-image-frontend-prd-tags:
   extends: .build-docker-image
   needs: [ "test", "lint" ]
   variables:
-    DOCKER_IMAGE_TAG: prd-${COMMIT_REF_SLUG}
+    DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
   environment:
     name: prd
   only:
