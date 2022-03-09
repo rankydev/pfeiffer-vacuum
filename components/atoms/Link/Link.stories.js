@@ -1,8 +1,8 @@
-import Link from '@/components/atoms/Links/Link/Link.vue'
+import Link from '~/components/atoms/Link/Link.vue'
 import LinkContent from './Link.stories.content'
 
 export default {
-  title: 'Atoms/Links/Link',
+  title: 'Atoms/Link',
   component: Link,
   parameters: {
     docs: {

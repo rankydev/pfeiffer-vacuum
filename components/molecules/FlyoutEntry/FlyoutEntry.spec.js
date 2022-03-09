@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import FlyoutEntry from './FlyoutEntry.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import Link from '~/components/atoms/Links/Link/Link.vue'
+import Link from '~/components/atoms/Link/Link.vue'
 
 const defaultProps = () => ({
   label: 'Some Label',

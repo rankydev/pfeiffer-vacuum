@@ -16,6 +16,14 @@
         "Header"
       ]
     },
+    "quicklinks": {
+      "type": "bloks",
+      "maximum": "1",
+      "restrict_components": true,
+      "component_whitelist": [
+        "QuicklinkNavigation"
+      ]
+    },
     "stage": {
       "type": "bloks",
       "display_name": "Stage",

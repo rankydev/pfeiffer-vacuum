@@ -13,7 +13,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const richtext = computed(() => props.content.richtext)
+    const richtext = computed(() => props.content?.richtext)
 
     return { richtext }
   },

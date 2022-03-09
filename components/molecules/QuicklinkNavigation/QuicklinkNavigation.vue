@@ -1,5 +1,6 @@
 <template>
   <div class="quicklink-navigation">
+    <!-- TODO: Implement breadcrumb -->
     <div>[Breadcrumb]</div>
     <div class="quicklink-navigation__items">
       <Quicklink
@@ -9,14 +10,14 @@
       >
         {{ item.label }}
       </Quicklink>
-      <span>[Shop]</span>
+      <Button size="small" label="Shop" />
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import Quicklink from '@/components/atoms/Links/Quicklink/Quicklink'
+import Quicklink from '~/components/molecules/Links/Quicklink/Quicklink'
 
 export default defineComponent({
   components: {
@@ -36,6 +37,8 @@ export default defineComponent({
 
 <style lang="scss">
 .quicklink-navigation {
+  @apply tw-container;
+
   &,
   &__items {
     @apply tw-flex tw-items-center tw-justify-between tw-gap-6;

@@ -1,7 +1,7 @@
-import Quicklink from '~/components/atoms/Links/Quicklink/Quicklink'
+import Quicklink from '@/components/molecules/Links/Quicklink/Quicklink'
 
 export default {
-  title: 'Atoms/Links/Quicklink',
+  title: 'Molecules/Links/Quicklink',
   component: Quicklink,
   parameters: {
     docs: {
@@ -19,7 +19,7 @@ const Template = (args) => ({
   components: { Quicklink },
   template: `
   <div class="documentation-preview">
-    <Quicklink anchor="#testAnchor">
+    <Quicklink anchor="testAnchor">
       Quicklink
     </Quicklink>
   </div>
