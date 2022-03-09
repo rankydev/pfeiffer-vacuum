@@ -1,4 +1,4 @@
-import Quicklink from '@/components/molecules/Links/Quicklink/Quicklink'
+import Quicklink from '~/components/molecules/Links/Quicklink/Quicklink'
 
 export default {
   title: 'Molecules/Links/Quicklink',
@@ -9,7 +9,7 @@ export default {
         component: 'Link that is used for quicklink navigation',
       },
       source: {
-        code: '<Quicklink anchor="#testAnchor">\n  Quicklink\n</Quicklink>',
+        code: '<Quicklink anchor="testAnchor">\n  Quicklink\n</Quicklink>',
       },
     },
   },

@@ -1,5 +1,5 @@
 import FlyoutEntry from '~/components/molecules/FlyoutEntry/FlyoutEntry.vue'
-import LinkContent from '@/components/atoms/Link/Link.stories.content'
+import LinkContent from '~/components/atoms/Link/Link.stories.content'
 
 export default {
   title: 'Molecules/FlyoutEntry',
