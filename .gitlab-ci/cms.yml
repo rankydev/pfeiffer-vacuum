@@ -12,9 +12,6 @@
   environment:
     name: dev
     url: https://${CI_ENVIRONMENT_NAME}-vacuum.westeurope.cloudapp.azure.com
-  except:
-    - schedules
-    - tags
 
 cms-migrate-dev-automatically-develop:
   extends: .cms-migrate
@@ -25,12 +22,8 @@ cms-migrate-dev-automatically-develop:
     - develop
 
 cms-migrate-dev-develop:
-  extends: .cms-migrate
+  extends: cms-migrate-dev-automatically-develop
   needs: [ "deploy-dev-manually-develop" ]
-  environment:
-    name: dev2
-  only:
-    - develop
 
 cms-migrate-dev:
   extends: .cms-migrate
@@ -45,7 +38,6 @@ cms-migrate-uat-automatically:
   needs: [ "deploy-uat-automatically" ]
   environment:
     name: uat
-  allow_failure: true
   only:
     - main
 
@@ -56,7 +48,7 @@ cms-migrate-uat:
     name: uat
   only:
     - tags
-  allow_failure: true
+    - main
 
 cms-migrate-production:
   extends: .cms-migrate
