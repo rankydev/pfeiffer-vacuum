@@ -2,7 +2,7 @@ import Richtext from '~/components/atoms/Richtext/Richtext'
 import richtext from '~/components/atoms/Richtext/Richtext.stories.content'
 
 const props = {
-  content: richtext.content,
+  richtext: richtext.content.richtext,
 }
 
 export default {

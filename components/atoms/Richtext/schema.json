@@ -41,6 +41,14 @@
         {
           "value": "tw-subline-6",
           "name": "Subline H6"
+        },
+        {
+          "value": "superscript",
+          "name": "Superscript"
+        },
+        {
+          "value": "subscript",
+          "name": "Subscript"
         }
       ]
     }

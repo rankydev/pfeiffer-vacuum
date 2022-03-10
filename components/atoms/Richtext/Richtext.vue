@@ -8,7 +8,7 @@
   ></div>
 </template>
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useRouter } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -18,6 +18,8 @@ export default defineComponent({
     },
   },
   setup() {
+    const router = useRouter()
+
     const handleClick = (event) => {
       // non <a> elements
       if (
@@ -53,7 +55,8 @@ export default defineComponent({
       }
 
       event.preventDefault()
-      this.$router.push(targetUrl)
+
+      router.push(targetUrl)
     }
     return { handleClick }
   },
@@ -61,6 +64,8 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .paragraph-section {
+  @apply tw-container;
+
   a {
     @apply tw-text-pv-red;
 
@@ -87,7 +92,15 @@ export default defineComponent({
         @apply tw-relative;
         @apply tw-content-['\25AA'];
       }
+
+      p {
+        @apply tw-inline-block;
+      }
     }
+  }
+
+  ol {
+    @apply tw-list-decimal;
   }
 }
 </style>
