@@ -6,17 +6,20 @@ include:
   extends: .container-structure-test
   variables:
     # Basic for git ci runner setup (docker in docker)
+    DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
     DOCKER_DRIVER: overlay2
     DOCKER_BUILDKIT: 1
+    DOCKER_IMAGE_TAG: ${CI_COMMIT_REF_SLUG}
   cache: {}
   tags:
-    - docker
+    - dind_runner
   script:
-    - echo "Run container structure test for image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG}"
-    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
-    - docker pull ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG}
-    - container-structure-test test --image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} --config .gitlab-ci/container_structure_test.config.yml
+    - echo "Run container structure test for image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+    - # disable gitlab warning for docker login
+      echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
+    - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+    - container-structure-test test --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} --config .gitlab-ci/container_structure_test.config.yml
 
 audit-frontend:
   extends: .audit_frontend
@@ -29,4 +32,20 @@ audit-frontend-develop:
   needs: [ "build-docker-image-frontend-develop" ]
   only:
     - develop
+
+audit-frontend-uat:
+  extends: .audit_frontend
+  needs: [ "build-docker-image-frontend-uat-tags" ]
+  variables:
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
+  only:
+    - tags
+
+audit-frontend-prd:
+  extends: .audit_frontend
+  needs: [ "build-docker-image-frontend-prd-tags" ]
+  variables:
+    DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
+  only:
+    - tags
 
