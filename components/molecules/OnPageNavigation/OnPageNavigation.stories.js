@@ -25,7 +25,7 @@ const Template = () => ({
   },
   template: `
   <div class="documentation-preview">
-    <QuicklinkNavigation v-bind="{ quicklinks: mockedLinks }" />
+    <OnPageNavigation v-bind="{ quicklinks: mockedLinks }" />
   </div>
 `,
 })
