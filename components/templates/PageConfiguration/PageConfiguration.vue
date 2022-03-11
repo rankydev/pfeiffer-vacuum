@@ -18,16 +18,6 @@
       />
     </slot>
 
-    <slot name="quicklinks">
-      <nuxt-dynamic
-        v-for="item in quicklinks"
-        :key="item._uid"
-        v-editable="item"
-        :name="item.uiComponent || item.component"
-        v-bind="item"
-      />
-    </slot>
-
     <slot>
       <main>
         <nuxt-dynamic
@@ -79,11 +69,10 @@ export default defineComponent({
   },
   setup(props) {
     const { content } = toRefs(props)
-    const { top, header, quicklinks, stage, body, bottom, footer } = content.value
+    const { top, header, stage, body, bottom, footer } = content.value
     return {
       top,
       header,
-      quicklinks,
       stage,
       body,
       bottom,

@@ -1,6 +1,6 @@
 {
-  "name": "QuicklinkNavigation",
-  "display_name": "Quicklink Navigation",
+  "name": "OnPageNavigation",
+  "display_name": "OnPageNavigation",
   "schema": {
     "quicklinks": {
       "type": "bloks",
@@ -19,5 +19,5 @@
   "is_nestable": true,
   "all_presets": [],
   "preset_id": null,
-  "real_name": "Quicklink Navigation"
+  "real_name": "OnPageNavigation"
 }

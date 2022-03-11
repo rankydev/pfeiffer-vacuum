@@ -16,29 +16,24 @@ describe('useTemplating ', () => {
               id: '2',
             },
           ],
-          quicklinks: [
+          stage: [
             {
               id: '3',
             },
           ],
-          stage: [
+          body: [
             {
               id: '4',
             },
           ],
-          body: [
+          bottom: [
             {
               id: '5',
             },
           ],
-          bottom: [
-            {
-              id: '6',
-            },
-          ],
           footer: [
             {
-              id: '7',
+              id: '6',
             },
           ],
         },
@@ -49,16 +44,14 @@ describe('useTemplating ', () => {
     expect(overwrittenContent.top.value[0].id).toBe('1')
     expect(overwrittenContent.header.value).toHaveLength(1)
     expect(overwrittenContent.header.value[0].id).toBe('2')
-    expect(overwrittenContent.quicklinks.value).toHaveLength(1)
-    expect(overwrittenContent.quicklinks.value[0].id).toBe('3')
     expect(overwrittenContent.stage.value).toHaveLength(1)
-    expect(overwrittenContent.stage.value[0].id).toBe('4')
+    expect(overwrittenContent.stage.value[0].id).toBe('3')
     expect(overwrittenContent.body.value).toHaveLength(1)
-    expect(overwrittenContent.body.value[0].id).toBe('5')
+    expect(overwrittenContent.body.value[0].id).toBe('4')
     expect(overwrittenContent.bottom.value).toHaveLength(1)
-    expect(overwrittenContent.bottom.value[0].id).toBe('6')
+    expect(overwrittenContent.bottom.value[0].id).toBe('5')
     expect(overwrittenContent.footer.value).toHaveLength(1)
-    expect(overwrittenContent.footer.value[0].id).toBe('7')
+    expect(overwrittenContent.footer.value[0].id).toBe('6')
   })
 
   it('should return custom content over template content', () => {

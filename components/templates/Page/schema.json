@@ -28,7 +28,7 @@
       "maximum": "1",
       "restrict_components": true,
       "component_whitelist": [
-        "QuicklinkNavigation"
+        "OnPageNavigation"
       ]
     },
     "stage": {

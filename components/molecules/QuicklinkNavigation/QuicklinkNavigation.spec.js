@@ -4,14 +4,6 @@ import { quicklinks } from './QuicklinkNavigation.stories.content'
 
 describe('QuicklinkNavigation', () => {
   describe('initial state', () => {
-    describe('given no items', () => {
-      it('should render', () => {
-        const wrapper = shallowMount(QuicklinkNavigation)
-        const links = wrapper.findAll('quicklink-stub')
-
-        expect(links).toHaveLength(0)
-      })
-    })
     describe('given a list of quicklink items', () => {
       it('should render', () => {
         const propsData = {

@@ -89,22 +89,25 @@ export default defineComponent({
     const { content } = toRefs(props)
     const translatedSlugs = inject('getTranslatedSlugs')()
     const defaultFullSlug = inject('getDefaultFullSlug')()
-    const { top, header, quicklinks, stage, body, bottom, footer } = useTemplating(content)
+    const { top, header, stage, body, bottom, footer } = useTemplating(content)
     const { getMetaData } = useMeta(content, defaultFullSlug, translatedSlugs, context)
 
     return {
       top,
       header,
-      quicklinks,
       stage,
       body,
       bottom,
       footer,
+      quicklinks: content.value.quicklinks,
       metaData: getMetaData(),
     }
   },
   head () {
     return this.metaData
   },
+  mounted() {
+    console.log(this.quicklinks)
+  }
 })
 </script>
