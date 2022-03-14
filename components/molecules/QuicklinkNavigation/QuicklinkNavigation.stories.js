@@ -1,6 +1,13 @@
 import QuicklinkNavigation from './QuicklinkNavigation.vue'
 import { quicklinks } from './QuicklinkNavigation.stories.content'
 
+const argTypes = {
+  quicklinks: {
+    defaultValue: quicklinks,
+    control: { type: 'array' },
+  },
+}
+
 export default {
   title: 'Molecules/Quicklink Navigation',
   component: QuicklinkNavigation,
@@ -14,6 +21,7 @@ export default {
       },
     },
   },
+  argTypes: argTypes,
 }
 
 const Template = () => ({
@@ -30,6 +38,3 @@ const Template = () => ({
 })
 
 export const Default = Template.bind({})
-Default.args = {
-  quicklinks,
-}
