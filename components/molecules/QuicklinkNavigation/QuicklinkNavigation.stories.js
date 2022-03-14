@@ -17,7 +17,8 @@ export default {
         code: '<QuicklinkNavigation v-bind="{ quicklinks }" />',
       },
       description: {
-        component: 'Quicklinks for on page navigation.',
+        component: `Quicklinks for on page navigation via anchors to elements which use the QuicklinkWrapper component.
+        The QuicklinkNavigation is used within the [OnPage Navigation](./?path=/story/molecules-onpage-navigation--default)`,
       },
     },
   },

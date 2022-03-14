@@ -2,7 +2,7 @@ import OnPageNavigation from './OnPageNavigation'
 import { quicklinks } from './OnPageNavigation.stories.content'
 
 export default {
-  title: 'Molecules/On-Page Navigation',
+  title: 'Molecules/OnPage Navigation',
   component: OnPageNavigation,
   parameters: {
     docs: {
