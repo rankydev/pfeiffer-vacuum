@@ -1,38 +1,35 @@
 <template>
   <div class="main-navigation">
-    <Icon icon="menu" class="main-navigation__trigger" />
-    <div class="main-navigation__items">
-      <div
-        v-for="(item, idx) in mockItems"
-        :key="idx"
-        class="main-navigation__item"
-      >
-        {{ item }}
-      </div>
+    <BurgerIcon
+      :is-active="isActive"
+      class="main-navigation__trigger"
+      tabindex="0"
+      @click.native="isActive = !isActive"
+      @keypress.native.enter="isActive = !isActive"
+    />
+    <div>
+      <PrimaryNavLink
+        class="main-navigation__items"
+        :class="{ 'main-navigation__items--active': isActive }"
+      />
+      <!-- flyout -->
+      <!-- sign in -->
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-
-import Icon from '~/components/atoms/Icon/Icon.vue'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import BurgerIcon from '~/components/atoms/BurgerIcon/BurgerIcon.vue'
 
 export default defineComponent({
   components: {
-    Icon,
+    BurgerIcon,
   },
   setup() {
-    const mockItems = [
-      'Produkte',
-      'Märkte',
-      'Knowledge',
-      'Blog',
-      'Service & Support',
-      'Kontakt',
-    ]
+    const isActive = ref(false)
 
-    return { mockItems }
+    return { isActive }
   },
 })
 </script>
@@ -42,7 +39,6 @@ export default defineComponent({
   &__trigger {
     @apply tw-ml-3;
     @apply tw-block;
-    @apply tw-text-pv-red;
 
     @screen md {
       @apply tw-hidden;
@@ -51,20 +47,22 @@ export default defineComponent({
 
   &__items {
     @apply tw-hidden;
+    @apply tw-flex-col;
+    @apply tw-absolute;
+    @apply tw-top-full tw-inset-x-0;
+    @apply tw-bg-pv-white;
+    @apply tw-mt-0.5;
+
+    &--active {
+      @apply tw-flex;
+    }
 
     @screen md {
       @apply tw-flex;
+      @apply tw-static;
+      @apply tw-flex-row;
+      @apply tw-mt-0;
     }
   }
-
-  /* temporarly until the component was implemented */
-  &__item {
-    @apply tw-mr-8;
-    @apply tw-text-xl;
-    @apply tw-leading-8;
-    @apply tw-text-pv-grey-16;
-  }
-
-  /* temporarly until the component was implemented */
 }
 </style>

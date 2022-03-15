@@ -57,6 +57,7 @@ module.exports = {
       0: '0',
       10: '0.1',
       20: '0.2',
+      100: '1',
     },
     outlineOffset: {
       '-2': '-2px',

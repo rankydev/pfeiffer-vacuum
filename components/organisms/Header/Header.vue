@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <ContentWrapper class="header">
     <NuxtLink to="/" class="header__logo"><Logo /></NuxtLink>
     <SearchHeader :has-opacity="active" class="header__search-input" />
     <TopNavigation
@@ -10,7 +10,7 @@
     <ShopNavigation class="header__shop-navigation" />
     <div class="header__break-column" />
     <MainNavigation class="header__main-navigation" />
-  </div>
+  </ContentWrapper>
 </template>
 
 <script>
@@ -21,6 +21,7 @@ import SearchHeader from './partials/SearchHeader/SearchHeader.vue'
 import TopNavigation from './partials/TopNavigation/TopNavigation.vue'
 import MainNavigation from './partials/MainNavigation/MainNavigation.vue'
 import ShopNavigation from './partials/ShopNavigation/ShopNavigation.vue'
+// import ContentWrapper from 'components/molecules/ContentWrapper/ContentWrapper.vue'
 
 export default defineComponent({
   components: {
@@ -29,6 +30,7 @@ export default defineComponent({
     TopNavigation,
     MainNavigation,
     ShopNavigation,
+    // ContentWrapper,
   },
   props: {
     /**
@@ -58,8 +60,32 @@ export default defineComponent({
 .header {
   @apply tw-flex;
   @apply tw-items-center;
-  @apply tw-container;
+  @apply tw-relative;
   @apply tw-py-4;
+  @apply tw-border-b-2;
+  @apply tw-border-pv-grey-96;
+
+  // @apply tw-z-10;
+
+  // &::after {
+  //   @apply tw-absolute;
+  //   @apply tw-inset-0;
+  //   @apply tw-border-pv-white;
+  //   content: '';
+  // }
+
+  // &::after {
+  //       @apply tw-fixed;
+  //       @apply tw-inset-0;
+  //       @apply tw-border-pv-black;
+  //       @apply tw-bg-opacity-20;
+  //       backdrop-filter: blur(20px);
+  //       content: '';
+  //     }
+
+  @screen md {
+    @apply tw-pb-0;
+  }
 
   &__logo {
     @apply tw-shrink tw-grow;
@@ -120,6 +146,10 @@ export default defineComponent({
 
     &__shop-navigation {
       @apply tw-order-1;
+    }
+
+    &__break-column {
+      @apply tw-h-10;
     }
   }
 }
