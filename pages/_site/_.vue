@@ -1,11 +1,4 @@
 <template>
-  <!--
-  <custom-cms-internationalization-query :handle-preview-events="true">
-    <template #default="{ result: { data } }">
-      <CmsRootComponent v-bind="data" />
-    </template>
-  </custom-cms-internationalization-query>
-  -->
   <CmsQuery
     :handle-preview-events="true"
     :slug="slug"
