@@ -7,28 +7,17 @@ const useTemplating = (content) => {
   const body = ref(undefined)
   const bottom = ref(undefined)
   const footer = ref(undefined)
-  const titleTemplate = ref(undefined)
 
   const getTemplateContentByName = (name) => {
-    return (
-      content.value.template &&
-      content.value.template.content &&
-      content.value.template.content[name]
-    )
+    return content?.value?.template?.content?.[name]
   }
 
   const getCustomContentByName = (name) => {
     const customContent = content.value[name]
-    const hasCustomContent = customContent && customContent.length > 0
+    const hasCustomContent = customContent?.length > 0
 
     return hasCustomContent && customContent
   }
-
-  /*
-  const hasCustomContent = (name) => {
-    return !!getCustomContentByName(name)
-  }
-   */
 
   const getContentByName = (name) => {
     const templateContent = getTemplateContentByName(name)
@@ -44,7 +33,6 @@ const useTemplating = (content) => {
     body.value = getContentByName('body')
     bottom.value = getContentByName('bottom')
     footer.value = getContentByName('footer')
-    titleTemplate.value = getTemplateContentByName('titleTemplate')
   }
 
   watch(content, getContent, { immediate: true })
@@ -56,7 +44,6 @@ const useTemplating = (content) => {
     body,
     bottom,
     footer,
-    titleTemplate,
   }
 }
 

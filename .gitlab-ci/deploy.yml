@@ -2,7 +2,6 @@
 # environment.name has to be set in extending configurations
 .deployment:
   stage: deployment
-  needs: [ "audit_frontend" ]
   cache: {}
   variables:
     DOCKER_IMAGE_NAME: ${CI_REGISTRY}/${CI_PROJECT_PATH}
@@ -13,6 +12,7 @@
 
 .deploy-on-dev-machine:
   extends: .deployment
+  needs: [ "audit-frontend" ]
   variables:
     DOCKER_COMPOSE_FILENAME: ""
     DOCKER_SERVICE_NAME: ""
@@ -32,14 +32,34 @@
     - pvac-frontend-dev2-deployment
 
 # scheduled deployment for nightly dev2
-deploy-dev:
+deploy-dev-automatically:
   extends: .deploy-on-dev-machine
+  needs: [ "audit-frontend-develop" ]
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
     DOCKER_SERVICE_NAME: "dev2"
   only:
-    refs:
-      - develop
+    - develop
+
+# manual deployment for dev2
+deploy-dev-manually-develop:
+  extends: deploy-dev-automatically
+  when: manual
+
+# scheduled deployment for nightly lsg
+deploy-lsg-automatically:
+  extends: .deploy-on-dev-machine
+  needs: [ "build-docker-image-lsg-develop" ]
+  variables:
+    DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
+    DOCKER_IMAGE_TAG: "lsg-${CI_COMMIT_REF_SLUG}"
+    DOCKER_SERVICE_NAME: "lsg"
+  only:
+    - develop
+
+deploy-lsg-manually-develop:
+  extends: deploy-lsg-automatically
+  when: manual
 
 # manual deployment for dev2
 deploy-dev-manually:
@@ -48,18 +68,8 @@ deploy-dev-manually:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
     DOCKER_SERVICE_NAME: "dev2"
   when: manual
-
-# scheduled deployment for nightly lsg
-deploy-lsg:
-  extends: .deploy-on-dev-machine
-  needs: [ "build-docker-image-lsg" ]
-  variables:
-    DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
-    DOCKER_IMAGE_TAG: "lsg-${CI_COMMIT_REF_SLUG}"
-    DOCKER_SERVICE_NAME: "lsg"
-  only:
-    refs:
-      - develop
+  except:
+    - develop
 
 # manual deployment for lsg
 deploy-lsg-manually:
@@ -70,43 +80,49 @@ deploy-lsg-manually:
     DOCKER_IMAGE_TAG: "lsg-${CI_COMMIT_REF_SLUG}"
     DOCKER_SERVICE_NAME: "lsg"
   when: manual
+  except:
+    - develop
 
-deploy-uat:
+.deploy_to_docker_swarm:
   extends: .deployment
   script:
-    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:main ${DOCKER_SERVICE_NAME}
+    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_SERVICE_NAME}
+  allow_failure: false
+
+deploy-uat-automatically:
+  extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-uat" ]
+  variables:
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
     name: uat
-  when: manual
-  allow_failure: false
   only:
-    refs:
-      - main
+    - main
   tags:
     - pvac-frontend-uat-deployment
 
 deploy-uat-manually:
-  extends: .deployment
-  script:
-    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
+  extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-uat" ]
+  variables:
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
     name: uat
   when: manual
-  allow_failure: false
   only:
     - tags
   tags:
     - pvac-frontend-uat-deployment
 
 deploy-prd-manually:
-  extends: .deployment
-  script:
-    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
+  extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-prd" ]
+  variables:
+    DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
   environment:
     name: prd
   when: manual
-  allow_failure: false
   only:
     - tags
   tags:
-    - pvac-frontend-uat-deployment
+    - pvac-frontend-prd-deployment

@@ -29,10 +29,10 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 ### Sync all components
 ```bash
-yarn storyblok:sync
+npm run storyblok:sync
 ```
 
 ### Sync one component
 ```bash
-yarn storyblok:sync ./components/atoms/YourComponent
+npm run storyblok:sync ./components/atoms/YourComponent
 ```

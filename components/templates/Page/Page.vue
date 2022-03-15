@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col min-h-screen overflow-x-hidden antialiased">
+  <div>
     <slot name="header">
       <nuxt-dynamic
         v-for="item in top"
@@ -18,11 +18,8 @@
       />
     </slot>
 
-    <h3>{{ body[0].text }}</h3>
-    <pre>{{ body }}</pre>
-
     <slot>
-      <main class="flex-grow z-10 space-y-7 lg:space-y-32 mb-10 lg:mb-32">
+      <main>
         <nuxt-dynamic
           v-for="item in stage"
           :key="item._uid"
@@ -67,10 +64,11 @@ import useTemplating from '~/composables/useTemplating'
 
 export default defineComponent({
   name: 'Page',
-  inject: [
+    inject: [
     'getTranslatedSlugs',
     'getDefaultFullSlug'
   ],
+
   props: {
     content: {
       type: Object,
@@ -81,9 +79,8 @@ export default defineComponent({
     const { content } = toRefs(props)
     const translatedSlugs = inject('getTranslatedSlugs')()
     const defaultFullSlug = inject('getDefaultFullSlug')()
-    const { top, stage, header, body, bottom, footer, titleTemplate } = useTemplating(content)
-    // const { top, stage, header, text, body, bottom, footer, titleTemplate } = content.value
-    const { getMetaData } = useMeta(content, defaultFullSlug, translatedSlugs, context, titleTemplate)
+    const { top, stage, header, body, bottom, footer } = useTemplating(content)
+    const { getMetaData } = useMeta(content, defaultFullSlug, translatedSlugs, context)
 
     return {
       top,
@@ -100,11 +97,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto;
-}
-*/
-</style>

@@ -1,6 +1,5 @@
 module.exports = {
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/$1',
     '^~/(.*)$': '<rootDir>/$1',
     '^vue$': 'vue/dist/vue.common.js',
   },
@@ -10,8 +9,10 @@ module.exports = {
     '.*\\.(vue)$': 'vue-jest',
   },
   collectCoverage: true,
+  coverageReporters: ['clover', 'json', 'lcov', 'text', 'html'],
   collectCoverageFrom: [
     '<rootDir>/components/**/*.vue',
     '<rootDir>/pages/**/*.vue',
+    '<rootDir>/composables/**/*.js',
   ],
 }

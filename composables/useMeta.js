@@ -1,42 +1,42 @@
 const useMeta = (
   { value: content },
-  // { value: titleTemplate }, to merge meta strings for meta tags
   defaultSlug,
   translatedSlugs,
   { root: context }
 ) => {
   const getMetaData = () => {
     const { title, seoTitle, seoDescription } = content
-    const meta = []
+    let meta = []
     const link = []
 
     const _seoTitle = seoTitle || title
+
+    const baseUrl = context.$config.baseURL
+
+    const opengraphMeta = addOpenGraph(
+      content,
+      _seoTitle,
+      seoDescription,
+      baseUrl,
+      context.$imageService
+    )
+    const twitterMeta = addTwitter(
+      content,
+      _seoTitle,
+      seoDescription,
+      baseUrl,
+      context.$imageService
+    )
+
+    const robotsMeta = addRobots(content)
+
+    meta = [...opengraphMeta, ...twitterMeta, ...robotsMeta]
 
     meta.push({
       hid: 'description',
       name: 'description',
       content: seoDescription,
     })
-    const baseUrl = context.$config.baseURL
-
-    addOpenGraph(
-      meta,
-      content,
-      _seoTitle,
-      seoDescription,
-      baseUrl,
-      context.$imageService
-    )
-    addTwitter(
-      meta,
-      content,
-      _seoTitle,
-      seoDescription,
-      baseUrl,
-      context.$imageService
-    )
-
-    addRobots(meta, content)
 
     const routeFullPath = context.$route.fullPath
     addCanonical(link, content, baseUrl, routeFullPath)
@@ -45,7 +45,6 @@ const useMeta = (
 
     return {
       title,
-      // titleTemplate,
       meta,
       link,
     }
@@ -71,7 +70,6 @@ function getImageUrl(image, fallbackImageUrl, width, height, imageService) {
 }
 
 function addOpenGraph(
-  meta,
   content,
   fallbackTitle,
   fallbackDescription,
@@ -80,6 +78,14 @@ function addOpenGraph(
 ) {
   const { ogTitle, ogDescription, ogImage } = content
   const ogFallbackImage = baseUrl + '/og_image.png'
+  const ogImageUrl = getImageUrl(
+    ogImage,
+    ogFallbackImage,
+    1200,
+    630,
+    imageService
+  )
+  const meta = []
 
   meta.push({
     hid: 'og:title',
@@ -94,12 +100,13 @@ function addOpenGraph(
   meta.push({
     hid: 'og:image',
     name: 'og:image',
-    content: getImageUrl(ogImage, ogFallbackImage, 1200, 630, imageService),
+    content: ogImageUrl,
   })
+
+  return meta
 }
 
 function addTwitter(
-  meta,
   content,
   fallbackTitle,
   fallbackDescription,
@@ -107,7 +114,15 @@ function addTwitter(
   imageService
 ) {
   const { twitterTitle, twitterDescription, twitterImage } = content
-  const twitterFallbackImage = baseUrl + '/og_image.png'
+  const twitterFallbackImage = baseUrl + '/twitter_image.png'
+  const twitterImageUrl = getImageUrl(
+    twitterImage,
+    twitterFallbackImage,
+    280,
+    150,
+    imageService
+  )
+  const meta = []
 
   meta.push({
     hid: 'twitter:title',
@@ -119,20 +134,17 @@ function addTwitter(
     name: 'twitter:description',
     content: twitterDescription || fallbackDescription,
   })
+
   meta.push({
     hid: 'twitter:image',
     name: 'twitter:image',
-    content: getImageUrl(
-      twitterImage,
-      twitterFallbackImage,
-      280,
-      150,
-      imageService
-    ),
+    content: twitterImageUrl,
   })
+
+  return meta
 }
 
-function addRobots(meta, { noindex, nofollow }) {
+function addRobots({ noindex, nofollow }) {
   const robotsContent = []
   if (noindex) {
     robotsContent.push('noindex')
@@ -142,12 +154,15 @@ function addRobots(meta, { noindex, nofollow }) {
   }
 
   if (robotsContent.length) {
-    meta.push({
-      hid: 'robots',
-      name: 'robots',
-      content: robotsContent.join(','),
-    })
+    return [
+      {
+        hid: 'robots',
+        name: 'robots',
+        content: robotsContent.join(','),
+      },
+    ]
   }
+  return []
 }
 
 function addCanonical(link, { canonical = '' }, baseUrl, routeFullPath) {
