@@ -5,6 +5,7 @@
         "label": {
             "type": "text",
             "description": "Visible text on hover",
+            "translatable": true,
             "max_length": "30"
         },
         "icon": {
