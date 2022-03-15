@@ -83,11 +83,11 @@ export default {
       process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
   },
   publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL,
+    baseURL: process.env.BASE_URL || 'https://localhost:3000',
   },
   server: {
     // for local change add 'environments/local.js'
-    port: process.env.PORT,
-    host: process.env.HOST,
+    port: process.env.PORT || 3000,
+    host: process.env.HOST || '0.0.0.0',
   },
 }

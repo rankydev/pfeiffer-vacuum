@@ -57,6 +57,7 @@ sonar-qube:
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
+    DOCKER_IMAGE_TAG: ${CI_COMMIT_REF_SLUG}
   image: docker:git
   stage: build-docker-image
   services:
@@ -64,6 +65,23 @@ sonar-qube:
   before_script:
     - # disable gitlab warning for docker login
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
+  script:
+    - docker build
+      -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+      --build-arg NODE_ENV=${NODE_ENV}
+      --build-arg BASE_URL="${CI_ENVIRONMENT_URL}"
+      --build-arg DOMAIN="${CI_ENVIRONMENT_URL}"
+      --build-arg DEFAULT_LANGUAGE_CODE="${DEFAULT_LANGUAGE_CODE}"
+      --build-arg STORYBLOK_OAUTH_TOKEN="${STORYBLOK_OAUTH_TOKEN}"
+      --build-arg STORYBLOK_ACCESS_TOKEN="${STORYBLOK_ACCESS_TOKEN}"
+      --build-arg STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
+      --build-arg STORYBLOK_VERSION="${STORYBLOK_VERSION}"
+      --build-arg STORYBLOK_RESOLVE_RELATIONS="${STORYBLOK_RESOLVE_RELATIONS}"
+      --build-arg STORYBLOK_RESOLVE_LINKS="${STORYBLOK_RESOLVE_LINKS}"
+      --build-arg STORYBLOK_RESOLVE_ASSETS="${STORYBLOK_RESOLVE_ASSETS}"
+      --build-arg STORYBLOK_CONTENT_TYPES="${STORYBLOK_CONTENT_TYPES}"
+      --build-arg STORYBLOK_EXCLUDE_ROUTES="${STORYBLOK_EXCLUDE_ROUTES}"
+      -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
       docker push --all-tags ${DOCKER_IMAGE_NAME}
@@ -73,8 +91,8 @@ sonar-qube:
 build-docker-image-frontend:
   extends: .build-docker-image
   needs: [ "test", "lint" ]
-  script:
-    - docker build -t ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} -f docker/Dockerfile .
+  environment:
+    name: dev2
   except:
     - develop
 
@@ -89,8 +107,8 @@ build-docker-image-lsg:
 build-docker-image-frontend-develop:
   extends: .build-docker-image
   needs: [ "sonar-qube" ]
-  script:
-    - docker build -t ${DOCKER_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} -f docker/Dockerfile .
+  environment:
+    name: dev2
   only:
     - develop
 
@@ -110,3 +128,23 @@ tag-docker-image-latest-main:
     - docker tag ${DOCKER_IMAGE_NAME}:main ${DOCKER_IMAGE_NAME}:latest
   only:
     - main
+
+build-docker-image-frontend-uat-tags:
+  extends: .build-docker-image
+  needs: [ "test", "lint" ]
+  variables:
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
+  environment:
+    name: uat
+  only:
+    - tags
+
+build-docker-image-frontend-prd-tags:
+  extends: .build-docker-image
+  needs: [ "test", "lint" ]
+  variables:
+    DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
+  environment:
+    name: prd
+  only:
+    - tags
