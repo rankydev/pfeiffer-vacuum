@@ -6,6 +6,8 @@
             "type": "multilink",
             "display_name": "Link",
             "restrict_content_types": true,
+            "required": true,
+            "translatable": true,
             "component_whitelist": [
                 "Page"
             ]

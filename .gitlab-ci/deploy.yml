@@ -83,40 +83,45 @@ deploy-lsg-manually:
   except:
     - develop
 
-deploy-uat-automatically:
+.deploy_to_docker_swarm:
   extends: .deployment
   script:
-    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:main ${DOCKER_SERVICE_NAME}
+    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_SERVICE_NAME}
+  allow_failure: false
+
+deploy-uat-automatically:
+  extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-uat" ]
+  variables:
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
     name: uat
-  when: manual
-  allow_failure: false
   only:
     - main
   tags:
     - pvac-frontend-uat-deployment
 
 deploy-uat-manually:
-  extends: .deployment
-  script:
-    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
+  extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-uat" ]
+  variables:
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
     name: uat
   when: manual
-  allow_failure: false
   only:
     - tags
   tags:
     - pvac-frontend-uat-deployment
 
 deploy-prd-manually:
-  extends: .deployment
-  script:
-    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${CI_COMMIT_TAG} ${DOCKER_SERVICE_NAME}
+  extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-prd" ]
+  variables:
+    DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
   environment:
     name: prd
   when: manual
-  allow_failure: false
   only:
     - tags
   tags:

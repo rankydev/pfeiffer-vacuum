@@ -1,4 +1,5 @@
 .cms-migrate:
+  extends: .node-image
   stage: cms-migration
   before_script:
     - # cp ./cms/storyblok.${CI_ENVIRONMENT_NAME}.env ./cms/storyblok.env
@@ -8,14 +9,9 @@
       echo "Laeuft 1"
     - # npm run cms:migrate-content
       echo "Laeuft 2"
-  tags:
-    - docker_runner
   environment:
     name: dev
     url: https://${CI_ENVIRONMENT_NAME}-vacuum.westeurope.cloudapp.azure.com
-  except:
-    - schedules
-    - tags
 
 cms-migrate-dev-automatically-develop:
   extends: .cms-migrate
@@ -26,12 +22,8 @@ cms-migrate-dev-automatically-develop:
     - develop
 
 cms-migrate-dev-develop:
-  extends: .cms-migrate
+  extends: cms-migrate-dev-automatically-develop
   needs: [ "deploy-dev-manually-develop" ]
-  environment:
-    name: dev2
-  only:
-    - develop
 
 cms-migrate-dev:
   extends: .cms-migrate
@@ -46,10 +38,8 @@ cms-migrate-uat-automatically:
   needs: [ "deploy-uat-automatically" ]
   environment:
     name: uat
-  allow_failure: true
   only:
     - main
-  except: []
 
 cms-migrate-uat:
   extends: .cms-migrate
@@ -58,8 +48,7 @@ cms-migrate-uat:
     name: uat
   only:
     - tags
-  allow_failure: true
-  except: []
+    - main
 
 cms-migrate-production:
   extends: .cms-migrate
@@ -68,4 +57,3 @@ cms-migrate-production:
     name: prd
   only:
     - tags
-  except: []

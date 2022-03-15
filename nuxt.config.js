@@ -18,7 +18,10 @@ export default {
   css: ['~/assets/scss/style.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/storyblok-api-client', mode: 'client' },
+    { src: '~/plugins/service.plugin', mode: 'client' },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
@@ -37,6 +40,7 @@ export default {
     // https://composition-api.nuxtjs.org/
     '@nuxtjs/composition-api/module',
     '@nuxt/postcss8',
+    '@nuxtjs/svg-sprite',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -52,9 +56,15 @@ export default {
     },
   },
 
-  // Storybook Configuration See https://storybook.nuxtjs.org/options
+  // Storybook Configuration, see https://storybook.nuxtjs.org/options
   storybook: {
     port: 4000,
+  },
+
+  // SVG Sprite Configuration, see: https://github.com/nuxt-community/svg-sprite-module
+  svgSprite: {
+    input: '~/assets/svgSource',
+    output: '~/assets/svgSprite',
   },
 
   // TXP-CMS Storyblok Configuration, see: https://txp-cms.dev/integrations/storyblok
@@ -71,10 +81,12 @@ export default {
       process.env.STORYBLOK_EXCLUDE_ROUTES &&
       process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
   },
-
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL || 'https://localhost:3000',
+  },
   server: {
     // for local change add 'environments/local.js'
-    port: process.env.PORT,
-    host: process.env.HOST,
+    port: process.env.PORT || 3000,
+    host: process.env.HOST || '0.0.0.0',
   },
 }
