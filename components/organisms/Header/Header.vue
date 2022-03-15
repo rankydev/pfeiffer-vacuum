@@ -1,20 +1,25 @@
 <template>
-  <ContentWrapper class="header">
-    <NuxtLink to="/" class="header__logo"><Logo /></NuxtLink>
-    <SearchHeader :has-opacity="active" class="header__search-input" />
-    <TopNavigation
-      v-model="active"
-      :flyout-links="flyoutLinks"
-      class="header__top-navigation"
-    />
-    <ShopNavigation class="header__shop-navigation" />
-    <div class="header__break-column" />
-    <MainNavigation class="header__main-navigation" />
-  </ContentWrapper>
+  <header class="header" :class="{ 'header--blur-content': menu.isActive }">
+    <ContentWrapper class="header__wrapper">
+      <NuxtLink to="/" class="header__logo"><Logo /></NuxtLink>
+      <SearchHeader :has-opacity="active" class="header__search-input" />
+      <TopNavigation
+        v-model="active"
+        :flyout-links="flyoutLinks"
+        class="header__top-navigation"
+      />
+      <ShopNavigation class="header__shop-navigation" />
+      <div class="header__break-column" />
+      <MainNavigation
+        class="header__main-navigation"
+        :navigation-entries="navigationEntries"
+      />
+    </ContentWrapper>
+  </header>
 </template>
 
 <script>
-import { ref, defineComponent } from '@nuxtjs/composition-api'
+import { ref, defineComponent, provide } from '@nuxtjs/composition-api'
 
 import Logo from '~/components/atoms/Logo/Logo.vue'
 import SearchHeader from './partials/SearchHeader/SearchHeader.vue'
@@ -22,6 +27,8 @@ import TopNavigation from './partials/TopNavigation/TopNavigation.vue'
 import MainNavigation from './partials/MainNavigation/MainNavigation.vue'
 import ShopNavigation from './partials/ShopNavigation/ShopNavigation.vue'
 // import ContentWrapper from 'components/molecules/ContentWrapper/ContentWrapper.vue'
+
+import { useMenuStore } from '~/stores/menu'
 
 export default defineComponent({
   components: {
@@ -49,42 +56,45 @@ export default defineComponent({
     },
   },
   setup() {
+    const menu = useMenuStore()
     const active = ref(false)
 
-    return { active }
+    return { active, menu }
   },
 })
 </script>
 
 <style lang="scss">
 .header {
-  @apply tw-flex;
-  @apply tw-items-center;
   @apply tw-relative;
-  @apply tw-py-4;
-  @apply tw-border-b-2;
-  @apply tw-border-pv-grey-96;
+  @apply tw-z-10;
 
-  // @apply tw-z-10;
+  &::before {
+    @apply tw-absolute;
+    @apply tw-inset-0;
+    @apply tw-bg-pv-white;
+    content: '';
+  }
 
-  // &::after {
-  //   @apply tw-absolute;
-  //   @apply tw-inset-0;
-  //   @apply tw-border-pv-white;
-  //   content: '';
-  // }
+  &--blur-content {
+    &::after {
+      @apply tw-fixed;
+      @apply tw-inset-0;
+      @apply tw--z-10;
+      @apply tw-border-pv-black;
+      @apply tw-bg-opacity-20;
+      backdrop-filter: blur(20px);
+      content: '';
+    }
+  }
 
-  // &::after {
-  //       @apply tw-fixed;
-  //       @apply tw-inset-0;
-  //       @apply tw-border-pv-black;
-  //       @apply tw-bg-opacity-20;
-  //       backdrop-filter: blur(20px);
-  //       content: '';
-  //     }
-
-  @screen md {
-    @apply tw-pb-0;
+  &__wrapper {
+    @apply tw-flex;
+    @apply tw-items-center;
+    @apply tw-relative;
+    @apply tw-py-4;
+    @apply tw-border-b-2;
+    @apply tw-border-pv-grey-96;
   }
 
   &__logo {
@@ -106,7 +116,10 @@ export default defineComponent({
   }
 
   @screen md {
-    @apply tw-flex-wrap;
+    &__wrapper {
+      @apply tw-flex-wrap;
+      @apply tw-pb-0;
+    }
 
     &__logo {
       @apply tw-shrink tw-grow-0;

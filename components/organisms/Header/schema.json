@@ -5,7 +5,7 @@
     "navigationEntries": {
       "type": "bloks",
       "restrict_components": true,
-      "component_whitelist": [],
+      "component_whitelist": ["MainNavigationLink"],
       "pos": 1,
       "description": "Navigation bar entries displayed on the left side."
     },

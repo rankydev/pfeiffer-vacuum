@@ -1,15 +1,15 @@
 <template>
-  <div class="pripary-nav" :class="`primary-nav--level-${level}`">
+  <div class="primary-nav" :class="`primary-nav--level-${level}`">
     <Link
-      v-for="(label, idx) in mockItems"
+      v-for="(entry, idx) in navigationEntries"
       :key="idx"
-      v-bind="$attrs"
+      :ref="`link-${idx}`"
+      v-bind="entry"
       class="primary-nav__link"
-      href="/test"
       :before-navigation="($event) => preventRouting($event, idx)"
     >
       <span class="primary-nav__link-activator">
-        <span class="primary-nav__link-label">{{ label }}</span>
+        <span class="primary-nav__link-label">{{ entry.label }}</span>
         <Icon
           class="primary-nav__link-icon"
           :icon="activeElement === idx ? 'expand_less' : 'expand_more'"
@@ -31,13 +31,13 @@
 import {
   defineComponent,
   ref,
-  inject,
   useContext,
   watch,
 } from '@nuxtjs/composition-api'
 
 import Link from '~/components/atoms/Link/Link.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
+import { useMenuStore } from '~/stores/menu'
 
 export default defineComponent({
   components: {
@@ -45,47 +45,51 @@ export default defineComponent({
     AnimatedCollapse,
   },
   props: {
+    navigationEntries: {
+      type: Array,
+      default: () => [],
+    },
     level: {
       type: Number,
       default: 0,
     },
   },
-  setup(props) {
+  setup(props, setupContext) {
     const { app } = useContext()
 
-    const mockItems = [
-      'Produkte',
-      'Märkte',
-      'Knowledge',
-      'Blog',
-      'Service & Support',
-      'Kontakt',
-    ]
+    const menu = useMenuStore()
 
     const activeElement = ref(null)
+    const isMobile = app.$breakpoints.isMobile
+
+    const openMenu = (idx) => {
+      const ref = setupContext.refs?.[`link-${idx}`]?.[0]?.$el
+
+      if (!isMobile.value) menu.open(ref)
+      activeElement.value = idx
+    }
+
+    const closeMenu = () => {
+      if (!isMobile.value) menu.close()
+      activeElement.value = null
+    }
+
+    watch(menu, (value) => {
+      if (!value.isActive) closeMenu()
+    })
 
     const toggleActive = function ($event, idx) {
       $event.preventDefault()
       $event.stopPropagation()
-
-      if (activeElement.value === idx) {
-        activeElement.value = null
-      } else {
-        activeElement.value = idx
-      }
-
+      activeElement.value === idx ? closeMenu() : openMenu(idx)
       return false
     }
 
     const preventRouting = ($event, idx) => {
-      return (
-        app.$breakpoints.isMobile.value ||
-        // activeElement.value === idx ||
-        toggleActive($event, idx)
-      )
+      return isMobile.value || toggleActive($event, idx)
     }
 
-    return { preventRouting, toggleActive, activeElement, mockItems }
+    return { preventRouting, toggleActive, activeElement }
   },
 })
 </script>

@@ -4,12 +4,10 @@ export default (context, inject) => {
   const current = ref('lg')
 
   if (process.client) {
-    console.log('here')
     const loadCss = () => window.getComputedStyle(document.body, ':before')
     const getBreakpoint = () => loadCss().content.replace(/\"/g, '')
 
     current.value = getBreakpoint()
-    console.log('what')
 
     const cb = () => (current.value = getBreakpoint())
     window.addEventListener('resize', cb, false)

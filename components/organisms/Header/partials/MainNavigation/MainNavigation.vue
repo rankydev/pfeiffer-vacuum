@@ -1,16 +1,17 @@
 <template>
   <div class="main-navigation">
     <BurgerIcon
-      :is-active="isActive"
+      :is-active="menu.isActive"
       class="main-navigation__trigger"
       tabindex="0"
-      @click.native="isActive = !isActive"
-      @keypress.native.enter="isActive = !isActive"
+      @click.native="toggleActive"
+      @keypress.native.enter="toggleActive"
     />
     <div>
-      <PrimaryNavLink
+      <MainNavigationLevel
         class="main-navigation__items"
-        :class="{ 'main-navigation__items--active': isActive }"
+        :class="{ 'main-navigation__items--active': menu.isActive }"
+        :navigation-entries="navigationEntries"
       />
       <!-- flyout -->
       <!-- sign in -->
@@ -21,15 +22,28 @@
 <script>
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import BurgerIcon from '~/components/atoms/BurgerIcon/BurgerIcon.vue'
+import MainNavigationLevel from '../MainNavigationLevel/MainNavigationLevel.vue'
+import { useMenuStore } from '~/stores/menu'
 
 export default defineComponent({
   components: {
     BurgerIcon,
+    MainNavigationLevel,
+  },
+  props: {
+    navigationEntries: {
+      type: Array,
+      default: () => [],
+    },
   },
   setup() {
-    const isActive = ref(false)
+    const menu = useMenuStore()
 
-    return { isActive }
+    const toggleActive = () => {
+      !menu.isActive ? menu.open() : menu.close()
+    }
+
+    return { menu, toggleActive }
   },
 })
 </script>
