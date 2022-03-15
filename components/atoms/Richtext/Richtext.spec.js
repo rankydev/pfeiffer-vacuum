@@ -18,7 +18,7 @@ describe('Richtext', () => {
         },
       })
 
-      expect(wrapper.html()).toContain(RichtextContent.content.richtext)
+      expect(wrapper.html()).toContain(RichtextContent.content)
     })
   })
 })
