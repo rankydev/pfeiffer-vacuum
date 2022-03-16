@@ -1,6 +1,6 @@
 <template>
   <Link v-editable="$attrs" v-bind="$attrs">
-    <Icon class="social-media__icon" :icon="icon" type="svg" />
+    <Icon class="social-media__icon" v-bind="{ icon, title }" type="svg" />
   </Link>
 </template>
 
@@ -32,6 +32,13 @@ export default defineComponent({
           'wechat',
           'zhihu',
         ].includes(val),
+    },
+    /**
+     * The icon title for accessibility
+     */
+    title: {
+      type: String,
+      default: '',
     },
   },
 })

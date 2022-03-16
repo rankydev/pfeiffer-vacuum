@@ -31,12 +31,15 @@ describe('Icon', () => {
     })
 
     describe('given custom svg name', () => {
-      it('should render svg-icon component with correct name', () => {
-        const propsData = { type: 'svg', icon: 'someIcon' }
+      it('should render svg-icon component with correct name and title', () => {
+        const propsData = { type: 'svg', icon: 'someIcon', title: 'someTitle' }
         createComponent(propsData)
 
         expect(wrapper.find('.icon__svg').attributes('name')).toBe(
           propsData.icon
+        )
+        expect(wrapper.find('.icon__svg').attributes('title')).toBe(
+          propsData.title
         )
       })
     })
