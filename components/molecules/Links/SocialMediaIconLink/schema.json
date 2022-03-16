@@ -37,6 +37,11 @@
         }
       ]
     },
+    "title": {
+      "type": "text",
+      "display_name": "Title",
+      "translatable": true
+    },
     "href": {
       "type": "multilink",
       "display_name": "Link",

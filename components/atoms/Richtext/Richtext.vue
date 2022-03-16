@@ -12,5 +12,10 @@ export default defineComponent({
       default: '',
     },
   },
+  setup(props) {
+    const richtext = computed(() => props.content.richtext)
+
+    return { richtext }
+  },
 })
 </script>
