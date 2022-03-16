@@ -1,5 +1,8 @@
 <template>
-  <header class="header" :class="{ 'header--blur-content': menu.isActive }">
+  <header
+    class="header"
+    :class="{ 'header--blur-content': menu.isActive.value }"
+  >
     <ContentWrapper class="header__wrapper">
       <NuxtLink to="/" class="header__logo"><Logo /></NuxtLink>
       <SearchHeader :has-opacity="active" class="header__search-input" />
@@ -26,7 +29,7 @@ import SearchHeader from './partials/SearchHeader/SearchHeader.vue'
 import TopNavigation from './partials/TopNavigation/TopNavigation.vue'
 import MainNavigation from './partials/MainNavigation/MainNavigation.vue'
 import ShopNavigation from './partials/ShopNavigation/ShopNavigation.vue'
-// import ContentWrapper from 'components/molecules/ContentWrapper/ContentWrapper.vue'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper.vue'
 
 import { useMenuStore } from '~/stores/menu'
 
@@ -37,7 +40,7 @@ export default defineComponent({
     TopNavigation,
     MainNavigation,
     ShopNavigation,
-    // ContentWrapper,
+    ContentWrapper,
   },
   props: {
     /**

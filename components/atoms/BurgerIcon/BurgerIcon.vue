@@ -30,6 +30,9 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
+    /**
+     * Control the burger icon form
+     */
     isActive: {
       type: Boolean,
       default: false,

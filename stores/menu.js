@@ -1,41 +1,33 @@
-import { defineStore } from 'pinia'
-import { ref } from '@nuxtjs/composition-api'
+import { ref, readonly } from '@nuxtjs/composition-api'
 
-const internalActive = ref(false)
+const isActive = ref(false)
 const hasResizeListener = false
-let target = null
 
-export const useMenuStore = defineStore('menu', {
-  getters: {
-    isActive(state) {
-      return internalActive.value
-    },
-  },
-  someMethod() {},
-  actions: {
-    async open(ele) {
-      target = ele || null
+const openMenu = () => {
+  if (isActive.value) return
 
-      if (internalActive.value) return
+  isActive.value = true
+  setTimeout(() => {
+    addEventListener('click', closeMenu)
+  }, 0)
 
-      internalActive.value = true
-      setTimeout(() => {
-        addEventListener('click', this.close)
-      }, 0)
+  if (hasResizeListener) return
 
-      if (hasResizeListener) return
+  addEventListener('resize', closeMenu, { passive: true })
+}
 
-      addEventListener('resize', this.close, { passive: true })
-    },
-    close(event) {
-      if (target && event?.target) {
-        if (target.contains(event.target)) return
-      }
+const closeMenu = () => {
+  if (!isActive.value) return
 
-      if (!internalActive.value) return
+  isActive.value = false
+  removeEventListener('click', closeMenu)
+}
 
-      internalActive.value = false
-      removeEventListener('click', this.close)
-    },
-  },
+const toggleMenu = () => (!isActive.value ? openMenu() : closeMenu())
+
+export const useMenuStore = () => ({
+  isActive: readonly(isActive),
+  toggle: toggleMenu,
+  open: openMenu,
+  close: closeMenu,
 })

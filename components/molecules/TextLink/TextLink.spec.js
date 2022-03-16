@@ -1,13 +1,16 @@
-import { shallowMount, RouterLinkStub } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import TextLink from './TextLink.vue'
 import TextLinkContent from './TextLink.stories.content'
 import LinkContent from '~/components/atoms/Link/Link.stories.content'
 
+const localVue = createLocalVue()
+const editable = (el, key) => (el.innerText = key.value)
+localVue.directive('editable', editable)
+
 let wrapper
 
 function createComponent(propsData = {}) {
-  const stubs = { NuxtLink: RouterLinkStub }
-  wrapper = shallowMount(TextLink, { propsData, stubs })
+  wrapper = shallowMount(TextLink, { propsData, localVue })
 }
 
 describe('TextLink', () => {

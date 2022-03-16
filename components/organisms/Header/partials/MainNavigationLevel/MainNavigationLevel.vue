@@ -3,12 +3,19 @@
     <Link
       v-for="(entry, idx) in navigationEntries"
       :key="idx"
-      :ref="`link-${idx}`"
       v-bind="entry"
       class="primary-nav__link"
-      :before-navigation="($event) => preventRouting($event, idx)"
+      :before-navigation="($event) => isMobile || toggleActive($event, idx)"
     >
-      <span class="primary-nav__link-activator">
+      <span
+        class="primary-nav__link-activator"
+        :class="{
+          'primary-nav__link-activator--active': activeElement === idx,
+
+          'primary-nav__link-activator--active': activeElement === idx,
+          'primary-nav__link-activator--inactive': activeElement !== idx,
+        }"
+      >
         <span class="primary-nav__link-label">{{ entry.label }}</span>
         <Icon
           class="primary-nav__link-icon"
@@ -36,11 +43,13 @@ import {
 } from '@nuxtjs/composition-api'
 
 import Link from '~/components/atoms/Link/Link.vue'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
 import { useMenuStore } from '~/stores/menu'
 
 export default defineComponent({
   components: {
+    Icon,
     Link,
     AnimatedCollapse,
   },
@@ -54,7 +63,7 @@ export default defineComponent({
       default: 0,
     },
   },
-  setup(props, setupContext) {
+  setup() {
     const { app } = useContext()
 
     const menu = useMenuStore()
@@ -62,34 +71,26 @@ export default defineComponent({
     const activeElement = ref(null)
     const isMobile = app.$breakpoints.isMobile
 
-    const openMenu = (idx) => {
-      const ref = setupContext.refs?.[`link-${idx}`]?.[0]?.$el
-
-      if (!isMobile.value) menu.open(ref)
-      activeElement.value = idx
-    }
-
-    const closeMenu = () => {
-      if (!isMobile.value) menu.close()
-      activeElement.value = null
-    }
-
-    watch(menu, (value) => {
-      if (!value.isActive) closeMenu()
+    watch(menu.isActive, (isActive) => {
+      if (!isActive) activeElement.value = null
     })
 
     const toggleActive = function ($event, idx) {
       $event.preventDefault()
       $event.stopPropagation()
-      activeElement.value === idx ? closeMenu() : openMenu(idx)
+
+      if (activeElement.value === idx) {
+        if (!isMobile.value) menu.close()
+        activeElement.value = null
+      } else {
+        if (!isMobile.value) menu.open()
+        activeElement.value = idx
+      }
+
       return false
     }
 
-    const preventRouting = ($event, idx) => {
-      return isMobile.value || toggleActive($event, idx)
-    }
-
-    return { preventRouting, toggleActive, activeElement }
+    return { toggleActive, activeElement, isMobile }
   },
 })
 </script>
@@ -155,16 +156,19 @@ export default defineComponent({
       @apply tw-mr-8;
 
       &:hover,
-      &:focus,
-      &:focus-within {
+      &:focus {
         outline: none;
 
         & .primary-nav__link-activator {
           @apply tw-text-pv-red-lighter;
+        }
+      }
 
-          &::after {
-            @apply tw-border-pv-red;
-          }
+      &:hover,
+      &:focus,
+      &:focus-within {
+        .primary-nav__link-activator::after {
+          @apply tw-border-pv-red;
         }
       }
     }
