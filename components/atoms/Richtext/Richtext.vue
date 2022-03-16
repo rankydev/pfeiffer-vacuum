@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div class="paragraph-section" v-html="richtext"></div>
+  <div v-editable="content" class="paragraph-section" v-html="richtext"></div>
 </template>
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'

@@ -11,9 +11,9 @@
         class="primary-nav__link-activator"
         :class="{
           'primary-nav__link-activator--active': activeElement === idx,
-
-          'primary-nav__link-activator--active': activeElement === idx,
-          'primary-nav__link-activator--inactive': activeElement !== idx,
+          'primary-nav__link-activator--inactive': ![null, idx].includes(
+            activeElement
+          ),
         }"
       >
         <span class="primary-nav__link-label">{{ entry.label }}</span>
@@ -141,8 +141,18 @@ export default defineComponent({
         @apply tw-border-pv-transparent;
         @apply tw-duration-200;
         @apply tw-ease-in-out;
-        transition-property: border;
+        transition-property: border color;
         content: '';
+      }
+
+      &--active {
+        &::after {
+          @apply tw-border-pv-red;
+        }
+      }
+
+      &--inactive {
+        @apply tw-text-pv-grey-80;
       }
     }
 
@@ -156,19 +166,15 @@ export default defineComponent({
       @apply tw-mr-8;
 
       &:hover,
-      &:focus {
+      &:focus-visible {
         outline: none;
 
         & .primary-nav__link-activator {
           @apply tw-text-pv-red-lighter;
-        }
-      }
 
-      &:hover,
-      &:focus,
-      &:focus-within {
-        .primary-nav__link-activator::after {
-          @apply tw-border-pv-red;
+          &::after {
+            @apply tw-border-pv-red;
+          }
         }
       }
     }
@@ -179,7 +185,6 @@ export default defineComponent({
       @apply tw-left-0 tw-right-0;
       @apply tw-bg-pv-white;
       @apply tw-p-4;
-      @apply tw-mt-0.5;
     }
   }
 }

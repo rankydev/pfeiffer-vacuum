@@ -15,8 +15,6 @@
         d="M0 7H24V9H0V7Z"
         class="burger-icon__path burger-icon__path--middle"
       ></path>
-
-      <path d="M12 8" lass="burger-icon__path"></path>
       <path
         d="M0 14H24V16H0V14Z"
         class="burger-icon__path burger-icon__path--bottom"

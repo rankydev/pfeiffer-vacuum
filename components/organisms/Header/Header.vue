@@ -3,26 +3,28 @@
     class="header"
     :class="{ 'header--blur-content': menu.isActive.value }"
   >
-    <ContentWrapper class="header__wrapper">
-      <NuxtLink to="/" class="header__logo"><Logo /></NuxtLink>
-      <SearchHeader :has-opacity="active" class="header__search-input" />
-      <TopNavigation
-        v-model="active"
-        :flyout-links="flyoutLinks"
-        class="header__top-navigation"
-      />
-      <ShopNavigation class="header__shop-navigation" />
-      <div class="header__break-column" />
-      <MainNavigation
-        class="header__main-navigation"
-        :navigation-entries="navigationEntries"
-      />
+    <ContentWrapper class="tw-relative">
+      <div class="header__wrapper">
+        <NuxtLink to="/" class="header__logo"><Logo /></NuxtLink>
+        <SearchHeader :has-opacity="active" class="header__search-input" />
+        <TopNavigation
+          v-model="active"
+          :flyout-links="flyoutLinks"
+          class="header__top-navigation"
+        />
+        <ShopNavigation class="header__shop-navigation" />
+        <div class="header__break-column" />
+        <MainNavigation
+          class="header__main-navigation"
+          :navigation-entries="navigationEntries"
+        />
+      </div>
     </ContentWrapper>
   </header>
 </template>
 
 <script>
-import { ref, defineComponent, provide } from '@nuxtjs/composition-api'
+import { ref, defineComponent } from '@nuxtjs/composition-api'
 
 import Logo from '~/components/atoms/Logo/Logo.vue'
 import SearchHeader from './partials/SearchHeader/SearchHeader.vue'
@@ -94,7 +96,6 @@ export default defineComponent({
   &__wrapper {
     @apply tw-flex;
     @apply tw-items-center;
-    @apply tw-relative;
     @apply tw-py-4;
     @apply tw-border-b-2;
     @apply tw-border-pv-grey-96;
@@ -121,7 +122,7 @@ export default defineComponent({
   @screen md {
     &__wrapper {
       @apply tw-flex-wrap;
-      @apply tw-pb-0;
+      @apply tw-pt-6 tw-pb-0;
     }
 
     &__logo {
@@ -147,6 +148,10 @@ export default defineComponent({
   }
 
   @screen lg {
+    &__wrapper {
+      @apply tw-pt-8;
+    }
+
     &__search-input {
       @apply tw-mx-32;
     }
