@@ -69,11 +69,11 @@ export default defineComponent({
   },
   setup(props) {
     const { content } = toRefs(props)
-    const { top, stage, header, body, bottom, footer } = content.value
+    const { top, header, stage, body, bottom, footer } = content.value
     return {
       top,
-      stage,
       header,
+      stage,
       body,
       bottom,
       footer,
