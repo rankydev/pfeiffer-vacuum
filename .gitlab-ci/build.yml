@@ -81,6 +81,8 @@ sonar-qube:
       --build-arg STORYBLOK_RESOLVE_ASSETS="${STORYBLOK_RESOLVE_ASSETS}"
       --build-arg STORYBLOK_CONTENT_TYPES="${STORYBLOK_CONTENT_TYPES}"
       --build-arg STORYBLOK_EXCLUDE_ROUTES="${STORYBLOK_EXCLUDE_ROUTES}"
+      --build-arg STORYBLOK_REGIONS="${STORYBLOK_REGIONS}"
+      --build-arg STORYBLOK_DEFAULT_REGION="${STORYBLOK_DEFAULT_REGION}"
       -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
