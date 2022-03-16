@@ -6,6 +6,8 @@
 build:
   extends: .node-image
   stage: build
+  environment:
+    name: experimental
   script:
     - npm ci --cache .npm --prefer-offline
     - npm run build
