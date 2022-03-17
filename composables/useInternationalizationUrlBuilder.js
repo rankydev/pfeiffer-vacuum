@@ -1,5 +1,5 @@
 const useInternationalizationUrlBuilder = () => {
-  const REGIONS = ['global', 'us', 'de', 'ko', 'zh']
+  const REGIONS = ['global', 'us', 'ger', 'sk', 'cn']
   const LANGUAGES = ['en', 'ko', 'zh', 'de']
 
   const DEFAULT_REGION = 'global'

@@ -25,6 +25,7 @@ export default {
         routes[key].caseSensitive = true
       }
     },
+    // middleware: 'browserLanguageDetection',
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -55,7 +56,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@txp-cms/storyblok'],
+  modules: ['@txp-cms/storyblok', '@nuxtjs/i18n'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -101,5 +102,20 @@ export default {
     // for local change add 'environments/local.js'
     port: process.env.PORT || 3000,
     host: process.env.HOST || '0.0.0.0',
+  },
+  i18n: {
+    strategy: 'prefix_except_default',
+    defaultLocale: 'en',
+    locales: [
+      'de',
+      'ko',
+      'zh',
+      'en', // Make sure that default locale is the last one!
+    ],
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root', // recommended
+    },
   },
 }
