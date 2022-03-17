@@ -42,7 +42,17 @@ export default defineComponent({
       type: String,
       default: 'base',
       validator: (val) =>
-        ['xsmall', 'small', 'base', 'large', 'xlarge'].includes(val),
+        [
+          'xsmall',
+          'small',
+          'base',
+          'large',
+          'xlarge',
+          'h3',
+          'h4',
+          'h5',
+          'h6',
+        ].includes(val),
     },
     /**
      * Set the type of icon
@@ -86,6 +96,34 @@ export default defineComponent({
 
     &.icon--xlarge {
       font-size: 4rem;
+    }
+
+    &.icon--h3 {
+      font-size: 1.75rem;
+
+      @screen lg {
+        font-size: 2.25rem;
+      }
+    }
+
+    &.icon--h4 {
+      font-size: 1.5rem;
+
+      @screen lg {
+        font-size: 2rem;
+      }
+    }
+
+    &.icon--h5 {
+      font-size: 1.5rem;
+
+      @screen lg {
+        font-size: 1.75rem;
+      }
+    }
+
+    &.icon--h6 {
+      font-size: 1.5rem;
     }
   }
 }

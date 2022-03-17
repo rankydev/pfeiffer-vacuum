@@ -1,0 +1,48 @@
+{
+    "name": "Accordion",
+    "display_name": "Accordion",
+    "schema": {
+      "level":{
+        "display_name": "Heading",
+        "type": "option",
+        "use_uuid": true,
+        "required": true,
+        "options": [
+            {
+            "value": "h3",
+            "name": "Heading 3"
+            },
+            {
+            "value": "h4",
+            "name": "Heading 4"
+            },
+            {
+            "value": "h5",
+            "name": "Heading 5"
+            },
+            {
+            "value": "h6",
+            "name": "Heading 6"
+            }
+        ]
+      },
+      "accordionEntries": {
+        "type": "bloks",
+        "restrict_components": true,
+        "component_whitelist": [
+          "AccordionEntry"
+        ],
+        "display_name": "Accordion Entries"
+      }
+    },
+    "image": null,
+    "preview_field": null,
+    "is_root": false,
+    "preview_tmpl": null,
+    "is_nestable": true,
+    "all_presets": [],
+    "preset_id": null,
+    "real_name": "Accordion",
+    "component_group_uuid": null
+  }
+  
