@@ -45,7 +45,7 @@ export default defineComponent({
      */
     beforeNavigation: {
       type: Function,
-      default: () => true,
+      default: /* istanbul ignore next */ () => true,
     },
   },
   setup(props) {

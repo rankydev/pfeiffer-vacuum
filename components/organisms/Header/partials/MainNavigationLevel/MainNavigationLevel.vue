@@ -56,7 +56,7 @@ export default defineComponent({
   props: {
     navigationEntries: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
     level: {
       type: Number,

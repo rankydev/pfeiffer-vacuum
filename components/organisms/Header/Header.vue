@@ -50,14 +50,14 @@ export default defineComponent({
      */
     flyoutLinks: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
     /**
      * A list of navgation entries for the main navigation
      */
     navigationEntries: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
   },
   setup() {

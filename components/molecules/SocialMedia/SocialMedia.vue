@@ -26,7 +26,7 @@ export default defineComponent({
   props: {
     socialMedia: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
   },
 })
