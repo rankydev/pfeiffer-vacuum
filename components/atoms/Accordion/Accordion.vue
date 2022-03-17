@@ -5,7 +5,7 @@
         <button
           class="accordion__button"
           :class="[level, { 'accordion__button--active': isActive(idx) }]"
-          aria-controls="myID-1"
+          :aria-controls="`accordion-${idx}`"
           :aria-expanded="isActive(idx)"
           @click="toggleActive(idx)"
         >
@@ -18,7 +18,11 @@
         </button>
       </component>
       <AnimatedCollapse speed="fast">
-        <div v-show="isActive(idx)" id="myID-1" class="accordion__content">
+        <div
+          v-show="isActive(idx)"
+          :id="`accordion-${idx}`"
+          class="accordion__content"
+        >
           <nuxt-dynamic
             v-for="item in entry.items"
             :key="item._uid"
