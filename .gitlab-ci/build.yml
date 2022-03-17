@@ -7,7 +7,7 @@ build:
   extends: .node-image
   stage: build
   script:
-    - npm ci --cache .npm
+    - npm ci
     - npm run build
     - npm run lsg:build
   artifacts:
