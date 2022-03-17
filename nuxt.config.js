@@ -40,7 +40,6 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://composition-api.nuxtjs.org/
     '@nuxtjs/composition-api/module',
-    ['@pinia/nuxt', { disableVuex: true }],
     '@nuxt/postcss8',
     '@nuxtjs/svg-sprite',
   ],
