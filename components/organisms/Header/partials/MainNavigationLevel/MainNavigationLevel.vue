@@ -1,37 +1,37 @@
 <template>
-  <div class="primary-nav" :class="`primary-nav--level-${level}`">
-    <Link
+  <ul class="primary-nav" :class="`primary-nav--level-${level}`">
+    <li
       v-for="(entry, idx) in navigationEntries"
       :key="idx"
-      v-bind="entry"
-      class="primary-nav__link"
-      :before-navigation="($event) => isMobile || toggleActive($event, idx)"
+      class="primary-nav__element"
     >
-      <span
-        class="primary-nav__link-activator"
+      <Link
+        class="primary-nav__link"
         :class="{
-          'primary-nav__link-activator--active': activeElement === idx,
-          'primary-nav__link-activator--inactive': ![null, idx].includes(
-            activeElement
-          ),
+          'primary-nav__link--active': activeElement === idx,
+          'primary-nav__link--inactive': ![null, idx].includes(activeElement),
         }"
+        v-bind="entry"
+        :before-navigation="($event) => isMobile || toggleActive($event, idx)"
       >
-        <span class="primary-nav__link-label">{{ entry.label }}</span>
+        <span class="primary-nav__label">{{ entry.label }}</span>
         <Icon
-          class="primary-nav__link-icon"
+          class="primary-nav__icon"
           :icon="activeElement === idx ? 'expand_less' : 'expand_more'"
           tabindex="0"
           @click.native="toggleActive($event, idx)"
           @keypress.native.enter="toggleActive($event, idx)"
         />
-      </span>
+      </Link>
       <AnimatedCollapse speed="fast">
+        <!-- start: temporarly until subnavigation is implemented -->
         <div v-if="activeElement === idx" class="primary-nav__sub-nav">
-          Some sub navigation
+          Some sub navigation {{ idx }}
         </div>
+        <!-- end: temporarly until subnavigation is implemented -->
       </AnimatedCollapse>
-    </Link>
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -97,13 +97,16 @@ export default defineComponent({
 
 <style lang="scss">
 .primary-nav {
-  &__link {
+  @apply tw-flex;
+  @apply tw-flex-col;
+
+  &__element {
     @apply tw-border-b-2;
     @apply tw-border-pv-grey-96;
     @apply tw-overflow-hidden;
   }
 
-  &__link-activator {
+  &__link {
     @apply tw-relative;
     @apply tw-block;
     @apply tw-text-base;
@@ -134,12 +137,12 @@ export default defineComponent({
     }
   }
 
-  &__link-label {
+  &__label {
     @apply tw-block;
     @apply tw-truncate;
   }
 
-  &__link-icon {
+  &__icon {
     @apply tw-absolute;
     @apply tw-right-4;
     @apply tw-top-1/2;
@@ -147,7 +150,9 @@ export default defineComponent({
   }
 
   @screen md {
-    &__link-activator {
+    @apply tw-flex-row;
+
+    &__link {
       @apply tw-p-0;
       @apply tw-pb-6;
       @apply tw-font-normal;
@@ -159,34 +164,32 @@ export default defineComponent({
         @apply tw-border-t-4;
       }
 
+      &:hover,
+      &:focus-visible {
+        @apply tw-outline-none;
+        @apply tw-text-pv-red-lighter;
+
+        &::after {
+          @apply tw-border-pv-red;
+        }
+      }
+
       &--inactive {
         @apply tw-text-pv-grey-80;
       }
     }
 
-    &__link-icon {
+    &__icon {
       @apply tw-hidden;
     }
 
-    &__link {
+    &__element {
       @apply tw-border-0;
       @apply tw-overflow-visible;
       @apply tw-mr-8;
-
-      &:hover,
-      &:focus-visible {
-        outline: none;
-
-        & .primary-nav__link-activator {
-          @apply tw-text-pv-red-lighter;
-
-          &::after {
-            @apply tw-border-pv-red;
-          }
-        }
-      }
     }
 
+    /* start: temporarly until subnavigation is implemented */
     &__sub-nav {
       @apply tw-absolute;
       @apply tw-top-full;
@@ -194,6 +197,8 @@ export default defineComponent({
       @apply tw-bg-pv-white;
       @apply tw-p-4;
     }
+
+    /* end: temporarly until subnavigation is implemented */
   }
 }
 </style>

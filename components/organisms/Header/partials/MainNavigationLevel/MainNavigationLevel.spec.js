@@ -28,7 +28,7 @@ describe('MainNavigationLevel', () => {
     it('should render all navigation entries', () => {
       createComponent({ navigationEntries })
 
-      const links = wrapper.findAll('.primary-nav__link-label')
+      const links = wrapper.findAll('.primary-nav__link')
 
       expect(links.length).toBe(navigationEntries.length)
 
@@ -46,7 +46,7 @@ describe('MainNavigationLevel', () => {
       it('should render all navigation entries', () => {
         createComponent({ navigationEntries })
 
-        const links = wrapper.findAll('.primary-nav__link-label')
+        const links = wrapper.findAll('.primary-nav__label')
 
         expect(links.length).toBe(navigationEntries.length)
 
@@ -62,7 +62,7 @@ describe('MainNavigationLevel', () => {
       it('should add an icon next to the link when viewport mobile', () => {
         createComponent({ navigationEntries }, { isMobile: true })
 
-        const links = wrapper.findAll('.primary-nav__link-activator')
+        const links = wrapper.findAll('.primary-nav__link')
 
         expect(links.length).toBe(navigationEntries.length)
 

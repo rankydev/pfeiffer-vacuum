@@ -1,7 +1,7 @@
 import { ref, readonly } from '@nuxtjs/composition-api'
 
 const isActive = ref(false)
-const hasResizeListener = false
+let hasResizeListener = false
 
 const openMenu = () => {
   if (isActive.value) return
@@ -10,11 +10,11 @@ const openMenu = () => {
   setTimeout(() => {
     addEventListener('click', closeMenu)
     addEventListener('keydown', closeMenuEsc)
+
+    if (hasResizeListener) return
+    hasResizeListener = true
+    addEventListener('resize', closeMenu, { passive: true })
   }, 0)
-
-  if (hasResizeListener) return
-
-  addEventListener('resize', closeMenu, { passive: true })
 }
 
 const closeMenu = () => {

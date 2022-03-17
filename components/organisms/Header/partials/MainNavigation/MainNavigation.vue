@@ -1,22 +1,24 @@
 <template>
-  <div class="main-navigation">
+  <nav class="main-navigation" aria-label="Main Menu">
     <BurgerIcon
       :is-active="isActive"
       class="main-navigation__trigger"
       tabindex="0"
+      :aria-expanded="isActive"
+      aria-controls="js__main-navigation"
       @click.native="toggle"
       @keypress.native.enter="toggle"
     />
-    <div>
-      <MainNavigationLevel
-        class="main-navigation__items"
-        :class="{ 'main-navigation__items--active': isActive }"
-        :navigation-entries="navigationEntries"
-      />
+    <div
+      id="js__main-navigation"
+      class="main-navigation__items"
+      :class="{ 'main-navigation__items--active': isActive }"
+    >
+      <MainNavigationLevel :navigation-entries="navigationEntries" />
       <!-- flyout -->
       <!-- sign in -->
     </div>
-  </div>
+  </nav>
 </template>
 
 <script>

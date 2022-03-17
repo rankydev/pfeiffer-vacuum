@@ -3,8 +3,8 @@
     class="header"
     :class="{ 'header--blur-content': menu.isActive.value }"
   >
-    <ContentWrapper class="tw-relative">
-      <div class="header__wrapper">
+    <ContentWrapper class="header__outer">
+      <div class="header__inner">
         <NuxtLink to="/" class="header__logo"><Logo /></NuxtLink>
         <SearchHeader :has-opacity="active" class="header__search-input" />
         <TopNavigation
@@ -70,6 +70,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@mixin border-bottom-mixin {
+  @apply tw-border-b-2;
+  @apply tw-border-pv-grey-96;
+}
+
 .header {
   @apply tw-relative;
   @apply tw-z-10;
@@ -93,12 +98,15 @@ export default defineComponent({
     }
   }
 
-  &__wrapper {
+  &__outer {
+    @apply tw-relative;
+    @include border-bottom-mixin;
+  }
+
+  &__inner {
+    @apply tw-py-4;
     @apply tw-flex;
     @apply tw-items-center;
-    @apply tw-py-4;
-    @apply tw-border-b-2;
-    @apply tw-border-pv-grey-96;
   }
 
   &__logo {
@@ -120,9 +128,14 @@ export default defineComponent({
   }
 
   @screen md {
-    &__wrapper {
+    &__outer {
+      @apply tw-border-b-0;
+    }
+
+    &__inner {
       @apply tw-flex-wrap;
       @apply tw-pt-6 tw-pb-0;
+      @include border-bottom-mixin;
     }
 
     &__logo {
@@ -148,7 +161,7 @@ export default defineComponent({
   }
 
   @screen lg {
-    &__wrapper {
+    &__inner {
       @apply tw-pt-8;
     }
 
