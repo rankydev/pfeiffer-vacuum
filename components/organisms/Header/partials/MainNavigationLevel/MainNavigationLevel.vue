@@ -107,12 +107,31 @@ export default defineComponent({
     @apply tw-relative;
     @apply tw-block;
     @apply tw-text-base;
+    @apply tw-font-bold;
     @apply tw-leading-6;
-    @apply tw-m-4 tw-pr-6;
+    @apply tw-p-4 tw-pr-10;
     @apply tw-text-pv-grey-16;
     @apply tw-duration-200;
     @apply tw-ease-in-out;
     transition-property: color;
+
+    &::after {
+      @apply tw-absolute;
+      @apply tw--bottom-0 tw-inset-x-0;
+      @apply tw-border-t-2;
+      @apply tw-rounded-t-sm;
+      @apply tw-border-pv-transparent;
+      @apply tw-duration-200;
+      @apply tw-ease-in-out;
+      transition-property: border color;
+      content: '';
+    }
+
+    &--active {
+      &::after {
+        @apply tw-border-pv-red;
+      }
+    }
   }
 
   &__link-label {
@@ -122,33 +141,22 @@ export default defineComponent({
 
   &__link-icon {
     @apply tw-absolute;
-    @apply tw-right-0;
-    @apply tw-top-0;
+    @apply tw-right-4;
+    @apply tw-top-1/2;
+    @apply tw--translate-y-1/2;
   }
 
   @screen md {
     &__link-activator {
-      @apply tw-m-0 tw-pr-0;
+      @apply tw-p-0;
       @apply tw-pb-6;
+      @apply tw-font-normal;
       @apply tw-text-xl;
       @apply tw-leading-8;
 
       &::after {
-        @apply tw-absolute;
-        @apply tw--bottom-0.5 tw-inset-x-0;
+        @apply tw--bottom-0.5;
         @apply tw-border-t-4;
-        @apply tw-rounded-t-sm;
-        @apply tw-border-pv-transparent;
-        @apply tw-duration-200;
-        @apply tw-ease-in-out;
-        transition-property: border color;
-        content: '';
-      }
-
-      &--active {
-        &::after {
-          @apply tw-border-pv-red;
-        }
       }
 
       &--inactive {

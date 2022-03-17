@@ -9,6 +9,7 @@ const openMenu = () => {
   isActive.value = true
   setTimeout(() => {
     addEventListener('click', closeMenu)
+    addEventListener('keydown', closeMenuEsc)
   }, 0)
 
   if (hasResizeListener) return
@@ -21,7 +22,10 @@ const closeMenu = () => {
 
   isActive.value = false
   removeEventListener('click', closeMenu)
+  removeEventListener('keydown', closeMenuEsc)
 }
+
+const closeMenuEsc = ($event) => $event.key === 'Escape' && closeMenu()
 
 const toggleMenu = () => (!isActive.value ? openMenu() : closeMenu())
 
