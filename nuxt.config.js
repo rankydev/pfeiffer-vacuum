@@ -1,3 +1,10 @@
+const locales = [
+  'de',
+  'ko',
+  'zh',
+  'en', // Make sure that default locale is the last one!
+]
+
 export default {
   srcDir: '',
   ssr: true,
@@ -97,6 +104,7 @@ export default {
   },
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL || 'https://localhost:3000',
+    languages: locales,
   },
   server: {
     // for local change add 'environments/local.js'
@@ -106,12 +114,7 @@ export default {
   i18n: {
     strategy: 'prefix_except_default',
     defaultLocale: 'en',
-    locales: [
-      'de',
-      'ko',
-      'zh',
-      'en', // Make sure that default locale is the last one!
-    ],
+    locales,
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',

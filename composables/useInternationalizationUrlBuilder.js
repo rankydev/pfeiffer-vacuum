@@ -1,14 +1,12 @@
-const useInternationalizationUrlBuilder = () => {
-  const REGIONS = ['global', 'us', 'ger', 'sk', 'cn']
-  const LANGUAGES = ['en', 'ko', 'zh', 'de']
+const useInternationalizationUrlBuilder = ({ root: context }) => {
+  const REGIONS = context.$cms.regions.split(',')
+  const DEFAULT_REGION = context.$cms.defaultRegion
 
-  const DEFAULT_REGION = 'global'
-  const DEFAULT_LANGUAGE = 'en'
+  const LANGUAGES = context.$config.languages
+  const DEFAULT_LANGUAGE = context.$cms.defaultLanguageCode
 
   function buildUrl(url) {
     const urlsSegments = url.split('/').filter((segment) => segment !== '')
-    console.log('url', url)
-    console.log('urlsSegments', urlsSegments)
 
     const region = REGIONS.includes(urlsSegments[0])
       ? urlsSegments.shift()

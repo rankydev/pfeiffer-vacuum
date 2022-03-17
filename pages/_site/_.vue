@@ -17,25 +17,10 @@ import useInternationalizationUrlBuilder from '~/composables/useInternationaliza
 
 export default defineComponent({
   layout: 'default',
-  setup() {
+  setup(props, context) {
     const route = useRoute()
-    const { buildUrl } = useInternationalizationUrlBuilder()
-    // regions = default, america(us), germany(de), korea(ko), china(zh)
-    // languages = english(en), korean(ko), chinese(zh), german(de)
+    const { buildUrl } = useInternationalizationUrlBuilder(context)
 
-    // pfeiffer-vacuum.com/fluxkompensator -> pfeiffer-vacuum.com/de/de/home
-    // pfeiffer-vacuum.com/de/de/
-    // pfeiffer-vacuum.com/
-
-    // http://localhost:3000/de/de-at/products
-    // http://localhost:3000/de/en/products
-    // http://localhost:3000/ko/en/products
-    // http://localhost:3000/zh/en/products
-    // http://localhost:3000/zh/en/products
-    // http://localhost:3000/ru/en/products
-    // http://localhost:3000/ru/de-de/products
-    // http://localhost:3000/fluxkompensator/de-de/products
-    // http://localhost:3000/ -> http://localhost:3000/default/en
     const currentPath = ref(route.value.path)
     const { slug, fallbackSlug, language } = buildUrl(currentPath.value)
 
