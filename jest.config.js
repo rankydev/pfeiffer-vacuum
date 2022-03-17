@@ -8,6 +8,7 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
     '.*\\.(vue)$': 'vue-jest',
   },
+  transformIgnorePatterns: ['/node_modules/'],
   collectCoverage: true,
   coverageReporters: ['clover', 'json', 'lcov', 'text', 'html'],
   collectCoverageFrom: [
