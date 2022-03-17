@@ -14,7 +14,7 @@ describe('Richtext', () => {
       const wrapper = shallowMount(Richtext, {
         localVue,
         propsData: {
-          content: RichtextContent.content,
+          richtext: RichtextContent.content.richtext,
         },
       })
 

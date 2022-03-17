@@ -5,6 +5,7 @@ const accordionEntry = () => ({
   _uid: nanoid(),
   label: 'Lorem Ipsum',
   items: [richtext.content],
+  _editable: '',
 })
 
 export const accordionEntries = [
@@ -15,6 +16,6 @@ export const accordionEntries = [
   accordionEntry(),
 ]
 
-export const level = 'h1'
+export const levels = ['h3', 'h4', 'h5', 'h6']
 
 export default {}

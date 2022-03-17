@@ -37,10 +37,16 @@ import { defineComponent, ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
+    /**
+     * List of accordion elements
+     */
     accordionEntries: {
       type: Array,
       default: () => [],
     },
+    /**
+     * The heading tag
+     */
     level: {
       type: String,
       default: 'h3',
@@ -48,14 +54,13 @@ export default defineComponent({
     },
   },
   setup() {
-    const list = [1, 2, 3, 4]
     const active = ref(null)
 
     const toggleActive = (idx) =>
       (active.value = active.value === idx ? null : idx)
     const isActive = (idx) => idx === active.value
 
-    return { isActive, toggleActive, list }
+    return { isActive, toggleActive }
   },
 })
 </script>
