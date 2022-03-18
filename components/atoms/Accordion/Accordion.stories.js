@@ -20,6 +20,9 @@ export default {
       description: {
         component: '',
       },
+      source: {
+        code: '<Accordion v-bind="{ accordionEntries, level }"  />',
+      },
     },
   },
   argTypes,
