@@ -96,7 +96,7 @@ build-docker-image-frontend:
   extends: .build-docker-image
   needs: [ "test", "lint" ]
   environment:
-    name: dev2
+    name: experimental
   except:
     - develop
 
@@ -112,7 +112,7 @@ build-docker-image-frontend-develop:
   extends: .build-docker-image
   needs: [ "sonar-qube" ]
   environment:
-    name: dev2
+    name: experimental
   only:
     - develop
 
