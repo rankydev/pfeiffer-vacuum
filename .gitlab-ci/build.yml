@@ -10,6 +10,7 @@ build:
     - npm cache verify
     - npm i
     - npx jest --clearCache
+    - BABEL_ENV=test
     - npm run test
     # - npm run build
     # - npm run lsg:build
