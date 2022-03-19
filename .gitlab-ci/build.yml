@@ -7,6 +7,8 @@ build:
   extends: .node-image
   stage: build
   script:
+    - npx jest --clearCache
+    - npm cache verify
     - npm i
     - npm run test
     # - npm run build
