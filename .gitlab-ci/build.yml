@@ -7,7 +7,7 @@ build:
   extends: .node-image
   stage: build
   script:
-    - npm ci --cache .npm --prefer-offline
+    - npm i
     # - npm run build
     # - npm run lsg:build
   artifacts:
