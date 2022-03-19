@@ -6,9 +6,10 @@ module.exports = {
   moduleFileExtensions: ['js', 'vue', 'json'],
   transform: {
     '^.+\\.js$': 'babel-jest',
-    '.*\\.(vue)$': 'vue-jest',
+    '.*\\.(vue)$': '@vue/vue2-jest',
   },
   collectCoverage: true,
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   coverageReporters: ['clover', 'json', 'lcov', 'text', 'html'],
   collectCoverageFrom: [
     '<rootDir>/components/**/*.vue',
