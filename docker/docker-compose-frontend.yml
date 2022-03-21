@@ -9,7 +9,7 @@ services:
     environment:
       # must match with the second entry in ports section
       - PORT=3000
-      - NODE_ENV=${CI_NODE_ENVIRONMENT}
+      - NODE_ENV=${NODE_ENV}
       # Sprach
       - DEFAULT_LANGUAGE_CODE=en
       #- LANGUAGES='en,de'
@@ -26,8 +26,7 @@ services:
       - BASE_URL=${CI_ENVIRONMENT_URL}
       - CI_COMMIT_SHORT_SHA=${CI_COMMIT_SHORT_SHA}
       - CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME}
-      - CI_REPOSITORY_URL=${CI_REPOSITORY_URL}
-      - CI_PROJECT_PATH=${CI_PROJECT_PATH}
+      - CI_PROJECT_URL=${CI_PROJECT_URL}
       # node setup
       #- REJECT_UNAUTHORIZED=true #don't trust all certificates
       #Storefront
