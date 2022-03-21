@@ -1,6 +1,10 @@
 <template>
   <div class="accordion">
-    <div v-for="(entry, idx) in accordionEntries" :key="idx">
+    <div
+      v-for="(entry, idx) in accordionEntries"
+      :key="idx"
+      :class="{ 'tw-pb-6': isActive(idx) }"
+    >
       <component :is="level" class="accordion__heading">
         <button
           class="accordion__button"
@@ -17,7 +21,7 @@
           />
         </button>
       </component>
-      <AnimatedCollapse speed="fast">
+      <AnimatedCollapse speed="medium">
         <div
           v-show="isActive(idx)"
           :id="`accordion-${idx}`"
@@ -106,9 +110,7 @@ export default defineComponent({
     transition-property: color;
 
     &--active {
-      & .accordion__label {
-        @apply tw-text-pv-red;
-      }
+      @apply tw-text-pv-red;
     }
 
     &:hover,
@@ -119,7 +121,6 @@ export default defineComponent({
 
   &__content {
     @apply tw-overflow-hidden;
-    @apply tw-mb-6;
   }
 }
 </style>
