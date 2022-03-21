@@ -11,17 +11,6 @@ stages:
   - deployment
   - cms-migration
 
-cache:
-  key: "${CI_PIPELINE_ID}"
-  paths:
-    - .npm/
-    - .nuxt/
-    - .nuxt-storybook/
-    - lsg-public/
-    - node_modules/
-    - coverage/
-    - report/
-
 include:
   - local: '/.gitlab-ci/container_structure_test.yml'
   - local: '/.gitlab-ci/build.yml'
