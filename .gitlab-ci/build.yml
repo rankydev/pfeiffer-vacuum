@@ -130,6 +130,10 @@ sonar-qube:
       --build-arg STORYBLOK_RESOLVE_ASSETS="${STORYBLOK_RESOLVE_ASSETS}"
       --build-arg STORYBLOK_CONTENT_TYPES="${STORYBLOK_CONTENT_TYPES}"
       --build-arg STORYBLOK_EXCLUDE_ROUTES="${STORYBLOK_EXCLUDE_ROUTES}"
+      --build-arg CI_COMMIT_SHORT_SHA="${CI_COMMIT_SHORT_SHA}"
+      --build-arg CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}"
+      --build-arg CI_REPOSITORY_URL="${CI_REPOSITORY_URL}"
+      --build-arg CI_PROJECT_PATH="${CI_PROJECT_PATH}"
       -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
