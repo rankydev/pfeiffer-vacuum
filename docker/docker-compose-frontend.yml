@@ -9,7 +9,7 @@ services:
     environment:
       # must match with the second entry in ports section
       - PORT=3000
-      - NODE_ENV=${CI_NODE_ENVIRONMENT}
+      - NODE_ENV=${NODE_ENV}
       # Sprach
       - DEFAULT_LANGUAGE_CODE=en
       #- LANGUAGES='en,de'
