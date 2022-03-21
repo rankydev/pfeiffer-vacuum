@@ -3,7 +3,7 @@ import { create } from '@storybook/theming/create'
 // See: https://storybook.js.org/docs/react/configure/theming
 export default create({
   base: 'light',
-  brandTitle: 'Pfeiffer Vacuum Styleguide',
+  brandTitle: `Pfeiffer Vacuum Styleguide Version: ${process.env.CI_COMMIT_REF_NAME}/${process.env.CI_COMMIT_SHORT_SHA}`,
   brandUrl: 'https://www.pfeiffer-vacuum.com/',
   brandImage: 'pv-logo.svg',
   colorSecondary: '#c03',
