@@ -7,14 +7,14 @@ build:
   extends: .node-image
   stage: build
   cache:
-    - key: "${CI_PIPELINE_ID}"-build-frontend
-        paths:
-          - .npm/
-          - .nuxt/
-          - node_modules/
-    - key: "${CI_PIPELINE_ID}"-build-lsg
-        paths:
-          - lsg-public/
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+    - key: "${CI_PIPELINE_ID}-build-lsg"
+      paths:
+        - lsg-public/
   script:
     - npm ci --cache .npm --prefer-offline
     - npm run build
@@ -30,15 +30,15 @@ lint:
   stage: test
   needs: ["build"]
   cache:
-    - key: "${CI_PIPELINE_ID}"-build-frontend
-        paths:
-          - .npm/
-          - .nuxt/
-          - node_modules/
-        policy: pull
-    - key: "${CI_PIPELINE_ID}"-report
-        paths:
-          - report/
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: pull
+    - key: "${CI_PIPELINE_ID}-report"
+      paths:
+        - report/
   script:
     - npm run lint:ci
   artifacts:
@@ -52,15 +52,15 @@ test:
   stage: test
   needs: ["build"]
   cache:
-    - key: "${CI_PIPELINE_ID}"-build-frontend
-        paths:
-          - .npm/
-          - .nuxt/
-          - node_modules/
-        policy: pull
-    - key: "${CI_PIPELINE_ID}"-coverage
-        paths:
-          - coverage/
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: pull
+    - key: "${CI_PIPELINE_ID}-coverage"
+      paths:
+        - coverage/
   script:
     - npm test
   artifacts:
@@ -76,17 +76,17 @@ sonar-qube:
   stage: analysis
   needs: ["test", "lint"]
   cache:
-    - key: "${CI_PIPELINE_ID}"-build-frontend
-        paths:
-          - .npm/
-          - .nuxt/
-          - node_modules/
-    - key: "${CI_PIPELINE_ID}"-report
-        paths:
-          - report/
-    - key: "${CI_PIPELINE_ID}"-coverage
-        paths:
-          - coverage/
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+    - key: "${CI_PIPELINE_ID}-report"
+      paths:
+        - report/
+    - key: "${CI_PIPELINE_ID}-coverage"
+      paths:
+        - coverage/
   script:
     - sonar-scanner -Dsonar.login=${SONARQUBE_ACCESS_TOKEN}
   tags:
@@ -142,9 +142,9 @@ build-docker-image-lsg:
   extends: .build-docker-image
   needs: ["test", "lint"]
   cache:
-    - key: "${CI_PIPELINE_ID}"-build-lsg
-        paths:
-          - lsg-public/
+    - key: "${CI_PIPELINE_ID}-build-lsg"
+      paths:
+        - lsg-public/
   script:
     - docker build -t ${DOCKER_IMAGE_NAME}:lsg-${CI_COMMIT_REF_SLUG} -f docker/DockerfileLSG .
   except:
@@ -162,9 +162,9 @@ build-docker-image-lsg-develop:
   extends: .build-docker-image
   needs: ["sonar-qube"]
   cache:
-    - key: "${CI_PIPELINE_ID}"-build-lsg
-        paths:
-          - lsg-public/
+    - key: "${CI_PIPELINE_ID}-build-lsg"
+      paths:
+        - lsg-public/
   script:
     - docker build -t ${DOCKER_IMAGE_NAME}:lsg-${CI_COMMIT_REF_SLUG} -f docker/DockerfileLSG .
   only:
