@@ -97,5 +97,6 @@ export default {
     CI_COMMIT_REF_NAME: process.env.CI_COMMIT_REF_NAME,
     CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,
     CI_PROJECT_URL: process.env.CI_PROJECT_URL,
+    NODE_ENV: process.env.NODE_ENV,
   },
 }
