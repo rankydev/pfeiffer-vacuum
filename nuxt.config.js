@@ -89,4 +89,14 @@ export default {
     port: process.env.PORT || 3000,
     host: process.env.HOST || '0.0.0.0',
   },
+
+  env: {
+    // Environment variables for build-time
+
+    // version info
+    CI_COMMIT_REF_NAME: process.env.CI_COMMIT_REF_NAME,
+    CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,
+    CI_REPOSITORY_URL: process.env.CI_REPOSITORY_URL,
+    CI_PROJECT_PATH: process.env.CI_PROJECT_PATH,
+  },
 }
