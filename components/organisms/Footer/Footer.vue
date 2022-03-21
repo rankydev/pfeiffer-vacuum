@@ -27,16 +27,20 @@
           <p>{{ copyright }}</p>
         </div>
 
-        <div v-if="hasVersionInfo" class="footer__version">
-          <TextLink :href="commitUrl" :target="'_blank'" :label="versionInfo" />
-        </div>
+        <TextLink
+          v-if="hasVersionInfo"
+          class="footer__version"
+          :href="commitUrl"
+          :label="versionInfo"
+          target="_blank"
+        />
       </ContentWrapper>
     </section>
   </footer>
 </template>
 
 <script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter'
 import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
@@ -84,7 +88,7 @@ export default defineComponent({
       default: null,
     },
   },
-  setup(props) {
+  setup() {
     const hasVersionInfo =
       process.env.NODE_ENV !== 'production' &&
       Boolean(process.env.CI_COMMIT_SHORT_SHA) &&
