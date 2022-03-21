@@ -96,8 +96,8 @@ export default defineComponent({
 
     const versionInfo = `Version: ${process.env.CI_COMMIT_REF_NAME}/${process.env.CI_COMMIT_SHORT_SHA}`
 
-    const baseUrl = `${process.env.CI_REPOSITORY_URL}/${process.env.CI_PROJECT_PATH}`
-    const commitUrl = `${baseUrl}/-/commit/${process.env.CI_COMMIT_SHORT_SHA}`
+    const commitUrl = `${process.env.CI_PROJECT_URL}/-/commit/${process.env.CI_COMMIT_SHORT_SHA}`
+
     return {
       hasVersionInfo,
       versionInfo,

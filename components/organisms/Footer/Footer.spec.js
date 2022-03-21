@@ -26,8 +26,7 @@ describe('Footer', () => {
       process.env.NODE_ENV = 'development'
       process.env.CI_COMMIT_SHORT_SHA = '12345678'
       process.env.CI_COMMIT_REF_NAME = 'test_version_info'
-      process.env.CI_REPOSITORY_URL = 'https://localhost'
-      process.env.CI_PROJECT_PATH = 'pvac/pvweb'
+      process.env.CI_PROJECT_URL = 'https://localhost/pvac/pvweb'
 
       const stubs = { NuxtLink: RouterLinkStub }
       const wrapper = shallowMount(Footer, { stubs, localVue })
@@ -46,8 +45,7 @@ describe('Footer', () => {
     it('should NOT render version info and link given production variables', () => {
       process.env.NODE_ENV = 'production'
       process.env.CI_COMMIT_SHORT_SHA = '12345678'
-      process.env.CI_REPOSITORY_URL = 'https://localhost'
-      process.env.CI_PROJECT_PATH = 'pvac/pvweb'
+      process.env.CI_PROJECT_URL = 'https://localhost/pvac/pvweb'
       process.env.CI_COMMIT_REF_NAME = 'test_version_info'
 
       const stubs = { NuxtLink: RouterLinkStub }

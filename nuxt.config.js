@@ -96,7 +96,6 @@ export default {
     // version info
     CI_COMMIT_REF_NAME: process.env.CI_COMMIT_REF_NAME,
     CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,
-    CI_REPOSITORY_URL: process.env.CI_REPOSITORY_URL,
-    CI_PROJECT_PATH: process.env.CI_PROJECT_PATH,
+    CI_PROJECT_URL: process.env.CI_PROJECT_URL,
   },
 }
