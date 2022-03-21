@@ -35,6 +35,7 @@ lint:
           - .npm/
           - .nuxt/
           - node_modules/
+        policy: pull
     - key: "${CI_PIPELINE_ID}"-report
         paths:
           - report/
@@ -56,6 +57,7 @@ test:
           - .npm/
           - .nuxt/
           - node_modules/
+        policy: pull
     - key: "${CI_PIPELINE_ID}"-coverage
         paths:
           - coverage/
