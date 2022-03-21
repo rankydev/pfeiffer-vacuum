@@ -3,7 +3,6 @@ import Footer from './Footer'
 import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter'
 import TextLink from '~/components/molecules/Links/TextLink/TextLink'
-import Link from '~/components/atoms/Link/Link'
 
 const localVue = createLocalVue()
 localVue.directive('editable', (el, key) => {
