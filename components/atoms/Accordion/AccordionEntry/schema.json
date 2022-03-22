@@ -11,7 +11,7 @@
         "type": "boolean",
         "description": "Attention: If multiple is not selected only the first checked element in the column will be opened",
         "display_name": "Initially open",
-        "default": false
+        "default_value": false
       },
       "items": {
         "type": "bloks",

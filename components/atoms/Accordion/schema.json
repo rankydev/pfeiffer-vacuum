@@ -38,7 +38,7 @@
         "type": "boolean",
         "description": "Allow the user to open multiple entries at the same time",
         "display_name": "Multiple",
-        "default": false
+        "default_value": false
       }
     },
     "image": null,
