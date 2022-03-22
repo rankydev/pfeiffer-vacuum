@@ -18,7 +18,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '',
+        component:
+          'The Accordion component is useful for reducing vertical space with large amounts of information. The default functionality of the component is to only display one accordion element at a time; however, with the multiple property, the accordion element can remain open until explicitly closed.',
       },
       source: {
         code: '<Accordion v-bind="{ accordionEntries, level }"  />',

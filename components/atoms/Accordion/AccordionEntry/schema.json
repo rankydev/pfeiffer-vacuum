@@ -7,6 +7,12 @@
         "translatable": true,
         "display_name": "Title"
       },
+      "isActive": {
+        "type": "boolean",
+        "description": "Attention: If multiple is not selected only the first checked element in the column will be opened",
+        "display_name": "Initially open",
+        "default": false
+      },
       "items": {
         "type": "bloks",
         "restrict_components": true,

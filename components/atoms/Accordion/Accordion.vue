@@ -60,15 +60,40 @@ export default defineComponent({
       default: 'h3',
       validator: (val) => ['h3', 'h4', 'h5', 'h6'].includes(val),
     },
+
+    multiple: {
+      type: Boolean,
+      default: false,
+    },
   },
-  setup() {
-    const active = ref(null)
+  setup(props) {
+    if (props.multiple) {
+      const filterActives = (memo, ele, idx) =>
+        ele.isActive === true ? [...memo, idx] : memo
+      const initial = props.accordionEntries.reduce(filterActives, [])
 
-    const toggleActive = (idx) =>
-      (active.value = active.value === idx ? null : idx)
-    const isActive = (idx) => idx === active.value
+      const active = ref([...initial])
+      const hasIdx = (idx) => active.value.includes(idx)
+      const findIdx = (idx) => active.value.indexOf(idx)
+      const removeIdx = (idx) => active.value.splice(findIdx(idx), 1)
+      const addIdx = (idx) => active.value.push(idx)
 
-    return { isActive, toggleActive }
+      return {
+        toggleActive: (idx) => (hasIdx(idx) ? removeIdx(idx) : addIdx(idx)),
+        isActive: hasIdx,
+      }
+    } else {
+      const findIdx = (ele) => ele.isActive === true
+      const initial = props.accordionEntries.findIndex(findIdx)
+
+      const active = ref(initial)
+      const hasIdx = (idx) => active.value === idx
+
+      return {
+        toggleActive: (idx) => (active.value = hasIdx(idx) ? null : idx),
+        isActive: (idx) => idx === active.value,
+      }
+    }
   },
 })
 </script>
@@ -102,7 +127,7 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-justify-between;
     @apply tw-items-center;
-    @apply tw-mt-5 tw-mb-6;
+    @apply tw-pt-5 tw-pb-6;
     @apply tw-w-full;
 
     @apply tw-duration-200;

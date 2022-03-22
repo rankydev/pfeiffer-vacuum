@@ -1,17 +1,18 @@
 import richtext from '~/components/atoms/Richtext/Richtext.stories.content.js'
 import { nanoid } from 'nanoid'
 
-const accordionEntry = () => ({
+const accordionEntry = (isActive = false) => ({
   _uid: nanoid(),
   label: 'Lorem Ipsum',
   items: [richtext.content],
+  isActive,
   _editable: '',
 })
 
 export const accordionEntries = [
+  accordionEntry(true),
   accordionEntry(),
-  accordionEntry(),
-  accordionEntry(),
+  accordionEntry(true),
   accordionEntry(),
   accordionEntry(),
 ]
