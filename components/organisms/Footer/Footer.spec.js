@@ -2,7 +2,7 @@ import { createLocalVue, RouterLinkStub, shallowMount } from '@vue/test-utils'
 import Footer from './Footer'
 import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter'
-import TextLink from '~/components/molecules/Links/TextLink/TextLink'
+import TextLink from '~/components/molecules/TextLink/TextLink'
 
 const localVue = createLocalVue()
 localVue.directive('editable', (el, key) => {

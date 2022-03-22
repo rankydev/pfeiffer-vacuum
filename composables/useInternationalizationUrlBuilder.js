@@ -15,7 +15,6 @@ const useInternationalizationUrlBuilder = ({ root: context }) => {
     let language = LANGUAGES.includes(urlsSegments[0])
       ? urlsSegments.shift()
       : DEFAULT_LANGUAGE
-    language = language === DEFAULT_LANGUAGE ? '' : language
 
     const slug = urlsSegments.join('/')
 

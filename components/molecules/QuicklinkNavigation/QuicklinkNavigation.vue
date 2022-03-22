@@ -14,7 +14,7 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import Quicklink from '~/components/molecules/Links/Quicklink/Quicklink'
+import Quicklink from '~/components/molecules/Quicklink/Quicklink'
 import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({

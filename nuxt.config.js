@@ -26,6 +26,15 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/scss/style.scss'],
 
+  router: {
+    extendRoutes(routes) {
+      for (const key in routes) {
+        routes[key].caseSensitive = true
+      }
+    },
+    middleware: 'browserLanguageDetection',
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/storyblok-api-client', mode: 'client' },

@@ -1,7 +1,7 @@
-import Quicklink from '~/components/molecules/Links/Quicklink/Quicklink'
+import Quicklink from '~/components/molecules/Quicklink/Quicklink'
 
 export default {
-  title: 'Molecules/Links/Quicklink',
+  title: 'Molecules/Quicklink',
   component: Quicklink,
   parameters: {
     docs: {
