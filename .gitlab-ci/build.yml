@@ -66,6 +66,7 @@ test:
         - coverage/
       policy: push
   script:
+    - NODE_ENV=test
     - npm test
   artifacts:
     when: always
@@ -212,17 +213,16 @@ build-docker-image-frontend-prd-tags:
     - tags
 
 tag-gitlab-nightly:
-  needs: [ "build-docker-image-frontend-develop" ]
+  needs: ["build-docker-image-frontend-develop"]
   image: docker:git
   stage: build-docker-image
   before_script:
     - git remote remove origin
-    - git remote add origin ${CI_REPOSITORY_URL}
+    - git remote add origin https://"${CI_GITLAB_TAG_WRITE_TOKEN_USERNAME}:${CI_GITLAB_TAG_WRITE_TOKEN_PASSWORD}"@gitlab.diva-e.com/pvac/pvweb.git
   script:
     - git tag  "$(date +'%Y%m%d.%H%M')"
     - git push origin "$(date +'%Y%m%d.%H%M')"
   only:
     - schedules
-    - develop
   tags:
     - docker_runner

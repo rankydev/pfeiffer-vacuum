@@ -106,8 +106,5 @@ export default defineComponent({
   head () {
     return this.metaData
   },
-  mounted() {
-    console.log(this.quicklinks)
-  }
 })
 </script>
