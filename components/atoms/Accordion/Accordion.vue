@@ -111,6 +111,11 @@ export default defineComponent({
     @apply tw-border-t-2;
     @apply tw-border-pv-grey-96;
     @apply tw-overflow-hidden;
+    @apply tw-py-4;
+  }
+
+  h3 {
+    @apply tw-py-6;
   }
 
   &__label {
@@ -126,7 +131,6 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-justify-between;
     @apply tw-items-center;
-    @apply tw-pt-5 tw-pb-6;
     @apply tw-w-full;
 
     @apply tw-duration-200;
