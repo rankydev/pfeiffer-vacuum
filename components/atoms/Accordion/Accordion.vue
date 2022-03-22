@@ -106,7 +106,6 @@ export default defineComponent({
   @apply tw-border-b-2;
   @apply tw-border-pv-grey-96;
   @apply tw-overflow-hidden;
-  width: 300px;
 
   &__heading {
     @apply tw-border-t-2;

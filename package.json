@@ -17,7 +17,7 @@
     "lint:ci": "npm run lint && npm run lint:js-ci && npm run lint:style-ci",
     "lsg": "nuxt storybook -s .storybook/static",
     "lsg:build": "nuxt storybook build -s .storybook/static --output-dir ./lsg-public",
-    "test": "jest --config ./jest.config.js",
+    "test": "jest",
     "storyblok:sync": "env-cmd nuxt storyblok sync"
   },
   "dependencies": {
