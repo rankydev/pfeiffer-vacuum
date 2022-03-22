@@ -1,9 +1,10 @@
 <template>
   <ul class="primary-nav" :class="`primary-nav--level-${level}`">
     <li
-      v-for="(entry, idx) in navigationEntries"
+      v-for="(entry, idx) in extendedEntries"
       :key="idx"
       class="primary-nav__element"
+      :class="entry.class || ''"
     >
       <Link
         class="primary-nav__link"
@@ -39,6 +40,7 @@ import {
   defineComponent,
   ref,
   useContext,
+  computed,
   watch,
 } from '@nuxtjs/composition-api'
 
@@ -63,7 +65,7 @@ export default defineComponent({
       default: 0,
     },
   },
-  setup() {
+  setup(props) {
     const { app } = useContext()
 
     const menu = useMenuStore()
@@ -90,7 +92,10 @@ export default defineComponent({
       return false
     }
 
-    return { toggleActive, activeElement, isMobile }
+    const home = { label: 'Home', href: '/', class: 'md:tw-hidden' }
+    const extendedEntries = computed(() => [home, ...props.navigationEntries])
+
+    return { toggleActive, activeElement, isMobile, extendedEntries }
   },
 })
 </script>

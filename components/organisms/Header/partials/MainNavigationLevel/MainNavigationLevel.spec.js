@@ -30,11 +30,20 @@ describe('MainNavigationLevel', () => {
 
       const links = wrapper.findAll('.primary-nav__link')
 
-      expect(links.length).toBe(navigationEntries.length)
+      expect(links.length).toBe(navigationEntries.length + 1)
 
       navigationEntries.forEach((entry, idx) => {
-        expect(links.at(idx).text()).toBe(entry.label)
+        expect(links.at(idx + 1).text()).toBe(entry.label)
       })
+    })
+
+    it('should prepend home link', () => {
+      createComponent({ navigationEntries })
+
+      const link = wrapper.find('.primary-nav__element')
+
+      expect(link.attributes('class')).toMatch('md:tw-hidden')
+      expect(link.text()).toBe('Home')
     })
 
     it('should render without navigation entries', () => {
@@ -48,10 +57,10 @@ describe('MainNavigationLevel', () => {
 
         const links = wrapper.findAll('.primary-nav__label')
 
-        expect(links.length).toBe(navigationEntries.length)
+        expect(links.length).toBe(navigationEntries.length + 1)
 
         navigationEntries.forEach((entry, idx) => {
-          expect(links.at(idx).text()).toBe(entry.label)
+          expect(links.at(idx + 1).text()).toBe(entry.label)
         })
       })
 
@@ -64,7 +73,7 @@ describe('MainNavigationLevel', () => {
 
         const links = wrapper.findAll('.primary-nav__link')
 
-        expect(links.length).toBe(navigationEntries.length)
+        expect(links.length).toBe(navigationEntries.length + 1)
 
         links.wrappers.forEach((link) => {
           const icon = link.findComponent(Icon)

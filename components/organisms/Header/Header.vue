@@ -91,9 +91,8 @@ export default defineComponent({
       @apply tw-fixed;
       @apply tw-inset-0;
       @apply tw--z-10;
-      @apply tw-border-pv-black;
-      @apply tw-bg-opacity-20;
-      backdrop-filter: blur(20px);
+      @apply tw--z-10;
+      @apply tw-bg-pv-black/50;
       content: '';
     }
   }
