@@ -26,15 +26,6 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/scss/style.scss'],
 
-  router: {
-    extendRoutes(routes) {
-      for (const key in routes) {
-        routes[key].caseSensitive = true
-      }
-    },
-    // middleware: 'browserLanguageDetection',
-  },
-
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/storyblok-api-client', mode: 'client' },
@@ -63,7 +54,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@txp-cms/storyblok', '@nuxtjs/i18n'],
+  modules: ['@txp-cms/storyblok'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -111,14 +102,14 @@ export default {
     port: process.env.PORT || 3000,
     host: process.env.HOST || '0.0.0.0',
   },
-  i18n: {
-    strategy: 'prefix_except_default',
-    defaultLocale: 'en',
-    locales,
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root', // recommended
-    },
+
+  env: {
+    // Environment variables for build-time
+
+    // version info
+    CI_COMMIT_REF_NAME: process.env.CI_COMMIT_REF_NAME,
+    CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,
+    CI_PROJECT_URL: process.env.CI_PROJECT_URL,
+    NODE_ENV: process.env.NODE_ENV,
   },
 }
