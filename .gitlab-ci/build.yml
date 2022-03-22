@@ -66,6 +66,7 @@ test:
         - coverage/
       policy: push
   script:
+    - NODE_ENV=test
     - npm test
   artifacts:
     when: always
@@ -212,7 +213,7 @@ build-docker-image-frontend-prd-tags:
     - tags
 
 tag-gitlab-nightly:
-  needs: [ "build-docker-image-frontend-develop" ]
+  needs: ["build-docker-image-frontend-develop"]
   image: docker:git
   stage: build-docker-image
   before_script:

@@ -33,8 +33,6 @@ describe('Footer', () => {
 
       const textLink = wrapper.findComponent(TextLink)
 
-      console.log(wrapper.html())
-
       expect(textLink.exists()).toBeTruthy()
       // not textLink.text() because of shallowMount, thus only stub with attributes available
       expect(textLink.attributes('label')).toBe(
