@@ -69,6 +69,7 @@ test:
         - coverage/
       policy: push
   script:
+    - NODE_ENV=test
     - echo $NODE_ENV
     - npm test
   artifacts:
