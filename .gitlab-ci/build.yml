@@ -18,7 +18,6 @@ build:
         - lsg-public/
       policy: push
   script:
-    - echo $NODE_ENV
     - npm ci --cache .npm --prefer-offline
     - npm run build
     - npm run lsg:build
@@ -55,8 +54,6 @@ test:
   extends: .node-image
   stage: test
   needs: ['build']
-  variables:
-    NODE_ENV: 'test'
   cache:
     - key: '${CI_PIPELINE_ID}-build-frontend'
       paths:
@@ -70,7 +67,6 @@ test:
       policy: push
   script:
     - NODE_ENV=test
-    - echo $NODE_ENV
     - npm test
   artifacts:
     when: always
@@ -120,7 +116,6 @@ sonar-qube:
     - # disable gitlab warning for docker login
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
   script:
-    - echo $NODE_ENV
     - docker build
       -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
       --build-arg NODE_ENV=${NODE_ENV}
