@@ -2,6 +2,7 @@
   <SvgIcon
     v-if="type === 'svg'"
     :name="icon"
+    :title="title"
     :class="['icon__svg', `icon--${size}`]"
   />
   <span
@@ -27,6 +28,13 @@ export default defineComponent({
       required: true,
     },
     /**
+     * The title of the icon (for better accessibility)
+     */
+    title: {
+      type: String,
+      default: '',
+    },
+    /**
      * The size of the icon
      * @values small, base, large, xlarge
      */
@@ -38,7 +46,7 @@ export default defineComponent({
     },
     /**
      * Set the type of icon
-     * @values small, base, large, xlarge
+     * @values material-icon, svg
      */
     type: {
       type: String,

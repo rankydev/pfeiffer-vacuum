@@ -152,6 +152,7 @@ export default defineComponent({
     &.button--primary {
       @apply tw-bg-pv-yellow;
       @apply tw-text-pv-grey-16;
+      @apply tw-shadow-button;
 
       &:hover,
       &:focus {
@@ -162,6 +163,7 @@ export default defineComponent({
     &.button--secondary {
       @apply tw-bg-pv-red;
       @apply tw-text-pv-white;
+      @apply tw-shadow-button;
 
       &:hover,
       &:focus {
@@ -172,6 +174,7 @@ export default defineComponent({
     &.button--inverted {
       @apply tw-bg-pv-white;
       @apply tw-text-pv-black;
+      @apply tw-shadow-button-inverted;
 
       &:hover,
       &:focus {
@@ -184,6 +187,7 @@ export default defineComponent({
     &.button--disabled:focus {
       @apply tw-bg-pv-grey-80;
       @apply tw-text-pv-grey-96;
+      @apply tw-shadow-none;
 
       &.button--inverted {
         @apply tw-bg-pv-grey-64;

@@ -2,8 +2,8 @@ import { ref, watch } from '@nuxtjs/composition-api'
 
 const useTemplating = (content) => {
   const top = ref(undefined)
-  const stage = ref(undefined)
   const header = ref(undefined)
+  const stage = ref(undefined)
   const body = ref(undefined)
   const bottom = ref(undefined)
   const footer = ref(undefined)
@@ -28,8 +28,8 @@ const useTemplating = (content) => {
 
   const getContent = () => {
     top.value = getContentByName('top')
-    stage.value = getContentByName('stage')
     header.value = getContentByName('header')
+    stage.value = getContentByName('stage')
     body.value = getContentByName('body')
     bottom.value = getContentByName('bottom')
     footer.value = getContentByName('footer')
@@ -39,8 +39,8 @@ const useTemplating = (content) => {
 
   return {
     top,
-    stage,
     header,
+    stage,
     body,
     bottom,
     footer,

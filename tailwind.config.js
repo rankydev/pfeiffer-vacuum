@@ -8,6 +8,11 @@ module.exports = {
     './nuxt.config.{js,ts}',
   ],
   theme: {
+    boxShadow: {
+      none: '0 0 #0000',
+      button: '0 12px 12px -12px rgba(51, 48, 0, 0.4)',
+      'button-inverted': '0 12px 12px -12px rgba(255, 255, 255, 0.3)',
+    },
     colors: {
       'pv-red': '#dd1541',
       'pv-red-darker': '#c01238',
