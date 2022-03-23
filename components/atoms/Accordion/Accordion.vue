@@ -5,7 +5,7 @@
       :key="idx"
       :class="{ 'tw-pb-6': isActive(idx) }"
     >
-      <component :is="level" class="accordion__heading">
+      <component :is="level === 'h3' ? level : 'p'" class="accordion__heading">
         <button
           class="accordion__button"
           :class="[
