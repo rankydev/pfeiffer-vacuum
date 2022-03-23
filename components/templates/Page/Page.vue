@@ -82,7 +82,7 @@ export default defineComponent({
   props: {
     content: {
       type: Object,
-      default: () => {}
+      default: /* istanbul ignore next */ () => {}
     }
   },
   setup (props, context) {
@@ -106,8 +106,5 @@ export default defineComponent({
   head () {
     return this.metaData
   },
-  mounted() {
-    console.log(this.quicklinks)
-  }
 })
 </script>
