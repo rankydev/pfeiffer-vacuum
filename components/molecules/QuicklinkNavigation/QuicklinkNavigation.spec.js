@@ -1,6 +1,8 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import QuicklinkNavigation from './QuicklinkNavigation.vue'
-import { quicklinks } from './QuicklinkNavigation.stories.content'
+import { quicklinkNavigation } from './QuicklinkNavigation.stories.content'
+
+const { quicklinks } = quicklinkNavigation
 
 const localVue = createLocalVue()
 localVue.directive('editable', (el, key) => {
