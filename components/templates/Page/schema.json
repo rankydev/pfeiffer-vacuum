@@ -37,7 +37,8 @@
         "LinkList",
         "Richtext",
         "TextLink",
-        "Accordion"
+        "Accordion",
+        "AnchorWrapper"
       ]
     },
     "bottom": {
