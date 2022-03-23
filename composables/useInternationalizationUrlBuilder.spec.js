@@ -30,7 +30,7 @@ describe('useInternationalizationUrlBuilder', () => {
     const { slug, fallbackSlug, language } = buildUrl('/home')
     expect(slug).toEqual('global/home')
     expect(fallbackSlug).toEqual('global/home')
-    expect(language).toEqual('')
+    expect(language).toEqual('en')
   })
 
   test('test complex url without region and language', () => {

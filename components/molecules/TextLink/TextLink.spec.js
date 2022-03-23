@@ -17,7 +17,7 @@ function createComponent(propsData = {}) {
 
 describe('TextLink', () => {
   describe('initial state', () => {
-    it('should rander the label text when a label was given', () => {
+    it('should render the label text when a label was given', () => {
       const propsData = { ...LinkContent, ...TextLinkContent }
       createComponent(propsData)
 
