@@ -64,7 +64,7 @@ export default defineComponent({
   props: {
     content: {
       type: Object,
-      default: () => ({}),
+      default: /* istanbul ignore next */ () => ({}),
     },
   },
   setup(props) {
