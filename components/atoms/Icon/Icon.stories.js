@@ -13,7 +13,7 @@ export default {
   },
   argTypes: {
     size: {
-      options: ['small', 'base', 'large', 'xlarge'],
+      options: ['small', 'base', 'large', 'xlarge', 'h3', 'paragraph'],
       control: { type: 'inline-radio' },
     },
   },

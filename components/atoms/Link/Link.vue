@@ -1,7 +1,21 @@
 <template>
-  <component :is="isAnchorLink ? 'a' : 'NuxtLink'" v-bind="bindings">
-    <slot />
-  </component>
+  <a v-if="isAnchorLink" v-bind="bindings" @click="beforeNavigation">
+    <slot :isActive="false" :isExactActive="false" />
+  </a>
+
+  <NuxtLink
+    v-else
+    v-slot="{ href: link, navigate, isActive, isExactActive }"
+    v-bind="bindings"
+    custom
+  >
+    <a
+      :href="link"
+      @click="($event) => beforeNavigation($event) && navigate($event)"
+    >
+      <slot :isActive="isActive" :isExactActive="isExactActive" />
+    </a>
+  </NuxtLink>
 </template>
 
 <script>
@@ -25,6 +39,13 @@ export default defineComponent({
       type: String,
       default: '_self',
       validator: (val) => ['_self', '_blank'].includes(val),
+    },
+    /**
+     * a function which will be executed before click. It receives the click event as first paramter
+     */
+    beforeNavigation: {
+      type: Function,
+      default: /* istanbul ignore next */ () => true,
     },
   },
   setup(props) {

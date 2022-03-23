@@ -34,7 +34,7 @@ export default defineComponent({
     links: {
       type: Array,
       require: true,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
   },
 })

@@ -1,21 +1,21 @@
 <template>
   <div class="shop-navigation">
-    <NuxtLink to="#" class="shop-navigation__account">
+    <Link href="#" class="shop-navigation__account">
       <Icon class="shop-navigation__icon" icon="person" />
       <span class="shop-navigation__account-name">Sign In</span>
-    </NuxtLink>
+    </Link>
 
-    <NuxtLink to="#" class="shop-navigation__comparhension">
+    <Link href="#" class="shop-navigation__comparhension">
       <Icon class="shop-navigation__icon" icon="compare_arrows" />
-    </NuxtLink>
+    </Link>
 
-    <NuxtLink to="#" class="shop-navigation__shopping-list">
+    <Link href="#" class="shop-navigation__shopping-list">
       <Icon class="shop-navigation__icon" icon="assignment" />
-    </NuxtLink>
+    </Link>
 
-    <NuxtLink to="#" class="shop-navigation__shopping-cart">
+    <Link href="#" class="shop-navigation__shopping-cart">
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
-    </NuxtLink>
+    </Link>
   </div>
 </template>
 
@@ -23,10 +23,12 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import Link from '~/components/atoms/Link/Link.vue'
 
 export default defineComponent({
   components: {
     Icon,
+    Link,
   },
 })
 </script>
@@ -35,6 +37,10 @@ export default defineComponent({
 .shop-navigation {
   @apply tw-flex;
   @apply tw-items-center;
+
+  @screen lg {
+    @apply tw-pb-8;
+  }
 
   &__account {
     @apply tw-hidden;

@@ -9,6 +9,7 @@ const navigationColumns = [footerMenuOne, footerMenuTwo, footerMenuThree]
 const copyright = '© 2021 Pfeiffer Vacuum GmbH'
 
 export const footerContent = {
+  component: 'Footer',
   socialMedia,
   navigationColumns,
   copyright,

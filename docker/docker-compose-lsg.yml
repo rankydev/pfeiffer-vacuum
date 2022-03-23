@@ -6,3 +6,8 @@ services:
     restart: always
     ports:
     - "4000:80"
+    environment:
+    - CI_COMMIT_SHORT_SHA=${CI_COMMIT_SHORT_SHA}
+    - CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME}
+    - CI_REPOSITORY_URL=${CI_REPOSITORY_URL}
+    - CI_PROJECT_PATH=${CI_PROJECT_PATH}

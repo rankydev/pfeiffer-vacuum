@@ -1,0 +1,51 @@
+{
+    "name": "MainNavigationLink",
+    "display_name": "MainNavigationLink",
+    "schema": {
+        "label": {
+            "type": "text",
+            "translatable": true,
+            "display_name": "Label"
+        },
+        "href": {
+            "type": "multilink",
+            "display_name": "MainNavigationLink",
+            "restrict_content_types": true,
+            "required": true,
+            "translatable": true,
+            "component_whitelist": [
+                "Page"
+            ]
+        },
+        "target": {
+            "type": "option",
+            "use_uuid": true,
+            "options": [
+                {
+                    "value": "_blank",
+                    "name": "New tab / window"
+                },
+                {
+                    "value": "_self",
+                    "name": "Same window"
+                }
+            ],
+            "default_value": "_self",
+            "display_name": "Open linked page in"
+        },
+        "navigationEntries": {
+            "type": "bloks",
+            "restrict_components": true,
+            "component_whitelist": ["MainNavigationLink"],
+            "description": "Navigation entries displayed on the left side."
+        }
+    },
+    "image": null,
+    "preview_field": null,
+    "is_root": false,
+    "is_nestable": true,
+    "all_presets": [],
+    "preset_id": null,
+    "real_name": "MainNavigationLink",
+    "component_group_uuid": null
+}

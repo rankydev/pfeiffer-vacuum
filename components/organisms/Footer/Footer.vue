@@ -64,21 +64,21 @@ export default defineComponent({
      */
     socialMedia: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
     /**
      * List of LinkLists with titles and newsletter block
      */
     navigationColumns: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
     /**
      * Newsletter sign up form
      */
     newsletter: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
     /**
      * Legal text and copyright

@@ -3,8 +3,8 @@ import Link from './Link.vue'
 
 let wrapper
 
-function createComponent(propsData = {}) {
-  const stubs = { NuxtLink: RouterLinkStub }
+function createComponent(propsData = {}, { CustomStub } = {}) {
+  const stubs = { NuxtLink: CustomStub || RouterLinkStub }
   wrapper = shallowMount(Link, { propsData, stubs })
 }
 
@@ -31,7 +31,7 @@ describe('Link', () => {
       })
     })
 
-    describe('given no target _self', () => {
+    describe('given target _self', () => {
       it('should render a NuxtLink component when it is a realtive href', () => {
         const propsData = { target: '_self', href: '/some/reltiv/path' }
         createComponent(propsData)
@@ -52,7 +52,7 @@ describe('Link', () => {
       })
     })
 
-    describe('given no target _blank', () => {
+    describe('given target _blank', () => {
       it('should render a anchor element component when it is a realtive href', () => {
         const propsData = { target: '_blank', href: '/some/reltiv/path' }
         createComponent(propsData)
@@ -75,7 +75,71 @@ describe('Link', () => {
     })
   })
 
-  // describe('during interaction', () => {})
+  describe('during interaction', () => {
+    describe('given beforeNavigation function', () => {
+      it('should call function before executing navigation when link is external', () => {
+        const propsData = {
+          target: '_blank',
+          href: 'https://google.de',
+          beforeNavigation: jest.fn(),
+        }
+        createComponent(propsData)
+
+        const link = wrapper.find('a')
+        link.trigger('click')
+
+        expect(propsData.beforeNavigation).toBeCalledTimes(1)
+      })
+
+      let navigateSpy = null
+      const customRouterStub = () => {
+        navigateSpy = jest.fn()
+        return {
+          data() {
+            return { navigateSpy }
+          },
+          template: `<div>
+            <slot
+              href="/"
+              :navigate="navigateSpy"
+              :isActive="false"
+              :isExactActive="false"
+            />
+          </div>`,
+        }
+      }
+
+      it('should can cancel a Nuxt Link navigate action when returning false', () => {
+        const propsData = {
+          target: '_self',
+          href: '/',
+          beforeNavigation: jest.fn(() => false),
+        }
+        createComponent(propsData, { CustomStub: customRouterStub() })
+
+        const link = wrapper.find('a')
+        link.trigger('click')
+
+        expect(propsData.beforeNavigation).toBeCalledTimes(1)
+        expect(navigateSpy).toBeCalledTimes(0)
+      })
+
+      it('should allow a Nuxt Link navigate action when returning true', () => {
+        const propsData = {
+          target: '_self',
+          href: '/',
+          beforeNavigation: jest.fn(() => true),
+        }
+        createComponent(propsData, { CustomStub: customRouterStub() })
+
+        const link = wrapper.find('a')
+        link.trigger('click')
+
+        expect(propsData.beforeNavigation).toBeCalledTimes(1)
+        expect(navigateSpy).toBeCalledTimes(1)
+      })
+    })
+  })
 
   // describe('business requirements', () => {})
 })
