@@ -75,26 +75,24 @@ export default defineComponent({
   }
 
   ul {
-    @apply tw-list-none;
     @apply tw-pl-0;
     @apply tw-overflow-hidden;
+    @apply tw-list-square;
+    @apply tw-list-inside;
 
     li {
       @apply tw-ml-0;
 
-      &::before {
+      &::marker {
         @apply tw-text-pv-red;
-        @apply tw-w-12;
-        @apply tw-h-12;
-        @apply tw-text-2xl tw-leading-6;
-        @apply tw-pr-1;
-        @apply tw-top-0;
-        @apply tw-relative;
-        @apply tw-content-['\25AA'];
+        @apply tw-text-xl tw-leading-6;
+        @apply tw-mr-1;
       }
 
       p {
         @apply tw-inline-block;
+        @apply tw-relative;
+        left: -0.75rem;
       }
     }
   }
