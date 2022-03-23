@@ -1,5 +1,5 @@
 <template>
-  <Link v-editable="$attrs" v-bind="$attrs">
+  <Link v-bind="$attrs">
     <Icon class="social-media__icon" v-bind="{ icon, title }" type="svg" />
   </Link>
 </template>

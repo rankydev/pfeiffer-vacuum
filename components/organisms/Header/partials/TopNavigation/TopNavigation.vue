@@ -12,7 +12,6 @@
         <FlyoutEntry
           v-for="item in flyoutLinks"
           :key="item._uid"
-          v-editable="item"
           class="top-navigation__flyout"
           v-bind="item"
           :active="active"

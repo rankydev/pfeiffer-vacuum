@@ -1,5 +1,5 @@
 <template>
-  <div v-editable="$attrs" class="link-list">
+  <div class="link-list">
     <h5 v-if="title" class="link-list__title">{{ title }}</h5>
     <ul class="link-list__list">
       <li
