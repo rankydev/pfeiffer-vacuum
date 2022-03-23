@@ -8,7 +8,10 @@
       <component :is="level" class="accordion__heading">
         <button
           class="accordion__button"
-          :class="[level, { 'accordion__button--active': isActive(idx) }]"
+          :class="[
+            `tw-${level}`,
+            { 'accordion__button--active': isActive(idx) },
+          ]"
           :aria-controls="`accordion-${idx}`"
           :aria-expanded="isActive(idx)"
           @click="toggleActive(idx)"
@@ -57,8 +60,8 @@ export default defineComponent({
      */
     level: {
       type: String,
-      default: 'h3',
-      validator: (val) => ['h3', 'h4', 'h5', 'h6'].includes(val),
+      default: 'paragraph',
+      validator: (val) => ['h3', 'paragraph'].includes(val),
     },
 
     multiple: {
@@ -111,11 +114,6 @@ export default defineComponent({
     @apply tw-border-t-2;
     @apply tw-border-pv-grey-96;
     @apply tw-overflow-hidden;
-    @apply tw-py-4;
-  }
-
-  h3 {
-    @apply tw-py-6;
   }
 
   &__label {
@@ -132,6 +130,7 @@ export default defineComponent({
     @apply tw-justify-between;
     @apply tw-items-center;
     @apply tw-w-full;
+    @apply tw-py-4;
 
     @apply tw-duration-200;
     @apply tw-ease-in-out;
@@ -144,6 +143,16 @@ export default defineComponent({
     &:hover,
     &:focus-visible {
       @apply tw-text-pv-red-lighter;
+    }
+
+    &.tw-h3 {
+      @screen lg {
+        @apply tw-py-6;
+      }
+    }
+
+    &.tw-paragraph {
+      @apply tw-font-bold;
     }
   }
 

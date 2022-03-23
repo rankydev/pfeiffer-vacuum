@@ -49,9 +49,7 @@ export default defineComponent({
           'large',
           'xlarge',
           'h3',
-          'h4',
-          'h5',
-          'h6',
+          'paragraph',
         ].includes(val),
     },
     /**
@@ -106,23 +104,7 @@ export default defineComponent({
       }
     }
 
-    &.icon--h4 {
-      font-size: 1.5rem;
-
-      @screen lg {
-        font-size: 2rem;
-      }
-    }
-
-    &.icon--h5 {
-      font-size: 1.5rem;
-
-      @screen lg {
-        font-size: 1.75rem;
-      }
-    }
-
-    &.icon--h6 {
+    &.icon--paragraph {
       font-size: 1.5rem;
     }
   }

@@ -17,6 +17,6 @@ export const accordionEntries = [
   accordionEntry(),
 ]
 
-export const levels = ['h3', 'h4', 'h5', 'h6']
+export const levels = ['h3', 'paragraph']
 
 export default {}
