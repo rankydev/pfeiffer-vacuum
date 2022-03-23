@@ -5,6 +5,7 @@
 
 @layer base {
   h1,
+  .tw-h1,
   .tw-subline-1 {
     color: #292929;
     font-size:  1.75rem;
@@ -17,6 +18,7 @@
   }
 
   h2,
+  .tw-h2,
   .tw-subline-2 {
     color: #292929;
     font-size: 1.5rem;
@@ -29,6 +31,7 @@
   }
 
   h3,
+  .tw-h3,
   .tw-subline-3 {
     color: #292929;
     font-size: 1.25rem;
@@ -41,6 +44,7 @@
   }
 
   h4,
+  .tw-h4,
   .tw-subline-4 {
     color: #292929;
     font-size: 1rem;
@@ -53,6 +57,7 @@
   }
 
   h5,
+  .tw-h5,
   .tw-subline-5 {
     color: #292929;
     font-size: 1rem;
@@ -65,6 +70,7 @@
   }
 
   h6,
+  .tw-h6,
   .tw-subline-6 {
     color: #292929;
     font-size: 1rem;
@@ -81,7 +87,13 @@
   h3,
   h4,
   h5,
-  h6 {
+  h6,
+  .tw-h1,
+  .tw-h2,
+  .tw-h3,
+  .tw-h4,
+  .tw-h5,
+  .tw-h6 {
     font-weight: bold;
   }
 

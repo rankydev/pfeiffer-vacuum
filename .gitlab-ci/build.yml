@@ -66,6 +66,7 @@ test:
         - coverage/
       policy: push
   script:
+    - NODE_ENV=test
     - npm test
   artifacts:
     when: always
@@ -132,8 +133,7 @@ sonar-qube:
       --build-arg STORYBLOK_EXCLUDE_ROUTES="${STORYBLOK_EXCLUDE_ROUTES}"
       --build-arg CI_COMMIT_SHORT_SHA="${CI_COMMIT_SHORT_SHA}"
       --build-arg CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}"
-      --build-arg CI_REPOSITORY_URL="${CI_REPOSITORY_URL}"
-      --build-arg CI_PROJECT_PATH="${CI_PROJECT_PATH}"
+      --build-arg CI_PROJECT_URL="${CI_PROJECT_URL}"
       -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
@@ -211,3 +211,18 @@ build-docker-image-frontend-prd-tags:
     name: prd
   only:
     - tags
+
+tag-gitlab-nightly:
+  needs: ["build-docker-image-frontend-develop"]
+  image: docker:git
+  stage: build-docker-image
+  before_script:
+    - git remote remove origin
+    - git remote add origin https://"${CI_GITLAB_TAG_WRITE_TOKEN_USERNAME}:${CI_GITLAB_TAG_WRITE_TOKEN_PASSWORD}"@gitlab.diva-e.com/pvac/pvweb.git
+  script:
+    - git tag  "$(date +'%Y%m%d.%H%M')"
+    - git push origin "$(date +'%Y%m%d.%H%M')"
+  only:
+    - schedules
+  tags:
+    - docker_runner

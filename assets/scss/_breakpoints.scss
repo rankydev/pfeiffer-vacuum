@@ -1,0 +1,21 @@
+body {
+  &::before {
+    content: "sm";
+    display: none;
+    visibility: hidden;
+
+    @screen md {
+      content: "md";
+    }
+
+    @screen lg {
+      content: "lg";
+    }
+
+    @screen xl {
+      content: "xl";
+    }
+  }
+}
+
+

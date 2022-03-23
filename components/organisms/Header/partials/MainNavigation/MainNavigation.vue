@@ -1,38 +1,46 @@
 <template>
-  <div class="main-navigation">
-    <Icon icon="menu" class="main-navigation__trigger" />
-    <div class="main-navigation__items">
-      <div
-        v-for="(item, idx) in mockItems"
-        :key="idx"
-        class="main-navigation__item"
-      >
-        {{ item }}
-      </div>
+  <nav class="main-navigation" aria-label="Main Menu">
+    <BurgerIcon
+      :is-active="isActive"
+      class="main-navigation__trigger"
+      tabindex="0"
+      :aria-expanded="isActive"
+      aria-controls="js__main-navigation"
+      @click.native="toggle"
+      @keypress.native.enter="toggle"
+    />
+    <div
+      id="js__main-navigation"
+      class="main-navigation__items"
+      :class="{ 'main-navigation__items--active': isActive }"
+    >
+      <MainNavigationLevel :navigation-entries="navigationEntries" />
+      <!-- flyout -->
+      <!-- sign in -->
     </div>
-  </div>
+  </nav>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-
-import Icon from '~/components/atoms/Icon/Icon.vue'
+import BurgerIcon from '~/components/atoms/BurgerIcon/BurgerIcon.vue'
+import MainNavigationLevel from '../MainNavigationLevel/MainNavigationLevel.vue'
+import { useMenuStore } from '~/stores/menu'
 
 export default defineComponent({
   components: {
-    Icon,
+    BurgerIcon,
+    MainNavigationLevel,
+  },
+  props: {
+    navigationEntries: {
+      type: Array,
+      default: /* istanbul ignore next */ () => [],
+    },
   },
   setup() {
-    const mockItems = [
-      'Produkte',
-      'Märkte',
-      'Knowledge',
-      'Blog',
-      'Service & Support',
-      'Kontakt',
-    ]
-
-    return { mockItems }
+    const menu = useMenuStore()
+    return { isActive: menu.isActive, toggle: menu.toggle }
   },
 })
 </script>
@@ -42,7 +50,6 @@ export default defineComponent({
   &__trigger {
     @apply tw-ml-3;
     @apply tw-block;
-    @apply tw-text-pv-red;
 
     @screen md {
       @apply tw-hidden;
@@ -51,20 +58,22 @@ export default defineComponent({
 
   &__items {
     @apply tw-hidden;
+    @apply tw-flex-col;
+    @apply tw-absolute;
+    @apply tw-top-full tw-inset-x-0;
+    @apply tw-bg-pv-white;
+    @apply tw-mt-0.5;
+
+    &--active {
+      @apply tw-flex;
+    }
 
     @screen md {
       @apply tw-flex;
+      @apply tw-static;
+      @apply tw-flex-row;
+      @apply tw-mt-0;
     }
   }
-
-  /* temporarly until the component was implemented */
-  &__item {
-    @apply tw-mr-8;
-    @apply tw-text-xl;
-    @apply tw-leading-8;
-    @apply tw-text-pv-grey-16;
-  }
-
-  /* temporarly until the component was implemented */
 }
 </style>

@@ -64,21 +64,21 @@ export default defineComponent({
      */
     socialMedia: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
     /**
      * List of LinkLists with titles and newsletter block
      */
     navigationColumns: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
     /**
      * Newsletter sign up form
      */
     newsletter: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
     /**
      * Legal text and copyright
@@ -96,8 +96,8 @@ export default defineComponent({
 
     const versionInfo = `Version: ${process.env.CI_COMMIT_REF_NAME}/${process.env.CI_COMMIT_SHORT_SHA}`
 
-    const baseUrl = `${process.env.CI_REPOSITORY_URL}/${process.env.CI_PROJECT_PATH}`
-    const commitUrl = `${baseUrl}/-/commit/${process.env.CI_COMMIT_SHORT_SHA}`
+    const commitUrl = `${process.env.CI_PROJECT_URL}/-/commit/${process.env.CI_COMMIT_SHORT_SHA}`
+
     return {
       hasVersionInfo,
       versionInfo,

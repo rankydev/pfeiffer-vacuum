@@ -9,11 +9,11 @@ module.exports = {
     '.*\\.(vue)$': 'vue-jest',
   },
   collectCoverage: true,
-  setupFiles: ['<rootDir>/jest-setup.js'],
   coverageReporters: ['clover', 'json', 'lcov', 'text', 'html'],
   collectCoverageFrom: [
     '<rootDir>/components/**/*.vue',
     '<rootDir>/pages/**/*.vue',
     '<rootDir>/composables/**/*.js',
+    '<rootDir>/stores/**/*.js',
   ],
 }

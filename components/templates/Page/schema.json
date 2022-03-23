@@ -34,14 +34,10 @@
       "display_name": "Content",
       "restrict_components": true,
       "component_whitelist": [
-        "ContentWrapper",
-        "FluidContainer",
-        "Grid",
-        "ImageWrapper",
-        "Link",
         "LinkList",
         "Richtext",
-        "TextLink"
+        "TextLink",
+        "Accordion"
       ]
     },
     "bottom": {
