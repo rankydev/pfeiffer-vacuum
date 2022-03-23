@@ -3,6 +3,10 @@
 
 @import 'variables';
 
+body {
+  @apply tw-font-sans;
+}
+
 @layer base {
   h1,
   .tw-h1,
