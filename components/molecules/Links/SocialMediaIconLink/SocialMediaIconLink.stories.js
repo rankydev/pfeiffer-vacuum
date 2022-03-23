@@ -2,7 +2,7 @@ import SocialMediaIconLink from './SocialMediaIconLink.vue'
 import LinkContent from '~/components/atoms/Link/Link.stories.content'
 
 export default {
-  title: 'Atoms/SocialMediaIconLink',
+  title: 'Molecules/Links/SocialMediaIconLink',
   component: SocialMediaIconLink,
   parameters: {
     docs: {

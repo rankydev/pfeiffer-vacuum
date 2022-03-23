@@ -26,6 +26,14 @@
         <div class="footer__copyright">
           <p>{{ copyright }}</p>
         </div>
+
+        <TextLink
+          v-if="hasVersionInfo"
+          class="footer__version"
+          :href="commitUrl"
+          :label="versionInfo"
+          target="_blank"
+        />
       </ContentWrapper>
     </section>
   </footer>
@@ -38,6 +46,7 @@ import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import LinkList from '~/components/molecules/LinkList/LinkList'
 import LanguageSwitcher from '~/components/molecules/LanguageSwitcher/LanguageSwitcher'
+import TextLink from '~/components/molecules/Links/TextLink/TextLink'
 
 export default defineComponent({
   name: 'Footer',
@@ -47,6 +56,7 @@ export default defineComponent({
     ContentWrapper,
     LinkList,
     LanguageSwitcher,
+    TextLink,
   },
   props: {
     /**
@@ -54,21 +64,21 @@ export default defineComponent({
      */
     socialMedia: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
     /**
      * List of LinkLists with titles and newsletter block
      */
     navigationColumns: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
     /**
      * Newsletter sign up form
      */
     newsletter: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
     /**
      * Legal text and copyright
@@ -77,6 +87,22 @@ export default defineComponent({
       type: String,
       default: null,
     },
+  },
+  setup() {
+    const hasVersionInfo =
+      process.env.NODE_ENV !== 'production' &&
+      Boolean(process.env.CI_COMMIT_SHORT_SHA) &&
+      Boolean(process.env.CI_COMMIT_REF_NAME)
+
+    const versionInfo = `Version: ${process.env.CI_COMMIT_REF_NAME}/${process.env.CI_COMMIT_SHORT_SHA}`
+
+    const commitUrl = `${process.env.CI_PROJECT_URL}/-/commit/${process.env.CI_COMMIT_SHORT_SHA}`
+
+    return {
+      hasVersionInfo,
+      versionInfo,
+      commitUrl,
+    }
   },
 })
 </script>
@@ -89,6 +115,7 @@ export default defineComponent({
 
   &__bottom-content {
     @apply tw-py-6;
+    @apply tw-relative;
 
     @screen lg {
       @apply tw-py-8;
@@ -145,6 +172,22 @@ export default defineComponent({
 
   &__copyright {
     @apply tw-col-span-3;
+
+    @screen md {
+      @apply tw-col-span-3;
+    }
+
+    @screen lg {
+      @apply tw-col-span-8;
+    }
+  }
+
+  &__version {
+    @apply tw-col-span-3;
+    @apply tw-absolute;
+    @apply tw-right-8;
+    @apply tw-bottom-8;
+    @apply tw-text-pv-green;
 
     @screen md {
       @apply tw-col-span-3;

@@ -2,6 +2,7 @@
   <SvgIcon
     v-if="type === 'svg'"
     :name="icon"
+    :title="title"
     :class="['icon__svg', `icon--${size}`]"
   />
   <span
@@ -27,6 +28,13 @@ export default defineComponent({
       required: true,
     },
     /**
+     * The title of the icon (for better accessibility)
+     */
+    title: {
+      type: String,
+      default: '',
+    },
+    /**
      * The size of the icon
      * @values small, base, large, xlarge
      */
@@ -34,11 +42,19 @@ export default defineComponent({
       type: String,
       default: 'base',
       validator: (val) =>
-        ['xsmall', 'small', 'base', 'large', 'xlarge'].includes(val),
+        [
+          'xsmall',
+          'small',
+          'base',
+          'large',
+          'xlarge',
+          'h3',
+          'paragraph',
+        ].includes(val),
     },
     /**
      * Set the type of icon
-     * @values small, base, large, xlarge
+     * @values material-icon, svg
      */
     type: {
       type: String,
@@ -78,6 +94,18 @@ export default defineComponent({
 
     &.icon--xlarge {
       font-size: 4rem;
+    }
+
+    &.icon--h3 {
+      font-size: 1.75rem;
+
+      @screen lg {
+        font-size: 2.25rem;
+      }
+    }
+
+    &.icon--paragraph {
+      font-size: 1.5rem;
     }
   }
 }

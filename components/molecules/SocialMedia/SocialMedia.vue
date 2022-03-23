@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import SocialMediaIconLink from '~/components/molecules/SocialMediaIconLink/SocialMediaIconLink'
+import SocialMediaIconLink from '~/components/molecules/Links/SocialMediaIconLink/SocialMediaIconLink'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 
 import { defineComponent } from '@nuxtjs/composition-api'
@@ -26,7 +26,7 @@ export default defineComponent({
   props: {
     socialMedia: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
   },
 })

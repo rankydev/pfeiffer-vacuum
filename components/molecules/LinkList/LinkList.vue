@@ -15,7 +15,7 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import TextLink from '~/components/molecules/TextLink/TextLink'
+import TextLink from '~/components/molecules/Links/TextLink/TextLink'
 
 export default defineComponent({
   name: 'LinkList',
@@ -34,7 +34,7 @@ export default defineComponent({
     links: {
       type: Array,
       require: true,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
   },
 })

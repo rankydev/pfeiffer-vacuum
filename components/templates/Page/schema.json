@@ -15,12 +15,12 @@
       "restrict_components": true,
       "component_whitelist": []
     },
-    "header": {
+    "quicklinks": {
       "type": "bloks",
       "maximum": "1",
       "restrict_components": true,
       "component_whitelist": [
-        "Header"
+        "OnPageNavigation"
       ]
     },
     "stage": {
@@ -34,7 +34,10 @@
       "display_name": "Content",
       "restrict_components": true,
       "component_whitelist": [
-        "Richtext"
+        "LinkList",
+        "Richtext",
+        "TextLink",
+        "Accordion"
       ]
     },
     "bottom": {
@@ -42,15 +45,6 @@
       "display_name": "Bottom",
       "restrict_components": true,
       "component_whitelist": []
-    },
-    "footer": {
-      "type": "bloks",
-      "display_name": "Footer",
-      "maximum": "1",
-      "restrict_components": true,
-      "component_whitelist": [
-        "Footer"
-      ]
     },
     "tab-seo": {
       "type": "tab",

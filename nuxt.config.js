@@ -20,6 +20,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/storyblok-api-client', mode: 'client' },
+    { src: '~/plugins/breakpoints' },
     { src: '~/plugins/service.plugin', mode: 'client' },
   ],
 
@@ -82,11 +83,21 @@ export default {
       process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
   },
   publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL,
+    baseURL: process.env.BASE_URL || 'https://localhost:3000',
   },
   server: {
     // for local change add 'environments/local.js'
-    port: process.env.PORT,
-    host: process.env.HOST,
+    port: process.env.PORT || 3000,
+    host: process.env.HOST || '0.0.0.0',
+  },
+
+  env: {
+    // Environment variables for build-time
+
+    // version info
+    CI_COMMIT_REF_NAME: process.env.CI_COMMIT_REF_NAME,
+    CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,
+    CI_PROJECT_URL: process.env.CI_PROJECT_URL,
+    NODE_ENV: process.env.NODE_ENV,
   },
 }
