@@ -41,7 +41,7 @@
       "type": "bloks",
       "display_name": "Content",
       "restrict_components": true,
-      "component_whitelist": []
+      "component_whitelist": ["Accordion"]
     },
     "bottom": {
       "type": "bloks",

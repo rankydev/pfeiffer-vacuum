@@ -1,21 +1,16 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div v-editable="content" class="paragraph-section" v-html="richtext"></div>
+  <div v-editable="richtext" class="paragraph-section" v-html="richtext"></div>
 </template>
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
-    content: {
-      type: Object,
-      default: /* istanbul ignore next */ () => {},
+    richtext: {
+      type: String,
+      default: '',
     },
-  },
-  setup(props) {
-    const richtext = computed(() => props.content?.richtext)
-
-    return { richtext }
   },
 })
 </script>
