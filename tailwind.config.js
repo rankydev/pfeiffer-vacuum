@@ -93,7 +93,7 @@ module.exports = {
       disc: 'disc',
       decimal: 'decimal',
       square: 'square',
-    }
+    },
   },
   prefix: 'tw-',
 }
