@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div>
     <slot name="header">
       <nuxt-dynamic
         v-for="item in top"
@@ -108,9 +108,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss">
-.page {
-  @apply tw-font-sans;
-}
-</style>
