@@ -1,5 +1,5 @@
 <template>
-  <footer v-editable="$attrs" class="footer tw-col-span-full">
+  <footer class="footer tw-col-span-full">
     <SocialMedia
       v-if="socialMedia"
       class="footer__top"
