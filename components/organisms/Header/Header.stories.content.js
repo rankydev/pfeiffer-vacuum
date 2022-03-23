@@ -1,3 +1,5 @@
+import navigationEntries from './partials/MainNavigationLevel/MainNavigationLevel.stories.content.js'
+
 export default {
   flyoutLinks: [
     {
@@ -55,5 +57,5 @@ export default {
         '<!--#storyblok#{"name": "FlyoutEntry", "space": "144293", "uid": "765ce473-f5b0-4123-8083-9f05ddab958c", "id": "104316822"}-->',
     },
   ],
-  navigationEntries: [],
+  navigationEntries,
 }
