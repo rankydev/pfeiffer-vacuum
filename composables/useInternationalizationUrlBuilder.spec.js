@@ -22,7 +22,7 @@ describe('useInternationalizationUrlBuilder', () => {
 
     expect(slug).toEqual('global/')
     expect(fallbackSlug).toEqual('global/')
-    expect(language).toEqual('')
+    expect(language).toEqual('en')
   })
 
   test('test home url without region and language', () => {
@@ -40,7 +40,7 @@ describe('useInternationalizationUrlBuilder', () => {
     )
     expect(slug).toEqual('global/products/fluxkompensator')
     expect(fallbackSlug).toEqual('global/products/fluxkompensator')
-    expect(language).toEqual('')
+    expect(language).toEqual('en')
   })
 
   test('test home url for a specific region', () => {
@@ -49,6 +49,6 @@ describe('useInternationalizationUrlBuilder', () => {
 
     expect(slug).toEqual('ko/home')
     expect(fallbackSlug).toEqual('global/home')
-    expect(language).toEqual('')
+    expect(language).toEqual('en')
   })
 })
