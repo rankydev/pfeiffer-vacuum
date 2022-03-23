@@ -41,3 +41,69 @@ export default {
       '<!--#storyblok#{"name": "Richtext", "space": "144293", "uid": "51e8d701-ae97-4800-b74e-58b93e5f09cd", "id": "104316822"}-->',
   },
 }
+
+export const headlines = `
+  <h2>Heading 2</h2>
+  <p><span class="tw-subline tw-subline-2">Subheading 2</span></p>
+  <h3>Heading 3</h3>
+  <p><span class="tw-subline tw-subline-3">Subheading 3</span></p>
+  <h2>Heading 4</h2>
+  <p><span class="tw-subline tw-subline-4">Subheading 4</span></p>
+  <h3>Heading 5</h3>
+  <p><span class="tw-subline tw-subline-5">Subheading 5</span></p>
+  <h2>Heading 6</h2>
+  <p><span class="tw-subline tw-subline-6">Subheading 6</span></p>
+`
+
+export const styleOptions = `
+<span class="superscript">amet</span>
+<span class="subscript">consectetur </span>
+`
+
+export const links = `
+<a href="https://google.com/" target="_blank" linktype="url">Absolute</a>
+<a href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" anchor="" linktype="story">Internal</a>
+<a href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" anchor="testAnchor" linktype="story">Anchor</a>
+<a href="mailto:test@test.com" linktype="email">Mail</a>`
+
+export const unorderedList = `
+<ul>
+    <li><p>list unordered 1</p></li>
+    <li><p>list unordered 2</p></li>
+    <li><p>list unordered 3</p>
+        <ul>
+            <li><p>list unordered 3</p>
+                <ul>
+                    <li><p>list unordered 3</p>
+                        <ul>
+                            <li><p>list unordered 3</p></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>`
+
+export const orderedList = `
+<ol>
+    <li><p>blubbb</p></li>
+    <li><p>wdwdwdwd</p>
+        <ol>
+            <li><p>blubbb</p></li>
+            <li><p>wdwdwdwd</p>
+                <ol>
+                    <li><p>blubbb</p></li>
+                    <li><p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                        tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos
+                        et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                        sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+                        sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                        aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+                        rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+                        amet.</p></li>
+                </ol>
+            </li>
+        </ol>
+    </li>
+</ol>`

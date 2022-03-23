@@ -22,11 +22,7 @@ export default defineComponent({
 
     const handleClick = (event) => {
       // non <a> elements
-      if (
-        !event.target ||
-        !event.target.attributes ||
-        !event.target.attributes.href
-      ) {
+      if (!event.target?.attributes?.href) {
         return
       }
 
@@ -34,23 +30,13 @@ export default defineComponent({
       // NOTE: we cannot use linkNode.href here, because this is the already processed url (absolute)
       const targetUrl = linkNode.attributes.href.value
 
-      // download links
-      if (linkNode.attributes.download) {
-        return
-      }
-
-      // absolute links
-      if (targetUrl.startsWith('http')) {
-        return
-      }
-
-      // email address link
-      if (targetUrl.startsWith('mailto:')) {
-        return
-      }
-
-      // telephone link
-      if (targetUrl.startsWith('tel:')) {
+      // download links, absolute links, mail links, telephone links
+      if (
+        linkNode.attributes.download ||
+        targetUrl.startsWith('http') ||
+        targetUrl.startsWith('mailto:') ||
+        targetUrl.startsWith('tel:')
+      ) {
         return
       }
 
