@@ -33,7 +33,7 @@ module.exports = {
       'pv-transparent': 'transparent',
     },
     fontFamily: {
-      sans: ['UniversLTStd', 'Helvetica Neue'],
+      sans: ['Roboto', 'sans-serif'],
     },
     fontSize: {
       xs: '.75rem', // 12px
@@ -62,6 +62,8 @@ module.exports = {
       0: '0',
       10: '0.1',
       20: '0.2',
+      50: '0.5',
+      100: '1',
     },
     outlineOffset: {
       '-2': '-2px',

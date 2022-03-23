@@ -47,7 +47,7 @@ export default defineComponent({
      */
     flyoutLinks: {
       type: Array,
-      default: () => [],
+      default: /* istanbul ignore next */ () => [],
     },
   },
   emits: ['input'],
