@@ -64,7 +64,34 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .paragraph-section {
-  @apply tw-container;
+  .tw-subline {
+    @apply tw-block;
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply tw-mb-4;
+
+    & + p > .tw-subline:first-child {
+      @apply tw--mt-4;
+    }
+  }
+
+  p {
+    @apply tw-mb-4;
+
+    & + h2,
+    & + h3,
+    & + h4,
+    & + h5,
+    & + h6,
+    & + p > .tw-subline:first-child {
+      @apply tw-mt-8;
+    }
+  }
 
   a {
     @apply tw-text-pv-red;
@@ -74,31 +101,77 @@ export default defineComponent({
     }
   }
 
-  ul {
-    @apply tw-pl-0;
-    @apply tw-overflow-hidden;
-    @apply tw-list-square;
-    @apply tw-list-inside;
+  ul,
+  ol {
+    @apply tw-mb-8;
 
     li {
-      @apply tw-ml-0;
-
       &::marker {
         @apply tw-text-pv-red;
-        @apply tw-text-xl tw-leading-6;
-        @apply tw-mr-1;
       }
 
       p {
-        @apply tw-inline-block;
-        @apply tw-relative;
-        left: -0.75rem;
+        @apply tw-mb-2;
       }
     }
   }
 
   ol {
-    @apply tw-list-decimal;
+    counter-reset: item;
+    @apply tw-ml-3;
+    @apply tw-pl-0.5;
+
+    li {
+      counter-increment: item;
+
+      p {
+        margin-left: 2px;
+      }
+
+      &::marker {
+        content: counters(item, '.') ' ';
+      }
+    }
+
+    & ol {
+      @apply tw-ml-7;
+
+      & ol {
+        @apply tw-ml-10;
+
+        & ol {
+          @apply tw-ml-14;
+        }
+      }
+    }
+  }
+
+  ul {
+    @apply tw-list-square;
+    @apply tw-ml-5;
+
+    li {
+      p {
+        margin-left: -4px;
+      }
+
+      &::marker {
+        @apply tw-text-xl;
+      }
+    }
+  }
+
+  .superscript,
+  .subscript {
+    font-size: 75%;
+    line-height: 0;
+    top: -0.5em;
+    position: relative;
+    vertical-align: baseline;
+  }
+
+  .subscript {
+    top: 0.5rem;
   }
 }
 </style>

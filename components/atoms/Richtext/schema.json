@@ -23,23 +23,23 @@
       ],
       "style_options": [
         {
-          "value": "tw-subline-2",
+          "value": "tw-subline tw-subline-2",
           "name": "Subline H2"
         },
         {
-          "value": "tw-subline-3",
+          "value": "tw-subline tw-subline-3",
           "name": "Subline H3"
         },
         {
-          "value": "tw-subline-4",
+          "value": "tw-subline tw-subline-4",
           "name": "Subline H4"
         },
         {
-          "value": "tw-subline-5",
+          "value": "tw-subline tw-subline-5",
           "name": "Subline H5"
         },
         {
-          "value": "tw-subline-6",
+          "value": "tw-subline tw-subline-6",
           "name": "Subline H6"
         },
         {
