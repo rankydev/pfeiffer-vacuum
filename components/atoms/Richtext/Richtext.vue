@@ -146,18 +146,5 @@ export default defineComponent({
       }
     }
   }
-
-  .superscript,
-  .subscript {
-    font-size: 75%;
-    line-height: 0;
-    top: -0.5em;
-    position: relative;
-    vertical-align: baseline;
-  }
-
-  .subscript {
-    top: 0.5rem;
-  }
 }
 </style>
