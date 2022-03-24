@@ -88,6 +88,12 @@ module.exports = {
         xl: '1440px',
       },
     },
+    listStyleType: {
+      none: 'none',
+      disc: 'disc',
+      decimal: 'decimal',
+      square: 'square',
+    },
   },
   prefix: 'tw-',
 }
