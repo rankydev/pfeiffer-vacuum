@@ -4,7 +4,8 @@ import Richtext from './Richtext.vue'
 import {
   headlines,
   styleOptions,
-  links,
+  linksTargetSelf,
+  linksTargetBlank,
   unorderedList,
   orderedList,
 } from './Richtext.stories.content'
@@ -45,9 +46,9 @@ describe('Richtext', () => {
     })
 
     test('should render correct richtext given different link types', () => {
-      createComponent({ richtext: links })
+      createComponent({ richtext: linksTargetSelf })
 
-      expect(wrapper.findAll('a')).toHaveLength(4)
+      expect(wrapper.findAll('a')).toHaveLength(5)
     })
 
     test('should render correct richtext given unordered list', () => {
@@ -66,22 +67,62 @@ describe('Richtext', () => {
   })
 
   describe('during interaction', () => {
-    test.only('should trigger router push only on internal links', async () => {
-      createComponent({ richtext: links })
+    const useRouterMock = jest.spyOn(
+      require('@nuxtjs/composition-api'),
+      'useRouter'
+    )
+    const routerMock = { push: jest.fn() }
 
-      const pushMock = jest.fn()
-      const linkElements = wrapper.findAll('a')
-      const externalLink = linkElements.at(0)
-      const internalLink = linkElements.at(1)
+    beforeAll(() => useRouterMock.mockImplementation(() => routerMock))
+    beforeEach(() => routerMock.push.mockClear())
+    afterAll(() => useRouterMock.mockRestore())
 
-      wrapper.vm.router = { push: pushMock }
+    test('should not trigger router push on non link elements', async () => {
+      createComponent({ richtext: '<button>Some button</button>' })
+      const button = wrapper.find('button')
+      await button.trigger('click')
+      expect(routerMock.push).toBeCalledTimes(0)
+    })
 
-      // trigger both links
-      await externalLink.trigger('click')
-      await internalLink.trigger('click')
+    describe('given target _blank', () => {
+      test.each([['external'], ['internal'], ['anchor'], ['mail'], ['asset']])(
+        'should not trigger router push on %s links',
+        async (type) => {
+          createComponent({ richtext: linksTargetBlank })
+          const link = wrapper.find(`.link-${type}`)
+          await link.trigger('click')
+          expect(routerMock.push).toBeCalledTimes(0)
+        }
+      )
+    })
 
-      // expect exactly one router push call
-      expect(pushMock).toBeCalledTimes(1)
+    describe('given target _self', () => {
+      test.each([['external'], ['mail'], ['asset']])(
+        'should not trigger router push on %s links',
+        async (type) => {
+          createComponent({ richtext: linksTargetSelf })
+          const link = wrapper.find(`.link-${type}`)
+          await link.trigger('click')
+          expect(routerMock.push).toBeCalledTimes(0)
+        }
+      )
+
+      test.each([['internal'], ['anchor']])(
+        'should trigger router push and prevent default on %s links',
+        async (type) => {
+          createComponent({ richtext: linksTargetSelf })
+          const link = wrapper.find(`.link-${type}`)
+          const preventSpy = jest.fn()
+
+          link.element.addEventListener(`click`, (e) => {
+            e.preventDefault = preventSpy
+          })
+
+          await link.trigger('click')
+          expect(routerMock.push).toBeCalledTimes(1)
+          expect(preventSpy).toBeCalledTimes(1)
+        }
+      )
     })
   })
 })

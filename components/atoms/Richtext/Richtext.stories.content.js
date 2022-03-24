@@ -3,10 +3,15 @@ export default {
     _uid: '51e8d701-ae97-4800-b74e-58b93e5f09cd',
     component: 'Richtext',
     richtext: `<p>Plain text can be added <u>also with underline</u> or <strong>strong</strong> and links can either be
-                <a href="https://www.pfeiffer-vacuum.com" target="_blank">external</a> or
+                
+    <a href="https://www.pfeiffer-vacuum.com" target="_blank">external</a> or
+                
                 <a href="/home" target="_self">internal</a> or
+                
                 <a href="mailto:info@pfeiffer-vacuum.com">eMail links</a> or
+                
                 <a href="tel:+49123456789">telephone</a> or
+                
                 <a href="#anchor">anchor</a>
                  also styles for several headlines are provide like
                 <h2>Headline H2</h2>
@@ -60,11 +65,19 @@ export const styleOptions = `
 <span class="subscript">consectetur </span>
 `
 
-export const links = `
-<a href="https://google.com/" target="_blank" linktype="url">Absolute</a>
-<a href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" anchor="" linktype="story">Internal</a>
-<a href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" anchor="testAnchor" linktype="story">Anchor</a>
-<a href="mailto:test@test.com" linktype="email">Mail</a>`
+export const linksTargetSelf = `
+<a class="link-external" href="https://google.com/" target="_self" linktype="url">External</a>
+<a class="link-internal" href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" anchor="" linktype="story">Internal</a>
+<a class="link-anchor" href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" anchor="testAnchor" linktype="story">Anchor</a>
+<a class="link-mail" href="mailto:test@test.com" linktype="email">Mail</a>
+<a class="link-asset" href="https://a.storyblok.com/f/144293/329x153/4c312abe67/asset.png" target="_self" linktype="asset">Asset</a>`
+
+export const linksTargetBlank = `
+<a class="link-external" href="https://google.com/" target="_blank" linktype="url">External</a>
+<a class="link-internal" href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" target="_blank" anchor="" linktype="story">Internal</a>
+<a class="link-anchor" href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" target="_blank" anchor="testAnchor" linktype="story">Anchor</a>
+<a class="link-mail" href="mailto:test@test.com" linktype="email" target="_blank">Mail</a>
+<a class="link-asset" href="https://a.storyblok.com/f/144293/329x153/4c312abe67/asset.png" target="_blank" linktype="asset">Asset</a>`
 
 export const unorderedList = `
 <ul>

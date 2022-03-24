@@ -21,18 +21,19 @@ export default defineComponent({
     const router = useRouter()
 
     const handleClick = (event) => {
+      const linkNode = event.target
+      // NOTE: we cannot use target.href here, because this is the already processed url (absolute)
+      const targetUrl = linkNode?.getAttribute('href')
+
       // non <a> elements
-      if (!event.target?.attributes?.href) {
+      if (!targetUrl) {
         return
       }
 
-      const linkNode = event.target
-      // NOTE: we cannot use linkNode.href here, because this is the already processed url (absolute)
-      const targetUrl = linkNode.attributes.href.value
-
-      // download links, absolute links, mail links, telephone links
+      // new tab links, download links, absolute links, mail links, telephone links
       if (
-        linkNode.attributes.download ||
+        linkNode?.target === '_blank' ||
+        linkNode?.download ||
         targetUrl.startsWith('http') ||
         targetUrl.startsWith('mailto:') ||
         targetUrl.startsWith('tel:')
@@ -41,7 +42,6 @@ export default defineComponent({
       }
 
       event.preventDefault()
-
       router.push(targetUrl)
     }
     return { handleClick }
