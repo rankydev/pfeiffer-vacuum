@@ -35,6 +35,7 @@
         },
         "navigationEntries": {
             "type": "bloks",
+            "maximum": 7,
             "restrict_components": true,
             "component_whitelist": ["MainNavigationLink"],
             "description": "Navigation entries displayed on the left side."

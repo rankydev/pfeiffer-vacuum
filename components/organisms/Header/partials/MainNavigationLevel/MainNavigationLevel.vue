@@ -169,8 +169,16 @@ export default defineComponent({
         @apply tw-border-t-4;
       }
 
-      &:hover,
       &:focus-visible {
+        @apply tw-outline-none;
+        @apply tw-text-pv-red-lighter;
+
+        &::after {
+          @apply tw-border-pv-red;
+        }
+      }
+
+      &:hover {
         @apply tw-outline-none;
         @apply tw-text-pv-red-lighter;
 
