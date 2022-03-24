@@ -36,13 +36,15 @@
           :name="item.uiComponent || item.component"
           v-bind="item"
         />
-        <nuxt-dynamic
-          v-for="item in body"
-          :key="item._uid"
-          v-editable="item"
-          :name="item.uiComponent || item.component"
-          v-bind="item"
-        />
+        <ContentWrapper>
+          <nuxt-dynamic
+            v-for="item in body"
+            :key="item._uid"
+            v-editable="item"
+            :name="item.uiComponent || item.component"
+            v-bind="item"
+          />
+        </ContentWrapper>
       </main>
     </slot>
 
@@ -112,10 +114,5 @@ export default defineComponent({
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-h-screen;
-
-  main {
-    @apply tw-mb-auto;
-    @apply tw-container;
-  }
 }
 </style>
