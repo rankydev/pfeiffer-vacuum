@@ -27,5 +27,6 @@
   "is_nestable": true,
   "all_presets": [],
   "preset_id": null,
-  "real_name": "Header"
+  "real_name": "Header",
+  "component_group_name": "Global"
 }

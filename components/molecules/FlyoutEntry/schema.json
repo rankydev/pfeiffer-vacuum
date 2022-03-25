@@ -1,6 +1,6 @@
 {
     "name": "FlyoutEntry",
-    "display_name": "FlyoutEntry",
+    "display_name": "Flyout Entry",
     "schema": {
         "label": {
             "type": "text",
@@ -46,5 +46,6 @@
     "is_nestable": true,
     "all_presets": [],
     "preset_id": null,
-    "real_name": "Flyout Entry"
+    "real_name": "Flyout Entry",
+    "component_group_name": "Global"
 }

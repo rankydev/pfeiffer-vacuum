@@ -1,6 +1,6 @@
 {
     "name": "MainNavigationLink",
-    "display_name": "MainNavigationLink",
+    "display_name": "Main Navigation Link",
     "schema": {
         "label": {
             "type": "text",
@@ -48,5 +48,5 @@
     "all_presets": [],
     "preset_id": null,
     "real_name": "MainNavigationLink",
-    "component_group_uuid": null
+    "component_group_name": "Global"
 }
