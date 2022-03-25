@@ -20,7 +20,6 @@ _Please delete those parts from this list, which are not relevant for this MR._
 * [ ] [Coding guidelines](https://confluence.diva-e.com/x/zEF-CQ) have been checked and obeyed
 * [ ] Left detailed instruction for QA provided at the ticket?
 * [ ] Tested in at least one browser (preferably Safari)
-* [ ] UI tests have been created or decision was not to have any.
 * [ ] Unit tests are provided
 * [ ] Test coverage did not decrease and new code has been tested 100%
 
