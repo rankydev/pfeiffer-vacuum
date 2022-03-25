@@ -55,7 +55,7 @@
   },
   "image": null,
   "preview_field": null,
-  "is_root": true,
+  "is_root": false,
   "preview_tmpl": null,
   "is_nestable": true,
   "all_presets": [],
