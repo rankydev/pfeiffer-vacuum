@@ -1,6 +1,13 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import QuicklinkNavigation from './QuicklinkNavigation.vue'
-import { quicklinks } from './QuicklinkNavigation.stories.content'
+import { quicklinkNavigation } from './QuicklinkNavigation.stories.content'
+
+const { quicklinks } = quicklinkNavigation
+
+const localVue = createLocalVue()
+localVue.directive('editable', (el, key) => {
+  el.innerText = key.value
+})
 
 describe('QuicklinkNavigation', () => {
   describe('initial state', () => {
@@ -9,7 +16,10 @@ describe('QuicklinkNavigation', () => {
         const propsData = {
           quicklinks,
         }
-        const wrapper = shallowMount(QuicklinkNavigation, { propsData })
+        const wrapper = shallowMount(QuicklinkNavigation, {
+          propsData,
+          localVue,
+        })
         const links = wrapper.findAll('quicklink-stub')
 
         quicklinks.forEach((item, index) => {

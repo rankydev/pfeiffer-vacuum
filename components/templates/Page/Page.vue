@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-template">
     <slot name="header">
       <nuxt-dynamic
         v-for="item in top"
@@ -12,7 +12,6 @@
       <nuxt-dynamic
         v-for="item in header"
         :key="item._uid"
-        v-editable="item"
         :name="item.uiComponent || item.component"
         v-bind="item"
       />
@@ -59,7 +58,6 @@
       <nuxt-dynamic
         v-for="item in footer"
         :key="item._uid"
-        v-editable="item"
         :name="item.uiComponent || item.component"
         v-bind="item"
       />
@@ -82,13 +80,13 @@ export default defineComponent({
   props: {
     content: {
       type: Object,
-      default: () => {}
+      default: /* istanbul ignore next */ () => {}
     }
   },
   setup (props, context) {
     const { content } = toRefs(props)
-    const translatedSlugs = inject('getTranslatedSlugs')()
-    const defaultFullSlug = inject('getDefaultFullSlug')()
+    const translatedSlugs = inject('getTranslatedSlugs', () => [])()
+    const defaultFullSlug = inject('getDefaultFullSlug', () => '')()
     const { top, header, stage, body, bottom, footer } = useTemplating(content)
     const { getMetaData } = useMeta(content, defaultFullSlug, translatedSlugs, context)
 
@@ -106,8 +104,18 @@ export default defineComponent({
   head () {
     return this.metaData
   },
-  mounted() {
-    console.log(this.quicklinks)
-  }
 })
 </script>
+
+<style lang="scss">
+.page-template {
+  @apply tw-flex;
+  @apply tw-flex-col;
+  @apply tw-h-screen;
+
+  main {
+    @apply tw-mb-auto;
+    @apply tw-container;
+  }
+}
+</style>

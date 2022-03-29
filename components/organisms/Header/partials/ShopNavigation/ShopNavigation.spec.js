@@ -1,14 +1,14 @@
-import { shallowMount, RouterLinkStub } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import ShopNavigation from './ShopNavigation.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import Link from '~/components/atoms/Link/Link.vue'
 
 describe('ShopNavigation', () => {
   describe('initial state', () => {
     it('should render', () => {
-      const stubs = { NuxtLink: RouterLinkStub }
-      const wrapper = shallowMount(ShopNavigation, { stubs })
+      const wrapper = shallowMount(ShopNavigation)
 
-      const navItems = wrapper.findAllComponents(RouterLinkStub)
+      const navItems = wrapper.findAllComponents(Link)
 
       expect(navItems.length).toBe(4)
 
