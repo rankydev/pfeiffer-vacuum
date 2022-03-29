@@ -8,8 +8,8 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
     '.*\\.(vue)$': '@vue/vue2-jest',
   },
+  testEnvironment: 'jsdom',
   collectCoverage: true,
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   coverageReporters: ['clover', 'json', 'lcov', 'text', 'html'],
   collectCoverageFrom: [
     '<rootDir>/components/**/*.vue',
