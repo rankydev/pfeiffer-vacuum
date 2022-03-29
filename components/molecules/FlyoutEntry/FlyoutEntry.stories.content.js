@@ -30,3 +30,5 @@ export const flyoutEntry3 = {
   _editable:
     '<!--#storyblok#{"name": "FlyoutEntry", "space": "144293", "uid": "765ce473-f5b0-4123-8083-9f05ddab958c", "id": "104316822"}-->',
 }
+
+export default {}
