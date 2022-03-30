@@ -18,7 +18,7 @@
     "lsg": "nuxt storybook -s .storybook/static",
     "lsg:build": "nuxt storybook build -s .storybook/static --output-dir ./lsg-public",
     "test": "jest",
-    "storyblok:sync": "env-cmd node -r esm ./bin/nuxt-stroyblok.js"
+    "storyblok:sync": "env-cmd node -r esm ./bin/nuxt-storyblok.js"
   },
   "dependencies": {
     "@nuxt/ufo": "^0.5.4",
