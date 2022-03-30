@@ -109,7 +109,7 @@ export default defineComponent({
       &::before {
         @apply tw-float-left;
         @apply tw-mr-2;
-        content: counters(item, '.') ' ';
+        content: counters(item, '.') '. ';
       }
     }
 
