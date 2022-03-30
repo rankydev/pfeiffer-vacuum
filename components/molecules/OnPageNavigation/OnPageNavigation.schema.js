@@ -6,7 +6,7 @@ export default {
       type: 'bloks',
       restrict_components: true,
       component_whitelist: ['Quicklink'],
-      maximum: '4',
+      maximum: 4,
       description: 'Links for Quicklink Navigation',
     },
   },

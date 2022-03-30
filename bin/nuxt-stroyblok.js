@@ -4,8 +4,11 @@ import path from 'path'
 import glob from 'glob'
 import arg from 'arg'
 import consola from 'consola'
-import getApi from '@txp-cms/storyblok/bin/utils/api'
-import syncComponents from '@txp-cms/storyblok/bin/tasks/sync-components'
+import getApi from '@txp-cms/storyblok/bin/utils/api.js'
+import syncComponents from '@txp-cms/storyblok/bin/tasks/sync-components.js'
+
+import { getWebpackConfig } from '@nuxt/cli'
+import moduleAlias from 'module-alias'
 
 export const logger = consola.withScope('@txp-cms/storyblok')
 export const usage = 'nuxt storyblok [`sync`] [`dir`]'
@@ -21,6 +24,13 @@ async function getComponentsSchema(dir) {
   return results.map((el) => el.default)
 }
 
+async function registerModuleAlias() {
+  const webpackConfig = await getWebpackConfig()
+  const { alias } = webpackConfig.resolve
+
+  moduleAlias.addAliases(alias)
+}
+
 async function _run() {
   const args = arg({
     '--space': Number,
@@ -33,7 +43,11 @@ async function _run() {
   mode = mode || 'sync'
 
   const schemaDir = path.resolve(process.cwd(), _dir)
-  const components = await getComponentsSchema(schemaDir)
+
+  const [components] = await Promise.all([
+    getComponentsSchema(schemaDir),
+    registerModuleAlias(),
+  ])
 
   const spaceId = args['--space'] || process.env.STORYBLOK_SPACE_ID
   const accessToken = args['--token'] || process.env.STORYBLOK_OAUTH_TOKEN

@@ -21,7 +21,7 @@ export default {
     },
     quicklinks: {
       type: 'bloks',
-      maximum: '1',
+      maximum: 1,
       restrict_components: true,
       component_whitelist: ['OnPageNavigation'],
     },

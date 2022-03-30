@@ -14,7 +14,7 @@ export default {
       restrict_components: true,
       component_whitelist: ['FlyoutEntry'],
       pos: 1,
-      maximum: '4',
+      maximum: 4,
       description: 'Links on the upper right',
     },
   },

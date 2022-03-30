@@ -12,7 +12,7 @@ export default {
     },
     header: {
       type: 'bloks',
-      maximum: '1',
+      maximum: 1,
       restrict_components: true,
       component_whitelist: ['Header'],
     },
@@ -24,7 +24,7 @@ export default {
     footer: {
       type: 'bloks',
       display_name: 'Footer',
-      maximum: '1',
+      maximum: 1,
       restrict_components: true,
       component_whitelist: ['Footer'],
     },

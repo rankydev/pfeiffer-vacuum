@@ -1,4 +1,4 @@
-import Link from '../../../atoms/Link/Link.schema.js'
+import Link from '~/components/atoms/Link/Link.schema.js'
 
 export default {
   name: 'SocialMediaIconLink',
