@@ -99,7 +99,6 @@ export default defineComponent({
   }
 
   ol {
-    @apply tw-ml-3;
     @apply tw-pl-0.5;
     @apply tw-list-none;
     counter-reset: item;
@@ -108,12 +107,9 @@ export default defineComponent({
       counter-increment: item;
 
       &::before {
+        @apply tw-float-left;
+        @apply tw-mr-2;
         content: counters(item, '.') ' ';
-      }
-
-      p {
-        @apply tw-inline-block;
-        margin-left: 2px;
       }
     }
 
@@ -140,8 +136,8 @@ export default defineComponent({
       }
 
       &::marker {
-        // Safari needs explicit color definition in order to load color of marker correctly
-        color: #dd1541 !important;
+        // Safari needs explicit opacity declaration in order to load color of marker correctly
+        @apply tw-text-pv-red/100;
         @apply tw-text-xl;
       }
     }
