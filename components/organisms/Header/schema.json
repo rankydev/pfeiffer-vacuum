@@ -6,6 +6,7 @@
       "type": "bloks",
       "restrict_components": true,
       "component_whitelist": ["MainNavigationLink"],
+      "maximum": 7,
       "pos": 1,
       "description": "Navigation bar entries displayed on the left side."
     },
