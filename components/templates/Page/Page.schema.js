@@ -3,7 +3,7 @@ import Social from './PageSocial.schema.partial.js'
 
 export default {
   name: 'Page',
-  display_name: null,
+  display_name: 'Page',
   schema: {
     title: {
       type: 'text',
@@ -72,7 +72,7 @@ export default {
   all_presets: [],
   preset_id: null,
   real_name: 'Page',
-  component_group_uuid: null,
   color: null,
   icon: null,
+  component_group_name: 'Templates',
 }

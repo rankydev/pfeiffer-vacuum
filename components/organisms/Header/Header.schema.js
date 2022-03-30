@@ -13,7 +13,7 @@ export default {
       type: 'bloks',
       restrict_components: true,
       component_whitelist: ['FlyoutEntry'],
-      pos: 1,
+      pos: 2,
       maximum: 4,
       description: 'Links on the upper right',
     },
@@ -26,4 +26,5 @@ export default {
   all_presets: [],
   preset_id: null,
   real_name: 'Header',
+  component_group_name: 'Global',
 }

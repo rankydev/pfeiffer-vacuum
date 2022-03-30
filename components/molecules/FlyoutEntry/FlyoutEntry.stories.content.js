@@ -14,7 +14,6 @@ export const flyoutEntry2 = {
   icon: 'business',
   href: '#',
   target: '_self',
-  component: 'Link',
   label: 'Second',
   component: 'FlyoutEntry',
   _editable:

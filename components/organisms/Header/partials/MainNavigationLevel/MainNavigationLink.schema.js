@@ -12,6 +12,7 @@ export default {
     ...Link.schema,
     navigationEntries: {
       type: 'bloks',
+      maximum: 7,
       restrict_components: true,
       component_whitelist: ['MainNavigationLink'],
       description: 'Navigation entries displayed on the left side.',
@@ -24,5 +25,5 @@ export default {
   all_presets: [],
   preset_id: null,
   real_name: 'MainNavigationLink',
-  component_group_uuid: null,
+  component_group_name: 'Global',
 }

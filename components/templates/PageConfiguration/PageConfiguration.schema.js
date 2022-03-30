@@ -37,5 +37,5 @@ export default {
   all_presets: [],
   preset_id: null,
   real_name: 'PageConfiguration',
-  component_group_uuid: null,
+  component_group_name: 'Templates',
 }

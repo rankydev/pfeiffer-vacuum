@@ -1,14 +1,14 @@
 <template>
   <nav class="main-navigation" aria-label="Main Menu">
-    <BurgerIcon
-      :is-active="isActive"
-      class="main-navigation__trigger"
-      tabindex="0"
-      :aria-expanded="isActive"
+    <button
       aria-controls="js__main-navigation"
-      @click.native="toggle"
-      @keypress.native.enter="toggle"
-    />
+      class="main-navigation__trigger"
+      :aria-expanded="isActive"
+      @click="toggle"
+      @keypress.enter="toggle"
+    >
+      <BurgerIcon :is-active="isActive" />
+    </button>
     <div
       id="js__main-navigation"
       class="main-navigation__items"
