@@ -10,7 +10,7 @@ localVue.use(VueMeta, { keyName: 'head' })
 
 describe('Page', () => {
   let wrapper
-  function createComponent(propsData = {}, { mocks, provide } = {}) {
+  function createComponent(propsData = {}, { provide } = {}) {
     wrapper = shallowMount(Page, {
       localVue,
       propsData: {
@@ -31,18 +31,11 @@ describe('Page', () => {
             return ''
           },
         },
-        ...mocks,
       },
       stubs: {
         NuxtDynamic: true,
       },
       provide: {
-        getTranslatedSlugs() {
-          return ''
-        },
-        getDefaultFullSlug() {
-          return ''
-        },
         ...provide,
       },
     })
@@ -130,7 +123,15 @@ describe('Page', () => {
             canonical: 'canonical',
           },
         }
-        createComponent(propsData)
+        const provide = {
+          getTranslatedSlugs() {
+            return ''
+          },
+          getDefaultFullSlug() {
+            return ''
+          },
+        }
+        createComponent(propsData, provide)
         const metaInfo = wrapper.vm.$meta().refresh().metaInfo
         expect(metaInfo.title).toBe('title')
         expect(metaInfo.meta).toContainEqual({

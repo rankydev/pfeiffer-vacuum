@@ -78,7 +78,6 @@ export default defineComponent({
   components: {
     ContentWrapper,
   },
-  inject: ['getTranslatedSlugs', 'getDefaultFullSlug'],
   props: {
     content: {
       type: Object,
