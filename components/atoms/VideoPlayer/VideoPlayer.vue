@@ -1,75 +1,72 @@
 <template>
-  <div class="video-player" @click.once="isActivated = true">
-    <template v-if="!isActivated">
-      <picture>
-        <source
-          :srcset="`https://i.ytimg.com/vi_webp/${id}/maxresdefault.webp`"
-          type="image/webp"
-        />
-        <img
-          class="video-player__preview"
-          :src="`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`"
-          :alt="title"
-        />
-      </picture>
-
-      <button class="video-player__button">
-        <svg viewBox="0 0 68 48">
-          <path
-            class="video-player__button-shape"
-            d="M66.5 7.7c-.8-2.9-2.5-5.4-5.4-6.2C55.8.1 34 0 34 0S12.2.1 6.9 1.6c-3 .7-4.6 3.2-5.4 6.1a89.6 89.6 0 0 0 0 32.5c.8 3 2.5 5.5 5.4 6.3C12.2 47.9 34 48 34 48s21.8-.1 27.1-1.6c3-.7 4.6-3.2 5.4-6.1C68 35 68 24 68 24s0-11-1.5-16.3z"
+  <div class="video-player">
+    <div class="video-player__inner" @click.once="isActivated = true">
+      <template v-if="!isActivated">
+        <picture>
+          <source
+            v-for="(source, idx) in sources || []"
+            :key="idx"
+            v-bind="source"
           />
-          <path class="video-player__button-icon" d="M45 24L27 14v20" />
-        </svg>
-      </button>
-    </template>
+          <img class="video-player__preview" :src="image" :alt="title" />
+        </picture>
 
-    <template v-else>
-      <iframe
-        :title="title"
-        class="video-player__embed"
-        :src="`https://www.youtube.com/embed/${id}?autoplay=1`"
-        v-bind="iframeAttributes"
-      />
-    </template>
+        <button class="video-player__button">
+          <Icon
+            class="video-player__icon"
+            :class="`video-player__icon--${icon}`"
+            :icon="icon"
+            type="svg"
+            size="large"
+          />
+        </button>
+      </template>
+
+      <template v-else>
+        <iframe
+          :title="title"
+          class="video-player__embed"
+          v-bind="iframeAttributes"
+        />
+      </template>
+    </div>
     <NuxtDynamic
       v-for="item in description"
       :key="item._uid"
       v-editable="item"
-      :name="item.uiComponent || item.component"
+      class="video-player__component"
       v-bind="item"
+      :component="item.uiComponent || item.component"
     />
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
-import getYouTubeID from 'get-youtube-id'
+import {
+  defineComponent,
+  watch,
+  reactive,
+  unref,
+} from '@nuxtjs/composition-api'
+import { useYoutube } from './composables/youtube.js'
 
-const PLAYER_SCRIPT_SRC = 'https://www.youtube.com/player_api'
-
-const DEFAULT_IFRAME_ATTRIBUTES = {
-  allowfullscreen: true,
-  frameborder: 0,
-  allow: [
-    'accelerometer',
-    'autoplay',
-    'clipboard-write',
-    'encrypted-media',
-    'gyroscope',
-    'picture-in-picture',
-  ].join('; '),
+const DEFAULT_DATA = {
+  image:
+    'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
+  icon: '',
+  sources: [],
+  iframeAttributes: {},
 }
 
 export default defineComponent({
   props: {
-    src: {
+    url: {
       type: String,
       default: '',
     },
     title: {
       type: String,
-      default: 'YouTube video player',
+      default: 'Video player',
     },
     description: {
       type: Array,
@@ -77,77 +74,86 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const isActivated = ref(false)
-
-    const id = computed(() => getYouTubeID(props.src) || '')
-
-    const iframeAttributes = computed(() => {
-      const hasQuestionMark = props.src.indexOf('?') !== -1
-      const query = ['autoplay=1', 'showinfo=0']
-      const divider = hasQuestionMark ? '&' : '?'
-
-      return {
-        // src: `${props.src}${divider}${query.join('&')}`,
-        ...DEFAULT_IFRAME_ATTRIBUTES,
-      }
+    const result = reactive({
+      isActivated: false,
+      ...DEFAULT_DATA,
     })
 
-    return { isActivated, id, iframeAttributes }
+    const youtube = useYoutube()
+
+    const updateData = (url) => {
+      youtube.setUrl(url)
+
+      const data = unref(youtube.hasId) && youtube.data
+      const getData = (i) => unref(data[i]) || DEFAULT_DATA[i]
+      const replaceData = (i) => (result[i] = getData(i))
+      Object.keys(DEFAULT_DATA).forEach(replaceData)
+    }
+
+    watch(() => props.url, updateData, { immediate: true })
+
+    return result
   },
 })
 </script>
 
 <style lang="scss">
 .video-player {
-  background-color: #000;
-  cursor: pointer;
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  padding-bottom: calc(9 / 16 * 100%);
+  &__inner {
+    @apply tw-relative;
+    @apply tw-cursor-pointer;
+    @apply tw-rounded-lg;
+    @apply tw-overflow-hidden;
+    padding-bottom: calc(9 / 16 * 100%);
+  }
 
   &__embed,
   &__preview {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-width: 0;
+    @apply tw-absolute;
+    @apply tw-inset-0;
+    @apply tw-border-none;
+    @apply tw-w-full;
+    @apply tw-h-full;
   }
 
   &__preview {
-    object-fit: cover;
+    @apply tw-object-cover;
+    @apply tw-ease-linear;
+    @apply tw-duration-100;
   }
 
-  &__button-shape {
-    fill: #212121;
-    fill-opacity: 0.8;
-  }
+  &__icon {
+    @apply tw-duration-200;
+    @apply tw-ease-in-out;
 
-  &__button-icon {
-    fill: #fff;
+    &--youtube {
+      @apply tw-text-pv-grey-16/80;
+    }
   }
 
   &__button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 0;
-    border-width: 0;
-    background-color: transparent;
-    width: 68px;
-    height: 48px;
-    cursor: pointer;
+    @apply tw-absolute;
+    @apply tw-top-1/2;
+    @apply tw-left-1/2;
+    @apply tw--translate-x-1/2;
+    @apply tw--translate-y-1/2;
+  }
 
-    &:focus,
-    &:hover {
-      outline: 0;
+  &__component {
+    @apply tw-mt-2;
+  }
 
-      & .video-player__button-shape {
-        fill: red;
-        fill-opacity: 1;
+  &__inner:hover,
+  &__button:focus {
+    @apply tw-outline-none;
+
+    & .video-player {
+      &__preview {
+        @apply tw-scale-105;
+      }
+
+      &__icon--youtube {
+        color: #f00;
       }
     }
   }
