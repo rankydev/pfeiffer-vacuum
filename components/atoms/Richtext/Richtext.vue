@@ -92,10 +92,6 @@ export default defineComponent({
     @apply tw-mb-8;
 
     li {
-      &::marker {
-        @apply tw-text-pv-red;
-      }
-
       p {
         @apply tw-mb-2;
       }
@@ -103,19 +99,17 @@ export default defineComponent({
   }
 
   ol {
-    counter-reset: item;
-    @apply tw-ml-3;
     @apply tw-pl-0.5;
+    @apply tw-list-none;
+    counter-reset: item;
 
     li {
       counter-increment: item;
 
-      p {
-        margin-left: 2px;
-      }
-
-      &::marker {
-        content: counters(item, '.') ' ';
+      &::before {
+        @apply tw-float-left;
+        @apply tw-mr-2;
+        content: counters(item, '.') '. ';
       }
     }
 
@@ -142,6 +136,8 @@ export default defineComponent({
       }
 
       &::marker {
+        // Safari needs explicit opacity declaration in order to load color of marker correctly
+        @apply tw-text-pv-red/100;
         @apply tw-text-xl;
       }
     }
