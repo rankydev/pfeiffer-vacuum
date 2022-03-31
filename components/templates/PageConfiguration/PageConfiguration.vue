@@ -57,7 +57,7 @@
   </div>
 </template>
 
-<script lang="js">
+<script>
 import { defineComponent, toRefs } from '@nuxtjs/composition-api'
 export default defineComponent({
   name: 'PageConfiguration',
