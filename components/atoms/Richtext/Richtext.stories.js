@@ -22,19 +22,21 @@ export default {
       },
     },
   },
-  argTypes: {
-    content: props.content,
-  },
+  argTypes: props,
 }
 
-const template = `
+const Template = (args) => ({
+  components: { Richtext },
+  setup() {
+    return { args }
+  },
+  data: () => ({ props }),
+  template: `
       <div class="documentation-preview">
         <richtext v-bind="props" />
       </div>
-    `
-
-export const Default = () => ({
-  components: { Richtext },
-  template,
-  data: () => ({ props }),
+    `,
 })
+
+export const Default = Template.bind({})
+Default.args = props
