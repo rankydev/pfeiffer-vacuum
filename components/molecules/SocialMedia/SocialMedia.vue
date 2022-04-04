@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import SocialMediaIconLink from '~/components/molecules/Links/SocialMediaIconLink/SocialMediaIconLink'
+import SocialMediaIconLink from '~/components/molecules/SocialMediaIconLink/SocialMediaIconLink'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 
 import { defineComponent } from '@nuxtjs/composition-api'

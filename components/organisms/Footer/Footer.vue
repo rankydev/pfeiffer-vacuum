@@ -46,7 +46,7 @@ import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import LinkList from '~/components/molecules/LinkList/LinkList'
 import LanguageSwitcher from '~/components/molecules/LanguageSwitcher/LanguageSwitcher'
-import TextLink from '~/components/molecules/Links/TextLink/TextLink'
+import TextLink from '~/components/molecules/TextLink/TextLink'
 
 export default defineComponent({
   name: 'Footer',

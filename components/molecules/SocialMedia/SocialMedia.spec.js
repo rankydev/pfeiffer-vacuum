@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import SocialMedia from './SocialMedia.vue'
 import SocialMediaContent from './SocialMedia.stories.content.js'
-import SocialMediaIconLink from '~/components/molecules/Links/SocialMediaIconLink/SocialMediaIconLink.vue'
+import SocialMediaIconLink from '~/components/molecules/SocialMediaIconLink/SocialMediaIconLink.vue'
 
 describe('SocialMedia', () => {
   describe('initial state', () => {
