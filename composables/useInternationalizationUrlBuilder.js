@@ -12,7 +12,7 @@ const useInternationalizationUrlBuilder = ({ root: context }) => {
       ? urlsSegments.shift()
       : DEFAULT_REGION
 
-    let language = LANGUAGES.includes(urlsSegments[0])
+    const language = LANGUAGES.includes(urlsSegments[0])
       ? urlsSegments.shift()
       : DEFAULT_LANGUAGE
 

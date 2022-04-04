@@ -24,10 +24,6 @@ export default defineComponent({
     const currentPath = ref(route.value.path)
     const { slug, fallbackSlug, language } = buildUrl(currentPath.value)
 
-    console.log('currentPath', currentPath)
-    console.log('slug', slug)
-    console.log('fallbackSlug', fallbackSlug)
-    console.log('language', language)
     return {
       slug,
       fallbackSlug,
