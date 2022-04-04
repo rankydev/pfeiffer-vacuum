@@ -1,23 +1,16 @@
 import Seo from '../Page/PageSeo.schema.partial.js'
 import Social from '../Page/PageSocial.schema.partial.js'
+import Page from '../Page/Page.schema.js'
 
 export default {
   name: 'ProductContentPage',
   display_name: 'Product Content Page',
   schema: {
     title: {
-      type: 'text',
-      required: true,
-      max_length: '55',
-      description:
-        'Keep the title around 50 characters and put the keywords you’re focusing on first.',
-      translatable: true,
+      ...Page.schema['title'],
     },
     quicklinks: {
-      type: 'bloks',
-      maximum: 1,
-      restrict_components: true,
-      component_whitelist: ['OnPageNavigation'],
+      ...Page.schema.quicklinks,
     },
     stage: {
       type: 'bloks',
@@ -40,16 +33,10 @@ export default {
     ...Seo,
     ...Social,
     'tab-advanced': {
-      type: 'tab',
-      display_name: 'Advanced',
-      keys: ['template'],
+      ...Page.schema['tab-advanced'],
     },
     template: {
-      type: 'option',
-      use_uuid: true,
-      source: 'internal_stories',
-      folder_slug: '{0}/templates/',
-      filter_content_type: 'PageConfiguration',
+      ...Page.schema.template,
     },
   },
   image: null,
