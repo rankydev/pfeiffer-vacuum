@@ -1,18 +1,20 @@
 <template>
-  <div class="on-page-navigation">
+  <ContentWrapper class="on-page-navigation">
     <!-- TODO: Breadcrumb -->
     <div>[Breadcrumb]</div>
     <QuicklinkNavigation v-bind="{ quicklinks }" />
-  </div>
+  </ContentWrapper>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import QuicklinkNavigation from '~/components/molecules/QuicklinkNavigation/QuicklinkNavigation'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper.vue'
 
 export default defineComponent({
   components: {
     QuicklinkNavigation,
+    ContentWrapper,
   },
   props: {
     quicklinks: {
@@ -25,7 +27,12 @@ export default defineComponent({
 
 <style lang="scss">
 .on-page-navigation {
-  @apply tw-container;
-  @apply tw-flex tw-items-center tw-justify-between;
+  @apply tw-items-center tw-justify-between;
+  @apply tw-my-4;
+  @apply tw-hidden;
+
+  @screen md {
+    @apply tw-flex;
+  }
 }
 </style>

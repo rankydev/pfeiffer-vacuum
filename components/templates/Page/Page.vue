@@ -12,7 +12,6 @@
       <nuxt-dynamic
         v-for="item in header"
         :key="item._uid"
-        v-editable="item"
         :name="item.uiComponent || item.component"
         v-bind="item"
       />
@@ -37,13 +36,15 @@
           :name="item.uiComponent || item.component"
           v-bind="item"
         />
-        <nuxt-dynamic
-          v-for="item in body"
-          :key="item._uid"
-          v-editable="item"
-          :name="item.uiComponent || item.component"
-          v-bind="item"
-        />
+        <ContentWrapper>
+          <nuxt-dynamic
+            v-for="item in body"
+            :key="item._uid"
+            v-editable="item"
+            :name="item.uiComponent || item.component"
+            v-bind="item"
+          />
+        </ContentWrapper>
       </main>
     </slot>
 
@@ -59,7 +60,6 @@
       <nuxt-dynamic
         v-for="item in footer"
         :key="item._uid"
-        v-editable="item"
         :name="item.uiComponent || item.component"
         v-bind="item"
       />
@@ -67,30 +67,35 @@
   </div>
 </template>
 
-<script lang="js">
+<script>
 import { defineComponent, inject, toRefs } from '@nuxtjs/composition-api'
 import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 
 export default defineComponent({
   name: 'Page',
-    inject: [
-    'getTranslatedSlugs',
-    'getDefaultFullSlug'
-  ],
-
+  components: {
+    ContentWrapper,
+  },
+  inject: ['getTranslatedSlugs', 'getDefaultFullSlug'],
   props: {
     content: {
       type: Object,
-      default: /* istanbul ignore next */ () => {}
-    }
+      default: /* istanbul ignore next */ () => {},
+    },
   },
-  setup (props, context) {
+  setup(props, context) {
     const { content } = toRefs(props)
     const translatedSlugs = inject('getTranslatedSlugs', () => [])()
     const defaultFullSlug = inject('getDefaultFullSlug', () => '')()
     const { top, header, stage, body, bottom, footer } = useTemplating(content)
-    const { getMetaData } = useMeta(content, defaultFullSlug, translatedSlugs, context)
+    const { getMetaData } = useMeta(
+      content,
+      defaultFullSlug,
+      translatedSlugs,
+      context
+    )
 
     return {
       top,
@@ -103,7 +108,7 @@ export default defineComponent({
       metaData: getMetaData(),
     }
   },
-  head () {
+  head() {
     return this.metaData
   },
 })
@@ -114,10 +119,5 @@ export default defineComponent({
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-h-screen;
-
-  main {
-    @apply tw-mb-auto;
-    @apply tw-container;
-  }
 }
 </style>
