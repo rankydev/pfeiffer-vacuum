@@ -6,8 +6,6 @@
 build:
   extends: .node-image
   stage: build
-  environment:
-    name: experimental
   cache:
     - key: "${CI_PIPELINE_ID}-build-frontend"
       paths:
@@ -149,7 +147,7 @@ build-docker-image-frontend:
   extends: .build-docker-image
   needs: ["test", "lint"]
   environment:
-    name: experimental
+    name: dev2
   except:
     - develop
 
@@ -170,7 +168,7 @@ build-docker-image-frontend-develop:
   extends: .build-docker-image
   needs: ["sonar-qube"]
   environment:
-    name: experimental
+    name: dev2
   only:
     - develop
 
