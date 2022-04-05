@@ -42,6 +42,7 @@ export default {
         'Accordion',
         'AnchorWrapper',
         'VideoPlayer',
+        'ContentMediaBlock',
       ],
     },
     bottom: {

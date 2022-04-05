@@ -36,11 +36,12 @@
           v-bind="item"
           :component="item.uiComponent || item.component"
         />
-        <ContentWrapper>
+        <ContentWrapper class="tw-grid-container">
           <nuxt-dynamic
             v-for="item in body"
             :key="item._uid"
             v-editable="item"
+            class="tw-col-span-full"
             v-bind="item"
             :component="item.uiComponent || item.component"
           />

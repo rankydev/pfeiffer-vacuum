@@ -69,19 +69,6 @@ export default defineComponent({
     }
   }
 
-  p {
-    @apply tw-mb-4;
-
-    & + h2,
-    & + h3,
-    & + h4,
-    & + h5,
-    & + h6,
-    & + p > .tw-subline:first-child {
-      @apply tw-mt-8;
-    }
-  }
-
   a {
     @apply tw-text-pv-red;
 
@@ -143,6 +130,24 @@ export default defineComponent({
         @apply tw-text-pv-red/100;
         @apply tw-text-xl;
       }
+    }
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  p {
+    @apply tw-mb-4;
+
+    &:last-child {
+      @apply tw-mb-0;
+    }
+
+    & + h2,
+    & + h3,
+    & + h4,
+    & + h5,
+    & + h6,
+    & + p > .tw-subline:first-child {
+      @apply tw-mt-8;
     }
   }
 }
