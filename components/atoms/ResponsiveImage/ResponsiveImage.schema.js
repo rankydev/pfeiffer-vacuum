@@ -1,0 +1,25 @@
+export default {
+  name: 'responsiveImage',
+  display_name: null,
+  created_at: '2022-04-05T12:08:40.846Z',
+  updated_at: '2022-04-05T12:09:30.492Z',
+  id: 2333347,
+  schema: {
+    image: {
+      type: 'asset',
+      filetypes: ['images'],
+      translatable: true,
+    },
+  },
+  image: null,
+  preview_field: null,
+  is_root: false,
+  preview_tmpl: null,
+  is_nestable: true,
+  all_presets: [],
+  preset_id: null,
+  real_name: 'responsiveImage',
+  component_group_uuid: null,
+  color: null,
+  icon: null,
+}

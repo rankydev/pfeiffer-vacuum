@@ -1,7 +1,6 @@
 <template>
   <div class="image-with-source">
     <h3>Image</h3>
-
     <picture
       v-if="image && image.originalFilename && defaultSize"
       :class="{
@@ -89,11 +88,9 @@ export default defineComponent({
   setup(props, { root }) {
     const medias = []
     medias.xs = '0px'
-    medias.sm = '640px'
-    medias.md = '768px'
-    medias.lg = '1024px'
+    medias.sm = '768px'
+    medias.lg = '1280px'
     medias.xl = '1440px'
-    medias['2xl'] = '1920px'
 
     function mediaQuery(media) {
       return medias[media]
@@ -101,7 +98,7 @@ export default defineComponent({
 
     const sortedSizes = computed(() => {
       return [...props.sizes].sort(function (a, b) {
-        const order = ['3xl', '2xl', 'xl', 'lg', 'md', 'sm', 'xs']
+        const order = ['xl', 'lg', 'sm', 'xs']
         return (
           order.indexOf(a.media.toLowerCase()) -
           order.indexOf(b.media.toLowerCase())
