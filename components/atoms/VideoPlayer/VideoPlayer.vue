@@ -33,7 +33,6 @@
     <NuxtDynamic
       v-for="item in description"
       :key="item._uid"
-      v-editable="item"
       class="video-player__component"
       v-bind="item"
       :component="item.uiComponent || item.component"
@@ -42,13 +41,9 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  watch,
-  reactive,
-  unref,
-} from '@nuxtjs/composition-api'
-import { useYoutube } from './composables/youtube.js'
+import { defineComponent, watch, reactive } from '@nuxtjs/composition-api'
+import Icon from '~/components/atoms/Icon/Icon.vue'
+import { useYoutube } from './player/youtube.js'
 
 const DEFAULT_DATA = {
   image:
@@ -59,15 +54,27 @@ const DEFAULT_DATA = {
 }
 
 export default defineComponent({
+  components: {
+    Icon,
+  },
   props: {
+    /**
+     * Url to the video source (currently only youtube supported)
+     */
     url: {
       type: String,
       default: '',
     },
+    /**
+     * The title for the iframe and alt attribute for preview image
+     */
     title: {
       type: String,
       default: 'Video player',
     },
+    /**
+     * Subcomponent which is rendered underneath the video
+     */
     description: {
       type: Array,
       default: () => [],
@@ -75,6 +82,9 @@ export default defineComponent({
   },
   setup(props) {
     const result = reactive({
+      someTHing(event) {
+        alert(event.type + ' ' + event.detail)
+      },
       isActivated: false,
       ...DEFAULT_DATA,
     })
@@ -82,12 +92,8 @@ export default defineComponent({
     const youtube = useYoutube()
 
     const updateData = (url) => {
-      youtube.setUrl(url)
-
-      const data = unref(youtube.hasId) && youtube.data
-      const getData = (i) => unref(data[i]) || DEFAULT_DATA[i]
-      const replaceData = (i) => (result[i] = getData(i))
-      Object.keys(DEFAULT_DATA).forEach(replaceData)
+      const data = youtube.checkUrl(url) && youtube.getData()
+      Object.assign(result, DEFAULT_DATA, { ...data })
     }
 
     watch(() => props.url, updateData, { immediate: true })

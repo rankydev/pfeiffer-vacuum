@@ -13,10 +13,22 @@ module.exports = {
   setupFilesAfterEnv: ['./jest.setup.js'],
   coverageReporters: ['clover', 'json', 'lcov', 'text', 'html'],
   collectCoverageFrom: [
-    '<rootDir>/components/**/*.vue',
-    '<rootDir>/pages/**/*.vue',
-    '<rootDir>/composables/**/*.js',
-    '<rootDir>/stores/**/*.js',
+    '<rootDir>/components/**/*.{vue,js}',
+    '<rootDir>/composables/**/*.{vue,js}',
+    '<rootDir>/layouts/**/*.{vue,js}',
+    '<rootDir>/middleware/**/*.{vue,js}',
+    '<rootDir>/mixins/**/*.{vue,js}',
+    '<rootDir>/pages/**/*.{vue,js}',
+    // '<rootDir>/plugins/**/*.{vue,js}',
+    '<rootDir>/stores/**/*.{vue,js}',
+  ],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    'spec.js',
+    'stories.js',
+    'stories.content.js',
+    'schema.js',
+    'schema.partial.js',
   ],
   coverageThreshold: {
     global: {

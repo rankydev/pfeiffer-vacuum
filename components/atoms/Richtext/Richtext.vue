@@ -12,6 +12,9 @@ import { defineComponent, useRouter } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
+    /**
+     * Prerendered HTML from storyblok richtext field
+     */
     richtext: {
       type: String,
       default: '',
