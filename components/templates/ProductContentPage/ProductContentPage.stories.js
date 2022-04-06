@@ -1,9 +1,9 @@
-import ProductContentPage from '~/components/templates/ProductContentPage/ProductContentPage.vue'
+import Page from '~/components/templates/Page/Page.vue'
 import ProductContentPageContent from './ProductContentPage.stories.content'
 
 export default {
   title: 'Templates/ProductContentPage',
-  component: ProductContentPage,
+  component: Page,
   parameters: {
     docs: {
       description: {
@@ -14,7 +14,7 @@ export default {
 }
 
 const Template = (args) => ({
-  components: { ProductContentPage },
+  components: { Page },
   setup() {
     const content = ProductContentPageContent.content
     return { args, content }

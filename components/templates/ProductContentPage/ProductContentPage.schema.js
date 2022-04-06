@@ -6,12 +6,8 @@ export default {
   name: 'ProductContentPage',
   display_name: 'Product Content Page',
   schema: {
-    title: {
-      ...Page.schema['title'],
-    },
-    quicklinks: {
-      ...Page.schema.quicklinks,
-    },
+    title: Page.schema.title,
+    quicklinks: Page.schema.quicklinks,
     stage: {
       type: 'bloks',
       display_name: 'Stage',
@@ -33,10 +29,14 @@ export default {
     ...Seo,
     ...Social,
     'tab-advanced': {
-      ...Page.schema['tab-advanced'],
+      type: 'tab',
+      display_name: 'Advanced',
+      keys: ['template', 'uiComponent'],
     },
-    template: {
-      ...Page.schema.template,
+    template: Page.schema.template,
+    uiComponent: {
+      type: 'text',
+      default_value: 'Page',
     },
   },
   image: null,
