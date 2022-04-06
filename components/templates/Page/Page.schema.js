@@ -30,6 +30,7 @@ export default {
       display_name: 'Stage',
       restrict_components: true,
       component_whitelist: ['Stage'],
+      maximum: 1,
     },
     body: {
       type: 'bloks',
