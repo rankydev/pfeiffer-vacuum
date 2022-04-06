@@ -1,50 +1,48 @@
 <template>
-  <div class="image-with-source">
-    <h3>Image</h3>
-    <picture
-      v-if="image && image.originalFilename && defaultSize"
-      :class="{
-        'relative block after:absolute after:inset-0 after:inline-block after:bg-gradient-to-t after:from-black after:via-transparent after:to-transparent ':
-          withGradient,
+  <picture
+    v-if="image && image.originalFilename && defaultSize"
+    :class="{
+      'relative block after:absolute after:inset-0 after:inline-block after:bg-gradient-to-t after:from-black after:via-transparent after:to-transparent ':
+        withGradient,
+    }"
+  >
+    <source
+      v-for="size in sortedSizes"
+      :key="'webp_' + size.media"
+      :media="'(min-width: ' + mediaQuery(size.media) + ')'"
+      :srcset="buildSrcset(image, size, 'webp')"
+      type="image/webp"
+    />
+    <source
+      :srcset="buildSrcset(image, defaultSize, 'webp')"
+      type="image/webp"
+    />
+    <source
+      v-for="size in sortedSizes"
+      :key="size.media"
+      :media="'(min-width: ' + mediaQuery(size.media) + ')'"
+      :srcset="buildSrcset(image, size)"
+    />
+    <source :srcset="buildSrcset(image, defaultSize)" />
+    <NuxtImg
+      :src="image.originalFilename"
+      :modifiers="{
+        filters: { focal: image.focus, grayscale: grayscaleVal },
       }"
-    >
-      <source
-        v-for="size in sortedSizes"
-        :key="'webp_' + size.media"
-        :media="'(min-width: ' + mediaQuery(size.media) + ')'"
-        :srcset="buildSrcset(image, size, 'webp')"
-        type="image/webp"
-      />
-      <source
-        :srcset="buildSrcset(image, defaultSize, 'webp')"
-        type="image/webp"
-      />
-      <source
-        v-for="size in sortedSizes"
-        :key="size.media"
-        :media="'(min-width: ' + mediaQuery(size.media) + ')'"
-        :srcset="buildSrcset(image, size)"
-      />
-      <source :srcset="buildSrcset(image, defaultSize)" />
-      <NuxtImg
-        :src="image.originalFilename"
-        :modifiers="{
-          filters: { focal: image.focus, grayscale: grayscaleVal },
-        }"
-        :alt="image.alt ? image.alt : ''"
-        :title="image.title ? image.title : ''"
-        :width="defaultSize.width"
-        :height="defaultSize.height"
-        :class="imgStyle"
-        :provider="image.provider"
-        :loading="lazy ? 'lazy' : undefined"
-      />
-    </picture>
-  </div>
+      :alt="image.alt ? image.alt : ''"
+      :title="image.title ? image.title : ''"
+      :width="defaultSize.width"
+      :height="defaultSize.height"
+      :class="imgStyle"
+      :provider="image.provider"
+      :loading="lazy ? 'lazy' : undefined"
+    />
+  </picture>
 </template>
 
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { theme } from '~/tailwind.config.js'
 
 export default defineComponent({
   components: {},
@@ -87,10 +85,10 @@ export default defineComponent({
   },
   setup(props, { root }) {
     const medias = []
-    medias.xs = '0px'
-    medias.sm = '768px'
-    medias.lg = '1280px'
-    medias.xl = '1440px'
+    medias.sm = theme.screens.sm
+    medias.md = theme.screens.md
+    medias.lg = theme.screens.lg
+    medias.xl = theme.screens.xl
 
     function mediaQuery(media) {
       return medias[media]
@@ -98,7 +96,7 @@ export default defineComponent({
 
     const sortedSizes = computed(() => {
       return [...props.sizes].sort(function (a, b) {
-        const order = ['xl', 'lg', 'sm', 'xs']
+        const order = ['xl', 'lg', 'md', 'sm']
         return (
           order.indexOf(a.media.toLowerCase()) -
           order.indexOf(b.media.toLowerCase())
