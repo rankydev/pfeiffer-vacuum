@@ -41,6 +41,7 @@ export default {
         'TextLink',
         'Accordion',
         'AnchorWrapper',
+        'VideoPlayer',
       ],
     },
     bottom: {
