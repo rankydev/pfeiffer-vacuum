@@ -5,15 +5,15 @@
         v-for="item in top"
         :key="item._uid"
         v-editable="item"
-        :name="item.uiComponent || item.component"
         v-bind="item"
+        :component="item.uiComponent || item.component"
       />
 
       <nuxt-dynamic
         v-for="item in header"
         :key="item._uid"
-        :name="item.uiComponent || item.component"
         v-bind="item"
+        :component="item.uiComponent || item.component"
       />
     </slot>
 
@@ -22,8 +22,8 @@
         v-for="item in quicklinks"
         :key="item._uid"
         v-editable="item"
-        :name="item.uiComponent || item.component"
         v-bind="item"
+        :component="item.uiComponent || item.component"
       />
     </slot>
 
@@ -33,16 +33,16 @@
           v-for="item in stage"
           :key="item._uid"
           v-editable="item"
-          :name="item.uiComponent || item.component"
           v-bind="item"
+          :component="item.uiComponent || item.component"
         />
         <ContentWrapper>
           <nuxt-dynamic
             v-for="item in body"
             :key="item._uid"
             v-editable="item"
-            :name="item.uiComponent || item.component"
             v-bind="item"
+            :component="item.uiComponent || item.component"
           />
         </ContentWrapper>
       </main>
@@ -53,15 +53,15 @@
         v-for="item in bottom"
         :key="item._uid"
         v-editable="item"
-        :name="item.uiComponent || item.component"
         v-bind="item"
+        :component="item.uiComponent || item.component"
       />
 
       <nuxt-dynamic
         v-for="item in footer"
         :key="item._uid"
-        :name="item.uiComponent || item.component"
         v-bind="item"
+        :component="item.uiComponent || item.component"
       />
     </slot>
   </div>
