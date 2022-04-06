@@ -82,9 +82,6 @@ export default defineComponent({
   },
   setup(props) {
     const result = reactive({
-      someTHing(event) {
-        alert(event.type + ' ' + event.detail)
-      },
       isActivated: false,
       ...DEFAULT_DATA,
     })
