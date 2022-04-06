@@ -7,10 +7,7 @@
     <StageContent
       v-if="displayStageContent"
       class="stage__content-block"
-      :headline="headline"
-      :subline="subline"
-      :teaser-text="teaserText"
-      :buttons="buttons"
+      v-bind="stageContent[0]"
     />
     <div class="stage__image-block">
       <NuxtImg preload :alt="image.alt" :src="image.originalFilename" />
@@ -48,7 +45,7 @@ export default {
     },
   },
   setup(props) {
-    const { variant, stageContent, imagePosition } = toRefs(props)
+    const { variant, imagePosition } = toRefs(props)
 
     const displayStageContent = !(variant.value === 'fullImage')
 
@@ -74,15 +71,9 @@ export default {
       }
     })
 
-    const { headline, subline, teaserText, buttons } = stageContent.value[0]
-
     return {
       displayStageContent,
       cssVars,
-      headline,
-      subline,
-      teaserText,
-      buttons,
     }
   },
 }

@@ -10,13 +10,7 @@
       v-for="button in buttons"
       :key="button._uid"
       class="stage-content__button"
-      :icon="button.icon"
-      :label="button.label"
-      :variant="button.variant"
-      :shape="button.shape"
-      :prepend-icon="button.prependIcon"
-      :disabled="button.disabled"
-      :size="button.size"
+      v-bind="button"
     />
   </div>
 </template>
