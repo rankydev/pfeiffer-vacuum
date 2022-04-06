@@ -42,6 +42,7 @@ export default {
     '@nuxtjs/composition-api/module',
     '@nuxt/postcss8',
     '@nuxtjs/svg-sprite',
+    '@nuxt/image',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -100,4 +101,7 @@ export default {
     CI_PROJECT_URL: process.env.CI_PROJECT_URL,
     NODE_ENV: process.env.NODE_ENV,
   },
+
+  //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
+  image: {}
 }
