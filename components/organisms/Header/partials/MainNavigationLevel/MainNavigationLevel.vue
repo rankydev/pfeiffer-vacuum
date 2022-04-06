@@ -1,23 +1,29 @@
 <template>
-  <ul class="primary-nav" :class="`primary-nav--level-${level}`">
+  <ul
+    :class="[
+      `primary-nav-${level}`,
+      activeElement ? `primary-nav-${level}--passive` : '',
+    ]"
+  >
     <li
       v-for="(entry, idx) in extendedEntries"
       :key="idx"
-      class="primary-nav__element"
-      :class="entry.class || ''"
+      :class="[`primary-nav-${level}__element`, entry.class || '']"
     >
       <Link
-        class="primary-nav__link"
-        :class="{
-          'primary-nav__link--active': activeElement === idx,
-          'primary-nav__link--inactive': ![null, idx].includes(activeElement),
-        }"
+        :class="[
+          `primary-nav-${level}__link`,
+          ![null, idx].includes(activeElement)
+            ? `primary-nav-${level}__link--inactive`
+            : '',
+          activeElement === idx ? `primary-nav-${level}__link--active` : '',
+        ]"
         v-bind="entry"
         :before-navigation="($event) => isMobile || toggleActive($event, idx)"
       >
-        <span class="primary-nav__label">{{ entry.label }}</span>
+        <span :class="`primary-nav-${level}__label`">{{ entry.label }}</span>
         <Icon
-          class="primary-nav__icon"
+          :class="`primary-nav-${level}__icon`"
           :icon="activeElement === idx ? 'expand_less' : 'expand_more'"
           tabindex="0"
           @click.native="toggleActive($event, idx)"
@@ -25,13 +31,42 @@
         />
       </Link>
       <AnimatedCollapse speed="fast">
-        <!-- start: temporarly until subnavigation is implemented -->
-        <div v-if="activeElement === idx" class="primary-nav__sub-nav">
-          Some sub navigation {{ idx }}
+        <div
+          v-if="activeElement === idx"
+          :class="`primary-nav-${level}__sub-nav`"
+        >
+          <MainNavigationLevel
+            :level="level + 1"
+            :navigation-entries="navigationEntries"
+          />
         </div>
-        <!-- end: temporarly until subnavigation is implemented -->
       </AnimatedCollapse>
     </li>
+    <template v-if="level > 0">
+      <li v-if="isMobile">
+        <Link href="/" :class="[`primary-nav-${level}__link`]">
+          <span :class="`primary-nav-${level}__label`">All Products</span>
+          <Icon
+            :class="`primary-nav-${level}__icon`"
+            icon="arrow_forward"
+            tabindex="0"
+          />
+        </Link>
+      </li>
+      <li :class="`primary-nav-${level}__buttons`">
+        <template v-if="!activeElement">
+          <Button
+            v-if="!isMobile"
+            class="tw-hidden md:tw-block"
+            variant="secondary"
+            shape="outlined"
+            size="small"
+            label="Übersicht"
+          />
+          <Button size="small" label="Shop" />
+        </template>
+      </li>
+    </template>
   </ul>
 </template>
 
@@ -50,6 +85,7 @@ import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollap
 import { useMenuStore } from '~/stores/menu'
 
 export default defineComponent({
+  name: 'MainNavigationLevel',
   components: {
     Icon,
     Link,
@@ -95,13 +131,18 @@ export default defineComponent({
     const home = { label: 'Home', href: '/', class: 'md:tw-hidden' }
     const extendedEntries = computed(() => [home, ...props.navigationEntries])
 
-    return { toggleActive, activeElement, isMobile, extendedEntries }
+    return {
+      toggleActive,
+      activeElement,
+      isMobile,
+      extendedEntries,
+    }
   },
 })
 </script>
 
 <style lang="scss">
-.primary-nav {
+.primary-nav-0 {
   @apply tw-flex;
   @apply tw-flex-col;
 
@@ -131,7 +172,7 @@ export default defineComponent({
       @apply tw-border-pv-transparent;
       @apply tw-duration-200;
       @apply tw-ease-in-out;
-      transition-property: border color;
+      transition-property: border, color;
       content: '';
     }
 
@@ -202,16 +243,143 @@ export default defineComponent({
       @apply tw-mr-8;
     }
 
-    /* start: temporarly until subnavigation is implemented */
     &__sub-nav {
       @apply tw-absolute;
       @apply tw-top-full;
+      @apply tw-overflow-hidden;
       @apply tw-left-0 tw-right-0;
-      @apply tw-bg-pv-white;
-      @apply tw-p-4;
+      @apply tw-bg-pv-grey-96;
     }
 
-    /* end: temporarly until subnavigation is implemented */
+    &__buttons {
+      @apply tw-flex tw-items-start;
+      @apply tw-gap-4;
+    }
+  }
+}
+
+.primary-nav-1,
+.primary-nav-2 {
+  $pn1: '.primary-nav-1';
+  $pn2: '.primary-nav-2';
+
+  @apply tw-bg-pv-white;
+
+  &__element {
+    @apply tw-border-b-2;
+    @apply tw-border-pv-grey-96;
+    @apply tw-overflow-hidden;
+  }
+
+  &__link {
+    @apply tw-relative;
+    @apply tw-block;
+    @apply tw-text-base;
+    @apply tw-leading-6;
+    @apply tw-p-4 tw-pr-10;
+    @apply tw-text-pv-grey-16;
+    @apply tw-duration-200;
+    @apply tw-ease-in-out;
+    transition-property: color, background-color, padding-left;
+
+    &::after {
+      @apply tw-absolute;
+      @apply tw--bottom-0 tw-inset-x-0;
+      @apply tw-border-t-2;
+      @apply tw-rounded-t-sm;
+      @apply tw-border-pv-transparent;
+      @apply tw-duration-200;
+      @apply tw-ease-in-out;
+      transition-property: border, color;
+      content: '';
+    }
+  }
+
+  &__label {
+    @apply tw-block;
+    @apply tw-truncate;
+  }
+
+  &__icon {
+    @apply tw-absolute;
+    @apply tw-right-4;
+    @apply tw-top-1/2;
+    @apply tw--translate-y-1/2;
+  }
+
+  &__buttons {
+    @apply tw-flex tw-justify-center;
+    @apply tw-p-4;
+    @apply tw-relative;
+    @apply tw-gap-4;
+
+    button {
+      @apply tw-flex tw-justify-center;
+      @apply tw-grow;
+    }
+  }
+
+  @screen md {
+    @apply tw-w-1/4;
+    @apply tw-pl-8 tw-py-4;
+
+    &__element {
+      @apply tw-border-b-0;
+    }
+
+    &__link {
+      @apply tw-block;
+      @apply tw-py-4 tw-px-0;
+      @apply tw-rounded-l;
+
+      &:hover {
+        @apply tw-pl-4;
+        @apply tw-bg-pv-grey-96;
+        @apply tw-text-pv-red-lighter;
+      }
+
+      &--active {
+        @apply tw-pl-4;
+        @apply tw-bg-pv-white;
+      }
+    }
+
+    &__icon {
+      @apply tw-hidden;
+    }
+
+    &__sub-nav {
+      @apply tw-absolute;
+      @apply tw-top-0;
+      @apply tw-overflow-hidden;
+      @apply tw-left-1/4 tw-right-0;
+      @apply tw-bg-pv-grey-96;
+    }
+
+    &__buttons {
+      @apply tw-justify-start;
+      @apply tw-px-0 tw-pb-0;
+      min-height: 56px;
+
+      button {
+        @apply tw-block;
+        @apply tw-grow-0;
+      }
+    }
+
+    &__overview {
+      @apply tw-mr-4;
+    }
+
+    &--passive {
+      @apply tw-bg-pv-grey-96;
+
+      #{$pn1} {
+        &__link:hover {
+          @apply tw-bg-pv-white;
+        }
+      }
+    }
   }
 }
 </style>
