@@ -32,6 +32,11 @@ export default {
     '~/components/organisms',
   ],
 
+  // server middleware: https://nuxtjs.org/docs/configuration-glossary/configuration-servermiddleware
+  serverMiddleware: {
+    '/_ipx': '~/server/middleware/ipx.js',
+  },
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
@@ -42,11 +47,10 @@ export default {
     '@nuxtjs/composition-api/module',
     '@nuxt/postcss8',
     '@nuxtjs/svg-sprite',
-    '@nuxt/image',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@txp-cms/storyblok'],
+  modules: ['@txp-cms/storyblok', '@nuxt/image'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -103,5 +107,5 @@ export default {
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
-  image: {}
+  image: {},
 }
