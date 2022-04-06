@@ -11,13 +11,11 @@
       :class="[`primary-nav-${level}__element`, entry.class || '']"
     >
       <Link
-        :class="[
-          `primary-nav-${level}__link`,
-          ![null, idx].includes(activeElement)
-            ? `primary-nav-${level}__link--inactive`
-            : '',
-          activeElement === idx ? `primary-nav-${level}__link--active` : '',
-        ]"
+        :class="{
+          [`primary-nav-${level}__link`]: true,
+          [`primary-nav-${level}__link--inactive`]: activeElement !== idx,
+          [`primary-nav-${level}__link--active`]: activeElement === idx,
+        }"
         v-bind="entry"
         :before-navigation="($event) => isMobile || toggleActive($event, idx)"
       >
