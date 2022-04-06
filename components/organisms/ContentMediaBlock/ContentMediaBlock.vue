@@ -1,5 +1,5 @@
 <template>
-  <div class="content-media-block tw-grid-container">
+  <div class="content-media-block tw-grid-container tw-my-component-wide">
     <div class="content-media-block__content" :class="contentClass">
       <Richtext
         :richtext="enrichedRichtext"
@@ -29,21 +29,22 @@
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
+import { renderHeadline, renderSubline } from '~/utils/richtext'
 
 export default defineComponent({
   components: { Richtext },
   props: {
     /**
-     * title of the media element rendred as h2
+     * headline of the media element rendred as h2
      */
-    title: {
+    headline: {
       type: String,
       default: '',
     },
     /**
-     * subtitle which will be rendered underneath
+     * subline which will be rendered underneath the headline
      */
-    subTitle: {
+    subline: {
       type: String,
       default: '',
     },
@@ -93,21 +94,18 @@ export default defineComponent({
       const index = orders.findIndex((val) => val === type)
       const order = index === 0 ? 'first' : 'last'
       return [
-        `content-media-block--${ratios[index]}`,
-        `content-media-block--${order}`,
+        `content-media-block__${type}--${ratios[index]}`,
+        `content-media-block__${type}--${order}`,
       ]
     }
 
     const contentClass = computed(() => getClass('content'))
     const mediaClass = computed(() => getClass('media'))
 
-    const getSublineHtml = (text) =>
-      `<p><span class="tw-subline tw-subline-3">${text}</span></p>`
-
     const enrichedRichtext = computed(() =>
       [
-        ...(props.title ? [`<h2>${props.title}</h2>`] : []),
-        ...(props.subTitle ? [getSublineHtml(props.subTitle)] : []),
+        props.headline ? renderHeadline(props.headline, 2) : '',
+        props.subline ? renderSubline(props.subline, 3) : '',
         props.richtext,
       ].join('')
     )
@@ -121,9 +119,41 @@ export default defineComponent({
 .content-media-block {
   @apply tw-items-center;
 
+  &__content {
+    &--three {
+      @apply tw-col-span-5;
+    }
+  }
+
+  &__media {
+    &--one {
+      @apply tw-col-span-3;
+    }
+  }
+
   &__content,
   &__media {
     @apply tw-col-span-full;
+
+    @screen md {
+      &--half {
+        @apply tw-col-span-4;
+      }
+    }
+
+    @screen lg {
+      &--half {
+        @apply tw-col-span-6;
+      }
+
+      &--one {
+        @apply tw-col-span-4;
+      }
+
+      &--three {
+        @apply tw-col-span-8;
+      }
+    }
   }
 
   &__buttons {
@@ -142,34 +172,6 @@ export default defineComponent({
 
   &--first {
     @apply tw-order-first;
-  }
-
-  @screen md {
-    &--half {
-      @apply tw-col-span-4;
-    }
-
-    &--one:not(.content-media-block__content) {
-      @apply tw-col-span-3;
-    }
-
-    &--three:not(.content-media-block__media) {
-      @apply tw-col-span-5;
-    }
-  }
-
-  @screen lg {
-    &--half {
-      @apply tw-col-span-6;
-    }
-
-    &--one {
-      @apply tw-col-span-4;
-    }
-
-    &--three {
-      @apply tw-col-span-8;
-    }
   }
 }
 </style>

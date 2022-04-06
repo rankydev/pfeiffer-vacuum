@@ -21,6 +21,7 @@ module.exports = {
     '<rootDir>/pages/**/*.{vue,js}',
     // '<rootDir>/plugins/**/*.{vue,js}',
     '<rootDir>/stores/**/*.{vue,js}',
+    '<rootDir>/utils/**/*.{vue,js}',
   ],
   coveragePathIgnorePatterns: [
     '/node_modules/',

@@ -4,13 +4,13 @@ export default {
   name: 'ContentMediaBlock',
   display_name: 'ContentMediaBlock',
   schema: {
-    title: {
+    headline: {
       type: 'text',
       required: true,
       max_length: '55',
       translatable: true,
     },
-    subTitle: {
+    subline: {
       type: 'text',
       required: true,
       max_length: '55',
