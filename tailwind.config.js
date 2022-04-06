@@ -1,5 +1,5 @@
 module.exports = {
-  important: true,
+  important: false,
   content: [
     './components/**/*.{js,vue,ts}',
     './layouts/**/*.vue',
