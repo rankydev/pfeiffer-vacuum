@@ -69,14 +69,6 @@ export default defineComponent({
     }
   }
 
-  a {
-    @apply tw-text-pv-red;
-
-    &:hover {
-      @apply tw-underline;
-    }
-  }
-
   p {
     @apply tw-mb-4;
 
@@ -87,6 +79,14 @@ export default defineComponent({
     & + h6,
     & + p > .tw-subline:first-child {
       @apply tw-mt-8;
+    }
+  }
+
+  a {
+    @apply tw-text-pv-red;
+
+    &:hover {
+      @apply tw-underline;
     }
   }
 
