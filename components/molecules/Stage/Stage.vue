@@ -1,14 +1,18 @@
 <template>
-  <div class="stage" :style="cssVars">
+  <div
+    v-editable="(image, variant, imagePosition, stageContent)"
+    class="stage"
+    :style="cssVars"
+  >
     <StageContent
       v-if="displayStageContent"
-      class="stage__contentBlock"
+      class="stage__content-block"
       :headline="headline"
       :subline="subline"
       :teaser-text="teaserText"
       :buttons="buttons"
     />
-    <div class="stage__imageBlock">
+    <div class="stage__image-block">
       <NuxtImg preload :alt="image.alt" :src="image.originalFilename" />
     </div>
   </div>
@@ -27,10 +31,12 @@ export default {
     variant: {
       type: String,
       default: 'fullImage',
+      required: true,
     },
     image: {
       type: Object,
       default: () => {},
+      required: true,
     },
     imagePosition: {
       type: String,
@@ -82,27 +88,42 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .stage {
   @apply tw-flex;
-  @apply tw-basis-6/12;
+  @apply tw-flex-wrap-reverse;
   @apply tw-bg-pv-grey-16;
-  flex-direction: var(--stage-flex-direction);
 
-  &__contentBlock {
-    width: 50%;
+  @screen md {
+    @apply tw-flex-nowrap;
+    flex-direction: var(--stage-flex-direction);
   }
 
-  &__imageBlock {
-    width: var(--image-max-width);
+  &__content-block {
+    @apply tw-basis-full;
+
+    @screen md {
+      @apply tw-basis-6/12;
+      width: 50%;
+    }
+  }
+
+  &__image-block {
+    @apply tw-basis-full;
+
+    @screen md {
+      @apply tw-basis-6/12;
+      width: var(--image-max-width);
+    }
 
     img {
       @apply tw-w-full;
       height: 180px;
-      object-fit: var(--object-fit);
+      object-fit: cover;
 
       @screen md {
         height: 372px;
+        object-fit: var(--object-fit);
       }
 
       @screen lg {

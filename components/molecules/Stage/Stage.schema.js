@@ -19,6 +19,7 @@ export default {
         },
       ],
       pos: 1,
+      required: true,
     },
     image: {
       type: 'asset',
@@ -26,6 +27,7 @@ export default {
       display_name: 'Image',
       filetypes: ['images'],
       pos: 2,
+      required: true,
     },
     imagePosition: {
       type: 'option',

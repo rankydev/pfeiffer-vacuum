@@ -1,12 +1,15 @@
 <template>
-  <div class="stageContent">
-    <h1 class="stageContent__headline">{{ headline }}</h1>
-    <p class="stageContent__subline tw-teaser">{{ subline }}</p>
-    <p class="stageContent__description tw-paragraph">{{ teaserText }}</p>
+  <div
+    v-editable="(headline, subline, teaserText, buttons)"
+    class="stage-content"
+  >
+    <h1 class="stage-content__headline">{{ headline }}</h1>
+    <p class="stage-content__subline tw-teaser">{{ subline }}</p>
+    <p class="stage-content__description tw-paragraph">{{ teaserText }}</p>
     <Button
       v-for="button in buttons"
       :key="button._uid"
-      class="stageContent__button"
+      class="stage-content__button"
       :icon="button.icon"
       :label="button.label"
       :variant="button.variant"
@@ -42,10 +45,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.stageContent {
+<style lang="scss">
+.stage-content {
   @apply tw-bg-pv-grey-16;
   @apply tw-px-8;
+  @apply tw-py-6;
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-justify-center;
