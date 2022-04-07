@@ -76,10 +76,10 @@ export default {
 
     &--with-text {
       @apply tw-w-full;
+      @apply tw-object-contain;
 
       @screen md {
         @apply tw-w-1/2;
-        @apply tw-object-contain;
       }
     }
 
