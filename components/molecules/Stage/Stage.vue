@@ -1,11 +1,7 @@
 <template>
-  <div
-    v-editable="(image, variant, imagePosition, stageContent)"
-    class="stage"
-    :class="imagePosition === 'left' ? 'stage--reverse' : ''"
-  >
+  <div v-editable="(image, stageContent)" class="stage">
     <StageContent
-      v-if="variant !== 'fullImage'"
+      v-if="stageContent.length > 0"
       class="stage__content-block"
       v-bind="stageContent[0]"
     />
@@ -13,10 +9,7 @@
       v-if="(image || {}).originalFilename"
       preload
       class="stage__image"
-      :class="{
-        'stage__image--with-text': variant === 'withText',
-        'stage__image--full': variant === 'fullImage',
-      }"
+      :class="`stage__image--${stageContent.length > 0 ? 'withText' : 'full'}`"
       :alt="image.alt"
       :src="image.originalFilename"
     />
@@ -32,19 +25,9 @@ export default {
     StageContent,
   },
   props: {
-    variant: {
-      type: String,
-      default: 'fullImage',
-      validator: (val) => ['fullImage', 'withText'].includes(val),
-    },
     image: {
       type: [Object, String],
       default: () => ({}),
-    },
-    imagePosition: {
-      type: String,
-      default: 'right',
-      validator: (val) => ['right', 'left'].includes(val),
     },
     stageContent: {
       type: Array,
@@ -63,10 +46,6 @@ export default {
   @screen md {
     @apply tw-flex-nowrap;
     @apply tw-flex-row;
-
-    &--reverse {
-      @apply tw-flex-row-reverse;
-    }
   }
 
   &__content-block {
@@ -77,26 +56,23 @@ export default {
     }
   }
 
-  &__image-block {
-    @apply tw-basis-full;
+  &__image {
+    height: 180px;
 
     @screen md {
-      @apply tw-basis-6/12;
-      width: var(--image-max-width);
+      height: 372px;
     }
 
+    @screen lg {
+      height: 400px;
     }
 
-    img {
     &--with-text {
       @apply tw-w-full;
-      height: 180px;
-      object-fit: cover;
 
       @screen md {
-        height: 372px;
-        object-fit: var(--object-fit);
         @apply tw-w-1/2;
+        @apply tw-object-contain;
       }
     }
 

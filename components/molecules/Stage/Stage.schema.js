@@ -2,25 +2,6 @@ export default {
   name: 'Stage',
   display_name: 'Stage',
   schema: {
-    variant: {
-      type: 'option',
-      exclude_empty_option: true,
-      default_value: 'fullImage',
-      description:
-        'The variants of the stage based on the content that should be displayed.',
-      options: [
-        {
-          value: 'fullImage',
-          name: 'Full image',
-        },
-        {
-          value: 'withText',
-          name: 'Image and content',
-        },
-      ],
-      pos: 1,
-      required: true,
-    },
     image: {
       type: 'asset',
       description: '',
@@ -28,23 +9,6 @@ export default {
       filetypes: ['images'],
       pos: 2,
       required: true,
-    },
-    imagePosition: {
-      type: 'option',
-      exclude_empty_option: true,
-      default_value: 'right',
-      description: 'The position of the image in the stage.',
-      options: [
-        {
-          value: 'right',
-          name: 'right',
-        },
-        {
-          value: 'left',
-          name: 'left',
-        },
-      ],
-      pos: 3,
     },
     stageContent: {
       type: 'bloks',
