@@ -3,15 +3,26 @@
     v-editable="(headline, subline, teaserText, buttons)"
     class="stage-content"
   >
-    <h1 class="stage-content__headline">{{ headline }}</h1>
-    <p class="stage-content__subline tw-teaser">{{ subline }}</p>
-    <p class="stage-content__description tw-paragraph">{{ teaserText }}</p>
-    <Button
-      v-for="button in buttons"
-      :key="button._uid"
-      class="stage-content__button"
-      v-bind="button"
-    />
+    <h1 v-if="headline" class="stage-content__headline">
+      {{ headline }}
+    </h1>
+
+    <p v-if="subline" class="stage-content__subline tw-teaser">
+      {{ subline }}
+    </p>
+
+    <p v-if="teaserText" class="stage-content__description">
+      {{ teaserText }}
+    </p>
+
+    <div v-if="buttons.length > 0" class="stage-content__buttons">
+      <Button
+        v-for="button in buttons"
+        :key="button._uid"
+        class="stage-content__button"
+        v-bind="button"
+      />
+    </div>
   </div>
 </template>
 
@@ -54,22 +65,16 @@ export default {
     @apply tw-text-pv-white;
   }
 
-  &__headline,
-  &__subline {
-    @apply tw-mb-2;
-  }
-
+  &__subline,
   &__description {
-    @apply tw-mb-8;
+    @apply tw-mt-2;
   }
 
-  &__button {
-    @apply tw-w-fit;
-    @apply tw-mb-4;
-
-    &:last-child {
-      @apply tw-m-0;
-    }
+  &__buttons {
+    @apply tw-mt-8;
+    @apply tw-flex;
+    @apply tw-flex-wrap;
+    @apply tw-gap-4;
   }
 }
 </style>

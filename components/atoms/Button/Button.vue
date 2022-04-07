@@ -22,6 +22,7 @@
         'button__icon--append': label && !prependIcon,
       }"
     />
+    <template v-if="!icon && !label">&nbsp;&nbsp;</template>
   </button>
 </template>
 

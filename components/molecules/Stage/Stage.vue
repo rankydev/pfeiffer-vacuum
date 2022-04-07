@@ -2,22 +2,29 @@
   <div
     v-editable="(image, variant, imagePosition, stageContent)"
     class="stage"
-    :style="cssVars"
+    :class="imagePosition === 'left' ? 'stage--reverse' : ''"
   >
     <StageContent
-      v-if="displayStageContent"
+      v-if="variant !== 'fullImage'"
       class="stage__content-block"
       v-bind="stageContent[0]"
     />
-    <div class="stage__image-block">
-      <NuxtImg preload :alt="image.alt" :src="image.originalFilename" />
-    </div>
+    <NuxtImg
+      v-if="(image || {}).originalFilename"
+      preload
+      class="stage__image"
+      :class="{
+        'stage__image--with-text': variant === 'withText',
+        'stage__image--full': variant === 'fullImage',
+      }"
+      :alt="image.alt"
+      :src="image.originalFilename"
+    />
   </div>
 </template>
 
 <script>
 import StageContent from '@/components/molecules/Stage/StageContent/StageContent'
-import { computed, toRefs } from '@nuxtjs/composition-api'
 
 export default {
   name: 'Stage',
@@ -28,53 +35,21 @@ export default {
     variant: {
       type: String,
       default: 'fullImage',
-      required: true,
+      validator: (val) => ['fullImage', 'withText'].includes(val),
     },
     image: {
-      type: Object,
-      default: () => {},
-      required: true,
+      type: [Object, String],
+      default: () => ({}),
     },
     imagePosition: {
       type: String,
       default: 'right',
+      validator: (val) => ['right', 'left'].includes(val),
     },
     stageContent: {
       type: Array,
       default: () => [],
     },
-  },
-  setup(props) {
-    const { variant, imagePosition } = toRefs(props)
-
-    const displayStageContent = !(variant.value === 'fullImage')
-
-    const cssVars = computed(() => {
-      if (displayStageContent) {
-        if (imagePosition.value === 'left') {
-          return {
-            '--object-fit': 'contain',
-            '--image-max-width': '50%',
-            '--stage-flex-direction': 'row-reverse',
-          }
-        }
-        return {
-          '--object-fit': 'contain',
-          '--image-max-width': '50%',
-          '--stage-flex-direction': 'row',
-        }
-      }
-      return {
-        '--object-fit': 'cover',
-        '--image-max-width': '100vw',
-        '--stage-flex-direction': 'row',
-      }
-    })
-
-    return {
-      displayStageContent,
-      cssVars,
-    }
   },
 }
 </script>
@@ -87,15 +62,18 @@ export default {
 
   @screen md {
     @apply tw-flex-nowrap;
-    flex-direction: var(--stage-flex-direction);
+    @apply tw-flex-row;
+
+    &--reverse {
+      @apply tw-flex-row-reverse;
+    }
   }
 
   &__content-block {
-    @apply tw-basis-full;
+    @apply tw-w-full;
 
     @screen md {
-      @apply tw-basis-6/12;
-      width: 50%;
+      @apply tw-w-1/2;
     }
   }
 
@@ -107,7 +85,10 @@ export default {
       width: var(--image-max-width);
     }
 
+    }
+
     img {
+    &--with-text {
       @apply tw-w-full;
       height: 180px;
       object-fit: cover;
@@ -115,11 +96,13 @@ export default {
       @screen md {
         height: 372px;
         object-fit: var(--object-fit);
+        @apply tw-w-1/2;
       }
+    }
 
-      @screen lg {
-        height: 400px;
-      }
+    &--full {
+      @apply tw-w-full;
+      @apply tw-object-cover;
     }
   }
 }

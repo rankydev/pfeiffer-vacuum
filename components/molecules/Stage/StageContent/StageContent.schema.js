@@ -5,6 +5,7 @@ export default {
     headline: {
       type: 'text',
       translatable: true,
+      required: true,
       display_name: 'Headline',
       max_length: '50',
       pos: 1,
