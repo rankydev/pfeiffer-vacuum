@@ -1,7 +1,7 @@
 <template>
   <div v-editable="(image, stageContent)" class="stage">
     <StageContent
-      v-if="stageContent.length > 0"
+      v-if="stageContent.length"
       class="stage__content-block"
       v-bind="stageContent[0]"
     />
@@ -9,7 +9,7 @@
       v-if="(image || {}).originalFilename"
       preload
       class="stage__image"
-      :class="`stage__image--${stageContent.length > 0 ? 'with-text' : 'full'}`"
+      :class="`stage__image--${stageContent.length ? 'with-text' : 'full'}`"
       :alt="image.alt"
       :src="image.originalFilename"
     />

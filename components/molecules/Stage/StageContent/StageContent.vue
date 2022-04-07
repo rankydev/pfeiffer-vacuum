@@ -15,7 +15,7 @@
       {{ teaserText }}
     </p>
 
-    <div v-if="buttons.length > 0" class="stage-content__buttons">
+    <div v-if="buttons.length" class="stage-content__buttons">
       <Button
         v-for="button in buttons"
         :key="button._uid"
