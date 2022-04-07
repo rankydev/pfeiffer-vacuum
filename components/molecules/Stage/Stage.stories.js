@@ -1,21 +1,10 @@
 import Stage from '~/components/molecules/Stage/Stage.vue'
 import StageContent from './Stage.stories.content'
-import { variants, imagePositions } from './Stage.stories.content'
 
 const argTypes = {
-  variant: {
-    defaultValue: StageContent.variant,
-    options: variants,
-    control: { type: 'inline-radio' },
-  },
   image: {
     defaultValue: StageContent.image,
     control: { type: 'object' },
-  },
-  imagePosition: {
-    defaultValue: StageContent.imagePosition,
-    options: imagePositions,
-    control: { type: 'inline-radio' },
   },
   stageContent: {
     defaultValue: StageContent.stageContent,
@@ -51,3 +40,6 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
+
+export const ImageOnly = Template.bind({})
+ImageOnly.args = { stageContent: [] }

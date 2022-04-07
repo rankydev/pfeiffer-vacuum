@@ -9,7 +9,7 @@
       v-if="(image || {}).originalFilename"
       preload
       class="stage__image"
-      :class="`stage__image--${stageContent.length > 0 ? 'withText' : 'full'}`"
+      :class="`stage__image--${stageContent.length > 0 ? 'with-text' : 'full'}`"
       :alt="image.alt"
       :src="image.originalFilename"
     />
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import StageContent from '@/components/molecules/Stage/StageContent/StageContent'
+import StageContent from '~/components/molecules/Stage/StageContent/StageContent.vue'
 
 export default {
   name: 'Stage',
@@ -25,10 +25,17 @@ export default {
     StageContent,
   },
   props: {
+    /**
+     * An image wich if displayed full width if no stage content is defined.
+     * If a stage content is defined it is displayed on the right side
+     */
     image: {
       type: [Object, String],
       default: () => ({}),
     },
+    /**
+     * The stage content which can be added optionally
+     */
     stageContent: {
       type: Array,
       default: () => [],

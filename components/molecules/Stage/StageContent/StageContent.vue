@@ -27,21 +27,36 @@
 </template>
 
 <script>
+import Button from '~/components/atoms/Button/Button.vue'
+
 export default {
   name: 'StageContent',
+  components: { Button },
   props: {
+    /**
+     * The headline of the stage
+     */
     headline: {
       type: String,
       default: '',
     },
+    /**
+     * subline of the stage
+     */
     subline: {
       type: String,
       default: '',
     },
+    /**
+     * Teaster test of the stage
+     */
     teaserText: {
       type: String,
       default: '',
     },
+    /**
+     * Up to 2 buttons can be added optional
+     */
     buttons: {
       type: Array,
       default: () => [],

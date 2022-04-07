@@ -1,11 +1,6 @@
-import StageContent from '~/components/molecules/Stage/StageContent/StageContent.content'
-
-export const variants = ['fullImage', 'withText']
-export const imagePositions = ['left', 'right']
+import StageContent from '~/components/molecules/Stage/StageContent/StageContent.stories.content'
 
 export default {
-  variant: 'fullImage',
-  imagePosition: 'right',
   image: {
     alt: 'Matterhorn',
     copyright: '',
