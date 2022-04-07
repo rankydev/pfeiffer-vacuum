@@ -1,17 +1,19 @@
 <template>
   <div v-bind="{ id }">
-    <nuxt-dynamic
+    <NuxtDynamic
       v-for="item in content"
       :key="item._uid"
       v-editable="item"
-      :name="item.uiComponent || item.component"
       v-bind="item"
+      :component="item.uiComponent || item.component"
     />
   </div>
 </template>
 
 <script>
-export default {
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   props: {
     id: {
       type: String,
@@ -22,5 +24,5 @@ export default {
       default: () => [],
     },
   },
-}
+})
 </script>
