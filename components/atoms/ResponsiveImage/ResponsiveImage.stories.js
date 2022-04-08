@@ -38,7 +38,7 @@ export default {
         component: '',
       },
       source: {
-        code: '<ResponsiveImage v-bind="{}" />',
+        code: '<ResponsiveImage provider="storyblok" v-bind="{}" />',
       },
     },
   },
@@ -52,6 +52,7 @@ const Template = (args) => ({
   },
   template: `<ResponsiveImage
                 v-bind="args"
+                provider="storyblok"
                 :default-size="{ width: '375px', height: '375px' }"
                 :sizes="[
                   { media: 'xl', height: '360px', width: '360px' },

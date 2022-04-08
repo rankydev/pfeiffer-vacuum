@@ -2,7 +2,7 @@
   <picture
     v-if="image && image.originalFilename && defaultSize"
     :class="{
-      'relative block after:absolute after:inset-0 after:inline-block after:bg-gradient-to-t after:from-black after:via-transparent after:to-transparent ':
+      'responsive-image relative block after:absolute after:inset-0 after:inline-block after:bg-gradient-to-t after:from-black after:via-transparent after:to-transparent ':
         withGradient,
     }"
   >
