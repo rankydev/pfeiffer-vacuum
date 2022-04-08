@@ -82,9 +82,6 @@ export default defineComponent({
   },
   setup(props) {
     const result = reactive({
-      someTHing(event) {
-        alert(event.type + ' ' + event.detail)
-      },
       isActivated: false,
       ...DEFAULT_DATA,
     })
@@ -105,12 +102,15 @@ export default defineComponent({
 
 <style lang="scss">
 .video-player {
+  @apply tw-overflow-hidden;
+
   &__inner {
     @apply tw-relative;
     @apply tw-cursor-pointer;
     @apply tw-rounded-lg;
     @apply tw-overflow-hidden;
     padding-bottom: calc(9 / 16 * 100%);
+    transform: translate3d(0, 0, 0);
   }
 
   &__embed,
