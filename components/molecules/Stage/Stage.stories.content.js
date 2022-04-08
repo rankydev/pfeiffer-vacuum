@@ -23,4 +23,5 @@ export default {
     title: 'Matterhorn nightscape',
   },
   stageContent: StageContent,
+  component: 'Stage',
 }

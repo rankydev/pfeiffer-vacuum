@@ -1,49 +1,19 @@
 import header from '~/components/organisms/Header/Header.stories.content.js'
 import { footerContent } from '~/components/organisms/Footer/Footer.stories.content.js'
 import { quicklinkNavigation } from '~/components/molecules/QuicklinkNavigation/QuicklinkNavigation.stories.content.js'
+import stageContent from '~/components/molecules/Stage/Stage.stories.content.js'
 
 export default {
   content: {
     top: [],
-    body: [
-      {
-        links: [
-          {
-            href: '/home',
-            label: 'Link',
-            target: '_self',
-            component: 'TextLink',
-          },
-          {
-            href: '/home',
-            label: 'Link',
-            target: '_self',
-            component: 'TextLink',
-          },
-          {
-            href: '/home',
-            label: 'Link',
-            target: '_self',
-            component: 'TextLink',
-          },
-          {
-            href: '/home',
-            label: 'Link',
-            target: '_self',
-            component: 'TextLink',
-          },
-        ],
-        title: 'This is an example',
-        component: 'LinkList',
-      },
-    ],
+    body: [],
     name: 'Welcome',
     text: 'Build with Storyblok-CMS right now',
-    stage: [],
     title: 'Home',
     bottom: [],
-    footer: [footerContent],
     header: [header],
+    stage: [stageContent],
+    footer: [footerContent],
     noindex: false,
     ogImage: {
       id: null,
