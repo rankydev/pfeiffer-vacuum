@@ -1,7 +1,7 @@
 import responsiveImage from './../../atoms/ResponsiveImage/ResponsiveImage.schema.js'
 
 export default {
-  name: 'imageWithSource',
+  name: 'ImageWithSource',
   display_name: 'Image with Source',
   schema: {
     description: {
@@ -13,12 +13,7 @@ export default {
     },
     image: responsiveImage.schema.image,
   },
-  image: null,
-  preview_field: null,
   is_root: false,
-  preview_tmpl: null,
-  is_nestable: false,
-  all_presets: [],
-  preset_id: null,
-  real_name: 'imageWithSource',
+  is_nestable: true,
+  real_name: 'ImageWithSource',
 }

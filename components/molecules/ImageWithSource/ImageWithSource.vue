@@ -3,7 +3,7 @@
     <ResponsiveImage
       class="image-with-source__img"
       provider="storyblok"
-      v-bind="imgSource"
+      :image="image"
       :default-size="defaultSize"
       :sizes="sizes"
     />
@@ -29,7 +29,7 @@ export default defineComponent({
     /**
      * Image data for responsive image component
      */
-    imgSource: {
+    image: {
       type: [Object, String],
       default: () => {},
     },

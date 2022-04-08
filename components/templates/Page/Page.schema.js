@@ -29,7 +29,7 @@ export default {
       type: 'bloks',
       display_name: 'Stage',
       restrict_components: true,
-      component_whitelist: [],
+      component_whitelist: ['ImageWithSource'],
     },
     body: {
       type: 'bloks',
@@ -42,6 +42,7 @@ export default {
         'Accordion',
         'AnchorWrapper',
         'VideoPlayer',
+        'ImageWithSource',
       ],
     },
     bottom: {
