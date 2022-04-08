@@ -107,5 +107,10 @@ export default {
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
-  image: {},
+  image: {
+    provider: 'storyblok',
+    storyblok: {
+      baseURL: 'https://img2.storyblok.com'
+    }
+  },
 }
