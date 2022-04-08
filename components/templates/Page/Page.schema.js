@@ -29,7 +29,8 @@ export default {
       type: 'bloks',
       display_name: 'Stage',
       restrict_components: true,
-      component_whitelist: [],
+      component_whitelist: ['Stage'],
+      maximum: 1,
     },
     body: {
       type: 'bloks',
@@ -41,6 +42,7 @@ export default {
         'TextLink',
         'Accordion',
         'AnchorWrapper',
+        'VideoPlayer',
       ],
     },
     bottom: {

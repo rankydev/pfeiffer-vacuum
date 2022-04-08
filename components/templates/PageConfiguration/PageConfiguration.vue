@@ -1,57 +1,57 @@
 <template>
   <div v-editable="content">
     <slot name="header">
-      <nuxt-dynamic
+      <NuxtDynamic
         v-for="item in top"
         :key="item._uid"
         v-editable="item"
-        :name="item.uiComponent || item.component"
         v-bind="item"
+        :component="item.uiComponent || item.component"
       />
 
-      <nuxt-dynamic
+      <NuxtDynamic
         v-for="item in header"
         :key="item._uid"
         v-editable="item"
-        :name="item.uiComponent || item.component"
         v-bind="item"
+        :component="item.uiComponent || item.component"
       />
     </slot>
 
     <slot>
       <main>
-        <nuxt-dynamic
+        <NuxtDynamic
           v-for="item in stage"
           :key="item._uid"
           v-editable="item"
-          :name="item.uiComponent || item.component"
           v-bind="item"
+          :component="item.uiComponent || item.component"
         />
-        <nuxt-dynamic
+        <NuxtDynamic
           v-for="item in body"
           :key="item._uid"
           v-editable="item"
-          :name="item.uiComponent || item.component"
           v-bind="item"
+          :component="item.uiComponent || item.component"
         />
       </main>
     </slot>
 
     <slot name="footer">
-      <nuxt-dynamic
+      <NuxtDynamic
         v-for="item in bottom"
         :key="item._uid"
         v-editable="item"
-        :name="item.uiComponent || item.component"
         v-bind="item"
+        :component="item.uiComponent || item.component"
       />
 
-      <nuxt-dynamic
+      <NuxtDynamic
         v-for="item in footer"
         :key="item._uid"
         v-editable="item"
-        :name="item.uiComponent || item.component"
         v-bind="item"
+        :component="item.uiComponent || item.component"
       />
     </slot>
   </div>

@@ -30,12 +30,12 @@
           :id="`accordion-${idx}`"
           class="accordion__content"
         >
-          <nuxt-dynamic
+          <NuxtDynamic
             v-for="item in entry.items"
             :key="item._uid"
             v-editable="item"
-            :name="item.uiComponent || item.component"
             v-bind="item"
+            :component="item.uiComponent || item.component"
           />
         </div>
       </AnimatedCollapse>

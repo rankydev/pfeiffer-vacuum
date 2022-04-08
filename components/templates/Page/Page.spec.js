@@ -81,22 +81,22 @@ describe('Page', () => {
         createComponent(propsData)
         const sections = wrapper.findAll('nuxtdynamic-stub')
 
-        expect(sections.at(0).attributes('name')).toBe(
+        expect(sections.at(0).attributes('component')).toBe(
           propsData.content.top[0].component
         )
-        expect(sections.at(1).attributes('name')).toBe(
+        expect(sections.at(1).attributes('component')).toBe(
           propsData.content.header[0].component
         )
-        expect(sections.at(2).attributes('name')).toBe(
+        expect(sections.at(2).attributes('component')).toBe(
           propsData.content.stage[0].component
         )
-        expect(sections.at(3).attributes('name')).toBe(
+        expect(sections.at(3).attributes('component')).toBe(
           propsData.content.body[0].component
         )
-        expect(sections.at(4).attributes('name')).toBe(
+        expect(sections.at(4).attributes('component')).toBe(
           propsData.content.bottom[0].component
         )
-        expect(sections.at(5).attributes('name')).toBe(
+        expect(sections.at(5).attributes('component')).toBe(
           propsData.content.footer[0].component
         )
       })
