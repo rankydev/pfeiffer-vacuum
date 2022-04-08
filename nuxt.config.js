@@ -32,6 +32,11 @@ export default {
     '~/components/organisms',
   ],
 
+  // server middleware: https://nuxtjs.org/docs/configuration-glossary/configuration-servermiddleware
+  serverMiddleware: {
+    '/_ipx': '~/server/middleware/ipx.js',
+  },
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
@@ -45,7 +50,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@txp-cms/storyblok'],
+  modules: ['@txp-cms/storyblok', '@nuxt/image'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -99,5 +104,13 @@ export default {
     CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,
     CI_PROJECT_URL: process.env.CI_PROJECT_URL,
     NODE_ENV: process.env.NODE_ENV,
+  },
+
+  //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
+  image: {
+    provider: 'storyblok',
+    storyblok: {
+      baseURL: 'https://img2.storyblok.com',
+    },
   },
 }
