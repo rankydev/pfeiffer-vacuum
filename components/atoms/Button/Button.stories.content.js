@@ -33,7 +33,7 @@ export const buttonVariants = [
 
 export const buttonOutlinedSecondary = {
   _uid: '2b6af927-5f0e-4c1a-be88-29bb5d04076d',
-  icon: 'arrow_right',
+  icon: 'arrow_forward',
   size: 'normal',
   label: 'Outlined Button',
   shape: 'outlined',
@@ -47,7 +47,7 @@ export const buttonOutlinedSecondary = {
 
 export const buttonFilledSecondary = {
   _uid: '3dd3700b-9e95-46d5-87ab-fd917b80848f',
-  icon: '',
+  icon: 'arrow_forward',
   size: 'normal',
   label: 'Filled Button',
   shape: 'filled',
