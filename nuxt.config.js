@@ -110,7 +110,7 @@ export default {
   image: {
     provider: 'storyblok',
     storyblok: {
-      baseURL: 'https://img2.storyblok.com'
-    }
+      baseURL: 'https://img2.storyblok.com',
+    },
   },
 }
