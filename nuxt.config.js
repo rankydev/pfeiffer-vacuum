@@ -105,7 +105,10 @@ export default {
     CI_PROJECT_URL: process.env.CI_PROJECT_URL,
     NODE_ENV: process.env.NODE_ENV,
   },
+
+  //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
   image: {
+    provider: 'storyblok',
     storyblok: {
       baseURL: 'https://img2.storyblok.com',
     },
