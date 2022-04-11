@@ -3,9 +3,9 @@ import imageMock from './../../atoms/ResponsiveImage/ResponsiveImage.stories.con
 import { description } from '../../atoms/VideoPlayer/VideoPlayer.stories.content'
 
 const argTypes = {
-  imgSource: {
+  image: {
     control: { type: 'object' },
-    defaultValue: imageMock,
+    defaultValue: imageMock.image,
   },
   description: {
     control: { type: 'object' },
