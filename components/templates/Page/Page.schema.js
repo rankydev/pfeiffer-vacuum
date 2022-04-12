@@ -29,7 +29,7 @@ export default {
       type: 'bloks',
       display_name: 'Stage',
       restrict_components: true,
-      component_whitelist: ['Stage'],
+      component_whitelist: [],
       maximum: 1,
     },
     body: {

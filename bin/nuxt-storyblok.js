@@ -8,7 +8,7 @@ import consola from 'consola'
 import getApi from '@txp-cms/storyblok/bin/utils/api.js'
 import syncComponents from '@txp-cms/storyblok/bin/tasks/sync-components.js'
 
-import { getWebpackConfig } from '@nuxt/cli'
+import { loadNuxtConfig, getNuxtConfig } from '@nuxt/config'
 import moduleAlias from 'module-alias'
 
 export const logger = consola.withScope('@txp-cms/storyblok')
@@ -30,8 +30,11 @@ async function getComponentsSchema(dir) {
 async function registerModuleAliases() {
   logger.log(`${chalk.blue('-')} Register module alias mappings...`)
 
-  const webpackConfig = await getWebpackConfig()
-  const { alias } = webpackConfig.resolve
+  // load project config for nuxt
+  const projectConfig = await loadNuxtConfig()
+
+  // extend project config with default values
+  const { alias } = getNuxtConfig(projectConfig)
 
   moduleAlias.addAliases(alias)
 }
