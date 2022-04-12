@@ -46,6 +46,12 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const formatString = props.format.split(':')
+    console.log(formatString)
+    let formatArr = []
+    formatString.forEach((el) => formatArr.push(parseInt(el, 10)))
+    console.log(formatArr)
+
     let defaultSize = { height: '375px', width: '375px' }
     let sizes = [
       { media: 's', height: '320px', width: '320px' },
