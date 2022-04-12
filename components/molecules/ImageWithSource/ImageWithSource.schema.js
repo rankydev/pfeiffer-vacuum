@@ -12,6 +12,20 @@ export default {
       display_name: 'Description',
     },
     image: responsiveImage.schema.image,
+    format: {
+      type: 'option',
+      hide_empty_options: true,
+      options: [
+        {
+          name: '1:1',
+          value: '1:1',
+        },
+        {
+          name: '2:3',
+          value: '2:3',
+        },
+      ],
+    },
   },
   is_root: false,
   is_nestable: true,

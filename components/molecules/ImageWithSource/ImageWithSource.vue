@@ -40,6 +40,10 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
+    format: {
+      type: String,
+      default: '1:1',
+    },
   },
   setup(props) {
     const defaultSize = { width: '375px', height: '375px' }
@@ -49,6 +53,7 @@ export default defineComponent({
       { media: 'lg', height: '256px', width: '256px' },
       { media: 'xl', height: '360px', width: '360px' },
     ]
+    console.log(props.format, 'format')
 
     return {
       props,
