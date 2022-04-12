@@ -7,6 +7,7 @@ import chalk from 'chalk'
 import consola from 'consola'
 import getApi from '@txp-cms/storyblok/bin/utils/api.js'
 import syncComponents from '@txp-cms/storyblok/bin/tasks/sync-components.js'
+
 import { loadNuxtConfig, getNuxtConfig } from '@nuxt/config'
 import moduleAlias from 'module-alias'
 
