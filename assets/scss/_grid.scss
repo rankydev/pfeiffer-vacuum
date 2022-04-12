@@ -35,4 +35,22 @@
     margin-right: initial;
     width: initial;
   }
+
+  .tw-my-component-wide {
+    @apply tw-my-6;
+
+    @screen md {
+      @apply tw-my-8;
+    }
+
+    @screen lg {
+      @apply tw-my-12;
+    }
+  }
+
+  .tw-my-component-narrow {
+    @apply tw-my-4;
+
+
+  }
 }

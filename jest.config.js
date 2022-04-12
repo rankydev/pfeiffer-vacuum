@@ -8,6 +8,7 @@ module.exports = {
     '^.+\\.js$': 'babel-jest',
     '.*\\.(vue)$': '@vue/vue2-jest',
   },
+  transformIgnorePatterns: ['node_modules/'],
   testEnvironment: 'jsdom',
   collectCoverage: true,
   setupFilesAfterEnv: ['./jest.setup.js'],
@@ -21,6 +22,7 @@ module.exports = {
     '<rootDir>/pages/**/*.{vue,js}',
     // '<rootDir>/plugins/**/*.{vue,js}',
     '<rootDir>/stores/**/*.{vue,js}',
+    '<rootDir>/utils/**/*.{vue,js}',
   ],
   coveragePathIgnorePatterns: [
     '/node_modules/',
