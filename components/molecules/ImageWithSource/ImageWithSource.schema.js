@@ -21,8 +21,24 @@ export default {
           value: '1:1',
         },
         {
+          name: '3:2',
+          value: '3:2',
+        },
+        {
           name: '2:3',
           value: '2:3',
+        },
+        {
+          name: '16:9',
+          value: '16:9',
+        },
+        {
+          name: '2:1',
+          value: '2:1',
+        },
+        {
+          name: '3:1',
+          value: '3:1',
         },
       ],
     },
