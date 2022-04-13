@@ -2,7 +2,7 @@
   <picture
     v-if="image && image.originalFilename && defaultSize"
     :class="{
-      'responsive-image relative block after:absolute after:inset-0 after:inline-block after:bg-gradient-to-t after:from-black after:via-transparent after:to-transparent ':
+      'responsive-image tw-relative tw-block after:tw-absolute after:tw-inset-0 after:tw-inline-block after:tw-bg-gradient-to-t after:tw-from-black after:tw-via-transparent after:tw-to-transparent ':
         withGradient,
     }"
   >
@@ -133,8 +133,8 @@ export default defineComponent({
 
       const width = parseFloat(size.width)
       const height = parseFloat(size.height)
-      const retinaWidth = `${width * 2}px`
-      const retinaHeight = `${height * 2}px`
+      const retinaWidth = `${width * 2}`
+      const retinaHeight = `${height * 2}`
 
       const img1x = root.$img(
         image.originalFilename,

@@ -60,31 +60,33 @@ export default defineComponent({
     const defaultHeightXl = 360
 
     let defaultSize = {
-      width: `${(defaultHeight / formatArr[1]) * formatArr[0]}px`,
+      width: `${(defaultHeight / formatArr[1]) * formatArr[0]}`,
       height: `${defaultHeight}`,
     }
     let sizes = [
       {
-        media: 's',
-        width: `${(defaultHeightS / formatArr[1]) * formatArr[0]}px`,
-        height: `${defaultHeightS}px`,
+        media: 'sm',
+        width: `${Math.floor((defaultHeightS / formatArr[1]) * formatArr[0])}`,
+        height: `${defaultHeightS}`,
       },
       {
         media: 'md',
-        width: `${(defaultHeightMd / formatArr[1]) * formatArr[0]}px`,
-        height: `${defaultHeightMd}px`,
+        width: `${Math.floor((defaultHeightMd / formatArr[1]) * formatArr[0])}`,
+        height: `${defaultHeightMd}`,
       },
       {
         media: 'lg',
-        width: `${(defaultHeightLg / formatArr[1]) * formatArr[0]}px`,
-        height: `${defaultHeightLg}px`,
+        width: `${Math.floor((defaultHeightLg / formatArr[1]) * formatArr[0])}`,
+        height: `${defaultHeightLg}`,
       },
       {
         media: 'xl',
-        width: `${(defaultHeightXl / formatArr[1]) * formatArr[0]}px`,
-        height: `${defaultHeightXl}px`,
+        width: `${Math.floor((defaultHeightXl / formatArr[1]) * formatArr[0])}`,
+        height: `${defaultHeightXl}`,
       },
     ]
+
+    console.log(sizes)
 
     return {
       props,
