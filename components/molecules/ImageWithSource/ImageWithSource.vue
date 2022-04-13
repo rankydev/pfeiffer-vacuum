@@ -46,102 +46,45 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const formatString = props.format.split(':')
-    console.log(formatString)
-    let formatArr = []
-    formatString.forEach((el) => formatArr.push(parseInt(el, 10)))
-    console.log(formatArr)
+    const formatStringArr = props.format.split(':')
+    const formatArr = []
 
-    const defaultFallback = 375
-    const defaultSizeS = 320
-    const defaultSizeMd = 192
-    const defaultSizeLg = 256
-    const defaultSizeXl = 360
+    formatStringArr.forEach((formatString) =>
+      formatArr.push(parseInt(formatString, 10))
+    )
+
+    const defaultHeight = 375
+    const defaultHeightS = 320
+    const defaultHeightMd = 192
+    const defaultHeightLg = 256
+    const defaultHeightXl = 360
 
     let defaultSize = {
-      height: `${defaultFallback}`,
-      width: `${defaultFallback}`,
+      width: `${(defaultHeight / formatArr[1]) * formatArr[0]}px`,
+      height: `${defaultHeight}`,
     }
     let sizes = [
       {
         media: 's',
-        width: `${defaultSizeS * formatArr[0]}px`,
-        height: `${defaultSizeS * formatArr[1]}px`,
+        width: `${(defaultHeightS / formatArr[1]) * formatArr[0]}px`,
+        height: `${defaultHeightS}px`,
       },
       {
         media: 'md',
-        width: `${defaultSizeMd * formatArr[0]}px`,
-        height: `${defaultSizeMd * formatArr[1]}px`,
+        width: `${(defaultHeightMd / formatArr[1]) * formatArr[0]}px`,
+        height: `${defaultHeightMd}px`,
       },
       {
         media: 'lg',
-        width: `${defaultSizeLg * formatArr[0]}px`,
-        height: `${defaultSizeLg * formatArr[1]}px`,
+        width: `${(defaultHeightLg / formatArr[1]) * formatArr[0]}px`,
+        height: `${defaultHeightLg}px`,
       },
       {
         media: 'xl',
-        width: `${defaultSizeXl * formatArr[0]}px`,
-        height: `${defaultSizeXl * formatArr[1]}px`,
+        width: `${(defaultHeightXl / formatArr[1]) * formatArr[0]}px`,
+        height: `${defaultHeightXl}px`,
       },
     ]
-
-    // let defaultSize = { height: '375px', width: '375px' }
-    // let sizes = [
-    //   { media: 's', height: '320px', width: '320px' },
-    //   { media: 'md', height: '192px', width: '192px' },
-    //   { media: 'lg', height: '256px', width: '256px' },
-    //   { media: 'xl', height: '360px', width: '360px' },
-    // ]
-
-    // if (props.format === '3:2') {
-    //   defaultSize = { height: '375px', width: '563px' }
-    //   sizes = [
-    //     { media: 's', height: '320px', width: '480px' },
-    //     { media: 'md', height: '192px', width: '288px' },
-    //     { media: 'lg', height: '256px', width: '384px' },
-    //     { media: 'xl', height: '360px', width: '540px' },
-    //   ]
-    // }
-
-    // if (props.format === '2:3') {
-    //   defaultSize = { height: '563px', width: '375px' }
-    //   sizes = [
-    //     { media: 's', height: '480px', width: '320px' },
-    //     { media: 'md', height: '288px', width: '192px' },
-    //     { media: 'lg', height: '384px', width: '256px' },
-    //     { media: 'xl', height: '540px', width: '360px' },
-    //   ]
-    // }
-
-    // if (props.format === '16:9') {
-    //   defaultSize = { height: '375px', width: '666.67px' }
-    //   sizes = [
-    //     { media: 's', height: '480px', width: '853.33px' },
-    //     { media: 'md', height: '288px', width: '512px' },
-    //     { media: 'lg', height: '384px', width: '682.67px' },
-    //     { media: 'xl', height: '540px', width: '960px' },
-    //   ]
-    // }
-
-    // if (props.format === '2:1') {
-    //   defaultSize = { height: '375px', width: '750px' }
-    //   sizes = [
-    //     { media: 's', height: '320px', width: '640px' },
-    //     { media: 'md', height: '192px', width: '384px' },
-    //     { media: 'lg', height: '256px', width: '512px' },
-    //     { media: 'xl', height: '360px', width: '720px' },
-    //   ]
-    // }
-
-    // if (props.format === '3:1') {
-    //   defaultSize = { height: '375px', width: '1125px' }
-    //   sizes = [
-    //     { media: 's', height: '320px', width: '960px' },
-    //     { media: 'md', height: '192px', width: '576px' },
-    //     { media: 'lg', height: '256px', width: '768px' },
-    //     { media: 'xl', height: '360px', width: '1080px' },
-    //   ]
-    // }
 
     return {
       props,
