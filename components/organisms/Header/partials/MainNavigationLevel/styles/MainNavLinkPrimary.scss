@@ -1,5 +1,4 @@
 .primary-nav-0 {
-  $root: &;
 
   @apply tw-flex;
   @apply tw-flex-col;
@@ -53,12 +52,6 @@
     @apply tw--translate-y-1/2;
   }
 
-  &__sub-nav {
-    #{$root}__label {
-      @apply tw-font-normal;
-    }
-  }
-
   @screen md {
     @apply tw-flex-row;
 
@@ -92,7 +85,7 @@
         }
       }
 
-      &--inactive {
+      &--passive {
         @apply tw-text-pv-grey-80;
       }
     }
@@ -105,14 +98,6 @@
       @apply tw-border-0;
       @apply tw-overflow-visible;
       @apply tw-mr-8;
-    }
-
-    &__sub-nav {
-      @apply tw-absolute;
-      @apply tw-top-full;
-      @apply tw-overflow-hidden;
-      @apply tw-left-0 tw-right-0;
-      @apply tw-bg-pv-grey-96;
     }
   }
 }

@@ -2,8 +2,6 @@
 
 .primary-nav-1,
 .primary-nav-2 {
-  $pn1: '.primary-nav-1';
-
   @apply tw-bg-pv-white;
 
   &__element {
@@ -64,10 +62,6 @@
     }
   }
 
-  &__sub-nav {
-    @apply tw-bg-pv-grey-96;
-  }
-
   @screen md {
     @include hide-scrollbar;
     @apply tw-flex;
@@ -101,20 +95,13 @@
       @apply tw-hidden;
     }
 
-    &__sub-nav {
-      @apply tw-absolute;
-      @apply tw-top-0 tw-bottom-0;
-      @apply tw-left-1/2 tw-right-0;
-      @apply tw-overflow-hidden;
-      @apply tw-bg-pv-grey-96;
-    }
-
     &__buttons {
       @apply tw-absolute;
       @apply tw-justify-start;
       @apply tw-left-0 tw-bottom-0;
-      @apply tw-w-full;
+      @apply tw-w-1/2;
       @apply tw-pl-8 tw-pb-8 tw-pr-0;
+      @apply tw-bg-pv-white;
 
       button {
         @apply tw-block;
@@ -125,27 +112,45 @@
     &__overview {
       @apply tw-mr-4;
     }
-
-    &--passive {
-      @apply tw-bg-pv-grey-96;
-
-      #{$pn1} {
-        &__link:hover {
-          @apply tw-bg-pv-white;
-        }
-      }
-    }
   }
 
   @screen lg {
     @apply tw-w-1/4;
 
-    &__sub-nav {
-      @apply tw-left-1/4;
-    }
-
     &__buttons {
       @apply tw-w-1/4;
+    }
+  }
+}
+
+.primary-nav-1 {
+  &__wrapper {
+    .primary-nav-1__label {
+      @apply tw-font-normal;
+    }
+
+    @screen md {
+      @apply tw-absolute;
+      @apply tw-top-full;
+      @apply tw-overflow-hidden;
+      @apply tw-left-0 tw-right-0;
+      @apply tw-bg-pv-grey-96;
+    }
+  }
+
+  &--passive {
+    @apply tw-bg-pv-grey-96;
+
+    .primary-nav-1 {
+      &__link:hover {
+        @apply tw-bg-pv-white;
+      }
+    }
+
+    .primary-nav-1 {
+      &__buttons {
+        @apply tw-bg-pv-transparent;
+      }
     }
   }
 }
@@ -154,6 +159,11 @@
   @apply tw-block;
   @apply tw-overflow-auto;
   @apply tw-bg-pv-grey-96;
+
+  &__wrapper {
+    @apply tw-pl-4;
+    @apply tw-bg-pv-grey-96;
+  }
 
   &__buttons {
     @apply tw-w-full;
@@ -164,13 +174,25 @@
     @apply tw-w-full tw-h-full;
     @apply tw-overflow-auto;
 
+    &__wrapper {
+      @apply tw-absolute;
+      @apply tw-top-0 tw-bottom-0;
+      @apply tw-left-1/2 tw-right-0;
+      @apply tw-pl-0;
+      @apply tw-overflow-hidden;
+      @apply tw-bg-pv-grey-96;
+    }
+
     &__buttons {
       @apply tw-w-1/3;
-      @apply tw-bg-pv-white;
     }
   }
 
   @screen lg {
     @apply tw-w-1/3;
+
+    &__wrapper {
+      @apply tw-left-1/4;
+    }
   }
 }
