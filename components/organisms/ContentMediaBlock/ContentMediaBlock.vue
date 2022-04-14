@@ -154,6 +154,10 @@ export default defineComponent({
         @apply tw-col-span-8;
       }
     }
+
+    &--first {
+      @apply tw-order-first;
+    }
   }
 
   &__buttons {
@@ -168,10 +172,6 @@ export default defineComponent({
     @screen md {
       @apply tw-basis-0;
     }
-  }
-
-  &--first {
-    @apply tw-order-first;
   }
 }
 </style>
