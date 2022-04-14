@@ -19,6 +19,7 @@
     @apply tw-text-pv-grey-16;
     @apply tw-duration-200;
     @apply tw-ease-in-out;
+    @apply tw--outline-offset-1;
     transition-property: color, background-color, padding-left;
 
     &::after {
@@ -50,13 +51,13 @@
     @apply tw--translate-y-1/2;
   }
 
-  &__buttons {
+  &__shop-button--mobile {
     @apply tw-flex tw-justify-center;
     @apply tw-p-4;
     @apply tw-relative;
     @apply tw-gap-4;
 
-    button {
+    & button {
       @apply tw-flex tw-justify-center;
       @apply tw-grow;
     }
@@ -80,6 +81,14 @@
       @apply tw-rounded-l;
 
       &:hover {
+        @apply tw-outline-none;
+        @apply tw-pl-4;
+        @apply tw-bg-pv-grey-96;
+        @apply tw-text-pv-red-lighter;
+      }
+
+      &:focus-visible {
+        @apply tw-outline-none;
         @apply tw-pl-4;
         @apply tw-bg-pv-grey-96;
         @apply tw-text-pv-red-lighter;
@@ -97,16 +106,12 @@
 
     &__buttons {
       @apply tw-absolute;
-      @apply tw-justify-start;
+      @apply tw-flex tw-justify-start;
+      @apply tw-gap-4;
       @apply tw-left-0 tw-bottom-0;
       @apply tw-w-1/2;
-      @apply tw-pl-8 tw-pb-8 tw-pr-0;
+      @apply tw-pt-4 tw-pl-8 tw-pb-8 tw-pr-0;
       @apply tw-bg-pv-white;
-
-      button {
-        @apply tw-block;
-        @apply tw-grow-0;
-      }
     }
 
     &__overview {
@@ -135,21 +140,27 @@
       @apply tw-overflow-hidden;
       @apply tw-left-0 tw-right-0;
       @apply tw-bg-pv-grey-96;
-    }
-  }
 
-  &--passive {
-    @apply tw-bg-pv-grey-96;
+      &--passive {
+        @apply tw-bg-pv-grey-96;
 
-    .primary-nav-1 {
-      &__link:hover {
-        @apply tw-bg-pv-white;
-      }
-    }
-
-    .primary-nav-1 {
-      &__buttons {
-        @apply tw-bg-pv-transparent;
+        .primary-nav-1 {
+          &__link {
+            &:hover {
+              @apply tw-bg-pv-white;
+            }
+    
+            &:focus-visible {
+              @apply tw-bg-pv-white;
+            }
+          }
+        }
+    
+        .primary-nav-1 {
+          &__buttons {
+            @apply tw-bg-pv-transparent;
+          }
+        }
       }
     }
   }

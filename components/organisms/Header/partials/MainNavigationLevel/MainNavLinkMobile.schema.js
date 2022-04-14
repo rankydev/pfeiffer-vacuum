@@ -8,6 +8,7 @@ export default {
       type: 'text',
       translatable: true,
       display_name: 'Label',
+      required: true,
     },
     ...Link.schema,
   },

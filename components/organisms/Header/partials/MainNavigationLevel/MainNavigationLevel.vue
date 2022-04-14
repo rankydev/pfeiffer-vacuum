@@ -1,9 +1,9 @@
 <template>
-  <div :class="`primary-nav-${level}__wrapper`">
+  <div :class="`${prefix}__wrapper`">
     <ul
       :class="{
-        [`primary-nav-${level}`]: true,
-        [`primary-nav-${level}--passive`]: hasActiveElement,
+        [prefix]: true,
+        [`${prefix}--passive`]: hasActiveElement,
       }"
       @mouseenter="isHovered = true"
       @mouseleave="isHovered = false"
@@ -12,30 +12,26 @@
         v-for="(entry, idx) in navigationEntries"
         :key="idx"
         :class="{
-          [`primary-nav-${level}__element`]: true,
+          [`${prefix}__element`]: true,
           ['md:tw-hidden']: entry.component === 'MainNavLinkMobile',
         }"
       >
         <Link
           :class="{
-            [`primary-nav-${level}__link`]: true,
-            [`primary-nav-${level}__link--passive`]: ![null, idx].includes(
-              activeElement
-            ),
-            [`primary-nav-${level}__link--active`]: activeElement === idx,
+            [`${prefix}__link`]: true,
+            [`${prefix}__link--passive`]: ![null, idx].includes(activeElement),
+            [`${prefix}__link--active`]: activeElement === idx,
           }"
           v-bind="entry"
           :before-navigation="
-            ($e) => !hasSubmenu(entry) || toggleActive($e, idx)
+            ($event) => !hasSubmenu(entry) || toggleActive($event, idx)
           "
         >
-          <span :class="`primary-nav-${level}__label`">{{ entry.label }}</span>
+          <span :class="`${prefix}__label`">{{ entry.label }}</span>
           <Icon
             v-if="hasSubmenu(entry)"
-            :class="`primary-nav-${level}__icon`"
+            :class="`${prefix}__icon`"
             :icon="activeElement === idx ? 'expand_less' : 'expand_more'"
-            @click.native="toggleActive($event, idx)"
-            @keypress.native.enter="toggleActive($event, idx)"
           />
         </Link>
         <client-only>
@@ -56,34 +52,39 @@
         </client-only>
       </li>
 
-      <template v-if="level > 0">
-        <li v-if="isMobile && !hasActiveElement">
-          <Link
-            :href="currentEntry.href || ''"
-            :class="[`primary-nav-${level}__link`]"
-          >
-            <span :class="`primary-nav-${level}__label`">All Products</span>
-            <Icon :class="`primary-nav-${level}__icon`" icon="arrow_forward" />
+      <template v-if="level > 0 && isMobile && !hasActiveElement">
+        <li>
+          <Link :href="currentEntry.href" :class="[`${prefix}__link`]">
+            <span :class="`${prefix}__label`">All Products</span>
+            <Icon :class="`${prefix}__icon`" icon="arrow_forward" />
           </Link>
         </li>
 
         <li
+          v-if="currentEntry.shopLink"
+          :class="`${prefix}__shop-button--mobile`"
+        >
+          <Button size="small" label="Shop" :href="currentEntry.shopLink" />
+        </li>
+      </template>
+
+      <template v-if="level > 0 && !isMobile">
+        <li
           v-if="
-            isMobile
-              ? !hasActiveElement && currentEntry.shopLink
-              : isHovered || (!hasActiveElement && !$parent.isHovered)
+            (isTablet && !hasActiveElement) ||
+            (isDesktop &&
+              (isHovered || (!hasActiveElement && !$parent.isHovered)))
           "
-          :class="`primary-nav-${level}__buttons`"
+          :class="`${prefix}__buttons`"
         >
           <Button
-            v-if="!isMobile"
-            class="tw-hidden md:tw-block"
             variant="secondary"
             shape="outlined"
             size="small"
             label="Overview"
             :href="currentEntry.href"
           />
+
           <Button
             v-if="currentEntry.shopLink"
             size="small"
@@ -120,7 +121,7 @@ export default defineComponent({
   props: {
     currentEntry: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
     navigationEntries: {
       type: Array,
@@ -136,9 +137,13 @@ export default defineComponent({
 
     const menu = useMenuStore()
 
+    const prefix = computed(() => `primary-nav-${props.level}`)
+
     const activeElement = ref(null)
     const hasActiveElement = computed(() => activeElement.value !== null)
     const isMobile = app.$breakpoints.isMobile
+    const isTablet = app.$breakpoints.isTablet
+    const isDesktop = app.$breakpoints.isDesktop
     const isHovered = ref(false)
 
     watch(menu.isActive, (isActive) => {
@@ -165,10 +170,13 @@ export default defineComponent({
     const hasSubmenu = (entry) => entry?.navigationEntries?.length > 0
 
     return {
+      prefix,
       toggleActive,
       hasActiveElement,
       activeElement,
       isMobile,
+      isTablet,
+      isDesktop,
       isHovered,
       hasSubmenu,
     }

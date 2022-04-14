@@ -19,6 +19,7 @@
     @apply tw-text-pv-grey-16;
     @apply tw-duration-200;
     @apply tw-ease-in-out;
+    @apply tw--outline-offset-1;
     transition-property: color;
 
     &::after {

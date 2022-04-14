@@ -25,169 +25,202 @@ function createComponent(propsData = {}, { isMobile, shallow = true } = {}) {
 
 describe('MainNavigationLevel', () => {
   describe('initial state', () => {
-    it('should render all navigation entries', () => {
-      createComponent({ navigationEntries })
-
-      const links = wrapper.findAll('.primary-nav__link')
-
-      expect(links.length).toBe(navigationEntries.length + 1)
-
-      navigationEntries.forEach((entry, idx) => {
-        expect(links.at(idx + 1).text()).toBe(entry.label)
-      })
-    })
-
-    it('should prepend home link', () => {
-      createComponent({ navigationEntries })
-
-      const link = wrapper.find('.primary-nav__element')
-
-      expect(link.attributes('class')).toMatch('md:tw-hidden')
-      expect(link.text()).toBe('Home')
-    })
-
-    it('should render without navigation entries', () => {
+    it('should render given no navigation entries', () => {
       createComponent()
       expect(wrapper.exists).toBeTruthy()
     })
 
-    describe('given navigation entries', () => {
-      it('should render all navigation entries', () => {
-        createComponent({ navigationEntries })
+    describe('given no level', () => {
+      const level = 0
 
-        const links = wrapper.findAll('.primary-nav__label')
+      it('should use level 0 as default', () => {})
 
-        expect(links.length).toBe(navigationEntries.length + 1)
+      it('should add the md hidden class given a MainNavLinkMobile component', () => {})
 
-        navigationEntries.forEach((entry, idx) => {
-          expect(links.at(idx + 1).text()).toBe(entry.label)
+      describe('given navigation entries', () => {
+        it('should render all navigation entries', () => {
+          createComponent({ navigationEntries })
+
+          const links = wrapper.findAll(`.primary-nav-${level}__label`)
+
+          expect(links.length).toBe(navigationEntries.length)
+
+          navigationEntries.forEach((entry, idx) => {
+            expect(links.at(idx).text()).toBe(entry.label)
+          })
+        })
+
+        it('should not render any button', () => {})
+
+        describe('given navigation sub entries', () => {
+          it('should render AnimatedCollapse component', () => {})
+
+          it('should render MainNavigationLevel sub components', () => {})
+
+          it('should add an icon next to the link given mobile true', () => {
+            createComponent({ navigationEntries }, { isMobile: true })
+
+            const links = wrapper.findAll(`.primary-nav-${level}__link`)
+
+            expect(links.length).toBe(navigationEntries.length)
+
+            links.wrappers.forEach((link) => {
+              const icon = link.findComponent(Icon)
+              expect(icon.exists()).toBeTruthy()
+              expect(icon.vm.icon).toBe('expand_more')
+            })
+          })
         })
       })
+    })
 
-      it('should add level class to DOM', () => {
-        expect(wrapper.attributes('class')).toMatch('primary-nav--level-0')
-      })
+    describe('given level > 0', () => {
+      const level = 1
 
-      it('should add an icon next to the link when viewport mobile', () => {
-        createComponent({ navigationEntries }, { isMobile: true })
+      it('should use the level in classes', () => {})
 
-        const links = wrapper.findAll('.primary-nav__link')
+      describe('given navigation entries', () => {
+        it('should render all navigation entries', () => {
+          createComponent({ navigationEntries, level })
 
-        expect(links.length).toBe(navigationEntries.length + 1)
+          const links = wrapper.findAll(`.primary-nav-${level}__label`)
 
-        links.wrappers.forEach((link) => {
-          const icon = link.findComponent(Icon)
-          expect(icon.exists()).toBeTruthy()
-          expect(icon.vm.icon).toBe('expand_more')
+          expect(links.length).toBe(navigationEntries.length)
+
+          navigationEntries.forEach((entry, idx) => {
+            expect(links.at(idx).text()).toBe(entry.label)
+          })
+        })
+
+        describe('given navigation sub entries', () => {
+          it('should render AnimatedCollapse component given mobile true', () => {})
+
+          it('should render no AnimatedCollapse component given mobile false', () => {})
+
+          it('should render MainNavigationLevel sub components', () => {})
+
+          it('should add an icon next to the link given mobile true', () => {
+            createComponent({ navigationEntries, level }, { isMobile: true })
+
+            const links = wrapper.findAll(`.primary-nav-${level}__link`)
+
+            expect(links.length).toBe(navigationEntries.length + 1)
+
+            links.wrappers.forEach((link) => {
+              const icon = link.findComponent(Icon)
+              expect(icon.exists()).toBeTruthy()
+              expect(icon.vm.icon).toBe('expand_more')
+            })
+          })
         })
       })
     })
   })
 
-  describe('during interaction', () => {
-    describe('given navigation entries', () => {
-      describe('given viewport tablet/desktop', () => {
-        it('should prevent default behavior when link was clicked', () => {
-          createComponent({ navigationEntries })
+  // describe('during interaction', () => {
+  //   describe('given navigation entries', () => {
+  //     describe('given viewport tablet/desktop', () => {
+  //       it('should prevent default behavior when link was clicked', () => {
+  //         createComponent({ navigationEntries })
 
-          const links = wrapper.findAllComponents(Link)
+  //         const links = wrapper.findAllComponents(Link)
 
-          links.wrappers.forEach((link) => {
-            const $event = eventMock()
-            const result = link.vm.beforeNavigation($event)
+  //         links.wrappers.forEach((link) => {
+  //           const $event = eventMock()
+  //           const result = link.vm.beforeNavigation($event)
 
-            expect(result).toBe(false)
-            expect($event.preventDefault).toBeCalledTimes(1)
-            expect($event.stopPropagation).toBeCalledTimes(1)
-          })
-        })
+  //           expect(result).toBe(false)
+  //           expect($event.preventDefault).toBeCalledTimes(1)
+  //           expect($event.stopPropagation).toBeCalledTimes(1)
+  //         })
+  //       })
 
-        it('should set active elment when link was clicked', () => {
-          createComponent({ navigationEntries })
+  //       it('should set active elment when link was clicked', () => {
+  //         createComponent({ navigationEntries })
 
-          const links = wrapper.findAllComponents(Link)
+  //         const links = wrapper.findAllComponents(Link)
 
-          links.wrappers.forEach((link, idx) => {
-            link.vm.beforeNavigation(eventMock())
-            expect(wrapper.vm.activeElement).toBe(idx)
-          })
-        })
+  //         links.wrappers.forEach((link, idx) => {
+  //           link.vm.beforeNavigation(eventMock())
+  //           expect(wrapper.vm.activeElement).toBe(idx)
+  //         })
+  //       })
 
-        it('should set active elment to null when same link was clicked again', () => {
-          createComponent({ navigationEntries })
+  //       it('should set active elment to null when same link was clicked again', () => {
+  //         createComponent({ navigationEntries })
 
-          const links = wrapper.findAllComponents(Link)
+  //         const links = wrapper.findAllComponents(Link)
 
-          links.wrappers.forEach((link, idx) => {
-            link.vm.beforeNavigation(eventMock())
-            link.vm.beforeNavigation(eventMock())
-            expect(wrapper.vm.activeElement).toBe(null)
-          })
-        })
-      })
+  //         links.wrappers.forEach((link, idx) => {
+  //           link.vm.beforeNavigation(eventMock())
+  //           link.vm.beforeNavigation(eventMock())
+  //           expect(wrapper.vm.activeElement).toBe(null)
+  //         })
+  //       })
+  //     })
 
-      describe('given viewport mobile', () => {
-        it('should not prevent default behavior when link was clicked', () => {
-          createComponent({ navigationEntries }, { isMobile: true })
+  //     describe('given viewport mobile', () => {
+  //       it('should not prevent default behavior when link was clicked', () => {
+  //         createComponent({ navigationEntries }, { isMobile: true })
 
-          const links = wrapper.findAllComponents(Link)
+  //         const links = wrapper.findAllComponents(Link)
 
-          links.wrappers.forEach((link) => {
-            const $event = eventMock()
-            const result = link.vm.beforeNavigation($event)
+  //         links.wrappers.forEach((link) => {
+  //           const $event = eventMock()
+  //           const result = link.vm.beforeNavigation($event)
 
-            expect(result).toBe(true)
-            expect($event.preventDefault).not.toBeCalled()
-            expect($event.stopPropagation).not.toBeCalled()
-          })
-        })
+  //           expect(result).toBe(true)
+  //           expect($event.preventDefault).not.toBeCalled()
+  //           expect($event.stopPropagation).not.toBeCalled()
+  //         })
+  //       })
 
-        it('should set active elment when icon was clicked', async () => {
-          createComponent({ navigationEntries }, { isMobile: true })
+  //       it('should set active elment when icon was clicked', async () => {
+  //         createComponent({ navigationEntries }, { isMobile: true })
 
-          const icons = wrapper.findAllComponents(Icon)
+  //         const icons = wrapper.findAllComponents(Icon)
 
-          for (const [idx, icon] of icons.wrappers.entries()) {
-            icon.trigger('click')
-            await wrapper.vm.$nextTick()
-            expect(wrapper.vm.activeElement).toBe(idx)
-            expect(icon.vm.icon).toBe('expand_less')
-          }
-        })
+  //         for (const [idx, icon] of icons.wrappers.entries()) {
+  //           icon.trigger('click')
+  //           await wrapper.vm.$nextTick()
+  //           expect(wrapper.vm.activeElement).toBe(idx)
+  //           expect(icon.vm.icon).toBe('expand_less')
+  //         }
+  //       })
 
-        it('should set active elment to null when same icon was clicked again', () => {
-          createComponent({ navigationEntries }, { isMobile: true })
+  //       it('should set active elment to null when same icon was clicked again', () => {
+  //         createComponent({ navigationEntries }, { isMobile: true })
 
-          const icons = wrapper.findAllComponents(Icon)
+  //         const icons = wrapper.findAllComponents(Icon)
 
-          icons.wrappers.forEach((icon, idx) => {
-            icon.trigger('click')
-            icon.trigger('click')
-            expect(wrapper.vm.activeElement).toBe(null)
-            expect(icon.vm.icon).toBe('expand_more')
-          })
-        })
-      })
+  //         icons.wrappers.forEach((icon, idx) => {
+  //           icon.trigger('click')
+  //           icon.trigger('click')
+  //           expect(wrapper.vm.activeElement).toBe(null)
+  //           expect(icon.vm.icon).toBe('expand_more')
+  //         })
+  //       })
+  //     })
 
-      it('should set active elment to null when menu active status changed to false', async () => {
-        createComponent({ navigationEntries })
+  //     it('should set active elment to null when menu active status changed to false', async () => {
+  //       createComponent({ navigationEntries })
 
-        const links = wrapper.findAllComponents(Link)
-        const menu = useMenuStore()
+  //       const links = wrapper.findAllComponents(Link)
+  //       const menu = useMenuStore()
 
-        for (const [idx, link] of links.wrappers.entries()) {
-          link.vm.beforeNavigation(eventMock())
-          expect(wrapper.vm.activeElement).toBe(idx)
+  //       for (const [idx, link] of links.wrappers.entries()) {
+  //         link.vm.beforeNavigation(eventMock())
+  //         expect(wrapper.vm.activeElement).toBe(idx)
 
-          await wrapper.vm.$nextTick()
-          menu.close()
-          await wrapper.vm.$nextTick()
+  //         await wrapper.vm.$nextTick()
+  //         menu.close()
+  //         await wrapper.vm.$nextTick()
 
-          expect(wrapper.vm.activeElement).toBe(null)
-        }
-      })
-    })
-  })
+  //         expect(wrapper.vm.activeElement).toBe(null)
+  //       }
+  //     })
+  //   })
+  // })
 
   // describe('business requirements', () => {})
 })
