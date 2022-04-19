@@ -86,8 +86,6 @@ export default defineComponent({
       },
     ]
 
-    console.log(sizes)
-
     return {
       props,
       defaultSize,
