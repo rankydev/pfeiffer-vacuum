@@ -14,7 +14,9 @@ export default {
     image: responsiveImage.schema.image,
     format: {
       type: 'option',
-      hide_empty_options: true,
+      exclude_empty_option: true,
+      default_value: '1:1',
+      description: 'The variants of different image formats',
       options: [
         {
           name: '1:1',
