@@ -21,6 +21,7 @@
     "storyblok:sync": "env-cmd node -r esm ./bin/nuxt-storyblok.js sync"
   },
   "dependencies": {
+    "@jest/globals": "^27.5.1",
     "@nuxt/ufo": "^0.5.4",
     "@nuxtjs/composition-api": "^0.31.0",
     "@nuxtjs/storybook": "^4.3.0",

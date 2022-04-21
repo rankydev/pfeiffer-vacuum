@@ -4,6 +4,7 @@
     :class="[
       `button--${variant}`,
       `button--${size}`,
+      `button--${cutaway}`,
       `button--${isPrimary ? 'filled' : shape}`,
       {
         'button--disabled': disabled,
@@ -75,19 +76,29 @@ export default defineComponent({
     },
     /**
      * The size of the component
-     * @values xsmall, small, normal
+     * * @values xsmall, small, normal
      */
     size: {
       type: String,
       default: 'normal',
       validator: (val) => ['xsmall', 'small', 'normal'].includes(val),
     },
-    /*
+    /**
      * Set if the button is clickable
      */
     disabled: {
       type: Boolean,
       default: false,
+    },
+    /**
+     * Defines the button shape cutaway in a side e.g. for slider controls
+     * * @values left, right
+     */
+    cutaway: {
+      type: String,
+      default: 'none',
+      validator: (val) =>
+        ['none', 'cutaway-left', 'cutaway-right'].includes(val),
     },
   },
   setup(props) {
@@ -276,6 +287,16 @@ export default defineComponent({
         @apply tw-text-pv-grey-48;
       }
     }
+  }
+
+  &--cutaway-left {
+    @apply tw-rounded-r-none;
+    @apply tw-rounded-l-md;
+  }
+
+  &--cutaway-right {
+    @apply tw-rounded-l-none;
+    @apply tw-rounded-r-md;
   }
 
   &__icon {

@@ -1,24 +1,17 @@
-export default {
-  carousel: [
-    {
-      title: 'Title 1',
-      text: 'Lorem ipsum',
-    },
-    {
-      title: 'Title 2',
-      text: 'Lorem ipsum',
-    },
-    {
-      title: 'Title 3',
-      text: 'Lorem ipsum',
-    },
-    {
-      title: 'Title 4',
-      text: 'Lorem ipsum',
-    },
-    {
-      title: 'Title 5',
-      text: 'Lorem ipsum',
-    },
-  ],
-}
+import { nanoid } from 'nanoid'
+
+export const carouselEntry = () => ({
+  _uid: nanoid(),
+  title: 'Title Ipsum',
+  text: 'Lorem ipsum',
+})
+
+export const carouselEntries = [
+  carouselEntry(),
+  carouselEntry(),
+  carouselEntry(),
+  carouselEntry(),
+  carouselEntry(),
+]
+
+export default {}

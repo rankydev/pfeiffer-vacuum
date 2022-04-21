@@ -4,27 +4,38 @@
     v-bind="settings"
     :center-mode="centerMode"
     :infinite="infinite"
+    class="carousel"
   >
     <slot />
-    <template #prevArrow="arrowOption">
-      <div class="custom-arrow button button--secondary button--icon-only">
-        {{ arrowOption.currentSlide }}/{{ arrowOption.slideCount }}
-      </div>
+    <template #prevArrow>
+      <Button
+        class="carousel__prev"
+        variant="secondary"
+        icon="arrow_back"
+        cutaway="cutaway-right"
+      >
+      </Button>
     </template>
-    <template #nextArrow="arrowOption">
-      <div class="custom-arrow button button--secondary button--icon-only">
-        {{ arrowOption.currentSlide }}/{{ arrowOption.slideCount }}
-      </div>
+    <template #nextArrow>
+      <Button
+        class="carousel__next"
+        variant="secondary"
+        icon="arrow_forward"
+        cutaway="cutaway-left"
+      >
+      </Button>
     </template>
   </VueSlickCarousel>
 </template>
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import VueSlickCarousel from 'vue-slick-carousel'
+import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
   name: 'Carousel',
   components: {
+    Button,
     VueSlickCarousel,
   },
   props: {
@@ -34,7 +45,9 @@ export default defineComponent({
         return {
           autoplay: false,
           autoplaySpeed: 5000,
-          dots: false,
+          dots: true,
+          dotsClass: 'slick-dots custom-dot-class',
+          edgeFriction: 0.35,
           pauseOnFocus: true,
           speed: 800,
           arrows: true,
@@ -50,5 +63,30 @@ export default defineComponent({
       default: true,
     },
   },
+  setup(props) {},
 })
 </script>
+<style lang="scss">
+.carousel {
+  @apply tw-h-80;
+
+  &__prev,
+  &__next {
+    @apply tw-absolute;
+    @apply tw-top-1/2;
+    @apply tw-translate-y-1/2;
+
+    &::before {
+      content: '';
+    }
+  }
+
+  &__prev {
+    @apply tw-left-0;
+  }
+
+  &__next {
+    @apply tw-right-0;
+  }
+}
+</style>
