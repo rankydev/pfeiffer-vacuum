@@ -2,10 +2,12 @@
   <div class="image-with-source">
     <ResponsiveImage
       class="image-with-source__img"
+      :class="`image-with-source__${formatString}`"
       provider="storyblok"
       :image="image"
       :default-size="defaultSize"
       :sizes="sizes"
+      :image-width="imageWidth"
     />
     <NuxtDynamic
       v-for="item in description"
@@ -18,8 +20,31 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+import tailwindconfig from '~/tailwind.config.js'
+
+function parseString(stringParam, splitParam) {
+  const stringArr = stringParam.split(splitParam)
+  const parsedArr = []
+
+  stringArr.forEach((stringElem) => parsedArr.push(parseInt(stringElem, 10)))
+
+  return parsedArr
+}
+
+function calculateWidth(width, ratioA, ratioB) {
+  const sideWidth = Math.floor(parseInt(width, 10) * (ratioA / ratioB))
+
+  return sideWidth
+}
+
+function calculateHeight(width, ratioA, ratioB, formatA, formatB) {
+  const sideHeight = Math.floor(
+    (calculateWidth(width, ratioA, ratioB) / formatA) * formatB
+  )
+  return sideHeight
+}
 
 export default defineComponent({
   components: {
@@ -31,7 +56,7 @@ export default defineComponent({
      */
     image: {
       type: [Object, String],
-      default: () => {},
+      default: () => ({}),
     },
     /**
      * Subcomponent which is rendered underneath the video
@@ -42,54 +67,106 @@ export default defineComponent({
     },
     format: {
       type: String,
-      default: '1:1',
+      default: '16:9',
+      validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
+    },
+    imageWidth: {
+      type: String,
+      default: '2/3',
+      validator: (val) => ['1/1', '1/4', '1/2', '1/3', '2/3'].includes(val),
     },
   },
   setup(props) {
-    const formatStringArr = props.format.split(':')
-    const formatArr = []
+    const formatString = computed(() => props.format.replace(':', '-'))
 
-    formatStringArr.forEach((formatString) =>
-      formatArr.push(parseInt(formatString, 10))
-    )
+    const formatArr = parseString(props.format, ':')
+    const imageWidthArr = parseString(props.imageWidth, '/')
 
-    const defaultHeight = 375
-    const defaultHeightS = 320
-    const defaultHeightMd = 192
-    const defaultHeightLg = 256
-    const defaultHeightXl = 360
+    const mediaWidth = tailwindconfig.theme.screens
+    mediaWidth.sm = '375px'
 
     let defaultSize = {
-      width: `${(defaultHeight / formatArr[1]) * formatArr[0]}`,
-      height: `${defaultHeight}`,
+      width: `${calculateWidth(
+        mediaWidth.sm,
+        imageWidthArr[0],
+        imageWidthArr[1]
+      )}`,
+      height: `${calculateHeight(
+        mediaWidth.sm,
+        imageWidthArr[0],
+        imageWidthArr[1],
+        formatArr[0],
+        formatArr[1]
+      )}`,
     }
+
     let sizes = [
       {
         media: 'sm',
-        width: `${Math.floor((defaultHeightS / formatArr[1]) * formatArr[0])}`,
-        height: `${defaultHeightS}`,
+        width: `${calculateWidth(
+          mediaWidth.sm,
+          imageWidthArr[0],
+          imageWidthArr[1]
+        )}`,
+        height: `${calculateHeight(
+          mediaWidth.sm,
+          imageWidthArr[0],
+          imageWidthArr[1],
+          formatArr[0],
+          formatArr[1]
+        )}`,
       },
       {
         media: 'md',
-        width: `${Math.floor((defaultHeightMd / formatArr[1]) * formatArr[0])}`,
-        height: `${defaultHeightMd}`,
+        width: `${calculateWidth(
+          mediaWidth.md,
+          imageWidthArr[0],
+          imageWidthArr[1]
+        )}`,
+        height: `${calculateHeight(
+          mediaWidth.md,
+          imageWidthArr[0],
+          imageWidthArr[1],
+          formatArr[0],
+          formatArr[1]
+        )}`,
       },
       {
         media: 'lg',
-        width: `${Math.floor((defaultHeightLg / formatArr[1]) * formatArr[0])}`,
-        height: `${defaultHeightLg}`,
+        width: `${calculateWidth(
+          mediaWidth.lg,
+          imageWidthArr[0],
+          imageWidthArr[1]
+        )}`,
+        height: `${calculateHeight(
+          mediaWidth.lg,
+          imageWidthArr[0],
+          imageWidthArr[1],
+          formatArr[0],
+          formatArr[1]
+        )}`,
       },
       {
         media: 'xl',
-        width: `${Math.floor((defaultHeightXl / formatArr[1]) * formatArr[0])}`,
-        height: `${defaultHeightXl}`,
+        width: `${calculateWidth(
+          mediaWidth.xl,
+          imageWidthArr[0],
+          imageWidthArr[1]
+        )}`,
+        height: `${calculateHeight(
+          mediaWidth.xl,
+          imageWidthArr[0],
+          imageWidthArr[1],
+          formatArr[0],
+          formatArr[1]
+        )}`,
       },
     ]
 
     return {
-      props,
       defaultSize,
       sizes,
+      formatString,
     }
   },
 })
@@ -104,6 +181,26 @@ export default defineComponent({
       @apply tw-relative;
       @apply tw-overflow-hidden;
     }
+  }
+
+  &__1-1 {
+    aspect-ratio: 1/1;
+  }
+
+  &__16-9 {
+    aspect-ratio: 16/9;
+  }
+
+  &__2-3 {
+    aspect-ratio: 2/3;
+  }
+
+  &__3-2 {
+    aspect-ratio: 3/2;
+  }
+
+  &__3-1 {
+    aspect-ratio: 3/1;
   }
 }
 </style>

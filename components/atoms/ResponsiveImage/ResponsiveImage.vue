@@ -31,8 +31,6 @@
       }"
       :alt="image.alt ? image.alt : ''"
       :title="image.title ? image.title : ''"
-      :width="defaultSize.width"
-      :height="defaultSize.height"
       :class="imgStyle"
       :provider="image.provider"
       :loading="lazy ? 'lazy' : undefined"
