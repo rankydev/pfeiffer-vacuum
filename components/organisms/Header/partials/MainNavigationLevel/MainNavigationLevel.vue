@@ -24,7 +24,10 @@
           }"
           v-bind="entry"
           :before-navigation="
-            ($event) => !hasSubmenu(entry) || toggleActive($event, idx)
+            ($event) =>
+              !hasSubmenu(entry)
+                ? (activeElement = null)
+                : toggleActive($event, idx)
           "
         >
           <span :class="`${prefix}__label`">{{ entry.label }}</span>
@@ -77,6 +80,7 @@
           "
           :class="`${prefix}__buttons`"
         >
+          <!-- TODO: Check button functionality with PVWEB-328 -->
           <Button
             variant="secondary"
             shape="outlined"

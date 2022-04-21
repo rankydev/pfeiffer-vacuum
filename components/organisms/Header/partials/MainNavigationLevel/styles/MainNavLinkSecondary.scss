@@ -140,26 +140,28 @@
       @apply tw-overflow-hidden;
       @apply tw-left-0 tw-right-0;
       @apply tw-bg-pv-grey-96;
+    }
+  }
 
-      &--passive {
-        @apply tw-bg-pv-grey-96;
+  @screen md {
+    &--passive {
+      @apply tw-bg-pv-grey-96;
 
-        .primary-nav-1 {
-          &__link {
-            &:hover {
-              @apply tw-bg-pv-white;
-            }
-    
-            &:focus-visible {
-              @apply tw-bg-pv-white;
-            }
+      .primary-nav-1 {
+        &__link {
+          &:hover {
+            @apply tw-bg-pv-white;
+          }
+
+          &:focus-visible {
+            @apply tw-bg-pv-white;
           }
         }
-    
-        .primary-nav-1 {
-          &__buttons {
-            @apply tw-bg-pv-transparent;
-          }
+      }
+
+      .primary-nav-1 {
+        &__buttons {
+          @apply tw-bg-pv-transparent;
         }
       }
     }
