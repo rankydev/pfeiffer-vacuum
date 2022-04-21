@@ -30,6 +30,7 @@ export default {
       display_name: 'Stage',
       restrict_components: true,
       component_whitelist: [],
+      maximum: 1,
     },
     body: {
       type: 'bloks',
@@ -42,6 +43,7 @@ export default {
         'Accordion',
         'AnchorWrapper',
         'VideoPlayer',
+        'ContentMediaBlock',
       ],
     },
     bottom: {
