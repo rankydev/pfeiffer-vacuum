@@ -1,4 +1,4 @@
-@import '~/assets/scss/_mixins.scss';
+@import '/assets/scss/mixins';
 
 .primary-nav-1,
 .primary-nav-2 {
@@ -148,6 +148,10 @@
       @apply tw-bg-pv-grey-96;
 
       .primary-nav-1 {
+        &__buttons {
+          @apply tw-bg-pv-transparent;
+        }
+
         &__link {
           &:hover {
             @apply tw-bg-pv-white;
@@ -156,12 +160,6 @@
           &:focus-visible {
             @apply tw-bg-pv-white;
           }
-        }
-      }
-
-      .primary-nav-1 {
-        &__buttons {
-          @apply tw-bg-pv-transparent;
         }
       }
     }
