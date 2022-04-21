@@ -72,7 +72,7 @@ export default defineComponent({
     },
     imageWidth: {
       type: String,
-      default: '2/3',
+      default: '1/1',
       validator: (val) => ['1/1', '1/4', '1/2', '1/3', '2/3'].includes(val),
     },
   },
