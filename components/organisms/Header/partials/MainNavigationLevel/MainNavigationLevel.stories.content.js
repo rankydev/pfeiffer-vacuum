@@ -22,7 +22,28 @@ export default [
         label: 'Sub1',
         target: '_self',
         component: 'MainNavigationLink',
-        navigationEntries: [],
+        navigationEntries: [
+          {
+            _uid: '684c230e-064f-494a-9984-71cf35147fbca',
+            href: '#',
+            label: 'Sub3',
+            target: '_self',
+            component: 'MainNavigationLink',
+            navigationEntries: [],
+            _editable:
+              '<!--#storyblok#{"name": "MainNavigationLink", "space": "144293", "uid": "684c230e-064f-494a-9984-71cf35147fbb", "id": "104316822"}-->',
+          },
+          {
+            _uid: '684c230e-064f-494a-9984-71cf35147fbcb',
+            href: '#',
+            label: 'Sub4',
+            target: '_self',
+            component: 'MainNavigationLink',
+            navigationEntries: [],
+            _editable:
+              '<!--#storyblok#{"name": "MainNavigationLink", "space": "144293", "uid": "684c230e-064f-494a-9984-71cf35147fbb", "id": "104316822"}-->',
+          },
+        ],
         _editable:
           '<!--#storyblok#{"name": "MainNavigationLink", "space": "144293", "uid": "684c230e-064f-494a-9984-71cf35147fbb", "id": "104316822"}-->',
       },
