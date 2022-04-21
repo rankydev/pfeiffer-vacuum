@@ -12,8 +12,8 @@ module.exports = {
       none: '0 0 #0000',
       button: '0 12px 12px -12px rgba(51, 48, 0, 0.4)',
       'button-inverted': '0 12px 12px -12px rgba(255, 255, 255, 0.3)',
-      button2: 'inset 0 0 0 2px #dd1541',
-      button3: 'inset 0 0 0 2px #CCCCCC',
+      borderRed: 'inset 0 0 0 2px #dd1541',
+      borderGrey80: 'inset 0 0 0 2px #CCCCCC',
     },
     colors: {
       'pv-red': '#dd1541',

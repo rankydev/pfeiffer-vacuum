@@ -204,7 +204,7 @@ export default defineComponent({
 
     &.button--secondary {
       @apply tw-text-pv-red;
-      @apply tw-shadow-button2;
+      @apply tw-shadow-borderRed;
 
       &:hover,
       &:focus {
@@ -231,7 +231,7 @@ export default defineComponent({
     &.button--disabled,
     &.button--disabled:hover,
     &.button--disabled:focus {
-      @apply tw-shadow-button3;
+      @apply tw-shadow-borderGrey80;
       @apply tw-bg-pv-transparent;
       @apply tw-text-pv-grey-80;
 
