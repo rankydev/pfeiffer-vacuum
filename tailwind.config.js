@@ -14,6 +14,7 @@ module.exports = {
       'button-inverted': '0 12px 12px -12px rgba(255, 255, 255, 0.3)',
       borderRed: 'inset 0 0 0 2px #dd1541',
       borderGrey80: 'inset 0 0 0 2px #CCCCCC',
+      borderWhite: 'inset 0 0 0 2px #ffffff',
     },
     colors: {
       'pv-red': '#dd1541',

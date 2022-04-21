@@ -218,6 +218,7 @@ export default defineComponent({
     &.button--inverted {
       @apply tw-outline-pv-grey-96;
       @apply tw-text-pv-grey-96;
+      @apply tw-shadow-borderWhite;
 
       &:hover,
       &:focus {
