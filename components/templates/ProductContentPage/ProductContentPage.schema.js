@@ -25,6 +25,8 @@ export default {
         'TextLink',
         'Accordion',
         'AnchorWrapper',
+        'VideoPlayer',
+        'ContentMediaBlock',
       ],
     },
     ...Seo,

@@ -33,7 +33,7 @@ export default {
       type: 'option',
       use_uuid: true,
       desciption: 'Aspect ratio between both elements',
-      required: true,
+      exclude_empty_option: true,
       options: [
         {
           value: 'half/half',
@@ -48,12 +48,13 @@ export default {
           name: '66:33',
         },
       ],
+      default_value: 'three/one',
     },
     order: {
       type: 'option',
       use_uuid: true,
       desciption: 'sort order of text and media item',
-      required: true,
+      exclude_empty_option: true,
       options: [
         {
           value: 'content/media',
@@ -64,6 +65,7 @@ export default {
           name: 'Media | Text',
         },
       ],
+      default_value: 'content/media',
     },
   },
   image: null,
