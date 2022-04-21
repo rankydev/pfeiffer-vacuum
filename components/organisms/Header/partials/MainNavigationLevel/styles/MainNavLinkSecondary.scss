@@ -30,8 +30,8 @@
       @apply tw-border-pv-transparent;
       @apply tw-duration-200;
       @apply tw-ease-in-out;
+      @apply tw-content-none;
       transition-property: border, color;
-      content: '';
     }
 
     &--active {

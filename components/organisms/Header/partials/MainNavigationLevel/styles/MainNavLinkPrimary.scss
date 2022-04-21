@@ -17,10 +17,10 @@
     @apply tw-leading-6;
     @apply tw-p-4 tw-pr-10;
     @apply tw-text-pv-grey-16;
+    @apply tw-transition-colors;
     @apply tw-duration-200;
     @apply tw-ease-in-out;
     @apply tw--outline-offset-1;
-    transition-property: color;
 
     &::after {
       @apply tw-absolute;
@@ -30,8 +30,8 @@
       @apply tw-border-pv-transparent;
       @apply tw-duration-200;
       @apply tw-ease-in-out;
+      @apply tw-content-none;
       transition-property: border, color;
-      content: '';
     }
 
     &--active {

@@ -1,6 +1,6 @@
 @mixin hide-scrollbar {
   &::-webkit-scrollbar {
-    width: 0 !important
+    display: none;
   }
   -ms-overflow-style: none;
   scrollbar-width: none;
