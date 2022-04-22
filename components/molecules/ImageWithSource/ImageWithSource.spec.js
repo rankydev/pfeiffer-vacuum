@@ -54,6 +54,16 @@ describe('ImageWithSource', () => {
       const imageElement = wrapper.findComponent(ResponsiveImage)
       expect(imageElement.vm.image).toEqual(propsData.image)
     })
+    test('images aspect ratio sould match selected format', () => {
+      const propsData = {
+        ...defaultProps(),
+      }
+      createComponent(propsData)
+
+      const imageElement = wrapper.findComponent(ResponsiveImage)
+      console.log(imageElement.vm, 'blblanlabla')
+      expect(imageElement.vm).toEqual(propsData.image)
+    })
   })
 
   // describe('during interaction', () => {})
