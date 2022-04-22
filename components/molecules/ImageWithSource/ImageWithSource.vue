@@ -7,7 +7,6 @@
       :image="image"
       :default-size="defaultSize"
       :sizes="sizes"
-      :image-width="imageWidth"
     />
     <NuxtDynamic
       v-for="item in description"
@@ -33,15 +32,15 @@ function parseString(stringParam, splitParam) {
   return parsedArr
 }
 
-function calculateWidth(width, ratioA, ratioB) {
-  const sideWidth = Math.floor(parseInt(width, 10) * (ratioA / ratioB))
+function calculateWidth(maxWidthByBreakpoint) {
+  const sideWidth = Math.floor(parseInt(maxWidthByBreakpoint, 10) - 1)
 
   return sideWidth
 }
 
-function calculateHeight(width, ratioA, ratioB, formatA, formatB) {
+function calculateHeight(maxWidthByBreakpoint, formatA, formatB) {
   const sideHeight = Math.floor(
-    (calculateWidth(width, ratioA, ratioB) / formatA) * formatB
+    (calculateWidth(maxWidthByBreakpoint) / formatA) * formatB
   )
   return sideHeight
 }
@@ -70,96 +69,40 @@ export default defineComponent({
       default: '16:9',
       validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
     },
-    // imageWidth: {
-    //   type: String,
-    //   default: '1/3',
-    //   validator: (val) => ['1/1', '1/4', '1/2', '1/3', '2/3'].includes(val),
-    // },
   },
   setup(props) {
     const formatString = computed(() => props.format.replace(':', '-'))
 
     const formatArr = parseString(props.format, ':')
-    const imageWidthArr = parseString(props.imageWidth, '/')
 
     const mediaWidth = tailwindconfig.theme.screens
     mediaWidth.sm = '375px'
 
     let defaultSize = {
-      width: `${calculateWidth(
-        mediaWidth.sm,
-        imageWidthArr[0],
-        imageWidthArr[1]
-      )}`,
-      height: `${calculateHeight(
-        mediaWidth.sm,
-        imageWidthArr[0],
-        imageWidthArr[1],
-        formatArr[0],
-        formatArr[1]
-      )}`,
+      width: `${calculateWidth(mediaWidth.md)}`,
+      height: `${calculateHeight(mediaWidth.md, formatArr[0], formatArr[1])}`,
     }
 
     let sizes = [
       {
         media: 'sm',
-        width: `${calculateWidth(
-          mediaWidth.sm,
-          imageWidthArr[0],
-          imageWidthArr[1]
-        )}`,
-        height: `${calculateHeight(
-          mediaWidth.sm,
-          imageWidthArr[0],
-          imageWidthArr[1],
-          formatArr[0],
-          formatArr[1]
-        )}`,
+        width: `${calculateWidth(mediaWidth.md)}`,
+        height: `${calculateHeight(mediaWidth.md, formatArr[0], formatArr[1])}`,
       },
       {
         media: 'md',
-        width: `${calculateWidth(
-          mediaWidth.md,
-          imageWidthArr[0],
-          imageWidthArr[1]
-        )}`,
-        height: `${calculateHeight(
-          mediaWidth.md,
-          imageWidthArr[0],
-          imageWidthArr[1],
-          formatArr[0],
-          formatArr[1]
-        )}`,
+        width: `${calculateWidth(mediaWidth.lg)}`,
+        height: `${calculateHeight(mediaWidth.lg, formatArr[0], formatArr[1])}`,
       },
       {
         media: 'lg',
-        width: `${calculateWidth(
-          mediaWidth.lg,
-          imageWidthArr[0],
-          imageWidthArr[1]
-        )}`,
-        height: `${calculateHeight(
-          mediaWidth.lg,
-          imageWidthArr[0],
-          imageWidthArr[1],
-          formatArr[0],
-          formatArr[1]
-        )}`,
+        width: `${calculateWidth(mediaWidth.xl)}`,
+        height: `${calculateHeight(mediaWidth.xl, formatArr[0], formatArr[1])}`,
       },
       {
         media: 'xl',
-        width: `${calculateWidth(
-          mediaWidth.xl,
-          imageWidthArr[0],
-          imageWidthArr[1]
-        )}`,
-        height: `${calculateHeight(
-          mediaWidth.xl,
-          imageWidthArr[0],
-          imageWidthArr[1],
-          formatArr[0],
-          formatArr[1]
-        )}`,
+        width: `${calculateWidth('2566px')}`,
+        height: `${calculateHeight('2566px', formatArr[0], formatArr[1])}`,
       },
     ]
 
@@ -183,24 +126,24 @@ export default defineComponent({
     }
   }
 
-  &__1-1 {
-    aspect-ratio: 1/1;
-  }
+  // &__1-1 {
+  //   aspect-ratio: 1/1;
+  // }
 
-  &__16-9 {
-    aspect-ratio: 16/9;
-  }
+  // &__16-9 {
+  //   aspect-ratio: 16/9;
+  // }
 
-  &__2-3 {
-    aspect-ratio: 2/3;
-  }
+  // &__2-3 {
+  //   aspect-ratio: 2/3;
+  // }
 
-  &__3-2 {
-    aspect-ratio: 3/2;
-  }
+  // &__3-2 {
+  //   aspect-ratio: 3/2;
+  // }
 
-  &__3-1 {
-    aspect-ratio: 3/1;
-  }
+  // &__3-1 {
+  //   aspect-ratio: 3/1;
+  // }
 }
 </style>
