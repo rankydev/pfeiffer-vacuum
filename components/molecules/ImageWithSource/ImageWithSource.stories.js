@@ -1,6 +1,7 @@
 import ImageWithSource from '~/components/molecules/ImageWithSource/ImageWithSource.vue'
 import imageMock from './../../atoms/ResponsiveImage/ResponsiveImage.stories.content'
-import { description } from '../../atoms/VideoPlayer/VideoPlayer.stories.content'
+import { smallText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
+import { description } from '@nuxtjs/svg-sprite/lib/plugins/inlineDefs'
 
 const argTypes = {
   image: {
@@ -8,8 +9,8 @@ const argTypes = {
     defaultValue: imageMock.image,
   },
   description: {
-    control: { type: 'object' },
-    defaultValue: description,
+    control: { type: 'array' },
+    defaultValue: [smallText],
   },
   format: {
     options: ['1:1', '16:9', '2:3', '3:2', '3:1'],

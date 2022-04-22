@@ -70,11 +70,11 @@ export default defineComponent({
       default: '16:9',
       validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
     },
-    imageWidth: {
-      type: String,
-      default: '1/1',
-      validator: (val) => ['1/1', '1/4', '1/2', '1/3', '2/3'].includes(val),
-    },
+    // imageWidth: {
+    //   type: String,
+    //   default: '1/3',
+    //   validator: (val) => ['1/1', '1/4', '1/2', '1/3', '2/3'].includes(val),
+    // },
   },
   setup(props) {
     const formatString = computed(() => props.format.replace(':', '-'))
