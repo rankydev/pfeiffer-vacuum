@@ -6,8 +6,7 @@
       provider="storyblok"
       :image="image"
       :default-size="defaultSize"
-      :sizes="sizes"
-      :image-width="imageWidth"
+      :sizes="imageSizes"
     />
     <NuxtDynamic
       v-for="item in description"
@@ -24,29 +23,22 @@ import { defineComponent, computed } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import tailwindconfig from '~/tailwind.config.js'
 
-function parseString(stringParam, splitParam) {
-  const stringArr = stringParam.split(splitParam)
-  const parsedArr = []
-
-  stringArr.forEach((stringElem) => parsedArr.push(parseInt(stringElem, 10)))
-
-  return parsedArr
+function parseMaxWidthByBreakpoint(breakpoint) {
+  return parseInt(breakpoint, 10) - 1
 }
 
-function calculateWidth(width, ratioA, ratioB) {
-  const sideWidth = Math.floor(parseInt(width, 10) * (ratioA / ratioB))
+function calculateHeight(breakpoint, aspectRatio) {
+  const aspectRatioArr = aspectRatio.split(':')
+  const aspectRatioA = aspectRatioArr[0]
+  const aspectRatioB = aspectRatioArr[1]
 
-  return sideWidth
-}
-
-function calculateHeight(width, ratioA, ratioB, formatA, formatB) {
-  const sideHeight = Math.floor(
-    (calculateWidth(width, ratioA, ratioB) / formatA) * formatB
+  return Math.floor(
+    (parseMaxWidthByBreakpoint(breakpoint) / aspectRatioA) * aspectRatioB
   )
-  return sideHeight
 }
 
 export default defineComponent({
+  name: 'ImageWithSource',
   components: {
     ResponsiveImage,
   },
@@ -70,103 +62,36 @@ export default defineComponent({
       default: '16:9',
       validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
     },
-    imageWidth: {
-      type: String,
-      default: '2/3',
-      validator: (val) => ['1/1', '1/4', '1/2', '1/3', '2/3'].includes(val),
-    },
   },
   setup(props) {
     const formatString = computed(() => props.format.replace(':', '-'))
 
-    const formatArr = parseString(props.format, ':')
-    const imageWidthArr = parseString(props.imageWidth, '/')
-
     const mediaWidth = tailwindconfig.theme.screens
-    mediaWidth.sm = '375px'
+    mediaWidth.xxl = '1441px'
+
+    const mediaWidthArr = Object.keys(mediaWidth).map(
+      (objectKey) => mediaWidth[objectKey]
+    )
+
+    const screenSizes = ['sm', 'md', 'lg', 'xl']
 
     let defaultSize = {
-      width: `${calculateWidth(
-        mediaWidth.sm,
-        imageWidthArr[0],
-        imageWidthArr[1]
-      )}`,
-      height: `${calculateHeight(
-        mediaWidth.sm,
-        imageWidthArr[0],
-        imageWidthArr[1],
-        formatArr[0],
-        formatArr[1]
-      )}`,
+      width: `${parseMaxWidthByBreakpoint(mediaWidth.md)}`,
+      height: `${calculateHeight(mediaWidth.md, props.format)}`,
     }
 
-    let sizes = [
-      {
-        media: 'sm',
-        width: `${calculateWidth(
-          mediaWidth.sm,
-          imageWidthArr[0],
-          imageWidthArr[1]
-        )}`,
-        height: `${calculateHeight(
-          mediaWidth.sm,
-          imageWidthArr[0],
-          imageWidthArr[1],
-          formatArr[0],
-          formatArr[1]
-        )}`,
-      },
-      {
-        media: 'md',
-        width: `${calculateWidth(
-          mediaWidth.md,
-          imageWidthArr[0],
-          imageWidthArr[1]
-        )}`,
-        height: `${calculateHeight(
-          mediaWidth.md,
-          imageWidthArr[0],
-          imageWidthArr[1],
-          formatArr[0],
-          formatArr[1]
-        )}`,
-      },
-      {
-        media: 'lg',
-        width: `${calculateWidth(
-          mediaWidth.lg,
-          imageWidthArr[0],
-          imageWidthArr[1]
-        )}`,
-        height: `${calculateHeight(
-          mediaWidth.lg,
-          imageWidthArr[0],
-          imageWidthArr[1],
-          formatArr[0],
-          formatArr[1]
-        )}`,
-      },
-      {
-        media: 'xl',
-        width: `${calculateWidth(
-          mediaWidth.xl,
-          imageWidthArr[0],
-          imageWidthArr[1]
-        )}`,
-        height: `${calculateHeight(
-          mediaWidth.xl,
-          imageWidthArr[0],
-          imageWidthArr[1],
-          formatArr[0],
-          formatArr[1]
-        )}`,
-      },
-    ]
+    const imageSizes = screenSizes.forEach((screenSize, index) => {
+      return {
+        media: screenSize,
+        width: `${parseMaxWidthByBreakpoint(mediaWidthArr[index + 1])}`,
+        height: `${calculateHeight(mediaWidthArr[index + 1], props.format)}`,
+      }
+    })
 
     return {
       defaultSize,
-      sizes,
       formatString,
+      imageSizes,
     }
   },
 })
