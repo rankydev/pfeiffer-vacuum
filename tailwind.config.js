@@ -12,9 +12,10 @@ module.exports = {
       none: '0 0 #0000',
       button: '0 12px 12px -12px rgba(51, 48, 0, 0.4)',
       'button-inverted': '0 12px 12px -12px rgba(255, 255, 255, 0.3)',
-      borderRed: 'inset 0 0 0 2px #dd1541',
-      borderGrey80: 'inset 0 0 0 2px #CCCCCC',
-      borderWhite: 'inset 0 0 0 2px #ffffff',
+      'border-red': 'inset 0 0 0 2px #dd1541',
+      'border-grey-80': 'inset 0 0 0 2px #CCCCCC',
+      'border-white': 'inset 0 0 0 2px #ffffff',
+      card: '0px 40px 40px -40px #CCCCCC;',
     },
     colors: {
       'pv-red': '#dd1541',

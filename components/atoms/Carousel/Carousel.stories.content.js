@@ -1,17 +1,25 @@
-import { nanoid } from 'nanoid'
+import {
+  productCardCategory,
+  productCardTitle,
+  productCardDescription,
+  productCardAdditionalInformation,
+} from '~/components/atoms/Card/Card.stories.content'
 
-export const carouselEntry = () => ({
-  _uid: nanoid(),
-  title: 'Title Ipsum',
-  text: 'Lorem ipsum',
-})
+export const carouselEntry = {
+  productCardCategory,
+  productCardTitle,
+  productCardDescription,
+  productCardAdditionalInformation,
+}
 
 export const carouselEntries = [
-  carouselEntry(),
-  carouselEntry(),
-  carouselEntry(),
-  carouselEntry(),
-  carouselEntry(),
+  carouselEntry,
+  carouselEntry,
+  carouselEntry,
+  carouselEntry,
+  carouselEntry,
+  carouselEntry,
+  carouselEntry,
 ]
 
 export default {}

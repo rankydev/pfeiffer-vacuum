@@ -1,5 +1,6 @@
 import Carousel from './Carousel'
 import { carouselEntries } from './Carousel.stories.content'
+import Card from '../Card/Card'
 
 const argTypes = {
   settings: {
@@ -39,8 +40,9 @@ export default {
   argTypes,
 }
 
-const Template = (args) => ({
-  components: { Carousel },
+const Template = (args, { argTypes }) => ({
+  components: { Carousel, Card },
+  props: Object.keys(argTypes),
   setup() {
     const data = carouselEntries
     return { args, data }
@@ -50,14 +52,11 @@ const Template = (args) => ({
     <div class="tw-grid-container">
       <div class="tw-col-span-full">
         <div class="tw-col-span-12">
-        <Carousel v-bind="args">
-          <template v-for="slide in data">
-            <div class="tw-bg-pv-red-darker">
-              <h3>{{ slide.title }}</h3>
-              <p>{{ slide.text }}</p>
-            </div>
-          </template>
-        </Carousel>
+          <Carousel v-bind="args">
+            <template v-slot:carousel>
+              <Card to="#" v-for="(index) in data" :key="index" />
+            </template>
+          </Carousel>
         </div>
       </div>
     </div>

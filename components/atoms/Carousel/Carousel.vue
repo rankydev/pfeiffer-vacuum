@@ -6,7 +6,7 @@
     :infinite="infinite"
     class="carousel"
   >
-    <slot />
+    <slot name="carousel" />
     <template #prevArrow>
       <Button
         class="carousel__prev"
@@ -75,9 +75,10 @@ export default defineComponent({
     @apply tw-absolute;
     @apply tw-top-1/2;
     @apply tw-translate-y-1/2;
+    @apply tw-z-10;
 
     &::before {
-      content: '';
+      @apply tw-content-none;
     }
   }
 
