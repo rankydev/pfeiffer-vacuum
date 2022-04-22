@@ -6,7 +6,7 @@
       provider="storyblok"
       :image="image"
       :default-size="defaultSize"
-      :sizes="sizes"
+      :sizes="imageSizes"
     />
     <NuxtDynamic
       v-for="item in description"
@@ -23,29 +23,22 @@ import { defineComponent, computed } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import tailwindconfig from '~/tailwind.config.js'
 
-function parseString(stringParam, splitParam) {
-  const stringArr = stringParam.split(splitParam)
-  const parsedArr = []
-
-  stringArr.forEach((stringElem) => parsedArr.push(parseInt(stringElem, 10)))
-
-  return parsedArr
+function parseMaxWidthByBreakpoint(breakpoint) {
+  return parseInt(breakpoint, 10) - 1
 }
 
-function calculateWidth(maxWidthByBreakpoint) {
-  const sideWidth = Math.floor(parseInt(maxWidthByBreakpoint, 10) - 1)
+function calculateHeight(breakpoint, aspectRatio) {
+  const aspectRatioArr = aspectRatio.split(':')
+  const aspectRatioA = aspectRatioArr[0]
+  const aspectRatioB = aspectRatioArr[1]
 
-  return sideWidth
-}
-
-function calculateHeight(maxWidthByBreakpoint, formatA, formatB) {
-  const sideHeight = Math.floor(
-    (calculateWidth(maxWidthByBreakpoint) / formatA) * formatB
+  return Math.floor(
+    (parseMaxWidthByBreakpoint(breakpoint) / aspectRatioA) * aspectRatioB
   )
-  return sideHeight
 }
 
 export default defineComponent({
+  name: 'ImageWithSource',
   components: {
     ResponsiveImage,
   },
@@ -73,43 +66,32 @@ export default defineComponent({
   setup(props) {
     const formatString = computed(() => props.format.replace(':', '-'))
 
-    const formatArr = parseString(props.format, ':')
-
     const mediaWidth = tailwindconfig.theme.screens
-    mediaWidth.sm = '375px'
+    mediaWidth.xxl = '1441px'
+
+    const mediaWidthArr = Object.keys(mediaWidth).map(
+      (objectKey) => mediaWidth[objectKey]
+    )
+
+    const screenSizes = ['sm', 'md', 'lg', 'xl']
 
     let defaultSize = {
-      width: `${calculateWidth(mediaWidth.md)}`,
-      height: `${calculateHeight(mediaWidth.md, formatArr[0], formatArr[1])}`,
+      width: `${parseMaxWidthByBreakpoint(mediaWidth.md)}`,
+      height: `${calculateHeight(mediaWidth.md, props.format)}`,
     }
 
-    let sizes = [
-      {
-        media: 'sm',
-        width: `${calculateWidth(mediaWidth.md)}`,
-        height: `${calculateHeight(mediaWidth.md, formatArr[0], formatArr[1])}`,
-      },
-      {
-        media: 'md',
-        width: `${calculateWidth(mediaWidth.lg)}`,
-        height: `${calculateHeight(mediaWidth.lg, formatArr[0], formatArr[1])}`,
-      },
-      {
-        media: 'lg',
-        width: `${calculateWidth(mediaWidth.xl)}`,
-        height: `${calculateHeight(mediaWidth.xl, formatArr[0], formatArr[1])}`,
-      },
-      {
-        media: 'xl',
-        width: `${calculateWidth('2566px')}`,
-        height: `${calculateHeight('2566px', formatArr[0], formatArr[1])}`,
-      },
-    ]
+    const imageSizes = screenSizes.forEach((screenSize, index) => {
+      return {
+        media: screenSize,
+        width: `${parseMaxWidthByBreakpoint(mediaWidthArr[index + 1])}`,
+        height: `${calculateHeight(mediaWidthArr[index + 1], props.format)}`,
+      }
+    })
 
     return {
       defaultSize,
-      sizes,
       formatString,
+      imageSizes,
     }
   },
 })
@@ -126,24 +108,24 @@ export default defineComponent({
     }
   }
 
-  // &__1-1 {
-  //   aspect-ratio: 1/1;
-  // }
+  &__1-1 {
+    aspect-ratio: 1/1;
+  }
 
-  // &__16-9 {
-  //   aspect-ratio: 16/9;
-  // }
+  &__16-9 {
+    aspect-ratio: 16/9;
+  }
 
-  // &__2-3 {
-  //   aspect-ratio: 2/3;
-  // }
+  &__2-3 {
+    aspect-ratio: 2/3;
+  }
 
-  // &__3-2 {
-  //   aspect-ratio: 3/2;
-  // }
+  &__3-2 {
+    aspect-ratio: 3/2;
+  }
 
-  // &__3-1 {
-  //   aspect-ratio: 3/1;
-  // }
+  &__3-1 {
+    aspect-ratio: 3/1;
+  }
 }
 </style>
