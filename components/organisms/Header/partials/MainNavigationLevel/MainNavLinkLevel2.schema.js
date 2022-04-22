@@ -1,22 +1,16 @@
 import Link from '~/components/atoms/Link/Link.schema.js'
 
 export default {
-  name: 'MainNavigationLink',
-  display_name: 'MainNavigationLink',
+  name: 'MainNavLinkLevel2',
+  display_name: 'Navigation Entry',
   schema: {
     label: {
       type: 'text',
       translatable: true,
       display_name: 'Label',
+      required: true,
     },
     ...Link.schema,
-    navigationEntries: {
-      type: 'bloks',
-      maximum: 7,
-      restrict_components: true,
-      component_whitelist: ['MainNavigationLink'],
-      description: 'Navigation entries displayed on the left side.',
-    },
   },
   image: null,
   preview_field: null,
@@ -24,6 +18,6 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'MainNavigationLink',
+  real_name: 'MainNavLinkLevel2',
   component_group_name: 'Global',
 }

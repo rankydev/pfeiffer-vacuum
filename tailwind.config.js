@@ -71,6 +71,7 @@ module.exports = {
     },
     outlineOffset: {
       '-2': '-2px',
+      '-1': '-1px',
     },
     gridTemplateColumns: {
       desktop: 'repeat(12, minmax(0, 1fr))',
