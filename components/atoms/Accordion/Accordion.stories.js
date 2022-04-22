@@ -1,7 +1,6 @@
 import Accordion from '~/components/atoms/Accordion/Accordion.vue'
 import { accordionEntries, levels } from './Accordion.stories.content.js'
 
-/*
 const argTypes = {
   accordionEntries: {
     defaultValue: accordionEntries,
@@ -12,7 +11,6 @@ const argTypes = {
     control: { type: 'inline-radio' },
   },
 }
- */
 
 export default {
   title: 'Atoms/Accordion',
@@ -28,16 +26,7 @@ export default {
       },
     },
   },
-  argTypes: {
-    accordionEntries: {
-      defaultValue: accordionEntries,
-      control: { type: 'array' },
-    },
-    level: {
-      options: levels,
-      control: { type: 'inline-radio' },
-    },
-  },
+  argTypes,
 }
 
 const Template = (args) => ({
