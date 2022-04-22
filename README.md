@@ -36,3 +36,8 @@ npm run storyblok:sync
 ```bash
 npm run storyblok:sync ./components/atoms/YourComponent
 ```
+
+## Run living style guide
+```bash
+npm run lsg
+```

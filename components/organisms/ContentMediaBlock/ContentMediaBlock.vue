@@ -139,6 +139,14 @@ export default defineComponent({
       &--half {
         @apply tw-col-span-4;
       }
+
+      &--one {
+        @apply tw-col-span-3;
+      }
+
+      &--three {
+        @apply tw-col-span-5;
+      }
     }
 
     @screen lg {
