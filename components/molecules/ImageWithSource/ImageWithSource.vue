@@ -73,6 +73,8 @@ export default defineComponent({
       (objectKey) => mediaWidth[objectKey]
     )
 
+    console.log(mediaWidthArr)
+
     const screenSizes = ['sm', 'md', 'lg', 'xl']
 
     let defaultSize = {
@@ -80,13 +82,15 @@ export default defineComponent({
       height: `${calculateHeight(mediaWidth.md, props.format)}`,
     }
 
-    const imageSizes = screenSizes.forEach((screenSize, index) => {
+    const imageSizes = screenSizes.map((screenSize, index) => {
       return {
         media: screenSize,
         width: `${parseMaxWidthByBreakpoint(mediaWidthArr[index + 1])}`,
         height: `${calculateHeight(mediaWidthArr[index + 1], props.format)}`,
       }
     })
+
+    console.log(imageSizes)
 
     return {
       defaultSize,
