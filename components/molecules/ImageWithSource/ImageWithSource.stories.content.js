@@ -6,6 +6,4 @@ export default {
   description: [smallText],
   image,
   component: 'ImageWithSource',
-  _editable:
-    '\u003c!--#storyblok#{"name": "ImageWithSource", "space": "152940", "uid": "0fbbfe8f-5ed3-4652-a2aa-08f10412b3e0", "id": "121587782"}--\u003e',
 }

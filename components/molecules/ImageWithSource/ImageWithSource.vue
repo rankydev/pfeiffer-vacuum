@@ -1,5 +1,5 @@
 <template>
-  <div class="image-with-source">
+  <div class="image-with-source" v-editable="image">
     <ResponsiveImage
       v-if="image"
       class="image-with-source__img"
