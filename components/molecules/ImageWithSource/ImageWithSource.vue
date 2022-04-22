@@ -1,9 +1,9 @@
 <template>
-  <div class="image-with-source" v-editable="image">
+  <div v-editable="image" class="image-with-source">
     <ResponsiveImage
       v-if="image"
       class="image-with-source__img"
-      :class="`image-with-source__${formatString}`"
+      :class="`image-with-source__${aspectRatioString}`"
       provider="storyblok"
       :image="image"
       :default-size="defaultSize"
@@ -26,20 +26,6 @@ import { defineComponent, computed } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import tailwindconfig from '~/tailwind.config.js'
 
-function parseMaxWidthByBreakpoint(breakpoint) {
-  return parseInt(breakpoint, 10) - 1
-}
-
-function calculateHeight(breakpoint, aspectRatio) {
-  const aspectRatioArr = aspectRatio.split(':')
-  const aspectRatioA = aspectRatioArr[0]
-  const aspectRatioB = aspectRatioArr[1]
-
-  return Math.floor(
-    (parseMaxWidthByBreakpoint(breakpoint) / aspectRatioA) * aspectRatioB
-  )
-}
-
 export default defineComponent({
   name: 'ImageWithSource',
   components: {
@@ -54,7 +40,7 @@ export default defineComponent({
       default: () => ({}),
     },
     /**
-     * Subcomponent which is rendered underneath the video
+     * Richtext which is rendered underneath the image
      */
     description: {
       type: Array,
@@ -67,40 +53,72 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const formatString = computed(() => props.aspectRatio.replace(':', '-'))
-
-    const mediaWidth = tailwindconfig.theme.screens
-    mediaWidth.xxl = '1441px'
-
-    const mediaWidthArr = Object.keys(mediaWidth).map(
-      (objectKey) => mediaWidth[objectKey]
+    const aspectRatioString = computed(() =>
+      props.aspectRatio.replace(':', '-')
     )
+    const tailwindConfigScreens = tailwindconfig.theme.screens
+    const configScreensArr = Object.entries(tailwindConfigScreens)
 
-    console.log(mediaWidthArr)
-
-    const screenSizes = ['sm', 'md', 'lg', 'xl']
-
-    let defaultSize = {
-      width: `${parseMaxWidthByBreakpoint(mediaWidth.md)}`,
-      height: `${calculateHeight(mediaWidth.md, props.aspectRatio)}`,
+    /**
+     * Calculate max width of current breakpoint by start width of next breakpoint
+     * @param startWidthNextBreakpoint
+     * @return {number}
+     */
+    const calculateMaxWidthByBreakpoint = (startWidthNextBreakpoint) => {
+      return Math.floor(parseInt(startWidthNextBreakpoint, 10) - 1)
     }
 
-    const imageSizes = screenSizes.map((screenSize, index) => {
-      return {
-        media: screenSize,
-        width: `${parseMaxWidthByBreakpoint(mediaWidthArr[index + 1])}`,
-        height: `${calculateHeight(
-          mediaWidthArr[index + 1],
-          props.aspectRatio
-        )}`,
+    /**
+     * Calculate image height by given width and aspect ratio
+     * @param Number maxWidth
+     * @param String aspectRatio
+     * @return {number}
+     */
+    const calculateHeight = (maxWidth, aspectRatio) => {
+      const aspectRatioArr = aspectRatio.split(':')
+      const aspectRatioA = aspectRatioArr[0]
+      const aspectRatioB = aspectRatioArr[1]
+
+      return Math.floor((maxWidth / aspectRatioA) * aspectRatioB)
+    }
+
+    /**
+     * calculate width, as well as height of image for each breakpoint
+     * @return Array
+     */
+    const imageSizes = configScreensArr.map((objectEntry, index) => {
+      if (index !== 3) {
+        const startWidthNextBreakpoint = configScreensArr[index + 1][1]
+        const maxWidthBreakpoint = calculateMaxWidthByBreakpoint(
+          startWidthNextBreakpoint
+        )
+
+        return {
+          media: objectEntry[0],
+          width: maxWidthBreakpoint,
+          height: calculateHeight(maxWidthBreakpoint, props.aspectRatio),
+        }
+      } else {
+        // last entry is xl, no next element given, 1440px is maxWidth
+        return {
+          media: objectEntry[0],
+          width: 1440,
+          height: calculateHeight(1440, props.aspectRatio),
+        }
       }
     })
 
-    console.log(imageSizes)
+    /**
+     * default size of the image using sm-breakpoint
+     */
+    const defaultSize = {
+      width: imageSizes[0].width,
+      height: imageSizes[0].height,
+    }
 
     return {
       defaultSize,
-      formatString,
+      aspectRatioString,
       imageSizes,
     }
   },
