@@ -61,7 +61,6 @@ describe('ImageWithSource', () => {
       createComponent(propsData)
 
       const imageElement = wrapper.findComponent(ResponsiveImage)
-      console.log(imageElement.vm, 'blblanlabla')
       expect(imageElement.vm).toEqual(propsData.image)
     })
   })

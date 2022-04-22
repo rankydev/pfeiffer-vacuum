@@ -1,6 +1,7 @@
 <template>
   <div class="image-with-source">
     <ResponsiveImage
+      v-if="image"
       class="image-with-source__img"
       :class="`image-with-source__${formatString}`"
       provider="storyblok"
@@ -8,13 +9,15 @@
       :default-size="defaultSize"
       :sizes="imageSizes"
     />
-    <NuxtDynamic
-      v-for="item in description"
-      :key="item._uid"
-      class="image-with-source__component"
-      v-bind="item"
-      :component="item.uiComponent || item.component"
-    />
+    <template v-if="description">
+      <NuxtDynamic
+        v-for="item in description"
+        :key="item._uid"
+        class="image-with-source__component"
+        v-bind="item"
+        :component="item.uiComponent || item.component"
+      />
+    </template>
   </div>
 </template>
 
@@ -47,7 +50,7 @@ export default defineComponent({
      * Image data for responsive image component
      */
     image: {
-      type: [Object, String],
+      type: Object,
       default: () => ({}),
     },
     /**
