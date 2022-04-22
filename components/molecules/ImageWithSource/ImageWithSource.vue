@@ -60,14 +60,14 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
-    format: {
+    aspectRatio: {
       type: String,
       default: '16:9',
       validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
     },
   },
   setup(props) {
-    const formatString = computed(() => props.format.replace(':', '-'))
+    const formatString = computed(() => props.aspectRatio.replace(':', '-'))
 
     const mediaWidth = tailwindconfig.theme.screens
     mediaWidth.xxl = '1441px'
@@ -82,14 +82,17 @@ export default defineComponent({
 
     let defaultSize = {
       width: `${parseMaxWidthByBreakpoint(mediaWidth.md)}`,
-      height: `${calculateHeight(mediaWidth.md, props.format)}`,
+      height: `${calculateHeight(mediaWidth.md, props.aspectRatio)}`,
     }
 
     const imageSizes = screenSizes.map((screenSize, index) => {
       return {
         media: screenSize,
         width: `${parseMaxWidthByBreakpoint(mediaWidthArr[index + 1])}`,
-        height: `${calculateHeight(mediaWidthArr[index + 1], props.format)}`,
+        height: `${calculateHeight(
+          mediaWidthArr[index + 1],
+          props.aspectRatio
+        )}`,
       }
     })
 

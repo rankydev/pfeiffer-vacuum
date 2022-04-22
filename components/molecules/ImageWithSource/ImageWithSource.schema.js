@@ -12,7 +12,8 @@ export default {
       display_name: 'Description',
     },
     image: responsiveImage.schema.image,
-    format: {
+    aspectRatio: {
+      display_name: 'Aspect Ratio',
       type: 'option',
       exclude_empty_option: true,
       default_value: '1:1',

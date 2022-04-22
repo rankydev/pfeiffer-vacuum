@@ -54,7 +54,7 @@ describe('ImageWithSource', () => {
       const imageElement = wrapper.findComponent(ResponsiveImage)
       expect(imageElement.vm.image).toEqual(propsData.image)
     })
-    test('images aspect ratio sould match selected format', () => {
+    test('images aspect ratio should match selected format', () => {
       const propsData = {
         ...defaultProps(),
       }
