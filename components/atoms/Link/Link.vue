@@ -47,6 +47,11 @@ export default defineComponent({
       type: Function,
       default: /* istanbul ignore next */ () => true,
     },
+    colored: {
+      type: String,
+      default: 'none',
+      validator: (val) => ['none', 'inline', 'breadcrumbs'].includes(val),
+    },
   },
   setup(props) {
     const isAnchorLink = computed(() => {
@@ -58,6 +63,7 @@ export default defineComponent({
       ...(isAnchorLink.value && { href: props.href }),
       ...(isAnchorLink.value && { target: props.target }),
       ...(!isAnchorLink.value && { to: props.href }),
+      class: `link--${props.colored}`,
     }))
 
     return {
@@ -67,3 +73,24 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.link {
+  &--inline {
+    @apply tw-text-pv-red;
+
+    &:hover {
+      @apply tw-underline;
+    }
+  }
+
+  &--breadcrumbs {
+    @apply tw-text-pv-grey-16;
+
+    &:hover {
+      @apply tw-text-pv-red-lighter;
+      @apply tw-underline;
+    }
+  }
+}
+</style>
