@@ -33,6 +33,12 @@ describe('ImageWithSource', () => {
       ['3:1', 'image-with-source__3-1'],
     ]
 
+    const testArr = [
+      [0, 'md'],
+      [1, 'lg'],
+      [2, 'xl'],
+    ]
+
     test('should render ImageWithSource when no entries are provided', () => {
       createComponent()
 
@@ -92,21 +98,26 @@ describe('ImageWithSource', () => {
       )
     })
 
-    test.only('if imageSizes are correct', () => {
+    test('if imageSizes are correct', () => {
       const propsData = {
         ...defaultProps(),
       }
       createComponent(propsData)
-
       const imageElement = wrapper.findComponent(ResponsiveImage)
-      console.log(imageElement.vm.sizes)
-      console.log(tailwindconfig.theme.screens)
-      // expect(imageElement.vm.defaultSize.width).toEqual(
-      //   imageElement.vm.sizes[0].width
-      // )
-      // expect(imageElement.vm.defaultSize.height).toEqual(
-      //   imageElement.vm.sizes[0].height
-      // )
+      expect(imageElement.vm.sizes[0].width).toEqual(
+        parseInt(tailwindconfig.theme.screens.md, 10) - 1
+      )
+    })
+
+    test.each(testArr)('if imageSizes are correct', (input, output) => {
+      const propsData = {
+        ...defaultProps(),
+      }
+      createComponent(propsData)
+      const imageElement = wrapper.findComponent(ResponsiveImage)
+      expect(imageElement.vm.sizes[input].width).toEqual(
+        parseInt(tailwindconfig.theme.screens[output], 10) - 1
+      )
     })
   })
 })
