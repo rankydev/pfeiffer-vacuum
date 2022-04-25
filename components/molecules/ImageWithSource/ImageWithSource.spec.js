@@ -2,6 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import ImageWithSource from './ImageWithSource.vue'
 import imageWithSourceEntries from './ImageWithSource.stories.content'
+import tailwindconfig from '~/tailwind.config.js'
 
 const defaultProps = () => JSON.parse(JSON.stringify(imageWithSourceEntries))
 
@@ -24,6 +25,14 @@ function createComponent(propsData = {}) {
 
 describe('ImageWithSource', () => {
   describe('initial state', () => {
+    const aspectRatioArr = [
+      ['1:1', 'image-with-source__1-1'],
+      ['16:9', 'image-with-source__16-9'],
+      ['2:3', 'image-with-source__2-3'],
+      ['3:2', 'image-with-source__3-2'],
+      ['3:1', 'image-with-source__3-1'],
+    ]
+
     test('should render ImageWithSource when no entries are provided', () => {
       createComponent()
 
@@ -54,16 +63,50 @@ describe('ImageWithSource', () => {
       const imageElement = wrapper.findComponent(ResponsiveImage)
       expect(imageElement.vm.image).toEqual(propsData.image)
     })
-    test('images aspect ratio should match selected format', () => {
+    test.each(aspectRatioArr)(
+      'images aspect-ratio-class should match selected aspect ratio',
+      (input, output) => {
+        const propsData = {
+          ...defaultProps(),
+          aspectRatio: input,
+        }
+        createComponent(propsData)
+
+        const htmlImage = wrapper.find('.image-with-source__img')
+        // console.log(htmlImage.attributes('class'))
+        expect(htmlImage.attributes('class')).toMatch(output)
+      }
+    )
+    test('if defaultSize is equal to smallest image size', () => {
       const propsData = {
         ...defaultProps(),
       }
       createComponent(propsData)
 
       const imageElement = wrapper.findComponent(ResponsiveImage)
-      expect(imageElement.vm).toEqual(propsData.image)
+      expect(imageElement.vm.defaultSize.width).toEqual(
+        imageElement.vm.sizes[0].width
+      )
+      expect(imageElement.vm.defaultSize.height).toEqual(
+        imageElement.vm.sizes[0].height
+      )
+    })
+
+    test.only('if imageSizes are correct', () => {
+      const propsData = {
+        ...defaultProps(),
+      }
+      createComponent(propsData)
+
+      const imageElement = wrapper.findComponent(ResponsiveImage)
+      console.log(imageElement.vm.sizes)
+      console.log(tailwindconfig.theme.screens)
+      // expect(imageElement.vm.defaultSize.width).toEqual(
+      //   imageElement.vm.sizes[0].width
+      // )
+      // expect(imageElement.vm.defaultSize.height).toEqual(
+      //   imageElement.vm.sizes[0].height
+      // )
     })
   })
-
-  // describe('during interaction', () => {})
 })
