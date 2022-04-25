@@ -18,7 +18,11 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'The main header of the appication',
+        component:
+          'This is the main header of the application. <br>' +
+          'It contains the flyout links and the main navigation. <br><br>' +
+          'Further information on how the header is structured can be found here: <br>' +
+          'https://confluence.diva-e.com/display/PVWEB/Header+Component',
       },
     },
   },

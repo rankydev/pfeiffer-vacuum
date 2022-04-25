@@ -1,0 +1,209 @@
+@import '/assets/scss/mixins';
+
+.primary-nav-1,
+.primary-nav-2 {
+  @apply tw-bg-pv-white;
+
+  &__element {
+    @apply tw-border-b-2;
+    @apply tw-border-pv-grey-96;
+    @apply tw-overflow-hidden;
+  }
+
+  &__link {
+    @apply tw-relative;
+    @apply tw-block;
+    @apply tw-text-base;
+    @apply tw-leading-6;
+    @apply tw-p-4 tw-pr-10;
+    @apply tw-text-pv-grey-16;
+    @apply tw-duration-200;
+    @apply tw-ease-in-out;
+    @apply tw--outline-offset-1;
+    transition-property: color, background-color, padding-left;
+
+    &::after {
+      @apply tw-absolute;
+      @apply tw--bottom-0 tw-inset-x-0;
+      @apply tw-border-t-2;
+      @apply tw-rounded-t-sm;
+      @apply tw-border-pv-transparent;
+      @apply tw-duration-200;
+      @apply tw-ease-in-out;
+      @apply tw-content-none;
+      transition-property: border, color;
+    }
+
+    &--active {
+      @apply tw-bg-pv-grey-96;
+    }
+  }
+
+  &__label {
+    @apply tw-block;
+    @apply tw-truncate;
+  }
+
+  &__icon {
+    @apply tw-absolute;
+    @apply tw-right-4;
+    @apply tw-top-1/2;
+    @apply tw--translate-y-1/2;
+  }
+
+  &__shop-button--mobile {
+    @apply tw-flex tw-justify-center;
+    @apply tw-p-4;
+    @apply tw-relative;
+    @apply tw-gap-4;
+
+    & button {
+      @apply tw-flex tw-justify-center;
+      @apply tw-grow;
+    }
+  }
+
+  @screen md {
+    @include hide-scrollbar;
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-w-1/2;
+    @apply tw-pl-8 tw-pt-4;
+    padding-bottom: 88px;
+
+    &__element {
+      @apply tw-border-b-0;
+    }
+
+    &__link {
+      @apply tw-block;
+      @apply tw-py-4 tw-px-0;
+      @apply tw-rounded-l;
+
+      &:hover {
+        @apply tw-outline-none;
+        @apply tw-pl-4;
+        @apply tw-bg-pv-grey-96;
+        @apply tw-text-pv-red-lighter;
+      }
+
+      &:focus-visible {
+        @apply tw-outline-none;
+        @apply tw-pl-4;
+        @apply tw-bg-pv-grey-96;
+        @apply tw-text-pv-red-lighter;
+      }
+
+      &--active {
+        @apply tw-pl-4;
+        @apply tw-bg-pv-white;
+      }
+    }
+
+    &__icon {
+      @apply tw-hidden;
+    }
+
+    &__buttons {
+      @apply tw-absolute;
+      @apply tw-flex tw-justify-start;
+      @apply tw-gap-4;
+      @apply tw-left-0 tw-bottom-0;
+      @apply tw-w-1/2;
+      @apply tw-pt-4 tw-pl-8 tw-pb-8 tw-pr-0;
+      @apply tw-bg-pv-white;
+    }
+
+    &__overview {
+      @apply tw-mr-4;
+    }
+  }
+
+  @screen lg {
+    @apply tw-w-1/4;
+
+    &__buttons {
+      @apply tw-w-1/4;
+    }
+  }
+}
+
+.primary-nav-1 {
+  &__wrapper {
+    .primary-nav-1__label {
+      @apply tw-font-normal;
+    }
+
+    @screen md {
+      @apply tw-absolute;
+      @apply tw-top-full;
+      @apply tw-overflow-hidden;
+      @apply tw-left-0 tw-right-0;
+      @apply tw-bg-pv-grey-96;
+    }
+  }
+
+  @screen md {
+    &--passive {
+      @apply tw-bg-pv-grey-96;
+
+      .primary-nav-1 {
+        &__buttons {
+          @apply tw-bg-pv-transparent;
+        }
+
+        &__link {
+          &:hover {
+            @apply tw-bg-pv-white;
+          }
+
+          &:focus-visible {
+            @apply tw-bg-pv-white;
+          }
+        }
+      }
+    }
+  }
+}
+
+.primary-nav-2 {
+  @apply tw-block;
+  @apply tw-overflow-auto;
+  @apply tw-bg-pv-grey-96;
+
+  &__wrapper {
+    @apply tw-pl-4;
+    @apply tw-bg-pv-grey-96;
+  }
+
+  &__buttons {
+    @apply tw-w-full;
+  }
+
+  @screen md {
+    @apply tw-bg-pv-white;
+    @apply tw-w-full tw-h-full;
+    @apply tw-overflow-auto;
+
+    &__wrapper {
+      @apply tw-absolute;
+      @apply tw-top-0 tw-bottom-0;
+      @apply tw-left-1/2 tw-right-0;
+      @apply tw-pl-0;
+      @apply tw-overflow-hidden;
+      @apply tw-bg-pv-grey-96;
+    }
+
+    &__buttons {
+      @apply tw-w-1/3;
+    }
+  }
+
+  @screen lg {
+    @apply tw-w-1/3;
+
+    &__wrapper {
+      @apply tw-left-1/4;
+    }
+  }
+}

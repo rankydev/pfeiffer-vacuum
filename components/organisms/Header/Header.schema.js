@@ -5,7 +5,7 @@ export default {
     navigationEntries: {
       type: 'bloks',
       restrict_components: true,
-      component_whitelist: ['MainNavigationLink'],
+      component_whitelist: ['MainNavLinkLevel0', 'MainNavLinkMobile'],
       pos: 1,
       description: 'Navigation bar entries displayed on the left side.',
     },
