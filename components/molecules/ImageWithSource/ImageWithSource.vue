@@ -3,11 +3,11 @@
     <ResponsiveImage
       v-if="image"
       class="image-with-source__img"
-      :class="`image-with-source__${aspectRatioString}`"
       provider="storyblok"
       :image="image"
       :default-size="defaultSize"
       :sizes="imageSizes"
+      :aspect-ratio="aspectRatio"
     />
     <template v-if="description">
       <NuxtDynamic
@@ -57,9 +57,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const aspectRatioString = computed(() =>
-      props.aspectRatio.replace(':', '-')
-    )
     const tailwindConfigScreens = tailwindconfig.theme.screens
     const configScreensArr = Object.entries(tailwindConfigScreens)
 
@@ -122,33 +119,8 @@ export default defineComponent({
 
     return {
       defaultSize,
-      aspectRatioString,
       imageSizes,
     }
   },
 })
 </script>
-
-<style lang="scss">
-.image-with-source {
-  &__1-1 {
-    aspect-ratio: 1/1;
-  }
-
-  &__16-9 {
-    aspect-ratio: 16/9;
-  }
-
-  &__2-3 {
-    aspect-ratio: 2/3;
-  }
-
-  &__3-2 {
-    aspect-ratio: 3/2;
-  }
-
-  &__3-1 {
-    aspect-ratio: 3/1;
-  }
-}
-</style>

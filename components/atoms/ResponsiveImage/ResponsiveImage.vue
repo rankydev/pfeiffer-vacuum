@@ -2,9 +2,10 @@
   <picture
     v-if="image && image.originalFilename && defaultSize"
     class="responsive-image"
-    :class="{
-      'responsive-image--with-gradient': withGradient,
-    }"
+    :class="[
+      withGradient ? 'responsive-image--with-gradient' : '',
+      aspectRatioString ? `responsive-image__${aspectRatioString}` : '',
+    ]"
   >
     <source
       v-for="size in sortedSizes"
@@ -98,8 +99,16 @@ export default defineComponent({
       type: String,
       default: 'storyblok',
     },
+    aspectRatio: {
+      type: String,
+      default: '1:1',
+      validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
+    },
   },
   setup(props, { root }) {
+    const aspectRatioString = computed(() =>
+      props.aspectRatio.replace(':', '-')
+    )
     /**
      * sorts Array from smallest to biggest breakpoint (sm to xl)
      */
@@ -184,6 +193,7 @@ export default defineComponent({
       mediaQuery,
       sortedSizes,
       grayscaleVal,
+      aspectRatioString,
       buildSrcset,
     }
   },
@@ -198,6 +208,26 @@ export default defineComponent({
     @apply tw-relative;
     @apply tw-rounded-lg;
     @apply tw-overflow-hidden;
+  }
+
+  &__1-1 {
+    aspect-ratio: 1/1;
+  }
+
+  &__16-9 {
+    aspect-ratio: 16/9;
+  }
+
+  &__2-3 {
+    aspect-ratio: 2/3;
+  }
+
+  &__3-2 {
+    aspect-ratio: 3/2;
+  }
+
+  &__3-1 {
+    aspect-ratio: 3/1;
   }
 
   &--with-gradient {
