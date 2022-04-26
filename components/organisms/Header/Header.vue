@@ -5,7 +5,7 @@
   >
     <ContentWrapper class="header__outer">
       <div class="header__inner">
-        <NuxtLink to="/" class="header__logo"><Logo /></NuxtLink>
+        <NuxtLink to="/default" class="header__logo"><Logo /></NuxtLink>
         <SearchHeader :has-opacity="active" class="header__search-input" />
         <TopNavigation
           v-model="active"
