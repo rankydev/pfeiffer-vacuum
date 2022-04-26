@@ -29,8 +29,8 @@
       :modifiers="{
         filters: { focal: image.focus, grayscale: grayscaleVal },
       }"
-      :alt="image.alt ? image.alt : ''"
-      :title="image.title ? image.title : ''"
+      :alt="image.alt || ''"
+      :title="image.title || ''"
       :class="imgStyle"
       :provider="image.provider"
       :loading="lazy ? 'lazy' : undefined"
@@ -80,6 +80,7 @@ export default defineComponent({
     },
     /**
      * Styles to enable a different behaviour of the image
+     * TODO do we have a use case here?
      */
     imgStyle: {
       type: [Object, String],

@@ -23,7 +23,6 @@
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
-// import { sizes } from 'components/atoms/Button/Button.stories.content'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import tailwindconfig from '~/tailwind.config.js'
 
