@@ -25,8 +25,6 @@ describe('ResponsiveImage', () => {
       expect(responsiveImageWrapper).toBeTruthy()
     })
 
-    test('should render a responsive image ', () => {
-      // const propsData = { ...defaultProps() }
-    })
+    test('should render a responsive image ', () => {})
   })
 })

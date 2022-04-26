@@ -1,10 +1,8 @@
 <template>
   <picture
     v-if="image && image.originalFilename && defaultSize"
-    class="responsive-image"
     :class="{
-      'tw-relative tw-block after:tw-absolute after:tw-inset-0 after:tw-inline-block after:tw-bg-gradient-to-t after:tw-from-black after:tw-via-transparent after:tw-to-transparent ':
-        withGradient,
+      'responsive-image': withGradient,
     }"
   >
     <source
@@ -52,23 +50,36 @@ export default defineComponent({
     image: {
       type: [Object, String],
       default: () => {},
+      required: true,
     },
     withGradient: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Parameter if the image should be rendered in black/white or color
+     */
     blackAndWhite: {
       type: Boolean,
       default: false,
     },
+    /**
+     * Image data for responsive image component
+     */
     defaultSize: {
       type: Object,
       default: () => {},
     },
+    /**
+     * Array of sizes, containing the width and height for different breakpoints
+     */
     sizes: {
       type: Array,
       default: () => [],
     },
+    /**
+     * Styles to enable a different behaviour of the image
+     */
     imgStyle: {
       type: [Object, String],
       default: () => {
@@ -83,16 +94,9 @@ export default defineComponent({
     },
   },
   setup(props, { root }) {
-    const medias = []
-    medias.sm = theme.screens.sm
-    medias.md = theme.screens.md
-    medias.lg = theme.screens.lg
-    medias.xl = theme.screens.xl
-
-    function mediaQuery(media) {
-      return medias[media]
-    }
-
+    /**
+     * sorts Array from smallest to biggest breakpoint (sm to xl)
+     */
     const sortedSizes = computed(() => {
       return [...props.sizes].sort(function (a, b) {
         const order = ['xl', 'lg', 'md', 'sm']
@@ -103,7 +107,25 @@ export default defineComponent({
       })
     })
 
-    function buildModifiers(image, size, format) {
+    const grayscaleVal = computed(() => (props.blackAndWhite ? '' : false))
+
+    /**
+     * loads breakpoints from tailwind.config into a medias Array
+     */
+    const medias = []
+    medias.sm = theme.screens.sm
+    medias.md = theme.screens.md
+    medias.lg = theme.screens.lg
+    medias.xl = theme.screens.xl
+
+    const mediaQuery = (media) => {
+      return medias[media]
+    }
+
+    /**
+     * Builds modifiers fro image, size and format
+     */
+    const buildModifiers = (image, size, format) => {
       if (!size) {
         return null
       }
@@ -125,15 +147,18 @@ export default defineComponent({
       }
     }
 
-    function buildSrcset(image, size, format) {
+    /**
+     * builds the Sourceset for rendering the image
+     */
+    const buildSrcset = (image, size, format) => {
       if (!size) {
         return null
       }
 
       const width = parseInt(size.width)
       const height = parseInt(size.height)
-      const retinaWidth = `${width * 2}`
-      const retinaHeight = `${height * 2}`
+      const retinaWidth = width * 2
+      const retinaHeight = height * 2
 
       const img1x = root.$img(
         image.originalFilename,
@@ -152,8 +177,6 @@ export default defineComponent({
       return `${img1x} 1x, ${img2x} 2x`
     }
 
-    const grayscaleVal = computed(() => (props.blackAndWhite ? '' : false))
-
     return {
       mediaQuery,
       sortedSizes,
@@ -165,10 +188,24 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .responsive-image {
+  @apply tw-relative;
+  @apply tw-block;
+
   img {
     @apply tw-relative;
     @apply tw-rounded-lg;
     @apply tw-overflow-hidden;
+  }
+
+  &::after {
+    @apply tw-absolute;
+    @apply tw-inset-0;
+    @apply tw-inline-block;
+    @apply tw-bg-gradient-to-t;
+
+    // @apply tw-from-black;
+    // @apply tw-via-transparent;
+    // @apply tw-to-transparent;
   }
 }
 </style>

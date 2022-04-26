@@ -23,6 +23,7 @@
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
+// import { sizes } from 'components/atoms/Button/Button.stories.content'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import tailwindconfig from '~/tailwind.config.js'
 
@@ -37,7 +38,8 @@ export default defineComponent({
      */
     image: {
       type: Object,
-      default: () => ({}),
+      default: () => {},
+      required: true,
     },
     /**
      * Richtext which is rendered underneath the image
@@ -46,9 +48,12 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
+    /**
+     * The Images Format selected by an editor in CMS
+     */
     aspectRatio: {
       type: String,
-      default: '16:9',
+      default: '1:1',
       validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
     },
   },

@@ -1,12 +1,11 @@
 import ImageWithSource from '~/components/molecules/ImageWithSource/ImageWithSource.vue'
-import imageMock from './../../atoms/ResponsiveImage/ResponsiveImage.stories.content'
+import ResponsiveImageContent from './../../atoms/ResponsiveImage/ResponsiveImage.stories.content'
 import { smallText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
-import { description } from '@nuxtjs/svg-sprite/lib/plugins/inlineDefs'
 
 const argTypes = {
   image: {
     control: { type: 'object' },
-    defaultValue: imageMock.image,
+    defaultValue: ResponsiveImageContent.image,
   },
   description: {
     control: { type: 'array' },

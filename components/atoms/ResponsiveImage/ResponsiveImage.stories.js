@@ -1,10 +1,10 @@
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
-import imageMock from './ResponsiveImage.stories.content.js'
+import ResponsiveImageContent from './ResponsiveImage.stories.content.js'
 
 const argTypes = {
   image: {
     control: { type: 'array' },
-    defaultValue: imageMock.image,
+    defaultValue: ResponsiveImageContent.image,
   },
   withGradient: {
     control: { type: 'boolean' },
@@ -16,7 +16,7 @@ const argTypes = {
   },
   defaultSize: {
     control: { type: 'object' },
-    defaultValue: imageMock.defaultSize,
+    defaultValue: ResponsiveImageContent.defaultSize,
   },
   sizes: {
     control: { type: 'object' },

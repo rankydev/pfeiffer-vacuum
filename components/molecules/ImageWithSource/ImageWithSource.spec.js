@@ -79,7 +79,6 @@ describe('ImageWithSource', () => {
         createComponent(propsData)
 
         const htmlImage = wrapper.find('.image-with-source__img')
-        // console.log(htmlImage.attributes('class'))
         expect(htmlImage.attributes('class')).toMatch(output)
       }
     )
