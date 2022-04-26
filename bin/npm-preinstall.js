@@ -1,6 +1,10 @@
+#!/usr/bin/env node -r esm
+
 import { lockfileVersion } from '../package-lock.json'
 import { engines } from '../package.json'
 
+console.log(`Please use node ${engines.node} with npm ${engines.npm}`)
+process.exit(1)
 if (lockfileVersion !== 2) {
   console.error('Your lockfile version is outdated')
   console.error(`Please use node ${engines.node} with npm ${engines.npm}`)
