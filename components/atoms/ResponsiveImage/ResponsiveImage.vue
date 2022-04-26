@@ -113,11 +113,7 @@ export default defineComponent({
     /**
      * loads breakpoints from tailwind.config into a medias Array
      */
-    const medias = []
-    medias.sm = theme.screens.sm
-    medias.md = theme.screens.md
-    medias.lg = theme.screens.lg
-    medias.xl = theme.screens.xl
+    const medias = { ...theme.screens }
 
     const mediaQuery = (media) => {
       return medias[media]
