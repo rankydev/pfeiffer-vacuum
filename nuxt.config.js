@@ -91,11 +91,6 @@ export default {
     host: process.env.HOST || '0.0.0.0',
   },
 
-  // server middleware: https://nuxtjs.org/docs/configuration-glossary/configuration-servermiddleware
-  serverMiddleware: {
-    '/_ipx': '~/server/middleware/ipx.js',
-  },
-
   env: {
     // Environment variables for build-time
 

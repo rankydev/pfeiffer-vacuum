@@ -1,8 +1,9 @@
 <template>
   <picture
     v-if="image && image.originalFilename && defaultSize"
+    class="responsive-image"
     :class="{
-      'responsive-image tw-relative tw-block after:tw-absolute after:tw-inset-0 after:tw-inline-block after:tw-bg-gradient-to-t after:tw-from-black after:tw-via-transparent after:tw-to-transparent ':
+      'tw-relative tw-block after:tw-absolute after:tw-inset-0 after:tw-inline-block after:tw-bg-gradient-to-t after:tw-from-black after:tw-via-transparent after:tw-to-transparent ':
         withGradient,
     }"
   >
@@ -129,8 +130,8 @@ export default defineComponent({
         return null
       }
 
-      const width = parseFloat(size.width)
-      const height = parseFloat(size.height)
+      const width = parseInt(size.width)
+      const height = parseInt(size.height)
       const retinaWidth = `${width * 2}`
       const retinaHeight = `${height * 2}`
 
@@ -162,3 +163,12 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss">
+.responsive-image {
+  img {
+    @apply tw-relative;
+    @apply tw-rounded-lg;
+    @apply tw-overflow-hidden;
+  }
+}
+</style>

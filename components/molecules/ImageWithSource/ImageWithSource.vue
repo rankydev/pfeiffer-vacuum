@@ -70,9 +70,9 @@ export default defineComponent({
 
     /**
      * Calculate image height by given width and aspect ratio
-     * @param Number maxWidth
-     * @param String aspectRatio
      * @return {number}
+     * @param maxWidth
+     * @param aspectRatio
      */
     const calculateHeight = (maxWidth, aspectRatio) => {
       const aspectRatioArr = aspectRatio.split(':')
@@ -127,15 +127,6 @@ export default defineComponent({
 
 <style lang="scss">
 .image-with-source {
-  &__img {
-    img {
-      @apply tw-relative;
-      @apply tw-rounded-lg;
-      @apply tw-relative;
-      @apply tw-overflow-hidden;
-    }
-  }
-
   &__1-1 {
     aspect-ratio: 1/1;
   }
