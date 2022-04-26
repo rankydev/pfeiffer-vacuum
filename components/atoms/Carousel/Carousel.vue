@@ -28,7 +28,12 @@
   </VueSlickCarousel>
 </template>
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  onMounted,
+  computed,
+} from '@nuxtjs/composition-api'
 import VueSlickCarousel from 'vue-slick-carousel'
 import Button from '~/components/atoms/Button/Button'
 
@@ -63,7 +68,17 @@ export default defineComponent({
       default: true,
     },
   },
-  setup(props) {},
+  setup(props) {
+    const carousel = ref(null)
+
+    const currentSlide = computed(
+      () => carousel.value.$refs.innerSlider.currentSlide
+    )
+
+    return {
+      currentSlide,
+    }
+  },
 })
 </script>
 <style lang="scss">
