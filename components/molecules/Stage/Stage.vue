@@ -53,7 +53,6 @@ export default {
   &__inner-wrapper {
     @apply tw-flex;
     @apply tw-flex-wrap-reverse;
-    @apply tw-container;
     @apply tw-px-0;
 
     @screen md {
@@ -79,6 +78,10 @@ export default {
 
     @screen lg {
       height: 400px;
+    }
+
+    @screen xl {
+      height: 35vh;
     }
 
     &--with-text {
