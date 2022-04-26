@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "prepare": "node bin/prepare.js",
     "dev": "nuxt",
     "build": "nuxt build",
     "build:standalone": "nuxt build --standalone",
