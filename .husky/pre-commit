@@ -1,0 +1,4 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+node -r esm ./bin/check-lockfile-version.js >&2 echo "error"
