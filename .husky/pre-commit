@@ -3,4 +3,4 @@ echo $(dirname "$0")
 . "$(dirname "$0")/_/husky.sh"
 node --version
 
-node -r esm ./bin/npm-preinstall.js >&2 echo "error"
+node -r esm ./bin/check-lockfile-version.js >&2 echo "error"
