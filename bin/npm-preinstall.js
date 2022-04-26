@@ -1,5 +1,3 @@
-#!/usr/bin/env node -r esm
-
 import { lockfileVersion } from '../package-lock.json'
 import { engines } from '../package.json'
 

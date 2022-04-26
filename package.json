@@ -8,6 +8,7 @@
     "build:standalone": "nuxt build --standalone",
     "start": "nuxt start",
     "generate": "nuxt generate",
+
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:js-ci": "eslint --ext \".js,.vue\" --max-warnings 0 --ignore-path .gitignore -f json -o report/eslint.json .",
     "lint:js:fix": "npm run lint:js -- --fix",
@@ -19,7 +20,7 @@
     "lsg:build": "nuxt storybook build -s .storybook/static --output-dir ./lsg-public",
     "test": "jest",
     "storyblok:sync": "env-cmd node -r esm ./bin/nuxt-storyblok.js sync",
-    "checkLockFile": "node -r esm ./bin/npm-preinstall.js"
+    "checkLockFile": "echo 'hi"
   },
   "dependencies": {
     "@nuxt/ufo": "^0.5.4",
