@@ -1,18 +1,20 @@
 <template>
   <div v-editable="(image, stageContent)" class="stage">
-    <StageContent
-      v-if="stageContent.length"
-      class="stage__content-block"
-      v-bind="stageContent[0]"
-    />
-    <NuxtImg
-      v-if="(image || {}).originalFilename"
-      preload
-      class="stage__image"
-      :class="`stage__image--${stageContent.length ? 'with-text' : 'full'}`"
-      :alt="image.alt"
-      :src="image.originalFilename"
-    />
+    <div class="stage__inner-wrapper">
+      <StageContent
+        v-if="stageContent.length"
+        class="stage__content-block"
+        v-bind="stageContent[0]"
+      />
+      <NuxtImg
+        v-if="(image || {}).originalFilename"
+        preload
+        class="stage__image"
+        :class="`stage__image--${stageContent.length ? 'with-text' : 'full'}`"
+        :alt="image.alt"
+        :src="image.originalFilename"
+      />
+    </div>
   </div>
 </template>
 
@@ -46,13 +48,18 @@ export default {
 
 <style lang="scss">
 .stage {
-  @apply tw-flex;
-  @apply tw-flex-wrap-reverse;
   @apply tw-bg-pv-grey-16;
 
-  @screen md {
-    @apply tw-flex-nowrap;
-    @apply tw-flex-row;
+  &__inner-wrapper {
+    @apply tw-flex;
+    @apply tw-flex-wrap-reverse;
+    @apply tw-container;
+    @apply tw-px-0;
+
+    @screen md {
+      @apply tw-flex-nowrap;
+      @apply tw-flex-row;
+    }
   }
 
   &__content-block {

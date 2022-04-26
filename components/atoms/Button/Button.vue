@@ -115,6 +115,7 @@ export default defineComponent({
   @apply tw-cursor-pointer;
   @apply tw-font-bold;
   @apply tw-whitespace-nowrap;
+  @apply tw-justify-between;
 
   &--disabled {
     @apply tw-cursor-default;
@@ -199,13 +200,11 @@ export default defineComponent({
   }
 
   &--outlined {
-    @apply tw-outline;
-    @apply tw-outline-2;
-    @apply tw--outline-offset-2;
+    @apply tw-rounded-md;
 
     &.button--secondary {
-      @apply tw-outline-pv-red;
       @apply tw-text-pv-red;
+      @apply tw-shadow-borderRed;
 
       &:hover,
       &:focus {
@@ -219,6 +218,7 @@ export default defineComponent({
     &.button--inverted {
       @apply tw-outline-pv-grey-96;
       @apply tw-text-pv-grey-96;
+      @apply tw-shadow-borderWhite;
 
       &:hover,
       &:focus {
@@ -232,7 +232,7 @@ export default defineComponent({
     &.button--disabled,
     &.button--disabled:hover,
     &.button--disabled:focus {
-      @apply tw-outline-pv-grey-80;
+      @apply tw-shadow-borderGrey80;
       @apply tw-bg-pv-transparent;
       @apply tw-text-pv-grey-80;
 

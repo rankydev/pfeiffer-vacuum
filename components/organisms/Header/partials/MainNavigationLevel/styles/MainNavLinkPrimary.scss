@@ -1,0 +1,104 @@
+.primary-nav-0 {
+
+  @apply tw-flex;
+  @apply tw-flex-col;
+
+  &__element {
+    @apply tw-border-b-2;
+    @apply tw-border-pv-grey-96;
+    @apply tw-overflow-hidden;
+  }
+
+  &__link {
+    @apply tw-relative;
+    @apply tw-block;
+    @apply tw-text-base;
+    @apply tw-font-bold;
+    @apply tw-leading-6;
+    @apply tw-p-4 tw-pr-10;
+    @apply tw-text-pv-grey-16;
+    @apply tw-transition-colors;
+    @apply tw-duration-200;
+    @apply tw-ease-in-out;
+    @apply tw--outline-offset-1;
+
+    &::after {
+      @apply tw-absolute;
+      @apply tw--bottom-0 tw-inset-x-0;
+      @apply tw-border-t-2;
+      @apply tw-rounded-t-sm;
+      @apply tw-border-pv-transparent;
+      @apply tw-duration-200;
+      @apply tw-ease-in-out;
+      @apply tw-content-none;
+      transition-property: border, color;
+    }
+
+    &--active {
+      &::after {
+        @apply tw-border-pv-red;
+      }
+    }
+  }
+
+  &__label {
+    @apply tw-block;
+    @apply tw-truncate;
+  }
+
+  &__icon {
+    @apply tw-absolute;
+    @apply tw-right-4;
+    @apply tw-top-1/2;
+    @apply tw--translate-y-1/2;
+  }
+
+  @screen md {
+    @apply tw-flex-row;
+
+    &__link {
+      @apply tw-p-0;
+      @apply tw-pb-6;
+      @apply tw-font-normal;
+      @apply tw-text-xl;
+      @apply tw-leading-8;
+
+      &::after {
+        @apply tw--bottom-0.5;
+        @apply tw-border-t-4;
+      }
+
+      &:focus-visible {
+        @apply tw-outline-none;
+        @apply tw-text-pv-red-lighter;
+
+        &::after {
+          @apply tw-border-pv-red;
+        }
+      }
+
+      &:hover {
+        @apply tw-outline-none;
+        @apply tw-text-pv-red-lighter;
+
+        &::after {
+          @apply tw-border-pv-red;
+        }
+      }
+
+      &--passive {
+        @apply tw-text-pv-grey-80;
+      }
+    }
+
+    &__icon {
+      @apply tw-hidden;
+    }
+
+    &__element {
+      @apply tw-border-0;
+      @apply tw-overflow-visible;
+      @apply tw-mr-8;
+    }
+  }
+}

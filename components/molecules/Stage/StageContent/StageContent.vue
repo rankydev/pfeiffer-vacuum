@@ -68,11 +68,19 @@ export default {
 <style lang="scss">
 .stage-content {
   @apply tw-bg-pv-grey-16;
-  @apply tw-px-8;
+  @apply tw-px-4;
   @apply tw-py-6;
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-justify-center;
+
+  @screen md {
+    @apply tw-px-6;
+  }
+
+  @screen lg {
+    @apply tw-px-8;
+  }
 
   &__headline,
   &__subline,

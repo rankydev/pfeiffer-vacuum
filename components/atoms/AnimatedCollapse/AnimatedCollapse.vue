@@ -127,7 +127,7 @@ export default defineComponent({
   }
 
   &--fast {
-    @apply tw-duration-100;
+    @apply tw-duration-200;
   }
 }
 </style>

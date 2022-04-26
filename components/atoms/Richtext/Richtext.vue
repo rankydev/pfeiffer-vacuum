@@ -145,5 +145,9 @@ export default defineComponent({
       }
     }
   }
+
+  & > *:last-child {
+    @apply tw-mb-0;
+  }
 }
 </style>

@@ -25,12 +25,38 @@ const generateContent = (variant, shapes) => {
   })
 }
 
-// TODO: Render these
-
 export const buttonVariants = [
   ...generateContent(variants[0], [shapes[0]]),
   ...generateContent(variants[1], shapes),
   ...generateContent(variants[2], shapes),
 ]
+
+export const buttonOutlinedSecondary = {
+  _uid: '2b6af927-5f0e-4c1a-be88-29bb5d04076d',
+  icon: 'arrow_forward',
+  size: 'normal',
+  label: 'Outlined Button',
+  shape: 'outlined',
+  variant: 'secondary',
+  disabled: false,
+  component: 'Button',
+  prependIcon: false,
+  _editable:
+    '<!--#storyblok#{"name": "Button", "space": "152017", "uid": "2b6af927-5f0e-4c1a-be88-29bb5d04076d", "id": "119228911"}-->',
+}
+
+export const buttonFilledSecondary = {
+  _uid: '3dd3700b-9e95-46d5-87ab-fd917b80848f',
+  icon: 'arrow_forward',
+  size: 'normal',
+  label: 'Filled Button',
+  shape: 'filled',
+  variant: 'secondary',
+  disabled: false,
+  component: 'Button',
+  prependIcon: false,
+  _editable:
+    '<!--#storyblok#{"name": "Button", "space": "152017", "uid": "3dd3700b-9e95-46d5-87ab-fd917b80848f", "id": "119228911"}-->',
+}
 
 export default {}

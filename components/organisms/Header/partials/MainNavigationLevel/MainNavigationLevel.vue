@@ -1,38 +1,104 @@
 <template>
-  <ul class="primary-nav" :class="`primary-nav--level-${level}`">
-    <li
-      v-for="(entry, idx) in extendedEntries"
-      :key="idx"
-      class="primary-nav__element"
-      :class="entry.class || ''"
+  <div :class="`${prefix}__wrapper`">
+    <ul
+      :class="{
+        [prefix]: true,
+        [`${prefix}--passive`]: hasActiveElement,
+      }"
+      @mouseenter="isHovered = true"
+      @mouseleave="isHovered = false"
     >
-      <Link
-        class="primary-nav__link"
+      <li
+        v-for="(entry, idx) in navigationEntries"
+        :key="idx"
         :class="{
-          'primary-nav__link--active': activeElement === idx,
-          'primary-nav__link--inactive': ![null, idx].includes(activeElement),
+          [`${prefix}__element`]: true,
+          ['md:tw-hidden']: entry.component === 'MainNavLinkMobile',
         }"
-        v-bind="entry"
-        :before-navigation="($event) => isMobile || toggleActive($event, idx)"
       >
-        <span class="primary-nav__label">{{ entry.label }}</span>
-        <Icon
-          class="primary-nav__icon"
-          :icon="activeElement === idx ? 'expand_less' : 'expand_more'"
-          tabindex="0"
-          @click.native="toggleActive($event, idx)"
-          @keypress.native.enter="toggleActive($event, idx)"
-        />
-      </Link>
-      <AnimatedCollapse speed="fast">
-        <!-- start: temporarly until subnavigation is implemented -->
-        <div v-if="activeElement === idx" class="primary-nav__sub-nav">
-          Some sub navigation {{ idx }}
-        </div>
-        <!-- end: temporarly until subnavigation is implemented -->
-      </AnimatedCollapse>
-    </li>
-  </ul>
+        <Link
+          :class="{
+            [`${prefix}__link`]: true,
+            [`${prefix}__link--passive`]: ![null, idx].includes(activeElement),
+            [`${prefix}__link--active`]: activeElement === idx,
+          }"
+          v-bind="entry"
+          :before-navigation="
+            ($event) =>
+              !hasSubmenu(entry)
+                ? (activeElement = null)
+                : toggleActive($event, idx)
+          "
+        >
+          <span :class="`${prefix}__label`">{{ entry.label }}</span>
+          <Icon
+            v-if="hasSubmenu(entry)"
+            :class="`${prefix}__icon`"
+            :icon="activeElement === idx ? 'expand_less' : 'expand_more'"
+          />
+        </Link>
+        <client-only>
+          <Component
+            :is="isMobile || level === 0 ? 'AnimatedCollapse' : 'div'"
+            v-if="hasSubmenu(entry)"
+            speed="medium"
+          >
+            <MainNavigationLevel
+              v-if="activeElement === idx"
+              :current-entry="entry"
+              :level="level + 1"
+              :navigation-entries="entry.navigationEntries"
+              @mouseenter.native="isHovered = false"
+              @mouseleave.native="isHovered = true"
+            />
+          </Component>
+        </client-only>
+      </li>
+
+      <template v-if="level > 0 && isMobile && !hasActiveElement">
+        <li>
+          <Link :href="currentEntry.href" :class="[`${prefix}__link`]">
+            <span :class="`${prefix}__label`">All Products</span>
+            <Icon :class="`${prefix}__icon`" icon="arrow_forward" />
+          </Link>
+        </li>
+
+        <li
+          v-if="currentEntry.shopLink"
+          :class="`${prefix}__shop-button--mobile`"
+        >
+          <Button size="small" label="Shop" :href="currentEntry.shopLink" />
+        </li>
+      </template>
+
+      <template v-if="level > 0 && !isMobile">
+        <li
+          v-if="
+            (isTablet && !hasActiveElement) ||
+            (isDesktop &&
+              (isHovered || (!hasActiveElement && !$parent.isHovered)))
+          "
+          :class="`${prefix}__buttons`"
+        >
+          <!-- TODO: Check button functionality with PVWEB-328 -->
+          <Button
+            variant="secondary"
+            shape="outlined"
+            size="small"
+            label="Overview"
+            :href="currentEntry.href"
+          />
+
+          <Button
+            v-if="currentEntry.shopLink"
+            size="small"
+            label="Shop"
+            :href="currentEntry.shopLink"
+          />
+        </li>
+      </template>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -50,12 +116,17 @@ import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollap
 import { useMenuStore } from '~/stores/menu'
 
 export default defineComponent({
+  name: 'MainNavigationLevel',
   components: {
     Icon,
     Link,
     AnimatedCollapse,
   },
   props: {
+    currentEntry: {
+      type: Object,
+      default: () => ({}),
+    },
     navigationEntries: {
       type: Array,
       default: /* istanbul ignore next */ () => [],
@@ -70,8 +141,14 @@ export default defineComponent({
 
     const menu = useMenuStore()
 
+    const prefix = computed(() => `primary-nav-${props.level}`)
+
     const activeElement = ref(null)
+    const hasActiveElement = computed(() => activeElement.value !== null)
     const isMobile = app.$breakpoints.isMobile
+    const isTablet = app.$breakpoints.isTablet
+    const isDesktop = app.$breakpoints.isDesktop
+    const isHovered = ref(false)
 
     watch(menu.isActive, (isActive) => {
       if (!isActive) activeElement.value = null
@@ -81,137 +158,37 @@ export default defineComponent({
       $event.preventDefault()
       $event.stopPropagation()
 
+      if (props.level >= 2) return false
+
       if (activeElement.value === idx) {
-        if (!isMobile.value) menu.close()
+        if (!isMobile.value && props.level === 0) menu.close()
         activeElement.value = null
       } else {
-        if (!isMobile.value) menu.open()
+        if (!isMobile.value && props.level === 0) menu.open()
         activeElement.value = idx
       }
 
       return false
     }
 
-    const home = { label: 'Home', href: '/', class: 'md:tw-hidden' }
-    const extendedEntries = computed(() => [home, ...props.navigationEntries])
+    const hasSubmenu = (entry) => entry?.navigationEntries?.length > 0
 
-    return { toggleActive, activeElement, isMobile, extendedEntries }
+    return {
+      prefix,
+      toggleActive,
+      hasActiveElement,
+      activeElement,
+      isMobile,
+      isTablet,
+      isDesktop,
+      isHovered,
+      hasSubmenu,
+    }
   },
 })
 </script>
 
 <style lang="scss">
-.primary-nav {
-  @apply tw-flex;
-  @apply tw-flex-col;
-
-  &__element {
-    @apply tw-border-b-2;
-    @apply tw-border-pv-grey-96;
-    @apply tw-overflow-hidden;
-  }
-
-  &__link {
-    @apply tw-relative;
-    @apply tw-block;
-    @apply tw-text-base;
-    @apply tw-font-bold;
-    @apply tw-leading-6;
-    @apply tw-p-4 tw-pr-10;
-    @apply tw-text-pv-grey-16;
-    @apply tw-duration-200;
-    @apply tw-ease-in-out;
-    transition-property: color;
-
-    &::after {
-      @apply tw-absolute;
-      @apply tw--bottom-0 tw-inset-x-0;
-      @apply tw-border-t-2;
-      @apply tw-rounded-t-sm;
-      @apply tw-border-pv-transparent;
-      @apply tw-duration-200;
-      @apply tw-ease-in-out;
-      transition-property: border color;
-      content: '';
-    }
-
-    &--active {
-      &::after {
-        @apply tw-border-pv-red;
-      }
-    }
-  }
-
-  &__label {
-    @apply tw-block;
-    @apply tw-truncate;
-  }
-
-  &__icon {
-    @apply tw-absolute;
-    @apply tw-right-4;
-    @apply tw-top-1/2;
-    @apply tw--translate-y-1/2;
-  }
-
-  @screen md {
-    @apply tw-flex-row;
-
-    &__link {
-      @apply tw-p-0;
-      @apply tw-pb-6;
-      @apply tw-font-normal;
-      @apply tw-text-xl;
-      @apply tw-leading-8;
-
-      &::after {
-        @apply tw--bottom-0.5;
-        @apply tw-border-t-4;
-      }
-
-      &:focus-visible {
-        @apply tw-outline-none;
-        @apply tw-text-pv-red-lighter;
-
-        &::after {
-          @apply tw-border-pv-red;
-        }
-      }
-
-      &:hover {
-        @apply tw-outline-none;
-        @apply tw-text-pv-red-lighter;
-
-        &::after {
-          @apply tw-border-pv-red;
-        }
-      }
-
-      &--inactive {
-        @apply tw-text-pv-grey-80;
-      }
-    }
-
-    &__icon {
-      @apply tw-hidden;
-    }
-
-    &__element {
-      @apply tw-border-0;
-      @apply tw-overflow-visible;
-      @apply tw-mr-8;
-    }
-
-    /* start: temporarly until subnavigation is implemented */
-    &__sub-nav {
-      @apply tw-absolute;
-      @apply tw-top-full;
-      @apply tw-left-0 tw-right-0;
-      @apply tw-bg-pv-white;
-      @apply tw-p-4;
-    }
-
-    /* end: temporarly until subnavigation is implemented */
-  }
-}
+@import './styles/MainNavLinkPrimary';
+@import './styles/MainNavLinkSecondary';
 </style>
