@@ -69,7 +69,7 @@ export default defineComponent({
      */
     defaultSize: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
     /**
      * Array of sizes, containing the width and height for different breakpoints
