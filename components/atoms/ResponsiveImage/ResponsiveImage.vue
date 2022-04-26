@@ -1,8 +1,9 @@
 <template>
   <picture
     v-if="image && image.originalFilename && defaultSize"
+    class="responsive-image"
     :class="{
-      'responsive-image': withGradient,
+      'responsive-image__with-gradient': withGradient,
     }"
   >
     <source
