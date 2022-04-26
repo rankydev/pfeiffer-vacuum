@@ -3,7 +3,7 @@
     v-if="image && image.originalFilename && defaultSize"
     class="responsive-image"
     :class="{
-      'responsive-image__with-gradient': withGradient,
+      'responsive-image--with-gradient': withGradient,
     }"
   >
     <source
@@ -198,15 +198,16 @@ export default defineComponent({
     @apply tw-overflow-hidden;
   }
 
-  &::after {
-    @apply tw-absolute;
-    @apply tw-inset-0;
-    @apply tw-inline-block;
-    @apply tw-bg-gradient-to-t;
-
-    // @apply tw-from-black;
-    // @apply tw-via-transparent;
-    // @apply tw-to-transparent;
+  &--with-gradient {
+    &::after {
+      @apply tw-absolute;
+      @apply tw-inset-0;
+      @apply tw-inline-block;
+      @apply tw-bg-gradient-to-t;
+      @apply tw-from-pv-black;
+      @apply tw-via-pv-transparent;
+      @apply tw-to-pv-transparent;
+    }
   }
 }
 </style>
