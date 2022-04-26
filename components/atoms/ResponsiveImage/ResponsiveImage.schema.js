@@ -7,6 +7,7 @@ export default {
       filetypes: ['images'],
       translatable: true,
       description: 'Image',
+      display_name: 'Image',
       required: true,
     },
   },
