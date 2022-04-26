@@ -2,21 +2,27 @@ import { defineStore } from 'pinia'
 import {
   useContext,
   useRoute,
-  ref,
   unref,
   computed,
+  useAsync,
+  watch,
 } from '@nuxtjs/composition-api'
 import { usePageStore } from '~/stores/page'
 
 export const useCmsStore = defineStore('cms', () => {
   const pageStore = usePageStore()
-  console.log(pageStore)
   const route = useRoute()
-  const cmsLinks = ref([])
 
-  const beardcrumb = computed(() => {
-    const { fullPath } = unref(route)
-    const links = unref(cmsLinks)?.data || []
+  const loadCmsLinks = async () => {
+    const { $cms } = useContext()
+    return $cms.query('links')
+  }
+  const cmsLinks = useAsync(async () => (await loadCmsLinks()).data)
+
+  const breadcrumb = computed(() => {
+    const { path } = unref(route)
+    console.log(route)
+    const links = unref(cmsLinks) || []
 
     const cleanSlug = (slug) => slug.replace(/\/$/, '').replace(/^\//, '')
     const joinSlug = (prefix, val) => (prefix ? `${prefix}/${val}` : val)
@@ -30,43 +36,12 @@ export const useCmsStore = defineStore('cms', () => {
     const getName = (slug) => getTranslation(slug.translated_slugs) || slug.name
     const buildSlug = (slug) => ({ href: getHref(slug), name: getName(slug) })
 
-    const slugs = cleanSlug(fullPath).split('/').reduce(joinSlugs, [])
+    const slugs = cleanSlug(path).split('/').reduce(joinSlugs, [])
     return slugs.map(findSlug).filter(hasName).map(buildSlug)
   })
 
-  let cmsLinkPromise = null
-  const loadCmsLinks = async () => {
-    if (!cmsLinkPromise) {
-      const { $cms } = useContext()
-      cmsLinkPromise = $cms.query('links')
-      cmsLinks.value = await cmsLinkPromise
-    }
-    await cmsLinkPromise
-    return cmsLinks
-  }
-
-  loadCmsLinks()
-
-  const dynamic = computed(() => {
-    return [useDnymiacStore(), useDnymiacStore(), useDnymiacStore()]
-  })
-
-  console.log('dynamic', dynamic)
-
   return {
-    beardcrumb,
-    loadCmsLinks,
-    dynamic,
+    cmsLinks,
+    breadcrumb,
   }
 })
-
-let idx = 0
-export const useDnymiacStore = () => {
-  idx++
-  console.log(`cms-${idx}`)
-  return defineStore(`cms-${idx}`, () => {
-    return {
-      test: ref(null),
-    }
-  })()
-}

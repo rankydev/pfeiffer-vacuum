@@ -4,6 +4,4 @@ export default ({ app }, inject) => {
   const storyblokApiClient = new StoryblokApiClient('pvweb')
 
   inject('storyblokApiClient', storyblokApiClient)
-
-  console.log(storyblokApiClient)
 }

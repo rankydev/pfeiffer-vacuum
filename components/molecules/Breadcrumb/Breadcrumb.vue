@@ -30,7 +30,7 @@ export default defineComponent({
   },
   setup() {
     const cmsStore = useCmsStore()
-    const entries = computed(() => cmsStore.beardcrumb)
+    const entries = computed(() => cmsStore.breadcrumb)
 
     const isLastEntry = (idx) => unref(entries).length - 1 === idx
     const getComponent = (idx) => (isLastEntry(idx) ? 'span' : 'Link')
