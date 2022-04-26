@@ -19,7 +19,7 @@
     "lsg:build": "nuxt storybook build -s .storybook/static --output-dir ./lsg-public",
     "test": "jest",
     "storyblok:sync": "env-cmd node -r esm ./bin/nuxt-storyblok.js sync",
-    "checkLockFile": "node ./bin/npm-preinstall.js"
+    "checkLockFile": "node -r esm ./bin/npm-preinstall.js"
   },
   "dependencies": {
     "@nuxt/ufo": "^0.5.4",
