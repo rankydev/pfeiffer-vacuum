@@ -22,10 +22,30 @@ export default {
     },
   },
   defaultSize: {
-    height: 800,
-    width: 800,
+    height: 767,
+    width: 431,
   },
+  sizes: [
+    {
+      media: 'sm',
+      width: 767,
+      height: 431,
+    },
+    {
+      media: 'md',
+      width: 1279,
+      height: 719,
+    },
+    {
+      media: 'lg',
+      width: 1439,
+      height: 809,
+    },
+    {
+      media: 'xl',
+      width: 1440,
+      height: 810,
+    },
+  ],
   component: 'ResponsiveImage',
-  _editable:
-    '\u003c!--#storyblok#{"name": "ResponsiveImage", "space": "152940", "uid": "0fbbfe8f-5ed3-4652-a2aa-08f10412b3e0", "id": "121587782"}--\u003e',
 }
