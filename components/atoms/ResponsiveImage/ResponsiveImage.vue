@@ -32,7 +32,7 @@
       :alt="image.alt || ''"
       :title="image.title || ''"
       :class="imgStyle"
-      :provider="image.provider"
+      :provider="provider"
       :loading="lazy ? 'lazy' : undefined"
     />
   </picture>
@@ -94,6 +94,10 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    provider: {
+      type: String,
+      default: 'storyblok',
+    },
   },
   setup(props, { root }) {
     /**
@@ -128,6 +132,7 @@ export default defineComponent({
         return null
       }
 
+      //TODO
       const focal = image?.focus ? { focal: image.focus } : {}
       const filtersModifiers = {
         filters: {

@@ -70,7 +70,7 @@ describe('ImageWithSource', () => {
       expect(imageElement.vm.image).toEqual(propsData.image)
     })
     test.each(aspectRatioArr)(
-      'images aspect-ratio-class should match selected aspect ratio',
+      'should have matching aspect-ratio-classes based on selected aspect ratio',
       (input, output) => {
         const propsData = {
           ...defaultProps(),
@@ -82,7 +82,7 @@ describe('ImageWithSource', () => {
         expect(htmlImage.attributes('class')).toMatch(output)
       }
     )
-    test('if defaultSize is equal to smallest image size', () => {
+    test('should have an equal default size to smallest image size', () => {
       const propsData = {
         ...defaultProps(),
       }
@@ -97,18 +97,7 @@ describe('ImageWithSource', () => {
       )
     })
 
-    test('if imageSizes are correct', () => {
-      const propsData = {
-        ...defaultProps(),
-      }
-      createComponent(propsData)
-      const imageElement = wrapper.findComponent(ResponsiveImage)
-      expect(imageElement.vm.sizes[0].width).toEqual(
-        parseInt(tailwindconfig.theme.screens.md, 10) - 1
-      )
-    })
-
-    test.each(testArr)('if imageSizes are correct', (input, output) => {
+    test.each(testArr)('should have correct image sizes', (input, output) => {
       const propsData = {
         ...defaultProps(),
       }
