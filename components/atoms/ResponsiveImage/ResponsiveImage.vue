@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 import { theme } from '~/tailwind.config.js'
 
 export default defineComponent({
@@ -104,7 +104,10 @@ export default defineComponent({
       validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
     },
   },
-  setup(props, { root }) {
+  setup(props) {
+    // const { root } = context
+    // console.log(useContext())
+    const { $img } = useContext()
     const sortByBreakpoints = (sizesArr) => {
       const order = ['xl', 'lg', 'md', 'sm']
       return sizesArr.sort((a, b) => {
@@ -176,12 +179,12 @@ export default defineComponent({
       const retinaWidth = width * 2
       const retinaHeight = height * 2
 
-      const img1x = root.$img(
+      const img1x = $img(
         image.originalFilename,
         buildModifiers(image, size, format),
         { provider: image.provider }
       )
-      const img2x = root.$img(
+      const img2x = $img(
         image.originalFilename,
         buildModifiers(
           image,
@@ -190,6 +193,7 @@ export default defineComponent({
         ),
         { provider: image.provider }
       )
+
       return `${img1x} 1x, ${img2x} 2x`
     }
 

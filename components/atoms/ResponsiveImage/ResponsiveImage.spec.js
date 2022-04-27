@@ -1,4 +1,4 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import ResponsiveImage from './ResponsiveImage.vue'
 import responsiveImageEntries from './ResponsiveImage.stories.content'
 
@@ -7,13 +7,13 @@ const defaultProps = () => JSON.parse(JSON.stringify(responsiveImageEntries))
 let wrapper
 
 function createComponent(propsData = {}) {
-  const stubs = { NuxtDynamic: true }
-  const localVue = createLocalVue()
-  const editable = (el, key) => (el.innerText = key.value)
-  localVue.directive('editable', editable)
+  const stubs = { NuxtImg: true }
+
+  const $img = () => ''
+  const mocks = { $nuxt: { context: { $img } } }
 
   const options = {
-    localVue,
+    mocks,
     stubs,
     propsData,
   }
@@ -23,13 +23,13 @@ function createComponent(propsData = {}) {
 
 describe('ResponsiveImage', () => {
   describe('initial state', () => {
-    // const aspectRatioArr = [
-    //   ['1:1', 'image-with-source__1-1'],
-    //   ['16:9', 'image-with-source__16-9'],
-    //   ['2:3', 'image-with-source__2-3'],
-    //   ['3:2', 'image-with-source__3-2'],
-    //   ['3:1', 'image-with-source__3-1'],
-    // ]
+    const aspectRatioArr = [
+      ['1:1', 'image-with-source__1-1'],
+      ['16:9', 'image-with-source__16-9'],
+      ['2:3', 'image-with-source__2-3'],
+      ['3:2', 'image-with-source__3-2'],
+      ['3:1', 'image-with-source__3-1'],
+    ]
 
     test('should render responsive image when no data is provided', () => {
       const propsData = {
