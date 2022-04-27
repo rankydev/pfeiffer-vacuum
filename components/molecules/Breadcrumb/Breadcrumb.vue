@@ -1,17 +1,17 @@
 <template>
-  <ul class="breadcrumbs">
+  <ul class="breadcrumb">
     <li
       v-for="(entry, idx) in entries"
       :key="idx"
-      class="breadcrumbs__entry"
-      :class="{ 'breadcrumbs__entry--last': isLastEntry(idx) }"
+      class="breadcrumb__entry"
+      :class="{ 'breadcrumb__entry--last': isLastEntry(idx) }"
     >
       <Component
         :is="getComponent(idx)"
         :href="!isLastEntry(idx) && entry.href"
-        :colored="!isLastEntry(idx) && 'breadcrumbs'"
-        class="breadcrumbs__link"
-        :class="{ 'breadcrumbs__link--last': isLastEntry(idx) }"
+        :variant="!isLastEntry(idx) && 'breadcrumb'"
+        class="breadcrumb__link"
+        :class="{ 'breadcrumb__link--last': isLastEntry(idx) }"
       >
         {{ entry.name }}
       </Component>
@@ -41,22 +41,20 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.breadcrumbs {
+@import '/assets/scss/mixins';
+
+.breadcrumb {
+  @include hide-scrollbar;
+
   @apply tw-flex;
   @apply tw-flex-row;
   @apply tw-gap-2;
   @apply tw-my-2;
   @apply tw-overflow-x-auto;
   @apply tw-whitespace-nowrap;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   &__entry {
-    & + .breadcrumbs__entry::before {
+    & + .breadcrumb__entry::before {
       @apply tw-mr-2;
       @apply tw-text-pv-red;
       content: '\00bb';
@@ -69,9 +67,6 @@ export default defineComponent({
 
   &__link {
     @apply tw-inline-block;
-
-    // &--last {
-    // }
   }
 }
 </style>

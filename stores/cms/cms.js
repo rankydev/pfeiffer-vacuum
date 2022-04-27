@@ -15,7 +15,7 @@ export const useCmsStore = defineStore('cms', () => {
 
   const loadCmsLinks = async () => {
     const { data } = await $cms.query({ type: 'links' })
-    return Object.values(data.links || {})
+    return Object.values(data?.links || {})
   }
   const cmsLinks = useAsync(loadCmsLinks)
 

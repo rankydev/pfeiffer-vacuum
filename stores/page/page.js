@@ -12,8 +12,6 @@ export const usePageStore = defineStore('page', () => {
 
   const setPageType = (type) => (pageType.value = type)
 
-  setTimeout(() => (language.value = 'en'), 3000)
-
   return {
     pageType: readonly(pageType),
     language,

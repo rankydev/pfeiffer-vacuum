@@ -47,10 +47,10 @@ export default defineComponent({
       type: Function,
       default: /* istanbul ignore next */ () => true,
     },
-    colored: {
+    variant: {
       type: String,
       default: 'none',
-      validator: (val) => ['none', 'inline', 'breadcrumbs'].includes(val),
+      validator: (val) => ['none', 'inline', 'breadcrumb'].includes(val),
     },
   },
   setup(props) {
@@ -63,7 +63,7 @@ export default defineComponent({
       ...(isAnchorLink.value && { href: props.href }),
       ...(isAnchorLink.value && { target: props.target }),
       ...(!isAnchorLink.value && { to: props.href }),
-      class: `link--${props.colored}`,
+      class: `link--${props.variant}`,
     }))
 
     return {
@@ -84,7 +84,7 @@ export default defineComponent({
     }
   }
 
-  &--breadcrumbs {
+  &--breadcrumb {
     @apply tw-text-pv-grey-16;
 
     &:hover {

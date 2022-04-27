@@ -10,11 +10,4 @@ export class StoryblokApiClient extends StoryblokClient {
       },
     })
   }
-
-  resolveRichtextToHtml(richtext) {
-    if (richtext && typeof richtext === 'object') {
-      return this.richTextResolver.render(richtext)
-    }
-    return richtext + ''
-  }
 }
