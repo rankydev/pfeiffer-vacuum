@@ -1,7 +1,6 @@
 <template>
   <div v-editable="image" class="image-with-source">
     <ResponsiveImage
-      v-if="image"
       class="image-with-source__img"
       provider="storyblok"
       :image="image"
