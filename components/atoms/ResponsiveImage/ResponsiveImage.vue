@@ -52,7 +52,6 @@ export default defineComponent({
     image: {
       type: [Object, String],
       default: () => {},
-      required: true,
     },
     withGradient: {
       type: Boolean,
