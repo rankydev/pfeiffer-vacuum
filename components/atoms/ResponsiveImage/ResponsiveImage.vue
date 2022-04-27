@@ -32,7 +32,6 @@
       }"
       :alt="image.alt || ''"
       :title="image.title || ''"
-      :class="imgStyle"
       :provider="provider"
       :loading="lazy ? 'lazy' : undefined"
     />
@@ -77,18 +76,6 @@ export default defineComponent({
     sizes: {
       type: Array,
       default: () => [],
-    },
-    /**
-     * Styles to enable a different behaviour of the image
-     * TODO do we have a use case here?
-     */
-    imgStyle: {
-      type: [Object, String],
-      default: () => {
-        return {
-          'w-full object-center object-contain': true,
-        }
-      },
     },
     lazy: {
       type: Boolean,
@@ -141,26 +128,18 @@ export default defineComponent({
      * Builds modifiers fro image, size and format
      */
     const buildModifiers = (image, size, format) => {
-      if (!size) {
-        return null
+      if (size) {
+        return {
+          filters: {
+            focal: image?.focus,
+            grayscale: props.blackAndWhite ? '' : false,
+          },
+          format,
+          height: size.height,
+          width: size.width,
+        }
       }
-
-      //TODO
-      const focal = image?.focus ? { focal: image.focus } : {}
-      const filtersModifiers = {
-        filters: {
-          ...focal,
-          grayscale: props.blackAndWhite ? '' : false,
-        },
-      }
-      const formatModifier = format ? { format } : {}
-
-      return {
-        ...filtersModifiers,
-        ...formatModifier,
-        height: size.height,
-        width: size.width,
-      }
+      return null
     }
 
     /**
