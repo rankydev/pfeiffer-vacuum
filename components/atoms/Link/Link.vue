@@ -47,6 +47,10 @@ export default defineComponent({
       type: Function,
       default: /* istanbul ignore next */ () => true,
     },
+    /**
+     * variant defines if any style should be applied to the link itself
+     * @values none, inline, breadcrumb
+     */
     variant: {
       type: String,
       default: 'none',
