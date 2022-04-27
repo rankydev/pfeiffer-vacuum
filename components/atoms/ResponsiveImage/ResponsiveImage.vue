@@ -69,7 +69,7 @@ export default defineComponent({
      */
     defaultSize: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
     /**
      * Array of sizes, containing the width and height for different breakpoints
@@ -105,20 +105,25 @@ export default defineComponent({
     },
   },
   setup(props, { root }) {
-    const aspectRatioString = computed(() =>
-      props.aspectRatio.replace(':', '-')
-    )
-    /**
-     * sorts Array from smallest to biggest breakpoint (sm to xl)
-     */
-    const sortedSizes = computed(() => {
-      return [...props.sizes].sort(function (a, b) {
-        const order = ['xl', 'lg', 'md', 'sm']
+    const sortByBreakpoints = (sizesArr) => {
+      const order = ['xl', 'lg', 'md', 'sm']
+      return sizesArr.sort((a, b) => {
         return (
           order.indexOf(a.media.toLowerCase()) -
           order.indexOf(b.media.toLowerCase())
         )
       })
+    }
+
+    const aspectRatioString = computed(() =>
+      props.aspectRatio.replace(':', '-')
+    )
+
+    /**
+     * sorts Array from smallest to biggest breakpoint (sm to xl)
+     */
+    const sortedSizes = computed(() => {
+      return sortByBreakpoints([...props.sizes])
     })
 
     const grayscaleVal = computed(() => (props.blackAndWhite ? '' : false))
