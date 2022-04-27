@@ -5,6 +5,8 @@ import { useMenuStore } from '~/stores/menu'
 import navigationEntries from './MainNavigationLevel.stories.content.js'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
+import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
+import Button from '~/components/atoms/Button/Button.vue'
 
 let wrapper
 
@@ -25,60 +27,134 @@ function createComponent(propsData = {}, { isMobile, shallow = true } = {}) {
 
 describe('MainNavigationLevel', () => {
   describe('initial state', () => {
-    it('should render all navigation entries', () => {
-      createComponent({ navigationEntries })
-
-      const links = wrapper.findAll('.primary-nav__link')
-
-      expect(links.length).toBe(navigationEntries.length + 1)
-
-      navigationEntries.forEach((entry, idx) => {
-        expect(links.at(idx + 1).text()).toBe(entry.label)
-      })
-    })
-
-    it('should prepend home link', () => {
-      createComponent({ navigationEntries })
-
-      const link = wrapper.find('.primary-nav__element')
-
-      expect(link.attributes('class')).toMatch('md:tw-hidden')
-      expect(link.text()).toBe('Home')
-    })
-
-    it('should render without navigation entries', () => {
+    it('should render given no navigation entries', () => {
       createComponent()
       expect(wrapper.exists).toBeTruthy()
     })
 
-    describe('given navigation entries', () => {
-      it('should render all navigation entries', () => {
+    describe('given no level', () => {
+      const level = 0
+
+      it('should use level 0 as default', () => {
+        createComponent()
+        expect(wrapper.vm.level).toBe(0)
+      })
+
+      it('should add the md hidden class given a MainNavLinkMobile component', () => {
         createComponent({ navigationEntries })
 
-        const links = wrapper.findAll('.primary-nav__label')
+        const elements = wrapper.findAll(`.primary-nav-${level}__element`)
 
-        expect(links.length).toBe(navigationEntries.length + 1)
+        expect(elements.at(0).attributes('class')).toContain('md:tw-hidden')
+      })
 
-        navigationEntries.forEach((entry, idx) => {
-          expect(links.at(idx + 1).text()).toBe(entry.label)
+      describe('given navigation entries', () => {
+        it('should render all navigation entries', () => {
+          createComponent({ navigationEntries })
+
+          const links = wrapper.findAll(`.primary-nav-${level}__label`)
+
+          expect(links.length).toBe(navigationEntries.length)
+
+          navigationEntries.forEach((entry, idx) => {
+            expect(links.at(idx).text()).toBe(entry.label)
+          })
+        })
+
+        it('should not render any button', () => {
+          createComponent()
+          expect(wrapper.findComponent(Button).exists()).toBeFalsy()
+        })
+
+        describe('given navigation sub entries', () => {
+          it('should render AnimatedCollapse component', () => {
+            createComponent({ navigationEntries })
+
+            const animCollapses = wrapper.findAllComponents(AnimatedCollapse)
+
+            expect(animCollapses).toHaveLength(1)
+          })
+
+          it('should render MainNavigationLevel sub components', () => {
+            createComponent({ navigationEntries })
+            expect(
+              wrapper.findComponent(MainNavigationLevel).exists()
+            ).toBeTruthy()
+          })
+
+          it('should add an icon next to the link given mobile true and sub entries', () => {
+            createComponent({ navigationEntries }, { isMobile: true })
+
+            const links = wrapper.findAll(`.primary-nav-${level}__link`)
+
+            expect(links.length).toBe(navigationEntries.length)
+
+            const icon = links.at(1).findComponent(Icon)
+
+            expect(icon.exists()).toBeTruthy()
+            expect(icon.vm.icon).toBe('expand_more')
+          })
         })
       })
+    })
 
-      it('should add level class to DOM', () => {
-        expect(wrapper.attributes('class')).toMatch('primary-nav--level-0')
+    describe('given level > 0', () => {
+      const level = 1
+
+      it('should use the level in classes', () => {
+        createComponent({ navigationEntries, level })
+        expect(wrapper.find(`.primary-nav-${level}`).exists()).toBeTruthy()
       })
 
-      it('should add an icon next to the link when viewport mobile', () => {
-        createComponent({ navigationEntries }, { isMobile: true })
+      describe('given navigation entries', () => {
+        it('should render all navigation entries', () => {
+          createComponent({ navigationEntries, level })
 
-        const links = wrapper.findAll('.primary-nav__link')
+          const links = wrapper.findAll(`.primary-nav-${level}__label`)
 
-        expect(links.length).toBe(navigationEntries.length + 1)
+          expect(links.length).toBe(navigationEntries.length)
 
-        links.wrappers.forEach((link) => {
-          const icon = link.findComponent(Icon)
-          expect(icon.exists()).toBeTruthy()
-          expect(icon.vm.icon).toBe('expand_more')
+          navigationEntries.forEach((entry, idx) => {
+            expect(links.at(idx).text()).toBe(entry.label)
+          })
+        })
+
+        describe('given navigation sub entries', () => {
+          it('should render AnimatedCollapse component given mobile true', () => {
+            createComponent({ navigationEntries, level }, { isMobile: true })
+
+            const animCollapses = wrapper.findAllComponents(AnimatedCollapse)
+
+            expect(animCollapses).toHaveLength(1)
+          })
+
+          it('should render no AnimatedCollapse component given mobile false', () => {
+            createComponent({ navigationEntries, level })
+
+            const animCollapses = wrapper.findAllComponents(AnimatedCollapse)
+
+            expect(animCollapses).toHaveLength(0)
+          })
+
+          it('should render MainNavigationLevel sub components', () => {
+            createComponent({ navigationEntries, level })
+            expect(
+              wrapper.findComponent(MainNavigationLevel).exists()
+            ).toBeTruthy()
+          })
+
+          it('should add an icon next to the link given mobile true and sub entries', () => {
+            createComponent({ navigationEntries, level }, { isMobile: true })
+
+            const links = wrapper.findAll(`.primary-nav-${level}__link`)
+
+            expect(links.length).toBe(navigationEntries.length + 1)
+
+            const icon = links.at(1).findComponent(Icon)
+
+            expect(icon.exists()).toBeTruthy()
+            expect(icon.vm.icon).toBe('expand_more')
+          })
         })
       })
     })
@@ -92,28 +168,36 @@ describe('MainNavigationLevel', () => {
 
           const links = wrapper.findAllComponents(Link)
 
-          links.wrappers.forEach((link) => {
+          links.wrappers.forEach((link, idx) => {
             const $event = eventMock()
             const result = link.vm.beforeNavigation($event)
+            const hasSubEntries =
+              navigationEntries[idx].navigationEntries?.length
 
-            expect(result).toBe(false)
-            expect($event.preventDefault).toBeCalledTimes(1)
-            expect($event.stopPropagation).toBeCalledTimes(1)
+            expect(result).toBe(!hasSubEntries ? null : !hasSubEntries)
+            expect($event.preventDefault).toBeCalledTimes(hasSubEntries ? 1 : 0)
+            expect($event.stopPropagation).toBeCalledTimes(
+              hasSubEntries ? 1 : 0
+            )
           })
         })
 
-        it('should set active elment when link was clicked', () => {
+        it('should set active element when link was clicked', () => {
           createComponent({ navigationEntries })
 
           const links = wrapper.findAllComponents(Link)
 
           links.wrappers.forEach((link, idx) => {
+            const hasSubEntries =
+              navigationEntries[idx].navigationEntries?.length
+
             link.vm.beforeNavigation(eventMock())
-            expect(wrapper.vm.activeElement).toBe(idx)
+
+            expect(wrapper.vm.activeElement).toBe(hasSubEntries ? idx : null)
           })
         })
 
-        it('should set active elment to null when same link was clicked again', () => {
+        it('should set active element to null when same link was clicked again', () => {
           createComponent({ navigationEntries })
 
           const links = wrapper.findAllComponents(Link)
@@ -127,35 +211,7 @@ describe('MainNavigationLevel', () => {
       })
 
       describe('given viewport mobile', () => {
-        it('should not prevent default behavior when link was clicked', () => {
-          createComponent({ navigationEntries }, { isMobile: true })
-
-          const links = wrapper.findAllComponents(Link)
-
-          links.wrappers.forEach((link) => {
-            const $event = eventMock()
-            const result = link.vm.beforeNavigation($event)
-
-            expect(result).toBe(true)
-            expect($event.preventDefault).not.toBeCalled()
-            expect($event.stopPropagation).not.toBeCalled()
-          })
-        })
-
-        it('should set active elment when icon was clicked', async () => {
-          createComponent({ navigationEntries }, { isMobile: true })
-
-          const icons = wrapper.findAllComponents(Icon)
-
-          for (const [idx, icon] of icons.wrappers.entries()) {
-            icon.trigger('click')
-            await wrapper.vm.$nextTick()
-            expect(wrapper.vm.activeElement).toBe(idx)
-            expect(icon.vm.icon).toBe('expand_less')
-          }
-        })
-
-        it('should set active elment to null when same icon was clicked again', () => {
+        it('should set active element to null when same icon was clicked again', () => {
           createComponent({ navigationEntries }, { isMobile: true })
 
           const icons = wrapper.findAllComponents(Icon)
@@ -169,15 +225,17 @@ describe('MainNavigationLevel', () => {
         })
       })
 
-      it('should set active elment to null when menu active status changed to false', async () => {
+      it('should set active element to null when menu active status changed to false', async () => {
         createComponent({ navigationEntries })
 
         const links = wrapper.findAllComponents(Link)
         const menu = useMenuStore()
 
         for (const [idx, link] of links.wrappers.entries()) {
+          const hasSubEntries = navigationEntries[idx].navigationEntries?.length
           link.vm.beforeNavigation(eventMock())
-          expect(wrapper.vm.activeElement).toBe(idx)
+
+          if (hasSubEntries) expect(wrapper.vm.activeElement).toBe(idx)
 
           await wrapper.vm.$nextTick()
           menu.close()

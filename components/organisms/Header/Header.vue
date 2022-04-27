@@ -109,7 +109,7 @@ export default defineComponent({
   }
 
   &__logo {
-    @apply tw-shrink tw-grow;
+    @apply tw-mr-auto;
   }
 
   &__top-navigation {
@@ -138,7 +138,7 @@ export default defineComponent({
     }
 
     &__logo {
-      @apply tw-shrink tw-grow-0;
+      @apply tw-m-0;
     }
 
     &__search-input {

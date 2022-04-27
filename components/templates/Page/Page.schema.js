@@ -37,13 +37,11 @@ export default {
       display_name: 'Content',
       restrict_components: true,
       component_whitelist: [
-        'LinkList',
-        'Richtext',
-        'TextLink',
         'Accordion',
         'AnchorWrapper',
         'VideoPlayer',
         'ContentMediaBlock',
+        'ContentTextBlock',
       ],
     },
     bottom: {

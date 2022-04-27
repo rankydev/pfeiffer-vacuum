@@ -14,7 +14,8 @@ export default {
       display_name: 'Titel',
       required: true,
       max_length: '55',
-      description: 'The title of the video',
+      description:
+        'The title is used for accessibility. It will not be visible on the page.',
       translatable: true,
     },
     description: {

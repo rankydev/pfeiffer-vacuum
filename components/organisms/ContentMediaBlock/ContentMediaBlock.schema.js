@@ -6,17 +6,18 @@ export default {
   schema: {
     headline: {
       type: 'text',
-      required: true,
       max_length: '55',
       translatable: true,
     },
     subline: {
       type: 'text',
-      required: true,
       max_length: '55',
       translatable: true,
     },
-    richtext: RichtextBasic.schema.richtext,
+    richtext: {
+      ...RichtextBasic.schema.richtext,
+      required: true,
+    },
     buttons: {
       type: 'bloks',
       maximum: 2,
@@ -27,13 +28,14 @@ export default {
       type: 'bloks',
       maximum: 1,
       restrict_components: true,
+      required: true,
       component_whitelist: ['VideoPlayer'],
     },
     ratio: {
       type: 'option',
       use_uuid: true,
-      desciption: 'Aspect ratio between both elements',
-      required: true,
+      description: 'Aspect ratio between both elements',
+      exclude_empty_option: true,
       options: [
         {
           value: 'half/half',
@@ -48,12 +50,13 @@ export default {
           name: '66:33',
         },
       ],
+      default_value: 'three/one',
     },
     order: {
       type: 'option',
       use_uuid: true,
-      desciption: 'sort order of text and media item',
-      required: true,
+      description: 'sort order of text and media item',
+      exclude_empty_option: true,
       options: [
         {
           value: 'content/media',
@@ -64,6 +67,7 @@ export default {
           name: 'Media | Text',
         },
       ],
+      default_value: 'content/media',
     },
   },
   image: null,
