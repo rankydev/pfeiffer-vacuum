@@ -4,11 +4,10 @@ import Template from '../Page/PageTemplate.schema.partial.js'
 import Page from '../Page/Page.schema.js'
 
 export default {
-  name: 'ProductContentPage',
-  display_name: 'Product Content Page',
+  name: 'StandardPage',
+  display_name: 'Standard Page',
   schema: {
     title: Page.schema.title,
-    quicklinks: Page.schema.quicklinks,
     stage: {
       type: 'bloks',
       display_name: 'Stage',
@@ -20,13 +19,7 @@ export default {
       type: 'bloks',
       display_name: 'Content',
       restrict_components: true,
-      component_whitelist: [
-        'Accordion',
-        'AnchorWrapper',
-        'VideoPlayer',
-        'ContentMediaBlock',
-        'ContentTextBlock',
-      ],
+      component_whitelist: ['ContentTextBlock'],
     },
     ...Seo,
     ...Social,
