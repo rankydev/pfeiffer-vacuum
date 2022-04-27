@@ -25,14 +25,6 @@ function createComponent(propsData = {}) {
 
 describe('ImageWithSource', () => {
   describe('initial state', () => {
-    const aspectRatioArr = [
-      ['1:1', 'image-with-source__1-1'],
-      ['16:9', 'image-with-source__16-9'],
-      ['2:3', 'image-with-source__2-3'],
-      ['3:2', 'image-with-source__3-2'],
-      ['3:1', 'image-with-source__3-1'],
-    ]
-
     const testArr = [
       [0, 'md'],
       [1, 'lg'],
@@ -41,9 +33,7 @@ describe('ImageWithSource', () => {
 
     test('should render ImageWithSource when no entries are provided', () => {
       createComponent()
-
       const ImageWithSourceWrapper = wrapper.find('.image-with-source')
-
       expect(ImageWithSourceWrapper.exists()).toBeTruthy()
     })
 
@@ -69,19 +59,7 @@ describe('ImageWithSource', () => {
       const imageElement = wrapper.findComponent(ResponsiveImage)
       expect(imageElement.vm.image).toEqual(propsData.image)
     })
-    test.each(aspectRatioArr)(
-      'should have matching aspect-ratio-classes based on selected aspect ratio',
-      (input, output) => {
-        const propsData = {
-          ...defaultProps(),
-          aspectRatio: input,
-        }
-        createComponent(propsData)
 
-        const htmlImage = wrapper.find('.image-with-source__img')
-        expect(htmlImage.attributes('class')).toMatch(output)
-      }
-    )
     test('should have an equal default size to smallest image size', () => {
       const propsData = {
         ...defaultProps(),
