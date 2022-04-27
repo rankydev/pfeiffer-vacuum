@@ -1,50 +1,61 @@
 <template>
-  <picture
-    v-if="image && image.originalFilename && defaultSize"
-    class="responsive-image"
-    :class="[
-      withGradient ? 'responsive-image--with-gradient' : '',
-      aspectRatioString ? `responsive-image__${aspectRatioString}` : '',
-    ]"
-  >
-    <source
-      v-for="size in sortedSizes"
-      :key="'webp_' + size.media"
-      :media="'(min-width: ' + mediaQuery(size.media) + ')'"
-      :srcset="buildSrcset(image, size, 'webp')"
-      type="image/webp"
-    />
-    <source
-      :srcset="buildSrcset(image, defaultSize, 'webp')"
-      type="image/webp"
-    />
-    <source
-      v-for="size in sortedSizes"
-      :key="size.media"
-      :media="'(min-width: ' + mediaQuery(size.media) + ')'"
-      :srcset="buildSrcset(image, size)"
-    />
-    <source :srcset="buildSrcset(image, defaultSize)" />
-    <NuxtImg
-      :src="image.originalFilename"
-      :modifiers="{
-        filters: { focal: image.focus, grayscale: grayscaleVal },
-      }"
-      :alt="image.alt || ''"
-      :title="image.title || ''"
-      :class="imgStyle"
-      :provider="provider"
-      :loading="lazy ? 'lazy' : undefined"
-    />
-  </picture>
+  <div>
+    <picture
+      v-if="image && image.originalFilename && defaultSize"
+      class="responsive-image"
+      :class="[
+        withGradient ? 'responsive-image--with-gradient' : '',
+        aspectRatioString ? `responsive-image__${aspectRatioString}` : '',
+      ]"
+    >
+      <source
+        v-for="size in sortedSizes"
+        :key="'webp_' + size.media"
+        :media="'(min-width: ' + mediaQuery(size.media) + ')'"
+        :srcset="buildSrcset(image, size, 'webp')"
+        type="image/webp"
+      />
+      <source
+        :srcset="buildSrcset(image, defaultSize, 'webp')"
+        type="image/webp"
+      />
+      <source
+        v-for="size in sortedSizes"
+        :key="size.media"
+        :media="'(min-width: ' + mediaQuery(size.media) + ')'"
+        :srcset="buildSrcset(image, size)"
+      />
+      <source :srcset="buildSrcset(image, defaultSize)" />
+      <NuxtImg
+        :src="image.originalFilename"
+        :modifiers="{
+          filters: { focal: image.focus, grayscale: grayscaleVal },
+        }"
+        :alt="image.alt || ''"
+        :title="image.title || ''"
+        :provider="provider"
+        :loading="lazy ? 'lazy' : undefined"
+      />
+    </picture>
+    <div
+      v-else
+      :class="[
+        'responsive-image__placeholder',
+        `responsive-image__${aspectRatioString}`,
+      ]"
+    >
+      <Icon icon="image" size="xlarge" />
+    </div>
+  </div>
 </template>
 
 <script>
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 import { theme } from '~/tailwind.config.js'
+import Icon from '@/components/atoms/Icon/Icon'
 
 export default defineComponent({
-  components: {},
+  components: { Icon },
   props: {
     /**
      * Image object containing source and alt text of the image
@@ -77,18 +88,6 @@ export default defineComponent({
     sizes: {
       type: Array,
       default: () => [],
-    },
-    /**
-     * Styles to enable a different behaviour of the image
-     * TODO do we have a use case here?
-     */
-    imgStyle: {
-      type: [Object, String],
-      default: () => {
-        return {
-          'w-full object-center object-contain': true,
-        }
-      },
     },
     lazy: {
       type: Boolean,
@@ -144,26 +143,18 @@ export default defineComponent({
      * Builds modifiers fro image, size and format
      */
     const buildModifiers = (image, size, format) => {
-      if (!size) {
-        return null
+      if (size) {
+        return {
+          filters: {
+            focal: image?.focus,
+            grayscale: props.blackAndWhite ? '' : false,
+          },
+          format,
+          height: size.height,
+          width: size.width,
+        }
       }
-
-      //TODO
-      const focal = image?.focus ? { focal: image.focus } : {}
-      const filtersModifiers = {
-        filters: {
-          ...focal,
-          grayscale: props.blackAndWhite ? '' : false,
-        },
-      }
-      const formatModifier = format ? { format } : {}
-
-      return {
-        ...filtersModifiers,
-        ...formatModifier,
-        height: size.height,
-        width: size.width,
-      }
+      return null
     }
 
     /**
@@ -247,6 +238,18 @@ export default defineComponent({
       @apply tw-from-pv-black;
       @apply tw-via-pv-transparent;
       @apply tw-to-pv-transparent;
+    }
+  }
+
+  &__placeholder {
+    @apply tw-flex;
+    @apply tw-items-center;
+    @apply tw-justify-center;
+    @apply tw-bg-pv-grey-96;
+    @apply tw-max-w-full;
+
+    span {
+      @apply tw-text-pv-grey-64;
     }
   }
 }
