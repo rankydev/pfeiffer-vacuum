@@ -81,7 +81,8 @@ export default {
     }
 
     @screen xl {
-      height: 35vh;
+      // growing proportionally to width of screen
+      height: 28vw;
     }
 
     &--with-text {
