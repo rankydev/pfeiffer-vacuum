@@ -17,15 +17,14 @@ export default {
 const Template = (args) => ({
   components: { Page },
   setup() {
-    return { args }
+    const content = imprintStandardPageContent.content
+    return { args, content }
   },
   template: `
   <div class="documentation-preview">
-    <Page v-bind="args" />
+    <Page v-bind="{ content }" />
   </div>
 `,
 })
 
-const imprintContent = imprintStandardPageContent.content
 export const Imprint = Template.bind({})
-Imprint.args = { imprintContent }

@@ -15,6 +15,7 @@ export default {
       component_whitelist: ['Stage'],
       maximum: 1,
     },
+    quicklinks: Page.schema.quicklinks,
     body: {
       type: 'bloks',
       display_name: 'Content',
