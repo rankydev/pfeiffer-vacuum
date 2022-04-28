@@ -11,12 +11,8 @@ const argTypes = {
     control: { type: 'array' },
     defaultValue: [smallText],
   },
-  format: {
+  aspectRatio: {
     options: ['1:1', '16:9', '2:3', '3:2', '3:1'],
-    control: { type: 'radio' },
-  },
-  imageWidth: {
-    options: ['1/1', '1/4', '1/2', '1/3', '2/3'],
     control: { type: 'radio' },
   },
 }
