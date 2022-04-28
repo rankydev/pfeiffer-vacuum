@@ -1,5 +1,5 @@
 import Page from '~/components/templates/Page/Page.vue'
-import StandardPageContent from './StandardPage.stories.content'
+import { imprintStandardPageContent } from './StandardPage.stories.content'
 
 export default {
   title: 'Templates/StandardPage',
@@ -7,7 +7,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A standard page of the application',
+        component:
+          'A standard page of the application. This template is used for example for imprint and data privacy.',
       },
     },
   },
@@ -16,14 +17,15 @@ export default {
 const Template = (args) => ({
   components: { Page },
   setup() {
-    const content = StandardPageContent.content
-    return { args, content }
+    return { args }
   },
   template: `
   <div class="documentation-preview">
-    <Page v-bind="{ content }" />
+    <Page v-bind="args" />
   </div>
 `,
 })
 
+const imprintContent = imprintStandardPageContent.content
 export const Imprint = Template.bind({})
+Imprint.args = { imprintContent }
