@@ -1,7 +1,7 @@
 <template>
   <div>
     <picture
-      v-if="image && image.originalFilename && defaultSize"
+      v-if="hasImage"
       class="responsive-image"
       :class="[
         withGradient ? 'responsive-image--with-gradient' : '',
@@ -104,8 +104,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    // const { root } = context
-    // console.log(useContext())
     const { $img } = useContext()
     const sortByBreakpoints = (sizesArr) => {
       const order = ['xl', 'lg', 'md', 'sm']
@@ -120,6 +118,10 @@ export default defineComponent({
     const aspectRatioString = computed(() =>
       props.aspectRatio.replace(':', '-')
     )
+
+    const hasImage = computed(() => {
+      return props.image && props.image.originalFilename && props.defaultSize
+    })
 
     /**
      * sorts Array from smallest to biggest breakpoint (sm to xl)
@@ -193,6 +195,7 @@ export default defineComponent({
       sortedSizes,
       grayscaleVal,
       aspectRatioString,
+      hasImage,
       buildSrcset,
     }
   },
