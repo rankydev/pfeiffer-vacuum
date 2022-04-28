@@ -52,7 +52,7 @@
 <script>
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 import { theme } from '~/tailwind.config.js'
-import Icon from '@/components/atoms/Icon/Icon'
+import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
   components: { Icon },
