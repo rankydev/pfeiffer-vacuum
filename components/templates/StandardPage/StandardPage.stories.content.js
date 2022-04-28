@@ -1,4 +1,4 @@
-import header from '~/components/organisms/Header/Header.stories.content.js'
+import Header from '~/components/organisms/Header/Header.stories.content.js'
 import { footerContent } from '~/components/organisms/Footer/Footer.stories.content.js'
 import { imprintStageContent } from '~/components/molecules/Stage/Stage.stories.content.js'
 import { imprintTextBlock } from '~/components/organisms/ContentTextBlock/ContentTextBlock.stories.content.js'
@@ -10,7 +10,7 @@ export const imprintStandardPageContent = {
   content: {
     body: [imprintTextBlock],
     title: 'Home',
-    header: [header],
+    header: [Header],
     quicklinks: [imprintQuicklinkContent],
     stage: [imprintStageContent],
     footer: [footerContent],
