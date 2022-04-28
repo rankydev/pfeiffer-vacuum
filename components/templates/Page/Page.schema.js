@@ -43,6 +43,7 @@ export default {
         'ImageWithSource',
         'ContentMediaBlock',
         'ContentTextBlock',
+        'TeaserCard',
       ],
     },
     bottom: {

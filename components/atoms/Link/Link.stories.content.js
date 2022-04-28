@@ -1,4 +1,9 @@
+export const href = 'https://www.pfeiffer-vacuum.com/de/'
+export const target = '_blank'
+
 export default {
-  href: 'https://www.pfeiffer-vacuum.com/de/',
-  target: '_blank',
+  href,
+  target,
 }
+
+export const targets = ['_self', '_blank']

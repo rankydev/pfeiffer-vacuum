@@ -7,6 +7,8 @@
       :sizes="imageSizes"
       :default-size="defaultSize"
       :aspect-ratio="aspectRatio"
+      :with-gradient="true"
+      :black-and-white="true"
     />
     <template v-if="description">
       <NuxtDynamic
