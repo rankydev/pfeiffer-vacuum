@@ -1,5 +1,5 @@
 <template>
-  <div class="content-text-block__richtext">
+  <div class="content-text-block">
     <Richtext :richtext="enrichedRichtext" />
   </div>
 </template>
@@ -28,7 +28,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.content-text-block__richtext {
-  @apply tw-py-24;
+.content-text-block {
+  @apply tw-my-16;
 }
 </style>

@@ -25,3 +25,26 @@ export default {
   stageContent: StageContent,
   component: 'Stage',
 }
+
+export const imprintStageContent = {
+  image: {
+    alt: 'Imprint',
+    copyright: '',
+    fieldtype: 'asset',
+    filename: '//a.storyblok.com/f/151661/2000x1193/610fe6b4d9/imprint.jpg',
+    focus: null,
+    name: '',
+    originalFilename:
+      '//a.storyblok.com/f/151661/2000x1193/610fe6b4d9/imprint.jpg',
+    title: 'Imprint',
+  },
+  stageContent: [
+    {
+      subline: '',
+      headline: 'Imprint',
+      component: 'StageContent',
+      teaserText: '',
+    },
+  ],
+  component: 'Stage',
+}
