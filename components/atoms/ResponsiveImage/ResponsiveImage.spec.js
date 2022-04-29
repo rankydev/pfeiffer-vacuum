@@ -76,7 +76,7 @@ describe('ResponsiveImage', () => {
       }
     )
 
-    test.only('should have matching provider', () => {
+    test('should have matching provider', () => {
       const propsData = {
         ...defaultProps(),
       }
@@ -86,18 +86,32 @@ describe('ResponsiveImage', () => {
       expect(ResponsiveImageWrapper.vm.provider).toEqual(propsData.provider)
     })
 
-    test.each(testArr)('should have correct image sizes', (input, output) => {
+    test.only('should be rendered black and white, when props boolean is true', () => {
       const propsData = {
         ...defaultProps(),
+        blackAndWhite: true,
       }
       createComponent(propsData)
-      // const imageElement = wrapper.findComponent(ResponsiveImage)
-      const htmlImage = wrapper.find('.responsive-image')
-      console.log(wrapper.vm.aspectRatio)
-      // expect(htmlImage.vm.sizes[input].width).toEqual(
-      //   parseInt(tailwindconfig.theme.screens[output], 10) - 1
-      // )
+      // const ResponsiveImageWrapper = wrapper.find('.responsive-image')
+      const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
+      console.log(wrapper.vm.blackAndWhite)
+      console.log(ResponsiveImageWrapper.vm.blackAndWhite)
+
+      // expect(ResponsiveImageWrapper.vm.provider).toEqual(propsData.provider)
     })
+
+    // test.each(testArr)('should have correct image sizes', (input, output) => {
+    //   const propsData = {
+    //     ...defaultProps(),
+    //   }
+    //   createComponent(propsData)
+    //   // const imageElement = wrapper.findComponent(ResponsiveImage)
+    //   const htmlImage = wrapper.find('.responsive-image')
+    //   console.log(wrapper.vm.aspectRatio)
+    //   // expect(htmlImage.vm.sizes[input].width).toEqual(
+    //   //   parseInt(tailwindconfig.theme.screens[output], 10) - 1
+    //   // )
+    // })
 
     // test('should have an equal default size to smallest image size', () => {
     //   const propsData = {

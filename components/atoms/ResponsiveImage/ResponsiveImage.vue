@@ -58,6 +58,7 @@ export default defineComponent({
       type: [Object, String],
       default: () => ({}),
     },
+
     /**
      * Parameter if the image should be rendered with a gradient overlay
      */
@@ -65,6 +66,7 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+
     /**
      * Parameter if the image should be rendered in black/white or color
      */
