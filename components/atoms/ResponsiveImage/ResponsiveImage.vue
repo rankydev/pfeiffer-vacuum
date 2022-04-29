@@ -138,11 +138,8 @@ export default defineComponent({
       const gradient = props.withGradient
         ? 'responsive-image--with-gradient'
         : ''
-      const aspectRatio = aspectRatioString.value
-        ? `responsive-image__${aspectRatioString.value}`
-        : ''
 
-      return `responsive-image ${gradient} ${aspectRatio}`
+      return `responsive-image ${gradient}`
     })
 
     /**
