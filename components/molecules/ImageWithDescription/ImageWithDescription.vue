@@ -1,7 +1,7 @@
 <template>
-  <div v-editable="image" class="image-with-source">
+  <div v-editable="image" class="image-with-description">
     <ResponsiveImage
-      class="image-with-source__img"
+      class="image-with-description__img"
       provider="storyblok"
       :image="image"
       :aspect-ratio="aspectRatio"
@@ -10,7 +10,7 @@
       <NuxtDynamic
         v-for="item in description"
         :key="item._uid"
-        class="image-with-source__component"
+        class="image-with-description__component"
         v-bind="item"
         :component="item.uiComponent || item.component"
       />
@@ -23,7 +23,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
 export default defineComponent({
-  name: 'ImageWithSource',
+  name: 'ImageWithDescription',
   components: {
     ResponsiveImage,
   },
