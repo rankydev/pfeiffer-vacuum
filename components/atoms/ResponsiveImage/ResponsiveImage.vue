@@ -56,8 +56,11 @@ export default defineComponent({
      */
     image: {
       type: [Object, String],
-      default: () => {},
+      default: () => ({}),
     },
+    /**
+     * Parameter if the image should be rendered with a gradient overlay
+     */
     withGradient: {
       type: Boolean,
       default: false,
@@ -69,14 +72,24 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    /**
+     * Parameter if lazy loading should be activated
+     */
     lazy: {
       type: Boolean,
       default: true,
     },
+    /**
+     * Parameter for specific image provider
+     * Read more here: https://image.nuxtjs.org/getting-started/providers/
+     */
     provider: {
       type: String,
       default: 'storyblok',
     },
+    /**
+     * Parameter for the aspect ratio of the image
+     */
     aspectRatio: {
       type: String,
       default: '1:1',
@@ -88,6 +101,12 @@ export default defineComponent({
     const configScreensArr = Object.entries(tailwindConfigScreens)
 
     const { $img } = useContext()
+
+    /**
+     * Sort array of sizes by breakpoint descending from xl to sm
+     * @param sizesArr
+     * @return Array sortedSizes
+     */
     const sortByBreakpoints = (sizesArr) => {
       const order = ['xl', 'lg', 'md', 'sm']
       return sizesArr.sort((a, b) => {
@@ -98,19 +117,28 @@ export default defineComponent({
       })
     }
 
+    /**
+     * Manipulate aspect-ratio string for usage in classes
+     */
     const aspectRatioString = computed(() =>
       props.aspectRatio.replace(':', '-')
     )
 
+    /**
+     * Property returns if component has image
+     */
     const hasImage = computed(() => {
       return props.image && props.image.originalFilename && defaultSize
     })
 
+    /**
+     * Return classes of responsive image parent element based on props for gradient and aspect ratio
+     */
     const responsiveImgClasses = computed(() => {
       const gradient = props.withGradient
         ? 'responsive-image--with-gradient'
         : ''
-      const aspectRatio = aspectRatioString
+      const aspectRatio = aspectRatioString.value
         ? `responsive-image__${aspectRatioString}`
         : ''
 
@@ -124,6 +152,9 @@ export default defineComponent({
       return sortByBreakpoints([...imageSizes])
     })
 
+    /**
+     * property for black and white filter of image api
+     */
     const grayscaleVal = computed(() => (props.blackAndWhite ? '' : false))
 
     /**
@@ -143,7 +174,7 @@ export default defineComponent({
         return {
           filters: {
             focal: image?.focus,
-            grayscale: props.blackAndWhite ? '' : false,
+            grayscale: grayscaleVal.value,
           },
           format,
           height: size.height,
@@ -255,6 +286,14 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
+@mixin calculate-aspect-ratio-properties(
+  $aspect-ratio-width,
+  $aspect-ratio-height
+) {
+  width: 100%;
+  height: calc((100vw / $aspect-ratio-width) * $aspect-ratio-height);
+}
+
 .responsive-image {
   @apply tw-relative;
   @apply tw-block;
@@ -267,22 +306,27 @@ export default defineComponent({
 
   &__1-1 {
     aspect-ratio: 1/1;
+    @include calculate-aspect-ratio-properties(1, 1);
   }
 
   &__16-9 {
     aspect-ratio: 16/9;
+    @include calculate-aspect-ratio-properties(16, 9);
   }
 
   &__2-3 {
     aspect-ratio: 2/3;
+    @include calculate-aspect-ratio-properties(2, 3);
   }
 
   &__3-2 {
     aspect-ratio: 3/2;
+    @include calculate-aspect-ratio-properties(3, 2);
   }
 
   &__3-1 {
     aspect-ratio: 3/1;
+    @include calculate-aspect-ratio-properties(3, 1);
   }
 
   &--with-gradient {

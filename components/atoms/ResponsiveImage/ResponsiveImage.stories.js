@@ -1,6 +1,5 @@
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 import ResponsiveImageContent from './ResponsiveImage.stories.content.js'
-import Icon from '~/components/atoms/Icon/Icon'
 
 const argTypes = {
   image: {
@@ -15,27 +14,6 @@ const argTypes = {
     control: { type: 'boolean' },
     defaultValue: false,
   },
-  defaultSize: {
-    control: { type: 'object' },
-    defaultValue: ResponsiveImageContent.defaultSize,
-  },
-  sizes: {
-    control: { type: 'object' },
-    defaultValue: [
-      { media: 'xl', height: '360px', width: '360px' },
-      { media: 'lg', height: '256px', width: '256px' },
-      { media: 'md', height: '192px', width: '192px' },
-      { media: 's', height: '320px', width: '320px' },
-    ],
-  },
-  // sizes: {
-  //   defaultValue: [
-  //     { media: 'xl', height: '360px', width: '360px' },
-  //     { media: 'lg', height: '256px', width: '256px' },
-  //     { media: 'md', height: '192px', width: '192px' },
-  //     { media: 's', height: '320px', width: '320px' },
-  //   ],
-  // },
   lazy: {
     control: { type: 'boolean' },
   },
@@ -58,7 +36,7 @@ export default {
           'This component will render an Image that is handed in from parent component or show a placeholder if the image is not available.',
       },
       source: {
-        code: '<ResponsiveImage provider="storyblok" v-bind="{}" />',
+        code: '<ResponsiveImage v-bind="{ image, withGradient, blackAndWhite, lazy, provider, aspectRatio }" />',
       },
     },
   },
@@ -70,17 +48,7 @@ const Template = (args) => ({
   setup() {
     return { args }
   },
-  template: `<ResponsiveImage v-bind="args"/>`,
-  // template: `<ResponsiveImage
-  //               v-bind="args"
-  //               provider="storyblok"
-  //               :default-size="{ width: '375px', height: '375px' }"
-  //               :sizes="[
-  //                 { media: 'xl', height: '360px', width: '360px' },
-  //                 { media: 'lg', height: '256px', width: '256px' },
-  //                 { media: 'md', height: '192px', width: '192px' },
-  //                 { media: 's', height: '320px', width: '320px' },
-  //               ]"/>`,
+  template: `<ResponsiveImage v-bind="args" />`,
 })
 
 export const Default = Template.bind({})
