@@ -1,5 +1,6 @@
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 import ResponsiveImageContent from './ResponsiveImage.stories.content.js'
+import { aspectRatioOptions } from '/components/molecules/ImageWithSource/ImageWithSource.stories.content'
 
 const argTypes = {
   image: {
@@ -21,7 +22,7 @@ const argTypes = {
     defaultValue: 'storyblok',
   },
   aspectRatio: {
-    options: ['1:1', '16:9', '2:3', '3:2', '3:1'],
+    options: aspectRatioOptions,
     control: { type: 'radio' },
   },
 }

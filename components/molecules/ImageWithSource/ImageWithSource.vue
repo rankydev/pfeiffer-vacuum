@@ -33,7 +33,7 @@ export default defineComponent({
      */
     image: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
     /**
      * Richtext which is rendered underneath the image

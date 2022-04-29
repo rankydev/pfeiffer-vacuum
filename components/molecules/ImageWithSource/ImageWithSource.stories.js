@@ -1,18 +1,21 @@
 import ImageWithSource from '~/components/molecules/ImageWithSource/ImageWithSource.vue'
-import ResponsiveImageContent from './../../atoms/ResponsiveImage/ResponsiveImage.stories.content'
-import { smallText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
+import {
+  aspectRatioOptions,
+  imageWithSourceContent,
+} from '/components/molecules/ImageWithSource/ImageWithSource.stories.content'
 
 const argTypes = {
   image: {
     control: { type: 'object' },
-    defaultValue: ResponsiveImageContent.image,
+    defaultValue: imageWithSourceContent.image.image,
   },
   description: {
     control: { type: 'array' },
-    defaultValue: [smallText],
+    defaultValue: imageWithSourceContent.description,
   },
   aspectRatio: {
-    options: ['1:1', '16:9', '2:3', '3:2', '3:1'],
+    options: aspectRatioOptions,
+    defaultValue: imageWithSourceContent.aspectRatio,
     control: { type: 'radio' },
   },
 }
