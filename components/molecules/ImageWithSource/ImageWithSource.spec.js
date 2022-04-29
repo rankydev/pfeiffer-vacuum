@@ -2,7 +2,6 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import ImageWithSource from './ImageWithSource.vue'
 import imageWithSourceEntries from './ImageWithSource.stories.content'
-// import tailwindconfig from '~/tailwind.config.js'
 
 const defaultProps = () => JSON.parse(JSON.stringify(imageWithSourceEntries))
 

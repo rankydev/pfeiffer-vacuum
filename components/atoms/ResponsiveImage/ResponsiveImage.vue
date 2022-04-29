@@ -58,10 +58,10 @@ export default defineComponent({
       type: [Object, String],
       default: () => {},
     },
-    withGradient: {
-      type: Boolean,
-      default: false,
-    },
+    // withGradient: {
+    //   type: Boolean,
+    //   default: false,
+    // },
     /**
      * Parameter if the image should be rendered in black/white or color
      */
@@ -98,24 +98,21 @@ export default defineComponent({
       })
     }
 
-    // const aspectRatioString = computed(() =>
-    //   props.aspectRatio.replace(':', '-')
-    // )
-
     const hasImage = computed(() => {
       return props.image && props.image.originalFilename && defaultSize
     })
 
     const responsiveImgClasses = computed(() => {
       const aspectRatioString = props.aspectRatio.replace(':', '-')
-      const gradient = props.withGradient
-        ? 'responsive-image--with-gradient'
-        : ''
+      // const gradient = props.withGradient
+      //   ? 'responsive-image--with-gradient'
+      //   : ''
       const aspectRatio = aspectRatioString
         ? `responsive-image__${aspectRatioString}`
         : ''
 
-      return `responsive-image ${gradient} ${aspectRatio}`
+      // return `responsive-image ${gradient} ${aspectRatio}`
+      return `responsive-image ${aspectRatio}`
     })
 
     /**
