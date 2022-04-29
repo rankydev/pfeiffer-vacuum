@@ -40,7 +40,7 @@ export default {
         'Accordion',
         'AnchorWrapper',
         'VideoPlayer',
-        'ImageWithSource',
+        'ImageWithDescription',
         'ContentMediaBlock',
         'ContentTextBlock',
       ],

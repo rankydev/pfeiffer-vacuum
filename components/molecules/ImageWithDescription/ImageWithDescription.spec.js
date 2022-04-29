@@ -1,9 +1,10 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
-import ImageWithSource from './ImageWithSource.vue'
-import imageWithSourceEntries from './ImageWithSource.stories.content'
+import ImageWithDescription from './ImageWithDescription.vue'
+import imageWithDescriptionEntries from './ImageWithDescription.stories.content'
 
-const defaultProps = () => JSON.parse(JSON.stringify(imageWithSourceEntries))
+const defaultProps = () =>
+  JSON.parse(JSON.stringify(imageWithDescriptionEntries))
 
 let wrapper
 
@@ -19,15 +20,17 @@ function createComponent(propsData = {}) {
     propsData,
   }
 
-  wrapper = shallowMount(ImageWithSource, options)
+  wrapper = shallowMount(ImageWithDescription, options)
 }
 
-describe('ImageWithSource', () => {
+describe('ImageWithDescription', () => {
   describe('initial state', () => {
-    test('should render ImageWithSource when no entries are provided', () => {
+    test('should render ImageWithDescription when no entries are provided', () => {
       createComponent()
-      const ImageWithSourceWrapper = wrapper.find('.image-with-source')
-      expect(ImageWithSourceWrapper.exists()).toBeTruthy()
+      const ImageWithDescriptionWrapper = wrapper.find(
+        '.image-with-description'
+      )
+      expect(ImageWithDescriptionWrapper.exists()).toBeTruthy()
     })
 
     test('should render description when it is provided', () => {
@@ -36,7 +39,9 @@ describe('ImageWithSource', () => {
       }
       createComponent(propsData)
 
-      const activeElements = wrapper.findAll('.image-with-source__component')
+      const activeElements = wrapper.findAll(
+        '.image-with-description__component'
+      )
       expect(activeElements.length).toBe(1)
       expect(activeElements.at(0).attributes('richtext')).toBe(
         propsData.description[0].richtext

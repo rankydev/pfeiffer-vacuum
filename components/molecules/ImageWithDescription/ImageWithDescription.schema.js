@@ -1,8 +1,8 @@
 import responsiveImage from './../../atoms/ResponsiveImage/ResponsiveImage.schema.js'
 
 export default {
-  name: 'ImageWithSource',
-  display_name: 'Image with Source',
+  name: 'ImageWithDescription',
+  display_name: 'Image with description',
   schema: {
     description: {
       type: 'bloks',
@@ -48,5 +48,5 @@ export default {
   },
   is_root: false,
   is_nestable: true,
-  real_name: 'ImageWithSource',
+  real_name: 'ImageWithDescription',
 }
