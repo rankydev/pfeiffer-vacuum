@@ -23,5 +23,4 @@ export default {
   },
   provider: 'storyblok',
   component: 'ResponsiveImage',
-  blackAndWhite: false,
 }

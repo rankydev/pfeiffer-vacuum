@@ -1,10 +1,10 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import ImageWithDescription from './ImageWithDescription.vue'
-import imageWithDescriptionEntries from './ImageWithDescription.stories.content'
+import { imageWithDescriptionContent } from './ImageWithDescription.stories.content'
 
 const defaultProps = () =>
-  JSON.parse(JSON.stringify(imageWithDescriptionEntries))
+  JSON.parse(JSON.stringify(imageWithDescriptionContent))
 
 let wrapper
 
