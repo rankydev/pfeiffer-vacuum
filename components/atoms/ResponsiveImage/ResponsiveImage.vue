@@ -118,13 +118,6 @@ export default defineComponent({
     }
 
     /**
-     * Manipulate aspect-ratio string for usage in classes
-     */
-    const aspectRatioString = computed(() =>
-      props.aspectRatio.replace(':', '-')
-    )
-
-    /**
      * Property returns if component has image
      */
     const hasImage = computed(() => {
@@ -135,10 +128,11 @@ export default defineComponent({
      * Return classes of responsive image parent element based on props for gradient and aspect ratio
      */
     const responsiveImgClasses = computed(() => {
+      const aspectRatioString = props.aspectRatio.replace(':', '-')
       const gradient = props.withGradient
         ? 'responsive-image--with-gradient'
         : ''
-      const aspectRatio = aspectRatioString.value
+      const aspectRatio = aspectRatioString
         ? `responsive-image__${aspectRatioString}`
         : ''
 
@@ -277,7 +271,6 @@ export default defineComponent({
       sortedSizes,
       defaultSize,
       grayscaleVal,
-      aspectRatioString,
       hasImage,
       responsiveImgClasses,
       buildSrcset,

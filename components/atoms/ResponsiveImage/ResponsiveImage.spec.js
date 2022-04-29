@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import ResponsiveImage from './ResponsiveImage.vue'
 import responsiveImageEntries from './ResponsiveImage.stories.content'
+import tailwindconfig from '~/tailwind.config.js'
 
 // import Icon from '@/components/atoms/Icon/Icon'
 // import { icon } from '~/components/atoms/Button/Button.stories.content'
@@ -60,16 +61,6 @@ describe('ResponsiveImage', () => {
         propsData.image.originalFilename
       )
     })
-    // test.only('should render a responsive image ', () => {
-    //   const propsData = {
-    //     ...defaultProps(),
-    //     image: undefined,
-    //   }
-    //   createComponent(propsData)
-
-    //   const Placeholder = wrapper.find('.responsive-image__placeholder')
-    //   console.log(Placeholder)
-    // })
 
     test.each(aspectRatioArr)(
       'should have matching aspect-ratio-classes based on selected aspect ratio',
@@ -84,5 +75,78 @@ describe('ResponsiveImage', () => {
         expect(htmlImage.attributes('class')).toMatch(output)
       }
     )
+
+    test.only('should have matching provider', () => {
+      const propsData = {
+        ...defaultProps(),
+      }
+      createComponent(propsData)
+      const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
+
+      expect(ResponsiveImageWrapper.vm.provider).toEqual(propsData.provider)
+    })
+
+    test.each(testArr)('should have correct image sizes', (input, output) => {
+      const propsData = {
+        ...defaultProps(),
+      }
+      createComponent(propsData)
+      // const imageElement = wrapper.findComponent(ResponsiveImage)
+      const htmlImage = wrapper.find('.responsive-image')
+      console.log(wrapper.vm.aspectRatio)
+      // expect(htmlImage.vm.sizes[input].width).toEqual(
+      //   parseInt(tailwindconfig.theme.screens[output], 10) - 1
+      // )
+    })
+
+    // test('should have an equal default size to smallest image size', () => {
+    //   const propsData = {
+    //     ...defaultProps(),
+    //   }
+    //   createComponent(propsData)
+
+    //   // const imageElement = wrapper.findComponent(ResponsiveImage)
+    //   const ResponsiveImageWrapper = wrapper.find('.responsive-image')
+    //   // const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
+    //   console.log(ResponsiveImageWrapper)
+    //   console.log(propsData.image)
+    //   // expect(ResponsiveImageWrapper.vm.src).toEqual(
+    //   //   propsData.image.originalFilename
+    //   // )
+    //   // expect(imageElement.vm.defaultSize.width).toEqual(
+    //   //   imageElement.vm.sizes[0].width
+    //   // )
+    //   // expect(imageElement.vm.defaultSize.height).toEqual(
+    //   //   imageElement.vm.sizes[0].height
+    //   // )
+    // })
+
+    // --> TESTS COPIED FROM IMAGEWITHSOURCE <--
+
+    // test('should have an equal default size to smallest image size', () => {
+    //   const propsData = {
+    //     ...defaultProps(),
+    //   }
+    //   createComponent(propsData)
+
+    //   const imageElement = wrapper.findComponent(ResponsiveImage)
+    //   expect(imageElement.vm.defaultSize.width).toEqual(
+    //     imageElement.vm.sizes[0].width
+    //   )
+    //   expect(imageElement.vm.defaultSize.height).toEqual(
+    //     imageElement.vm.sizes[0].height
+    //   )
+    // })
+
+    // test.each(testArr)('should have correct image sizes', (input, output) => {
+    //   const propsData = {
+    //     ...defaultProps(),
+    //   }
+    //   createComponent(propsData)
+    //   const imageElement = wrapper.findComponent(ResponsiveImage)
+    //   expect(imageElement.vm.sizes[input].width).toEqual(
+    //     parseInt(tailwindconfig.theme.screens[output], 10) - 1
+    //   )
+    // })
   })
 })

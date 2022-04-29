@@ -21,31 +21,6 @@ export default {
       height: 1110,
     },
   },
-  defaultSize: {
-    height: 767,
-    width: 431,
-  },
-  sizes: [
-    {
-      media: 'sm',
-      width: 767,
-      height: 431,
-    },
-    {
-      media: 'md',
-      width: 1279,
-      height: 719,
-    },
-    {
-      media: 'lg',
-      width: 1439,
-      height: 809,
-    },
-    {
-      media: 'xl',
-      width: 1440,
-      height: 810,
-    },
-  ],
+  provider: 'storyblok',
   component: 'ResponsiveImage',
 }

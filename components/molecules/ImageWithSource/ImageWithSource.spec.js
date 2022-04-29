@@ -2,7 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import ImageWithSource from './ImageWithSource.vue'
 import imageWithSourceEntries from './ImageWithSource.stories.content'
-import tailwindconfig from '~/tailwind.config.js'
+// import tailwindconfig from '~/tailwind.config.js'
 
 const defaultProps = () => JSON.parse(JSON.stringify(imageWithSourceEntries))
 
@@ -25,12 +25,6 @@ function createComponent(propsData = {}) {
 
 describe('ImageWithSource', () => {
   describe('initial state', () => {
-    const testArr = [
-      [0, 'md'],
-      [1, 'lg'],
-      [2, 'xl'],
-    ]
-
     test('should render ImageWithSource when no entries are provided', () => {
       createComponent()
       const ImageWithSourceWrapper = wrapper.find('.image-with-source')
@@ -58,32 +52,6 @@ describe('ImageWithSource', () => {
 
       const imageElement = wrapper.findComponent(ResponsiveImage)
       expect(imageElement.vm.image).toEqual(propsData.image)
-    })
-
-    test('should have an equal default size to smallest image size', () => {
-      const propsData = {
-        ...defaultProps(),
-      }
-      createComponent(propsData)
-
-      const imageElement = wrapper.findComponent(ResponsiveImage)
-      expect(imageElement.vm.defaultSize.width).toEqual(
-        imageElement.vm.sizes[0].width
-      )
-      expect(imageElement.vm.defaultSize.height).toEqual(
-        imageElement.vm.sizes[0].height
-      )
-    })
-
-    test.each(testArr)('should have correct image sizes', (input, output) => {
-      const propsData = {
-        ...defaultProps(),
-      }
-      createComponent(propsData)
-      const imageElement = wrapper.findComponent(ResponsiveImage)
-      expect(imageElement.vm.sizes[input].width).toEqual(
-        parseInt(tailwindconfig.theme.screens[output], 10) - 1
-      )
     })
   })
 })
