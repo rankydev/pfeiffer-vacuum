@@ -290,7 +290,7 @@ export default defineComponent({
   $aspect-ratio-height
 ) {
   width: 100%;
-  height: calc((100vw / $aspect-ratio-width) * $aspect-ratio-height);
+  height: calc((100% / $aspect-ratio-width) * $aspect-ratio-height);
 }
 
 .responsive-image {
