@@ -7,7 +7,6 @@ import {
   targets,
 } from '~/components/molecules/TeaserCard/TeaserCard.stories.content.js'
 
-console.log(headline)
 const argTypes = {
   image: {
     control: { type: 'object' },
