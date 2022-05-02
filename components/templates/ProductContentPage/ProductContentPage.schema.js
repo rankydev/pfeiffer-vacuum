@@ -26,6 +26,7 @@ export default {
         'VideoPlayer',
         'ContentMediaBlock',
         'ContentTextBlock',
+        'ImageWithDescription',
       ],
     },
     ...Seo,
