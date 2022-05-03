@@ -1,5 +1,6 @@
 import Seo from './PageSeo.schema.partial.js'
 import Social from './PageSocial.schema.partial.js'
+import Template from './PageTemplate.schema.partial.js'
 
 export default {
   name: 'Page',
@@ -29,7 +30,7 @@ export default {
       type: 'bloks',
       display_name: 'Stage',
       restrict_components: true,
-      component_whitelist: [],
+      component_whitelist: ['Stage'],
       maximum: 1,
     },
     body: {
@@ -40,8 +41,10 @@ export default {
         'Accordion',
         'AnchorWrapper',
         'VideoPlayer',
+        'ImageWithDescription',
         'ContentMediaBlock',
         'ContentTextBlock',
+        'TeaserCard',
       ],
     },
     bottom: {
@@ -52,18 +55,7 @@ export default {
     },
     ...Seo,
     ...Social,
-    'tab-advanced': {
-      type: 'tab',
-      display_name: 'Advanced',
-      keys: ['template'],
-    },
-    template: {
-      type: 'option',
-      use_uuid: true,
-      source: 'internal_stories',
-      folder_slug: '{0}/templates/',
-      filter_content_type: 'PageConfiguration',
-    },
+    ...Template,
   },
   image: null,
   preview_field: null,

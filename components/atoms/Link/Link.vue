@@ -28,7 +28,6 @@ export default defineComponent({
      */
     href: {
       type: String,
-      required: true,
       default: '#',
     },
     /**

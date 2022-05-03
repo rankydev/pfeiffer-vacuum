@@ -1,10 +1,10 @@
-import RichtextBasic from '~/components/atoms/Richtext/RichtextBasic.schema.js'
+import Richtext from '~/components/atoms/Richtext/Richtext.schema.js'
 
 export default {
   name: 'ContentTextBlock',
   display_name: 'Content Text Block',
   schema: {
-    text: RichtextBasic.schema.richtext,
+    text: Richtext.schema.richtext,
   },
   image: null,
   preview_field: null,

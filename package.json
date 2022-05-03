@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "prepare": "node bin/prepare.js",
     "dev": "nuxt",
     "build": "nuxt build",
     "build:standalone": "nuxt build --standalone",
@@ -22,9 +23,10 @@
   },
   "dependencies": {
     "@jest/globals": "^27.5.1",
+    "@nuxt/image": "^0.6.2",
     "@nuxt/ufo": "^0.5.4",
     "@nuxtjs/composition-api": "^0.31.0",
-    "@nuxtjs/storybook": "^4.3.0",
+    "@nuxtjs/storybook": "^4.3.1",
     "@nuxtjs/svg-sprite": "^0.5.2",
     "@txp-cms/storyblok": "^1.6.5",
     "core-js": "^3.21.1",
@@ -42,7 +44,6 @@
   "devDependencies": {
     "@babel/core": "^7.17.8",
     "@babel/preset-env": "^7.16.11",
-    "@nuxt/image": "^0.6.2",
     "@nuxt/postcss8": "^1.1.3",
     "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/stylelint-module": "^4.1.0",
@@ -65,6 +66,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-storybook": "^0.5.11",
     "eslint-plugin-vue": "^7.20.0",
+    "husky": "^7.0.4",
     "jest": "^27.5.1",
     "jest-fail-on-console": "^2.3.0",
     "jsdom-global": "^3.0.2",
@@ -77,5 +79,9 @@
     "stylelint-config-standard": "^25.0.0",
     "stylelint-processor-html": "^1.0.0",
     "tailwindcss": "^3.0.18"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=16.0.0"
   }
 }
