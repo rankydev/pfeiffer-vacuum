@@ -2,9 +2,7 @@
   <Link class="teaser-card" v-bind="{ href, target }">
     <ResponsiveImage
       class="teaser-card__img"
-      provider="storyblok"
       :image="image"
-      :sizes="imageSizes"
       aspect-ratio="3:2"
       :with-gradient="true"
     />
@@ -51,24 +49,6 @@ export default defineComponent({
       default: '_self',
       validator: (val) => ['_self', '_blank'].includes(val),
     },
-  },
-  setup() {
-    const baseSizes = {
-      sm: 90,
-      md: 75,
-      lg: 100,
-    }
-
-    const imageSizes = ['lg', 'md', 'sm'].map((size) => ({
-      media: size,
-      width: baseSizes[size] * 3,
-      height: baseSizes[size] * 2,
-    }))
-
-    return {
-      imageSizes,
-      baseSizes,
-    }
   },
 })
 </script>
