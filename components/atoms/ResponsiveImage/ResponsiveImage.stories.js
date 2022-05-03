@@ -1,5 +1,6 @@
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 import ResponsiveImageContent from './ResponsiveImage.stories.content.js'
+import { aspectRatioOptions } from '/components/molecules/ImageWithDescription/ImageWithDescription.stories.content'
 
 const argTypes = {
   image: {
@@ -14,18 +15,15 @@ const argTypes = {
     control: { type: 'boolean' },
     defaultValue: false,
   },
-  defaultSize: {
-    control: { type: 'object' },
-    defaultValue: ResponsiveImageContent.defaultSize,
-  },
-  sizes: {
-    control: { type: 'object' },
-  },
-  imgStyle: {
-    control: { type: 'object' },
-  },
   lazy: {
     control: { type: 'boolean' },
+  },
+  provider: {
+    defaultValue: 'storyblok',
+  },
+  aspectRatio: {
+    options: aspectRatioOptions,
+    control: { type: 'radio' },
   },
 }
 
@@ -35,10 +33,11 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '',
+        component:
+          'This component will render an Image that is handed in from parent component or show a placeholder if the image is not available.',
       },
       source: {
-        code: '<ResponsiveImage provider="storyblok" v-bind="{}" />',
+        code: '<ResponsiveImage v-bind="{ image, withGradient, blackAndWhite, lazy, provider, aspectRatio }" />',
       },
     },
   },
@@ -50,16 +49,7 @@ const Template = (args) => ({
   setup() {
     return { args }
   },
-  template: `<ResponsiveImage
-                v-bind="args"
-                provider="storyblok"
-                :default-size="{ width: '375px', height: '375px' }"
-                :sizes="[
-                  { media: 'xl', height: '360px', width: '360px' },
-                  { media: 'lg', height: '256px', width: '256px' },
-                  { media: 'md', height: '192px', width: '192px' },
-                  { media: 's', height: '320px', width: '320px' },
-                ]"/>`,
+  template: `<ResponsiveImage v-bind="args" />`,
 })
 
 export const Default = Template.bind({})

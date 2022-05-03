@@ -1,13 +1,6 @@
 <template>
   <div>
-    <picture
-      v-if="image && image.originalFilename && defaultSize"
-      class="responsive-image"
-      :class="[
-        withGradient ? 'responsive-image--with-gradient' : '',
-        aspectRatioString ? `responsive-image__${aspectRatioString}` : '',
-      ]"
-    >
+    <picture v-if="hasImage" :class="responsiveImgClasses">
       <source
         v-for="size in sortedSizes"
         :key="'webp_' + size.media"
@@ -52,6 +45,7 @@
 <script>
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 import { theme } from '~/tailwind.config.js'
+import tailwindconfig from '~/tailwind.config.js'
 import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
@@ -62,12 +56,17 @@ export default defineComponent({
      */
     image: {
       type: [Object, String],
-      default: () => {},
+      default: () => ({}),
     },
+
+    /**
+     * Parameter if the image should be rendered with a gradient overlay
+     */
     withGradient: {
       type: Boolean,
       default: false,
     },
+
     /**
      * Parameter if the image should be rendered in black/white or color
      */
@@ -76,27 +75,23 @@ export default defineComponent({
       default: false,
     },
     /**
-     * Image data for responsive image component
+     * Parameter if lazy loading should be activated
      */
-    defaultSize: {
-      type: Object,
-      default: () => ({}),
-    },
-    /**
-     * Array of sizes, containing the width and height for different breakpoints
-     */
-    sizes: {
-      type: Array,
-      default: () => [],
-    },
     lazy: {
       type: Boolean,
       default: true,
     },
+    /**
+     * Parameter for specific image provider
+     * Read more here: https://image.nuxtjs.org/getting-started/providers/
+     */
     provider: {
       type: String,
       default: 'storyblok',
     },
+    /**
+     * Parameter for the aspect ratio of the image
+     */
     aspectRatio: {
       type: String,
       default: '1:1',
@@ -104,9 +99,16 @@ export default defineComponent({
     },
   },
   setup(props) {
-    // const { root } = context
-    // console.log(useContext())
+    const tailwindConfigScreens = tailwindconfig.theme.screens
+    const configScreensArr = Object.entries(tailwindConfigScreens)
+
     const { $img } = useContext()
+
+    /**
+     * Sort array of sizes by breakpoint descending from xl to sm
+     * @param sizesArr
+     * @return Array sortedSizes
+     */
     const sortByBreakpoints = (sizesArr) => {
       const order = ['xl', 'lg', 'md', 'sm']
       return sizesArr.sort((a, b) => {
@@ -117,17 +119,41 @@ export default defineComponent({
       })
     }
 
+    /**
+     * Property returns if component has image
+     */
+    const hasImage = computed(() => {
+      return props.image && props.image.originalFilename && defaultSize
+    })
+
+    /**
+     * Property returns modified string for aspect ratio classes
+     */
     const aspectRatioString = computed(() =>
       props.aspectRatio.replace(':', '-')
     )
 
     /**
+     * Return classes of responsive image parent element based on props for gradient and aspect ratio
+     */
+    const responsiveImgClasses = computed(() => {
+      const gradient = props.withGradient
+        ? 'responsive-image--with-gradient'
+        : ''
+
+      return `responsive-image ${gradient}`
+    })
+
+    /**
      * sorts Array from smallest to biggest breakpoint (sm to xl)
      */
     const sortedSizes = computed(() => {
-      return sortByBreakpoints([...props.sizes])
+      return sortByBreakpoints([...imageSizes])
     })
 
+    /**
+     * property for black and white filter of image api
+     */
     const grayscaleVal = computed(() => (props.blackAndWhite ? '' : false))
 
     /**
@@ -147,7 +173,7 @@ export default defineComponent({
         return {
           filters: {
             focal: image?.focus,
-            grayscale: props.blackAndWhite ? '' : false,
+            grayscale: grayscaleVal.value,
           },
           format,
           height: size.height,
@@ -188,10 +214,70 @@ export default defineComponent({
       return `${img1x} 1x, ${img2x} 2x`
     }
 
+    /**
+     * Calculate max width of current breakpoint by start width of next breakpoint
+     * @param startWidthNextBreakpoint
+     * @return {number}
+     */
+    const calculateMaxWidthByBreakpoint = (startWidthNextBreakpoint) => {
+      return Math.floor(parseInt(startWidthNextBreakpoint, 10) - 1)
+    }
+
+    /**
+     * Calculate image height by given width and aspect ratio
+     * @return {number}
+     * @param maxWidth
+     * @param aspectRatio
+     */
+    const calculateHeight = (maxWidth, aspectRatio) => {
+      const aspectRatioArr = aspectRatio.split(':')
+      const aspectRatioA = aspectRatioArr[0]
+      const aspectRatioB = aspectRatioArr[1]
+
+      return Math.floor((maxWidth / aspectRatioA) * aspectRatioB)
+    }
+
+    /**
+     * calculate width, as well as height of image for each breakpoint
+     * @return Array
+     */
+    const imageSizes = configScreensArr.map((objectEntry, index) => {
+      if (index !== 3) {
+        const startWidthNextBreakpoint = configScreensArr[index + 1][1]
+        const maxWidthBreakpoint = calculateMaxWidthByBreakpoint(
+          startWidthNextBreakpoint
+        )
+
+        return {
+          media: objectEntry[0],
+          width: maxWidthBreakpoint,
+          height: calculateHeight(maxWidthBreakpoint, props.aspectRatio),
+        }
+      } else {
+        // last entry is xl, no next element given, 1440px is maxWidth
+        return {
+          media: objectEntry[0],
+          width: 1440,
+          height: calculateHeight(1440, props.aspectRatio),
+        }
+      }
+    })
+
+    /**
+     * default size of the image using sm-breakpoint
+     */
+    const defaultSize = {
+      width: imageSizes[0].width,
+      height: imageSizes[0].height,
+    }
+
     return {
       mediaQuery,
       sortedSizes,
+      defaultSize,
       grayscaleVal,
+      hasImage,
+      responsiveImgClasses,
       aspectRatioString,
       buildSrcset,
     }
@@ -199,6 +285,14 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
+@mixin calculate-aspect-ratio-properties(
+  $aspect-ratio-width,
+  $aspect-ratio-height
+) {
+  width: 100%;
+  height: calc((100% / $aspect-ratio-width) * $aspect-ratio-height);
+}
+
 .responsive-image {
   @apply tw-relative;
   @apply tw-block;
@@ -211,22 +305,27 @@ export default defineComponent({
 
   &__1-1 {
     aspect-ratio: 1/1;
+    @include calculate-aspect-ratio-properties(1, 1);
   }
 
   &__16-9 {
     aspect-ratio: 16/9;
+    @include calculate-aspect-ratio-properties(16, 9);
   }
 
   &__2-3 {
     aspect-ratio: 2/3;
+    @include calculate-aspect-ratio-properties(2, 3);
   }
 
   &__3-2 {
     aspect-ratio: 3/2;
+    @include calculate-aspect-ratio-properties(3, 2);
   }
 
   &__3-1 {
     aspect-ratio: 3/1;
+    @include calculate-aspect-ratio-properties(3, 1);
   }
 
   &--with-gradient {

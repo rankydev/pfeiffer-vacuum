@@ -1,5 +1,6 @@
 import Seo from './PageSeo.schema.partial.js'
 import Social from './PageSocial.schema.partial.js'
+import Template from './PageTemplate.schema.partial.js'
 
 export default {
   name: 'Page',
@@ -40,7 +41,7 @@ export default {
         'Accordion',
         'AnchorWrapper',
         'VideoPlayer',
-        'ImageWithSource',
+        'ImageWithDescription',
         'ContentMediaBlock',
         'ContentTextBlock',
         'TeaserCard',
@@ -54,18 +55,7 @@ export default {
     },
     ...Seo,
     ...Social,
-    'tab-advanced': {
-      type: 'tab',
-      display_name: 'Advanced',
-      keys: ['template'],
-    },
-    template: {
-      type: 'option',
-      use_uuid: true,
-      source: 'internal_stories',
-      folder_slug: '{0}/templates/',
-      filter_content_type: 'PageConfiguration',
-    },
+    ...Template,
   },
   image: null,
   preview_field: null,
