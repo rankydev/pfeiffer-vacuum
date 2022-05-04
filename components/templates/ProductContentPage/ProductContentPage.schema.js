@@ -27,6 +27,7 @@ export default {
         'ContentMediaBlock',
         'ContentTextBlock',
         'ImageWithDescription',
+        'Carousel',
       ],
     },
     ...Seo,

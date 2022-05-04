@@ -1,12 +1,22 @@
 <template>
   <VueSlickCarousel
+    v-if="slides.length"
     ref="carousel"
     v-bind="settings"
     :center-mode="centerMode"
     :infinite="infinite"
+    :autoplay="autoplay"
+    :dots="dots"
     class="carousel"
   >
     <slot name="carousel" />
+    <NuxtDynamic
+      v-for="slide in slides"
+      :key="slide._uid"
+      v-editable="slide"
+      v-bind="slide"
+      :component="slide.uiComponent || slide.component"
+    />
     <template #prevArrow>
       <Button
         class="carousel__prev"
@@ -28,12 +38,7 @@
   </VueSlickCarousel>
 </template>
 <script>
-import {
-  defineComponent,
-  ref,
-  onMounted,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 import VueSlickCarousel from 'vue-slick-carousel'
 import Button from '~/components/atoms/Button/Button'
 
@@ -48,14 +53,21 @@ export default defineComponent({
       type: Object,
       default: () => {
         return {
-          autoplay: false,
           autoplaySpeed: 5000,
-          dots: true,
+          adaptiveHeight: true,
           dotsClass: 'slick-dots custom-dot-class',
           edgeFriction: 0.35,
           pauseOnFocus: true,
           speed: 800,
           arrows: true,
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          initialSlide: 0,
+          responsive: [
+            {
+              breakpoint: 1024,
+            },
+          ],
         }
       },
     },
@@ -65,17 +77,29 @@ export default defineComponent({
     },
     infinite: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+    autoplay: {
+      type: Boolean,
+      default: false,
+    },
+    dots: {
+      type: Boolean,
+      default: false,
+    },
+    slides: {
+      type: Array,
+      default: () => [],
     },
   },
   setup(props) {
     const carousel = ref(null)
-
     const currentSlide = computed(
       () => carousel.value.$refs.innerSlider.currentSlide
     )
 
     return {
+      carousel,
       currentSlide,
     }
   },
@@ -83,8 +107,6 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .carousel {
-  @apply tw-h-80;
-
   &__prev,
   &__next {
     @apply tw-absolute;
@@ -103,6 +125,14 @@ export default defineComponent({
 
   &__next {
     @apply tw-right-0;
+  }
+
+  .slick-slide {
+    @apply tw-px-2;
+
+    .teaser-card {
+      @apply tw-h-full;
+    }
   }
 }
 </style>
