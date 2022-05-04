@@ -43,6 +43,7 @@ lint:
         - report/
       policy: push
   script:
+    - npm ci --cache .npm --prefer-offline
     - npm run lint:ci
   artifacts:
     when: always
@@ -66,6 +67,7 @@ test:
         - coverage/
       policy: push
   script:
+    - npm ci --cache .npm --prefer-offline
     - NODE_ENV=test
     - npm test
   artifacts:
@@ -149,9 +151,9 @@ build-docker-image-frontend:
   except:
     - develop
 
-build-docker-image-lsg:
+.build-docker-image-lsg:
   extends: .build-docker-image
-  needs: ["test", "lint"]
+  image: docker:git
   cache:
     - key: "${CI_PIPELINE_ID}-build-lsg"
       paths:
@@ -159,6 +161,10 @@ build-docker-image-lsg:
       policy: pull
   script:
     - docker build -t ${DOCKER_IMAGE_NAME}:lsg-${CI_COMMIT_REF_SLUG} -f docker/DockerfileLSG .
+
+build-docker-image-lsg:
+  extends: .build-docker-image-lsg
+  needs: ["test", "lint"]
   except:
     - develop
 
@@ -171,15 +177,8 @@ build-docker-image-frontend-develop:
     - develop
 
 build-docker-image-lsg-develop:
-  extends: .build-docker-image
+  extends: .build-docker-image-lsg
   needs: ["sonar-qube"]
-  cache:
-    - key: "${CI_PIPELINE_ID}-build-lsg"
-      paths:
-        - lsg-public/
-      policy: pull
-  script:
-    - docker build -t ${DOCKER_IMAGE_NAME}:lsg-${CI_COMMIT_REF_SLUG} -f docker/DockerfileLSG .
   only:
     - develop
 
