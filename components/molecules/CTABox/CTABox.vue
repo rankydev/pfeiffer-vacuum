@@ -1,5 +1,5 @@
 <template>
-  <div class="cto">
+  <div class="cta">
     <div>
       <ResponsiveImage
         provider="storyblok"
@@ -8,22 +8,22 @@
       />
     </div>
 
-    <div class="cto__sectionBelow">
-      <div class="cto__sectionBelowContent">
-        <div class="cto__sectionBelowText">
+    <div class="cta__sectionBelow">
+      <div class="cta__sectionBelowContent">
+        <div class="cta__sectionBelowText">
           <NuxtDynamic
             v-for="item in description"
             :key="item._uid"
             v-bind="item"
-            class="cto__description"
+            class="cta__description"
             :component="item.uiComponent || item.component"
           />
         </div>
-        <div class="cto__sectionBelowButton">
+        <div class="cta__sectionBelowButton">
           <NuxtDynamic
             v-for="item in buttons"
             :key="item._uid"
-            class="cto__button"
+            class="cta__button"
             v-bind="item"
             :component="item.uiComponent || item.component"
           />
@@ -34,32 +34,20 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-
-const DEFAULT_DATA = {
-  image:
-    'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
-  icon: '',
-  sources: [],
-  iframeAttributes: {},
-}
+import { defineComponent, reactive } from '@nuxtjs/composition-api'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
 export default defineComponent({
-  components: {},
+  components: {
+    ResponsiveImage,
+  },
   props: {
     /**
      * The image
      */
     image: {
-      type: Object,
-      default: () => ({}),
-    },
-    /**
-     * The title for the iframe and alt attribute for preview image
-     */
-    title: {
-      type: String,
-      default: 'CTA Box',
+      type: [Object, String],
+      default: () => {},
     },
     /**
      * Subcomponent which is rendered underneath the image
@@ -76,14 +64,21 @@ export default defineComponent({
       default: () => [],
     },
   },
-  setup(props) {},
 })
 </script>
 
 <style lang="scss">
-.cto {
+.cta {
   @apply tw-overflow-hidden;
   @apply tw-rounded-lg;
+
+  .responsive-image {
+    img {
+      @apply tw-rounded-t-lg;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
 
   &__sectionBelow {
     @apply tw-bg-pv-grey-16;

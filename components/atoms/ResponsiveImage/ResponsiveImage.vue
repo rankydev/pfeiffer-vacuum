@@ -95,7 +95,8 @@ export default defineComponent({
     aspectRatio: {
       type: String,
       default: '1:1',
-      validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
+      validator: (val) =>
+        ['1:1', '16:9', '2:3', '3:2', '3:1', '2:1'].includes(val),
     },
   },
   setup(props) {
@@ -326,6 +327,11 @@ export default defineComponent({
   &__3-1 {
     aspect-ratio: 3/1;
     @include calculate-aspect-ratio-properties(3, 1);
+  }
+
+  &__2-1 {
+    aspect-ratio: 2/1;
+    @include calculate-aspect-ratio-properties(2, 1);
   }
 
   &--with-gradient {

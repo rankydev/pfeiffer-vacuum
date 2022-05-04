@@ -1,5 +1,5 @@
 import CTABox from '~/components/molecules/CTABox/CTAbox.vue'
-import { image, title, description, buttons } from './CTABox.stories.content.js'
+import { image, description, buttons } from './CTABox.stories.content.js'
 
 export default {
   title: 'Molecules/CTABox',
@@ -8,7 +8,7 @@ export default {
     docs: {
       description: {
         component:
-          'The CTA Box component is used to display a combination of an image and a section below that contains text and buttons',
+          'The CTA Box component is used to display a combination of an image and a section below that contains text and buttons. The buttons should always be filled and inverted. ',
       },
       source: {
         code: '<CTABox v-bind="{ image, title, description, buttons }"  />',
@@ -30,4 +30,4 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
-Default.args = { image, title, description, buttons }
+Default.args = { image, description, buttons }
