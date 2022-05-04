@@ -112,8 +112,8 @@ export default defineComponent({
   &__next {
     @apply tw-absolute;
     @apply tw-top-1/2;
-    @apply tw-translate-y-1/2;
     @apply tw-z-10;
+    transform: translateY(-50%);
 
     &::before {
       @apply tw-content-none;
