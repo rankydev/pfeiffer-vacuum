@@ -6,6 +6,17 @@
 build:
   extends: .node-image
   stage: build
+  cache:
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: push
+    - key: "${CI_PIPELINE_ID}-build-lsg"
+      paths:
+        - lsg-public/
+      policy: push
   script:
     - npm ci --cache .npm --prefer-offline
     - npm run build
@@ -20,6 +31,17 @@ lint:
   extends: .node-image
   stage: test
   needs: ["build"]
+  cache:
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: pull
+    - key: "${CI_PIPELINE_ID}-report"
+      paths:
+        - report/
+      policy: push
   script:
     - npm ci --cache .npm --prefer-offline
     - npm run lint:ci
@@ -33,6 +55,17 @@ test:
   extends: .node-image
   stage: test
   needs: ["build"]
+  cache:
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: pull
+    - key: "${CI_PIPELINE_ID}-coverage"
+      paths:
+        - coverage/
+      policy: push
   script:
     - npm ci --cache .npm --prefer-offline
     - NODE_ENV=test
@@ -49,8 +82,23 @@ sonar-qube:
   image: sonarsource/sonar-scanner-cli
   stage: analysis
   needs: ["test", "lint"]
+  cache:
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: pull
+    - key: "${CI_PIPELINE_ID}-report"
+      paths:
+        - report/
+      policy: pull
+    - key: "${CI_PIPELINE_ID}-coverage"
+      paths:
+        - coverage/
+      policy: pull
   script:
-    - echo "Deaktiviert zum Pipeline fixen" # sonar-scanner -Dsonar.login=${SONARQUBE_ACCESS_TOKEN}
+    - sonar-scanner -Dsonar.login=${SONARQUBE_ACCESS_TOKEN}
   tags:
     - docker_runner
   only:
@@ -106,6 +154,11 @@ build-docker-image-frontend:
 .build-docker-image-lsg:
   extends: .build-docker-image
   image: docker:git
+  cache:
+    - key: "${CI_PIPELINE_ID}-build-lsg"
+      paths:
+        - lsg-public/
+      policy: pull
   script:
     - docker build -t ${DOCKER_IMAGE_NAME}:lsg-${CI_COMMIT_REF_SLUG} -f docker/DockerfileLSG .
 
