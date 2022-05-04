@@ -2,7 +2,7 @@
   <VueSlickCarousel
     v-if="slides.length"
     ref="carousel"
-    v-bind="settings"
+    v-bind="{ ...defaultSettings, ...settings }"
     :center-mode="centerMode"
     :infinite="infinite"
     :autoplay="autoplay"
@@ -51,25 +51,7 @@ export default defineComponent({
   props: {
     settings: {
       type: Object,
-      default: () => {
-        return {
-          autoplaySpeed: 5000,
-          adaptiveHeight: true,
-          dotsClass: 'slick-dots custom-dot-class',
-          edgeFriction: 0.35,
-          pauseOnFocus: true,
-          speed: 800,
-          arrows: true,
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          initialSlide: 0,
-          responsive: [
-            {
-              breakpoint: 1024,
-            },
-          ],
-        }
-      },
+      default: () => {},
     },
     centerMode: {
       type: Boolean,
@@ -98,9 +80,28 @@ export default defineComponent({
       () => carousel.value.$refs.innerSlider.currentSlide
     )
 
+    const defaultSettings = {
+      autoplaySpeed: 5000,
+      adaptiveHeight: true,
+      dotsClass: 'slick-dots custom-dot-class',
+      edgeFriction: 0.35,
+      pauseOnFocus: true,
+      speed: 800,
+      arrows: true,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      initialSlide: 0,
+      responsive: [
+        {
+          breakpoint: 1024,
+        },
+      ],
+    }
+
     return {
       carousel,
       currentSlide,
+      defaultSettings,
     }
   },
 })
