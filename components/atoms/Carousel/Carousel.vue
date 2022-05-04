@@ -93,7 +93,16 @@ export default defineComponent({
       initialSlide: 0,
       responsive: [
         {
-          breakpoint: 1024,
+          breakpoint: 1280,
+          settings: {
+            slidesToShow: 3,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 1,
+          },
         },
       ],
     }
