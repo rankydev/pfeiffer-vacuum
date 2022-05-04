@@ -1,7 +1,67 @@
+########################################################################################################################
+# begin frontend-build image
+########################################################################################################################
+FROM node:16-alpine  as frontend-build
+
+# !!! IMPORTANT NOTE !!!
+# ENV variables will be set by either
+#   - pipeline
+#   - docker-compose
+#   - orchestrating environment, i.e., kubernetes
+
+# port of frontend application
+ARG PORT=3000
+ARG HOST='0.0.0.0'
+
+ARG BASE_URL='https://localhost:3000'
+ARG DOMAIN='https://localhost:3000'
+
+# please read the note above
+ARG NODE_ENV=development
+
+# please read the note above
+ARG DEFAULT_LANGUAGE_CODE
+
+# please read the note above
+ARG STORYBLOK_OAUTH_TOKEN
+
+ARG STORYBLOK_ACCESS_TOKEN
+ARG STORYBLOK_SPACE_ID
+ARG STORYBLOK_VERSION
+
+# please read the note above
+ARG STORYBLOK_RESOLVE_RELATIONS
+ARG STORYBLOK_RESOLVE_LINKS
+ARG STORYBLOK_RESOLVE_ASSETS
+ARG STORYBLOK_CONTENT_TYPES
+ARG STORYBLOK_EXCLUDE_ROUTES
+
+ARG CI_COMMIT_SHORT_SHA
+ARG CI_COMMIT_REF_NAME
+ARG CI_PROJECT_URL
+
+RUN \
+  apk update \
+  && apk add gettext
+
+WORKDIR /src/
+
+ADD . ./
+
+RUN cat .env.template | envsubst >> .env
+
+RUN mkdir -p build_logs
+
+RUN \
+  npm install &> build_logs/npm_install.log \
+  && npm ci  &> build_logs/npm_ci.log \
+  && npm run build  &> build_logs/npm_build.log \
+  && npm run lsg:build &> build_logs/npm_lsg_build.log
+
 FROM nginx:alpine
 
 # copy lsg bundle
-COPY lsg-public/ /usr/share/nginx/html
+COPY --from=frontend-build lsg-public/ /usr/share/nginx/html
 
 ENV CI_COMMIT_SHORT_SHA="${CI_COMMIT_SHORT_SHA}"
 ENV CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}"
