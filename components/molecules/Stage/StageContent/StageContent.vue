@@ -82,6 +82,10 @@ export default {
     @apply tw-px-8;
   }
 
+  @screen xl {
+    @apply tw-px-16;
+  }
+
   &__headline,
   &__subline,
   &__description {
