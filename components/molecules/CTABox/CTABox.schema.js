@@ -27,7 +27,7 @@ export default {
     },
     buttons: {
       type: 'bloks',
-      maximum: 2,
+      maximum: 1,
       restrict_components: true,
       component_whitelist: ['Button'],
     },

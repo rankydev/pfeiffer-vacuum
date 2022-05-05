@@ -1,4 +1,4 @@
-import CTABox from '~/components/molecules/CTABox/CTAbox.vue'
+import CTABox from '~/components/molecules/CTABox/CTABox.vue'
 import { image, description, buttons } from './CTABox.stories.content.js'
 
 export default {
