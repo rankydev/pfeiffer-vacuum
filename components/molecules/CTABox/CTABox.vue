@@ -21,7 +21,7 @@
         </div>
         <div class="cta__sectionBelowButton">
           <NuxtDynamic
-            v-for="item in buttons"
+            v-for="item in button"
             :key="item._uid"
             class="cta__button"
             v-bind="item"
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { defineComponent, reactive } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
 export default defineComponent({
@@ -59,7 +59,7 @@ export default defineComponent({
     /**
      * buttons appended to the richtext
      */
-    buttons: {
+    button: {
       type: Array,
       default: () => [],
     },

@@ -15,7 +15,7 @@ export default {
       component_whitelist: ['RichtextBasic'],
       display_name: 'Description',
     },
-    buttons: {
+    button: {
       type: 'bloks',
       maximum: 1,
       restrict_components: true,
