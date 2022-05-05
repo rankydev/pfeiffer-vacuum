@@ -1,21 +1,11 @@
 export default {
   name: 'CTABox',
-  display_name: 'CTABox',
+  display_name: 'Call to action Box',
   schema: {
     image: {
       type: 'asset',
       display_name: 'Image',
       required: true,
-      description: 'Please enter the image title',
-      translatable: true,
-    },
-    title: {
-      type: 'text',
-      display_name: 'Titel',
-      required: true,
-      max_length: '55',
-      description:
-        'The title is used for accessibility. It will not be visible on the page.',
       translatable: true,
     },
     description: {
