@@ -9,7 +9,7 @@ import {
   ratios,
   buttons,
   richtext,
-} from './ConentMediaBlock.stories.content.js'
+} from './ContentMediaBlock.stories.content.js'
 
 const argTypes = {
   ratio: {

@@ -1,13 +1,13 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
-import ConentMediaBlock from './ContentMediaBlock.vue'
+import ContentMediaBlock from './ContentMediaBlock.vue'
 import {
   headline,
   subline,
   media,
   buttons,
   richtext,
-} from './ConentMediaBlock.stories.content.js'
+} from './ContentMediaBlock.stories.content.js'
 
 let wrapper
 
@@ -23,7 +23,7 @@ function createComponent(propsData = {}) {
     propsData,
   }
 
-  wrapper = shallowMount(ConentMediaBlock, options)
+  wrapper = shallowMount(ContentMediaBlock, options)
 }
 
 describe('ConentMediaBlock', () => {
