@@ -95,7 +95,8 @@ export default defineComponent({
     aspectRatio: {
       type: String,
       default: '1:1',
-      validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
+      validator: (val) =>
+        ['1:1', '16:9', '2:3', '3:2', '3:1', '2:1'].includes(val),
     },
   },
   setup(props) {
@@ -290,7 +291,7 @@ export default defineComponent({
   $aspect-ratio-height
 ) {
   width: 100%;
-  height: calc((100vw / $aspect-ratio-width) * $aspect-ratio-height);
+  height: calc((100% / $aspect-ratio-width) * $aspect-ratio-height);
 }
 
 .responsive-image {

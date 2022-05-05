@@ -7,7 +7,7 @@ import {
 const argTypes = {
   image: {
     control: { type: 'object' },
-    defaultValue: imageWithDescriptionContent.image.image,
+    defaultValue: imageWithDescriptionContent.image,
   },
   description: {
     control: { type: 'array' },
