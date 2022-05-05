@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import ConentMediaBlock from './ContentMediaBlock.vue'
 import {
@@ -13,7 +13,17 @@ let wrapper
 
 function createComponent(propsData = {}) {
   const stubs = { NuxtDynamic: true }
-  wrapper = shallowMount(ConentMediaBlock, { propsData, stubs })
+  const localVue = createLocalVue()
+  const editable = (el, key) => (el.innerText = key.value)
+  localVue.directive('editable', editable)
+
+  const options = {
+    localVue,
+    stubs,
+    propsData,
+  }
+
+  wrapper = shallowMount(ConentMediaBlock, options)
 }
 
 describe('ConentMediaBlock', () => {
