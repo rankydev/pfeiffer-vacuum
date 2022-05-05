@@ -1,20 +1,13 @@
 import StoryblokClient from 'storyblok-js-client'
 
-export class StoryblokApiClient {
+export class StoryblokApiClient extends StoryblokClient {
   constructor() {
-    this.client = new StoryblokClient({
+    super({
       accessToken: process.env.STORYBLOK_ACCESS_TOKEN,
       cache: {
         clear: 'auto',
         type: 'memory',
       },
     })
-  }
-
-  resolveRichtextToHtml(richtext) {
-    if (richtext && typeof richtext === 'object') {
-      return this.client.richTextResolver.render(richtext)
-    }
-    return richtext + ''
   }
 }

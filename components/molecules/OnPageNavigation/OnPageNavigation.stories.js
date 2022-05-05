@@ -1,5 +1,8 @@
 import OnPageNavigation from './OnPageNavigation'
 import { quicklinks } from './OnPageNavigation.stories.content'
+import { useCmsStore } from '~/stores/cms'
+import { watch } from '@nuxtjs/composition-api'
+import cmsLinks from '~/components/molecules/Breadcrumb/Breadcrumb.stories.content.js'
 
 export default {
   title: 'Molecules/OnPage Navigation',
@@ -17,15 +20,24 @@ export default {
   },
 }
 
-const Template = () => ({
+const Template = (args) => ({
   components: { OnPageNavigation },
   setup() {
-    const mockedLinks = quicklinks
-    return { mockedLinks }
+    const cmsStore = useCmsStore()
+
+    watch(
+      () => cmsStore.cmsLinks,
+      () => {
+        if (cmsStore.cmsLinks?.length === cmsLinks.length) return
+        cmsStore.cmsLinks = cmsLinks
+      },
+      { immediate: true }
+    )
+    return { args }
   },
   template: `
   <div class="documentation-preview">
-    <OnPageNavigation v-bind="{ quicklinks: mockedLinks }" />
+    <OnPageNavigation v-bind="args" />
   </div>
 `,
 })
