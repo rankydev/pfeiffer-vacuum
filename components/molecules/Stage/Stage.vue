@@ -6,13 +6,12 @@
         class="stage__content-block"
         v-bind="stageContent[0]"
       />
-      <NuxtImg
+      <ResponsiveImage
         v-if="(image || {}).originalFilename"
-        preload
+        :image="image"
         class="stage__image"
         :class="`stage__image--${stageContent.length ? 'with-text' : 'full'}`"
-        :alt="image.alt"
-        :src="image.originalFilename"
+        aspect-ratio="16:9"
       />
     </div>
   </div>
@@ -20,11 +19,13 @@
 
 <script>
 import StageContent from '~/components/molecules/Stage/StageContent/StageContent.vue'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
 export default {
   name: 'Stage',
   components: {
     StageContent,
+    ResponsiveImage,
   },
   props: {
     /**
@@ -53,7 +54,6 @@ export default {
   &__inner-wrapper {
     @apply tw-flex;
     @apply tw-flex-wrap-reverse;
-    @apply tw-container;
     @apply tw-px-0;
 
     @screen md {
@@ -71,16 +71,6 @@ export default {
   }
 
   &__image {
-    height: 180px;
-
-    @screen md {
-      height: 372px;
-    }
-
-    @screen lg {
-      height: 400px;
-    }
-
     &--with-text {
       @apply tw-w-full;
       @apply tw-object-cover;
@@ -94,6 +84,28 @@ export default {
     &--full {
       @apply tw-w-full;
       @apply tw-object-cover;
+    }
+
+    .responsive-image {
+      img {
+        @apply tw-w-full;
+        @apply tw-rounded-none;
+        @apply tw-object-cover;
+        height: 180px;
+
+        @screen md {
+          height: 372px;
+        }
+
+        @screen lg {
+          height: 400px;
+        }
+
+        @screen xl {
+          // growing proportionally to width of screen
+          height: 28vw;
+        }
+      }
     }
   }
 }
