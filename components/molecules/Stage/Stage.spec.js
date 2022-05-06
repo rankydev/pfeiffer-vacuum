@@ -31,13 +31,6 @@ describe('Stage', () => {
         expect(domStageContent.exists()).toBeFalsy()
       })
 
-      it('should render a NuxtImg component and provide correct data', () => {
-        const nuxtImg = wrapper.find('.stage__image')
-
-        expect(nuxtImg.attributes('alt')).toBe(content.image.alt)
-        expect(nuxtImg.attributes('src')).toBe(content.image.originalFilename)
-      })
-
       it('should add the full class modifier to the NuxtImg component', () => {
         const nuxtImg = wrapper.find('.stage__image')
 
@@ -57,13 +50,6 @@ describe('Stage', () => {
         expect(domStageContent.vm.subline).toBe(stageContent.subline)
         expect(domStageContent.vm.teaserText).toBe(stageContent.teaserText)
         expect(domStageContent.vm.buttons).toEqual(stageContent.buttons)
-      })
-
-      it('should render a NuxtImg component and provide correct data', () => {
-        const nuxtImg = wrapper.find('.stage__image')
-
-        expect(nuxtImg.attributes('alt')).toBe(content.image.alt)
-        expect(nuxtImg.attributes('src')).toBe(content.image.originalFilename)
       })
 
       it('should add the with-text class modifier to the NuxtImg component', () => {

@@ -1,6 +1,6 @@
 import { StoryblokApiClient } from './storyblok-api-client'
 
-export default ({ app }, inject) => {
+export default (_, inject) => {
   const storyblokApiClient = new StoryblokApiClient('pvweb')
 
   inject('storyblokApiClient', storyblokApiClient)

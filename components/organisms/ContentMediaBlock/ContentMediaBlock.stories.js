@@ -2,7 +2,8 @@ import ContentMediaBlock from './ContentMediaBlock.vue'
 import {
   headline,
   subline,
-  media,
+  mediaVideo,
+  mediaImage,
   order,
   orders,
   ratio,
@@ -51,5 +52,24 @@ const Template = (args) => ({
 `,
 })
 
-export const Default = Template.bind({})
-Default.args = { headline, subline, media, order, ratio, buttons, richtext }
+export const Video = Template.bind({})
+Video.args = {
+  headline,
+  subline,
+  media: mediaVideo,
+  order,
+  ratio,
+  buttons,
+  richtext,
+}
+
+export const Image = Template.bind({})
+Image.args = {
+  headline,
+  subline,
+  media: mediaImage,
+  order,
+  ratio,
+  buttons,
+  richtext,
+}

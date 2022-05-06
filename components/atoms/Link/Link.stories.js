@@ -1,5 +1,6 @@
 import Link from '~/components/atoms/Link/Link.vue'
 import LinkContent from './Link.stories.content'
+import { variants, targets } from './Link.stories.content'
 
 export default {
   title: 'Atoms/Link',
@@ -13,7 +14,11 @@ export default {
   },
   argTypes: {
     target: {
-      options: ['_self', '_blank'],
+      options: targets,
+      control: { type: 'inline-radio' },
+    },
+    variant: {
+      options: variants,
       control: { type: 'inline-radio' },
     },
   },
