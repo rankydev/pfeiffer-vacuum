@@ -99,10 +99,9 @@ describe('ResponsiveImage', () => {
       }
       createComponent(propsData)
 
-      const ResponsiveImageWrapper = wrapper.find('.responsive-image')
-      expect(ResponsiveImageWrapper.attributes('class')).toMatch(
-        'responsive-image responsive-image--with-gradient'
-      )
+      expect(
+        wrapper.find('.responsive-image__gradient-overlay').exists()
+      ).toBeTruthy()
     })
 
     test.each(aspectRatioArr)(
