@@ -57,8 +57,6 @@ describe('ContentMediaBlock', () => {
       createComponent(propsData)
 
       const domMedia = wrapper.find('.content-media-block__media')
-      console.log(domMedia.attributes('component'), 'dom')
-      console.log(mediaVideo[0].component, 'media')
 
       expect(domMedia.attributes('component')).toBe(mediaVideo[0].component)
     })
@@ -68,8 +66,6 @@ describe('ContentMediaBlock', () => {
       createComponent(propsData)
 
       const domMedia = wrapper.find('.content-media-block__media')
-      console.log(domMedia.attributes('component'), 'dom')
-      console.log(mediaImage[0].component, 'media')
 
       expect(domMedia.attributes('component')).toBe(mediaImage[0].component)
     })

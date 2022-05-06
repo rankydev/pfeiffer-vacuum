@@ -19,31 +19,4 @@ export const ratio = 'half/half'
 export const buttons = [buttonOutlinedSecondary, buttonFilledSecondary]
 export const richtext = smallText.richtext
 
-export const contentVideo = {
-  _uid: '9e1c946c-ccbf-4e18-85ea-998a2de8a845',
-  headline,
-  media: mediaVideo,
-  order,
-  ratio,
-  buttons,
-  subline,
-  richtext,
-  component: 'ContentMediaBlock',
-  _editable:
-    '<!--#storyblok#{"name": "ContentMediaBlock", "space": "152017", "uid": "9e1c946c-ccbf-4e18-85ea-998a2de8a845", "id": "119228911"}-->',
-}
-export const contentImage = {
-  _uid: '9e1c946c-ccbf-4e18-85ea-998a2de8a845',
-  headline,
-  media: mediaImage,
-  order,
-  ratio,
-  buttons,
-  subline,
-  richtext,
-  component: 'ContentMediaBlock',
-  _editable:
-    '<!--#storyblok#{"name": "ContentMediaBlock", "space": "152017", "uid": "9e1c946c-ccbf-4e18-85ea-998a2de8a845", "id": "119228911"}-->',
-}
-
 export default {}
