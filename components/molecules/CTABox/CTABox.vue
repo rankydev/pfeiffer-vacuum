@@ -8,26 +8,22 @@
       />
     </div>
 
-    <div class="cta__sectionBelow">
-      <div class="cta__sectionBelowContent">
-        <div class="cta__sectionBelowText">
-          <NuxtDynamic
-            v-for="item in description"
-            :key="item._uid"
-            v-bind="item"
-            class="cta__description"
-            :component="item.uiComponent || item.component"
-          />
-        </div>
-        <div class="cta__sectionBelowButton">
-          <NuxtDynamic
-            v-for="item in button"
-            :key="item._uid"
-            class="cta__button"
-            v-bind="item"
-            :component="item.uiComponent || item.component"
-          />
-        </div>
+    <div class="cta__content">
+      <NuxtDynamic
+        v-for="item in description"
+        :key="item._uid"
+        v-bind="item"
+        class="cta__description"
+        :component="item.uiComponent || item.component"
+      />
+      <div class="cta__button-wrapper">
+        <NuxtDynamic
+          v-for="item in button"
+          :key="item._uid"
+          class="cta__button"
+          v-bind="item"
+          :component="item.uiComponent || item.component"
+        />
       </div>
     </div>
   </div>
@@ -80,22 +76,15 @@ export default defineComponent({
     }
   }
 
-  &__sectionBelow {
+  &__content {
     @apply tw-bg-pv-grey-16;
     @apply tw-text-center;
-  }
-
-  &__sectionBelowContent {
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-items-center;
   }
 
-  &__sectionBelowText {
-    @apply tw-mt-4;
-  }
-
-  &__sectionBelowButton {
+  &__button-wrapper {
     @apply tw-mt-4;
     @apply tw-mb-6;
     @apply tw-px-4;
@@ -112,6 +101,7 @@ export default defineComponent({
   }
 
   &__description {
+    @apply tw-mt-4;
     @apply tw-text-pv-white;
   }
 }

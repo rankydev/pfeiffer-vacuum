@@ -1,22 +1,33 @@
-import { shallowMount } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
-import ConentMediaBlock from './ContentMediaBlock.vue'
+import ContentMediaBlock from './ContentMediaBlock.vue'
 import {
   headline,
   subline,
-  media,
+  mediaVideo,
+  mediaImage,
   buttons,
   richtext,
-} from './ConentMediaBlock.stories.content.js'
+} from './ContentMediaBlock.stories.content.js'
 
 let wrapper
 
 function createComponent(propsData = {}) {
   const stubs = { NuxtDynamic: true }
-  wrapper = shallowMount(ConentMediaBlock, { propsData, stubs })
+  const localVue = createLocalVue()
+  const editable = (el, key) => (el.innerText = key.value)
+  localVue.directive('editable', editable)
+
+  const options = {
+    localVue,
+    stubs,
+    propsData,
+  }
+
+  wrapper = shallowMount(ContentMediaBlock, options)
 }
 
-describe('ConentMediaBlock', () => {
+describe('ContentMediaBlock', () => {
   describe('initial state', () => {
     it('should provide headline subline and richtext to richtext component when these are provided', () => {
       const propsData = { headline, subline, richtext }
@@ -41,17 +52,30 @@ describe('ConentMediaBlock', () => {
       })
     })
 
-    it('should add media to the media area when it is provided', () => {
-      const propsData = { richtext, media }
+    it('should add Video to the media area when it is provided', () => {
+      const propsData = { richtext, media: mediaVideo }
       createComponent(propsData)
 
       const domMedia = wrapper.find('.content-media-block__media')
+      console.log(domMedia.attributes('component'), 'dom')
+      console.log(mediaVideo[0].component, 'media')
 
-      expect(domMedia.attributes('component')).toBe(media[0].component)
+      expect(domMedia.attributes('component')).toBe(mediaVideo[0].component)
+    })
+
+    it('should add Image to the media area when it is provided', () => {
+      const propsData = { richtext, media: mediaImage }
+      createComponent(propsData)
+
+      const domMedia = wrapper.find('.content-media-block__media')
+      console.log(domMedia.attributes('component'), 'dom')
+      console.log(mediaImage[0].component, 'media')
+
+      expect(domMedia.attributes('component')).toBe(mediaImage[0].component)
     })
 
     it('should apply correct classes given a half/half ratio', () => {
-      const propsData = { richtext, media, ratio: 'half/half' }
+      const propsData = { richtext, media: mediaVideo, ratio: 'half/half' }
       createComponent(propsData)
 
       const domContent = wrapper.find('.content-media-block__content')
@@ -66,7 +90,7 @@ describe('ConentMediaBlock', () => {
     })
 
     it('should apply correct classes given a one/three ratio', () => {
-      const propsData = { richtext, media, ratio: 'one/three' }
+      const propsData = { richtext, media: mediaVideo, ratio: 'one/three' }
       createComponent(propsData)
 
       const domContent = wrapper.find('.content-media-block__content')
@@ -81,7 +105,7 @@ describe('ConentMediaBlock', () => {
     })
 
     it('should apply correct classes given a three/one ratio', () => {
-      const propsData = { richtext, media, ratio: 'three/one' }
+      const propsData = { richtext, media: mediaVideo, ratio: 'three/one' }
       createComponent(propsData)
 
       const domContent = wrapper.find('.content-media-block__content')
@@ -96,7 +120,7 @@ describe('ConentMediaBlock', () => {
     })
 
     it('should apply correct classes given a content/media order', () => {
-      const propsData = { richtext, media, order: 'content/media' }
+      const propsData = { richtext, media: mediaVideo, order: 'content/media' }
       createComponent(propsData)
 
       const domContent = wrapper.find('.content-media-block__content')
@@ -111,7 +135,7 @@ describe('ConentMediaBlock', () => {
     })
 
     it('should apply correct classes given a media/content order', () => {
-      const propsData = { richtext, media, order: 'media/content' }
+      const propsData = { richtext, media: mediaVideo, order: 'media/content' }
       createComponent(propsData)
 
       const domContent = wrapper.find('.content-media-block__content')

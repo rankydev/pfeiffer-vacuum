@@ -4,13 +4,14 @@ import {
   subline,
   mediaVideo,
   mediaCTA,
+  mediaImage,
   order,
   orders,
   ratio,
   ratios,
   buttons,
   richtext,
-} from './ConentMediaBlock.stories.content.js'
+} from './ContentMediaBlock.stories.content.js'
 
 const argTypes = {
   ratio: {
@@ -68,6 +69,17 @@ WithCTA.args = {
   headline,
   subline,
   media: mediaCTA,
+  order,
+  ratio,
+  buttons,
+  richtext,
+}
+
+export const WithImage = Template.bind({})
+WithImage.args = {
+  headline,
+  subline,
+  media: mediaImage,
   order,
   ratio,
   buttons,

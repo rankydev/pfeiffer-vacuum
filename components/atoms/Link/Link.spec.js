@@ -73,6 +73,31 @@ describe('Link', () => {
         expect(link.attributes('target')).toBe(propsData.target)
       })
     })
+
+    describe.each([['none'], ['inline'], ['breadcrumb']])(
+      'given the variant %s',
+      (variant) => {
+        it('should render the variant when Link is a NuxtLink', () => {
+          const propsData = {
+            target: '_blank',
+            href: 'http://www.example.de',
+            variant,
+          }
+          createComponent(propsData)
+
+          const link = wrapper.find('a')
+          expect(link.attributes('class')).toBe(`link--${variant}`)
+        })
+
+        it('should render the variant when link is an anchor link', () => {
+          const propsData = { href: '/some/reltiv/path', variant }
+          createComponent(propsData)
+
+          const link = wrapper.findComponent(RouterLinkStub)
+          expect(link.attributes('class')).toBe(`link--${variant}`)
+        })
+      }
+    )
   })
 
   describe('during interaction', () => {

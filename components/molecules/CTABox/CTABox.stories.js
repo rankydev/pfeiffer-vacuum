@@ -1,5 +1,5 @@
 import CTABox from '~/components/molecules/CTABox/CTABox.vue'
-import { image, description, buttons } from './CTABox.stories.content.js'
+import { image, description, button } from './CTABox.stories.content.js'
 
 export default {
   title: 'Molecules/CTABox',
@@ -30,4 +30,4 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
-Default.args = { image, description, buttons }
+Default.args = { image, description, button }
