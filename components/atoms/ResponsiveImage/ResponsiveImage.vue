@@ -1,6 +1,6 @@
 <template>
   <div>
-    <picture v-if="hasImage" :class="responsiveImgClasses">
+    <picture v-if="hasImage" class="responsive-image">
       <source
         v-for="size in sortedSizes"
         :key="'webp_' + size.media"
@@ -29,6 +29,7 @@
         :provider="provider"
         :loading="lazy ? 'lazy' : undefined"
       />
+      <div v-if="withGradient" class="responsive-image__gradient-overlay"></div>
     </picture>
     <div
       v-else
@@ -133,17 +134,6 @@ export default defineComponent({
     const aspectRatioString = computed(() =>
       props.aspectRatio.replace(':', '-')
     )
-
-    /**
-     * Return classes of responsive image parent element based on props for gradient and aspect ratio
-     */
-    const responsiveImgClasses = computed(() => {
-      const gradient = props.withGradient
-        ? 'responsive-image--with-gradient'
-        : ''
-
-      return `responsive-image ${gradient}`
-    })
 
     /**
      * sorts Array from smallest to biggest breakpoint (sm to xl)
@@ -278,7 +268,6 @@ export default defineComponent({
       defaultSize,
       grayscaleVal,
       hasImage,
-      responsiveImgClasses,
       aspectRatioString,
       buildSrcset,
     }
@@ -329,16 +318,15 @@ export default defineComponent({
     @include calculate-aspect-ratio-properties(3, 1);
   }
 
-  &--with-gradient {
-    &::after {
-      @apply tw-absolute;
-      @apply tw-inset-0;
-      @apply tw-inline-block;
-      @apply tw-bg-gradient-to-t;
-      @apply tw-from-pv-black;
-      @apply tw-via-pv-transparent;
-      @apply tw-to-pv-transparent;
-    }
+  &__gradient-overlay {
+    @apply tw-absolute;
+    @apply tw-inset-0;
+    @apply tw-inline-block;
+    @apply tw-bg-gradient-to-t;
+    @apply tw-from-pv-black;
+    @apply tw-via-pv-transparent;
+    @apply tw-to-pv-transparent;
+    @apply tw-rounded-lg;
   }
 
   &__placeholder {
