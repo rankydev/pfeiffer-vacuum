@@ -52,26 +52,22 @@ const Template = (args) => ({
 `,
 })
 
-let media = mediaVideo
-
-export const DefaultVideo = Template.bind({})
-DefaultVideo.args = {
+export const WithVideo = Template.bind({})
+WithVideo.args = {
   headline,
   subline,
-  media,
+  media: mediaVideo,
   order,
   ratio,
   buttons,
   richtext,
 }
 
-media = mediaCTA
-
-export const DefaultCTA = Template.bind({})
-DefaultCTA.args = {
+export const WithCTA = Template.bind({})
+WithCTA.args = {
   headline,
   subline,
-  media,
+  media: mediaCTA,
   order,
   ratio,
   buttons,
