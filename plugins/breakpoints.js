@@ -1,6 +1,6 @@
 import { computed, ref, readonly } from '@nuxtjs/composition-api'
 
-export default (context, inject) => {
+export default (_, inject) => {
   const current = ref('lg')
 
   if (process.client) {

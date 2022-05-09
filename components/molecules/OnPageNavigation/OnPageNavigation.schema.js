@@ -9,6 +9,10 @@ export default {
       maximum: 4,
       description: 'Links for Quicklink Navigation',
     },
+    hideBreadcrumb: {
+      type: 'boolean',
+      default_value: false,
+    },
   },
   image: null,
   preview_field: null,
