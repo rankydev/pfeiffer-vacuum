@@ -1,17 +1,16 @@
 <template>
   <div class="bubble-wrapper">
-    <div>Hallo Bubble</div>
-    <h2>{{ title }}</h2>
-    <h2>{{ richtext }}</h2>
-    <!-- <circle cx="170" cy="200" r="160" fill="ivory" stroke="orange" /> -->
+    <h5>{{ title }}</h5>
+    <Richtext :richtext="richtext" />
   </div>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 
 export default defineComponent({
-  components: {},
+  components: { Richtext },
   props: {
     /**
      * The title of the component
@@ -36,18 +35,16 @@ export default defineComponent({
       validator: (val) => ['left', 'right'].includes(val),
     },
   },
-  setup(props) {
-    // return {
-    //   title,
-    //   richtext,
-    //   position,
-    // }
-  },
+  setup(props) {},
 })
 </script>
 
 <style lang="scss">
 .bubble-wrapper {
+  @apply tw-flex;
+  @apply tw-flex-col;
+  @apply tw-justify-center;
+  @apply tw-items-center;
   color: white;
   height: 90px;
   width: 90px;
@@ -65,7 +62,7 @@ export default defineComponent({
     width: 180px;
   }
 
-  h2 {
+  h5 {
     color: white;
   }
 }

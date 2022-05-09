@@ -22,9 +22,9 @@
         aspect-ratio="16:9"
       />
       <Bubble
-        :title="'Bubble Headline'"
-        :richtext="'Hallo Hallo'"
-        :position="bubble.position"
+        :title="bubble[0].title"
+        :richtext="bubble[0].richtext"
+        :position="bubble[0].position"
       />
     </div>
   </div>
@@ -71,9 +71,16 @@ export default {
   @apply tw-bg-no-repeat tw-bg-cover tw-bg-center;
   @apply tw-flex tw-flex-col tw-justify-between;
   height: 512px;
+  position: relative;
 
   &__visual-wrapper {
     height: 154px;
+  }
+
+  &__image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
   }
 }
 </style>
