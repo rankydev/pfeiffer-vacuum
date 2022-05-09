@@ -1,20 +1,36 @@
 import { shallowMount } from '@vue/test-utils'
 import CTABox from '~/components/molecules/CTABox/CTABox.vue'
-import { description, button } from './CTABox.stories.content.js'
+import { description, button, image } from './CTABox.stories.content.js'
 
-const propsData = { description, button }
-const stubs = { NuxtDynamic: true }
+let wrapper
+
+function createComponent(propsData = {}) {
+  const stubs = { NuxtDynamic: true }
+  const options = {
+    stubs,
+    propsData,
+  }
+
+  wrapper = shallowMount(CTABox, options)
+}
 
 describe('CTABox', () => {
   describe('initial state', () => {
     it('should render given no propsData', () => {
-      const wrapper = shallowMount(CTABox)
-
+      const propsData = {
+        image: JSON.parse(JSON.stringify(image)),
+      }
+      createComponent(propsData)
       expect(wrapper.exists()).toBeTruthy()
     })
 
     it('should render given propsData', () => {
-      const wrapper = shallowMount(CTABox, { propsData, stubs })
+      const propsData = {
+        description,
+        button,
+        image: JSON.parse(JSON.stringify(image)),
+      }
+      createComponent(propsData)
       const descriptionWrapper = wrapper.findAll('.cta__description')
       description.forEach((item, index) => {
         expect(

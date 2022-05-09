@@ -43,7 +43,7 @@ export default defineComponent({
      */
     image: {
       type: [Object, String],
-      default: () => {},
+      required: true,
     },
     /**
      * Subcomponent which is rendered underneath the image
