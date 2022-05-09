@@ -1,0 +1,42 @@
+export default {
+  name: 'HomeStageModule',
+  display_name: 'HomeStageModule',
+  schema: {
+    stageContent: {
+      type: 'bloks',
+      maximum: 1,
+      restrict_components: true,
+      component_whitelist: ['HomeStageContent'],
+      display_name: 'Home Stage Content',
+    },
+    image: {
+      type: 'asset',
+      description: '',
+      display_name: 'Background Image',
+      filetypes: ['images'],
+      pos: 2,
+    },
+    interlay: {
+      type: 'asset',
+      description: '',
+      display_name: 'Interlay',
+      filetypes: ['images'],
+      pos: 2,
+    },
+    bubble: {
+      type: 'bloks',
+      maximum: 1,
+      restrict_components: true,
+      component_whitelist: ['Bubble'],
+    },
+    // timeBetweenSlides: {},
+  },
+  image: null,
+  preview_field: null,
+  is_root: false,
+  preview_tmpl: null,
+  is_nestable: true,
+  all_presets: [],
+  preset_id: null,
+  real_name: 'HomeStageModule',
+}
