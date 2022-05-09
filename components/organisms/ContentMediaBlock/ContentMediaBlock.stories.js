@@ -3,6 +3,7 @@ import {
   headline,
   subline,
   mediaVideo,
+  mediaCTA,
   mediaImage,
   order,
   orders,
@@ -52,8 +53,8 @@ const Template = (args) => ({
 `,
 })
 
-export const Video = Template.bind({})
-Video.args = {
+export const WithVideo = Template.bind({})
+WithVideo.args = {
   headline,
   subline,
   media: mediaVideo,
@@ -63,8 +64,19 @@ Video.args = {
   richtext,
 }
 
-export const Image = Template.bind({})
-Image.args = {
+export const WithCTA = Template.bind({})
+WithCTA.args = {
+  headline,
+  subline,
+  media: mediaCTA,
+  order,
+  ratio,
+  buttons,
+  richtext,
+}
+
+export const WithImage = Template.bind({})
+WithImage.args = {
   headline,
   subline,
   media: mediaImage,

@@ -59,4 +59,17 @@ export const buttonFilledSecondary = {
     '<!--#storyblok#{"name": "Button", "space": "152017", "uid": "3dd3700b-9e95-46d5-87ab-fd917b80848f", "id": "119228911"}-->',
 }
 
+export const buttonFilledThird = {
+  _uid: '3dd3700b-9e95-46d5-87ab-fd917b80848f',
+  icon: 'arrow_forward',
+  size: 'normal',
+  label: 'Filled Button',
+  shape: 'filled',
+  variant: 'inverted',
+  disabled: false,
+  component: 'Button',
+  prependIcon: false,
+  _editable:
+    '<!--#storyblok#{"name": "Button", "space": "152017", "uid": "3dd3700b-9e95-46d5-87ab-fd917b80848f", "id": "119228911"}-->',
+}
 export default {}

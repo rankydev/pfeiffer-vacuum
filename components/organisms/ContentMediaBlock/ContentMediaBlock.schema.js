@@ -29,7 +29,7 @@ export default {
       maximum: 1,
       restrict_components: true,
       required: true,
-      component_whitelist: ['VideoPlayer', 'ImageWithDescription'],
+      component_whitelist: ['VideoPlayer', 'ImageWithDescription', 'CTABox'],
     },
     ratio: {
       type: 'option',
