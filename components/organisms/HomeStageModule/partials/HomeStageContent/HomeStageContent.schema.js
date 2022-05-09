@@ -17,13 +17,6 @@ export default {
       max_length: '250',
       pos: 3,
     },
-    links: {
-      type: 'bloks',
-      restrict_components: true,
-      maximum: 2,
-      component_whitelist: ['TextLink'],
-      display_name: 'Links',
-    },
     buttons: {
       type: 'bloks',
       restrict_components: true,
