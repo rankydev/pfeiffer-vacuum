@@ -72,11 +72,34 @@ export default defineComponent({
   &__wrapper--right {
     @apply tw-bottom-6;
     @apply tw-right-6;
+
+    @screen md {
+      @apply tw-bottom-16;
+      @apply tw-right-16;
+    }
+
+    @screen lg {
+      @apply tw-bottom-20;
+      @apply tw-right-20;
+    }
   }
 
   &__wrapper--left {
     @apply tw-bottom-12;
     @apply tw-left-6;
+
+    @screen md {
+      left: unset;
+      bottom: 144px;
+      right: 240px;
+    }
+
+    @screen lg {
+      left: unset;
+      bottom: unset;
+      top: 134px;
+      right: 300px;
+    }
   }
 
   &__headline {
