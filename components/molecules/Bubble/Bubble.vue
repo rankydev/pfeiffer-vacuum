@@ -1,16 +1,15 @@
 <template>
-  <div class="bubble-wrapper">
-    <h5>{{ title }}</h5>
-    <Richtext :richtext="richtext" />
+  <div class="bubble__wrapper">
+    <h5 class="bubble__headline">{{ title }}</h5>
+    <div v-editable="richtext" class="bubble__richtext" v-html="richtext"></div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 
 export default defineComponent({
-  components: { Richtext },
+  components: {},
   props: {
     /**
      * The title of the component
@@ -40,30 +39,40 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.bubble-wrapper {
-  @apply tw-flex;
-  @apply tw-flex-col;
-  @apply tw-justify-center;
-  @apply tw-items-center;
-  color: white;
-  height: 90px;
-  width: 90px;
-
-  @apply tw-rounded-full;
-  @apply tw-bg-pv-red;
-
-  @screen md {
-    height: 144px;
-    width: 144px;
-  }
-
-  @screen lg {
-    height: 180px;
-    width: 180px;
-  }
-
-  h5 {
+.bubble {
+  &__wrapper {
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-justify-center;
+    @apply tw-items-center;
     color: white;
+    height: 90px;
+    width: 90px;
+    @apply tw-rounded-full;
+    @apply tw-bg-pv-red;
+
+    @screen md {
+      height: 144px;
+      width: 144px;
+    }
+
+    @screen lg {
+      height: 180px;
+      width: 180px;
+    }
+  }
+
+  &__headline {
+    color: white;
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  &__richtext {
+    p {
+      font-size: 10px;
+      line-height: 16px;
+    }
   }
 }
 </style>
