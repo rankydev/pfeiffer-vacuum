@@ -12,14 +12,13 @@
       v-bind="stageContent[0]"
     />
     <div class="homestage__visual-wrapper">
-      <ResponsiveImage
-        v-if="(interlay || {}).originalFilename"
-        :image="interlay"
+      <NuxtImg
+        :src="interlay.originalFilename"
+        :alt="interlay.alt || ''"
+        :title="interlay.title || ''"
+        :provider="'storyblok'"
+        :loading="undefined"
         class="homestage__image"
-        :class="`homestage__image--${
-          stageContent.length ? 'with-text' : 'full'
-        }`"
-        aspect-ratio="16:9"
       />
       <Bubble
         :title="bubble[0].title"
@@ -32,14 +31,12 @@
 
 <script>
 import HomeStageContent from '~/components/organisms/HomeStageModule/partials/HomeStageContent/HomeStageContent.vue'
-import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Bubble from '~/components/molecules/Bubble/Bubble'
 
 export default {
   name: 'HomeStageModule',
   components: {
     HomeStageContent,
-    ResponsiveImage,
     Bubble,
   },
   props: {
@@ -72,15 +69,51 @@ export default {
   @apply tw-flex tw-flex-col tw-justify-between;
   height: 512px;
   position: relative;
+  overflow: hidden;
+
+  @screen md {
+    height: 768px;
+  }
+
+  @screen lg {
+    @apply tw-flex-row;
+    height: 640px;
+  }
+
+  @screen xl {
+    height: 853px;
+  }
 
   &__visual-wrapper {
     height: 154px;
+
+    @screen lg {
+      width: 50%;
+    }
   }
 
   &__image {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: -24px;
+    right: -24px;
+    width: 360px;
+    height: auto;
+
+    @screen sm {
+      width: 600px;
+    }
+
+    @screen md {
+      width: 620px;
+      bottom: -64px;
+      right: -64px;
+    }
+
+    @screen lg {
+      width: 1080px;
+      bottom: -80px;
+      right: -80px;
+    }
   }
 }
 </style>

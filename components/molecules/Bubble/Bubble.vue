@@ -54,6 +54,7 @@ export default defineComponent({
     @apply tw-absolute;
     @apply tw-rounded-full;
     @apply tw-bg-pv-red;
+    @apply tw-px-1;
     color: white;
     height: 90px;
     width: 90px;
@@ -106,12 +107,32 @@ export default defineComponent({
     color: white;
     font-size: 10px;
     line-height: 16px;
+
+    @screen md {
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    @screen lg {
+      font-size: 20px;
+      line-height: 28px;
+    }
   }
 
   &__richtext {
     p {
       font-size: 10px;
       line-height: 16px;
+
+      @screen md {
+        font-size: 14px;
+        line-height: 24px;
+      }
+
+      @screen lg {
+        font-size: 16px;
+        line-height: 28px;
+      }
     }
   }
 }

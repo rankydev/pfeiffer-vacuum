@@ -1,10 +1,10 @@
 <template>
   <div v-editable="(headline, teaserText, buttons)" class="homestage-content">
-    <h1 v-if="headline" class="homestage-content__headline">
+    <h2 v-if="headline" class="homestage-content__headline tw-hero">
       {{ headline }}
-    </h1>
+    </h2>
 
-    <p v-if="teaserText" class="homestage-content__description">
+    <p v-if="teaserText" class="homestage-content__description tw-teaser">
       {{ teaserText }}
     </p>
 
@@ -53,6 +53,7 @@ export default {
   @apply tw-py-6;
   @apply tw-flex;
   @apply tw-flex-col;
+  @apply tw-z-10;
 
   @screen md {
     @apply tw-px-6;
@@ -60,6 +61,8 @@ export default {
 
   @screen lg {
     @apply tw-px-8;
+    @apply tw-justify-center;
+    width: 50%;
   }
 
   @screen xl {
@@ -80,6 +83,10 @@ export default {
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-gap-4;
+
+    @screen md {
+      @apply tw-flex-row;
+    }
   }
 }
 </style>

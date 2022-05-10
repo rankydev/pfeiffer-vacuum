@@ -6,12 +6,13 @@ export default {
   schema: {
     title: {
       type: 'text',
-      max_length: '55',
+      max_length: '20',
       translatable: true,
     },
     richtext: {
       ...RichtextBasic.schema.richtext,
       required: true,
+      max_length: '20',
     },
     position: {
       type: 'option',
