@@ -1,26 +1,23 @@
 <template>
-  <div class="cta">
-    <div>
-      <ResponsiveImage
-        provider="storyblok"
-        :image="image"
-        :aspect-ratio="'2:1'"
-      />
-    </div>
-
-    <div class="cta__content">
+  <div class="cta-box">
+    <ResponsiveImage
+      provider="storyblok"
+      :image="image"
+      :aspect-ratio="'2:1'"
+    />
+    <div class="cta-box__content">
       <NuxtDynamic
         v-for="item in description"
         :key="item._uid"
         v-bind="item"
-        class="cta__description"
+        class="cta-box__description"
         :component="item.uiComponent || item.component"
       />
-      <div class="cta__button-wrapper">
+      <div class="cta-box__button-wrapper">
         <NuxtDynamic
           v-for="item in button"
           :key="item._uid"
-          class="cta__button"
+          class="cta-box__button"
           v-bind="item"
           :component="item.uiComponent || item.component"
         />
@@ -64,15 +61,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.cta {
+.cta-box {
   @apply tw-overflow-hidden;
   @apply tw-rounded-lg;
 
   .responsive-image {
     img {
       @apply tw-rounded-t-lg;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+      @apply tw-rounded-b-none;
     }
   }
 

@@ -9,6 +9,6 @@ export const imageWithDescriptionContent = {
   component: 'ImageWithDescription',
 }
 
-export const aspectRatioOptions = ['1:1', '16:9', '2:3', '3:2', '3:1']
+export const aspectRatioOptions = ['1:1', '16:9', '2:3', '3:2', '3:1', '2:1']
 
 export default {}
