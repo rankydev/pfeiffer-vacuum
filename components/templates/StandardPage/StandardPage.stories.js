@@ -44,4 +44,4 @@ const TemplatePrivacy = (args) => ({
 })
 
 export const Imprint = TemplateImprint.bind({})
-export const Privacy = TemplatePrivacy.bind({})
+export const DataPrivacy = TemplatePrivacy.bind({})
