@@ -31,7 +31,7 @@ describe('CTABox', () => {
         image: JSON.parse(JSON.stringify(image)),
       }
       createComponent(propsData)
-      const descriptionWrapper = wrapper.findAll('.cta__description')
+      const descriptionWrapper = wrapper.findAll('.cta-box__description')
       description.forEach((item, index) => {
         expect(
           descriptionWrapper
@@ -44,7 +44,7 @@ describe('CTABox', () => {
         )
       })
 
-      const buttonWrapper = wrapper.findAll('.cta__button')
+      const buttonWrapper = wrapper.findAll('.cta-box__button')
       button.forEach((item, index) => {
         expect(
           buttonWrapper
