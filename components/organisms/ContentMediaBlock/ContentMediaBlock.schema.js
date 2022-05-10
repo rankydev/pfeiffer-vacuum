@@ -2,7 +2,7 @@ import RichtextBasic from '~/components/atoms/Richtext/RichtextBasic.schema.js'
 
 export default {
   name: 'ContentMediaBlock',
-  display_name: 'ContentMediaBlock',
+  display_name: 'Content Media Block',
   schema: {
     headline: {
       type: 'text',
