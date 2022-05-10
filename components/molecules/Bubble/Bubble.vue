@@ -1,5 +1,10 @@
 <template>
-  <div class="bubble__wrapper">
+  <div
+    class="bubble__wrapper"
+    :class="
+      position === 'right' ? 'bubble__wrapper--right' : 'bubble__wrapper--left'
+    "
+  >
     <h5 class="bubble__headline">{{ title }}</h5>
     <div v-editable="richtext" class="bubble__richtext" v-html="richtext"></div>
   </div>
@@ -45,11 +50,13 @@ export default defineComponent({
     @apply tw-flex-col;
     @apply tw-justify-center;
     @apply tw-items-center;
+    @apply tw-absolute;
+    @apply tw-absolute;
+    @apply tw-rounded-full;
+    @apply tw-bg-pv-red;
     color: white;
     height: 90px;
     width: 90px;
-    @apply tw-rounded-full;
-    @apply tw-bg-pv-red;
 
     @screen md {
       height: 144px;
@@ -60,6 +67,16 @@ export default defineComponent({
       height: 180px;
       width: 180px;
     }
+  }
+
+  &__wrapper--right {
+    @apply tw-bottom-6;
+    @apply tw-right-6;
+  }
+
+  &__wrapper--left {
+    @apply tw-bottom-12;
+    @apply tw-left-6;
   }
 
   &__headline {
