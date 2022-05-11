@@ -48,25 +48,29 @@ export default {
 
 <style lang="scss">
 .homestage-content {
+  @apply tw-flex;
+  @apply tw-flex-col;
   @apply tw-grow;
   @apply tw-px-4;
   @apply tw-py-6;
-  @apply tw-flex;
-  @apply tw-flex-col;
   @apply tw-z-10;
 
   @screen md {
-    @apply tw-px-6;
+    @apply tw-px-10;
+    @apply tw-py-14;
   }
 
   @screen lg {
-    @apply tw-px-8;
+    @apply tw-px-36;
+    @apply tw-pl-36;
+    @apply tw-pr-4;
+    @apply tw-py-0;
     @apply tw-justify-center;
     width: 50%;
   }
 
   @screen xl {
-    @apply tw-px-16;
+    @apply tw-pl-96;
   }
 
   &__headline,
