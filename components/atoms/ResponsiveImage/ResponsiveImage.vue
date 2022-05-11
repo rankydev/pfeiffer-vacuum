@@ -318,6 +318,11 @@ export default defineComponent({
     @include calculate-aspect-ratio-properties(3, 1);
   }
 
+  &__2-1 {
+    aspect-ratio: 2/1;
+    @include calculate-aspect-ratio-properties(2, 1);
+  }
+
   &__gradient-overlay {
     @apply tw-absolute;
     @apply tw-inset-0;
