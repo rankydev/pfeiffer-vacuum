@@ -1,6 +1,6 @@
 <template>
   <div v-editable="(headline, teaserText, buttons)" class="homestage-content">
-    <h2 v-if="headline" class="homestage-content__headline tw-hero">
+    <h2 v-if="headline" class="homestage-content__headline">
       {{ headline }}
     </h2>
 
@@ -61,16 +61,16 @@ export default {
   }
 
   @screen lg {
-    @apply tw-px-36;
+    // @apply tw-px-36;
     @apply tw-pl-36;
     @apply tw-pr-4;
     @apply tw-py-0;
     @apply tw-justify-center;
-    width: 50%;
+    width: 70%;
   }
 
   @screen xl {
-    @apply tw-pl-96;
+    // @apply tw-pl-96;
   }
 
   &__headline,

@@ -104,7 +104,8 @@ export default {
     }
 
     @screen md {
-      width: 620px;
+      width: 100vw;
+      min-width: 620px;
       bottom: -64px;
       right: -64px;
     }
