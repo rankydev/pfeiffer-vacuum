@@ -65,7 +65,6 @@ export default {
     @apply tw-pr-4;
     @apply tw-py-0;
     @apply tw-justify-center;
-    width: 70%;
   }
 
   &__headline,

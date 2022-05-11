@@ -65,11 +65,11 @@ export default {
 
 <style lang="scss">
 .homestage {
+  @apply tw-relative;
+  @apply tw-overflow-hidden;
   @apply tw-bg-no-repeat tw-bg-cover tw-bg-center;
   @apply tw-flex tw-flex-col tw-justify-between;
   height: 512px;
-  position: relative;
-  overflow: hidden;
 
   @screen md {
     height: 768px;
@@ -93,11 +93,10 @@ export default {
   }
 
   &__image {
-    position: absolute;
+    @apply tw-absolute;
+    @apply tw-h-auto;
     bottom: -24px;
     right: -24px;
-    width: 360px;
-    height: auto;
 
     @screen sm {
       width: 600px;
