@@ -101,6 +101,7 @@ sonar-qube:
     - sonar-scanner -Dsonar.login=${SONARQUBE_ACCESS_TOKEN}
   tags:
     - docker_runner
+    - shared
   only:
     - develop
 
