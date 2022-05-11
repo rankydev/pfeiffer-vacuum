@@ -59,6 +59,7 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://composition-api.nuxtjs.org/
     '@nuxtjs/composition-api/module',
+    '@pinia/nuxt',
     '@nuxt/postcss8',
     '@nuxtjs/svg-sprite',
   ],
@@ -122,6 +123,7 @@ export default {
     CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,
     CI_PROJECT_URL: process.env.CI_PROJECT_URL,
     NODE_ENV: process.env.NODE_ENV,
+    STORYBLOK_ACCESS_TOKEN: process.env.STORYBLOK_ACCESS_TOKEN,
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img

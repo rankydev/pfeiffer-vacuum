@@ -6,25 +6,19 @@
         :key="item._uid"
         v-editable="item"
         v-bind="item"
-        :name="item.uiComponent || item.component"
+        :component="item.uiComponent || item.component"
       />
 
       <nuxt-dynamic
         v-for="item in header"
         :key="item._uid"
         v-bind="item"
-        :name="item.uiComponent || item.component"
+        :component="item.uiComponent || item.component"
       />
     </slot>
 
-    <slot name="quicklinks">
-      <nuxt-dynamic
-        v-for="item in quicklinks"
-        :key="item._uid"
-        v-editable="item"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      />
+    <slot name="onPageNavigation">
+      <OnPageNavigation v-bind="(quicklinks || [])[0]" />
     </slot>
 
     <slot>
@@ -34,7 +28,7 @@
           :key="item._uid"
           v-editable="item"
           v-bind="item"
-          :name="item.uiComponent || item.component"
+          :component="item.uiComponent || item.component"
         />
         <ContentWrapper>
           <nuxt-dynamic
@@ -42,7 +36,7 @@
             :key="item._uid"
             v-editable="item"
             v-bind="item"
-            :name="item.uiComponent || item.component"
+            :component="item.uiComponent || item.component"
           />
         </ContentWrapper>
       </main>
@@ -54,14 +48,14 @@
         :key="item._uid"
         v-editable="item"
         v-bind="item"
-        :name="item.uiComponent || item.component"
+        :component="item.uiComponent || item.component"
       />
 
       <nuxt-dynamic
         v-for="item in footer"
         :key="item._uid"
         v-bind="item"
-        :name="item.uiComponent || item.component"
+        :component="item.uiComponent || item.component"
       />
     </slot>
   </div>
@@ -72,11 +66,13 @@ import { defineComponent, inject, toRefs } from '@nuxtjs/composition-api'
 import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
 
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
+    OnPageNavigation,
   },
   props: {
     content: {

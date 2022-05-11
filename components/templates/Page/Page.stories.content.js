@@ -1,6 +1,6 @@
 import header from '~/components/organisms/Header/Header.stories.content.js'
 import { footerContent } from '~/components/organisms/Footer/Footer.stories.content.js'
-import { quicklinkNavigation } from '~/components/molecules/QuicklinkNavigation/QuicklinkNavigation.stories.content.js'
+import { OnPageNavigation } from '~/components/molecules/OnPageNavigation/OnPageNavigation.stories.content.js'
 
 export default {
   content: {
@@ -61,7 +61,7 @@ export default {
     template: '',
     canonical: '/',
     component: 'Page',
-    quicklinks: [quicklinkNavigation],
+    quicklinks: [OnPageNavigation],
     twitterImage: {
       id: null,
       alt: null,

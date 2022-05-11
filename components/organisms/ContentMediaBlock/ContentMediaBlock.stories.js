@@ -2,14 +2,16 @@ import ContentMediaBlock from './ContentMediaBlock.vue'
 import {
   headline,
   subline,
-  media,
+  mediaVideo,
+  mediaCTA,
+  mediaImage,
   order,
   orders,
   ratio,
   ratios,
   buttons,
   richtext,
-} from './ConentMediaBlock.stories.content.js'
+} from './ContentMediaBlock.stories.content.js'
 
 const argTypes = {
   ratio: {
@@ -51,5 +53,35 @@ const Template = (args) => ({
 `,
 })
 
-export const Default = Template.bind({})
-Default.args = { headline, subline, media, order, ratio, buttons, richtext }
+export const WithVideo = Template.bind({})
+WithVideo.args = {
+  headline,
+  subline,
+  media: mediaVideo,
+  order,
+  ratio,
+  buttons,
+  richtext,
+}
+
+export const WithCTA = Template.bind({})
+WithCTA.args = {
+  headline,
+  subline,
+  media: mediaCTA,
+  order,
+  ratio,
+  buttons,
+  richtext,
+}
+
+export const WithImage = Template.bind({})
+WithImage.args = {
+  headline,
+  subline,
+  media: mediaImage,
+  order,
+  ratio,
+  buttons,
+  richtext,
+}

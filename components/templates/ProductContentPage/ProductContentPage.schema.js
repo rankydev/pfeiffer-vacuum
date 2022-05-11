@@ -1,5 +1,6 @@
 import Seo from '../Page/PageSeo.schema.partial.js'
 import Social from '../Page/PageSocial.schema.partial.js'
+import Template from '../Page/PageTemplate.schema.partial.js'
 import Page from '../Page/Page.schema.js'
 
 export default {
@@ -25,20 +26,12 @@ export default {
         'VideoPlayer',
         'ContentMediaBlock',
         'ContentTextBlock',
+        'ImageWithDescription',
       ],
     },
     ...Seo,
     ...Social,
-    'tab-advanced': {
-      type: 'tab',
-      display_name: 'Advanced',
-      keys: ['template', 'uiComponent'],
-    },
-    template: Page.schema.template,
-    uiComponent: {
-      type: 'text',
-      default_value: 'Page',
-    },
+    ...Template,
   },
   image: null,
   preview_field: null,
