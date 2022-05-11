@@ -88,7 +88,7 @@ export default {
     height: 154px;
 
     @screen lg {
-      width: 50%;
+      width: 100%;
     }
   }
 

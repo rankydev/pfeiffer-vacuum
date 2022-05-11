@@ -58,6 +58,7 @@ export default {
   @screen md {
     @apply tw-px-10;
     @apply tw-py-14;
+    max-width: 800px;
   }
 
   @screen lg {
