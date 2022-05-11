@@ -61,7 +61,6 @@ export default {
   }
 
   @screen lg {
-    // @apply tw-px-36;
     @apply tw-pl-36;
     @apply tw-pr-4;
     @apply tw-py-0;
@@ -69,26 +68,52 @@ export default {
     width: 70%;
   }
 
-  @screen xl {
-    // @apply tw-pl-96;
-  }
-
   &__headline,
   &__description {
     @apply tw-text-pv-white;
   }
 
+  &__headline {
+    @apply tw-leading-9;
+    @apply tw-font-bold;
+    font-size: 28px;
+
+    @screen md {
+      @apply tw-text-5xl;
+      line-height: 56px;
+    }
+
+    @screen lg {
+      font-size: 56px;
+      line-height: 64px;
+    }
+  }
+
   &__description {
     @apply tw-mt-2;
+    @apply tw-font-normal;
+    @apply tw-text-sm;
+    @apply tw-leading-6;
+
+    @screen md {
+      @apply tw-mt-4;
+      @apply tw-text-base;
+    }
+
+    @screen lg {
+      @apply tw-text-xl;
+      @apply tw-leading-7;
+    }
   }
 
   &__buttons {
-    @apply tw-mt-8;
+    @apply tw-mt-4;
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-gap-4;
 
     @screen md {
+      @apply tw-mt-6;
       @apply tw-flex-row;
     }
   }
