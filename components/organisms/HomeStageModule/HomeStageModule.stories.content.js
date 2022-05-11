@@ -1,4 +1,5 @@
 import HomeStageContent from '~/components/organisms/HomeStageModule/partials/HomeStageContent/HomeStageContent.stories.content'
+import { bubbleText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
 
 export default {
   image: {
@@ -18,52 +19,7 @@ export default {
       _uid: '1a435e3c-7570-4c66-9b92-543bf55c5bfa',
       title: 'Hochvakuum',
       position: 'right',
-      richtext: {
-        type: 'doc',
-        content: [
-          {
-            type: 'paragraph',
-            content: [
-              {
-                text: '10',
-                type: 'text',
-              },
-              {
-                text: '3 ',
-                type: 'text',
-                marks: [
-                  {
-                    type: 'styled',
-                    attrs: {
-                      class: 'superscript',
-                    },
-                  },
-                ],
-              },
-              {
-                text: '- 10',
-                type: 'text',
-              },
-              {
-                text: '-6 ',
-                type: 'text',
-                marks: [
-                  {
-                    type: 'styled',
-                    attrs: {
-                      class: 'superscript',
-                    },
-                  },
-                ],
-              },
-              {
-                text: 'hPa',
-                type: 'text',
-              },
-            ],
-          },
-        ],
-      },
+      richtext: bubbleText.richtext,
       component: 'Bubble',
       _editable:
         '<!--#storyblok#{"name": "Bubble", "space": "156817", "uid": "1a435e3c-7570-4c66-9b92-543bf55c5bfa", "id": "132667482"}-->',

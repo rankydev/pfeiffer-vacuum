@@ -3,15 +3,15 @@ export default {
     _uid: '51e8d701-ae97-4800-b74e-58b93e5f09cd',
     component: 'Richtext',
     richtext: `<p>Plain text can be added <u>also with underline</u> or <strong>strong</strong> and links can either be
-                
+
     <a href="https://www.pfeiffer-vacuum.com" target="_blank">external</a> or
-                
+
                 <a href="/home" target="_self">internal</a> or
-                
+
                 <a href="mailto:info@pfeiffer-vacuum.com">eMail links</a> or
-                
+
                 <a href="tel:+49123456789">telephone</a> or
-                
+
                 <a href="#anchor">anchor</a>
                  also styles for several headlines are provide like
                 <h2>Headline H2</h2>
@@ -125,6 +125,16 @@ export const smallText = {
   _uid: '4d12b093-e25f-4ff2-bc8c-f645ca6e0e11',
   richtext:
     '<p><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b><br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est velit pharetra tincidunt rhoncus, sed</p>',
+  component: 'RichtextBasic',
+  uiComponent: 'Richtext',
+  _editable:
+    '<!--#storyblok#{"name": "RichtextBasic", "space": "152017", "uid": "4d12b093-e25f-4ff2-bc8c-f645ca6e0e11", "id": "119228911"}-->',
+}
+
+export const bubbleText = {
+  _uid: '4d12b093-e25f-4ff2-bc8c-f645ca6e0e11',
+  richtext:
+    '<p>10<sup class="superscript">3 </sup>- 10<sup class="superscript">-6 </sup>hPa</p>',
   component: 'RichtextBasic',
   uiComponent: 'Richtext',
   _editable:
