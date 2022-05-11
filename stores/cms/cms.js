@@ -6,36 +6,42 @@ import {
   computed,
   useAsync,
 } from '@nuxtjs/composition-api'
-import { usePageStore } from '~/stores/page'
 
 export const useCmsStore = defineStore('cms', () => {
-  const pageStore = usePageStore()
   const route = useRoute()
   const { $cms } = useContext()
 
   const loadCmsLinks = async () => {
-    const { data } = await $cms.query({ type: 'links' })
-    return Object.values(data?.links || {})
+    const data = await $cms.getLinks()
+    return Object.values(data || {})
   }
   const cmsLinks = useAsync(loadCmsLinks)
 
   const breadcrumb = computed(() => {
     const { path } = unref(route)
-    const filterFolders = ({ is_folder }) => !is_folder
-    const links = (unref(cmsLinks) || []).filter(filterFolders)
+    const filterFolders = ({ isFolder }) => !isFolder
+
+    const prepareSlugName = (name) => (slug) => ({
+      ...slug,
+      name: slug.name || name,
+    })
+    const getTranslationSlugs = (memo, value) => [
+      ...memo,
+      value,
+      ...value.translatedSlugs.map(prepareSlugName(value.name)),
+    ]
+    const links = (unref(cmsLinks) || [])
+      .filter(filterFolders)
+      .reduce(getTranslationSlugs, [])
 
     const cleanSlug = (slug) => slug.replace(/\/$/, '').replace(/^\//, '')
     const joinSlug = (prefix, val) => (prefix ? `${prefix}/${val}` : val)
     const joinSlugs = (acc, ele) => [...acc, joinSlug([...acc].pop(), ele)]
-    const isSlug = (val, { slug }) => cleanSlug(slug) === val
+    const isSlug = (val, { path }) => cleanSlug(path) === val
     const findSlug = (slug) => links.find((link) => isSlug(slug, link))
-    const getHref = ({ slug }) => `/${cleanSlug(slug)}`
-    const hasLanguage = ({ lang }) => lang === pageStore.language
-    const getTranslation = (slug) =>
-      slug ? slug.find(hasLanguage)?.name : undefined
+    const getHref = ({ path }) => `/${cleanSlug(path)}`
     const hasName = (slug) => slug?.name
-    const getName = (slug) => getTranslation(slug.alternates) || slug.name
-    const buildSlug = (slug) => ({ href: getHref(slug), name: getName(slug) })
+    const buildSlug = (slug) => ({ href: getHref(slug), name: slug.name })
 
     const slugs = cleanSlug(path).split('/').reduce(joinSlugs, [])
     return slugs.map(findSlug).filter(hasName).map(buildSlug)

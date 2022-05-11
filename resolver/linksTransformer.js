@@ -20,6 +20,7 @@ export function transform(links, context) {
     }))
 
     transformedLinks[key] = {
+      ...value,
       path,
       translatedSlugs,
     }

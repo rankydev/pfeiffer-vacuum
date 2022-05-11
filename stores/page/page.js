@@ -7,14 +7,11 @@ export const PRODUCT_PAGE = 'product'
 
 export const usePageStore = defineStore('page', () => {
   const pageType = ref(CMS_PAGE)
-  //TODO: receive the language dynamically
-  const language = ref('de')
 
   const setPageType = (type) => (pageType.value = type)
 
   return {
     pageType: readonly(pageType),
-    language,
     setPageType,
   }
 })
