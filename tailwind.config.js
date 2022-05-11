@@ -12,6 +12,9 @@ module.exports = {
       none: '0 0 #0000',
       button: '0 12px 12px -12px rgba(51, 48, 0, 0.4)',
       'button-inverted': '0 12px 12px -12px rgba(255, 255, 255, 0.3)',
+      borderRed: 'inset 0 0 0 2px #dd1541',
+      borderGrey80: 'inset 0 0 0 2px #CCCCCC',
+      borderWhite: 'inset 0 0 0 2px #ffffff',
     },
     colors: {
       'pv-red': '#dd1541',
@@ -63,10 +66,12 @@ module.exports = {
       10: '0.1',
       20: '0.2',
       50: '0.5',
+      80: '0.8',
       100: '1',
     },
     outlineOffset: {
       '-2': '-2px',
+      '-1': '-1px',
     },
     gridTemplateColumns: {
       desktop: 'repeat(12, minmax(0, 1fr))',

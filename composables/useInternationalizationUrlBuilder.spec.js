@@ -8,7 +8,7 @@ describe('useInternationalizationUrlBuilder', () => {
           languages: ['de', 'ko', 'zh', 'en'],
         },
         $cms: {
-          regions: 'global,ger,zh,ko',
+          regions: 'global,de,zh,ko',
           defaultRegion: 'global',
           defaultLanguageCode: 'en',
         },
@@ -23,6 +23,15 @@ describe('useInternationalizationUrlBuilder', () => {
     expect(slug).toEqual('global/')
     expect(fallbackSlug).toEqual('global/')
     expect(language).toEqual('en')
+  })
+
+  test('test germany de page', () => {
+    const { buildUrl } = useInternationalizationUrlBuilder(createContext())
+    const { slug, fallbackSlug, language } = buildUrl('/de/de/')
+
+    expect(slug).toEqual('de/')
+    expect(fallbackSlug).toEqual('global/')
+    expect(language).toEqual('de')
   })
 
   test('test home url without region and language', () => {

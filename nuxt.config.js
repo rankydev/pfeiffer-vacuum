@@ -64,7 +64,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@txp-cms/storyblok'],
+  modules: ['@txp-cms/storyblok', '@nuxt/image'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -102,9 +102,7 @@ export default {
       process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
     regions: process.env.STORYBLOK_REGIONS,
     defaultRegion: process.env.STORYBLOK_DEFAULT_REGION,
-    resolver: {
-      multilink: '~/resolver/customLinkResolver'
-    }
+    linksTransformer: '~/resolver/linksTransformer',
   },
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL || 'https://localhost:3000',
@@ -124,5 +122,13 @@ export default {
     CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,
     CI_PROJECT_URL: process.env.CI_PROJECT_URL,
     NODE_ENV: process.env.NODE_ENV,
+  },
+
+  //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
+  image: {
+    provider: 'storyblok',
+    storyblok: {
+      baseURL: 'https://img2.storyblok.com',
+    },
   },
 }

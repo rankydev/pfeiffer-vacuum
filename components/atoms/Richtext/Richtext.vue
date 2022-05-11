@@ -12,6 +12,9 @@ import { defineComponent, useRouter } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
+    /**
+     * Prerendered HTML from storyblok richtext field
+     */
     richtext: {
       type: String,
       default: '',
@@ -141,6 +144,10 @@ export default defineComponent({
         @apply tw-text-xl;
       }
     }
+  }
+
+  & > *:last-child {
+    @apply tw-mb-0;
   }
 }
 </style>

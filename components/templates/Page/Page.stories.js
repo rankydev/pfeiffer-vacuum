@@ -15,7 +15,6 @@ export default {
 
 const Template = (args) => ({
   components: { Page },
-  inject: ['getTranslatedSlugs', 'getDefaultFullSlug'],
   setup() {
     const content = PageContent.content
     return { args, content }

@@ -1,4 +1,4 @@
-import { quicklinks } from '~/components/molecules/Quicklink/QuickLink.stories.content'
+import { quicklinks } from '~/components/molecules/Quicklink/QuickLink.stories.content.js'
 
 export const quicklinkNavigation = {
   _uid: '83765e37-cc94-4ecb-84fa-f25b57dbb4de',
