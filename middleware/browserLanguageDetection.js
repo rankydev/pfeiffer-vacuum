@@ -1,39 +1,36 @@
 import { withoutTrailingSlash, withoutLeadingSlash } from 'ufo'
 import consola from 'consola'
+
 const logger = consola.withScope('browserLaguageDetection')
 
-// @todo Review and eventually rework this with ticket: https://jira.diva-e.com/browse/PVWEB-596
-
 export default async function (context) {
-  logger.trace('ENTER middleware', context)
-  if (context.isHMR) {
-    logger.trace('CONTINUE: isHMR')
-    // ignore if called from hot module replacement
+  if (!process.server) {
     return
   }
 
   const path = withoutLeadingSlash(withoutTrailingSlash(context.route.path))
-  const defaultLanguage = context.$cms.defaultLanguageCode
-  const languages = await context.$cms.getLanguages()
+  const defaultLanguage = process.env.DEFAULT_LANGUAGE_CODE
+  const languages = process.env.LANGUAGE_CODES.split(',')
+  const defaultRegion = process.env.STORYBLOK_DEFAULT_REGION
+  const regions = process.env.STORYBLOK_REGIONS.split('.')
 
   logger.trace('path', path)
-  logger.trace('defaultLanguage', defaultLanguage)
-  logger.trace('languages', languages)
 
   const urlsSegments = path.split('/')
-  const region = urlsSegments.shift()
+  let language = urlsSegments.shift()
+  let region = urlsSegments.shift()
 
   // if the requested url contains a language code, then do nothing
-  if (languages.includes(urlsSegments[0])) {
-    logger.trace('CONTINUE: url contains a language code')
+  if (languages.includes(language) && regions.includes(region)) {
+    logger.trace('CONTINUE: url contains correct parameters')
     return
   }
 
-  let language = defaultLanguage
+  if (!region.includes(region)) {
+    region = defaultRegion
+  }
 
-  logger.trace('process', process.server)
-  if (process.server) {
-    logger.trace('process.server')
+  if (!languages.includes(language)) {
     const acceptLanguage = context.req.headers['accept-language']
       .split(',')[0]
       .toLocaleLowerCase()
@@ -46,7 +43,8 @@ export default async function (context) {
       : defaultLanguage
   }
 
-  const redirectUrl = `/${region}/${language}/${urlsSegments.join('/')}`
+  const redirectUrl = `/${region}/${language}`
+
   logger.trace('redirect to', redirectUrl)
   return context.redirect(redirectUrl)
 }

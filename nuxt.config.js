@@ -1,10 +1,3 @@
-const locales = [
-  'de',
-  'ko',
-  'zh',
-  'en', // Make sure that default locale is the last one!
-]
-
 export default {
   srcDir: '',
   ssr: true,
@@ -32,7 +25,7 @@ export default {
         routes[key].caseSensitive = true
       }
     },
-    middleware: 'browserLanguageDetection',
+    // middleware: 'browserLanguageDetection',
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -105,10 +98,12 @@ export default {
     defaultRegion: process.env.STORYBLOK_DEFAULT_REGION,
     linksTransformer: '~/resolver/linksTransformer',
   },
+
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL || 'https://localhost:3000',
-    languages: locales,
+    languages: process.env.LANGUAGE_CODES.split(','),
   },
+
   server: {
     // for local change add 'environments/local.js'
     port: process.env.PORT || 3000,
@@ -133,4 +128,7 @@ export default {
       baseURL: 'https://img2.storyblok.com',
     },
   },
+
+  // https://nuxtjs.org/docs/configuration-glossary/configuration-servermiddleware/
+  middleware: ['~/middleware/browserLanguageDetection'],
 }
