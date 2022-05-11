@@ -1,6 +1,5 @@
 export default [
   {
-    _uid: '1b1d8fe7-735d-49ca-a220-989e3fdfa102',
     headline: 'Komplettlösungen für jeden Vakuumbereich',
     component: 'HomeStageContent',
     teaserText:
