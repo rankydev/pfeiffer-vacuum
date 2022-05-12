@@ -20,7 +20,7 @@ const useInternationalizationUrlBuilder = ({ root: context }) => {
 
     return {
       slug: `${region}/${slug}`,
-      fallbackSlug: `${DEFAULT_REGION}/${slug}`,
+      fallbackSlug: `${region}/${slug}/,${DEFAULT_REGION}/${slug},${DEFAULT_REGION}/${slug}/`,
       language,
     }
   }
