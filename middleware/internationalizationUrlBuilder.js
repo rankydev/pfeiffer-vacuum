@@ -1,7 +1,7 @@
 import { withoutTrailingSlash, withoutLeadingSlash } from 'ufo'
 import consola from 'consola'
 
-const logger = consola.withScope('browserLaguageDetection')
+const logger = consola.withScope('internationalizationUrlBuilder')
 
 export default async function (context) {
   if (!process.server) {

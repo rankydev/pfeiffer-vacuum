@@ -17,7 +17,7 @@ export const cmsLinks = [
     uuid: 'c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125',
     is_startpage: true,
     real_path: '/default/',
-    alternates: [{ path: 'default/', name: 'Zu Hause', lang: 'de' }],
+    translatedSlugs: [{ path: 'default/', name: 'Zu Hause', lang: 'de' }],
   },
   {
     id: 125502714,
@@ -31,7 +31,7 @@ export const cmsLinks = [
     uuid: 'a05a4b87-2a2f-4e7d-8327-7a5d65634de1',
     is_startpage: false,
     real_path: '/default/products',
-    alternates: [{ path: 'default/products', name: null, lang: 'de' }],
+    translatedSlugs: [{ path: 'default/products', name: null, lang: 'de' }],
   },
   {
     id: 125502713,
@@ -45,7 +45,7 @@ export const cmsLinks = [
     uuid: '4cd1434c-4957-460b-8525-b05565ebafdb',
     is_startpage: false,
     real_path: '/default/accordion',
-    alternates: [{ path: 'default/accordion', name: null, lang: 'de' }],
+    translatedSlugs: [{ path: 'default/accordion', name: null, lang: 'de' }],
   },
   {
     id: 125502720,
@@ -59,7 +59,9 @@ export const cmsLinks = [
     uuid: 'ed59fcdb-df75-4a90-b985-f71e004c3314',
     is_startpage: false,
     real_path: '/default/products/trio2',
-    alternates: [{ path: 'default/products/trio2', name: null, lang: 'de' }],
+    translatedSlugs: [
+      { path: 'default/products/trio2', name: null, lang: 'de' },
+    ],
   },
   {
     id: 125502719,
@@ -73,7 +75,9 @@ export const cmsLinks = [
     uuid: '00a6a346-e50b-4dbc-b276-7c8fe58f4db4',
     is_startpage: false,
     real_path: '/default/products/trio',
-    alternates: [{ path: 'default/products/trio', name: null, lang: 'de' }],
+    translatedSlugs: [
+      { path: 'default/products/trio', name: null, lang: 'de' },
+    ],
   },
   {
     id: 125502718,
@@ -87,7 +91,7 @@ export const cmsLinks = [
     uuid: '366c167e-8d4e-4475-80c7-b540b7eb248a',
     is_startpage: false,
     real_path: '/default/products/duo',
-    alternates: [{ path: 'default/products/duo', name: null, lang: 'de' }],
+    translatedSlugs: [{ path: 'default/products/duo', name: null, lang: 'de' }],
   },
   {
     id: 125502717,
@@ -101,7 +105,9 @@ export const cmsLinks = [
     uuid: '70ff68c6-2cfb-4a0c-86c9-e5fb85b761c9',
     is_startpage: false,
     real_path: '/default/products/hicube',
-    alternates: [{ path: 'default/products/hicube', name: null, lang: 'de' }],
+    translatedSlugs: [
+      { path: 'default/products/hicube', name: null, lang: 'de' },
+    ],
   },
   {
     id: 125502710,
@@ -115,7 +121,7 @@ export const cmsLinks = [
     uuid: '4118f6b0-3c2b-4eac-a570-f5003f35a240',
     is_startpage: false,
     real_path: '/default',
-    alternates: [{ path: 'default', name: null, lang: 'de' }],
+    translatedSlugs: [{ path: 'default', name: null, lang: 'de' }],
   },
   {
     id: 125502711,
@@ -129,7 +135,7 @@ export const cmsLinks = [
     uuid: '43a786f9-5521-48d0-bc7d-901a0f9039bf',
     is_startpage: false,
     real_path: '/default/templates',
-    alternates: [{ path: 'default/templates', name: null, lang: 'de' }],
+    translatedSlugs: [{ path: 'default/templates', name: null, lang: 'de' }],
   },
   {
     id: 125502715,
@@ -143,7 +149,7 @@ export const cmsLinks = [
     uuid: '98223465-2e9e-4a0e-a4a5-46c10af6c900',
     is_startpage: false,
     real_path: '/default/templates/defaultpageconfiguration',
-    alternates: [
+    translatedSlugs: [
       {
         path: 'default/templates/defaultpageconfiguration',
         name: null,
@@ -163,7 +169,9 @@ export const cmsLinks = [
     uuid: '9d56b5f6-8382-4eeb-96b5-feb25cbcf3b1',
     is_startpage: false,
     real_path: '/default/products/hipace',
-    alternates: [{ path: 'default/products/hipace', name: null, lang: 'de' }],
+    translatedSlugs: [
+      { path: 'default/products/hipace', name: null, lang: 'de' },
+    ],
   },
 ]
 

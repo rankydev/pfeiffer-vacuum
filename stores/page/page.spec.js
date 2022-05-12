@@ -9,7 +9,6 @@ describe('Page store', () => {
       const pageStore = usePageStore()
 
       expect(pageStore.pageType).toBe(CMS_PAGE)
-      expect(pageStore.language).toBe('de')
       expect(pageStore.setPageType).toBeInstanceOf(Function)
     })
   })

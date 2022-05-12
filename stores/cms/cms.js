@@ -28,7 +28,7 @@ export const useCmsStore = defineStore('cms', () => {
     const getTranslationSlugs = (memo, value) => [
       ...memo,
       value,
-      ...value.translatedSlugs.map(prepareSlugName(value.name)),
+      ...(value.translatedSlugs || []).map(prepareSlugName(value.name)),
     ]
     const links = (unref(cmsLinks) || [])
       .filter(filterFolders)
@@ -37,9 +37,9 @@ export const useCmsStore = defineStore('cms', () => {
     const cleanSlug = (slug) => slug.replace(/\/$/, '').replace(/^\//, '')
     const joinSlug = (prefix, val) => (prefix ? `${prefix}/${val}` : val)
     const joinSlugs = (acc, ele) => [...acc, joinSlug([...acc].pop(), ele)]
-    const isSlug = (val, { path }) => cleanSlug(path) === val
+    const isSlug = (val, { path }) => (path ? cleanSlug(path) : false) === val
     const findSlug = (slug) => links.find((link) => isSlug(slug, link))
-    const getHref = ({ path }) => `/${cleanSlug(path)}`
+    const getHref = ({ path }) => `/${path ? cleanSlug(path) : ''}`
     const hasName = (slug) => slug?.name
     const buildSlug = (slug) => ({ href: getHref(slug), name: slug.name })
 

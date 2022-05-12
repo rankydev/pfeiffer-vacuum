@@ -25,7 +25,7 @@ export default {
         routes[key].caseSensitive = true
       }
     },
-    // middleware: 'browserLanguageDetection',
+    middleware: 'internationalizationUrlBuilder',
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -128,7 +128,4 @@ export default {
       baseURL: 'https://img2.storyblok.com',
     },
   },
-
-  // https://nuxtjs.org/docs/configuration-glossary/configuration-servermiddleware/
-  middleware: ['~/middleware/browserLanguageDetection'],
 }

@@ -7,18 +7,17 @@ jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   const { ref } = originalModule
 
-  const result = { data: { links: cmsLinks } }
   const key = '' + Math.random()
-  const query = jest
+  const getLinks = jest
     .fn()
     .mockReturnValueOnce({}) // return empty object
     .mockReturnValueOnce(new Promise(() => {})) // unresolved promise
-    .mockReturnValue(Promise.resolve(result)) // normal behaviour
+    .mockReturnValue(Promise.resolve(cmsLinks)) // normal behaviour
 
   return {
     __esModule: true,
     ...originalModule,
-    useContext: jest.fn(() => ({ $cms: { query } })),
+    useContext: jest.fn(() => ({ $cms: { getLinks } })),
     useRoute: jest.fn(() => ref({ path })),
     useAsync: (cb) => originalModule.useAsync(cb, key),
   }
