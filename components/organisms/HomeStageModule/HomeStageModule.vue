@@ -21,6 +21,7 @@
         class="homestage__image"
       />
       <Bubble
+        v-if="bubble[0]"
         :title="bubble[0].title"
         :richtext="bubble[0].richtext"
         :position="bubble[0].position"
