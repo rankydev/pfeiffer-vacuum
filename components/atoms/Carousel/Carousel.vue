@@ -19,6 +19,10 @@
     <template #prevArrow>
       <Button
         class="carousel__prev"
+        :class="{
+          'carousel__prev--show': !isFirstSlide,
+          'carousel__prev--hide': isFirstSlide,
+        }"
         variant="secondary"
         icon="arrow_back"
         cutaway="cutaway-right"
@@ -37,7 +41,15 @@
   </VueSlickCarousel>
 </template>
 <script>
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  watchEffect,
+  reactive,
+  watch,
+} from '@nuxtjs/composition-api'
 import VueSlickCarousel from 'vue-slick-carousel'
 import Button from '~/components/atoms/Button/Button'
 
@@ -78,6 +90,13 @@ export default defineComponent({
     const currentSlide = computed(
       () => carousel.value.$refs.innerSlider.currentSlide
     )
+    let isFirstSlide = ref(true)
+
+    watchEffect(() => {
+      if (carousel.value) {
+        isFirstSlide.value = carousel.value.$refs.innerSlider.currentSlide === 0
+      }
+    })
 
     const defaultSettings = {
       autoplaySpeed: 5000,
@@ -110,6 +129,7 @@ export default defineComponent({
       carousel,
       currentSlide,
       defaultSettings,
+      isFirstSlide,
     }
   },
 })
@@ -130,6 +150,14 @@ export default defineComponent({
 
   &__prev {
     @apply tw-left-0;
+
+    &--hide {
+      display: none;
+    }
+
+    &--show {
+      display: block;
+    }
   }
 
   &__next {
