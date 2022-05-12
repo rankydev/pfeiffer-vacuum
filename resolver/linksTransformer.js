@@ -29,15 +29,26 @@ export function transform(links, context) {
   return transformedLinks
 }
 
+function appendTrailingSlashIfRequired(url, append) {
+  return append && !url.endsWith('/') ? url + '/' : url
+}
+
 function transformUrl(url, currentRegion, defaultRegion) {
+  const isTrailingSlash = url.endsWith('/')
   const urlsSegments = url.split('/').filter((segment) => segment !== '')
   const language = urlsSegments.shift()
   const region = urlsSegments.shift()
   const slug = urlsSegments.join('/')
 
   if (region === defaultRegion) {
-    return `/${currentRegion}/${language}/${slug}`
+    return appendTrailingSlashIfRequired(
+      `/${currentRegion}/${language}/${slug}`,
+      isTrailingSlash
+    )
   } else {
-    return `/${region}/${language}/${slug}`
+    return appendTrailingSlashIfRequired(
+      `/${region}/${language}/${slug}`,
+      isTrailingSlash
+    )
   }
 }
