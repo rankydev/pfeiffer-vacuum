@@ -21,16 +21,16 @@ describe('useInternationalizationUrlBuilder', () => {
     const { slug, fallbackSlug, language } = buildUrl('/')
 
     expect(slug).toEqual('global/')
-    expect(fallbackSlug).toEqual('global/')
+    expect(fallbackSlug).toEqual('global//,global/,global//')
     expect(language).toEqual('en')
   })
 
   test('test germany de page', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
-    const { slug, fallbackSlug, language } = buildUrl('/de/de/')
+    const { slug, fallbackSlug, language } = buildUrl('/de/de')
 
     expect(slug).toEqual('de/')
-    expect(fallbackSlug).toEqual('global/')
+    expect(fallbackSlug).toEqual('de//,global/,global//')
     expect(language).toEqual('de')
   })
 
@@ -38,7 +38,7 @@ describe('useInternationalizationUrlBuilder', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
     const { slug, fallbackSlug, language } = buildUrl('/home')
     expect(slug).toEqual('global/home')
-    expect(fallbackSlug).toEqual('global/home')
+    expect(fallbackSlug).toEqual('global/home/,global/home,global/home/')
     expect(language).toEqual('en')
   })
 
@@ -48,7 +48,7 @@ describe('useInternationalizationUrlBuilder', () => {
       '/products/fluxkompensator'
     )
     expect(slug).toEqual('global/products/fluxkompensator')
-    expect(fallbackSlug).toEqual('global/products/fluxkompensator')
+    expect(fallbackSlug).toEqual('global/products/fluxkompensator/,global/products/fluxkompensator,global/products/fluxkompensator/')
     expect(language).toEqual('en')
   })
 
@@ -57,7 +57,7 @@ describe('useInternationalizationUrlBuilder', () => {
     const { slug, fallbackSlug, language } = buildUrl('ko/en/home')
 
     expect(slug).toEqual('ko/home')
-    expect(fallbackSlug).toEqual('global/home')
+    expect(fallbackSlug).toEqual('ko/home/,global/home,global/home/')
     expect(language).toEqual('en')
   })
 })
