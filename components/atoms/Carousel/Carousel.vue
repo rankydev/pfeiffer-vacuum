@@ -9,7 +9,6 @@
     :dots="dots"
     class="carousel"
   >
-    <slot name="carousel" />
     <NuxtDynamic
       v-for="slide in slides"
       :key="slide._uid"
@@ -137,12 +136,18 @@ export default defineComponent({
     @apply tw-right-0;
   }
 
-  .slick-slide {
-    @apply tw-px-2;
+  .slick-track {
+    @apply tw-flex;
+    @apply tw-gap-4;
 
-    .teaser-card {
-      @apply tw-h-full;
+    &::before,
+    &::after {
+      @apply tw-content-none;
     }
+  }
+
+  .teaser-card {
+    @apply tw-h-full;
   }
 }
 </style>

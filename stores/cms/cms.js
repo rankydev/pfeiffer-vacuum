@@ -28,11 +28,10 @@ export const useCmsStore = defineStore('cms', () => {
     const joinSlug = (prefix, val) => (prefix ? `${prefix}/${val}` : val)
     const joinSlugs = (acc, ele) => [...acc, joinSlug([...acc].pop(), ele)]
     const isSlug = (val, { slug }) => cleanSlug(slug) === val
-    const findSlug = (slug) => links.find((link) => isSlug(slug, link))
+    const findSlug = (slug) => links?.find((link) => isSlug(slug, link))
     const getHref = ({ slug }) => `/${cleanSlug(slug)}`
     const hasLanguage = ({ lang }) => lang === pageStore.language
-    const getTranslation = (slug) =>
-      slug ? slug.find(hasLanguage)?.name : undefined
+    const getTranslation = (slug) => slug?.find(hasLanguage)?.name
     const hasName = (slug) => slug?.name
     const getName = (slug) => getTranslation(slug.alternates) || slug.name
     const buildSlug = (slug) => ({ href: getHref(slug), name: getName(slug) })

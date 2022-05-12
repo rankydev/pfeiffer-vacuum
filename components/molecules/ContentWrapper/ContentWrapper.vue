@@ -1,5 +1,5 @@
 <template>
-  <div class="content-wrapper">
+  <div :class="breakout ? 'breakout' : 'content-wrapper'">
     <slot />
   </div>
 </template>
@@ -7,7 +7,14 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
-export default defineComponent({})
+export default defineComponent({
+  props: {
+    breakout: {
+      type: Boolean,
+      default: false,
+    },
+  },
+})
 </script>
 
 <style lang="scss">
@@ -23,5 +30,12 @@ export default defineComponent({})
   @screen lg {
     @apply tw-px-8;
   }
+}
+
+.breakout {
+  @apply tw-relative;
+  @apply tw-w-screen;
+  @apply tw-left-2/4;
+  margin-left: -50vw;
 }
 </style>
