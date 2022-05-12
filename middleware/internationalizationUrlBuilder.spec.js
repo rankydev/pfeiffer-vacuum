@@ -1,4 +1,4 @@
-import browserLanguageDetection from './browserLanguageDetection'
+import urlBuilder from './internationalizationUrlBuilder'
 
 const redirect = jest.fn()
 
@@ -10,14 +10,14 @@ const validPathArray = [
 ]
 
 const invalidPathArray = [
-  // '',
+  '',
   '/global',
   '/germany/some/path',
   '/unknown/en/some/path',
   '/some/other/path/',
 ]
 
-describe('browserLanguageDetection', () => {
+describe('internationalizationUrlBuilder', () => {
   function createContext({ path, language, server }) {
     process.env.DEFAULT_LANGUAGE_CODE = 'de'
     process.env.LANGUAGE_CODES = 'de,ko,zh,en'
@@ -43,7 +43,7 @@ describe('browserLanguageDetection', () => {
   describe('given process.server=true', () => {
     test('should not call redirect given a valid route path', () => {
       validPathArray.forEach((validPath) => {
-        browserLanguageDetection(createContext({ path: validPath }))
+        urlBuilder(createContext({ path: validPath }))
         expect(redirect).toBeCalledTimes(0)
       })
     })
@@ -51,37 +51,37 @@ describe('browserLanguageDetection', () => {
     test('should not call redirect given an invalid route path', () => {
       invalidPathArray.forEach((invalidPath) => {
         redirect.mockClear()
-        browserLanguageDetection(createContext({ path: invalidPath }))
+        urlBuilder(createContext({ path: invalidPath }))
         expect(redirect).toBeCalledTimes(1)
       })
     })
 
     test('should add region and laguage given an empty path', () => {
-      browserLanguageDetection(createContext({ path: '' }))
+      urlBuilder(createContext({ path: '' }))
       expect(redirect).toBeCalledTimes(1)
       expect(redirect).toBeCalledWith('/global/en')
     })
 
     test('should add laguage given an valid region', () => {
-      browserLanguageDetection(createContext({ path: '/germany' }))
+      urlBuilder(createContext({ path: '/germany' }))
       expect(redirect).toBeCalledTimes(1)
       expect(redirect).toBeCalledWith('/germany/en')
     })
 
     test('should redirect to base path given an invalid path', () => {
-      browserLanguageDetection(createContext({ path: '/some/invalid/path' }))
+      urlBuilder(createContext({ path: '/some/invalid/path' }))
       expect(redirect).toBeCalledTimes(1)
       expect(redirect).toBeCalledWith('/global/en')
     })
 
     test('should use the accept language header given a valid language code', () => {
-      browserLanguageDetection(createContext({ path: '', language: 'zh' }))
+      urlBuilder(createContext({ path: '', language: 'zh' }))
       expect(redirect).toBeCalledTimes(1)
       expect(redirect).toBeCalledWith('/global/zh')
     })
 
     test('should ignore the accept language header given am invalid language code', () => {
-      browserLanguageDetection(createContext({ path: '', language: 'invalid' }))
+      urlBuilder(createContext({ path: '', language: 'invalid' }))
       expect(redirect).toBeCalledTimes(1)
       expect(redirect).toBeCalledWith('/global/de')
     })
@@ -92,7 +92,7 @@ describe('browserLanguageDetection', () => {
       const pathArray = [...validPathArray, ...invalidPathArray]
 
       pathArray.forEach((path) => {
-        browserLanguageDetection(createContext({ path, server: false }))
+        urlBuilder(createContext({ path, server: false }))
         expect(redirect).toBeCalledTimes(0)
       })
     })
