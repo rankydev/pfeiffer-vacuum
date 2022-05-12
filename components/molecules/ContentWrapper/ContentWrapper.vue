@@ -1,5 +1,5 @@
 <template>
-  <div :class="breakout ? 'breakout' : 'content-wrapper'">
+  <div :class="classList">
     <slot />
   </div>
 </template>
@@ -13,6 +13,19 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    noPadding: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props) {
+    const classList = `${props.breakout ? 'breakout' : 'content-wrapper'} ${
+      props.noPadding ? 'content-wrapper--no-padding' : ''
+    }`
+
+    return {
+      classList,
+    }
   },
 })
 </script>
@@ -29,6 +42,10 @@ export default defineComponent({
 
   @screen lg {
     @apply tw-px-8;
+  }
+
+  &--no-padding {
+    @apply tw-p-0;
   }
 }
 

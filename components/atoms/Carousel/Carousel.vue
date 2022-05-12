@@ -1,44 +1,48 @@
 <template>
-  <VueSlickCarousel
-    v-if="slides.length"
-    ref="carousel"
-    v-bind="{ ...defaultSettings, ...settings }"
-    :center-mode="centerMode"
-    :infinite="infinite"
-    :autoplay="autoplay"
-    :dots="dots"
-    class="carousel"
-  >
-    <NuxtDynamic
-      v-for="slide in slides"
-      :key="slide._uid"
-      v-editable="slide"
-      v-bind="slide"
-      :component="slide.uiComponent || slide.component"
-    />
-    <template #prevArrow>
-      <Button
-        class="carousel__prev"
-        :class="{
-          'carousel__prev--show': !isFirstSlide,
-          'carousel__prev--hide': isFirstSlide,
-        }"
-        variant="secondary"
-        icon="arrow_back"
-        cutaway="cutaway-right"
-      >
-      </Button>
-    </template>
-    <template #nextArrow>
-      <Button
-        class="carousel__next"
-        variant="secondary"
-        icon="arrow_forward"
-        cutaway="cutaway-left"
-      >
-      </Button>
-    </template>
-  </VueSlickCarousel>
+  <ContentWrapper v-bind="contentWrapperProps">
+    <VueSlickCarousel
+      v-if="slides.length"
+      ref="carousel"
+      v-bind="{ ...defaultSettings, ...settings }"
+      :infinite="infiniteSetting"
+      autoplay
+      class="carousel"
+    >
+      <NuxtDynamic
+        v-for="slide in slides"
+        :key="slide._uid"
+        v-editable="slide"
+        v-bind="slide"
+        :component="slide.uiComponent || slide.component"
+      />
+      <template #prevArrow>
+        <Button
+          class="carousel__prev"
+          :class="{
+            'carousel__prev--show': !isFirstSlide,
+            'carousel__prev--hide': isFirstSlide,
+          }"
+          variant="secondary"
+          icon="arrow_back"
+          cutaway="cutaway-right"
+        >
+        </Button>
+      </template>
+      <template #nextArrow>
+        <Button
+          class="carousel__next"
+          :class="{
+            'carousel__next--show': !isLastSlide,
+            'carousel__next--hide': isLastSlide,
+          }"
+          variant="secondary"
+          icon="arrow_forward"
+          cutaway="cutaway-left"
+        >
+        </Button>
+      </template>
+    </VueSlickCarousel>
+  </ContentWrapper>
 </template>
 <script>
 import {
@@ -52,21 +56,35 @@ import {
 } from '@nuxtjs/composition-api'
 import VueSlickCarousel from 'vue-slick-carousel'
 import Button from '~/components/atoms/Button/Button'
+import ContentWrapper from '@/components/molecules/ContentWrapper/ContentWrapper'
 
 export default defineComponent({
   name: 'Carousel',
   components: {
     Button,
     VueSlickCarousel,
+    ContentWrapper,
   },
   props: {
-    settings: {
-      type: Object,
-      default: () => {},
+    headline: {
+      type: String,
+      default: '',
     },
-    centerMode: {
+    button: {
+      type: Array,
+      default: () => [],
+    },
+    slides: {
+      type: Array,
+      default: () => [],
+    },
+    isWide: {
       type: Boolean,
       default: false,
+    },
+    settings: {
+      type: Object,
+      default: () => ({}),
     },
     infinite: {
       type: Boolean,
@@ -76,39 +94,57 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    dots: {
-      type: Boolean,
-      default: false,
-    },
-    slides: {
-      type: Array,
-      default: () => [],
-    },
   },
   setup(props) {
+    const carouselIsBreakout = computed(() => props.isWide)
     const carousel = ref(null)
     const currentSlide = computed(
       () => carousel.value.$refs.innerSlider.currentSlide
     )
     let isFirstSlide = ref(true)
+    let isLastSlide = ref(false)
+
+    const infiniteSetting = computed(() => {
+      if (props.infinite && carouselIsBreakout.value) {
+        return false
+      }
+      return !!(props.infinite && !carouselIsBreakout.value)
+    })
 
     watchEffect(() => {
       if (carousel.value) {
-        isFirstSlide.value = carousel.value.$refs.innerSlider.currentSlide === 0
+        if (!infiniteSetting.value) {
+          const innerSlider = carousel.value.$refs.innerSlider
+          const slideCount = innerSlider.slideCount
+          const slidesToShowCarousel = innerSlider.slidesToShow
+          const totalSlidesCount = Math.ceil(slideCount / slidesToShowCarousel)
+
+          isFirstSlide.value = innerSlider.currentSlide === 0
+          isLastSlide.value = totalSlidesCount - 1 === currentSlide.value
+        } else {
+          isFirstSlide.value = false
+          isLastSlide.value = false
+        }
       }
     })
 
+    const contentWrapperProps = computed(() => ({
+      breakout: carouselIsBreakout.value,
+      noPadding: !carouselIsBreakout.value,
+    }))
+
+    const slidesToShow = computed(() => (carouselIsBreakout.value ? 6 : 4))
+
     const defaultSettings = {
-      autoplaySpeed: 5000,
       adaptiveHeight: true,
-      dotsClass: 'slick-dots custom-dot-class',
-      edgeFriction: 0.35,
-      pauseOnFocus: true,
-      speed: 800,
       arrows: true,
-      slidesToShow: 4,
-      slidesToScroll: 1,
+      autoplaySpeed: 5000,
+      edgeFriction: 0.35,
       initialSlide: 0,
+      pauseOnFocus: true,
+      speed: 300,
+      slidesToShow: slidesToShow.value,
+      slidesToScroll: 1,
       responsive: [
         {
           breakpoint: 1280,
@@ -128,8 +164,11 @@ export default defineComponent({
     return {
       carousel,
       currentSlide,
+      contentWrapperProps,
       defaultSettings,
       isFirstSlide,
+      isLastSlide,
+      infiniteSetting,
     }
   },
 })
@@ -146,10 +185,6 @@ export default defineComponent({
     &::before {
       @apply tw-content-none;
     }
-  }
-
-  &__prev {
-    @apply tw-left-0;
 
     &--hide {
       display: none;
@@ -158,6 +193,10 @@ export default defineComponent({
     &--show {
       display: block;
     }
+  }
+
+  &__prev {
+    @apply tw-left-0;
   }
 
   &__next {
