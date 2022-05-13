@@ -28,7 +28,7 @@
     "@nuxtjs/i18n": "^7.2.0",
     "@nuxtjs/storybook": "^4.3.1",
     "@nuxtjs/svg-sprite": "^0.5.2",
-    "@txp-cms/storyblok": "^1.8.1",
+    "@txp-cms/storyblok": "^1.8.2",
     "@pinia/nuxt": "^0.1.8",
     "core-js": "^3.21.1",
     "env-cmd": "^10.1.0",

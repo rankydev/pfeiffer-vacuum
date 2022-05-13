@@ -8,7 +8,7 @@ describe('useInternationalizationUrlBuilder', () => {
           languages: ['de', 'ko', 'zh', 'en'],
         },
         $cms: {
-          regions: 'global,de,zh,ko',
+          regions: 'global,germany,china,korea',
           defaultRegion: 'global',
           defaultLanguageCode: 'en',
         },
@@ -18,28 +18,37 @@ describe('useInternationalizationUrlBuilder', () => {
 
   test('test default url', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
-    const { slug, fallbackSlug, language } = buildUrl('/')
+    const { slug, fallbackSlug, language } = buildUrl('/global/en')
 
-    expect(slug).toEqual('global/')
-    expect(fallbackSlug).toEqual('global//,global/,global//')
+    expect(slug).toEqual('global')
+    expect(fallbackSlug).toEqual('global/,global,global/')
     expect(language).toEqual('en')
   })
 
   test('test germany de page', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
-    const { slug, fallbackSlug, language } = buildUrl('/de/de')
+    const { slug, fallbackSlug, language } = buildUrl('/germany/de')
 
-    expect(slug).toEqual('de/')
-    expect(fallbackSlug).toEqual('de//,global/,global//')
+    expect(slug).toEqual('germany')
+    expect(fallbackSlug).toEqual('germany/,global,global/')
     expect(language).toEqual('de')
   })
 
-  test('test home url without region and language', () => {
+  test('test germany de page with trailing slash', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
-    const { slug, fallbackSlug, language } = buildUrl('/home')
-    expect(slug).toEqual('global/home')
-    expect(fallbackSlug).toEqual('global/home/,global/home,global/home/')
-    expect(language).toEqual('en')
+    const { slug, fallbackSlug, language } = buildUrl('/germany/de/')
+
+    expect(slug).toEqual('germany')
+    expect(fallbackSlug).toEqual('germany/,global,global/')
+    expect(language).toEqual('de')
+  })
+
+  test('test home slug of the german region', () => {
+    const { buildUrl } = useInternationalizationUrlBuilder(createContext())
+    const { slug, fallbackSlug, language } = buildUrl('germany/de/home')
+    expect(slug).toEqual('germany/home')
+    expect(fallbackSlug).toEqual('germany/home/,global/home,global/home/')
+    expect(language).toEqual('de')
   })
 
   test('test complex url without region and language', () => {
@@ -48,16 +57,18 @@ describe('useInternationalizationUrlBuilder', () => {
       '/products/fluxkompensator'
     )
     expect(slug).toEqual('global/products/fluxkompensator')
-    expect(fallbackSlug).toEqual('global/products/fluxkompensator/,global/products/fluxkompensator,global/products/fluxkompensator/')
+    expect(fallbackSlug).toEqual(
+      'global/products/fluxkompensator/,global/products/fluxkompensator,global/products/fluxkompensator/'
+    )
     expect(language).toEqual('en')
   })
 
   test('test home url for a specific region', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
-    const { slug, fallbackSlug, language } = buildUrl('ko/en/home')
+    const { slug, fallbackSlug, language } = buildUrl('korea/en/home')
 
-    expect(slug).toEqual('ko/home')
-    expect(fallbackSlug).toEqual('ko/home/,global/home,global/home/')
+    expect(slug).toEqual('korea/home')
+    expect(fallbackSlug).toEqual('korea/home/,global/home,global/home/')
     expect(language).toEqual('en')
   })
 })
