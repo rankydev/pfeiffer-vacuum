@@ -89,6 +89,7 @@ export default defineComponent({
     slides: {
       type: Array,
       default: () => [],
+      required: true,
     },
     isWide: {
       type: Boolean,

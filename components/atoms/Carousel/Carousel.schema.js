@@ -20,6 +20,7 @@ export default {
       display_name: 'Slides',
       restrict_components: true,
       component_whitelist: ['TeaserCard'],
+      required: true,
       pos: 3,
     },
     isWide: {
