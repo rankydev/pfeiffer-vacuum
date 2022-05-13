@@ -99,6 +99,16 @@ export default defineComponent({
   &__description {
     @apply tw-mt-4;
     @apply tw-text-pv-white;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span {
+      @apply tw-text-pv-white;
+    }
   }
 }
 </style>
