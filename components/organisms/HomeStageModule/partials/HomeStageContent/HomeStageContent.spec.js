@@ -1,4 +1,5 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
+import Button from '~/components/atoms/Button/Button'
 // import HomeStageContent from './HomeStageContent'
 import HomeStageContent from '~/components/organisms/HomeStageModule/partials/HomeStageContent/HomeStageContent'
 import content from './HomeStageContent.stories.content'
@@ -31,29 +32,36 @@ describe('HomeStageContent', () => {
     })
 
     // headline
-    test('should render headline', () => {
+    test('should render headline given propsData', () => {
       const propsData = {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const homeStageContentWrapper = wrapper.find('.homestage-content')
-      console.log(homeStageContentWrapper)
-      // // console.log(homeStageContentWrapper.at(0).attributes('headline'))
-      // // console.log(homeStageContentWrapper.vm)
-      // // console.log(homeStageContentWrapper.attributes('headline'))
-      // // console.log(propsData[0].headline)
-      // const headline = propsData[0].headline
-      // const headlineWrapper = homeStageContentWrapper.find(
-      //   '.homestage-content__headline'
-      // )
-      // console.log(headlineWrapper)
-      // expect(headlineWrapper.exists()).toBeTruthy()
-      // console.log(homeStageContentWrapper)
-      // expect(homeStageContentWrapper.exists()).toBeTruthy()
+      const contentHeadline = wrapper.find('.homestage-content__headline')
+      expect(contentHeadline.text()).toBe(propsData.headline)
     })
 
     // teaserText
+    test('should render teaserText given propsData', () => {
+      const propsData = {
+        ...defaultProps(),
+      }
+      createComponent(propsData)
+      const contentHeadline = wrapper.find('.homestage-content__description')
+      expect(contentHeadline.text()).toBe(propsData.teaserText)
+    })
 
-    // position
+    // buttons
+    test('should render button given propsData', () => {
+      const propsData = {
+        ...defaultProps(),
+      }
+      createComponent(propsData)
+
+      const buttonArr = wrapper.findAllComponents(Button)
+      buttonArr.wrappers.forEach((item, idx) => {
+        expect(item.attributes('icon')).toBe(propsData.buttons[idx].icon)
+      })
+    })
   })
 })

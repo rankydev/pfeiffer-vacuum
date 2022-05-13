@@ -67,6 +67,17 @@ describe('HomeStageModule', () => {
     })
 
     // background image
+    test('should render background image', () => {
+      const propsData = {
+        ...defaultProps(),
+      }
+      createComponent(propsData)
+      const homeStageWrapper = wrapper.find('.homestage')
+
+      expect(homeStageWrapper.element.style.backgroundImage).toBe(
+        `url(${propsData.image.originalFilename})`
+      )
+    })
 
     // bubble
     test('should render Bubble when it is provided', () => {
