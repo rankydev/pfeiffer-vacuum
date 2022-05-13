@@ -12,6 +12,7 @@ export const carouselEntry = {
   target,
   image,
   headline,
+  component: 'TeaserCard',
 }
 
 export const carouselEntries = [
