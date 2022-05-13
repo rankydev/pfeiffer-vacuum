@@ -31,5 +31,5 @@ export default {
     fieldtype: 'asset',
   },
   component: 'HomeStageModule',
-  stageContent: HomeStageContent,
+  stageContent: [HomeStageContent],
 }
