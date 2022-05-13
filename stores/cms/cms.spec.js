@@ -1,6 +1,7 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { useCmsStore } from './cms'
-import { cmsLinks, breadcrumbResult } from './cms.stories.content.js'
+import { cmsLinks } from './cms.stories.content.js'
+import { useRoute, ref } from '@nuxtjs/composition-api'
 
 jest.mock('@nuxtjs/composition-api', () => {
   const { cmsLinks, path } = require('./cms.stories.content.js')
@@ -10,6 +11,7 @@ jest.mock('@nuxtjs/composition-api', () => {
   const key = '' + Math.random()
   const getLinks = jest
     .fn()
+    .mockReturnValueOnce(null) // return empty object
     .mockReturnValueOnce({}) // return empty object
     .mockReturnValueOnce(new Promise(() => {})) // unresolved promise
     .mockReturnValue(Promise.resolve(cmsLinks)) // normal behaviour
@@ -18,7 +20,7 @@ jest.mock('@nuxtjs/composition-api', () => {
     __esModule: true,
     ...originalModule,
     useContext: jest.fn(() => ({ $cms: { getLinks } })),
-    useRoute: jest.fn(() => ref({ path })),
+    useRoute: jest.fn(),
     useAsync: (cb) => originalModule.useAsync(cb, key),
   }
 })
@@ -27,7 +29,22 @@ describe('Page store', () => {
   beforeEach(() => setActivePinia(createPinia()))
 
   describe('initial state', () => {
+    test('should return empty breadcrumb if cms return null', async () => {
+      useRoute.mockImplementation(() =>
+        ref({ path: '/germany/en/test/de-test' })
+      )
+      const pageStore = useCmsStore()
+
+      await new Promise(process.nextTick)
+
+      expect(pageStore.cmsLinks).toEqual([])
+      expect(pageStore.breadcrumb).toEqual([])
+    })
+
     test('should return empty breadcrumb if cms return empty object', async () => {
+      useRoute.mockImplementation(() =>
+        ref({ path: '/germany/en/test/de-test' })
+      )
       const pageStore = useCmsStore()
 
       await new Promise(process.nextTick)
@@ -37,6 +54,9 @@ describe('Page store', () => {
     })
 
     test('should return empty breadcrumb if cms request is pending', async () => {
+      useRoute.mockImplementation(() =>
+        ref({ path: '/germany/en/test/de-test' })
+      )
       const pageStore = useCmsStore()
 
       await new Promise(process.nextTick)
@@ -46,12 +66,39 @@ describe('Page store', () => {
     })
 
     test('should return breadcrumb if cms request resolves', async () => {
+      useRoute.mockImplementation(() =>
+        ref({ path: '/germany/en/test/de-test' })
+      )
       const pageStore = useCmsStore()
 
       await new Promise(process.nextTick)
 
+      const expectedBreadcrumbResult = [
+        { href: '/germany/en', name: 'Home' },
+        { href: '/germany/en/test', name: 'Test Home' },
+        { href: '/germany/en/test/de-test', name: 'DE Test' },
+      ]
+
       expect(pageStore.cmsLinks).toEqual(cmsLinks)
-      expect(pageStore.breadcrumb).toEqual(breadcrumbResult)
+      expect(pageStore.breadcrumb).toEqual(expectedBreadcrumbResult)
+    })
+
+    test('should return german breadcrumb if cms request resolves', async () => {
+      useRoute.mockImplementation(() =>
+        ref({ path: '/germany/de/test/de-test' })
+      )
+      const pageStore = useCmsStore()
+
+      await new Promise(process.nextTick)
+
+      const expectedBreadcrumbResult = [
+        { href: '/germany/de', name: 'Home' },
+        { href: '/germany/de/test', name: 'Test Home' },
+        { href: '/germany/de/test/de-test', name: 'Translated Label' },
+      ]
+
+      expect(pageStore.cmsLinks).toEqual(cmsLinks)
+      expect(pageStore.breadcrumb).toEqual(expectedBreadcrumbResult)
     })
   })
 
