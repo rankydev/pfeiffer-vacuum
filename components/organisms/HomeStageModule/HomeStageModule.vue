@@ -41,9 +41,6 @@ export default {
     Bubble,
   },
   props: {
-    /**
-     * The stage content which can be added optionally
-     */
     stageContent: {
       type: Array,
       default: () => [],
