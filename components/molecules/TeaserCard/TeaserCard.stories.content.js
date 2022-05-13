@@ -5,3 +5,5 @@ export { targets } from '~/components/atoms/Link/Link.stories.content'
 export const { href, target } = linkContent
 export const { image } = responsiveImageContent
 export const headline = 'Some Headline'
+
+export default {}
