@@ -25,7 +25,13 @@ export const cmsLinks = [
     name: 'Test',
     isFolder: true,
     isStartpage: false,
-    translatedSlugs: [],
+    translatedSlugs: [
+      {
+        path: '/germany/de/test',
+        lang: 'de',
+        name: null
+      }
+    ],
   },
   {
     path: '/germany/en/test/',
@@ -46,7 +52,13 @@ export const cmsLinks = [
     name: 'test',
     isFolder: false,
     isStartpage: false,
-    translatedSlugs: [],
+    translatedSlugs: [
+      {
+        path: '/germany/de/test/test',
+        lang: 'de',
+        name: null
+      }
+    ],
   },
   {
     path: '/germany/en/',
