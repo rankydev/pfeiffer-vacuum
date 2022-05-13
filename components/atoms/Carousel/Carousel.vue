@@ -1,6 +1,10 @@
 <template>
-  <div class="carousel">
-    <div class="carousel__content">
+  <div
+    v-editable="slides"
+    class="carousel"
+    :class="{ 'carousel--home-stage': isHomeStage }"
+  >
+    <div v-if="!isHomeStage" class="carousel__content">
       <h2>{{ headline }}</h2>
       <NuxtDynamic
         v-for="btn in button"
@@ -107,6 +111,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    isHomeStage: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const carouselIsBreakout = computed(() => props.isWide)
@@ -118,6 +126,9 @@ export default defineComponent({
     let isLastSlide = ref(false)
 
     const infiniteSetting = computed(() => {
+      if (props.infinite && props.isHomeStage) {
+        return true
+      }
       if (props.infinite && carouselIsBreakout.value) {
         return false
       }
@@ -142,7 +153,7 @@ export default defineComponent({
     })
 
     const contentWrapperProps = computed(() => ({
-      breakout: carouselIsBreakout.value,
+      breakout: props.isHomeStage ? true : carouselIsBreakout.value,
       noPadding: !carouselIsBreakout.value,
     }))
 
@@ -250,6 +261,20 @@ export default defineComponent({
 
     .teaser-card {
       @apply tw-h-full;
+    }
+  }
+
+  &--home-stage {
+    .slick-slider {
+      padding: 0;
+
+      .slick-track {
+        @apply tw-gap-0;
+
+        .slick-slide {
+          min-width: 100vw;
+        }
+      }
     }
   }
 }

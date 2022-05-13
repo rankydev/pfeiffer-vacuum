@@ -46,7 +46,7 @@ export default {
         'ContentTextBlock',
         'TeaserCard',
         'Carousel',
-        'WideCarousel',
+        'HomeStageCarousel',
       ],
     },
     bottom: {
