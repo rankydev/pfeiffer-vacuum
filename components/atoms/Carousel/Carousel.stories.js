@@ -1,28 +1,34 @@
 import Carousel from './Carousel'
-import { carouselEntries } from './Carousel.stories.content'
-import Card from '../Card/Card'
+import carouselContent from './Carousel.stories.content'
 
 const argTypes = {
-  settings: {
-    control: { type: 'object' },
-    defaultValue: {
-      autoplay: false,
-      autoplaySpeed: 5000,
-      dots: false,
-      pauseOnFocus: true,
-      speed: 800,
-      arrows: true,
-      centerPadding: '16px',
-      slidesToShow: 3,
-      slidesToScroll: 3,
-      touchThreshold: 5,
-    },
-  },
-  centerMode: {
+  autoplay: {
     control: { type: 'boolean' },
+    defaultValue: carouselContent.autoplay,
+  },
+  button: {
+    control: { type: 'array' },
+    defaultValue: carouselContent.button,
+  },
+  headline: {
+    control: { type: 'text' },
+    defaultValue: carouselContent.headline,
+  },
+  isWide: {
+    control: { type: 'boolean' },
+    defaultValue: carouselContent.isWide,
   },
   infinite: {
     control: { type: 'boolean' },
+    defaultValue: carouselContent.infinite,
+  },
+  settings: {
+    control: { type: 'object' },
+    defaultValue: carouselContent.settings,
+  },
+  slides: {
+    control: { type: 'array' },
+    defaultValue: carouselContent.slides,
   },
 }
 
@@ -41,25 +47,14 @@ export default {
 }
 
 const Template = (args, { argTypes }) => ({
-  components: { Carousel, Card },
+  components: { Carousel },
   props: Object.keys(argTypes),
   setup() {
-    const data = carouselEntries
-    return { args, data }
+    return { args }
   },
   template: `
     <div class="documentation-preview">
-    <div class="tw-grid-container">
-      <div class="tw-col-span-full">
-        <div class="tw-col-span-12">
-          <Carousel v-bind="args">
-            <template v-slot:carousel>
-              <Card to="#" v-for="(index) in data" :key="index" />
-            </template>
-          </Carousel>
-        </div>
-      </div>
-    </div>
+      <Carousel v-bind="args" />
     </div>
   `,
 })
