@@ -209,6 +209,8 @@ export default defineComponent({
     @screen md {
       @apply tw-flex-nowrap;
       @apply tw-justify-between;
+      @apply tw-items-center;
+      @apply tw-pb-4;
     }
   }
 
