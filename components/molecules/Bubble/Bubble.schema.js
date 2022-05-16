@@ -10,9 +10,11 @@ export default {
       translatable: true,
     },
     richtext: {
-      ...RichtextBasic.schema.richtext,
-      required: true,
-      max_length: '20',
+      type: 'bloks',
+      maximum: 1,
+      restrict_components: true,
+      component_whitelist: ['Richtext'],
+      display_name: 'Description',
     },
     position: {
       type: 'option',

@@ -7,7 +7,13 @@
     "
   >
     <h5 class="bubble__headline">{{ title }}</h5>
-    <div v-editable="richtext" class="bubble__richtext" v-html="richtext"></div>
+    <NuxtDynamic
+      v-for="item in richtext"
+      :key="item._uid"
+      v-bind="item"
+      class="bubble__richtext"
+      :component="item.uiComponent || item.component"
+    />
   </div>
 </template>
 
@@ -28,8 +34,8 @@ export default defineComponent({
      * richtext element
      */
     richtext: {
-      type: String,
-      default: '',
+      type: Array,
+      default: () => [],
     },
     /**
      * The position of the element
