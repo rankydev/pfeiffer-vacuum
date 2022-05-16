@@ -65,14 +65,11 @@ import {
   defineComponent,
   ref,
   computed,
-  onMounted,
   watchEffect,
-  reactive,
-  watch,
 } from '@nuxtjs/composition-api'
 import VueSlickCarousel from 'vue-slick-carousel'
 import Button from '~/components/atoms/Button/Button'
-import ContentWrapper from '@/components/molecules/ContentWrapper/ContentWrapper'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 
 export default defineComponent({
   name: 'Carousel',
@@ -93,7 +90,6 @@ export default defineComponent({
     slides: {
       type: Array,
       default: () => [],
-      required: true,
     },
     isWide: {
       type: Boolean,
@@ -117,10 +113,10 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const carouselIsBreakout = computed(() => props.isWide)
+    const isBreakout = computed(() => props.isWide)
     const carousel = ref(null)
     const currentSlide = computed(
-      () => carousel.value.$refs.innerSlider.currentSlide
+      () => carousel.value.$refs.innerSlider?.currentSlide
     )
     let isFirstSlide = ref(true)
     let isLastSlide = ref(false)
@@ -129,21 +125,21 @@ export default defineComponent({
       if (props.infinite && props.isHomeStage) {
         return true
       }
-      if (props.infinite && carouselIsBreakout.value) {
+      if (props.infinite && isBreakout.value) {
         return false
       }
-      return !!(props.infinite && !carouselIsBreakout.value)
+      return !!(props.infinite && !isBreakout.value)
     })
 
     watchEffect(() => {
       if (carousel.value) {
         if (!infiniteSetting.value) {
           const innerSlider = carousel.value.$refs.innerSlider
-          const slideCount = innerSlider.slideCount
-          const slidesToShowCarousel = innerSlider.slidesToShow
+          const slideCount = innerSlider?.slideCount
+          const slidesToShowCarousel = innerSlider?.slidesToShow
           const totalSlidesCount = Math.ceil(slideCount / slidesToShowCarousel)
 
-          isFirstSlide.value = innerSlider.currentSlide === 0
+          isFirstSlide.value = innerSlider?.currentSlide === 0
           isLastSlide.value = totalSlidesCount - 1 === currentSlide.value
         } else {
           isFirstSlide.value = false
@@ -153,11 +149,11 @@ export default defineComponent({
     })
 
     const contentWrapperProps = computed(() => ({
-      breakout: props.isHomeStage ? true : carouselIsBreakout.value,
-      noPadding: !carouselIsBreakout.value,
+      breakout: props.isHomeStage ? true : isBreakout.value,
+      noPadding: !isBreakout.value,
     }))
 
-    const slidesToShow = computed(() => (carouselIsBreakout.value ? 6 : 4))
+    const slidesToShow = computed(() => (isBreakout.value ? 6 : 4))
 
     const defaultSettings = {
       adaptiveHeight: true,
@@ -285,18 +281,18 @@ export default defineComponent({
     @apply tw-absolute;
     @apply tw-top-1/2;
     @apply tw-z-10;
-    transform: translateY(-50%);
+    @apply tw--translate-y-2/4;
 
     &::before {
       @apply tw-content-none;
     }
 
     &--hide {
-      display: none;
+      @apply tw-hidden;
     }
 
     &--show {
-      display: block;
+      @apply tw-inline-flex;
     }
   }
 
