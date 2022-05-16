@@ -1,12 +1,9 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Button from '~/components/atoms/Button/Button'
-// import HomeStageContent from './HomeStageContent'
 import HomeStageContent from '~/components/organisms/HomeStageModule/partials/HomeStageContent/HomeStageContent'
 import content from './HomeStageContent.stories.content'
 
-// import content from './HomeStageModule.stories.content'
-
-const defaultProps = () => JSON.parse(JSON.stringify(content))
+const defaultProps = () => JSON.parse(JSON.stringify(content[0]))
 
 let wrapper
 

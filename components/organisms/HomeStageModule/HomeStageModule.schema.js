@@ -29,7 +29,6 @@ export default {
       restrict_components: true,
       component_whitelist: ['Bubble'],
     },
-    // timeBetweenSlides: {},
   },
   image: null,
   preview_field: null,

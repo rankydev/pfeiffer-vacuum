@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div
     class="bubble__wrapper"
@@ -44,6 +45,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+/**
+* Variables
+*/
+
 .bubble {
   &__wrapper {
     @apply tw-flex;
@@ -55,7 +60,7 @@ export default defineComponent({
     @apply tw-rounded-full;
     @apply tw-bg-pv-red;
     @apply tw-px-1;
-    color: white;
+    @apply tw-text-pv-white;
     height: 90px;
     width: 90px;
 
@@ -104,34 +109,34 @@ export default defineComponent({
   }
 
   &__headline {
-    color: white;
+    @apply tw-text-pv-white;
+    @apply tw-leading-4;
     font-size: 10px;
-    line-height: 16px;
 
     @screen md {
-      font-size: 16px;
-      line-height: 24px;
+      @apply tw-text-base;
+      @apply tw-leading-6;
     }
 
     @screen lg {
-      font-size: 20px;
-      line-height: 28px;
+      @apply tw-text-xl;
+      @apply tw-leading-7;
     }
   }
 
   &__richtext {
     p {
+      @apply tw-leading-4;
       font-size: 10px;
-      line-height: 16px;
 
       @screen md {
-        font-size: 14px;
-        line-height: 24px;
+        @apply tw-text-sm;
+        @apply tw-leading-6;
       }
 
       @screen lg {
-        font-size: 16px;
-        line-height: 28px;
+        @apply tw-text-base;
+        @apply tw-leading-7;
       }
     }
   }

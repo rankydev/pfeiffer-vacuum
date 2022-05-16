@@ -1,6 +1,15 @@
 import HomeStageContent from '~/components/organisms/HomeStageModule/partials/HomeStageContent/HomeStageContent.stories.content'
 import { bubbleText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
 
+export const bubble = [
+  {
+    title: 'Hochvakuum',
+    position: 'right',
+    richtext: bubbleText.richtext,
+    component: 'Bubble',
+  },
+]
+
 export default {
   image: {
     alt: 'Sky',
@@ -12,14 +21,7 @@ export default {
     copyright: '',
     fieldtype: 'asset',
   },
-  bubble: [
-    {
-      title: 'Hochvakuum',
-      position: 'right',
-      richtext: bubbleText.richtext,
-      component: 'Bubble',
-    },
-  ],
+  bubble,
   interlay: {
     alt: 'Astronaut',
     name: '',
