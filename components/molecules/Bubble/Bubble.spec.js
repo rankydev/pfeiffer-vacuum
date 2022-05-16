@@ -1,12 +1,14 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Bubble from './Bubble'
 import { bubble } from '~/components/organisms/HomeStageModule/HomeStageModule.stories.content'
+import { bubbleText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
 
 const defaultProps = () => JSON.parse(JSON.stringify(bubble[0]))
 
 let wrapper
 
 function createComponent(propsData = {}) {
+  const stubs = { NuxtDynamic: true }
   const localVue = createLocalVue()
   const editable = (el, key) => (el.innerText = key.value)
   localVue.directive('editable', editable)
@@ -14,6 +16,7 @@ function createComponent(propsData = {}) {
   const options = {
     localVue,
     propsData,
+    stubs,
   }
 
   wrapper = shallowMount(Bubble, options)
@@ -30,14 +33,16 @@ describe('Bubble', () => {
     test('should render correct data given propsData', () => {
       const propsData = {
         ...defaultProps(),
+        bubbleText,
       }
-      createComponent(propsData)
+      createComponent(propsData, false)
       const bubbleHeadline = wrapper.find('.bubble__headline')
-      const bubbleRichtext = wrapper.find('.bubble__richtext')
+      const domRichtext = wrapper.find('[component="Richtext"]')
+
       // checking default position (right)
       const bubblePosition = wrapper.find('.bubble__wrapper--right')
       expect(bubbleHeadline.text()).toEqual(propsData.title)
-      expect(bubbleRichtext.html()).toContain(propsData.richtext)
+      expect(domRichtext.attributes('richtext')).toBe(bubbleText.richtext)
       expect(bubblePosition.exists()).toBeTruthy()
     })
 

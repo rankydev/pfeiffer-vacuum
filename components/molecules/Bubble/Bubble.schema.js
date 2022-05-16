@@ -1,5 +1,3 @@
-import RichtextBasic from '@/components/atoms/Richtext/RichtextBasic.schema'
-
 export default {
   name: 'Bubble',
   display_name: 'Bubble',
