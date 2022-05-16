@@ -78,6 +78,9 @@ $home-stage-height-xs: 512px;
 $home-stage-height-md: 768px;
 $home-stage-height-lg: 640px;
 $home-stage-height-xl: 853px;
+$home-stage-width-sm: 600px;
+$home-stage-min-width-md: 620px;
+$home-stage-width-lg: 1080px;
 $home-stage-spacing-lg: 80px; // 100%
 $home-stage-spacing-md: calc($home-stage-spacing-lg * 0.8); // 80%
 $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
@@ -106,7 +109,7 @@ $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
     height: 154px;
 
     @screen lg {
-      width: 100%;
+      @apply tw-w-full;
     }
   }
 
@@ -117,18 +120,18 @@ $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
     right: -$home-stage-spacing-xs;
 
     @screen sm {
-      width: 600px;
+      width: $home-stage-width-sm;
     }
 
     @screen md {
-      width: 100vw;
-      min-width: 620px;
+      @apply tw-w-screen;
+      min-width: $home-stage-min-width-md;
       bottom: -$home-stage-spacing-md;
       right: -$home-stage-spacing-md;
     }
 
     @screen lg {
-      width: 1080px;
+      width: $home-stage-width-lg;
       bottom: -$home-stage-spacing-lg;
       right: -$home-stage-spacing-lg;
     }

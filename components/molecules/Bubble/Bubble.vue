@@ -48,6 +48,19 @@ export default defineComponent({
 /**
 * Variables
 */
+$bubble-height-xs: 90px;
+$bubble-width-xs: $bubble-height-xs;
+$bubble-height-md: 144px;
+$bubble-width-md: $bubble-height-md;
+$bubble-height-lg: 180px;
+$bubble-width-lg: $bubble-height-lg;
+$bubble-bottom-md: 144px;
+$bubble-left-md: unset;
+$bubble-right-md: 240px;
+$bubble-top-lg: 134px;
+$bubble-bottom-lg: unset;
+$bubble-left-lg: unset;
+$bubble-right-lg: 300px;
 
 .bubble {
   &__wrapper {
@@ -61,17 +74,17 @@ export default defineComponent({
     @apply tw-bg-pv-red;
     @apply tw-px-1;
     @apply tw-text-pv-white;
-    height: 90px;
-    width: 90px;
+    height: $bubble-height-xs;
+    width: $bubble-width-xs;
 
     @screen md {
-      height: 144px;
-      width: 144px;
+      height: $bubble-height-md;
+      width: $bubble-width-md;
     }
 
     @screen lg {
-      height: 180px;
-      width: 180px;
+      height: $bubble-height-lg;
+      width: $bubble-width-lg;
     }
   }
 
@@ -95,16 +108,16 @@ export default defineComponent({
     @apply tw-left-6;
 
     @screen md {
-      left: unset;
-      bottom: 144px;
-      right: 240px;
+      bottom: $bubble-bottom-md;
+      left: $bubble-left-md;
+      right: $bubble-right-md;
     }
 
     @screen lg {
-      left: unset;
-      bottom: unset;
-      top: 134px;
-      right: 300px;
+      top: $bubble-top-lg;
+      bottom: $bubble-bottom-lg;
+      left: $bubble-left-lg;
+      right: $bubble-right-lg;
     }
   }
 
