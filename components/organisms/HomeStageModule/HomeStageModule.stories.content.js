@@ -5,7 +5,7 @@ export const bubble = [
   {
     title: 'Hochvakuum',
     position: 'right',
-    richtext: bubbleText.richtext,
+    richtext: [bubbleText],
     component: 'Bubble',
   },
 ]
