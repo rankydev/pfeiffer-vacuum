@@ -13,7 +13,6 @@
       >
         {{ item.label }}
       </Quicklink>
-      <Button size="small" label="Shop" />
     </div>
   </ContentWrapper>
 </template>
@@ -21,7 +20,6 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import Quicklink from '~/components/molecules/Quicklink/Quicklink'
-import Button from '~/components/atoms/Button/Button'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper.vue'
 import Breadcrumb from '~/components/molecules/Breadcrumb/Breadcrumb.vue'
 
@@ -30,7 +28,6 @@ export default defineComponent({
     Quicklink,
     ContentWrapper,
     Breadcrumb,
-    Button,
   },
   props: {
     quicklinks: {
