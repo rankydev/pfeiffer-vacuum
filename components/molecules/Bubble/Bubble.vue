@@ -31,7 +31,7 @@ export default defineComponent({
       default: '',
     },
     /**
-     * richtext element
+     * richtext element, containing the description
      */
     richtext: {
       type: Array,
