@@ -41,18 +41,30 @@ export default {
     Bubble,
   },
   props: {
+    /**
+     * the text area that can be seen in the home stage
+     */
     stageContent: {
       type: Array,
       default: () => [],
     },
+    /**
+     * the background image of the stage
+     */
     image: {
       type: [Object, String],
       default: () => ({}),
     },
+    /**
+     * an image placed absolute inside the stage
+     */
     interlay: {
       type: [Object, String],
       default: () => ({}),
     },
+    /**
+     * red filled circle with a title, a description and a position
+     */
     bubble: {
       type: Array,
       default: () => [],
@@ -62,24 +74,32 @@ export default {
 </script>
 
 <style lang="scss">
+$home-stage-height-xs: 512px;
+$home-stage-height-md: 768px;
+$home-stage-height-lg: 640px;
+$home-stage-height-xl: 853px;
+$home-stage-spacing-lg: 80px; // 100%
+$home-stage-spacing-md: calc($home-stage-spacing-lg * 0.8); // 80%
+$home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
+
 .homestage {
   @apply tw-relative;
   @apply tw-overflow-hidden;
   @apply tw-bg-no-repeat tw-bg-cover tw-bg-center;
   @apply tw-flex tw-flex-col tw-justify-between;
-  height: 512px;
+  height: $home-stage-height-xs;
 
   @screen md {
-    height: 768px;
+    height: $home-stage-height-md;
   }
 
   @screen lg {
     @apply tw-flex-row;
-    height: 640px;
+    height: $home-stage-height-lg;
   }
 
   @screen xl {
-    height: 853px;
+    height: $home-stage-height-xl;
   }
 
   &__visual-wrapper {
@@ -93,8 +113,8 @@ export default {
   &__image {
     @apply tw-absolute;
     @apply tw-h-auto;
-    bottom: -24px;
-    right: -24px;
+    bottom: -$home-stage-spacing-xs;
+    right: -$home-stage-spacing-xs;
 
     @screen sm {
       width: 600px;
@@ -103,14 +123,14 @@ export default {
     @screen md {
       width: 100vw;
       min-width: 620px;
-      bottom: -64px;
-      right: -64px;
+      bottom: -$home-stage-spacing-md;
+      right: -$home-stage-spacing-md;
     }
 
     @screen lg {
       width: 1080px;
-      bottom: -80px;
-      right: -80px;
+      bottom: -$home-stage-spacing-lg;
+      right: -$home-stage-spacing-lg;
     }
   }
 }
