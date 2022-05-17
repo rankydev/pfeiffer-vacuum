@@ -187,7 +187,7 @@ export default defineComponent({
       if (props.infinite && isBreakout.value) {
         return false
       }
-      return !!(props.infinite && !isBreakout.value)
+      return props.infinite
     })
 
     /**
