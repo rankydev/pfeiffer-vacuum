@@ -15,7 +15,6 @@ module.exports = {
       'border-red': 'inset 0 0 0 2px #dd1541',
       'border-grey-80': 'inset 0 0 0 2px #CCCCCC',
       'border-white': 'inset 0 0 0 2px #ffffff',
-      card: '0px 40px 40px -40px #CCCCCC;',
     },
     colors: {
       'pv-red': '#dd1541',
