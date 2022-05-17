@@ -6,6 +6,10 @@ const argTypes = {
     control: { type: 'boolean' },
     defaultValue: carouselContent.autoplay,
   },
+  autoplaySpeed: {
+    control: { type: 'number' },
+    defaultValue: carouselContent.autoplaySpeed,
+  },
   button: {
     control: { type: 'array' },
     defaultValue: carouselContent.button,

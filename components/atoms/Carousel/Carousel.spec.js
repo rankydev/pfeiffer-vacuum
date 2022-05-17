@@ -81,7 +81,7 @@ describe('Carousel', () => {
       const slider = wrapper.find('.carousel__slider')
 
       expect(slider.attributes('speed')).toBe('500')
-      expect(slider.attributes('autoplayspeed')).toBe('5000')
+      expect(slider.attributes('autoplaySpeed')).toBe('5000')
     })
 
     test('should render headline and interaction button given propsData', () => {
@@ -151,6 +151,7 @@ describe('Carousel', () => {
         createComponent({
           slides: carouselEntries,
           autoplay: true,
+          autoplaySpeed: '4000',
           infinite: true,
         })
 
@@ -158,6 +159,7 @@ describe('Carousel', () => {
 
         expect(slider.attributes('infinite')).toBeTruthy()
         expect(slider.attributes('autoplay')).toBeTruthy()
+        expect(slider.attributes('autoplaySpeed')).toBe('4000')
       })
 
       test('should set correct infinite state given homestage true', () => {

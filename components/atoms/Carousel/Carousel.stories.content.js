@@ -27,6 +27,7 @@ export const carouselEntries = [
 
 export default {
   autoplay: false,
+  autoplaySpeed: '5000',
   button: [
     {
       _uid: '5f3551f0-2e8e-4ddb-a7ed-938b08be3f4c',

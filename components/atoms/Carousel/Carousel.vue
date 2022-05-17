@@ -20,6 +20,7 @@
         v-bind="{ ...defaultSettings, ...settings }"
         :infinite="infiniteSetting"
         :autoplay="autoplay"
+        :autoplay-speed="parseInt(autoplaySpeed)"
         class="carousel__slider"
         :class="{ 'carousel__slider--wide': isWide }"
       >
@@ -132,6 +133,13 @@ export default defineComponent({
       default: false,
     },
     /**
+     * autoplay Speed in milliseconds, retrieves string from Storyblok
+     */
+    autoplaySpeed: {
+      type: String,
+      default: '5000',
+    },
+    /**
      * when carousel is home stage, wide mode is enabled and headline, as
      * well as button won't be rendered above carousel
      */
@@ -225,7 +233,6 @@ export default defineComponent({
     const defaultSettings = {
       adaptiveHeight: true,
       arrows: true,
-      autoplaySpeed: 5000,
       edgeFriction: 0.35,
       initialSlide: 0,
       pauseOnFocus: true,
