@@ -70,6 +70,7 @@ import {
 import VueSlickCarousel from 'vue-slick-carousel'
 import Button from '~/components/atoms/Button/Button'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import tailwindconfig from '@/tailwind.config'
 
 export default defineComponent({
   name: 'Carousel',
@@ -140,6 +141,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const tailwindConfigScreens = tailwindconfig.theme.screens
+
     /**
      * Check if carousel is breakout (wide mode)
      */
@@ -231,13 +234,13 @@ export default defineComponent({
       slidesToScroll: 1,
       responsive: [
         {
-          breakpoint: 1280,
+          breakpoint: tailwindConfigScreens.lg,
           settings: {
             slidesToShow: 3,
           },
         },
         {
-          breakpoint: 768,
+          breakpoint: tailwindConfigScreens.md,
           settings: {
             slidesToShow: 1,
           },
