@@ -1,4 +1,4 @@
-export const imageSizes = ['contain', 'cover']
+export const imageSizes = ['cover', 'contain']
 export const href = '#'
 export const subheading = 'Card subheading'
 export const heading = 'Card heading'

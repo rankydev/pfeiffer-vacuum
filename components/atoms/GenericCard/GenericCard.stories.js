@@ -97,7 +97,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-  <div class="documentation-preview" style="width: 300px; padding: 20px; background-color: #ccc;">
+  <div class="documentation-preview" style="width: 300px; padding: 20px; background-color: #f5f5f5;">
     <GenericCard v-bind="args">
       <template v-if="'tag' in args" v-slot:tag>${args.tag}</template>
       <template v-if="'image' in args" v-slot:image>${args.image}</template>
@@ -115,5 +115,5 @@ const Template = (args) => ({
 export const Default = Template.bind({})
 
 Default.args = {
-  imageSize: imageSizes[1],
+  imageSize: imageSizes[0],
 }

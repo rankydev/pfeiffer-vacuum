@@ -16,10 +16,7 @@
         <slot name="subheading" />
       </div>
 
-      <h3
-        class="pv-card__heading"
-        :class="{ 'add-spacing': !hasSlot('subheading') }"
-      >
+      <h3 class="pv-card__heading">
         <!-- @slot the main heading of the card component -->
         <slot name="heading" />
       </h3>
@@ -72,7 +69,7 @@ export default defineComponent({
      */
     imageSize: {
       type: String,
-      default: 'contain',
+      default: 'cover',
       validator: (val) => ['cover', 'contain'].includes(val),
     },
   },
@@ -96,11 +93,16 @@ $card-image-height: 200px;
 
 .pv-card {
   @include box-shadow;
-
-  @apply tw-px-4 tw-py-6;
   @apply tw-bg-pv-white;
   @apply tw-flex tw-flex-col;
   @apply tw-h-full;
+  @apply tw-rounded-lg;
+  @apply tw-overflow-hidden;
+  @apply tw-p-4;
+
+  @screen lg {
+    @apply tw-py-6;
+  }
 
   &__image {
     @apply tw-relative;
@@ -117,7 +119,11 @@ $card-image-height: 200px;
     }
 
     &--cover {
-      @apply tw--mx-4 tw--mt-6;
+      @apply tw--mx-4 tw--mt-4;
+
+      @screen lg {
+        @apply tw--mt-6;
+      }
 
       img {
         @apply tw-object-cover;
@@ -144,23 +150,19 @@ $card-image-height: 200px;
   &__subheading {
     @apply tw-text-pv-grey-48;
     @apply tw-text-xs;
-    @apply tw-mb-2;
+    @apply tw-mb-1;
   }
 
   &__heading {
     @apply tw-text-xl;
     @apply tw-font-bold;
-    @apply tw-mb-4;
-  }
-
-  .add-spacing {
-    @apply tw-mt-4;
+    @apply tw-mb-2;
   }
 
   &__tags {
     @apply tw-text-xs;
     @apply tw--mt-1.5;
-    @apply tw-mb-4;
+    @apply tw-mb-2;
   }
 
   &__description {
