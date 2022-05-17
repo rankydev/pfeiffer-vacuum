@@ -206,7 +206,7 @@ export default defineComponent({
           const totalSlidesCount = Math.ceil(slideCount - slidesToShowCarousel)
 
           isFirstSlide.value = innerSlider?.currentSlide === 0
-          isLastSlide.value = totalSlidesCount === currentSlide.value
+          isLastSlide.value = currentSlide.value >= totalSlidesCount
         } else {
           isFirstSlide.value = false
           isLastSlide.value = false
