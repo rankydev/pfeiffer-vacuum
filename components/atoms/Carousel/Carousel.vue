@@ -113,14 +113,35 @@ export default defineComponent({
     },
   },
   setup(props) {
+    /**
+     * Check if carousel is breakout (wide mode)
+     */
     const isBreakout = computed(() => props.isWide)
+
+    /**
+     * Get Carousel object by reference
+     */
     const carousel = ref(null)
+
+    /**
+     * Get currentSlide of carousel
+     */
     const currentSlide = computed(
       () => carousel.value.$refs.innerSlider?.currentSlide
     )
+
+    /**
+     * set isFirstSlide && isLastSlide to initial values
+     * props enable/disable the buttons on the carousel
+     */
     let isFirstSlide = ref(true)
     let isLastSlide = ref(false)
 
+    /**
+     * Set computed property infinite
+     * carousel in wide mode (breakout) should never be infinite
+     * otherwise set infinite based on setting
+     */
     const infiniteSetting = computed(() => {
       if (props.infinite && props.isHomeStage) {
         return true
@@ -131,8 +152,15 @@ export default defineComponent({
       return !!(props.infinite && !isBreakout.value)
     })
 
+    /**
+     * watchEffect will be triggered once the carousel is mounted
+     */
     watchEffect(() => {
       if (carousel.value) {
+        /**
+         * isFirstSlide and isLastSlide won't be set dynamically when the
+         * carousel is infinite, because then we always want to show the btns
+         */
         if (!infiniteSetting.value) {
           const innerSlider = carousel.value.$refs.innerSlider
           const slideCount = innerSlider?.slideCount
@@ -148,11 +176,20 @@ export default defineComponent({
       }
     })
 
+    /**
+     * set ContentWrapper props based on isBreakout and isHomeStage values
+     * ContentWrapper should have noPadding when the carousel will be rendered normally
+     * ContentWrapper should have breakout, when the carousel isHomeStage || isBreakout
+     */
     const contentWrapperProps = computed(() => ({
       breakout: props.isHomeStage ? true : isBreakout.value,
       noPadding: !isBreakout.value,
     }))
 
+    /**
+     * slidesToShow should be set to 6 for wide mode carousels on desktop
+     * otherwise the carousel should only show 4 slides
+     */
     const slidesToShow = computed(() => (isBreakout.value ? 6 : 4))
 
     const defaultSettings = {
