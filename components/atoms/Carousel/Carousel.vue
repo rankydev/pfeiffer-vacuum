@@ -41,8 +41,7 @@
             variant="secondary"
             icon="arrow_back"
             cutaway="cutaway-right"
-          >
-          </Button>
+          />
         </template>
         <template #nextArrow>
           <Button
@@ -54,8 +53,7 @@
             variant="secondary"
             icon="arrow_forward"
             cutaway="cutaway-left"
-          >
-          </Button>
+          />
         </template>
       </VueSlickCarousel>
     </ContentWrapper>
