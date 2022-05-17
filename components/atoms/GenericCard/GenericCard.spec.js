@@ -1,4 +1,4 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue, mount } from '@vue/test-utils'
 import GenericCard from './GenericCard.vue'
 import {
   imageSizes,
@@ -22,7 +22,7 @@ const defaultProps = () => ({
 
 let wrapper
 
-function createComponent(propsData = {}) {
+function createComponent(propsData = {}, { shallow = true, slots = {} } = {}) {
   const stubs = {}
   const localVue = createLocalVue()
   const editable = (el, key) => (el.innerText = key.value)
@@ -32,9 +32,12 @@ function createComponent(propsData = {}) {
     localVue,
     stubs,
     propsData,
+    slots,
   }
 
-  wrapper = shallowMount(GenericCard, options)
+  wrapper = shallow
+    ? shallowMount(GenericCard, options)
+    : mount(GenericCard, options)
 }
 
 describe('GenericCard', () => {
@@ -46,30 +49,46 @@ describe('GenericCard', () => {
       expect(wrapper.vm).toBeTruthy()
     })
 
-    it('should render all content given slot content', () => {
-      const tag = '<tag />'
-      const image = '<image />'
-      const subheading = '<subheading />'
-      const heading = '<heading />'
-      const tags = '<tags />'
-      const description = '<description />'
-      const scopedSlots = { tag, image, subheading, heading, tags, description }
-
+    it('should use the image size contain as default', () => {
       const propsData = { ...defaultProps() }
       createComponent(propsData)
 
-      const genericCard = wrapper.findComponent(GenericCard)
-      const imageComponent = wrapper.find('image')
-      console.log(genericCard.html(), scopedSlots)
+      const imageWrapper = wrapper.find('.pv-card__image')
 
-      /*
-      expect(genericCard.vm.find('tag')).toBeTruthy()
-      expect(genericCard.vm.find('image')).toBeTruthy()
-      expect(genericCard.vm.find('subheading')).toBeTruthy()
-      expect(genericCard.vm.find('heading')).toBeTruthy()
-      expect(genericCard.vm.find('tags')).toBeTruthy()
-      expect(genericCard.vm.find('description')).toBeTruthy()
-       */
+      expect(imageWrapper.attributes('class')).toMatch(
+        'pv-card__image--contain'
+      )
+    })
+
+    it('should use the image size cover given cover', () => {
+      const propsData = { ...defaultProps(), imageSize: 'cover' }
+      createComponent(propsData)
+
+      const imageWrapper = wrapper.find('.pv-card__image')
+
+      expect(imageWrapper.attributes('class')).toMatch('pv-card__image--cover')
+    })
+
+    it('should render all content given slot content', () => {
+      const tag = '<div class="test-tag" />'
+      const image = '<div class="test-image" />'
+      const subheading = '<div class="test-subheading" />'
+      const heading = '<div class="test-heading" />'
+      const tags = '<div class="test-tags" />'
+      const description = '<div class="test-description" />'
+      const slots = { tag, image, subheading, heading, tags, description }
+
+      const propsData = { ...defaultProps() }
+      createComponent(propsData, { shallow: false, slots })
+
+      const genericCard = wrapper.findComponent(GenericCard)
+
+      expect(genericCard.find('.test-tag')).toBeTruthy()
+      expect(genericCard.find('.test-image')).toBeTruthy()
+      expect(genericCard.find('.test-subheading')).toBeTruthy()
+      expect(genericCard.find('.test-heading')).toBeTruthy()
+      expect(genericCard.find('.test-tags')).toBeTruthy()
+      expect(genericCard.find('.test-description')).toBeTruthy()
     })
   })
 

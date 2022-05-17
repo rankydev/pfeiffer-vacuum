@@ -6,7 +6,64 @@ import {
   tag,
   description,
   additionalInfo,
+  image,
 } from '~/components/atoms/GenericCard/GenericCard.stories.content.js'
+
+const argTypes = {
+  imageSize: {
+    options: imageSizes,
+    control: { type: 'inline-radio' },
+  },
+
+  // slots
+  tag: {
+    control: { type: 'text' },
+    defaultValue: tag,
+    table: { type: { summary: null } },
+  },
+
+  image: {
+    control: { type: 'text' },
+    defaultValue: `<img src="${image}" />`,
+    table: { type: { summary: null } },
+  },
+
+  subheading: {
+    control: { type: 'text' },
+    defaultValue: subheading,
+    table: { type: { summary: null } },
+  },
+
+  heading: {
+    control: { type: 'text' },
+    defaultValue: heading,
+    table: { type: { summary: null } },
+  },
+
+  tags: {
+    control: { type: 'text' },
+    defaultValue: tag,
+    table: { type: { summary: null } },
+  },
+
+  description: {
+    control: { type: 'text' },
+    defaultValue: description,
+    table: { type: { summary: null } },
+  },
+
+  additionalInfo: {
+    control: { type: 'text' },
+    defaultValue: additionalInfo,
+    table: { type: { summary: null } },
+  },
+
+  actionItems: {
+    control: { type: 'text' },
+    defaultValue: 'Action items',
+    table: { type: { summary: null } },
+  },
+}
 
 export default {
   title: 'Technical Components/GenericCard',
@@ -15,121 +72,23 @@ export default {
     docs: {
       description: {
         component:
-          'The generic card is an abstract Component which can be used to define the different card components like product card or blog card.',
+          'The generic card is an abstract component which can be used to define the different card components like product card or blog card.',
+      },
+      source: {
+        code: `<GenericCard v-bind="{ imageSize }" >
+            <template v-slot:tag />
+            <template v-slot:image />
+            <template v-slot:subheading />
+            <template v-slot:heading />
+            <template v-slot:tags />
+            <template v-slot:description />
+            <template v-slot:additionalInfo />
+            <template v-slot:actionItems />
+          </GenericCard>`,
       },
     },
   },
-  argTypes: {
-    imageSize: {
-      options: imageSizes,
-      control: { type: 'inline-radio' },
-    },
-
-    // slots
-    tag: {
-      control: {
-        type: 'text',
-      },
-      defaultValue: tag,
-      meta_description: 'slot content',
-      table: {
-        type: {
-          summary: null,
-        },
-      },
-    },
-
-    image: {
-      control: {
-        type: 'text',
-      },
-      defaultValue: '<img src="http://placekitten.com/g/200/300" />',
-      meta_description: 'slot content',
-      table: {
-        type: {
-          summary: null,
-        },
-      },
-    },
-
-    subheading: {
-      control: {
-        type: 'text',
-      },
-      defaultValue: subheading,
-      meta_description: 'slot content',
-      table: {
-        type: {
-          summary: null,
-        },
-      },
-    },
-
-    heading: {
-      control: {
-        type: 'text',
-      },
-      defaultValue: heading,
-      meta_description: 'slot content',
-      table: {
-        type: {
-          summary: null,
-        },
-      },
-    },
-
-    tags: {
-      control: {
-        type: 'text',
-      },
-      defaultValue: tag,
-      meta_description: 'slot content',
-      table: {
-        type: {
-          summary: null,
-        },
-      },
-    },
-
-    description: {
-      control: {
-        type: 'text',
-      },
-      defaultValue: description,
-      meta_description: 'slot content',
-      table: {
-        type: {
-          summary: null,
-        },
-      },
-    },
-
-    additionalInfo: {
-      control: {
-        type: 'text',
-      },
-      defaultValue: additionalInfo,
-      meta_description: 'slot content',
-      table: {
-        type: {
-          summary: null,
-        },
-      },
-    },
-
-    actionItems: {
-      control: {
-        type: 'text',
-      },
-      defaultValue: 'Action items',
-      meta_description: 'slot content',
-      table: {
-        type: {
-          summary: null,
-        },
-      },
-    },
-  },
+  argTypes,
 }
 
 const Template = (args) => ({
@@ -156,5 +115,5 @@ const Template = (args) => ({
 export const Default = Template.bind({})
 
 Default.args = {
-  imageSize: imageSizes[0],
+  imageSize: imageSizes[1],
 }
