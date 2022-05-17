@@ -19,9 +19,9 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const classList = `${props.breakout ? 'breakout' : 'content-wrapper'} ${
-      props.noPadding ? 'content-wrapper--no-padding' : ''
-    }`
+    const classList = `${
+      props.breakout ? 'content-wrapper--breakout' : 'content-wrapper'
+    } ${props.noPadding ? 'content-wrapper--no-padding' : ''}`
 
     return {
       classList,
@@ -47,12 +47,12 @@ export default defineComponent({
   &--no-padding {
     @apply tw-p-0;
   }
-}
 
-.breakout {
-  @apply tw-relative;
-  @apply tw-w-screen;
-  @apply tw-left-2/4;
-  margin-left: -50vw;
+  &--breakout {
+    @apply tw-relative;
+    @apply tw-w-screen;
+    @apply tw-left-2/4;
+    margin-left: -50vw;
+  }
 }
 </style>
