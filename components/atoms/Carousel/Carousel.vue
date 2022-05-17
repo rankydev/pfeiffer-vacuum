@@ -34,10 +34,7 @@
         <template #prevArrow>
           <Button
             class="slider__prev"
-            :class="{
-              'slider__prev--show': !isFirstSlide,
-              'slider__prev--hide': isFirstSlide,
-            }"
+            :class="{ 'slider__prev--hide': isFirstSlide }"
             variant="secondary"
             icon="arrow_back"
             cutaway="cutaway-right"
@@ -46,10 +43,7 @@
         <template #nextArrow>
           <Button
             class="slider__next"
-            :class="{
-              'slider__next--show': !isLastSlide,
-              'slider__next--hide': isLastSlide,
-            }"
+            :class="{ 'slider__next--hide': isLastSlide }"
             variant="secondary"
             icon="arrow_forward"
             cutaway="cutaway-left"
@@ -350,6 +344,7 @@ export default defineComponent({
 .slider {
   &__prev,
   &__next {
+    @apply tw-inline-flex;
     @apply tw-absolute;
     @apply tw-top-1/2;
     @apply tw-z-10;
@@ -361,10 +356,6 @@ export default defineComponent({
 
     &--hide {
       @apply tw-hidden;
-    }
-
-    &--show {
-      @apply tw-inline-flex;
     }
   }
 
