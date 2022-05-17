@@ -1,8 +1,15 @@
 import GenericCard from '~/components/atoms/GenericCard/GenericCard.vue'
-import { imageSizes } from '~/components/atoms/GenericCard/GenericCard.stories.content.js'
+import {
+  imageSizes,
+  subheading,
+  heading,
+  tag,
+  description,
+  additionalInfo,
+} from '~/components/atoms/GenericCard/GenericCard.stories.content.js'
 
 export default {
-  title: 'Atoms/GenericCard',
+  title: 'Technical Components/GenericCard',
   component: GenericCard,
   parameters: {
     docs: {
@@ -23,7 +30,7 @@ export default {
       control: {
         type: 'text',
       },
-      defaultValue: 'tag',
+      defaultValue: tag,
       meta_description: 'slot content',
       table: {
         type: {
@@ -49,7 +56,7 @@ export default {
       control: {
         type: 'text',
       },
-      defaultValue: 'Subheading',
+      defaultValue: subheading,
       meta_description: 'slot content',
       table: {
         type: {
@@ -62,7 +69,7 @@ export default {
       control: {
         type: 'text',
       },
-      defaultValue: 'Heading',
+      defaultValue: heading,
       meta_description: 'slot content',
       table: {
         type: {
@@ -75,7 +82,7 @@ export default {
       control: {
         type: 'text',
       },
-      defaultValue: 'Tags',
+      defaultValue: tag,
       meta_description: 'slot content',
       table: {
         type: {
@@ -88,7 +95,7 @@ export default {
       control: {
         type: 'text',
       },
-      defaultValue: 'Description',
+      defaultValue: description,
       meta_description: 'slot content',
       table: {
         type: {
@@ -101,7 +108,7 @@ export default {
       control: {
         type: 'text',
       },
-      defaultValue: 'Additional info',
+      defaultValue: additionalInfo,
       meta_description: 'slot content',
       table: {
         type: {

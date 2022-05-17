@@ -78,6 +78,8 @@ export default defineComponent({
 <style lang="scss">
 @import '/assets/scss/mixins';
 
+$card-image-height: 200px;
+
 .search-results-highlight {
   @apply tw-text-pv-red;
   @apply tw-font-normal;
@@ -98,11 +100,11 @@ export default defineComponent({
     @apply tw-justify-center;
     @apply tw-content-center;
     @apply tw-mb-6;
-    height: 200px;
+    height: $card-image-height;
 
     img {
       @apply tw-w-full;
-      height: 200px;
+      height: $card-image-height;
     }
 
     &--cover {
@@ -138,7 +140,7 @@ export default defineComponent({
 
   &__heading {
     @apply tw-text-xl;
-    @apply tw-font-normal;
+    @apply tw-font-bold;
     @apply tw-mb-4;
   }
 
@@ -155,7 +157,7 @@ export default defineComponent({
   &__description {
     @apply tw-block;
     @apply tw-overflow-hidden;
-    @apply tw-text-xs;
+    @apply tw-text-base;
     @apply tw-mb-4;
 
     @include text-overflow;
