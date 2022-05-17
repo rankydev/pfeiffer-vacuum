@@ -19,8 +19,8 @@ export const mockContent = {
       disabled: false,
       component: 'Button',
       prependIcon: false,
-    }
-  ]
+    },
+  ],
 }
 
 export const carouselEntry = {

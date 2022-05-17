@@ -13,11 +13,11 @@ const slickSliderStub = {
         <slot name="prevArrow" />
         <slot name="nextArrow" />
       </div>
-      `
+      `,
 }
 
 const nuxtDynamicStub = {
-  template: '<div />'
+  template: '<div />',
 }
 
 function createComponent(propsData = {}) {
@@ -25,7 +25,7 @@ function createComponent(propsData = {}) {
     Button: true,
     Template: true,
     VueSlickCarousel: slickSliderStub,
-    NuxtDynamic: nuxtDynamicStub
+    NuxtDynamic: nuxtDynamicStub,
   }
   const localVue = createLocalVue()
   const editable = (el, key) => (el.innerText = key.value)
@@ -85,7 +85,7 @@ describe('Carousel', () => {
     test('should render headline and interaction button given propsData', () => {
       createComponent({
         slides: carouselEntries,
-        ...mockContent
+        ...mockContent,
       })
 
       const content = wrapper.find('.carousel__content')
@@ -93,7 +93,9 @@ describe('Carousel', () => {
       const contentButton = content.find('[component="Button"]')
 
       expect(contentHeadline.text()).toEqual(mockContent.headline)
-      expect(contentButton.attributes('label')).toEqual(mockContent.button[0].label)
+      expect(contentButton.attributes('label')).toEqual(
+        mockContent.button[0].label
+      )
     })
 
     describe('buttons', () => {
@@ -219,8 +221,8 @@ describe('Carousel', () => {
       createComponent({
         slides: carouselEntries,
         settings: {
-          initialSlide: carouselEntries.length - 1
-        }
+          initialSlide: carouselEntries.length - 1,
+        },
       })
 
       console.log(wrapper.html())
