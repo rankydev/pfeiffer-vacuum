@@ -31,6 +31,7 @@ export default {
   },
   setup() {
     const settings = {
+      fade: true,
       slidesToShow: 1,
       slidesToScroll: 1,
       responsive: [
