@@ -1,34 +1,32 @@
-import { createLocalVue, shallowMount, mount } from '@vue/test-utils'
-import { carouselEntries } from './Carousel.stories.content'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { carouselEntries, mockContent } from './Carousel.stories.content'
 import Button from '~/components/atoms/Button/Button'
 import Carousel from './Carousel'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 
 let wrapper
 
-const headline = 'Lorem headline'
-const buttonText = 'Lorem button'
-const propContent = {
-  headline,
-  button: [
-    {
-      _uid: 'be5655d7-d497-4702-a6cc-c6c546df90f5',
-      icon: 'arrow_forward',
-      size: 'normal',
-      label: buttonText,
-      shape: 'plain',
-      variant: 'secondary',
-      disabled: false,
-      component: 'Button',
-      prependIcon: false,
-      _editable:
-        '<!--#storyblok#{"name": "Button", "space": "153186", "uid": "be5655d7-d497-4702-a6cc-c6c546df90f5", "id": "122271355"}-->',
-    },
-  ],
+const slickSliderStub = {
+  template: `
+      <div>
+        <slot />
+        <slot name="prevArrow" />
+        <slot name="nextArrow" />
+      </div>
+      `
 }
 
-function createComponent(propsData = {}, shallow = true) {
-  const stubs = { Button: true, NuxtDynamic: true, Template: true }
+const nuxtDynamicStub = {
+  template: '<div />'
+}
+
+function createComponent(propsData = {}) {
+  const stubs = {
+    Button: true,
+    Template: true,
+    VueSlickCarousel: slickSliderStub,
+    NuxtDynamic: nuxtDynamicStub
+  }
   const localVue = createLocalVue()
   const editable = (el, key) => (el.innerText = key.value)
   localVue.directive('editable', editable)
@@ -39,7 +37,7 @@ function createComponent(propsData = {}, shallow = true) {
     propsData,
   }
 
-  wrapper = shallow ? shallowMount(Carousel, options) : mount(Carousel, options)
+  wrapper = shallowMount(Carousel, options)
 }
 
 describe('Carousel', () => {
@@ -53,11 +51,11 @@ describe('Carousel', () => {
     })
 
     test('should render carousel entries given propsData', () => {
-      createComponent({ slides: carouselEntries }, false)
+      createComponent({ slides: carouselEntries })
 
-      const entries = wrapper.findAll('.slick-slide')
+      const entries = wrapper.findAllComponents(nuxtDynamicStub)
 
-      expect(entries).toHaveLength(7)
+      expect(entries).toHaveLength(carouselEntries.length)
     })
 
     test('should render carousel in wide mode given isWide prop', () => {
@@ -81,36 +79,40 @@ describe('Carousel', () => {
       const slider = wrapper.find('.carousel__slider')
 
       expect(slider.attributes('speed')).toBe('500')
-      expect(slider.attributes('autoplayspeed')).toBe('5000')
+      expect(slider.attributes('autoplay-speed')).toBe('5000')
     })
 
     test('should render headline and interaction button given propsData', () => {
       createComponent({
         slides: carouselEntries,
-        ...propContent,
+        ...mockContent
       })
 
       const content = wrapper.find('.carousel__content')
       const contentHeadline = content.find('h2')
       const contentButton = content.find('[component="Button"]')
 
-      expect(contentHeadline.text()).toEqual(headline)
-      expect(contentButton.attributes('label')).toEqual(buttonText)
+      expect(contentHeadline.text()).toEqual(mockContent.headline)
+      expect(contentButton.attributes('label')).toEqual(mockContent.button[0].label)
     })
 
     describe('buttons', () => {
-      test('should render no buttons given less slides than configured in the setting', () => {
+      test('should hide buttons given less slides than configured in the setting', () => {
+        // TODO: Fix after carousel component adaptions
+
         const lessEntries = carouselEntries.slice(0, 2)
 
         createComponent({ slides: lessEntries })
 
-        const buttons = wrapper.findAllComponents(Button)
+        const next = wrapper.find('.slider__next--hide')
+        const prev = wrapper.find('.slider__prev--hide')
 
-        expect(buttons).toHaveLength(0)
+        expect(next.exists()).toBeTruthy()
+        expect(prev.exists()).toBeTruthy()
       })
 
       test('should render next and no prev button given enough entries', () => {
-        createComponent({ slides: carouselEntries }, false)
+        createComponent({ slides: carouselEntries })
 
         const prev = wrapper.find('.slider__prev--hide')
         const next = wrapper.find('.slider__next--hide')
@@ -125,7 +127,7 @@ describe('Carousel', () => {
         createComponent({
           slides: carouselEntries,
           isHomeStage: true,
-          ...propContent,
+          ...mockContent,
         })
 
         const content = wrapper.find('.carousel__content')
@@ -159,7 +161,7 @@ describe('Carousel', () => {
 
         expect(slider.attributes('infinite')).toBeTruthy()
         expect(slider.attributes('autoplay')).toBeTruthy()
-        expect(slider.attributes('autoplayspeed')).toBe('4000')
+        expect(slider.attributes('autoplay-speed')).toBe('4000')
       })
 
       test('should set correct infinite state given homestage true', () => {
@@ -189,8 +191,10 @@ describe('Carousel', () => {
   })
 
   describe('during interaction', () => {
-    test('should render both buttons given an active slide unequal to first or last one', async () => {
-      createComponent({ slides: carouselEntries }, false)
+    test('should show both buttons given an active slide unequal to first or last one', async () => {
+      // TODO: Fix after carousel component adaptions
+
+      createComponent({ slides: carouselEntries })
 
       const prev = wrapper.find('.slider__prev--hide')
       const next = wrapper.find('.slider__next--show')
@@ -205,15 +209,21 @@ describe('Carousel', () => {
       const newPrev = wrapper.find('.slider__prev--show')
       const newNext = wrapper.find('.slider__next--show')
       expect(newPrev.exists()).toBeTruthy()
+      expect(newPrev.exists()).toBeTruthy()
       expect(newNext.exists()).toBeTruthy()
     })
 
-    test('should remove next button given last slide as active', () => {
+    test('should hide next button given last slide as active', async () => {
+      // TODO: Fix after carousel component adaptions
+
       createComponent({
         slides: carouselEntries,
-        initialSlide: carouselEntries.length - 1,
+        settings: {
+          initialSlide: carouselEntries.length - 1
+        }
       })
 
+      console.log(wrapper.html())
       const next = wrapper.find('.slider__next--hide')
 
       expect(next.exists()).toBeTruthy()
