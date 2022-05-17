@@ -70,7 +70,7 @@ import {
 import VueSlickCarousel from 'vue-slick-carousel'
 import Button from '~/components/atoms/Button/Button'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import tailwindconfig from '@/tailwind.config'
+import tailwindconfig from '~/tailwind.config'
 
 export default defineComponent({
   name: 'Carousel',
