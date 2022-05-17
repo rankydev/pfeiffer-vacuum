@@ -220,7 +220,7 @@ export default defineComponent({
      * ContentWrapper should have breakout, when the carousel isHomeStage || isBreakout
      */
     const contentWrapperProps = computed(() => ({
-      breakout: props.isHomeStage ? true : isBreakout.value,
+      breakout: props.isHomeStage || isBreakout.value,
       noPadding: !isBreakout.value,
     }))
 
