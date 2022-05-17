@@ -49,8 +49,17 @@ describe('GenericCard', () => {
       expect(wrapper.vm).toBeTruthy()
     })
 
-    it('should use the image size contain as default', () => {
+    it('should use the image size cover as default', () => {
       const propsData = { ...defaultProps() }
+      createComponent(propsData)
+
+      const imageWrapper = wrapper.find('.pv-card__image')
+
+      expect(imageWrapper.attributes('class')).toMatch('pv-card__image--cover')
+    })
+
+    it('should use the image size contain given contain', () => {
+      const propsData = { ...defaultProps(), imageSize: 'contain' }
       createComponent(propsData)
 
       const imageWrapper = wrapper.find('.pv-card__image')
@@ -58,15 +67,6 @@ describe('GenericCard', () => {
       expect(imageWrapper.attributes('class')).toMatch(
         'pv-card__image--contain'
       )
-    })
-
-    it('should use the image size cover given cover', () => {
-      const propsData = { ...defaultProps(), imageSize: 'cover' }
-      createComponent(propsData)
-
-      const imageWrapper = wrapper.find('.pv-card__image')
-
-      expect(imageWrapper.attributes('class')).toMatch('pv-card__image--cover')
     })
 
     it('should render all content given slot content', () => {
