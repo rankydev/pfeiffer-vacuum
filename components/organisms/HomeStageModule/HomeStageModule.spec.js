@@ -15,9 +15,6 @@ let wrapper
 
 function createComponent(propsData = {}) {
   const stubs = { NuxtImg: nuxtImg }
-
-  const $img = () => ''
-  const mocks = { $nuxt: { context: { $img } } }
   const localVue = createLocalVue()
   const editable = (el, key) => (el.innerText = key.value)
   localVue.directive('editable', editable)
