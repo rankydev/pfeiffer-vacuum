@@ -47,10 +47,10 @@ describe('HomeStageModule', () => {
       createComponent(propsData)
       const contentElement = wrapper.findComponent(HomeStageContent)
       expect(contentElement.vm.teaserText).toEqual(
-        propsData.stageContent[0].teaserText
+        propsData.stageContent[0][0].teaserText
       )
       expect(contentElement.vm.headline).toEqual(
-        propsData.stageContent[0].headline
+        propsData.stageContent[0][0].headline
       )
     })
 
