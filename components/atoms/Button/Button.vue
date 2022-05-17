@@ -67,7 +67,7 @@ export default defineComponent({
     },
     /**
      * Defines the button shape
-     * * @values filled, outlined, plain
+     * @values filled, outlined, plain
      */
     shape: {
       type: String,
@@ -76,7 +76,7 @@ export default defineComponent({
     },
     /**
      * The size of the component
-     * * @values xsmall, small, normal
+     * @values xsmall, small, normal
      */
     size: {
       type: String,
@@ -92,7 +92,7 @@ export default defineComponent({
     },
     /**
      * Defines the button shape cutaway in a side e.g. for slider controls
-     * * @values left, right
+     * @values left, right
      */
     cutaway: {
       type: String,
