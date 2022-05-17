@@ -19,9 +19,11 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const classList = `${
-      props.breakout ? 'content-wrapper--breakout' : 'content-wrapper'
-    } ${props.noPadding ? 'content-wrapper--no-padding' : ''}`
+    const classList = {
+      'content-wrapper': !props.breakout,
+      'content-wrapper--breakout': props.breakout,
+      'content-wrapper--no-padding': props.noPadding,
+    }
 
     return {
       classList,
