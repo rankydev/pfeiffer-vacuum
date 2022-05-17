@@ -21,9 +21,10 @@ const propContent = {
       disabled: false,
       component: 'Button',
       prependIcon: false,
-      _editable: '<!--#storyblok#{\"name\": \"Button\", \"space\": \"153186\", \"uid\": \"be5655d7-d497-4702-a6cc-c6c546df90f5\", \"id\": \"122271355\"}-->'
-    }
-  ]
+      _editable:
+        '<!--#storyblok#{"name": "Button", "space": "153186", "uid": "be5655d7-d497-4702-a6cc-c6c546df90f5", "id": "122271355"}-->',
+    },
+  ],
 }
 
 function createComponent(propsData = {}, shallow = true) {
@@ -73,9 +74,9 @@ describe('Carousel', () => {
 
     test('should extend default settings than overwriting them given example setting', () => {
       createComponent({
-          slides: carouselEntries,
-          settings: { speed: 500 }
-        })
+        slides: carouselEntries,
+        settings: { speed: 500 },
+      })
 
       const slider = wrapper.find('.carousel__slider')
 
@@ -86,7 +87,7 @@ describe('Carousel', () => {
     test('should render headline and interaction button given propsData', () => {
       createComponent({
         slides: carouselEntries,
-        ...propContent
+        ...propContent,
       })
 
       const content = wrapper.find('.carousel__content')
@@ -101,7 +102,7 @@ describe('Carousel', () => {
       test('should render no buttons given less slides than configured in the setting', () => {
         const lessEntries = carouselEntries.slice(0, 2)
 
-        createComponent({ slides : lessEntries })
+        createComponent({ slides: lessEntries })
 
         const buttons = wrapper.findAllComponents(Button)
 
@@ -124,7 +125,7 @@ describe('Carousel', () => {
         createComponent({
           slides: carouselEntries,
           isHomeStage: true,
-          ...propContent
+          ...propContent,
         })
 
         const content = wrapper.find('.carousel__content')
@@ -135,7 +136,7 @@ describe('Carousel', () => {
       test('should set content wrapper breakout given homestage', () => {
         createComponent({
           slides: carouselEntries,
-          isHomeStage: true
+          isHomeStage: true,
         })
 
         const contentWrapper = wrapper.findComponent(ContentWrapper)
@@ -150,7 +151,7 @@ describe('Carousel', () => {
         createComponent({
           slides: carouselEntries,
           autoplay: true,
-          infinite: true
+          infinite: true,
         })
 
         const slider = wrapper.find('.carousel__slider')
@@ -163,7 +164,7 @@ describe('Carousel', () => {
         createComponent({
           slides: carouselEntries,
           infinite: true,
-          isHomeStage: true
+          isHomeStage: true,
         })
 
         const slider = wrapper.find('.carousel__slider')
@@ -175,7 +176,7 @@ describe('Carousel', () => {
         createComponent({
           slides: carouselEntries,
           infinite: true,
-          isWide: true
+          isWide: true,
         })
 
         const slider = wrapper.find('.carousel__slider')
@@ -206,7 +207,10 @@ describe('Carousel', () => {
     })
 
     test('should remove next button given last slide as active', () => {
-      createComponent({ slides: carouselEntries, initialSlide: carouselEntries.length - 1 })
+      createComponent({
+        slides: carouselEntries,
+        initialSlide: carouselEntries.length - 1,
+      })
 
       const next = wrapper.find('.slider__next--hide')
 

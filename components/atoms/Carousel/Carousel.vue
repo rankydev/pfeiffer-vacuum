@@ -79,34 +79,61 @@ export default defineComponent({
     ContentWrapper,
   },
   props: {
+    /**
+     * Headline of the carousel
+     */
     headline: {
       type: String,
       default: '',
     },
+
+    /**
+     * Button which will be displayed above the carousel
+     */
     button: {
       type: Array,
       default: () => [],
     },
+    /**
+     * Slider items
+     */
     slides: {
       type: Array,
       default: () => [],
     },
+
+    /**
+     * enables/disables wide mode of carousel (breakout of ContentWrapper)
+     */
     isWide: {
       type: Boolean,
       default: false,
     },
+    /**
+     * optional carousel settings for manual use
+     */
     settings: {
       type: Object,
       default: () => ({}),
     },
+    /**
+     * enables/ disables infinite wrap around items on slider
+     */
     infinite: {
       type: Boolean,
       default: false,
     },
+    /**
+     * enables/ disables autoplay
+     */
     autoplay: {
       type: Boolean,
       default: false,
     },
+    /**
+     * when carousel is home stage, wide mode is enabled and headline, as
+     * well as button won't be rendered above carousel
+     */
     isHomeStage: {
       type: Boolean,
       default: false,
