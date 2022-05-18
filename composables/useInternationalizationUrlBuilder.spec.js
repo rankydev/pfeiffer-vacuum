@@ -16,7 +16,7 @@ describe('useInternationalizationUrlBuilder', () => {
     }
   }
 
-  test('test default url', () => {
+  test('should return expected values given /global/en', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
     const { slug, fallbackSlug, language } = buildUrl('/global/en')
 
@@ -25,7 +25,7 @@ describe('useInternationalizationUrlBuilder', () => {
     expect(language).toEqual('en')
   })
 
-  test('test germany de page', () => {
+  test('should return expected values given /germany/de', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
     const { slug, fallbackSlug, language } = buildUrl('/germany/de')
 
@@ -34,7 +34,7 @@ describe('useInternationalizationUrlBuilder', () => {
     expect(language).toEqual('de')
   })
 
-  test('test germany de page with trailing slash', () => {
+  test('should return expected values given /germany/de/', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
     const { slug, fallbackSlug, language } = buildUrl('/germany/de/')
 
@@ -43,7 +43,7 @@ describe('useInternationalizationUrlBuilder', () => {
     expect(language).toEqual('de')
   })
 
-  test('test home slug of the german region', () => {
+  test('should return expected values given germany/de/home', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
     const { slug, fallbackSlug, language } = buildUrl('germany/de/home')
     expect(slug).toEqual('germany/home')
@@ -51,7 +51,7 @@ describe('useInternationalizationUrlBuilder', () => {
     expect(language).toEqual('de')
   })
 
-  test('test complex url without region and language', () => {
+  test('should return expected values given /products/fluxkompensator', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
     const { slug, fallbackSlug, language } = buildUrl(
       '/products/fluxkompensator'
@@ -63,7 +63,7 @@ describe('useInternationalizationUrlBuilder', () => {
     expect(language).toEqual('en')
   })
 
-  test('test home url for a specific region', () => {
+  test('should return expected values given korea/en/home', () => {
     const { buildUrl } = useInternationalizationUrlBuilder(createContext())
     const { slug, fallbackSlug, language } = buildUrl('korea/en/home')
 
