@@ -1,3 +1,4 @@
+console.log(JSON.stringify(process.env))
 export default {
   srcDir: '',
   ssr: true,
