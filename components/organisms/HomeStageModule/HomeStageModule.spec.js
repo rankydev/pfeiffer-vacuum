@@ -30,7 +30,7 @@ function createComponent(propsData = {}) {
 
 describe('HomeStageModule', () => {
   describe('initial state', () => {
-    test('should still render when no data was given', () => {
+    test('should render when no data was given', () => {
       createComponent()
       const homeStageWrapper = wrapper.find('.homestage')
       expect(homeStageWrapper.exists()).toBeTruthy()

@@ -1,11 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div
-    class="bubble__wrapper"
-    :class="
-      position === 'right' ? 'bubble__wrapper--right' : 'bubble__wrapper--left'
-    "
-  >
+  <div class="bubble__wrapper" :class="`bubble__wrapper--${position}`">
     <h5 class="bubble__headline">{{ title }}</h5>
     <NuxtDynamic
       v-for="item in richtext"
@@ -46,7 +41,6 @@ export default defineComponent({
       validator: (val) => ['left', 'right'].includes(val),
     },
   },
-  setup(props) {},
 })
 </script>
 
@@ -67,6 +61,7 @@ $bubble-top-lg: 134px;
 $bubble-bottom-lg: unset;
 $bubble-left-lg: unset;
 $bubble-right-lg: 300px;
+$bubble-text-xxs: 10px;
 
 .bubble {
   &__wrapper {
@@ -130,7 +125,7 @@ $bubble-right-lg: 300px;
   &__headline {
     @apply tw-text-pv-white;
     @apply tw-leading-4;
-    font-size: 10px;
+    font-size: $bubble-text-xxs;
 
     @screen md {
       @apply tw-text-base;
@@ -146,7 +141,7 @@ $bubble-right-lg: 300px;
   &__richtext {
     p {
       @apply tw-leading-4;
-      font-size: 10px;
+      font-size: $bubble-text-xxs;
 
       @screen md {
         @apply tw-text-sm;

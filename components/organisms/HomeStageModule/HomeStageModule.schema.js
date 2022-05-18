@@ -15,14 +15,12 @@ export default {
       description: '',
       display_name: 'Background Image',
       filetypes: ['images'],
-      pos: 2,
     },
     interlay: {
       type: 'asset',
       description: '',
       display_name: 'Interlay',
       filetypes: ['images'],
-      pos: 2,
     },
     bubble: {
       type: 'bloks',

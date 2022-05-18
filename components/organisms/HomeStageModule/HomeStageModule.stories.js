@@ -23,7 +23,13 @@ export default {
     docs: {
       description: {
         component:
-          'The home stage component, nesting the home-stage-content component.',
+          'This is the home stage of the application. <br>' +
+          'It nests the home-stage-content and the bubble component. <br><br>' +
+          'Further information on how the home stage is structured can be found here: <br>' +
+          'https://confluence.diva-e.com/display/PVWEB/HomeStage+Component',
+      },
+      source: {
+        code: '<HomeStageModule v-bind="{ stageContent, image, interlay, bubble }"  />',
       },
     },
   },
