@@ -8,6 +8,7 @@ export default {
       restrict_components: true,
       component_whitelist: ['HomeStageContent'],
       display_name: 'Home Stage Content',
+      required: true,
     },
     image: {
       type: 'asset',

@@ -11,7 +11,7 @@ export default {
       type: 'bloks',
       maximum: 1,
       restrict_components: true,
-      component_whitelist: ['Richtext'],
+      component_whitelist: ['RichtextBasic'],
       display_name: 'Description',
     },
     position: {
