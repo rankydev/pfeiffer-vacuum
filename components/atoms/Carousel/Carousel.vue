@@ -37,7 +37,7 @@
             :class="{ 'slider__prev--hide': isFirstSlide }"
             variant="secondary"
             icon="arrow_back"
-            cutaway="cutaway-right"
+            cutaway="right"
           />
         </template>
         <template #nextArrow>
@@ -46,7 +46,7 @@
             :class="{ 'slider__next--hide': isLastSlide }"
             variant="secondary"
             icon="arrow_forward"
-            cutaway="cutaway-left"
+            cutaway="left"
           />
         </template>
       </VueSlickCarousel>

@@ -4,7 +4,7 @@
     :class="[
       `button--${variant}`,
       `button--${size}`,
-      `button--${cutaway}`,
+      `button--cutaway-${cutaway}`,
       `button--${isPrimary ? 'filled' : shape}`,
       {
         'button--disabled': disabled,
@@ -97,8 +97,7 @@ export default defineComponent({
     cutaway: {
       type: String,
       default: 'none',
-      validator: (val) =>
-        ['none', 'cutaway-left', 'cutaway-right'].includes(val),
+      validator: (val) => ['none', 'left', 'right'].includes(val),
     },
   },
   setup(props) {
