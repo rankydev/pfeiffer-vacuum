@@ -114,8 +114,8 @@ export default {
     // Environment variables for build-time
 
     // version info
-    LANGUAGE_CODES: process.env.LANGUAGE_CODES.split(','),
-    STORYBLOK_REGIONS: process.env.STORYBLOK_REGIONS.split(','),
+    LANGUAGE_CODES: process.env.LANGUAGE_CODES,
+    STORYBLOK_REGIONS: process.env.STORYBLOK_REGIONS,
     DEFAULT_LANGUAGE_CODE: process.env.DEFAULT_LANGUAGE_CODE,
     STORYBLOK_DEFAULT_REGION: process.env.STORYBLOK_DEFAULT_REGION,
 

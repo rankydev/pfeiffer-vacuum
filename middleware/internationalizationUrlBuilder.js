@@ -10,9 +10,9 @@ export default async function (context) {
 
   const path = withoutLeadingSlash(withoutTrailingSlash(context.route.path))
   const defaultRegion = process.env.STORYBLOK_DEFAULT_REGION
-  const regions = process.env.STORYBLOK_REGIONS
+  const regions = process.env.STORYBLOK_REGIONS.split(',')
   const defaultLanguage = process.env.DEFAULT_LANGUAGE_CODE
-  const languages = process.env.LANGUAGE_CODES
+  const languages = process.env.LANGUAGE_CODES.split(',')
 
   logger.trace('path', path)
 
