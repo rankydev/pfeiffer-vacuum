@@ -46,7 +46,7 @@ describe('ImageWithDescription', () => {
       expect(activeElements.at(0).attributes('richtext')).toBe(
         propsData.description[0].richtext
       )
-      expect(activeElements.at(0).attributes('component')).toBe('Richtext')
+      expect(activeElements.at(0).attributes('name')).toBe('Richtext')
     })
     test('should render image', () => {
       const propsData = {

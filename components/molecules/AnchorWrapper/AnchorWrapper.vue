@@ -5,7 +5,7 @@
       :key="item._uid"
       v-editable="item"
       v-bind="item"
-      :component="item.uiComponent || item.component"
+      :name="item.uiComponent || item.component"
     />
   </div>
 </template>

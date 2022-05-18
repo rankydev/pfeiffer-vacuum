@@ -12,7 +12,7 @@
         :key="item._uid"
         class="image-with-description__component"
         v-bind="item"
-        :component="item.uiComponent || item.component"
+        :name="item.uiComponent || item.component"
       />
     </template>
   </div>
