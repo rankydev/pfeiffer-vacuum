@@ -1,11 +1,10 @@
 import { withoutTrailingSlash } from 'ufo'
 
 const useInternationalizationUrlBuilder = ({ root: context }) => {
-  const REGIONS = context.$cms.regions.split(',')
-  const DEFAULT_REGION = context.$cms.defaultRegion
-
-  const LANGUAGES = context.$config.languages
-  const DEFAULT_LANGUAGE = context.$cms.defaultLanguageCode
+  const REGIONS = process.env.STORYBLOK_REGIONS
+  const DEFAULT_REGION = process.env.STORYBLOK_DEFAULT_REGION
+  const LANGUAGES = process.env.LANGUAGE_CODES
+  const DEFAULT_LANGUAGE = process.env.DEFAULT_LANGUAGE_CODE
 
   function buildUrl(url) {
     const urlsSegments = url.split('/').filter((segment) => segment !== '')

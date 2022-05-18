@@ -1,6 +1,6 @@
 export function transform(links, context) {
-  const { regions, defaultRegion } = context.$cms
-  const regionsArray = regions.split(',')
+  const defaultRegion = process.env.STORYBLOK_DEFAULT_REGION
+  const regionsArray = process.env.STORYBLOK_REGIONS
 
   const urlsSegments = context.route.path
     .split('/')

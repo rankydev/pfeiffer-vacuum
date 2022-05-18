@@ -85,7 +85,7 @@ export default {
   storyblok: {
     accessToken: process.env.STORYBLOK_ACCESS_TOKEN,
     version: process.env.STORYBLOK_VERSION,
-    defaultLanguage: process.env.DEFAULT_LANGUAGE_CODE,
+    // defaultLanguage: process.env.DEFAULT_LANGUAGE_CODE,
     resolveRelations: process.env.STORYBLOK_RESOLVE_RELATIONS,
     resolveLinks: process.env.STORYBLOK_RESOLVE_LINKS,
     resolveAssets: process.env.STORYBLOK_RESOLVE_ASSETS,
@@ -94,14 +94,13 @@ export default {
     exclude:
       process.env.STORYBLOK_EXCLUDE_ROUTES &&
       process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
-    regions: process.env.STORYBLOK_REGIONS,
-    defaultRegion: process.env.STORYBLOK_DEFAULT_REGION,
+    // regions: process.env.STORYBLOK_REGIONS,
+    // defaultRegion: process.env.STORYBLOK_DEFAULT_REGION,
     linksTransformer: './resolver/linksTransformer',
   },
 
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL || 'https://localhost:3000',
-    languages: process.env.LANGUAGE_CODES.split(','),
   },
 
   server: {
@@ -114,6 +113,11 @@ export default {
     // Environment variables for build-time
 
     // version info
+    LANGUAGE_CODES: process.env.LANGUAGE_CODES.split(','),
+    STORYBLOK_REGIONS: process.env.STORYBLOK_REGIONS.split(','),
+    DEFAULT_LANGUAGE_CODE: process.env.DEFAULT_LANGUAGE_CODE,
+    STORYBLOK_DEFAULT_REGION: process.env.STORYBLOK_DEFAULT_REGION,
+
     CI_COMMIT_REF_NAME: process.env.CI_COMMIT_REF_NAME,
     CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,
     CI_PROJECT_URL: process.env.CI_PROJECT_URL,
