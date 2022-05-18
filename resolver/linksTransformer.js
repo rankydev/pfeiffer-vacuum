@@ -1,6 +1,6 @@
 export function transform(links, context) {
   const defaultRegion = process.env.STORYBLOK_DEFAULT_REGION
-  const regionsArray = process.env.STORYBLOK_REGIONS
+  const regionsArray = process.env.STORYBLOK_REGIONS.split(',')
 
   const urlsSegments = context.route.path
     .split('/')
