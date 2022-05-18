@@ -96,7 +96,7 @@ export default {
       process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
     regions: process.env.STORYBLOK_REGIONS,
     defaultRegion: process.env.STORYBLOK_DEFAULT_REGION,
-    linksTransformer: '~/resolver/linksTransformer',
+    linksTransformer: './resolver/linksTransformer',
   },
 
   publicRuntimeConfig: {
