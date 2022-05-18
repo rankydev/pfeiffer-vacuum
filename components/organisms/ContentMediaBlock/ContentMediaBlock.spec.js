@@ -32,7 +32,6 @@ describe('ContentMediaBlock', () => {
     it('should provide headline subline and richtext to richtext component when these are provided', () => {
       const propsData = { headline, subline, richtext }
       createComponent(propsData)
-
       const domRichtext = wrapper.findComponent(Richtext)
 
       expect(domRichtext.vm.richtext).toMatch(headline)
