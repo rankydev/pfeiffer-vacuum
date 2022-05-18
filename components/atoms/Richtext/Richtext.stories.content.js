@@ -3,15 +3,10 @@ export default {
     _uid: '51e8d701-ae97-4800-b74e-58b93e5f09cd',
     component: 'Richtext',
     richtext: `<p>Plain text can be added <u>also with underline</u> or <strong>strong</strong> and links can either be
-
-    <a href="https://www.pfeiffer-vacuum.com" target="_blank">external</a> or
-
+                <a href="https://www.pfeiffer-vacuum.com" target="_blank">external</a> or
                 <a href="/home" target="_self">internal</a> or
-
                 <a href="mailto:info@pfeiffer-vacuum.com">eMail links</a> or
-
                 <a href="tel:+49123456789">telephone</a> or
-
                 <a href="#anchor">anchor</a>
                  also styles for several headlines are provide like
                 <h2>Headline H2</h2>

@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'The main page of the appication',
+        component: 'The main page of the application',
       },
     },
   },

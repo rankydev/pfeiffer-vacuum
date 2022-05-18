@@ -18,6 +18,7 @@
     <NuxtDynamic
       v-for="item in media"
       :key="item._uid"
+      v-editable="item"
       class="content-media-block__media"
       :class="mediaClass"
       v-bind="item"
@@ -176,6 +177,10 @@ export default defineComponent({
 
   &__button {
     @apply tw-basis-full;
+
+    &:nth-child(2) {
+      @apply tw-justify-start;
+    }
 
     @screen md {
       @apply tw-basis-0;
