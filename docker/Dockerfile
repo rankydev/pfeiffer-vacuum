@@ -82,6 +82,7 @@ ENV NODE_ENV=development
 
 # please read the note above
 ENV DEFAULT_LANGUAGE_CODE='en'
+ENV LANGUAGE_CODES='de,ko,zh,en'
 
 # please read the note above
 ENV STORYBLOK_OAUTH_TOKEN=''
