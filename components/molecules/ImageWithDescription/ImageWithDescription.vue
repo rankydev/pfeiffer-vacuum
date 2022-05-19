@@ -48,8 +48,16 @@ export default defineComponent({
     aspectRatio: {
       type: String,
       default: '1:1',
-      validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
+      // validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
     },
   },
 })
 </script>
+<style lang="scss">
+.image-with-description {
+  &__component {
+    @apply tw-text-pv-grey-48;
+    @apply tw-mt-2;
+  }
+}
+</style>
