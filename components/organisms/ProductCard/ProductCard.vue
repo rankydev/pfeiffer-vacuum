@@ -5,15 +5,12 @@ export default defineComponent({
   components: {},
   props: {
     /**
-     * Headline to display the teaser
+     * productID that specifies Product Card
      */
     productID: {
       type: String,
       default: '',
     },
-    /**
-     * Image data for responsive image component
-     */
   },
 })
 </script>
