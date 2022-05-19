@@ -17,7 +17,13 @@
           />
         </div>
 
-        <FooterNewsletter class="footer__newsletter" />
+        <FooterNewsletter
+          v-if="newsletter[0]"
+          :headline="newsletter[0].headline"
+          :richtext="newsletter[0].richtext"
+          :buttons="newsletter[0].buttons"
+          :links="newsletter[0].links"
+        />
 
         <hr class="footer__ruler" />
 
