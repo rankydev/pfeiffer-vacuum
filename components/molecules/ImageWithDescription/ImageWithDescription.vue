@@ -1,11 +1,22 @@
 <template>
   <div v-editable="image" class="image-with-description">
-    <ResponsiveImage
+    <div class="image-with-description__img-wrapper">
+      <ResponsiveImage
+        class="image-with-description__img"
+        provider="storyblok"
+        :image="image"
+        :aspect-ratio="aspectRatio"
+      />
+      <div v-if="image.copyright" class="image-with-description__copyright">
+        <span>{{ `@copyright: ${image.copyright}` }}</span>
+      </div>
+    </div>
+    <!-- <ResponsiveImage
       class="image-with-description__img"
       provider="storyblok"
       :image="image"
       :aspect-ratio="aspectRatio"
-    />
+    /> -->
     <template v-if="description">
       <NuxtDynamic
         v-for="item in description"
@@ -55,6 +66,18 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .image-with-description {
+  &__img-wrapper {
+    @apply tw-relative;
+  }
+
+  &__copyright {
+    @apply tw-absolute;
+    @apply tw-text-pv-grey-48;
+    @apply tw-bottom-2;
+    @apply tw-right-2;
+    @apply tw-ml-2;
+  }
+
   &__component {
     @apply tw-text-pv-grey-48;
     @apply tw-mt-2;
