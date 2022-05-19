@@ -3,7 +3,7 @@ import { transform } from './linksTransformer'
 describe('linksTransformer', () => {
   const CMS_LINKS_MOCK_DATA = {
     'ad837da9-7e42-4a40-a541-cdf168fc6ef6': {
-      path: '/global/home',
+      path: '/en/global/home',
       name: 'Home',
       isFolder: false,
       isStartpage: true,

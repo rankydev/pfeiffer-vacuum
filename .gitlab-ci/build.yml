@@ -18,7 +18,9 @@ build:
         - lsg-public/
       policy: push
   script:
-    - echo "test"
+    - npm ci --cache .npm --prefer-offline
+    - npm run build
+    - npm run lsg:build
   artifacts:
     when: on_failure
     paths:
@@ -147,7 +149,7 @@ sonar-qube:
 
 build-docker-image-frontend:
   extends: .build-docker-image
-  needs: ["build"]
+  needs: ["test", "lint"]
   environment:
     name: dev2
   except:
@@ -172,7 +174,7 @@ build-docker-image-lsg:
 
 build-docker-image-frontend-develop:
   extends: .build-docker-image
-  needs: ["build-docker-image-frontend"]
+  needs: ["sonar-qube"]
   environment:
     name: dev2
   only:
