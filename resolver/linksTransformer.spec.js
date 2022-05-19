@@ -3,7 +3,7 @@ import { transform } from './linksTransformer'
 describe('linksTransformer', () => {
   const CMS_LINKS_MOCK_DATA = {
     'ad837da9-7e42-4a40-a541-cdf168fc6ef6': {
-      path: '/en/global/home',
+      path: '/global/home',
       name: 'Home',
       isFolder: false,
       isStartpage: true,
@@ -22,10 +22,10 @@ describe('linksTransformer', () => {
 
   function createContext() {
     return {
-      $cms: {
-        regions: 'global,germany,china,korea',
-        defaultRegion: 'global',
-        defaultLanguageCode: 'en',
+      $config: {
+        REGION_CODES: 'global,germany,china,korea',
+        DEFAULT_REGION_CODE: 'global',
+        DEFAULT_LANGUAGE_CODE: 'en',
       },
     }
   }
