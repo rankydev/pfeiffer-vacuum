@@ -21,6 +21,11 @@ ARG NODE_ENV=development
 
 # please read the note above
 ARG DEFAULT_LANGUAGE_CODE
+ARG LANGUAGE_CODES
+
+# please read the note above
+ARG STORYBLOK_REGIONS
+ARG STORYBLOK_DEFAULT_REGION
 
 # please read the note above
 ARG STORYBLOK_OAUTH_TOKEN
@@ -53,8 +58,7 @@ RUN cat .env.template | envsubst >> .env
 RUN mkdir -p build_logs
 
 RUN \
-  npm install &> build_logs/npm_install.log \
-  && npm ci  &> build_logs/npm_ci.log \
+  npm ci  &> build_logs/npm_ci.log \
   && npm run build &> build_logs/npm_build.log
 
 ########################################################################################################################

@@ -10,9 +10,9 @@ services:
       # must match with the second entry in ports section
       - PORT=3000
       - NODE_ENV=${NODE_ENV}
-      # Sprach
-      - DEFAULT_LANGUAGE_CODE=en
-      #- LANGUAGES='en,de'
+      # Sprache
+      - DEFAULT_LANGUAGE_CODE=${DEFAULT_LANGUAGE_CODE}
+      - LANGUAGE_CODES=${LANGUAGE_CODES}
       # storyblok
       - STORYBLOK_ACCESS_TOKEN=${STORYBLOK_ACCESS_TOKEN}
       - STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
