@@ -7,6 +7,7 @@ export default {
       required: true,
       pos: 1,
       max: 1,
+      display_name: 'Product-ID',
     },
   },
   image: null,

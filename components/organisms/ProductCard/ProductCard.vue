@@ -1,6 +1,12 @@
-<template></template>
+<template>
+  <div>
+    <GenericCard :href="t" :image-size="cover" />
+  </div>
+</template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api'
+
 export default defineComponent({
   components: {},
   props: {
