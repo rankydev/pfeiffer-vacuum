@@ -3,8 +3,7 @@ function appendTrailingSlashIfRequired(url, append) {
 }
 
 export function transform(links, context) {
-  const { REGION_CODES, DEFAULT_REGION_CODE, DEFAULT_LANGUAGE_CODE } =
-    context.$config
+  const { REGION_CODES, DEFAULT_REGION_CODE } = context.$config
 
   const urlsSegments = context.route.path
     .split('/')
@@ -14,10 +13,10 @@ export function transform(links, context) {
     ? urlsSegments.shift()
     : DEFAULT_REGION_CODE
 
-  function transformUrl(url, currentRegion, isRoot = false) {
+  function transformUrl(url, currentRegion) {
     const isTrailingSlash = url.endsWith('/')
     const urlsSegments = url.split('/').filter((segment) => segment !== '')
-    const language = isRoot ? DEFAULT_LANGUAGE_CODE : urlsSegments.shift()
+    const language = urlsSegments.shift()
     const region = urlsSegments.shift()
     const slug = urlsSegments.join('/')
 
