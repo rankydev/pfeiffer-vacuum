@@ -25,6 +25,7 @@ export default {
         'ContentMediaBlock',
         'ContentTextBlock',
         'ImageWithSource',
+        'TeaserCard',
         'VideoPlayer',
         'Carousel',
       ],

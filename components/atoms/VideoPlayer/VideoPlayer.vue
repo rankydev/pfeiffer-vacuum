@@ -35,7 +35,7 @@
       :key="item._uid"
       class="video-player__component"
       v-bind="item"
-      :component="item.uiComponent || item.component"
+      :name="item.uiComponent || item.component"
     />
   </div>
 </template>

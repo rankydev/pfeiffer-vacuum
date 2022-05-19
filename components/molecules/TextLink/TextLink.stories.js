@@ -3,7 +3,7 @@ import LinkContent from '~/components/atoms/Link/Link.stories.content'
 import TextLinkContent from './TextLink.stories.content'
 
 export default {
-  title: 'Molecules/Links/TextLink',
+  title: 'Molecules/TextLink',
   component: TextLink,
   parameters: {
     docs: {

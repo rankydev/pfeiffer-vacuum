@@ -1,10 +1,11 @@
 export default {
   srcDir: '',
+  ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'pvweb',
+    title: 'pvweb', // @todo make dynamic
     htmlAttrs: {
-      lang: 'en',
+      lang: 'en-EN', // @todo make dynamic
     },
     meta: [
       { charset: 'utf-8' },
@@ -12,6 +13,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    // @todo add link alternate href lang
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -20,6 +22,15 @@ export default {
     'vue-slick-carousel/dist/vue-slick-carousel.css',
     'vue-slick-carousel/dist/vue-slick-carousel-theme.css',
   ],
+
+  router: {
+    extendRoutes(routes) {
+      for (const key in routes) {
+        routes[key].caseSensitive = true
+      }
+    },
+    middleware: 'internationalizationUrlBuilder',
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -34,6 +45,7 @@ export default {
     '~/components/atoms',
     '~/components/molecules',
     '~/components/organisms',
+    '~/components/util',
   ],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -86,10 +98,16 @@ export default {
     exclude:
       process.env.STORYBLOK_EXCLUDE_ROUTES &&
       process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
+    regions: process.env.STORYBLOK_REGIONS,
+    defaultRegion: process.env.STORYBLOK_DEFAULT_REGION,
+    linksTransformer: './resolver/linksTransformer',
   },
+
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL || 'https://localhost:3000',
+    languages: process.env.LANGUAGE_CODES.split(','),
   },
+
   server: {
     // for local change add 'environments/local.js'
     port: process.env.PORT || 3000,

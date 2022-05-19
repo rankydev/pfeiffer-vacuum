@@ -43,7 +43,7 @@ export default defineComponent({
       default: null,
     },
     /**
-     * The icon dispalyed at the button
+     * The icon displayed at the button
      */
     icon: {
       type: String,

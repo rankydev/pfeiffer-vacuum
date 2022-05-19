@@ -23,11 +23,12 @@ export default {
       component_whitelist: [
         'Accordion',
         'AnchorWrapper',
-        'VideoPlayer',
         'ContentMediaBlock',
         'ContentTextBlock',
         'ImageWithDescription',
         'Carousel',
+        'TeaserCard',
+        'VideoPlayer',
       ],
     },
     ...Seo,
