@@ -30,7 +30,7 @@ export default {
       type: 'bloks',
       display_name: 'Stage',
       restrict_components: true,
-      component_whitelist: ['Stage', 'HomeStageModule'],
+      component_whitelist: ['Stage', 'HomeStageCarousel'],
       maximum: 1,
     },
     body: {

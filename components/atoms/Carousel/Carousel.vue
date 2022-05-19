@@ -293,20 +293,6 @@ export default defineComponent({
       @apply tw-h-full;
     }
   }
-
-  &--home-stage {
-    .slick-slider {
-      padding: 0;
-
-      .slick-track {
-        @apply tw-gap-0;
-
-        .slick-slide {
-          min-width: 100vw;
-        }
-      }
-    }
-  }
 }
 
 .slider {

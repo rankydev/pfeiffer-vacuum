@@ -86,6 +86,7 @@ $home-stage-spacing-md: calc($home-stage-spacing-lg * 0.8); // 80%
 $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
 
 .homestage {
+  @apply tw-flex;
   @apply tw-relative;
   @apply tw-overflow-hidden;
   @apply tw-bg-no-repeat tw-bg-cover tw-bg-center;
