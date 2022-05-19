@@ -1,18 +1,5 @@
 <template>
-  <div
-    v-editable="slides"
-    class="carousel"
-    :class="{ 'carousel--home-stage': isHomeStage }"
-  >
-    <div v-if="!isHomeStage" class="carousel__content">
-      <h2>{{ headline }}</h2>
-      <NuxtDynamic
-        v-for="btn in button"
-        :key="btn._uid"
-        v-bind="btn"
-        :component="btn.uiComponent || btn.component"
-      />
-    </div>
+  <div v-editable="slides" class="carousel">
     <ContentWrapper v-bind="contentWrapperProps">
       <VueSlickCarousel
         v-if="slides.length"
@@ -29,7 +16,7 @@
           :key="slide._uid"
           v-editable="slide"
           v-bind="slide"
-          :component="slide.uiComponent || slide.component"
+          :name="slide.uiComponent || slide.component"
         />
         <template #prevArrow>
           <Button
@@ -131,14 +118,6 @@ export default defineComponent({
       type: String,
       default: '5000',
     },
-    /**
-     * when carousel is home stage, wide mode is enabled and headline, as
-     * well as button won't be rendered above carousel
-     */
-    isHomeStage: {
-      type: Boolean,
-      default: false,
-    },
   },
   setup(props) {
     const tailwindConfigScreens = tailwindconfig.theme.screens
@@ -164,7 +143,7 @@ export default defineComponent({
      * set isFirstSlide && isLastSlide to initial values
      * props enable/disable the buttons on the carousel
      */
-    let isFirstSlide = ref(true)
+    let isFirstSlide = ref(false)
     let isLastSlide = ref(false)
 
     /**
@@ -173,12 +152,8 @@ export default defineComponent({
      * otherwise set infinite based on setting
      */
     const infiniteSetting = computed(() => {
-      if (props.infinite && props.isHomeStage) {
-        return true
-      }
-      if (props.infinite && isBreakout.value) {
-        return false
-      }
+      if (isBreakout.value) return false
+
       return props.infinite
     })
 
@@ -186,33 +161,27 @@ export default defineComponent({
      * watchEffect will be triggered once the carousel is mounted
      */
     watchEffect(() => {
-      if (carousel.value) {
-        /**
-         * isFirstSlide and isLastSlide won't be set dynamically when the
-         * carousel is infinite, because then we always want to show the btns
-         */
-        if (!infiniteSetting.value) {
-          const innerSlider = carousel.value.$refs.innerSlider
-          const slideCount = innerSlider?.slideCount
-          const slidesToShowCarousel = innerSlider?.slidesToShow
-          const totalSlidesCount = Math.ceil(slideCount - slidesToShowCarousel)
+      if (!carousel.value || infiniteSetting.value) return
 
-          isFirstSlide.value = innerSlider?.currentSlide === 0
-          isLastSlide.value = currentSlide.value >= totalSlidesCount
-        } else {
-          isFirstSlide.value = false
-          isLastSlide.value = false
-        }
-      }
+      /*
+       * isFirstSlide and isLastSlide won't be set dynamically when the
+       * carousel is infinite, because then we always want to show the btns
+       */
+      const innerSlider = carousel.value.$refs.innerSlider
+      const slideCount = innerSlider?.slideCount
+      const slidesToShowCarousel = innerSlider?.slidesToShow
+      const totalSlidesCount = Math.ceil(slideCount - slidesToShowCarousel)
+
+      isFirstSlide.value = currentSlide.value === 0
+      isLastSlide.value = currentSlide.value >= totalSlidesCount
     })
 
     /**
-     * set ContentWrapper props based on isBreakout and isHomeStage values
+     * set ContentWrapper props based on isBreakout value
      * ContentWrapper should have noPadding when the carousel will be rendered normally
-     * ContentWrapper should have breakout, when the carousel isHomeStage || isBreakout
      */
     const contentWrapperProps = computed(() => ({
-      breakout: props.isHomeStage || isBreakout.value,
+      breakout: isBreakout.value,
       noPadding: !isBreakout.value,
     }))
 
@@ -249,7 +218,6 @@ export default defineComponent({
 
     return {
       carousel,
-      currentSlide,
       contentWrapperProps,
       defaultSettings,
       isFirstSlide,

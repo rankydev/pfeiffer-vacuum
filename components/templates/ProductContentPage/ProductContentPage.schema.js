@@ -27,6 +27,7 @@ export default {
         'ContentTextBlock',
         'ImageWithDescription',
         'Carousel',
+        'ContentCarousel',
         'TeaserCard',
         'VideoPlayer',
       ],

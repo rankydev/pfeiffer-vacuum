@@ -10,14 +10,6 @@ const argTypes = {
     control: { type: 'number' },
     defaultValue: carouselContent.autoplaySpeed,
   },
-  button: {
-    control: { type: 'array' },
-    defaultValue: carouselContent.button,
-  },
-  headline: {
-    control: { type: 'text' },
-    defaultValue: carouselContent.headline,
-  },
   isWide: {
     control: { type: 'boolean' },
     defaultValue: carouselContent.isWide,
