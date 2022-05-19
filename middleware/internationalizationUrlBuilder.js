@@ -10,9 +10,9 @@ export default async function (context) {
 
   const path = withoutLeadingSlash(withoutTrailingSlash(context.route.path))
 
-  const REGIONS = (process.env.STORYBLOK_REGIONS || []).split(',')
+  const REGIONS = (process.env.STORYBLOK_REGIONS || '').split(',')
   const DEFAULT_REGION = process.env.STORYBLOK_DEFAULT_REGION || ''
-  const LANGUAGES = (process.env.LANGUAGE_CODES || []).split(',')
+  const LANGUAGES = (process.env.LANGUAGE_CODES || '').split(',')
   const DEFAULT_LANGUAGE = process.env.DEFAULT_LANGUAGE_CODE || ''
 
   const isEmpty = (ele) => (ele?.length || 0) === 0
