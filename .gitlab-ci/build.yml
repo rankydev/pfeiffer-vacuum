@@ -123,6 +123,7 @@ sonar-qube:
       --build-arg BASE_URL="${CI_ENVIRONMENT_URL}"
       --build-arg DOMAIN="${CI_ENVIRONMENT_URL}"
       --build-arg DEFAULT_LANGUAGE_CODE="${DEFAULT_LANGUAGE_CODE}"
+      --build-arg LANGUAGE_CODES="${LANGUAGE_CODES}"
       --build-arg STORYBLOK_OAUTH_TOKEN="${STORYBLOK_OAUTH_TOKEN}"
       --build-arg STORYBLOK_ACCESS_TOKEN="${STORYBLOK_ACCESS_TOKEN}"
       --build-arg STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
