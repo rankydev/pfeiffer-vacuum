@@ -11,12 +11,6 @@
         <span>{{ `@copyright: ${image.copyright}` }}</span>
       </div>
     </div>
-    <!-- <ResponsiveImage
-      class="image-with-description__img"
-      provider="storyblok"
-      :image="image"
-      :aspect-ratio="aspectRatio"
-    /> -->
     <template v-if="description">
       <NuxtDynamic
         v-for="item in description"
@@ -59,7 +53,8 @@ export default defineComponent({
     aspectRatio: {
       type: String,
       default: '1:1',
-      // validator: (val) => ['1:1', '16:9', '2:3', '3:2', '3:1'].includes(val),
+      validator: (val) =>
+        ['1:1', '16:9', '2:3', '2:1', '3:2', '3:1'].includes(val),
     },
   },
 })
