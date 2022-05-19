@@ -1,6 +1,13 @@
 export function transform(links, context) {
   const defaultRegion = process.env.STORYBLOK_DEFAULT_REGION
-  const regionsArray = process.env.STORYBLOK_REGIONS.split(',')
+  const regionsArray = (process.env.STORYBLOK_REGIONS || []).split(',')
+
+  const processEnvs = [defaultRegion, regionsArray]
+  const isEmpty = (ele) => (ele?.length || 0) === 0
+
+  if (processEnvs.some(isEmpty)) {
+    console.error('linksTransformer: Empty process env', processEnvs.join(', '))
+  }
 
   const urlsSegments = context.route.path
     .split('/')

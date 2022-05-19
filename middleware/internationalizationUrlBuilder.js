@@ -9,10 +9,22 @@ export default async function (context) {
   }
 
   const path = withoutLeadingSlash(withoutTrailingSlash(context.route.path))
-  const defaultRegion = process.env.STORYBLOK_DEFAULT_REGION
-  const regions = process.env.STORYBLOK_REGIONS.split(',')
-  const defaultLanguage = process.env.DEFAULT_LANGUAGE_CODE
-  const languages = process.env.LANGUAGE_CODES.split(',')
+
+  const REGIONS = (process.env.STORYBLOK_REGIONS || []).split(',')
+  const DEFAULT_REGION = process.env.STORYBLOK_DEFAULT_REGION || ''
+  const LANGUAGES = (process.env.LANGUAGE_CODES || []).split(',')
+  const DEFAULT_LANGUAGE = process.env.DEFAULT_LANGUAGE_CODE || ''
+
+  const isEmpty = (ele) => (ele?.length || 0) === 0
+  const processEnvs = [REGIONS, DEFAULT_REGION, LANGUAGES, DEFAULT_LANGUAGE]
+
+  if (processEnvs.some(isEmpty)) {
+    console.error(
+      'InternationalizationUrlBuilder: Empty process env',
+      processEnvs.join(', ')
+    )
+    return
+  }
 
   logger.trace('path', path)
 
@@ -21,16 +33,16 @@ export default async function (context) {
   let language = urlsSegments.shift()
 
   // if the requested url contains a language code, then do nothing
-  if (languages.includes(language) && regions.includes(region)) {
+  if (LANGUAGES.includes(language) && REGIONS.includes(region)) {
     logger.trace('CONTINUE: url contains correct parameters')
     return
   }
 
-  if (!regions.includes(region)) {
-    region = defaultRegion
+  if (!REGIONS.includes(region)) {
+    region = DEFAULT_REGION
   }
 
-  if (!languages.includes(language)) {
+  if (!LANGUAGES.includes(language)) {
     const acceptLanguage = context.req.headers['accept-language']
       .split(',')[0]
       .toLocaleLowerCase()
@@ -38,9 +50,9 @@ export default async function (context) {
 
     logger.trace('acceptLanguage', acceptLanguage)
 
-    language = languages.includes(acceptLanguage)
+    language = LANGUAGES.includes(acceptLanguage)
       ? acceptLanguage
-      : defaultLanguage
+      : DEFAULT_LANGUAGE
   }
 
   const redirectUrl = `/${region}/${language}`
