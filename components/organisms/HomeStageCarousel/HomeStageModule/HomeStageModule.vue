@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import HomeStageContent from '~/components/organisms/HomeStageModule/partials/HomeStageContent/HomeStageContent.vue'
+import HomeStageContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/partials/HomeStageContent/HomeStageContent.vue'
 import Bubble from '~/components/molecules/Bubble/Bubble'
 
 export default {
