@@ -1,6 +1,6 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Bubble from './Bubble'
-import { bubble } from '~/components/organisms/HomeStageModule/HomeStageModule.stories.content'
+import { bubble } from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.stories.content'
 import { bubbleText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
 
 const defaultProps = () => JSON.parse(JSON.stringify(bubble[0]))
@@ -37,7 +37,7 @@ describe('Bubble', () => {
       }
       createComponent(propsData, false)
       const bubbleHeadline = wrapper.find('.bubble__headline')
-      const domRichtext = wrapper.find('[component="Richtext"]')
+      const domRichtext = wrapper.find('[name="Richtext"]')
 
       // checking default position (right)
       const bubblePosition = wrapper.find('.bubble__wrapper--right')

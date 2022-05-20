@@ -10,5 +10,5 @@ export default {
   autoplay: false,
   autoplaySpeed: '5000',
   infinite: false,
-  slides,
+  slides: slides,
 }

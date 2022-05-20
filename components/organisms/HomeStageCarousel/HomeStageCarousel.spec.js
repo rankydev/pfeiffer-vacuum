@@ -29,8 +29,8 @@ function createComponent(propsData = {}) {
 // tests provided for the HomeStageModule and Content partials
 describe('HomeStageCarousel', () => {
   describe('initial state', () => {
-    test('should render HomeStageCarousel when no entries are provided', () => {
-      createComponent()
+    test('should render HomeStageCarousel', () => {
+      createComponent({ slides: HomeStageCarouselContent.slides })
 
       const homeStageCarouselWrapper = wrapper.find('.home-stage-carousel')
 
