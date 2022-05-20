@@ -21,6 +21,11 @@ ARG NODE_ENV=development
 
 # please read the note above
 ARG DEFAULT_LANGUAGE_CODE
+ARG LANGUAGE_CODES
+
+# please read the note above
+ARG REGION_CODES
+ARG DEFAULT_REGION_CODE
 
 # please read the note above
 ARG STORYBLOK_OAUTH_TOKEN
@@ -53,8 +58,7 @@ RUN cat .env.template | envsubst >> .env
 RUN mkdir -p build_logs
 
 RUN \
-  npm install &> build_logs/npm_install.log \
-  && npm ci  &> build_logs/npm_ci.log \
+  npm ci  &> build_logs/npm_ci.log \
   && npm run build &> build_logs/npm_build.log
 
 ########################################################################################################################
@@ -81,7 +85,12 @@ ENV BASE_URL='https://localhost:3000'
 ENV NODE_ENV=development
 
 # please read the note above
-ENV DEFAULT_LANGUAGE_CODE='en'
+ENV DEFAULT_LANGUAGE_CODE="${DEFAULT_LANGUAGE_CODE}"
+ENV LANGUAGE_CODES="${LANGUAGE_CODES}"
+
+# please read the note above
+ENV REGION_CODES="${REGION_CODES}"
+ENV DEFAULT_REGION_CODE="${DEFAULT_REGION_CODE}"
 
 # please read the note above
 ENV STORYBLOK_OAUTH_TOKEN=''
@@ -91,13 +100,11 @@ ENV STORYBLOK_SPACE_ID=''
 ENV STORYBLOK_VERSION=''
 
 # please read the note above
-ENV STORYBLOK_RESOLVE_RELATIONS=Page.template
-ENV STORYBLOK_RESOLVE_LINKS=''
-ENV STORYBLOK_RESOLVE_ASSETS=''
-ENV STORYBLOK_CONTENT_TYPES=Page
-ENV STORYBLOK_EXCLUDE_ROUTES=^\/[a-z]{2}\/home$
-ENV STORYBLOK_REGIONS=global
-ENV STORYBLOK_DEFAULT_REGION=global
+ENV STORYBLOK_RESOLVE_RELATIONS="${STORYBLOK_RESOLVE_RELATIONS}"
+ENV STORYBLOK_RESOLVE_LINKS="${STORYBLOK_RESOLVE_LINKS}"
+ENV STORYBLOK_RESOLVE_ASSETS="${STORYBLOK_RESOLVE_ASSETS}"
+ENV STORYBLOK_CONTENT_TYPES="${STORYBLOK_CONTENT_TYPES}"
+ENV STORYBLOK_EXCLUDE_ROUTES="${STORYBLOK_EXCLUDE_ROUTES}"
 
 ENV CI_COMMIT_SHORT_SHA="${CI_COMMIT_SHORT_SHA}"
 ENV CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}"
@@ -119,6 +126,7 @@ COPY --from=frontend-build /src/.env ./
 COPY --from=frontend-build /src/.nuxt .nuxt/
 COPY --from=frontend-build /src/node_modules/ ./node_modules/
 COPY --from=frontend-build /src/static ./static/
+COPY --from=frontend-build /src/resolver ./resolver/
 
 EXPOSE 3000
 
