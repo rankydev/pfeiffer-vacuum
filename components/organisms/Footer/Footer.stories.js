@@ -12,7 +12,7 @@ const argTypes = {
   },
   newsletter: {
     defaultValue: footerContent.newsletter,
-    control: { type: 'object' },
+    control: { type: 'array' },
   },
   copyright: {
     defaultValue: footerContent.copyright,
