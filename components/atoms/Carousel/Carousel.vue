@@ -1,11 +1,5 @@
 <template>
   <div v-editable="slides" class="carousel">
-    <span>
-      {{ 'isFirst: ' + isFirstSlide }}
-    </span>
-    <span>
-      {{ 'isLast: ' + isLastSlide }}
-    </span>
     <ContentWrapper v-bind="contentWrapperProps">
       <VueSlickCarousel
         v-if="slides.length"
