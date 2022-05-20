@@ -1,5 +1,5 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import { carouselEntries, mockContent } from './Carousel.stories.content'
+import { carouselEntries } from './Carousel.stories.content'
 import Button from '~/components/atoms/Button/Button'
 import Carousel from './Carousel'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'

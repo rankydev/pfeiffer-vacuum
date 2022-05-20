@@ -1,5 +1,5 @@
-import HomeStageModule from '~/components/organisms/HomeStageModule/HomeStageModule.vue'
-import HomeStageModuleContent from '~/components/organisms/HomeStageModule/HomeStageModule.stories.content'
+import HomeStageModule from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.vue'
+import HomeStageModuleContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.stories.content'
 
 const argTypes = {
   stageContent: {
