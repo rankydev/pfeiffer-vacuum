@@ -9,28 +9,31 @@ export default async function (context) {
   }
 
   const path = withoutLeadingSlash(withoutTrailingSlash(context.route.path))
-  const defaultRegion = process.env.STORYBLOK_DEFAULT_REGION
-  const regions = process.env.STORYBLOK_REGIONS.split(',')
-  const defaultLanguage = process.env.DEFAULT_LANGUAGE_CODE
-  const languages = process.env.LANGUAGE_CODES.split(',')
+
+  const {
+    REGION_CODES,
+    DEFAULT_REGION_CODE,
+    DEFAULT_LANGUAGE_CODE,
+    LANGUAGE_CODES,
+  } = context.$config
 
   logger.trace('path', path)
 
   const urlsSegments = path.split('/')
-  let region = urlsSegments.shift()
-  let language = urlsSegments.shift()
+  let region = urlsSegments.shift() || undefined
+  let language = urlsSegments.shift() || undefined
 
   // if the requested url contains a language code, then do nothing
-  if (languages.includes(language) && regions.includes(region)) {
+  if (LANGUAGE_CODES.includes(language) && REGION_CODES.includes(region)) {
     logger.trace('CONTINUE: url contains correct parameters')
     return
   }
 
-  if (!regions.includes(region)) {
-    region = defaultRegion
+  if (!REGION_CODES.includes(region)) {
+    region = DEFAULT_REGION_CODE
   }
 
-  if (!languages.includes(language)) {
+  if (!LANGUAGE_CODES.includes(language)) {
     const acceptLanguage = context.req.headers['accept-language']
       .split(',')[0]
       .toLocaleLowerCase()
@@ -38,9 +41,9 @@ export default async function (context) {
 
     logger.trace('acceptLanguage', acceptLanguage)
 
-    language = languages.includes(acceptLanguage)
+    language = LANGUAGE_CODES.includes(acceptLanguage)
       ? acceptLanguage
-      : defaultLanguage
+      : DEFAULT_LANGUAGE_CODE
   }
 
   const redirectUrl = `/${region}/${language}`

@@ -5,12 +5,10 @@ describe('useInternationalizationUrlBuilder', () => {
     return {
       root: {
         $config: {
-          languages: ['de', 'ko', 'zh', 'en'],
-        },
-        $cms: {
-          regions: 'global,germany,china,korea',
-          defaultRegion: 'global',
-          defaultLanguageCode: 'en',
+          LANGUAGE_CODES: ['de', 'ko', 'zh', 'en'],
+          REGION_CODES: 'global,germany,china,korea',
+          DEFAULT_REGION_CODE: 'global',
+          DEFAULT_LANGUAGE_CODE: 'en',
         },
       },
     }
