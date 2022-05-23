@@ -33,6 +33,7 @@ export default defineComponent({
 <style lang="scss">
 .quicklink {
   @apply tw-font-bold;
+  @apply tw-text-pv-grey-16;
   @apply hover:tw-text-pv-red-lighter;
 }
 </style>

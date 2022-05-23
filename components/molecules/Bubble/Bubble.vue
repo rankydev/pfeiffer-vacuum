@@ -75,6 +75,8 @@ $bubble-text-xxs: 10px;
     @apply tw-bg-pv-red;
     @apply tw-px-1;
     @apply tw-text-pv-white;
+    @apply tw-transition-all;
+    @apply tw-duration-500;
     height: $bubble-height-xs;
     width: $bubble-width-xs;
 
@@ -125,6 +127,9 @@ $bubble-text-xxs: 10px;
   &__headline {
     @apply tw-text-pv-white;
     @apply tw-leading-4;
+    @apply tw-transition;
+    @apply tw-ease-in;
+    @apply tw-duration-700;
     font-size: $bubble-text-xxs;
 
     @screen md {
