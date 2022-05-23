@@ -99,6 +99,9 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .content-carousel {
+  @apply tw-bg-pv-grey-96;
+  @apply tw-py-12;
+
   &__content {
     @apply tw-mx-auto;
     @apply tw-container;

@@ -51,6 +51,7 @@ export default {
       fade: true,
       slidesToShow: 1,
       slidesToScroll: 1,
+      initialSlide: -1,
       responsive: [
         {
           breakpoint: 1280,
