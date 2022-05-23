@@ -6,5 +6,8 @@ export const useProductStore = defineStore('product', {
       return (productId) =>
         state.products.find((product) => product.id === productId)
     },
+    getAllProducts: (state) => {
+      return state.products
+    },
   },
 })
