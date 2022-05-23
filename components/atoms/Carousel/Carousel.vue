@@ -195,11 +195,11 @@ export default defineComponent({
       adaptiveHeight: true,
       arrows: true,
       edgeFriction: 0.35,
-      initialSlide: 0,
       pauseOnFocus: true,
       speed: 300,
       slidesToShow: slidesToShow.value,
       slidesToScroll: 1,
+      initialSlide: isBreakout.value ? 0 : -1,
       responsive: [
         {
           breakpoint: tailwindConfigScreens.lg,
