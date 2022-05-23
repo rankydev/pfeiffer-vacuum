@@ -7,7 +7,7 @@
       :aspect-ratio="aspectRatio"
     />
     <div v-if="image.copyright" class="image-with-description__copyright">
-      <span>{{ `@copyright: ${image.copyright}` }}</span>
+      <span>{{ image.copyright }}</span>
     </div>
     <template v-if="description">
       <NuxtDynamic
