@@ -4,7 +4,7 @@
     <template #image>
       <ResponsiveImage
         provider="storyblok"
-        :image="product.images[0]"
+        :image="product.images[0].url"
         :aspect-ratio="'2:1'"
       />
     </template>
