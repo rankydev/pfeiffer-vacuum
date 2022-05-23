@@ -37,21 +37,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const imageSize = 'contain'
-
-    const imageUrl = (images) => {
-      if (images) {
-        const isPrimaryImage = (img) => img.imageType === 'PRIMARY'
-        const isProductImage = (img) => img.format === 'product'
-        const findImage = (img) => isPrimaryImage(img) && isProductImage(img)
-
-        const { url } = images.find(findImage) || {}
-        if (url) {
-          return this.getShopMedia(url)
-        }
-        return this.getAssetImage(this.$t('product.placeholderImage'))
-      }
-    }
+    const store = useProductStore()
 
     const product = {
       categories: [
@@ -99,7 +85,7 @@ export default defineComponent({
       url: '/Pumps/Turbopumps/HiPace%C2%AE-80/HiPace%C2%AE-80/p/128ee16d-cb90-45be-9986-c8006a5235e6_sample',
     }
 
-    return { product }
+    return { product, getUserById: store.getUserById }
   },
 })
 </script>
