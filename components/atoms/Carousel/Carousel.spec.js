@@ -1,5 +1,5 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils'
-import { carouselEntries } from './Carousel.stories.content'
+import { createLocalVue, shallowMount, mount } from '@vue/test-utils'
+import { carouselEntries, mockContent } from './Carousel.stories.content'
 import Button from '~/components/atoms/Button/Button'
 import Carousel from './Carousel'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
@@ -20,13 +20,14 @@ const nuxtDynamicStub = {
   template: '<div />',
 }
 
-function createComponent(propsData = {}) {
+function createComponent(propsData = {}, shallow = true, noStub = false) {
   const stubs = {
-    Button: true,
+    Button: !noStub,
+    VueSlickCarousel: noStub ? false : slickSliderStub,
     Template: true,
-    VueSlickCarousel: slickSliderStub,
     NuxtDynamic: nuxtDynamicStub,
   }
+
   const localVue = createLocalVue()
   const editable = (el, key) => (el.innerText = key.value)
   localVue.directive('editable', editable)
@@ -37,7 +38,7 @@ function createComponent(propsData = {}) {
     propsData,
   }
 
-  wrapper = shallowMount(Carousel, options)
+  wrapper = shallow ? shallowMount(Carousel, options) : mount(Carousel, options)
 }
 
 describe('Carousel', () => {
@@ -83,15 +84,23 @@ describe('Carousel', () => {
     })
 
     describe('buttons', () => {
-      /*test('should render next and no prev button given enough entries', () => {
-        createComponent({ slides: carouselEntries })
+      test('should render next and no prev button given enough entries', async () => {
+        createComponent(
+          { slides: carouselEntries, settings: { initialSlide: 0 } },
+          false,
+          true
+        )
+
+        await wrapper.vm.$nextTick()
+        await wrapper.vm.$nextTick()
+        await wrapper.vm.$nextTick()
 
         const prev = wrapper.find('.slider__prev--hide')
         const next = wrapper.find('.slider__next--hide')
 
         expect(prev.exists()).toBeTruthy()
         expect(next.exists()).toBeFalsy()
-      })*/
+      })
 
       test('should render both buttons given prop infinite true', () => {
         createComponent({ slides: carouselEntries, infinite: true })
@@ -146,11 +155,16 @@ describe('Carousel', () => {
     })
   })
 
-  /*describe('during interaction', () => {
+  describe('during interaction', () => {
     test('should show both buttons given an active slide unequal to first or last one', async () => {
-      createComponent({ slides: carouselEntries })
+      createComponent(
+        { slides: carouselEntries, settings: { initialSlide: 0 } },
+        false,
+        true
+      )
 
-      console.log(wrapper.html())
+      await wrapper.vm.$nextTick()
+      await wrapper.vm.$nextTick()
 
       const prev = wrapper.find('.slider__prev--hide')
       const next = wrapper.find('.slider__next--hide')
@@ -162,25 +176,30 @@ describe('Carousel', () => {
       await nextBtn.trigger('click')
       await wrapper.vm.$nextTick()
 
-      const newPrev = wrapper.find('.slider__prev--show')
-      const newNext = wrapper.find('.slider__next--show')
-      expect(newPrev.exists()).toBeTruthy()
-      expect(newPrev.exists()).toBeTruthy()
-      expect(newNext.exists()).toBeTruthy()
+      const newPrev = wrapper.find('.slider__prev--hide')
+      const newNext = wrapper.find('.slider__next--hide')
+      expect(newPrev.exists()).toBeFalsy()
+      expect(newNext.exists()).toBeFalsy()
     })
 
     test('should hide next button given last slide as active', async () => {
-      createComponent({
-        slides: carouselEntries,
-        settings: {
-          initialSlide: carouselEntries.length - 1,
+      createComponent(
+        {
+          slides: carouselEntries,
+          settings: {
+            initialSlide: carouselEntries.length - 1,
+          },
         },
-      })
+        false,
+        true
+      )
 
-      console.log(wrapper.html())
+      await wrapper.vm.$nextTick()
+      await wrapper.vm.$nextTick()
+
       const next = wrapper.find('.slider__next--hide')
 
       expect(next.exists()).toBeTruthy()
     })
-  })*/
+  })
 })
