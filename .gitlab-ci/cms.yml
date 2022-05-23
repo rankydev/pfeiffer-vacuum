@@ -24,7 +24,7 @@ cms-sync-dev-develop:
   needs: [ "deploy-dev-manually-develop" ]
 
 cms-sync-dev:
-  extends: .cms-migrate
+  extends: .cms-sync
   needs: [ "deploy-dev-manually" ]
   environment:
     name: dev2
