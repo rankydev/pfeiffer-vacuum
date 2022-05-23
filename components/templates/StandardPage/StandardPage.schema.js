@@ -27,6 +27,7 @@ export default {
         'ImageWithSource',
         'TeaserCard',
         'VideoPlayer',
+        'Carousel',
       ],
     },
     ...Seo,

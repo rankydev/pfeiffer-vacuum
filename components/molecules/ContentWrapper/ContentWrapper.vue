@@ -1,5 +1,5 @@
 <template>
-  <div class="content-wrapper">
+  <div :class="classList">
     <slot />
   </div>
 </template>
@@ -7,7 +7,29 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
-export default defineComponent({})
+export default defineComponent({
+  props: {
+    breakout: {
+      type: Boolean,
+      default: false,
+    },
+    noPadding: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props) {
+    const classList = {
+      'content-wrapper': !props.breakout,
+      'content-wrapper--breakout': props.breakout,
+      'content-wrapper--no-padding': props.noPadding,
+    }
+
+    return {
+      classList,
+    }
+  },
+})
 </script>
 
 <style lang="scss">
@@ -22,6 +44,17 @@ export default defineComponent({})
 
   @screen lg {
     @apply tw-px-8;
+  }
+
+  &--no-padding {
+    @apply tw-p-0;
+  }
+
+  &--breakout {
+    @apply tw-relative;
+    @apply tw-w-screen;
+    @apply tw-left-2/4;
+    margin-left: -50vw;
   }
 }
 </style>

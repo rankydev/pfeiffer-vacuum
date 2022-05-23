@@ -8,7 +8,7 @@ export default {
       description: {
         component:
           'The ContentWrapper can be used to display given slot content. <br> ' +
-          'Currently it handles max-width only, but if needed it should handle grid breakouts/fluid via a prop too.',
+          'It has a max-width set to 1440px. You can break out of the parent container to use full screen size with the breakout attribute.',
       },
       source: {
         code:
