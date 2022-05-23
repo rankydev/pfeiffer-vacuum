@@ -7,6 +7,7 @@ export default {
       display_name: 'Slides',
       restrict_components: true,
       component_whitelist: ['TeaserCard'],
+      maximum: 16,
       required: true,
     },
     isWide: {
@@ -28,7 +29,7 @@ export default {
     },
     infinite: {
       type: 'boolean',
-      display_name: 'Inifinite',
+      display_name: 'Infinite',
       description: 'Enables infinite wrap around slides on carousel.',
     },
   },
