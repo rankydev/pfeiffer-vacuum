@@ -1,11 +1,7 @@
 <template>
   <GenericCard :image-size="'contain'">
     <template #image>
-      <img
-        class="productCard__image"
-        :src="product.images[0].url"
-        :alt="product.images[0].altText"
-      />
+      <img :src="product.images[0].url" :alt="product.images[0].altText" />
     </template>
     <template #subheading>
       {{ product.categories[0].name }}
@@ -24,6 +20,8 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import { useProductStore } from '@/stores/products/products'
+import { createPinia } from 'pinia'
 
 export default defineComponent({
   components: {},
@@ -37,7 +35,9 @@ export default defineComponent({
     },
   },
   setup() {
-    const store = useProductStore()
+    const pinia = createPinia()
+    // app.use(pinia)
+    // const store = useProductStore()
 
     const product = {
       categories: [
@@ -85,7 +85,8 @@ export default defineComponent({
       url: '/Pumps/Turbopumps/HiPace%C2%AE-80/HiPace%C2%AE-80/p/128ee16d-cb90-45be-9986-c8006a5235e6_sample',
     }
 
-    return { product, getUserById: store.getUserById }
+    // getProductById: store.getProductById
+    return { product }
   },
 })
 </script>
