@@ -1,7 +1,7 @@
 <template>
   <div v-editable="(headline, richtext, buttons)">
     <div>Test</div>
-    <h2 v-if="headline">
+    <h2 v-if="headline" class="newsletter__headline">
       {{ headline }}
     </h2>
 
@@ -9,7 +9,7 @@
       v-for="item in richtext"
       :key="item._uid"
       v-bind="item"
-      :component="item.uiComponent || item.component"
+      :name="item.uiComponent || item.component"
     />
 
     <div v-if="buttons.length">
@@ -57,4 +57,12 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.newsletter {
+  &__headline {
+    @apply tw-text-pv-white;
+    @apply tw-text-base;
+    @apply tw-leading-6;
+  }
+}
+</style>
