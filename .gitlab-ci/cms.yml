@@ -1,57 +1,55 @@
-.cms-migrate:
+.cms-sync:
   extends: .node-image
-  stage: cms-migration
-  before_script:
-    - # cp ./cms/storyblok.${CI_ENVIRONMENT_NAME}.env ./cms/storyblok.env
-      echo "Laeuft davor..."
+  stage: cms-sync
+  cache:
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: pull
   script:
-    - # npm run cms:migrate-components
-      echo "Laeuft 1"
-    - # npm run cms:migrate-content
-      echo "Laeuft 2"
-  environment:
-    name: dev
-    url: https://${CI_ENVIRONMENT_NAME}-vacuum.westeurope.cloudapp.azure.com
+    - npm run cms:sync:ci --space "${STORYBLOK_SPACE_ID}" --token "${STORYBLOK_OAUTH_TOKEN}"
 
-cms-migrate-dev-automatically-develop:
-  extends: .cms-migrate
+cms-sync-dev-automatically-develop:
+  extends: .cms-sync
   needs: [ "deploy-dev-automatically" ]
   environment:
     name: dev2
   only:
     - develop
 
-cms-migrate-dev-develop:
-  extends: cms-migrate-dev-automatically-develop
+cms-sync-dev-develop:
+  extends: cms-sync-dev-automatically-develop
   needs: [ "deploy-dev-manually-develop" ]
 
-cms-migrate-dev:
-  extends: .cms-migrate
+cms-sync-dev:
+  extends: .cms-sync
   needs: [ "deploy-dev-manually" ]
   environment:
     name: dev2
   except:
     - develop
 
-cms-migrate-uat-automatically:
-  extends: .cms-migrate
+cms-sync-uat-automatically:
+  extends: .cms-sync
   needs: [ "deploy-uat-automatically" ]
   environment:
-    name: uat
+    name: uat2
   only:
     - main
 
-cms-migrate-uat:
-  extends: .cms-migrate
+cms-sync-uat:
+  extends: .cms-sync
   needs: [ "deploy-uat-manually" ]
   environment:
-    name: uat
+    name: uat2
   only:
     - tags
     - main
 
-cms-migrate-production:
-  extends: .cms-migrate
+cms-sync-production:
+  extends: .cms-sync
   needs: [ "deploy-prd-manually" ]
   environment:
     name: prd
