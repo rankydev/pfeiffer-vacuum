@@ -15,7 +15,7 @@ export default {
     docs: {
       description: {
         component:
-          'The icon component which handles all material icons. For a full searchable icon list please go to: https://fonts.google.com/icons?selected=Material+Buttons',
+          'The button component which can be used to add buttons or signal an opportunity for a user to interact',
       },
     },
   },
@@ -70,11 +70,11 @@ const OverviewTemplate = (args) => ({
     <div style="display: flex;">
       <div
         v-for="(col, index) in buttonVariants"
-        :key="index" 
+        :key="index"
         :style="col[0].variant === 'inverted' && 'background-color: #000;'"
       >
         <template  v-for="(ele, idx) in col">
-          <Button 
+          <Button
             :key="'button-' + index"
             v-bind="ele"
             style="margin:10px;"

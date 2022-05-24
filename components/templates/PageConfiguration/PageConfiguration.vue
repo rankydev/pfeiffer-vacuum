@@ -6,7 +6,7 @@
         :key="item._uid"
         v-editable="item"
         v-bind="item"
-        :component="item.uiComponent || item.component"
+        :name="item.uiComponent || item.component"
       />
 
       <NuxtDynamic
@@ -14,7 +14,7 @@
         :key="item._uid"
         v-editable="item"
         v-bind="item"
-        :component="item.uiComponent || item.component"
+        :name="item.uiComponent || item.component"
       />
     </slot>
 
@@ -25,14 +25,14 @@
           :key="item._uid"
           v-editable="item"
           v-bind="item"
-          :component="item.uiComponent || item.component"
+          :name="item.uiComponent || item.component"
         />
         <NuxtDynamic
           v-for="item in body"
           :key="item._uid"
           v-editable="item"
           v-bind="item"
-          :component="item.uiComponent || item.component"
+          :name="item.uiComponent || item.component"
         />
       </main>
     </slot>
@@ -43,7 +43,7 @@
         :key="item._uid"
         v-editable="item"
         v-bind="item"
-        :component="item.uiComponent || item.component"
+        :name="item.uiComponent || item.component"
       />
 
       <NuxtDynamic
@@ -51,7 +51,7 @@
         :key="item._uid"
         v-editable="item"
         v-bind="item"
-        :component="item.uiComponent || item.component"
+        :name="item.uiComponent || item.component"
       />
     </slot>
   </div>

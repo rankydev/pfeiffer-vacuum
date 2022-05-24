@@ -11,7 +11,7 @@
           :key="item._uid"
           class="content-media-block__button"
           v-bind="item"
-          :component="item.uiComponent || item.component"
+          :name="item.uiComponent || item.component"
         />
       </div>
     </div>
@@ -22,7 +22,7 @@
       class="content-media-block__media"
       :class="mediaClass"
       v-bind="item"
-      :component="item.uiComponent || item.component"
+      :name="item.uiComponent || item.component"
     />
   </div>
 </template>

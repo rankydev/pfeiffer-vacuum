@@ -11,7 +11,7 @@
         :key="item._uid"
         v-bind="item"
         class="cta-box__description"
-        :component="item.uiComponent || item.component"
+        :name="item.uiComponent || item.component"
       />
       <div class="cta-box__button-wrapper">
         <NuxtDynamic
@@ -19,7 +19,7 @@
           :key="item._uid"
           class="cta-box__button"
           v-bind="item"
-          :component="item.uiComponent || item.component"
+          :name="item.uiComponent || item.component"
         />
       </div>
     </div>
@@ -99,6 +99,16 @@ export default defineComponent({
   &__description {
     @apply tw-mt-4;
     @apply tw-text-pv-white;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span {
+      @apply tw-text-pv-white;
+    }
   }
 }
 </style>

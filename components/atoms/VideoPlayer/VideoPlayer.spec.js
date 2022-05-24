@@ -40,7 +40,7 @@ describe('VideoPlayer', () => {
       expect(elements.length).toBe(description.length)
 
       description.forEach((ele, idx) => {
-        expect(elements.at(idx).attributes('component')).toBe(
+        expect(elements.at(idx).attributes('name')).toBe(
           ele.uiComponent || ele.component
         )
       })
