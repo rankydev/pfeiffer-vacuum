@@ -19,7 +19,8 @@
     "lsg": "nuxt storybook -s .storybook/static",
     "lsg:build": "nuxt storybook build -s .storybook/static --output-dir ./lsg-public",
     "test": "jest",
-    "cms:sync": "env-cmd node -r esm ./bin/nuxt-storyblok.js sync"
+    "cms:sync": "env-cmd node -r esm ./bin/nuxt-storyblok.js sync",
+    "cms:sync:ci": "node -r esm ./bin/nuxt-storyblok.js sync"
   },
   "dependencies": {
     "@jest/globals": "^27.5.1",
