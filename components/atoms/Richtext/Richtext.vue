@@ -141,7 +141,7 @@ export default defineComponent({
       &::marker {
         // Safari needs explicit opacity declaration in order to load color of marker correctly
         @apply tw-text-pv-red/100;
-        @apply tw-text-xl;
+        @apply tw-text-lg;
       }
     }
   }

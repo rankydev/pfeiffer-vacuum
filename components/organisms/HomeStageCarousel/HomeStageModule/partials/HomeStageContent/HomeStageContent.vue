@@ -106,7 +106,7 @@ $stage-content-max-width: 800px;
     }
 
     @screen lg {
-      @apply tw-text-xl;
+      @apply tw-text-lg;
       @apply tw-leading-7;
     }
   }
