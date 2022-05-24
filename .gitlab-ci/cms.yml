@@ -9,7 +9,7 @@
         - node_modules/
       policy: pull
   script:
-    - npm run cms:sync --space "${STORYBLOK_SPACE_ID}" --token "${STORYBLOK_OAUTH_TOKEN}"
+    - npm run cms:sync:ci --space "${STORYBLOK_SPACE_ID}" --token "${STORYBLOK_OAUTH_TOKEN}"
 
 cms-sync-dev-automatically-develop:
   extends: .cms-sync
