@@ -5,8 +5,8 @@
     <NuxtDynamic
       v-for="item in richtext"
       :key="item._uid"
-      v-bind="item"
       class="bubble__richtext"
+      v-bind="item"
       :name="item.uiComponent || item.component"
     />
   </div>
