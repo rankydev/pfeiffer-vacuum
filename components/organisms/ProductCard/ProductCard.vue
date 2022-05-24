@@ -20,8 +20,7 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { useProductStore } from '@/stores/products/products'
-import { createPinia } from 'pinia'
+import { useProductStore } from '~/stores/products/products.js'
 
 export default defineComponent({
   components: {},
@@ -34,10 +33,8 @@ export default defineComponent({
       default: '',
     },
   },
-  setup() {
-    const pinia = createPinia()
-    // app.use(pinia)
-    // const store = useProductStore()
+  setup(props) {
+    const productStore = useProductStore
 
     const product = {
       categories: [
@@ -84,8 +81,6 @@ export default defineComponent({
       summary: '',
       url: '/Pumps/Turbopumps/HiPace%C2%AE-80/HiPace%C2%AE-80/p/128ee16d-cb90-45be-9986-c8006a5235e6_sample',
     }
-
-    // getProductById: store.getProductById
     return { product }
   },
 })

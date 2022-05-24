@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia/dist/pinia.mjs'
+import { defineStore } from 'pinia'
 
 export const useProductStore = defineStore('product', {
   getters: {
