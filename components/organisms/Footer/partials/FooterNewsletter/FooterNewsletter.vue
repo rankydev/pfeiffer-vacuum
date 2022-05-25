@@ -1,6 +1,5 @@
 <template>
-  <div v-editable="(headline, richtext, buttons)">
-    <div>Test</div>
+  <div v-editable="(headline, richtext, buttons)" class="newsletter">
     <h2 v-if="headline" class="newsletter__headline">
       {{ headline }}
     </h2>
@@ -59,6 +58,9 @@ export default defineComponent({
 
 <style lang="scss">
 .newsletter {
+  @apply tw-grid tw-gap-4;
+  @apply tw-col-span-full;
+
   &__headline {
     @apply tw-text-pv-white;
     @apply tw-text-base;
