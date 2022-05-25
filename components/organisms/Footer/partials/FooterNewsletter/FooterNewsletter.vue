@@ -46,7 +46,7 @@ export default defineComponent({
       default: () => [],
     },
     /**
-     * This is a button
+     * This is the link section
      */
     links: {
       type: Array,
