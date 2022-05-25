@@ -118,7 +118,7 @@ describe('Carousel', () => {
         createComponent({
           slides: carouselEntries,
           autoplay: true,
-          autoplaySpeed: '4000',
+          autoplaySpeed: '4',
           infinite: true,
         })
 
