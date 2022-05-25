@@ -1,7 +1,11 @@
 <template>
   <GenericCard :image-size="'contain'">
     <template #image>
-      <img :src="product.images[0].url" :alt="product.images[0].altText" />
+      <ResponsiveImage
+        v-if="(image || {}).originalFilename"
+        :image="image"
+        aspect-ratio="16:9"
+      />
     </template>
     <template #subheading>
       {{ product.categories[0].name }}
@@ -30,11 +34,15 @@ export default defineComponent({
      */
     productID: {
       type: String,
-      default: '',
+      default: '128ee16d-cb90-45be-9986-c8006a5235e6_sample',
     },
   },
   setup(props) {
     const productStore = useProductStore
+    console.log('test')
+    console.log(productStore)
+
+    // const p = productStore.getProductById(props.productID)
 
     const product = {
       categories: [
@@ -81,7 +89,26 @@ export default defineComponent({
       summary: '',
       url: '/Pumps/Turbopumps/HiPace%C2%AE-80/HiPace%C2%AE-80/p/128ee16d-cb90-45be-9986-c8006a5235e6_sample',
     }
-    return { product }
+
+    const image = {
+      alt: product.images[0].altText,
+      copyright: '',
+      fieldtype: 'asset',
+      filename: product.images[0].url,
+      filenamePreload: product.images[0].url,
+      filenameWebp: product.images[0].url,
+      focus: null,
+      id: 4192972,
+      name: '',
+      originalFilename:
+        'https://a.storyblok.com/f/152324/1250x846/e9830940f5/matterhorn.jpg',
+      originalResolution: {
+        height: 846,
+        width: 1250,
+      },
+    }
+
+    return { product, image }
   },
 })
 </script>
