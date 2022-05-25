@@ -9,6 +9,7 @@
       :key="item._uid"
       v-bind="item"
       :name="item.uiComponent || item.component"
+      class="newsletter__description"
     />
 
     <div v-if="buttons.length">
@@ -58,13 +59,33 @@ export default defineComponent({
 
 <style lang="scss">
 .newsletter {
-  @apply tw-grid tw-gap-4;
   @apply tw-col-span-full;
+
+  @screen lg {
+    @apply tw-col-span-4;
+  }
 
   &__headline {
     @apply tw-text-pv-white;
+    @apply tw-pb-2;
     @apply tw-text-base;
     @apply tw-leading-6;
+
+    @screen lg {
+      @apply tw-text-xl;
+      @apply tw-leading-7;
+      @apply tw-pb-4;
+    }
+  }
+
+  &__description {
+    @apply tw-pb-2;
+    @apply tw-text-sm;
+
+    @screen lg {
+      @apply tw-text-base;
+      @apply tw-pb-4;
+    }
   }
 }
 </style>
