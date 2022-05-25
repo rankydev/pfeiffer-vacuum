@@ -135,10 +135,15 @@ body {
 }
 
 .tw-hero {
-  font-size: 3rem;
-  line-height: 3.5rem;
+  font-size: 1.75rem;
+  line-height: 2.25rem;
   font-weight: bold;
   color: #292929;
+
+  @screen md {
+    font-size: 3rem;
+    line-height: 3.5rem;
+  }
 
   @screen lg {
     font-size: 3.5rem;
