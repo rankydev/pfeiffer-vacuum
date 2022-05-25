@@ -5,6 +5,7 @@ export default {
     label: {
       type: 'text',
       max_length: '56',
+      translatable: true,
     },
     icon: {
       type: 'text',

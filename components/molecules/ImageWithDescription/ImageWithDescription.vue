@@ -6,6 +6,9 @@
       :image="image"
       :aspect-ratio="aspectRatio"
     />
+    <div v-if="image.copyright" class="image-with-description__copyright">
+      <span>{{ image.copyright }}</span>
+    </div>
     <template v-if="description">
       <NuxtDynamic
         v-for="item in description"
@@ -49,8 +52,28 @@ export default defineComponent({
       type: String,
       default: '1:1',
       validator: (val) =>
-        ['1:1', '16:9', '2:3', '3:2', '3:1', '2:1'].includes(val),
+        ['1:1', '16:9', '2:3', '2:1', '3:2', '3:1'].includes(val),
     },
   },
 })
 </script>
+<style lang="scss">
+.image-with-description {
+  &__copyright {
+    @apply tw-text-pv-grey-48;
+    @apply tw-mt-2;
+    @apply tw-text-xs;
+    @apply tw-leading-4;
+  }
+
+  &__component {
+    @apply tw-text-pv-grey-48;
+    @apply tw-mt-2;
+
+    p {
+      @apply tw-text-xs;
+      @apply tw-leading-4;
+    }
+  }
+}
+</style>

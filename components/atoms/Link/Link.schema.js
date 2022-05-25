@@ -8,7 +8,7 @@ export default {
       restrict_content_types: true,
       required: true,
       translatable: true,
-      component_whitelist: ['Page'],
+      component_whitelist: ['Page', 'ProductContentPage', 'StandardPage'],
     },
     target: {
       type: 'option',
