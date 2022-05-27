@@ -17,9 +17,10 @@ export default {
     },
     buttons: {
       type: 'bloks',
+      maximum: 1,
       restrict_components: true,
       component_whitelist: ['Button'],
-      display_name: 'Buttons',
+      display_name: 'Button',
     },
     links: {
       type: 'bloks',
