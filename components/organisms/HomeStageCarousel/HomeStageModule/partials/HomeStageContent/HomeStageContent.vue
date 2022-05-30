@@ -4,9 +4,13 @@
       {{ headline }}
     </h2>
 
-    <p v-if="teaserText" class="homestage-content__description tw-teaser">
-      {{ teaserText }}
-    </p>
+    <NuxtDynamic
+      v-for="item in richtext"
+      :key="item._uid"
+      class="homestage-content__description tw-teaser"
+      v-bind="item"
+      :name="item.uiComponent || item.component"
+    />
 
     <div v-if="buttons.length" class="homestage-content__buttons">
       <Button v-for="button in buttons" :key="button._uid" v-bind="button" />
@@ -29,11 +33,11 @@ export default {
       default: '',
     },
     /**
-     * Teaster test of the stage
+     * richtext element, containing the description
      */
-    teaserText: {
-      type: String,
-      default: '',
+    richtext: {
+      type: Array,
+      default: () => [],
     },
     /**
      * Up to 2 buttons can be added optional
@@ -83,19 +87,21 @@ $stage-content-max-width: 800px;
   }
 
   &__description {
-    @apply tw-mt-2;
-    @apply tw-font-normal;
-    @apply tw-text-sm;
-    @apply tw-leading-6;
+    p {
+      @apply tw-mt-2;
+      @apply tw-font-normal;
+      @apply tw-text-sm;
+      @apply tw-leading-6;
 
-    @screen md {
-      @apply tw-mt-4;
-      @apply tw-text-base;
-    }
+      @screen md {
+        @apply tw-mt-4;
+        @apply tw-text-base;
+      }
 
-    @screen lg {
-      @apply tw-text-xl;
-      @apply tw-leading-7;
+      @screen lg {
+        @apply tw-text-xl;
+        @apply tw-leading-7;
+      }
     }
   }
 
