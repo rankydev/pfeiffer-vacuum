@@ -20,7 +20,7 @@
       />
       <source :srcset="buildSrcset(image, defaultSize)" />
       <NuxtImg
-        :src="image.originalFilename"
+        :src="image.originalFilename || image.url"
         :modifiers="{
           filters: { focal: image.focus, grayscale: grayscaleVal },
         }"
@@ -105,6 +105,13 @@ export default defineComponent({
     const configScreensArr = Object.entries(tailwindConfigScreens)
 
     const { $img } = useContext()
+
+    const imageObj = {
+      scr: props.image.originalFilename || props.image.url,
+      alt: props.image.alt || props.image.altText,
+      title: props.image.title || '',
+      // Alles was von unterschiedlichen Stellen kommt (title, caption, etc)
+    }
 
     /**
      * Sort array of sizes by breakpoint descending from xl to sm
@@ -191,13 +198,11 @@ export default defineComponent({
       const retinaWidth = width * 2
       const retinaHeight = height * 2
 
-      const img1x = $img(
-        image.originalFilename,
-        buildModifiers(image, size, format),
-        { provider: image.provider }
-      )
+      const img1x = $img(imageObj.src, buildModifiers(image, size, format), {
+        provider: image.provider,
+      })
       const img2x = $img(
-        image.originalFilename,
+        imageObj.src,
         buildModifiers(
           image,
           { height: retinaHeight, width: retinaWidth },
