@@ -125,7 +125,11 @@ export default defineComponent({
      * Property returns if component has image
      */
     const hasImage = computed(() => {
-      return props.image && props.image.originalFilename && defaultSize
+      return (
+        props.image &&
+        (props.image.originalFilename || props.image.url) &&
+        defaultSize
+      )
     })
 
     /**
