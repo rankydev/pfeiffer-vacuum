@@ -47,48 +47,55 @@ describe('ProductCard', () => {
       expect(wrapper.vm).toBeTruthy()
     })
 
-    it('should use the image size cover as default', () => {
+    it('should have correct productID', () => {
       const propsData = { ...defaultProps() }
       createComponent(propsData)
 
-      const imageWrapper = wrapper.find('.pv-card__image')
+      console.log(propsData)
 
-      expect(imageWrapper.attributes('class')).toMatch('pv-card__image--cover')
+      // expect(wrapper.vm).toBeTruthy()
     })
 
-    it('should use the image size contain given contain', () => {
-      const propsData = { ...defaultProps(), imageSize: 'contain' }
-      createComponent(propsData)
+    // it('should use the image size cover as default', () => {
+    //   const propsData = { ...defaultProps() }
+    //   createComponent(propsData)
 
-      const imageWrapper = wrapper.find('.pv-card__image')
+    //   const imageWrapper = wrapper.find('.pv-card__image')
 
-      expect(imageWrapper.attributes('class')).toMatch(
-        'pv-card__image--contain'
-      )
-    })
+    //   expect(imageWrapper.attributes('class')).toMatch('pv-card__image--cover')
+    // })
 
-    it('should render all content given slot content', () => {
-      const tag = '<div class="test-tag" />'
-      const image = '<div class="test-image" />'
-      const subheading = '<div class="test-subheading" />'
-      const heading = '<div class="test-heading" />'
-      const tags = '<div class="test-tags" />'
-      const description = '<div class="test-description" />'
-      const slots = { tag, image, subheading, heading, tags, description }
+    // it('should use the image size contain given contain', () => {
+    //   const propsData = { ...defaultProps(), imageSize: 'contain' }
+    //   createComponent(propsData)
 
-      const propsData = { ...defaultProps() }
-      createComponent(propsData, { shallow: false, slots })
+    //   const imageWrapper = wrapper.find('.pv-card__image')
 
-      const productCard = wrapper.findComponent(ProductCard)
+    //   expect(imageWrapper.attributes('class')).toMatch(
+    //     'pv-card__image--contain'
+    //   )
+    // })
 
-      expect(productCard.find('.test-tag')).toBeTruthy()
-      expect(productCard.find('.test-image')).toBeTruthy()
-      expect(productCard.find('.test-subheading')).toBeTruthy()
-      expect(productCard.find('.test-heading')).toBeTruthy()
-      expect(productCard.find('.test-tags')).toBeTruthy()
-      expect(productCard.find('.test-description')).toBeTruthy()
-    })
+    // it('should render all content given slot content', () => {
+    //   const tag = '<div class="test-tag" />'
+    //   const image = '<div class="test-image" />'
+    //   const subheading = '<div class="test-subheading" />'
+    //   const heading = '<div class="test-heading" />'
+    //   const tags = '<div class="test-tags" />'
+    //   const description = '<div class="test-description" />'
+    //   const slots = { tag, image, subheading, heading, tags, description }
+
+    //   const propsData = { ...defaultProps() }
+    //   createComponent(propsData, { shallow: false, slots })
+
+    //   const productCard = wrapper.findComponent(ProductCard)
+
+    //   expect(productCard.find('.test-tag')).toBeTruthy()
+    //   expect(productCard.find('.test-image')).toBeTruthy()
+    //   expect(productCard.find('.test-subheading')).toBeTruthy()
+    //   expect(productCard.find('.test-heading')).toBeTruthy()
+    //   expect(productCard.find('.test-tags')).toBeTruthy()
+    //   expect(productCard.find('.test-description')).toBeTruthy()
+    // })
   })
-
-  // describe('business requirements', () => {})
 })
