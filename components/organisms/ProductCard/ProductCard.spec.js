@@ -1,4 +1,5 @@
 import { shallowMount, createLocalVue, mount } from '@vue/test-utils'
+import Vuex from 'vuex'
 import ProductCard from './ProductCard.vue'
 import {
   imageSizes,
@@ -23,6 +24,7 @@ let wrapper
 function createComponent(propsData = {}, { shallow = true, slots = {} } = {}) {
   const stubs = {}
   const localVue = createLocalVue()
+  localVue.use(Vuex)
   const editable = (el, key) => (el.innerText = key.value)
   localVue.directive('editable', editable)
 
