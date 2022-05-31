@@ -31,7 +31,10 @@ function createComponent(propsData = {}) {
 
 describe('CustomContentCard', () => {
   describe('initial state', () => {
-    it('should render without props', () => {})
+    it('should render without props', () => {
+      createComponent()
+      expect(wrapper.exists()).toBeTruthy()
+    })
 
     it('should place href to GenericCard component given a href', () => {
       const props = { href }
