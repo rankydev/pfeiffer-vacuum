@@ -37,7 +37,7 @@ describe('Bubble', () => {
       }
       createComponent(propsData, false)
       const bubbleHeadline = wrapper.find('.bubble__headline')
-      const domRichtext = wrapper.find('[component="Richtext"]')
+      const domRichtext = wrapper.find('[name="Richtext"]')
 
       // checking default position (right)
       const bubblePosition = wrapper.find('.bubble__wrapper--right')

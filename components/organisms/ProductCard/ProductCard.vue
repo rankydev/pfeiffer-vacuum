@@ -1,5 +1,5 @@
 <template>
-  <GenericCard v-bind="{ imageSize }">
+  <GenericCard v-bind="{ imageSize }" :href="''">
     <template #tag></template>
     <template #image>
       <ResponsiveImage
@@ -11,10 +11,12 @@
     <template #subheading>
       {{ product.categories[0].name }}
     </template>
+    <!-- eslint-disable vue/no-v-html -->
     <template #heading>
       <span v-html="product.name" />
     </template>
     <template #tags></template>
+    <!-- eslint-disable vue/no-v-html -->
     <template #description>
       <p v-html="product.description" />
     </template>
