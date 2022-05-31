@@ -1,4 +1,4 @@
-import GenericCard from '~/components/atoms/GenericCard/GenericCard.vue'
+import ProductCard from '~/components/organisms/ProductCard/ProductCard.vue'
 import {
   imageSizes,
   subheading,
@@ -55,7 +55,7 @@ const argTypes = {
 
 export default {
   title: 'Organisms/ProductCard',
-  component: GenericCard,
+  component: ProductCard,
   parameters: {
     docs: {
       description: {
@@ -63,14 +63,14 @@ export default {
           'The generic card is an abstract component which can be used to define the different card components like product card or blog card.',
       },
       source: {
-        code: `<GenericCard v-bind="{ imageSize }" >
+        code: `<ProductCard v-bind="{ imageSize }" >
             <template v-slot:image />
             <template v-slot:subheading />
             <template v-slot:heading />
             <template v-slot:description />
             <template v-slot:additionalInfo />
             <template v-slot:actionItems />
-          </GenericCard>`,
+          </ProductCard>`,
       },
     },
   },
@@ -78,20 +78,20 @@ export default {
 }
 
 const Template = (args) => ({
-  components: { GenericCard },
+  components: { ProductCard },
   setup() {
     return { args }
   },
   template: `
   <div class="documentation-preview" style="width: 300px; padding: 20px; background-color: #f5f5f5;">
-    <GenericCard v-bind="args">
+    <ProductCard v-bind="args">
       <template v-if="'image' in args" v-slot:image>${args.image}</template>
       <template v-if="'subheading' in args" v-slot:subheading>${args.subheading}</template>
       <template v-if="'heading' in args" v-slot:heading>${args.heading}</template>
       <template v-if="'description' in args" v-slot:description>${args.description}</template>
       <template v-if="'additionalInfo' in args" v-slot:additionalInfo>${args.additionalInfo}</template>
       <template v-if="'actionItems' in args" v-slot:actionItems>${args.actionItems}</template>
-    </GenericCard>
+    </ProductCard>
   </div>
 `,
 })
