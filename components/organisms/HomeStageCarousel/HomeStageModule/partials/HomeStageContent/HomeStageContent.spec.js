@@ -51,7 +51,6 @@ describe('HomeStageContent', () => {
       expect(domRichtext.attributes('richtext')).toBe(
         propsData.richtext[0].richtext
       )
-      // expect(contentHeadline.text()).toBe(propsData.richtext)
     })
 
     // buttons

@@ -1,5 +1,5 @@
 <template>
-  <div v-editable="(headline, richtext, buttons)" class="homestage-content">
+  <div v-editable="(headline, buttons)" class="homestage-content">
     <h2 v-if="headline" class="homestage-content__headline tw-hero">
       {{ headline }}
     </h2>
