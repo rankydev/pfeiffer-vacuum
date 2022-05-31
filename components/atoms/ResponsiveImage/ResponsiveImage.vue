@@ -20,7 +20,7 @@
       />
       <source :srcset="buildSrcset(image, defaultSize)" />
       <NuxtImg
-        :src="image.originalFilename || image.url"
+        :src="imageObj.src"
         :modifiers="{
           filters: { focal: image.focus, grayscale: grayscaleVal },
         }"
@@ -107,10 +107,7 @@ export default defineComponent({
     const { $img } = useContext()
 
     const imageObj = {
-      scr: props.image.originalFilename || props.image.url,
-      alt: props.image.alt || props.image.altText,
-      title: props.image.title || '',
-      // Alles was von unterschiedlichen Stellen kommt (title, caption, etc)
+      src: props.image.originalFilename || props.image.url,
     }
 
     /**
@@ -170,7 +167,7 @@ export default defineComponent({
     /**
      * Builds modifiers fro image, size and format
      */
-    const buildModifiers = (image, size, format) => {
+    const buildModifiers = (image, size, format = 'png') => {
       if (size) {
         return {
           filters: {
@@ -189,7 +186,7 @@ export default defineComponent({
      * builds the Sourceset for rendering the image
      */
     const buildSrcset = (image, size, format) => {
-      if (!size) {
+      if (!size || props.provider === 'static') {
         return null
       }
 
@@ -278,6 +275,7 @@ export default defineComponent({
       grayscaleVal,
       hasImage,
       aspectRatioString,
+      imageObj,
       buildSrcset,
     }
   },

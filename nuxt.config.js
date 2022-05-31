@@ -127,5 +127,6 @@ export default {
     storyblok: {
       baseURL: 'https://img2.storyblok.com',
     },
+    domains: ['s3-alpha-sig.figma.com'],
   },
 }

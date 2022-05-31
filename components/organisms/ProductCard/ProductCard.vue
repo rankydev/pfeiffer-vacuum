@@ -2,10 +2,9 @@
   <GenericCard :image-size="'contain'" :href="''">
     <template #image>
       <ResponsiveImage
-        v-if="(image || {}).url"
         :image="image"
         aspect-ratio="16:9"
-        provider="static"
+        :provider="'static'"
       />
     </template>
     <template #subheading>
@@ -20,13 +19,18 @@
     <template #description>
       <p v-html="product.description" />
     </template>
-    <template #additionalInfo><p>Order Number</p></template>
+    <template #additionalInfo>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus ornare
+        est diam aliquet turpis enim felis bibendum net…
+      </p>
+    </template>
     <template #actionItems></template>
   </GenericCard>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/products/products.js'
 import ResponsiveImage from '@/components/atoms/ResponsiveImage/ResponsiveImage'
 
@@ -44,7 +48,6 @@ export default defineComponent({
   setup(props) {
     const store = useProductStore()
     const product = store.getProductById(props.productID)
-
     const image = product.images[0]
 
     return { product, image }
