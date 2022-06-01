@@ -1,3 +1,5 @@
+import Link from '~/components/atoms/Link/Link.schema.js'
+
 export default {
   name: 'Button',
   display_name: 'Button',
@@ -80,6 +82,7 @@ export default {
         },
       ],
     },
+    ...Link,
   },
   image: null,
   preview_field: null,

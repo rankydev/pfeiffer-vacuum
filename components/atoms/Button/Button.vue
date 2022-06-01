@@ -1,39 +1,45 @@
 <template>
-  <button
-    class="button"
-    :class="[
-      `button--${variant}`,
-      `button--${size}`,
-      `button--cutaway-${cutaway}`,
-      `button--${isPrimary ? 'filled' : shape}`,
-      {
-        'button--disabled': disabled,
-        'button--icon-only': !label,
-      },
-    ]"
-    :disabled="disabled"
-  >
-    <span v-if="label" class="button__label">{{ label }}</span>
-    <Icon
-      v-if="icon"
-      :icon="icon"
-      :size="iconSize"
-      :class="{
-        'button__icon--prepend': label && prependIcon,
-        'button__icon--append': label && !prependIcon,
-      }"
-    />
-    <!--TODO: clarify why the next line is needed-->
-    <template v-if="!icon && !label">&nbsp;&nbsp;</template>
-  </button>
+  <Link v-bind="{ href, target }">
+    <button
+      class="button"
+      :class="[
+        `button--${variant}`,
+        `button--${size}`,
+        `button--cutaway-${cutaway}`,
+        `button--${isPrimary ? 'filled' : shape}`,
+        {
+          'button--disabled': disabled,
+          'button--icon-only': !label,
+        },
+      ]"
+      :disabled="disabled"
+    >
+      <span v-if="label" class="button__label">{{ label }}</span>
+      <Icon
+        v-if="icon"
+        :icon="icon"
+        :size="iconSize"
+        :class="{
+          'button__icon--prepend': label && prependIcon,
+          'button__icon--append': label && !prependIcon,
+        }"
+      />
+      <!--TODO: clarify why the next line is needed-->
+      <template v-if="!icon && !label">&nbsp;&nbsp;</template>
+    </button>
+  </Link>
 </template>
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import Link from '~/components/atoms/Link/Link.vue'
 
 export default defineComponent({
-  components: { Icon },
+  components: {
+    Icon,
+    Link,
+  },
   props: {
     /**
      * The text displayed at the button
@@ -98,6 +104,21 @@ export default defineComponent({
       type: String,
       default: 'none',
       validator: (val) => ['none', 'left', 'right'].includes(val),
+    },
+    /**
+     * Defines button link if needed
+     */
+    href: {
+      type: String,
+      default: '',
+    },
+    /**
+     * Target can be defined for button link
+     * @values _self, _blank
+     */
+    target: {
+      type: String,
+      default: '_self',
     },
   },
   setup(props) {
