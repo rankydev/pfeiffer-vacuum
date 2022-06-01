@@ -6,6 +6,7 @@ export default {
   schema: {
     headline: {
       type: 'text',
+      display_name: 'Newsletter Headline',
       translatable: true,
     },
     richtext: {
@@ -13,20 +14,14 @@ export default {
       maximum: 1,
       restrict_components: true,
       component_whitelist: ['RichtextBasic'],
-      display_name: 'Description',
+      display_name: 'Newsletter Description',
     },
-    buttons: {
+    button: {
       type: 'bloks',
       maximum: 1,
       restrict_components: true,
       component_whitelist: ['Button'],
-      display_name: 'Button',
-    },
-    links: {
-      type: 'bloks',
-      restrict_components: true,
-      component_whitelist: ['TextLink'],
-      display_name: 'Links',
+      display_name: 'Newsletter Button',
     },
   },
   image: null,

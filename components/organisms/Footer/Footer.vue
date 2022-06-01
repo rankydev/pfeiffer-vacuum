@@ -16,13 +16,10 @@
             class="footer__menu-element"
           />
         </div>
-
         <FooterNewsletter
-          v-if="newsletter[0]"
-          :headline="newsletter[0].headline"
-          :richtext="newsletter[0].richtext"
-          :buttons="newsletter[0].buttons"
-          :links="newsletter[0].links"
+          :headline="headline"
+          :richtext="richtext"
+          :button="button"
         />
 
         <hr class="footer__ruler" />
@@ -80,18 +77,32 @@ export default defineComponent({
       default: /* istanbul ignore next */ () => [],
     },
     /**
-     * Newsletter sign up form
-     */
-    newsletter: {
-      type: Array,
-      default: /* istanbul ignore next */ () => [],
-    },
-    /**
      * Legal text and copyright
      */
     copyright: {
       type: String,
       default: null,
+    },
+    /**
+     * This is a headline
+     */
+    headline: {
+      type: String,
+      default: '',
+    },
+    /**
+     * richtext element, containing the description
+     */
+    richtext: {
+      type: Array,
+      default: () => [],
+    },
+    /**
+     * This is a button
+     */
+    button: {
+      type: Array,
+      default: () => [],
     },
   },
   setup() {

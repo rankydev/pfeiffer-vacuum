@@ -10,8 +10,19 @@ const argTypes = {
     defaultValue: footerContent.navigationColumns,
     control: { type: 'array' },
   },
-  newsletter: {
-    defaultValue: footerContent.newsletter,
+  headline: {
+    name: 'newsletterHeadline',
+    defaultValue: footerContent.headline,
+    control: { type: 'text' },
+  },
+  richtext: {
+    name: 'newsletterRichtext',
+    defaultValue: footerContent.richtext,
+    control: { type: 'array' },
+  },
+  button: {
+    name: 'newsletterButton',
+    defaultValue: footerContent.button,
     control: { type: 'array' },
   },
   copyright: {

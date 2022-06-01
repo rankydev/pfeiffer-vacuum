@@ -1,5 +1,5 @@
 <template>
-  <div v-editable="(headline, richtext, buttons)" class="newsletter">
+  <div v-editable="(headline, richtext, button)" class="newsletter">
     <h2 v-if="headline" class="newsletter__headline">
       {{ headline }}
     </h2>
@@ -11,9 +11,8 @@
       :name="item.uiComponent || item.component"
       class="newsletter__description"
     />
-
-    <div v-if="buttons.length">
-      <Button v-for="button in buttons" :key="button._uid" v-bind="button" />
+    <div v-if="button.length">
+      <Button v-for="btn in button" :key="btn._uid" v-bind="btn" />
     </div>
   </div>
 </template>
@@ -42,14 +41,7 @@ export default defineComponent({
     /**
      * This is a button
      */
-    buttons: {
-      type: Array,
-      default: () => [],
-    },
-    /**
-     * This is the link section
-     */
-    links: {
+    button: {
       type: Array,
       default: () => [],
     },
