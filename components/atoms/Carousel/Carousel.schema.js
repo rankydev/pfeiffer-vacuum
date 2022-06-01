@@ -6,7 +6,7 @@ export default {
       type: 'bloks',
       display_name: 'Slides',
       restrict_components: true,
-      component_whitelist: ['TeaserCard'],
+      component_whitelist: ['TeaserCard', 'CustomContentCard'],
       maximum: 16,
       required: true,
     },
@@ -24,8 +24,8 @@ export default {
     autoplaySpeed: {
       type: 'number',
       display_name: 'Autoplay Speed',
-      description: 'Autoplay Speed in milliseconds',
-      default_value: 5000,
+      description: 'Autoplay Speed in seconds',
+      default_value: 5,
     },
     infinite: {
       type: 'boolean',

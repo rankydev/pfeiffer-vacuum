@@ -1,6 +1,6 @@
 <template>
   <div v-editable="(headline, teaserText, buttons)" class="homestage-content">
-    <h2 v-if="headline" class="homestage-content__headline">
+    <h2 v-if="headline" class="homestage-content__headline tw-hero">
       {{ headline }}
     </h2>
 
@@ -79,19 +79,7 @@ $stage-content-max-width: 800px;
   }
 
   &__headline {
-    @apply tw-leading-9;
     @apply tw-font-bold;
-    font-size: 28px;
-
-    @screen md {
-      @apply tw-text-5xl;
-      line-height: 56px;
-    }
-
-    @screen lg {
-      font-size: 56px;
-      line-height: 64px;
-    }
   }
 
   &__description {
@@ -106,7 +94,7 @@ $stage-content-max-width: 800px;
     }
 
     @screen lg {
-      @apply tw-text-xl;
+      @apply tw-text-lg;
       @apply tw-leading-7;
     }
   }

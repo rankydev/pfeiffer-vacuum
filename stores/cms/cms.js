@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
+import { nanoid } from 'nanoid'
 import {
   useContext,
   useRoute,
   unref,
+  ssrRef,
   computed,
   useAsync,
 } from '@nuxtjs/composition-api'
@@ -15,7 +17,15 @@ export const useCmsStore = defineStore('cms', () => {
     const data = await $cms.getLinks()
     return Object.values(data || {})
   }
-  const cmsLinks = useAsync(loadCmsLinks)
+
+  /**
+   * We need to create a ssr ref here to ensure that cmsLinks will
+   * be fetched on each server request. Otherwise a cached cmsLinks
+   * response will be returned across all requests and content
+   * changes that affect the breadcrumb will not reflected immediately.
+   */
+  const cmsLinkRef = ssrRef(nanoid())
+  const cmsLinks = useAsync(loadCmsLinks, unref(cmsLinkRef))
 
   const breadcrumb = computed(() => {
     const { path } = unref(route)
