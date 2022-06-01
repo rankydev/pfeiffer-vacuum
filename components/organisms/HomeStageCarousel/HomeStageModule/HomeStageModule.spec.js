@@ -2,14 +2,14 @@ import { createLocalVue, shallowMount } from '@vue/test-utils'
 import HomeStageModule from './HomeStageModule'
 import HomeStageContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/partials/HomeStageContent/HomeStageContent'
 import Bubble from '~/components/molecules/Bubble/Bubble'
-import content from './HomeStageModule.stories.content'
+import { homeStageModuleContent } from './HomeStageModule.stories.content'
 
 const nuxtImg = {
   template: '<div>some image</div>',
   props: ['src', 'modifiers', 'title', 'alt', 'provider'],
 }
 
-const defaultProps = () => JSON.parse(JSON.stringify(content))
+const defaultProps = () => JSON.parse(JSON.stringify(homeStageModuleContent))
 
 let wrapper
 
