@@ -18,9 +18,6 @@
           v-bind="slide"
           :name="slide.uiComponent || slide.component"
         />
-        <template v-for="slide in slides">
-          {{ slide }}
-        </template>
         <template #prevArrow>
           <Button
             class="slider__prev"
@@ -156,8 +153,7 @@ export default defineComponent({
      */
     const infiniteSetting = computed(() => {
       //settings should override values
-      if (props.settings && props.settings?.infinite)
-        return props.settings?.infinite
+      if (props.settings?.infinite) return props.settings?.infinite
       if (isBreakout.value) return false
 
       return props.infinite
