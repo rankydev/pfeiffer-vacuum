@@ -2,6 +2,7 @@
   <div v-editable="slides" class="carousel">
     <ContentWrapper v-bind="contentWrapperProps">
       <VueSlickCarousel
+        v-if="slides.length"
         ref="carousel"
         v-bind="{ ...defaultSettings, ...settings }"
         :infinite="infiniteSetting"
@@ -204,7 +205,7 @@ export default defineComponent({
       speed: 300,
       slidesToShow: slidesToShow.value,
       slidesToScroll: 1,
-      initialSlide: isBreakout.value ? 0 : -1,
+      initialSlide: 0,
       responsive: [
         {
           breakpoint: tailwindConfigScreens.lg,
