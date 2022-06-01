@@ -2,7 +2,6 @@
   <div v-editable="slides" class="carousel">
     <ContentWrapper v-bind="contentWrapperProps">
       <VueSlickCarousel
-        v-if="slides.length"
         ref="carousel"
         v-bind="{ ...defaultSettings, ...settings }"
         :infinite="infiniteSetting"
@@ -18,6 +17,9 @@
           v-bind="slide"
           :name="slide.uiComponent || slide.component"
         />
+        <template v-for="slide in slides">
+          {{ slide }}
+        </template>
         <template #prevArrow>
           <Button
             class="slider__prev"
@@ -152,6 +154,9 @@ export default defineComponent({
      * otherwise set infinite based on setting
      */
     const infiniteSetting = computed(() => {
+      //settings should override values
+      if (props.settings && props.settings?.infinite)
+        return props.settings?.infinite
       if (isBreakout.value) return false
 
       return props.infinite
