@@ -1,3 +1,10 @@
+import {
+  languageCodes,
+  defaultLanguageCode,
+  locales,
+  dateTimeFormats,
+} from './i18n.config'
+
 export default {
   srcDir: '',
   ssr: true,
@@ -24,13 +31,25 @@ export default {
   ],
 
   router: {
+    base: `/${process.env.CURRENT_REGION_CODE || 'global'}/`,
+    // base: '/',
     extendRoutes(routes) {
+      // add root page to the routed object
+      routes.push({
+        name: 'Home',
+        path: '/',
+        component: '~/pages/_site/_.vue',
+      })
+
       for (const key in routes) {
         routes[key].caseSensitive = true
       }
     },
-    middleware: 'internationalizationUrlBuilder',
   },
+
+  serverMiddleware: [
+    { prefix: false, handler: '~/server/middleware/region-redirect.js' },
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -61,7 +80,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@txp-cms/storyblok', '@nuxt/image'],
+  modules: ['@txp-cms/storyblok', '@nuxt/image', '@nuxtjs/i18n'],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -78,6 +97,28 @@ export default {
     port: 4000,
   },
 
+  // internationalization configuration, see https://i18n.nuxtjs.org/options-reference
+  i18n: {
+    locales: locales,
+    defaultLocale: defaultLanguageCode,
+    strategy: 'prefix',
+    langDir: '~/i18n/',
+    /*
+        Browser language from 'nuxt-i18n' detection disabled,
+        because redirection is always processed on first request without cookie,
+        this causes problems when switching languages in storyblok.
+       */
+    // detectBrowserLanguage: false,
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18nLanguage',
+    },
+    vueI18n: {
+      fallbackLocale: defaultLanguageCode,
+      dateTimeFormats: dateTimeFormats,
+    },
+  },
+
   // SVG Sprite Configuration, see: https://github.com/nuxt-community/svg-sprite-module
   svgSprite: {
     input: '~/assets/svgSource',
@@ -88,7 +129,8 @@ export default {
   storyblok: {
     accessToken: process.env.STORYBLOK_ACCESS_TOKEN,
     version: process.env.STORYBLOK_VERSION,
-    defaultLanguage: process.env.DEFAULT_LANGUAGE_CODE,
+    defaultLanguage: defaultLanguageCode,
+    languageCodes: languageCodes.join(','),
     defaultRegion: process.env.DEFAULT_REGION_CODE,
     regions: process.env.REGION_CODES,
     resolveRelations: process.env.STORYBLOK_RESOLVE_RELATIONS,
@@ -102,10 +144,6 @@ export default {
     linksTransformer: './resolver/linksTransformer',
   },
 
-  publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL || 'https://localhost:3000',
-  },
-
   server: {
     // for local change add 'environments/local.js'
     port: process.env.PORT || 3000,
@@ -113,10 +151,14 @@ export default {
   },
 
   publicRuntimeConfig: {
-    LANGUAGE_CODES: (process.env.LANGUAGE_CODES || 'en').split(','),
+    baseURL: process.env.BASE_URL || 'https://localhost:3000',
+
+    LANGUAGE_CODES: languageCodes,
+    DEFAULT_LANGUAGE_CODE: defaultLanguageCode,
+
     REGION_CODES: (process.env.REGION_CODES || 'global').split(','),
-    DEFAULT_LANGUAGE_CODE: process.env.DEFAULT_LANGUAGE_CODE || 'en',
     DEFAULT_REGION_CODE: process.env.DEFAULT_REGION_CODE || 'global',
+    CURRENT_REGION_CODE: process.env.CURRENT_REGION_CODE || 'global',
   },
 
   env: {

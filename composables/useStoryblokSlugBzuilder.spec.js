@@ -1,6 +1,6 @@
-import useInternationalizationUrlBuilder from './useInternationalizationUrlBuilder'
+import useStoryblokSlugBuilder from './useStoryblokSlugBuilder'
 
-describe('useInternationalizationUrlBuilder', () => {
+describe('useStoryblokSlugBuilder', () => {
   function createContext() {
     return {
       root: {
@@ -15,8 +15,8 @@ describe('useInternationalizationUrlBuilder', () => {
   }
 
   test('should return expected values given /global/en', () => {
-    const { buildUrl } = useInternationalizationUrlBuilder(createContext())
-    const { slug, fallbackSlug, language } = buildUrl('/global/en')
+    const { buildSlugs } = useStoryblokSlugBuilder(createContext())
+    const { slug, fallbackSlug, language } = buildSlugs('/global/en')
 
     expect(slug).toEqual('global')
     expect(fallbackSlug).toEqual('global/,global,global/')
@@ -24,8 +24,8 @@ describe('useInternationalizationUrlBuilder', () => {
   })
 
   test('should return expected values given /germany/de', () => {
-    const { buildUrl } = useInternationalizationUrlBuilder(createContext())
-    const { slug, fallbackSlug, language } = buildUrl('/germany/de')
+    const { buildSlugs } = useStoryblokSlugBuilder(createContext())
+    const { slug, fallbackSlug, language } = buildSlugs('/germany/de')
 
     expect(slug).toEqual('germany')
     expect(fallbackSlug).toEqual('germany/,global,global/')
@@ -33,8 +33,8 @@ describe('useInternationalizationUrlBuilder', () => {
   })
 
   test('should return expected values given /germany/de/', () => {
-    const { buildUrl } = useInternationalizationUrlBuilder(createContext())
-    const { slug, fallbackSlug, language } = buildUrl('/germany/de/')
+    const { buildSlugs } = useStoryblokSlugBuilder(createContext())
+    const { slug, fallbackSlug, language } = buildSlugs('/germany/de/')
 
     expect(slug).toEqual('germany')
     expect(fallbackSlug).toEqual('germany/,global,global/')
@@ -42,16 +42,16 @@ describe('useInternationalizationUrlBuilder', () => {
   })
 
   test('should return expected values given germany/de/home', () => {
-    const { buildUrl } = useInternationalizationUrlBuilder(createContext())
-    const { slug, fallbackSlug, language } = buildUrl('germany/de/home')
+    const { buildSlugs } = useStoryblokSlugBuilder(createContext())
+    const { slug, fallbackSlug, language } = buildSlugs('germany/de/home')
     expect(slug).toEqual('germany/home')
     expect(fallbackSlug).toEqual('germany/home/,global/home,global/home/')
     expect(language).toEqual('de')
   })
 
   test('should return expected values given /products/fluxkompensator', () => {
-    const { buildUrl } = useInternationalizationUrlBuilder(createContext())
-    const { slug, fallbackSlug, language } = buildUrl(
+    const { buildSlugs } = useStoryblokSlugBuilder(createContext())
+    const { slug, fallbackSlug, language } = buildSlugs(
       '/products/fluxkompensator'
     )
     expect(slug).toEqual('global/products/fluxkompensator')
@@ -62,8 +62,8 @@ describe('useInternationalizationUrlBuilder', () => {
   })
 
   test('should return expected values given korea/en/home', () => {
-    const { buildUrl } = useInternationalizationUrlBuilder(createContext())
-    const { slug, fallbackSlug, language } = buildUrl('korea/en/home')
+    const { buildSlugs } = useStoryblokSlugBuilder(createContext())
+    const { slug, fallbackSlug, language } = buildSlugs('korea/en/home')
 
     expect(slug).toEqual('korea/home')
     expect(fallbackSlug).toEqual('korea/home/,global/home,global/home/')
