@@ -19,18 +19,12 @@
     <template #description>
       <p v-html="product.description" />
     </template>
-    <template #additionalInfo>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus ornare
-        est diam aliquet turpis enim felis bibendum net…
-      </p>
-    </template>
     <template #actionItems></template>
   </GenericCard>
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/products/products.js'
 import ResponsiveImage from '@/components/atoms/ResponsiveImage/ResponsiveImage'
 
