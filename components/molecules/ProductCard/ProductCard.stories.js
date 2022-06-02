@@ -1,4 +1,4 @@
-import ProductCard from '~/components/organisms/ProductCard/ProductCard.vue'
+import ProductCard from '~/components/molecules/ProductCard/ProductCard.vue'
 import { productID } from './ProductCard.stories.content'
 
 const argTypes = {
@@ -10,7 +10,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Organisms/ProductCard',
+  title: 'Molecules/ProductCard',
   component: ProductCard,
   parameters: {
     docs: {
@@ -32,7 +32,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-  <div class="documentation-preview" style="width: 300px; padding: 20px; background-color: #f5f5f5;">
+  <div class="documentation-preview card-wrapper">
     <ProductCard v-bind="args" />
   </div>
 `,
