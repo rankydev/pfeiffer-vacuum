@@ -1,22 +1,4 @@
-export default {
-  welcome: 'Willkommen',
-  language: {
-    code: 'EN',
-  },
-  account: {
-    signIn: 'Sign In',
-  },
-  input: {
-    search: {
-      placeholder: 'Search ...',
-    },
-  },
-  button: {
-    overview: {
-      label: 'Overview',
-    },
-    shop: {
-      label: 'Shop',
-    },
-  },
-}
+import language from './language.json'
+import navigation from './navigation.json'
+import form from './form.json'
+export default { language, navigation, form }

@@ -66,7 +66,7 @@
         >
           <Button
             size="small"
-            :label="$t('button.shop.label')"
+            :label="$t('navigation.button.shop.label')"
             :href="currentEntry.shopLink"
           />
         </li>
@@ -86,14 +86,14 @@
             variant="secondary"
             shape="outlined"
             size="small"
-            :label="$t('button.overview.label')"
+            :label="$t('navigation.button.overview.label')"
             :href="currentEntry.href"
           />
 
           <Button
             v-if="currentEntry.shopLink"
             size="small"
-            :label="$t('button.shop.label')"
+            :label="$t('navigation.button.shop.label')"
             :href="currentEntry.shopLink"
           />
         </li>

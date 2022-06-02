@@ -3,7 +3,7 @@
     <Link href="#" class="shop-navigation__account">
       <Icon class="shop-navigation__icon" icon="person" />
       <span class="shop-navigation__account-name">{{
-        $t('account.signIn')
+        $t('navigation.button.signIn.label')
       }}</span>
     </Link>
 

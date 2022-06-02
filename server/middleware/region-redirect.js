@@ -35,7 +35,7 @@ export default function (req, res, next) {
    */
   if (!isCurrentBase && regionCodes.includes(firstLevel)) {
     const err = `The server for the region ${firstLevel} is currently not implemented.`
-    res.statusCode = 500
+    res.statusCode = 425
     res.write(err)
     return res.end()
   }

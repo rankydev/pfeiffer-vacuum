@@ -48,9 +48,8 @@ export const dateTimeFormats = {
     },
     dateLong: {
       year: 'numeric',
-      month: 'short',
+      month: 'long',
       day: 'numeric',
-      weekday: 'short',
     },
     time: {
       hour: 'numeric',
@@ -93,9 +92,8 @@ export const dateTimeFormats = {
     },
     dateLong: {
       year: 'numeric',
-      month: 'short',
+      month: 'long',
       day: 'numeric',
-      weekday: 'short',
     },
     time: {
       hour: 'numeric',
