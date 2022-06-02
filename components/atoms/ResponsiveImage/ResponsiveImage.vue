@@ -24,7 +24,7 @@
       />
       <source :srcset="buildSrcset(image, defaultSize)" />
       <NuxtImg
-        :src="image.originalFilename"
+        :src="imageObj.src"
         :modifiers="{
           filters: { focal: image.focus, grayscale: grayscaleVal },
         }"
@@ -114,6 +114,10 @@ export default defineComponent({
 
     const { $img } = useContext()
 
+    const imageObj = {
+      src: props.image.originalFilename || props.image.url,
+    }
+
     /**
      * Sort array of sizes by breakpoint descending from xl to sm
      * @param sizesArr
@@ -133,7 +137,11 @@ export default defineComponent({
      * Property returns if component has image
      */
     const hasImage = computed(() => {
-      return props.image && props.image.originalFilename && defaultSize
+      return (
+        props.image &&
+        (props.image.originalFilename || props.image.url) &&
+        defaultSize
+      )
     })
 
     /**
@@ -167,7 +175,7 @@ export default defineComponent({
     /**
      * Builds modifiers fro image, size and format
      */
-    const buildModifiers = (image, size, format) => {
+    const buildModifiers = (image, size, format = 'png') => {
       if (size) {
         return {
           filters: {
@@ -186,7 +194,7 @@ export default defineComponent({
      * builds the Sourceset for rendering the image
      */
     const buildSrcset = (image, size, format) => {
-      if (!size) {
+      if (!size || props.provider === 'static') {
         return null
       }
 
@@ -195,13 +203,11 @@ export default defineComponent({
       const retinaWidth = width * 2
       const retinaHeight = height * 2
 
-      const img1x = $img(
-        image.originalFilename,
-        buildModifiers(image, size, format),
-        { provider: image.provider }
-      )
+      const img1x = $img(imageObj.src, buildModifiers(image, size, format), {
+        provider: image.provider,
+      })
       const img2x = $img(
-        image.originalFilename,
+        imageObj.src,
         buildModifiers(
           image,
           { height: retinaHeight, width: retinaWidth },
@@ -279,6 +285,7 @@ export default defineComponent({
       grayscaleVal,
       hasImage,
       aspectRatioString,
+      imageObj,
       buildSrcset,
     }
   },
