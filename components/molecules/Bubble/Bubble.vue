@@ -55,12 +55,15 @@ $bubble-width-md: $bubble-height-md;
 $bubble-height-lg: 180px;
 $bubble-width-lg: $bubble-height-lg;
 $bubble-bottom-md: 144px;
-$bubble-left-md: unset;
-$bubble-right-md: 240px;
+$bubble-left-md: 50vw;
+$bubble-right-md: unset;
 $bubble-top-lg: 134px;
 $bubble-bottom-lg: unset;
-$bubble-left-lg: unset;
-$bubble-right-lg: 300px;
+$bubble-left-lg: 66vw;
+$bubble-right-lg: unset;
+$bubble-left-xl: 50vw;
+$bubble-right-xl: unset;
+$bubble-top-xl: 18.7573vw;
 $bubble-text-xxs: 10px;
 
 .bubble {
@@ -121,6 +124,12 @@ $bubble-text-xxs: 10px;
       bottom: $bubble-bottom-lg;
       left: $bubble-left-lg;
       right: $bubble-right-lg;
+    }
+
+    @screen xl {
+      left: $bubble-left-xl;
+      right: $bubble-right-xl;
+      top: $bubble-top-xl;
     }
   }
 
