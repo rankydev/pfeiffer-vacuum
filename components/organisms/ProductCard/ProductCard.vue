@@ -26,7 +26,7 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/products/products.js'
-import ResponsiveImage from '@/components/atoms/ResponsiveImage/ResponsiveImage'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
 export default defineComponent({
   components: { ResponsiveImage },
