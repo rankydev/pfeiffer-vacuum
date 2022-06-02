@@ -51,11 +51,6 @@ export default {
 </script>
 
 <style lang="scss">
-/**
-* Variables
-*/
-$stage-content-max-width: 800px;
-
 .homestage-content {
   @apply tw-flex;
   @apply tw-flex-col;
@@ -67,7 +62,6 @@ $stage-content-max-width: 800px;
   @screen md {
     @apply tw-px-10;
     @apply tw-py-14;
-    max-width: $stage-content-max-width;
   }
 
   @screen lg {

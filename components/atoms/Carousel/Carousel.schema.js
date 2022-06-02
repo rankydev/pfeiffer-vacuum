@@ -25,7 +25,7 @@ export default {
       type: 'number',
       display_name: 'Autoplay Speed',
       description: 'Autoplay Speed in seconds',
-      default_value: 5000,
+      default_value: 5,
     },
     infinite: {
       type: 'boolean',
