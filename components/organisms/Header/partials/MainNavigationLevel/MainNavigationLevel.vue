@@ -64,7 +64,11 @@
           v-if="currentEntry.shopLink"
           :class="`${prefix}__shop-button--mobile`"
         >
-          <Button size="small" label="Shop" :href="currentEntry.shopLink" />
+          <Button
+            size="small"
+            :label="$t('button.shop.label')"
+            :href="currentEntry.shopLink"
+          />
         </li>
       </template>
 
@@ -82,14 +86,14 @@
             variant="secondary"
             shape="outlined"
             size="small"
-            label="Overview"
+            :label="$t('button.overview.label')"
             :href="currentEntry.href"
           />
 
           <Button
             v-if="currentEntry.shopLink"
             size="small"
-            label="Shop"
+            :label="$t('button.shop.label')"
             :href="currentEntry.shopLink"
           />
         </li>
