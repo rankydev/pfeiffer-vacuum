@@ -139,7 +139,7 @@ export default defineComponent({
      * sorts Array from smallest to biggest breakpoint (sm to xl)
      */
     const sortedSizes = computed(() => {
-      return sortByBreakpoints([...imageSizes])
+      return sortByBreakpoints([...imageSizes.value])
     })
 
     /**
@@ -232,34 +232,36 @@ export default defineComponent({
      * calculate width, as well as height of image for each breakpoint
      * @return Array
      */
-    const imageSizes = configScreensArr.map((objectEntry, index) => {
-      if (index !== 3) {
-        const startWidthNextBreakpoint = configScreensArr[index + 1][1]
-        const maxWidthBreakpoint = calculateMaxWidthByBreakpoint(
-          startWidthNextBreakpoint
-        )
+    const imageSizes = computed(() =>
+      configScreensArr.map((objectEntry, index) => {
+        if (index !== 3) {
+          const startWidthNextBreakpoint = configScreensArr[index + 1][1]
+          const maxWidthBreakpoint = calculateMaxWidthByBreakpoint(
+            startWidthNextBreakpoint
+          )
 
-        return {
-          media: objectEntry[0],
-          width: maxWidthBreakpoint,
-          height: calculateHeight(maxWidthBreakpoint, props.aspectRatio),
+          return {
+            media: objectEntry[0],
+            width: maxWidthBreakpoint,
+            height: calculateHeight(maxWidthBreakpoint, props.aspectRatio),
+          }
+        } else {
+          // last entry is xl, no next element given, 1440px is maxWidth
+          return {
+            media: objectEntry[0],
+            width: 1440,
+            height: calculateHeight(1440, props.aspectRatio),
+          }
         }
-      } else {
-        // last entry is xl, no next element given, 1440px is maxWidth
-        return {
-          media: objectEntry[0],
-          width: 1440,
-          height: calculateHeight(1440, props.aspectRatio),
-        }
-      }
-    })
+      })
+    )
 
     /**
      * default size of the image using sm-breakpoint
      */
     const defaultSize = {
-      width: imageSizes[0].width,
-      height: imageSizes[0].height,
+      width: imageSizes.value[0].width,
+      height: imageSizes.value[0].height,
     }
 
     return {

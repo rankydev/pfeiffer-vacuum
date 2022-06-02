@@ -22,10 +22,10 @@ describe('linksTransformer', () => {
 
   function createContext() {
     return {
-      $cms: {
-        regions: 'global,germany,china,korea',
-        defaultRegion: 'global',
-        defaultLanguageCode: 'en',
+      $config: {
+        REGION_CODES: 'global,germany,china,korea',
+        DEFAULT_REGION_CODE: 'global',
+        DEFAULT_LANGUAGE_CODE: 'en',
       },
     }
   }

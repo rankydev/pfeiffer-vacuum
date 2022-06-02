@@ -9,7 +9,7 @@ stages:
   - build-docker-image
   - audit
   - deployment
-  - cms-migration
+  - cms-sync
 
 include:
   - local: '/.gitlab-ci/container_structure_test.yml'
