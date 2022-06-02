@@ -8,24 +8,24 @@
       />
     </template>
     <template #subheading>
-      {{ product.categories[0].name }}
+      {{ ((product.categories || [])[0] || {}).name || '' }}
     </template>
     <!-- eslint-disable vue/no-v-html -->
     <template #heading>
-      <span v-html="product.name" />
+      <span v-html="product.name || ''" />
     </template>
     <template #tags></template>
     <!-- eslint-disable vue/no-v-html -->
     <template #description>
-      <p v-html="product.description" />
+      <p v-html="product.description || ''" />
     </template>
     <template #actionItems></template>
   </GenericCard>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-import { useProductStore } from '~/stores/products/products.js'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { useProductStore } from '~/stores/products'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
 export default defineComponent({
@@ -36,13 +36,15 @@ export default defineComponent({
      */
     productID: {
       type: String,
-      default: '128ee16d-cb90-45be-9986-c8006a5235e6_sample',
+      default: null,
     },
   },
   setup(props) {
     const store = useProductStore()
-    const product = store.getProductById(props.productID)
-    const image = product.images[0]
+    const product = computed(() =>
+      props.productID ? store.getProductById(props.productID) : {}
+    )
+    const image = computed(() => product.images?.[0])
 
     return { product, image }
   },

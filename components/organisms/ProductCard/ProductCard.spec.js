@@ -2,13 +2,20 @@ import { shallowMount, createLocalVue, mount } from '@vue/test-utils'
 import { setActivePinia, createPinia } from 'pinia'
 import { useProductStore } from '~/stores/products/products.js'
 import ProductCard from './ProductCard.vue'
-import { productID } from './ProductCard.stories.content.js'
+import GenericCard from '~/components/atoms/GenericCard/GenericCard'
+import { productID, product } from './ProductCard.stories.content.js'
 
-let productID = '128ee16d-cb90-45be-9986-c8006a5235e6_sample'
+let productStoreID = '128ee16d-cb90-45be-9986-c8006a5235e6_sample'
 
-// const defaultProps = () => ({
-//   productID: '128ee16d-cb90-45be-9986-c8006a5235e6_sample',
-// })
+jest.mock('~/stores/products', () => {
+  const { product } = require('./ProductCard.stories.content.js')
+  const getProductById = () => product
+
+  return {
+    __esModule: true,
+    useProductStore: () => ({ getProductById }),
+  }
+})
 
 let wrapper
 
@@ -37,23 +44,10 @@ function createComponent(propsData = {}, { shallow = true } = {}) {
 //   })
 // })
 
-describe('Counter Store', () => {
-  beforeEach(() => {
-    // creates a fresh pinia and make it active so it's automatically picked
-    // up by any useStore() call without having to pass it to it:
-    // `useStore(pinia)`
-    setActivePinia(createPinia())
-  })
-
-  it('product', () => {
-    createComponent(propsData)
-    const store = useProductStore()
-    // expect(counter.n).toBe(0)
-    const product = store.getProductById(productID)
-    // expect(counter.n).toBe(1)
-    console.log(product)
-    console.log()
-  })
+describe('ProductCard', () => {
+  it('should render empty component without warnings given no productId', () => {})
+  it('should render all product data given a productId', () => {})
+  it('should call getProductById given productId', () => {})
 
   // it('increments by amount', () => {
   //   const counter = useCounter()
