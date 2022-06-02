@@ -10,16 +10,14 @@
     <template #subheading>
       {{ ((product.categories || [])[0] || {}).name || '' }}
     </template>
-    <!-- eslint-disable vue/no-v-html -->
     <template #heading>
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <span v-html="product.name || ''" />
     </template>
-    <template #tags></template>
-    <!-- eslint-disable vue/no-v-html -->
     <template #description>
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <p v-html="product.description || ''" />
     </template>
-    <template #actionItems></template>
   </GenericCard>
 </template>
 
