@@ -12,5 +12,5 @@ export default {
   ],
   infinite: false,
   autoplay: true,
-  autoplaySpeed: '5000',
+  autoplaySpeed: '5',
 }

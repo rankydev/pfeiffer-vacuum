@@ -1,18 +1,18 @@
 import HomeStageModule from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.vue'
-import HomeStageModuleContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.stories.content'
+import { homeStageModuleContent } from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.stories.content'
 
 const argTypes = {
   stageContent: {
-    defaultValue: HomeStageModuleContent.stageContent,
+    defaultValue: homeStageModuleContent.stageContent,
   },
   image: {
-    defaultValue: HomeStageModuleContent.image,
+    defaultValue: homeStageModuleContent.image,
   },
   interlay: {
-    defaultValue: HomeStageModuleContent.interlay,
+    defaultValue: homeStageModuleContent.interlay,
   },
   bubble: {
-    defaultValue: HomeStageModuleContent.bubble,
+    defaultValue: homeStageModuleContent.bubble,
   },
 }
 
