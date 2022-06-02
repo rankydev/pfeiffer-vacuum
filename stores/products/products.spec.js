@@ -5,7 +5,7 @@ describe('Page store', () => {
   beforeEach(() => setActivePinia(createPinia()))
 
   describe('initial state', () => {
-    test('should return all expected properties and getters', () => {
+    test('should return all expected properties and getters.', () => {
       const productStore = useProductStore()
       expect(productStore).toBeTruthy()
       const product = productStore.getProductById(
