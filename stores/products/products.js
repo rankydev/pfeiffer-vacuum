@@ -27,7 +27,8 @@ export const useProductStore = defineStore('product', {
           ],
           code: '128ee16d-cb90-45be-9986-c8006a5235e6_sample',
           configurable: false,
-          description: '',
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus ornare est diam aliquet turpis enim felis bibendum net…',
           images: [
             {
               altText: 'HiPace® 80 for TCP 350, DN 63 ISO-K',
