@@ -21,6 +21,7 @@ jest.mock('@nuxtjs/composition-api', () => {
     ...originalModule,
     useContext: jest.fn(() => ({ $cms: { getLinks } })),
     useRoute: jest.fn(),
+    ssrRef: ref,
     useAsync: (cb) => originalModule.useAsync(cb, key),
   }
 })

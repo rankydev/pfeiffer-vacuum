@@ -1,6 +1,10 @@
 <template>
   <div>
-    <picture v-if="hasImage" class="responsive-image">
+    <picture
+      v-if="hasImage"
+      class="responsive-image"
+      :class="{ 'responsive-image--corners-rounded': rounded }"
+    >
       <source
         v-for="size in sortedSizes"
         :key="'webp_' + size.media"
@@ -98,6 +102,10 @@ export default defineComponent({
       default: '1:1',
       validator: (val) =>
         ['1:1', '16:9', '2:3', '3:2', '3:1', '2:1'].includes(val),
+    },
+    rounded: {
+      type: Boolean,
+      default: true,
     },
   },
   setup(props) {
@@ -291,7 +299,6 @@ export default defineComponent({
 
   img {
     @apply tw-relative;
-    @apply tw-rounded-lg;
     @apply tw-overflow-hidden;
   }
 
@@ -333,7 +340,6 @@ export default defineComponent({
     @apply tw-from-pv-black;
     @apply tw-via-pv-transparent;
     @apply tw-to-pv-transparent;
-    @apply tw-rounded-lg;
   }
 
   &__placeholder {
@@ -345,6 +351,13 @@ export default defineComponent({
 
     span {
       @apply tw-text-pv-grey-64;
+    }
+  }
+
+  &__rounded {
+    img,
+    .responsive-image__gradient-overlay {
+      @apply tw-rounded-lg;
     }
   }
 }
