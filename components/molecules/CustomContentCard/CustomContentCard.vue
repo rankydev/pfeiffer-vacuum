@@ -31,7 +31,7 @@
 
     <template #actionItems>
       <Button
-        label="Zum Artikel"
+        :label="$t('navigation.button.article.label')"
         icon="arrow_forward"
         variant="secondary"
         shape="plain"
