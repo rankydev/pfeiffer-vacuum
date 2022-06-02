@@ -4,3 +4,13 @@ import failOnConsole from 'jest-fail-on-console'
 
 config.stubs['client-only'] = clientOnly
 failOnConsole()
+
+window.matchMedia =
+  window.matchMedia ||
+  function () {
+    return {
+      matches: false,
+      addListener: function () {},
+      removeListener: function () {},
+    }
+  }

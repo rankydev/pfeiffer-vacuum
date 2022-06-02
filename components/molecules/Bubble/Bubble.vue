@@ -5,9 +5,9 @@
     <NuxtDynamic
       v-for="item in richtext"
       :key="item._uid"
-      v-bind="item"
       class="bubble__richtext"
-      :component="item.uiComponent || item.component"
+      v-bind="item"
+      :name="item.uiComponent || item.component"
     />
   </div>
 </template>
@@ -75,6 +75,8 @@ $bubble-text-xxs: 10px;
     @apply tw-bg-pv-red;
     @apply tw-px-1;
     @apply tw-text-pv-white;
+    @apply tw-transition-all;
+    @apply tw-duration-500;
     height: $bubble-height-xs;
     width: $bubble-width-xs;
 
@@ -125,6 +127,9 @@ $bubble-text-xxs: 10px;
   &__headline {
     @apply tw-text-pv-white;
     @apply tw-leading-4;
+    @apply tw-transition;
+    @apply tw-ease-in;
+    @apply tw-duration-700;
     font-size: $bubble-text-xxs;
 
     @screen md {
@@ -133,7 +138,7 @@ $bubble-text-xxs: 10px;
     }
 
     @screen lg {
-      @apply tw-text-xl;
+      @apply tw-text-lg;
       @apply tw-leading-7;
     }
   }

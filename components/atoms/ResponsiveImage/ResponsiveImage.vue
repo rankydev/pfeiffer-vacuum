@@ -1,6 +1,10 @@
 <template>
   <div>
-    <picture v-if="hasImage" class="responsive-image">
+    <picture
+      v-if="hasImage"
+      class="responsive-image"
+      :class="{ 'responsive-image--corners-rounded': rounded }"
+    >
       <source
         v-for="size in sortedSizes"
         :key="'webp_' + size.media"
@@ -20,7 +24,7 @@
       />
       <source :srcset="buildSrcset(image, defaultSize)" />
       <NuxtImg
-        :src="image.originalFilename"
+        :src="imageObj.src"
         :modifiers="{
           filters: { focal: image.focus, grayscale: grayscaleVal },
         }"
@@ -99,12 +103,20 @@ export default defineComponent({
       validator: (val) =>
         ['1:1', '16:9', '2:3', '3:2', '3:1', '2:1'].includes(val),
     },
+    rounded: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props) {
     const tailwindConfigScreens = tailwindconfig.theme.screens
     const configScreensArr = Object.entries(tailwindConfigScreens)
 
     const { $img } = useContext()
+
+    const imageObj = {
+      src: props.image.originalFilename || props.image.url,
+    }
 
     /**
      * Sort array of sizes by breakpoint descending from xl to sm
@@ -125,7 +137,11 @@ export default defineComponent({
      * Property returns if component has image
      */
     const hasImage = computed(() => {
-      return props.image && props.image.originalFilename && defaultSize
+      return (
+        props.image &&
+        (props.image.originalFilename || props.image.url) &&
+        defaultSize
+      )
     })
 
     /**
@@ -139,7 +155,7 @@ export default defineComponent({
      * sorts Array from smallest to biggest breakpoint (sm to xl)
      */
     const sortedSizes = computed(() => {
-      return sortByBreakpoints([...imageSizes])
+      return sortByBreakpoints([...imageSizes.value])
     })
 
     /**
@@ -159,7 +175,7 @@ export default defineComponent({
     /**
      * Builds modifiers fro image, size and format
      */
-    const buildModifiers = (image, size, format) => {
+    const buildModifiers = (image, size, format = 'png') => {
       if (size) {
         return {
           filters: {
@@ -178,7 +194,7 @@ export default defineComponent({
      * builds the Sourceset for rendering the image
      */
     const buildSrcset = (image, size, format) => {
-      if (!size) {
+      if (!size || props.provider === 'static') {
         return null
       }
 
@@ -187,13 +203,11 @@ export default defineComponent({
       const retinaWidth = width * 2
       const retinaHeight = height * 2
 
-      const img1x = $img(
-        image.originalFilename,
-        buildModifiers(image, size, format),
-        { provider: image.provider }
-      )
+      const img1x = $img(imageObj.src, buildModifiers(image, size, format), {
+        provider: image.provider,
+      })
       const img2x = $img(
-        image.originalFilename,
+        imageObj.src,
         buildModifiers(
           image,
           { height: retinaHeight, width: retinaWidth },
@@ -232,34 +246,36 @@ export default defineComponent({
      * calculate width, as well as height of image for each breakpoint
      * @return Array
      */
-    const imageSizes = configScreensArr.map((objectEntry, index) => {
-      if (index !== 3) {
-        const startWidthNextBreakpoint = configScreensArr[index + 1][1]
-        const maxWidthBreakpoint = calculateMaxWidthByBreakpoint(
-          startWidthNextBreakpoint
-        )
+    const imageSizes = computed(() =>
+      configScreensArr.map((objectEntry, index) => {
+        if (index !== 3) {
+          const startWidthNextBreakpoint = configScreensArr[index + 1][1]
+          const maxWidthBreakpoint = calculateMaxWidthByBreakpoint(
+            startWidthNextBreakpoint
+          )
 
-        return {
-          media: objectEntry[0],
-          width: maxWidthBreakpoint,
-          height: calculateHeight(maxWidthBreakpoint, props.aspectRatio),
+          return {
+            media: objectEntry[0],
+            width: maxWidthBreakpoint,
+            height: calculateHeight(maxWidthBreakpoint, props.aspectRatio),
+          }
+        } else {
+          // last entry is xl, no next element given, 1440px is maxWidth
+          return {
+            media: objectEntry[0],
+            width: 1440,
+            height: calculateHeight(1440, props.aspectRatio),
+          }
         }
-      } else {
-        // last entry is xl, no next element given, 1440px is maxWidth
-        return {
-          media: objectEntry[0],
-          width: 1440,
-          height: calculateHeight(1440, props.aspectRatio),
-        }
-      }
-    })
+      })
+    )
 
     /**
      * default size of the image using sm-breakpoint
      */
     const defaultSize = {
-      width: imageSizes[0].width,
-      height: imageSizes[0].height,
+      width: imageSizes.value[0].width,
+      height: imageSizes.value[0].height,
     }
 
     return {
@@ -269,6 +285,7 @@ export default defineComponent({
       grayscaleVal,
       hasImage,
       aspectRatioString,
+      imageObj,
       buildSrcset,
     }
   },
@@ -289,7 +306,6 @@ export default defineComponent({
 
   img {
     @apply tw-relative;
-    @apply tw-rounded-lg;
     @apply tw-overflow-hidden;
   }
 
@@ -331,7 +347,6 @@ export default defineComponent({
     @apply tw-from-pv-black;
     @apply tw-via-pv-transparent;
     @apply tw-to-pv-transparent;
-    @apply tw-rounded-lg;
   }
 
   &__placeholder {
@@ -343,6 +358,13 @@ export default defineComponent({
 
     span {
       @apply tw-text-pv-grey-64;
+    }
+  }
+
+  &__rounded {
+    img,
+    .responsive-image__gradient-overlay {
+      @apply tw-rounded-lg;
     }
   }
 }

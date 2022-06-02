@@ -1,6 +1,6 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import HomeStageModule from './HomeStageModule'
-import HomeStageContent from '~/components/organisms/HomeStageModule/partials/HomeStageContent/HomeStageContent'
+import HomeStageContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/partials/HomeStageContent/HomeStageContent'
 import Bubble from '~/components/molecules/Bubble/Bubble'
 import content from './HomeStageModule.stories.content'
 

@@ -148,13 +148,14 @@ $card-image-height: 200px;
   }
 
   &__subheading {
-    @apply tw-text-pv-grey-48;
+    @apply tw-text-pv-grey-64;
+    @apply tw-font-bold;
     @apply tw-text-xs;
     @apply tw-mb-1;
   }
 
   &__heading {
-    @apply tw-text-xl;
+    @apply tw-text-lg;
     @apply tw-font-bold;
     @apply tw-mb-2;
   }
