@@ -19,6 +19,8 @@
   script:
     - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
     - export container_running=`docker container list | grep ${DOCKER_SERVICE_NAME}`
+    - export BASE_URL=${BASE_URL}
+    - echo "BASE_URL:${BASE_URL}"
     - # check if container is running. stop and remove if so.
       if [ -n container_running ]; then
         docker-compose -f ${DOCKER_COMPOSE_FILENAME} stop ${DOCKER_SERVICE_NAME};
