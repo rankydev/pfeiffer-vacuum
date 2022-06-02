@@ -32,15 +32,15 @@ export default defineComponent({
     /**
      * productID that specifies Product Card
      */
-    productID: {
-      type: String,
-      default: null,
+    productData: {
+      type: Object,
+      default: () => ({}),
     },
   },
   setup(props) {
     const store = useProductStore()
     const product = computed(() =>
-      props.productID ? store.getProductById(props.productID) : {}
+      props.productData.code ? store.getProductById(props.productData.code) : {}
     )
     const image = computed(() => product.images?.[0])
 

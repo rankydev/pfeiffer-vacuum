@@ -2,12 +2,17 @@ export default {
   name: 'ProductCard',
   display_name: 'ProductCard',
   schema: {
-    productID: {
-      type: 'text',
+    productData: {
+      type: 'custom',
       required: true,
-      pos: 1,
-      max: 1,
-      display_name: 'Product-ID',
+      field_type: 'shop-url-selector',
+      options: [
+        {
+          name: 'domain',
+          value: 'https://dev.vacuum-shop.com/api/shop',
+        },
+      ],
+      display_name: 'Product-Picker',
     },
   },
   image: null,
