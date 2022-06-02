@@ -16,7 +16,7 @@ export default {
     docs: {
       description: {
         component:
-          'The generic card is an abstract component which can be used to define the different card components like product card or blog card.',
+          'The product card is a component which can be used to display products from Hybris which are selected by productID.',
       },
       source: {
         code: `<ProductCard v-bind="{ productID }" />`,
