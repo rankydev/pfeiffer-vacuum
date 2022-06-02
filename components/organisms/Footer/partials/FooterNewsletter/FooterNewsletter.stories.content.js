@@ -14,7 +14,7 @@ export const newsletterHeadline = 'Newsletter'
 
 export const newsletterButton = [
   {
-    icon: 'arrow_forward',
+    icon: 'send',
     size: 'normal',
     label: 'Zur Newsletteranmeldung',
     shape: 'outlined',
