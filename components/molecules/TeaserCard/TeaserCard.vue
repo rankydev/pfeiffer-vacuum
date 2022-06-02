@@ -62,6 +62,7 @@ $base-lg: 100px;
   @apply tw-relative;
   @apply tw-block;
   @apply tw-overflow-hidden;
+  @apply tw-rounded-lg;
   width: calc($base-sm * 3);
   height: calc($base-sm * 2);
 
@@ -75,7 +76,7 @@ $base-lg: 100px;
     height: calc($base-lg * 2);
   }
 
-  img {
+  .responsive-image {
     @apply tw-ease-linear;
     @apply tw-duration-100;
     @apply tw-bg-pv-grey-16;
@@ -83,7 +84,7 @@ $base-lg: 100px;
 
   &:hover,
   &:focus {
-    img {
+    .responsive-image {
       @apply tw-scale-105;
     }
   }

@@ -27,7 +27,7 @@ export const carouselEntries = [
 
 export default {
   autoplay: false,
-  autoplaySpeed: '5000',
+  autoplaySpeed: '5',
   infinite: false,
   isWide: true,
   settings: {},

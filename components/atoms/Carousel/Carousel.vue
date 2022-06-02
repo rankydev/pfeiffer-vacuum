@@ -7,7 +7,7 @@
         v-bind="{ ...defaultSettings, ...settings }"
         :infinite="infiniteSetting"
         :autoplay="autoplay"
-        :autoplay-speed="parseInt(autoplaySpeed)"
+        :autoplay-speed="autoplaySpeedMilliseconds"
         class="carousel__slider"
         :class="{ 'carousel__slider--wide': isWide }"
       >
@@ -112,11 +112,11 @@ export default defineComponent({
       default: false,
     },
     /**
-     * autoplay Speed in milliseconds, retrieves string from Storyblok
+     * autoplay Speed in seconds, retrieves string from Storyblok
      */
     autoplaySpeed: {
       type: String,
-      default: '5000',
+      default: '5',
     },
   },
   setup(props) {
@@ -191,9 +191,26 @@ export default defineComponent({
      */
     const slidesToShow = computed(() => (isBreakout.value ? 6 : 4))
 
+    /**
+     * split string of tailwind breakpoint, so lib aknowledges breakpoint
+     */
+    const splitBreakpointString = (breakpointString) => {
+      const split = breakpointString.split('px')
+
+      return parseInt(split[0])
+    }
+
+    /**
+     * convert autoplaySpeed from seconds into milliseconds
+     */
+    const autoplaySpeedMilliseconds = Math.ceil(
+      parseInt(props.autoplaySpeed) * 1000
+    )
+
     const defaultSettings = {
       adaptiveHeight: true,
       arrows: true,
+      dotsClass: 'slick-dots',
       edgeFriction: 0.35,
       pauseOnFocus: true,
       speed: 300,
@@ -202,15 +219,17 @@ export default defineComponent({
       initialSlide: isBreakout.value ? 0 : -1,
       responsive: [
         {
-          breakpoint: tailwindConfigScreens.lg,
+          breakpoint: splitBreakpointString(tailwindConfigScreens.lg),
           settings: {
             slidesToShow: 3,
           },
         },
         {
-          breakpoint: tailwindConfigScreens.md,
+          breakpoint: splitBreakpointString(tailwindConfigScreens.md),
           settings: {
             slidesToShow: 1,
+            dots: true,
+            arrows: false,
           },
         },
       ],
@@ -223,6 +242,7 @@ export default defineComponent({
       isFirstSlide,
       isLastSlide,
       infiniteSetting,
+      autoplaySpeedMilliseconds,
     }
   },
 })
@@ -258,7 +278,7 @@ export default defineComponent({
   &__slider {
     &--wide {
       @apply tw-px-4;
-      @apply tw-overflow-hidden;
+      @apply tw-overflow-x-clip;
 
       @screen md {
         @apply tw-px-6;
@@ -319,6 +339,50 @@ export default defineComponent({
 
   &__next {
     @apply tw-right-0;
+  }
+
+  &__dots {
+    display: flex !important;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+    li {
+      color: red;
+      opacity: 0;
+
+      &::before {
+        content: '+';
+      }
+    }
+  }
+}
+
+.slick-dots {
+  // set max-width due to dots position on wide mode
+  max-width: 92vw;
+
+  li {
+    @apply tw-w-3;
+    @apply tw-m-0;
+
+    button {
+      @apply tw-w-2;
+
+      &::before {
+        @apply tw-text-pv-grey-80;
+        @apply tw-opacity-100;
+        content: '■';
+        font-size: 0.5rem;
+      }
+    }
+  }
+
+  li.slick-active {
+    button::before {
+      @apply tw-text-pv-red;
+      @apply tw-opacity-100;
+    }
   }
 }
 </style>
