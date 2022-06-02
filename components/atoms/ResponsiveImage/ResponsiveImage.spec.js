@@ -121,5 +121,33 @@ describe('ResponsiveImage', () => {
         expect(placeholderWrapper.attributes('class')).toMatch(output)
       }
     )
+
+    test('should add rounded class given rounded=true', () => {
+      const propsData = {
+        ...defaultProps(),
+        rounded: true,
+      }
+      createComponent(propsData)
+
+      const picture = wrapper.find('.responsive-image')
+
+      expect(picture.attributes('class')).toMatch(
+        'responsive-image--corners-rounded'
+      )
+    })
+
+    test('should not add rounded class given rounded=false', () => {
+      const propsData = {
+        ...defaultProps(),
+        rounded: false,
+      }
+      createComponent(propsData)
+
+      const picture = wrapper.find('.responsive-image')
+
+      expect(picture.attributes('class')).not.toMatch(
+        'responsive-image--corners-rounded'
+      )
+    })
   })
 })
