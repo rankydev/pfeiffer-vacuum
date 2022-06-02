@@ -1,14 +1,16 @@
-import HomeStageModuleContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.stories.content'
-
-const slides = [
-  HomeStageModuleContent,
-  HomeStageModuleContent,
-  HomeStageModuleContent,
-]
+import {
+  homeStageModuleContent,
+  homeStageModuleContent2,
+  homeStageModuleContent3,
+} from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.stories.content'
 
 export default {
-  autoplay: false,
-  autoplaySpeed: '5000',
+  slides: [
+    homeStageModuleContent,
+    homeStageModuleContent2,
+    homeStageModuleContent3,
+  ],
   infinite: false,
-  slides: slides,
+  autoplay: true,
+  autoplaySpeed: '5000',
 }
