@@ -17,7 +17,11 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/scss/style.scss'],
+  css: [
+    '~/assets/scss/style.scss',
+    'vue-slick-carousel/dist/vue-slick-carousel.css',
+    'vue-slick-carousel/dist/vue-slick-carousel-theme.css',
+  ],
 
   router: {
     extendRoutes(routes) {
@@ -41,7 +45,6 @@ export default {
     '~/components/atoms',
     '~/components/molecules',
     '~/components/organisms',
-    '~/components/util',
   ],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -86,6 +89,8 @@ export default {
     accessToken: process.env.STORYBLOK_ACCESS_TOKEN,
     version: process.env.STORYBLOK_VERSION,
     defaultLanguage: process.env.DEFAULT_LANGUAGE_CODE,
+    defaultRegion: process.env.DEFAULT_REGION_CODE,
+    regions: process.env.REGION_CODES,
     resolveRelations: process.env.STORYBLOK_RESOLVE_RELATIONS,
     resolveLinks: process.env.STORYBLOK_RESOLVE_LINKS,
     resolveAssets: process.env.STORYBLOK_RESOLVE_ASSETS,
@@ -93,15 +98,12 @@ export default {
     contentTypes: process.env.STORYBLOK_CONTENT_TYPES,
     exclude:
       process.env.STORYBLOK_EXCLUDE_ROUTES &&
-      process.env.STORYBLOK_EXCLUDE_ROUTES.split(','),
-    regions: process.env.STORYBLOK_REGIONS,
-    defaultRegion: process.env.STORYBLOK_DEFAULT_REGION,
+      (process.env.STORYBLOK_EXCLUDE_ROUTES || '').split(','),
     linksTransformer: './resolver/linksTransformer',
   },
 
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL || 'https://localhost:3000',
-    languages: process.env.LANGUAGE_CODES.split(','),
   },
 
   server: {
@@ -110,9 +112,14 @@ export default {
     host: process.env.HOST || '0.0.0.0',
   },
 
-  env: {
-    // Environment variables for build-time
+  publicRuntimeConfig: {
+    LANGUAGE_CODES: (process.env.LANGUAGE_CODES || 'en').split(','),
+    REGION_CODES: (process.env.REGION_CODES || 'global').split(','),
+    DEFAULT_LANGUAGE_CODE: process.env.DEFAULT_LANGUAGE_CODE || 'en',
+    DEFAULT_REGION_CODE: process.env.DEFAULT_REGION_CODE || 'global',
+  },
 
+  env: {
     // version info
     CI_COMMIT_REF_NAME: process.env.CI_COMMIT_REF_NAME,
     CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,

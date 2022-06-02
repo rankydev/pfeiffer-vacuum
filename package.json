@@ -19,17 +19,19 @@
     "lsg": "nuxt storybook -s .storybook/static",
     "lsg:build": "nuxt storybook build -s .storybook/static --output-dir ./lsg-public",
     "test": "jest",
-    "storyblok:sync": "env-cmd node -r esm ./bin/nuxt-storyblok.js sync"
+    "cms:sync": "env-cmd node -r esm ./bin/nuxt-storyblok.js sync",
+    "cms:sync:ci": "node -r esm ./bin/nuxt-storyblok.js sync"
   },
   "dependencies": {
+    "@jest/globals": "^27.5.1",
     "@nuxt/image": "^0.6.2",
     "@nuxt/ufo": "^0.5.4",
     "@nuxtjs/composition-api": "^0.31.0",
     "@nuxtjs/i18n": "^7.2.0",
     "@nuxtjs/storybook": "^4.3.1",
     "@nuxtjs/svg-sprite": "^0.5.2",
-    "@txp-cms/storyblok": "^1.8.2",
     "@pinia/nuxt": "^0.1.8",
+    "@txp-cms/storyblok": "^1.8.3",
     "core-js": "^3.21.1",
     "env-cmd": "^10.1.0",
     "get-youtube-id": "^1.0.1",
@@ -40,7 +42,8 @@
     "pinia": "^2.0.13",
     "storyblok-js-client": "^4.2.1",
     "stylelint-config-standard-scss": "^3.0.0",
-    "ufo": "^0.7.11"
+    "ufo": "^0.7.11",
+    "vue-slick-carousel": "^1.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",

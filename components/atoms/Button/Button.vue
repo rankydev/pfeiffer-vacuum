@@ -4,6 +4,7 @@
     :class="[
       `button--${variant}`,
       `button--${size}`,
+      `button--cutaway-${cutaway}`,
       `button--${isPrimary ? 'filled' : shape}`,
       {
         'button--disabled': disabled,
@@ -66,7 +67,7 @@ export default defineComponent({
     },
     /**
      * Defines the button shape
-     * * @values filled, outlined, plain
+     * @values filled, outlined, plain
      */
     shape: {
       type: String,
@@ -82,12 +83,21 @@ export default defineComponent({
       default: 'normal',
       validator: (val) => ['xsmall', 'small', 'normal'].includes(val),
     },
-    /*
+    /**
      * Set if the button is clickable
      */
     disabled: {
       type: Boolean,
       default: false,
+    },
+    /**
+     * Defines the button shape cutaway in a side e.g. for slider controls
+     * @values left, right
+     */
+    cutaway: {
+      type: String,
+      default: 'none',
+      validator: (val) => ['none', 'left', 'right'].includes(val),
     },
   },
   setup(props) {
@@ -204,7 +214,7 @@ export default defineComponent({
 
     &.button--secondary {
       @apply tw-text-pv-red;
-      @apply tw-shadow-borderRed;
+      @apply tw-shadow-border-red;
 
       &:hover,
       &:focus {
@@ -218,7 +228,7 @@ export default defineComponent({
     &.button--inverted {
       @apply tw-outline-pv-grey-96;
       @apply tw-text-pv-grey-96;
-      @apply tw-shadow-borderWhite;
+      @apply tw-shadow-border-white;
 
       &:hover,
       &:focus {
@@ -232,7 +242,7 @@ export default defineComponent({
     &.button--disabled,
     &.button--disabled:hover,
     &.button--disabled:focus {
-      @apply tw-shadow-borderGrey80;
+      @apply tw-shadow-border-grey-80;
       @apply tw-bg-pv-transparent;
       @apply tw-text-pv-grey-80;
 
@@ -275,6 +285,16 @@ export default defineComponent({
         @apply tw-text-pv-grey-48;
       }
     }
+  }
+
+  &--cutaway-left {
+    @apply tw-rounded-r-none;
+    @apply tw-rounded-l-md;
+  }
+
+  &--cutaway-right {
+    @apply tw-rounded-l-none;
+    @apply tw-rounded-r-md;
   }
 
   &__icon {

@@ -1,5 +1,9 @@
 import Accordion from '~/components/atoms/Accordion/Accordion.vue'
-import { accordionEntries, levels } from './Accordion.stories.content.js'
+import {
+  accordionEntries,
+  accordionEntriesWithImg,
+  levels,
+} from './Accordion.stories.content.js'
 
 const argTypes = {
   accordionEntries: {
@@ -43,3 +47,8 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {}
+
+export const WithImg = Template.bind({})
+WithImg.args = {
+  accordionEntries: accordionEntriesWithImg,
+}

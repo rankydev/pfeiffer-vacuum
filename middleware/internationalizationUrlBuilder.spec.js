@@ -19,10 +19,6 @@ const invalidPathArray = [
 
 describe('internationalizationUrlBuilder', () => {
   function createContext({ path, language, server }) {
-    process.env.DEFAULT_LANGUAGE_CODE = 'de'
-    process.env.LANGUAGE_CODES = 'de,ko,zh,en'
-    process.env.STORYBLOK_DEFAULT_REGION = 'global'
-    process.env.STORYBLOK_REGIONS = 'global,korea,china,america,germany'
     process.server = server !== undefined ? server : true
 
     return {
@@ -35,6 +31,12 @@ describe('internationalizationUrlBuilder', () => {
         },
       },
       redirect,
+      $config: {
+        REGION_CODES: 'global,korea,china,america,germany',
+        DEFAULT_REGION_CODE: 'global',
+        DEFAULT_LANGUAGE_CODE: 'de',
+        LANGUAGE_CODES: 'de,ko,zh,en',
+      },
     }
   }
 
@@ -48,7 +50,7 @@ describe('internationalizationUrlBuilder', () => {
       })
     })
 
-    test('should not call redirect given an invalid route path', () => {
+    test('should call redirect given an invalid route path', () => {
       invalidPathArray.forEach((invalidPath) => {
         redirect.mockClear()
         urlBuilder(createContext({ path: invalidPath }))

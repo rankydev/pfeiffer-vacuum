@@ -1,6 +1,6 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Bubble from './Bubble'
-import { bubble } from '~/components/organisms/HomeStageModule/HomeStageModule.stories.content'
+import { bubble } from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.stories.content'
 import { bubbleText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
 
 const defaultProps = () => JSON.parse(JSON.stringify(bubble[0]))
@@ -45,7 +45,6 @@ describe('Bubble', () => {
       expect(domRichtext.attributes('richtext')).toBe(bubbleText.richtext)
       expect(bubblePosition.exists()).toBeTruthy()
     })
-
     // position left
     test('should render bubble left given position attribute left', () => {
       const propsData = {
@@ -55,6 +54,16 @@ describe('Bubble', () => {
       createComponent(propsData)
       const bubblePosition = wrapper.find('.bubble__wrapper--left')
       expect(bubblePosition.exists()).toBeTruthy()
+    })
+    // fallback component
+    test('should use fallback component name given no uiComponentKey', () => {
+      const propsData = {
+        ...defaultProps(),
+      }
+      delete propsData.richtext[0].uiComponent
+      createComponent(propsData)
+      const domRichtext = wrapper.find('[name="RichtextBasic"]')
+      expect(domRichtext.exists()).toBeTruthy()
     })
   })
 })

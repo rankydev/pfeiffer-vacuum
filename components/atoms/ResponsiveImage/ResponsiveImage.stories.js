@@ -18,6 +18,9 @@ const argTypes = {
   lazy: {
     control: { type: 'boolean' },
   },
+  rounded: {
+    control: { type: 'boolean' },
+  },
   provider: {
     defaultValue: 'storyblok',
   },

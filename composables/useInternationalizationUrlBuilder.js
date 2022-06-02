@@ -1,28 +1,29 @@
 import { withoutTrailingSlash } from 'ufo'
 
 const useInternationalizationUrlBuilder = ({ root: context }) => {
-  const REGIONS = context.$cms.regions.split(',')
-  const DEFAULT_REGION = context.$cms.defaultRegion
-
-  const LANGUAGES = context.$config.languages
-  const DEFAULT_LANGUAGE = context.$cms.defaultLanguageCode
+  const {
+    REGION_CODES,
+    DEFAULT_REGION_CODE,
+    DEFAULT_LANGUAGE_CODE,
+    LANGUAGE_CODES,
+  } = context.$config
 
   function buildUrl(url) {
     const urlsSegments = url.split('/').filter((segment) => segment !== '')
 
-    const region = REGIONS.includes(urlsSegments[0])
+    const region = REGION_CODES.includes(urlsSegments[0])
       ? urlsSegments.shift()
-      : DEFAULT_REGION
+      : DEFAULT_REGION_CODE
 
-    const language = LANGUAGES.includes(urlsSegments[0])
+    const language = LANGUAGE_CODES.includes(urlsSegments[0])
       ? urlsSegments.shift()
-      : DEFAULT_LANGUAGE
+      : DEFAULT_LANGUAGE_CODE
 
     const slug = urlsSegments.join('/')
 
     const generatedSlug = withoutTrailingSlash(`${region}/${slug}`)
     const generatedFallbackSlug = withoutTrailingSlash(
-      `${DEFAULT_REGION}/${slug}`
+      `${DEFAULT_REGION_CODE}/${slug}`
     )
 
     return {
