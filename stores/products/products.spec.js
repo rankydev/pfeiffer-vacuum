@@ -12,12 +12,21 @@ describe('Page store', () => {
       const product = productStore.getProductById(
         '128ee16d-cb90-45be-9986-c8006a5235e6_sample'
       )
+      expect(product).toBeTruthy()
       expect(product.code).toBe('128ee16d-cb90-45be-9986-c8006a5235e6_sample')
       expect(product.name).toBe('HiPace® 80')
-      expect(product).toBeTruthy()
+    })
+    test('should return all products from store', () => {
+      const productStore = useProductStore()
       const products = productStore.getAllProducts
       expect(products).toBeTruthy()
       expect(productStore.products).toBe(productStore.getAllProducts)
+    })
+    test('should return no properties given no valid ID', () => {
+      const productStore = useProductStore()
+      expect(productStore).toBeTruthy()
+      const product = productStore.getProductById('715')
+      expect(product).toStrictEqual({})
     })
   })
 })
