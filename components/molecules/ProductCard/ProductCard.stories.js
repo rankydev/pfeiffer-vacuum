@@ -3,7 +3,7 @@ import { product } from './ProductCard.stories.content'
 
 const argTypes = {
   productData: {
-    control: { type: 'text' },
+    control: { type: 'custom' },
     defaultValue: product,
     table: { type: { summary: null } },
   },
@@ -39,5 +39,4 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
-
 Default.args = {}
