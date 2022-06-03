@@ -48,12 +48,13 @@ export default defineComponent({
     },
     /**
      * variant defines if any style should be applied to the link itself
-     * @values none, inline, breadcrumb
+     * @values none, inline, breadcrumb, quicklink, textlink
      */
     variant: {
       type: String,
       default: 'none',
-      validator: (val) => ['none', 'inline', 'breadcrumb'].includes(val),
+      validator: (val) =>
+        ['none', 'inline', 'breadcrumb', 'quicklink', 'textlink'].includes(val),
     },
   },
   setup(props) {
@@ -81,19 +82,27 @@ export default defineComponent({
 .link {
   &--inline {
     @apply tw-text-pv-red;
-
-    &:hover {
-      @apply tw-underline;
-    }
+    @apply hover:tw-underline;
   }
 
   &--breadcrumb {
     @apply tw-text-pv-grey-16;
+    @apply hover:tw-text-pv-red-lighter;
+    @apply hover:tw-underline;
+  }
 
-    &:hover {
-      @apply tw-text-pv-red-lighter;
-      @apply tw-underline;
-    }
+  &--quicklink {
+    @apply tw-font-bold;
+    @apply tw-text-pv-grey-16;
+    @apply hover:tw-text-pv-red-lighter;
+  }
+
+  &--textlink {
+    @apply tw-transition-colors;
+    @apply tw-duration-300;
+    @apply tw-ease-out;
+    @apply tw-leading-6;
+    @apply hover:tw-underline;
   }
 }
 </style>
