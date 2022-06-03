@@ -43,9 +43,8 @@ export default defineComponent({
       props.productData.code ? store.getProductById(props.productData.code) : {}
     )
     const image = computed(() => product.value.images?.[0])
-    const productUrl = computed(() => product.value.url)
 
-    return { product, image, productUrl }
+    return { product, image }
   },
 })
 </script>
