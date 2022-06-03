@@ -1,7 +1,12 @@
 <template>
   <div>
-    <Link v-editable="label" class="text-link" v-bind="$attrs">
-      <b>{{ label }}</b>
+    <Link
+      v-editable="label"
+      class="text-link"
+      v-bind="$attrs"
+      variant="textlink"
+    >
+      {{ label }}
     </Link>
   </div>
 </template>
@@ -23,16 +28,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss">
-.text-link {
-  @apply tw-transition-colors;
-  @apply tw-duration-300;
-  @apply tw-ease-out;
-  @apply tw-leading-6;
-
-  &:hover {
-    @apply tw-underline;
-  }
-}
-</style>
