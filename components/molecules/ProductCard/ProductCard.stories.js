@@ -1,10 +1,10 @@
 import ProductCard from '~/components/molecules/ProductCard/ProductCard.vue'
-import { productID } from './ProductCard.stories.content'
+import { productID, product } from './ProductCard.stories.content'
 
 const argTypes = {
   productID: {
     control: { type: 'text' },
-    defaultValue: productID,
+    defaultValue: product,
     table: { type: { summary: null } },
   },
 }
@@ -19,7 +19,7 @@ export default {
           'The product card is a component which can be used to display products from Hybris which are selected by productID.',
       },
       source: {
-        code: `<ProductCard v-bind="{ productID }" />`,
+        code: `<ProductCard v-bind="{ product }" />`,
       },
     },
   },
