@@ -3,7 +3,6 @@
     :settings="settings"
     :slides="slides"
     is-wide
-    :infinite="infinite"
     :autoplay="autoplay"
     :autoplay-speed="autoplaySpeed"
     class="home-stage-carousel"
@@ -46,12 +45,13 @@ export default {
       default: '5000',
     },
   },
-  setup() {
+  setup(props) {
     const settings = {
       fade: true,
       slidesToShow: 1,
       slidesToScroll: 1,
       initialSlide: -1,
+      infinite: props.infinite,
       responsive: [
         {
           breakpoint: 1280,
