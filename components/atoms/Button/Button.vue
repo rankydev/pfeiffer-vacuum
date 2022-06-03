@@ -119,6 +119,7 @@ export default defineComponent({
     target: {
       type: String,
       default: '_self',
+      validator: (val) => ['_self', '_blank'].includes(val),
     },
   },
   setup(props) {
