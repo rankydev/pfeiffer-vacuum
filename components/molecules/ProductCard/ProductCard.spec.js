@@ -44,11 +44,10 @@ describe('ProductCard', () => {
     const ProductCardWrapper = wrapper.find('genericcard-stub')
     expect(ProductCardWrapper.vm).toBeTruthy()
   })
-  it.only('should render product data given a productId', () => {
+  it('should render product data given a productId', () => {
     createComponent({
       productData: { code: product.code, name: product.name },
     })
-    console.log(wrapper.text())
     expect(wrapper.text()).toContain(product.categories[0].name)
     expect(wrapper.find('span').text()).toBe(product.name)
     expect(wrapper.find('p').text()).toBe(product.description)
