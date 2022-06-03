@@ -52,9 +52,13 @@ export default defineComponent({
 
   &__item {
     @apply tw-mb-1;
+    @apply tw-pb-2;
+    @apply tw-text-sm;
 
     @screen lg {
       @apply tw-mb-2;
+      @apply tw-text-base;
+      @apply tw-pb-4;
     }
   }
 }

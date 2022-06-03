@@ -1,7 +1,7 @@
 <template>
   <div>
     <Link v-editable="label" class="text-link" v-bind="$attrs">
-      <b>{{ label }}</b>
+      {{ label }}
     </Link>
   </div>
 </template>
