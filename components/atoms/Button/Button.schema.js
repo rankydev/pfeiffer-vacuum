@@ -82,7 +82,7 @@ export default {
         },
       ],
     },
-    ...Link,
+    ...Link.schema,
   },
   image: null,
   preview_field: null,
