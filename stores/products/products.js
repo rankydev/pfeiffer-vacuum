@@ -140,7 +140,7 @@ export const useProductStore = defineStore('product', {
               name: 'HiCube Pro',
             },
           ],
-          code: 'PM_S43_590_00_sample',
+          code: 'f35d5da3-6db5-4175-aa5b-0ba195e3789a_sample',
           configurable: false,
           description: '',
           images: [

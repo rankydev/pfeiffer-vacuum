@@ -1,5 +1,5 @@
 <template>
-  <GenericCard :image-size="'contain'" :href="''">
+  <GenericCard :image-size="'contain'" :href="product.url || ''">
     <template #image>
       <ResponsiveImage
         :image="image"
@@ -42,9 +42,10 @@ export default defineComponent({
     const product = computed(() =>
       props.productData.code ? store.getProductById(props.productData.code) : {}
     )
-    const image = computed(() => product.images?.[0])
+    const image = computed(() => product.value.images?.[0])
+    const productUrl = computed(() => product.value.url)
 
-    return { product, image }
+    return { product, image, productUrl }
   },
 })
 </script>
