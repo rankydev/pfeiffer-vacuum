@@ -30,7 +30,7 @@ export default defineComponent({
   components: { ResponsiveImage },
   props: {
     /**
-     * productID that specifies Product Card
+     * productData that specifies Product Card
      */
     productData: {
       type: Object,
