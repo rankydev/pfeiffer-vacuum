@@ -1,5 +1,5 @@
 <template>
-  <GenericCard :image-size="'contain'" :href="product.url || ''">
+  <GenericCard :image-size="'contain'" :href="(product || {}).url || ''">
     <template #image>
       <ResponsiveImage
         :image="image"

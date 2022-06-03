@@ -1,22 +1,23 @@
 import { shallowMount, createLocalVue, mount } from '@vue/test-utils'
-import { createPinia, setActivePinia } from 'pinia'
+import { setActivePinia, createPinia } from 'pinia'
 import { useProductStore } from '~/stores/products/products'
-// import { useProductStore } from '~/stores/products/products.js'
 import ProductCard from './ProductCard.vue'
+import { product, productID } from './ProductCard.stories.content.js'
+import { expect, it } from '@jest/globals'
 
-// jest.mock('~/stores/products', () => {
-//   const { product } = require('./ProductCard.stories.content.js')
-//   const getProductById = () => product
+jest.mock('~/stores/products', () => {
+  const { product } = require('./ProductCard.stories.content.js')
+  const getProductById = () => product
 
-//   return {
-//     __esModule: true,
-//     useProductStore: () => ({ getProductById }),
-//   }
-// })
+  return {
+    __esModule: true,
+    useProductStore: () => ({ getProductById }),
+  }
+})
 
 let wrapper
 
-function createComponent(propsData = {}, { shallow = true } = {}) {
+function createComponent(propsData = {}, shallow = true) {
   const localVue = createLocalVue()
   const editable = (el, key) => (el.innerText = key.value)
   localVue.directive('editable', editable)
@@ -24,39 +25,40 @@ function createComponent(propsData = {}, { shallow = true } = {}) {
   const options = {
     localVue,
     propsData,
+    stubs: {
+      GenericCard: true,
+      ResponsiveImage: true,
+    },
   }
-
-  // wrapper = shallowMount(ProductCard, options)
 
   wrapper = shallow
     ? shallowMount(ProductCard, options)
     : mount(ProductCard, options)
-  // wrapper = shallowMount(ProductCard, options)
 }
-
-// describe('ProductCard', () => {
-//   describe('initial state', () => {
-//     it('should render given the minimal setup', () => {
-//       const propsData = { ...defaultProps() }
-//     })
-//   })
-// })
 
 describe('ProductCard', () => {
   beforeEach(() => setActivePinia(createPinia()))
 
   it('should render empty component without warnings given no productId', () => {
-    createComponent()
-    // const ProductCardWrapper = wrapper.find('GenericCard')
-    // console.log(ProductCardWrapper)
-    // expect(wrapper.vm).toBeTruthy()
+    createComponent({})
+    const ProductCardWrapper = wrapper.find('genericcard-stub')
+    expect(ProductCardWrapper.vm).toBeTruthy()
   })
-  it('should render all product data given a productId', () => {})
-  it('should call getProductById given productId', () => {})
-
-  // it('increments by amount', () => {
-  //   const counter = useCounter()
-  //   counter.increment(10)
-  //   expect(counter.n).toBe(10)
-  // })
+  it.only('should render product data given a productId', () => {
+    createComponent({
+      productData: { code: product.code, name: product.name },
+    })
+    console.log(wrapper.text())
+    expect(wrapper.text()).toContain(product.categories[0].name)
+    expect(wrapper.find('span').text()).toBe(product.name)
+    expect(wrapper.find('p').text()).toBe(product.description)
+  })
+  it('should call getProductById given productId', () => {
+    const productStore = useProductStore()
+    expect(productStore).toBeTruthy()
+    const storeProduct = productStore.getProductById(productID)
+    expect(storeProduct).toBeTruthy()
+    const storeProducts = productStore.getAllProducts
+    expect(storeProducts).toBeTruthy()
+  })
 })
