@@ -102,10 +102,6 @@ export default {
     linksTransformer: './resolver/linksTransformer',
   },
 
-  publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL || 'https://localhost:3000',
-  },
-
   server: {
     // for local change add 'environments/local.js'
     port: process.env.PORT || 3000,
@@ -113,6 +109,7 @@ export default {
   },
 
   publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL || 'https://localhost:3000',
     LANGUAGE_CODES: (process.env.LANGUAGE_CODES || 'en').split(','),
     REGION_CODES: (process.env.REGION_CODES || 'global').split(','),
     DEFAULT_LANGUAGE_CODE: process.env.DEFAULT_LANGUAGE_CODE || 'en',
