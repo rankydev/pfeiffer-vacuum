@@ -1,10 +1,10 @@
 import ProductCard from '~/components/molecules/ProductCard/ProductCard.vue'
-import { product as productData } from './ProductCard.stories.content'
+import { product } from './ProductCard.stories.content'
 
 const argTypes = {
   product: {
     control: { type: 'object' },
-    defaultValue: productData,
+    defaultValue: product,
     table: { type: { summary: null } },
   },
 }
