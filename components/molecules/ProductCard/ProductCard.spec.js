@@ -46,7 +46,7 @@ describe('ProductCard', () => {
   })
   it('should render product data given a productId', () => {
     createComponent({
-      productData: { code: product.code, name: product.name },
+      product: { code: product.code, name: product.name },
     })
     expect(wrapper.text()).toContain(product.categories[0].name)
     expect(wrapper.find('span').text()).toBe(product.name)

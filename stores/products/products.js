@@ -27,14 +27,13 @@ export const useProductStore = defineStore('product', {
           ],
           code: '128ee16d-cb90-45be-9986-c8006a5235e6_sample',
           configurable: false,
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cursus ornare est diam aliquet turpis enim felis bibendum net…',
+          description: '',
           images: [
             {
               altText: 'HiPace® 80 for TCP 350, DN 63 ISO-K',
               format: 'product',
               imageType: 'PRIMARY',
-              url: 'medias/?context=bWFzdGVyfGltYWdlc3w0NTcwMDd8aW1hZ2UvcG5nfGgxMy9oYTEvODgyNDY4Nzk1MTkwMnxjNGJlMmFkN2RkZTBhOWNjOTdlZThjNzMyYzlhMTc5ZWQ0YmE1ZTlkOTU4NmQ4ZGY1NzI3YmY0YWI1M2ZmNTYz',
+              url: '/medias/?context=bWFzdGVyfGltYWdlc3wzNTE0Njd8aW1hZ2UvcG5nfGgzNy9oMjMvODgxOTQ1NzA2NDk5MHw5MjM5ZmNhYWRkODlmYWZlMWY5ODhlODA5NWYwOGM2ODAzZDlkM2FlMzkxYWZkZjhlZjVlNzJmOWM1NjMwNTZm',
             },
           ],
           name: 'HiPace® 80',
@@ -140,7 +139,7 @@ export const useProductStore = defineStore('product', {
               name: 'HiCube Pro',
             },
           ],
-          code: 'f35d5da3-6db5-4175-aa5b-0ba195e3789a_sample',
+          code: 'PM_S43_590_00_sample',
           configurable: false,
           description: '',
           images: [
