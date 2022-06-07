@@ -2,18 +2,18 @@ export default {
   name: 'ProductCard',
   display_name: 'ProductCard',
   schema: {
-    productData: {
-      type: 'custom',
-      required: true,
-      field_type: 'shop-url-selector',
-      options: [
-        {
-          name: 'domain',
-          value: 'https://dev.vacuum-shop.com/api/shop',
-        },
-      ],
-      display_name: 'Product-Picker',
-    },
+    // productData: {
+    //   type: 'custom',
+    //   required: true,
+    //   field_type: 'shop-url-selector',
+    //   options: [
+    //     {
+    //       name: 'domain',
+    //       value: 'https://dev.vacuum-shop.com/api/shop',
+    //     },
+    //   ],
+    //   display_name: 'Product-Picker',
+    // },
   },
   image: null,
   preview_field: null,
