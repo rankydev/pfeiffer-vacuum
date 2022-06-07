@@ -1,33 +1,34 @@
 <template>
-  <Link v-bind="{ href, target }">
-    <button
-      class="button"
-      :class="[
-        `button--${variant}`,
-        `button--${size}`,
-        `button--cutaway-${cutaway}`,
-        `button--${isPrimary ? 'filled' : shape}`,
-        {
-          'button--disabled': disabled,
-          'button--icon-only': !label,
-        },
-      ]"
-      :disabled="disabled"
-    >
-      <span v-if="label" class="button__label">{{ label }}</span>
-      <Icon
-        v-if="icon"
-        :icon="icon"
-        :size="iconSize"
-        :class="{
-          'button__icon--prepend': label && prependIcon,
-          'button__icon--append': label && !prependIcon,
-        }"
-      />
-      <!--TODO: clarify why the next line is needed-->
-      <template v-if="!icon && !label">&nbsp;&nbsp;</template>
-    </button>
-  </Link>
+  <component
+    :is="href ? 'Link' : 'button'"
+    v-bind="href && { href, target }"
+    class="button"
+    :class="[
+      `button--${variant}`,
+      `button--${size}`,
+      `button--cutaway-${cutaway}`,
+      `button--${isPrimary ? 'filled' : shape}`,
+      {
+        'button--disabled': disabled,
+        'button--icon-only': !label,
+      },
+    ]"
+    :disabled="disabled"
+  >
+    <span v-if="label" class="button__label">{{ label }}</span>
+    <Icon
+      v-if="icon"
+      :icon="icon"
+      :size="iconSize"
+      :class="{
+        'button__icon--prepend': label && prependIcon,
+        'button__icon--append': label && !prependIcon,
+      }"
+    />
+    <!-- This makes sure there is at least whitespace as
+    content in the button if no icon or label are provided -->
+    <template v-if="!icon && !label">&nbsp;&nbsp;</template>
+  </component>
 </template>
 
 <script>
