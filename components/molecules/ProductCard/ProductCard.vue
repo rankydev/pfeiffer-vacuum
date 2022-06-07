@@ -2,7 +2,7 @@
   <GenericCard :image-size="'contain'" :href="(product || {}).url || ''">
     <template #image>
       <ResponsiveImage
-        :image="image"
+        :image="image || {}"
         aspect-ratio="16:9"
         :provider="'static'"
       />
@@ -23,7 +23,6 @@
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
-import { useProductStore } from '~/stores/products'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
 export default defineComponent({
@@ -32,19 +31,15 @@ export default defineComponent({
     /**
      * productData that specifies Product Card
      */
-    productData: {
+    product: {
       type: Object,
       default: () => ({}),
     },
   },
   setup(props) {
-    const store = useProductStore()
-    const product = computed(() =>
-      props.productData.code ? store.getProductById(props.productData.code) : {}
-    )
-    const image = computed(() => product.value.images?.[0])
+    const image = computed(() => props.product.images?.[0])
 
-    return { product, image }
+    return { image }
   },
 })
 </script>
