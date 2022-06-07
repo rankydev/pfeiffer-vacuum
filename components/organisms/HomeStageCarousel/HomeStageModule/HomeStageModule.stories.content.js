@@ -78,3 +78,5 @@ export const homeStageModuleContent3 = {
   },
   ...requiredContent,
 }
+
+export default {}

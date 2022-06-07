@@ -102,10 +102,6 @@ export default {
     linksTransformer: './resolver/linksTransformer',
   },
 
-  publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL || 'https://localhost:3000',
-  },
-
   server: {
     // for local change add 'environments/local.js'
     port: process.env.PORT || 3000,
@@ -113,6 +109,7 @@ export default {
   },
 
   publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL || 'https://localhost:3000',
     LANGUAGE_CODES: (process.env.LANGUAGE_CODES || 'en').split(','),
     REGION_CODES: (process.env.REGION_CODES || 'global').split(','),
     DEFAULT_LANGUAGE_CODE: process.env.DEFAULT_LANGUAGE_CODE || 'en',
@@ -130,10 +127,21 @@ export default {
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
   image: {
+    // fallback if provider is not defined
     provider: 'storyblok',
+    providers: {
+      hybris: {
+        provider: '~/providers/images/hybrisProvider',
+      },
+    },
     storyblok: {
       baseURL: 'https://img2.storyblok.com',
     },
-    domains: ['s3-alpha-sig.figma.com'],
+    // domain whitelist
+    domains: [],
   },
+  serverMiddleware: [
+    // Will register file from project server-middleware directory to handle /server-middleware/* requires
+    { path: '/api', handler: '~/server/middleware/index.js' },
+  ],
 }

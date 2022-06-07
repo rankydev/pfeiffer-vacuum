@@ -4,7 +4,7 @@
       <ResponsiveImage
         :image="image"
         aspect-ratio="16:9"
-        :provider="'static'"
+        :provider="'hybris'"
       />
     </template>
     <template #subheading>
