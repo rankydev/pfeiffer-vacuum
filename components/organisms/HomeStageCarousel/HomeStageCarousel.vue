@@ -11,6 +11,7 @@
 
 <script>
 import Carousel from '~/components/atoms/Carousel/Carousel'
+import tailwindconfig from '@/tailwind.config'
 export default {
   name: 'HomeStageCarousel',
   components: { Carousel },
@@ -46,6 +47,17 @@ export default {
     },
   },
   setup(props) {
+    const tailwindConfigScreens = tailwindconfig.theme.screens
+
+    /**
+     * split string of tailwind breakpoint, so lib aknowledges breakpoint
+     */
+    const splitBreakpointString = (breakpointString) => {
+      const split = breakpointString.split('px')
+
+      return parseInt(split[0])
+    }
+
     const settings = {
       fade: true,
       slidesToShow: 1,
@@ -54,9 +66,17 @@ export default {
       infinite: props.infinite,
       responsive: [
         {
-          breakpoint: 1280,
+          breakpoint: splitBreakpointString(tailwindConfigScreens.lg),
           settings: {
             slidesToShow: 1,
+          },
+        },
+        {
+          breakpoint: splitBreakpointString(tailwindConfigScreens.md),
+          settings: {
+            slidesToShow: 1,
+            dots: true,
+            arrows: false,
           },
         },
       ],
