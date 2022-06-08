@@ -74,6 +74,19 @@ describe('Link', () => {
       })
     })
 
+    describe('given label', () => {
+      it('should render the label text', () => {
+        const propsData = {
+          target: '_blank',
+          href: 'https://www.example.com',
+          label: 'Example.com',
+        }
+        createComponent(propsData)
+
+        expect(wrapper.text()).toBe(propsData.label)
+      })
+    })
+
     describe.each([
       ['none'],
       ['inline'],

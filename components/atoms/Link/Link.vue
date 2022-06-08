@@ -1,6 +1,7 @@
 <template>
   <a v-if="isAnchorLink" v-bind="bindings" @click="beforeNavigation">
-    <slot :isActive="false" :isExactActive="false" />
+    <template v-if="label">{{ label }}</template>
+    <slot v-else :isActive="false" :isExactActive="false" />
   </a>
 
   <NuxtLink
@@ -13,7 +14,8 @@
       :href="link"
       @click="($event) => beforeNavigation($event) && navigate($event)"
     >
-      <slot :isActive="isActive" :isExactActive="isExactActive" />
+      <template v-if="label">{{ label }}</template>
+      <slot v-else :isActive="isActive" :isExactActive="isExactActive" />
     </a>
   </NuxtLink>
 </template>
@@ -55,6 +57,13 @@ export default defineComponent({
       default: 'none',
       validator: (val) =>
         ['none', 'inline', 'breadcrumb', 'quicklink', 'textlink'].includes(val),
+    },
+    /**
+     * The label of the link. Optional, can be used instead of providing content for the template slot.
+     */
+    label: {
+      type: String,
+      default: '',
     },
   },
   setup(props) {

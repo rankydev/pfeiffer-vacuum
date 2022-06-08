@@ -1,4 +1,4 @@
-import Link from '~/components/atoms/Link/Link.schema.js'
+import Link from './Link.schema.js'
 
 export default {
   name: 'TextLink',
@@ -10,6 +10,19 @@ export default {
       display_name: 'Label',
     },
     ...Link.schema,
+    'tab-advanced': {
+      type: 'tab',
+      display_name: 'Advanced',
+      keys: ['uiComponent', 'variant'],
+    },
+    uiComponent: {
+      type: 'text',
+      default_value: 'Link',
+    },
+    variant: {
+      type: 'text',
+      default_value: 'textlink',
+    },
   },
   image: null,
   preview_field: null,
