@@ -1,8 +1,8 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import HomeStageModule from './HomeStageModule'
-import HomeStageContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/partials/HomeStageContent/HomeStageContent'
+import HomeStageModule from './HomeStageSlide'
+import HomeStageContent from '@/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent'
 import Bubble from '~/components/molecules/Bubble/Bubble'
-import { homeStageModuleContent } from './HomeStageModule.stories.content'
+import { homeStageModuleContent } from './HomeStageSlide.stories.content'
 
 const nuxtImg = {
   template: '<div>some image</div>',

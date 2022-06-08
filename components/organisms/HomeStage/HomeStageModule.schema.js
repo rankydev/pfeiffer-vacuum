@@ -1,12 +1,12 @@
 export default {
-  name: 'HomeStageCarousel',
-  display_name: 'Home Stage Carousel',
+  name: 'HomeStageModule',
+  display_name: 'Home Stage Module',
   schema: {
     slides: {
       type: 'bloks',
       display_name: 'Slides',
       restrict_components: true,
-      component_whitelist: ['HomeStageModule'],
+      component_whitelist: ['HomeStageSlide'],
       maximum: 5,
       required: true,
       pos: 1,
@@ -38,6 +38,6 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'HomeStageCarousel',
+  real_name: 'HomeStageModule',
   component_group_uuid: null,
 }

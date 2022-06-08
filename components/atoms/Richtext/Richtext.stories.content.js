@@ -146,7 +146,7 @@ export const newsletterText = {
     '<!--#storyblok#{"name": "RichtextBasic", "space": "152017", "uid": "4d12b093-e25f-4ff2-bc8c-f645ca6e0e11", "id": "119228911"}-->',
 }
 
-export const homestageContentText = {
+export const homestageSlideContentText = {
   _uid: '4d12b093-e25f-4ff2-bc8c-f645ca6e0e11',
   richtext:
     '<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>',

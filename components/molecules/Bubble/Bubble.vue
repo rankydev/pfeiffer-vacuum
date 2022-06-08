@@ -55,15 +55,15 @@ $bubble-width-md: $bubble-height-md;
 $bubble-height-lg: 180px;
 $bubble-width-lg: $bubble-height-lg;
 $bubble-bottom-md: 144px;
-$bubble-left-md: 50vw;
+$bubble-left-md: 50%;
 $bubble-right-md: unset;
-$bubble-top-lg: 134px;
+$bubble-top-lg: 90px;
 $bubble-bottom-lg: unset;
-$bubble-left-lg: 66vw;
+$bubble-left-lg: 66%;
 $bubble-right-lg: unset;
-$bubble-left-xl: 50vw;
+$bubble-left-xl: 55%;
 $bubble-right-xl: unset;
-$bubble-top-xl: 18.7573vw;
+$bubble-top-xl: 180px;
 $bubble-text-xxs: 10px;
 
 .bubble {
@@ -72,7 +72,6 @@ $bubble-text-xxs: 10px;
     @apply tw-flex-col;
     @apply tw-justify-center;
     @apply tw-items-center;
-    @apply tw-absolute;
     @apply tw-absolute;
     @apply tw-rounded-full;
     @apply tw-bg-pv-red;

@@ -1,18 +1,18 @@
 <template>
-  <div v-editable="(headline, buttons)" class="homestage-content">
-    <h2 v-if="headline" class="homestage-content__headline tw-hero">
+  <div v-editable="(headline, buttons)" class="homestage-slide-content">
+    <h2 v-if="headline" class="homestage-slide-content__headline tw-hero">
       {{ headline }}
     </h2>
 
     <NuxtDynamic
       v-for="item in richtext"
       :key="item._uid"
-      class="homestage-content__description tw-teaser"
+      class="homestage-slide-content__description tw-teaser"
       v-bind="item"
       :name="item.uiComponent || item.component"
     />
 
-    <div v-if="buttons.length" class="homestage-content__buttons">
+    <div v-if="buttons.length" class="homestage-slide-content__buttons">
       <Button v-for="button in buttons" :key="button._uid" v-bind="button" />
     </div>
   </div>
@@ -22,7 +22,7 @@
 import Button from '~/components/atoms/Button/Button.vue'
 
 export default {
-  name: 'HomeStageContent',
+  name: 'HomeStageSlideContent',
   components: { Button },
   props: {
     /**
@@ -51,13 +51,14 @@ export default {
 </script>
 
 <style lang="scss">
-.homestage-content {
+.homestage-slide-content {
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-grow;
   @apply tw-px-4;
   @apply tw-py-6;
   @apply tw-z-10;
+  min-width: 50%;
 
   @screen md {
     @apply tw-px-10;

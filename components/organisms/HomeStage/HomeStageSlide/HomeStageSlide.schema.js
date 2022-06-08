@@ -1,12 +1,12 @@
 export default {
-  name: 'HomeStageModule',
-  display_name: 'HomeStageModule',
+  name: 'HomeStageSlide',
+  display_name: 'HomeStageSlide',
   schema: {
     stageContent: {
       type: 'bloks',
       maximum: 1,
       restrict_components: true,
-      component_whitelist: ['HomeStageContent'],
+      component_whitelist: ['HomeStageSlideContent'],
       display_name: 'Home Stage Content',
       required: true,
     },
@@ -36,5 +36,5 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'HomeStageModule',
+  real_name: 'HomeStageSlide',
 }

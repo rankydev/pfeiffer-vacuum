@@ -1,24 +1,24 @@
-import HomeStageModule from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.vue'
-import { homeStageModuleContent } from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.stories.content'
+import HomeStageSlide from '~/components/organisms/HomeStage/HomeStageSlide/HomeStageSlide.vue'
+import { homeStageSlideContent } from '~/components/organisms/HomeStage/HomeStageSlide/HomeStageSlide.stories.content'
 
 const argTypes = {
   stageContent: {
-    defaultValue: homeStageModuleContent.stageContent,
+    defaultValue: homeStageSlideContent.stageContent,
   },
   image: {
-    defaultValue: homeStageModuleContent.image,
+    defaultValue: homeStageSlideContent.image,
   },
   interlay: {
-    defaultValue: homeStageModuleContent.interlay,
+    defaultValue: homeStageSlideContent.interlay,
   },
   bubble: {
-    defaultValue: homeStageModuleContent.bubble,
+    defaultValue: homeStageSlideContent.bubble,
   },
 }
 
 export default {
-  title: 'Organisms/HomeStageModule',
-  component: HomeStageModule,
+  title: 'organisms/HomeStageSlide',
+  component: HomeStageSlide,
   parameters: {
     docs: {
       description: {
@@ -29,7 +29,7 @@ export default {
           'https://confluence.diva-e.com/display/PVWEB/HomeStage+Component',
       },
       source: {
-        code: '<HomeStageModule v-bind="{ stageContent, image, interlay, bubble }"  />',
+        code: '<HomeStageSlide v-bind="{ stageContent, image, interlay, bubble }"  />',
       },
     },
   },
@@ -37,7 +37,7 @@ export default {
 }
 
 const Template = (args) => ({
-  components: { HomeStageModule },
+  components: { HomeStageSlide },
   setup() {
     return {
       args,
@@ -45,7 +45,7 @@ const Template = (args) => ({
   },
   template: `
   <div class="documentation-preview">
-    <HomeStageModule v-bind="args"/>
+    <HomeStageSlide v-bind="args"/>
   </div>
 `,
 })

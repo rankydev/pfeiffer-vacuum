@@ -1,6 +1,6 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import HomeStageCarouselContent from './HomeStageCarousel.stories.content'
-import HomeStageCarousel from './HomeStageCarousel'
+import HomeStageCarouselContent from './HomeStageModule.stories.content'
+import HomeStageCarousel from './HomeStageModule'
 
 let wrapper
 

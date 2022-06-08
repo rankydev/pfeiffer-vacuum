@@ -1,9 +1,9 @@
-import { homestageContentText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
+import { homestageSlideContentText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
 
 export default {
   headline: 'Komplettlösungen für jeden Vakuumbereich',
-  component: 'HomeStageContent',
-  richtext: [homestageContentText],
+  component: 'HomeStageSlideContent',
+  richtext: [homestageSlideContentText],
   buttons: [
     {
       icon: 'arrow_forward',
@@ -18,7 +18,7 @@ export default {
     {
       icon: 'arrow_forward',
       size: 'normal',
-      label: 'Produkte entdecken',
+      label: 'Anwendungen finden',
       shape: 'outlined',
       variant: 'inverted',
       disabled: false,

@@ -1,24 +1,24 @@
 <template>
   <div
     v-editable="stageContent"
-    class="homestage"
+    class="homestage-slide"
     :style="{
       backgroundImage: `url(${image.originalFilename})`,
     }"
   >
     <HomeStageContent
       v-if="stageContent.length"
-      class="homestage__content-block"
+      class="homestage-slide__content-block"
       v-bind="stageContent[0]"
     />
-    <div class="homestage__visual-wrapper">
+    <div class="homestage-slide__visual-wrapper">
       <NuxtImg
         :src="interlay.originalFilename"
         :alt="interlay.alt || ''"
         :title="interlay.title || ''"
         :provider="'storyblok'"
         :loading="undefined"
-        class="homestage__image"
+        class="homestage-slide__image"
       />
       <Bubble
         v-if="bubble[0]"
@@ -31,11 +31,11 @@
 </template>
 
 <script>
-import HomeStageContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/partials/HomeStageContent/HomeStageContent.vue'
+import HomeStageContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.vue'
 import Bubble from '~/components/molecules/Bubble/Bubble'
 
 export default {
-  name: 'HomeStageModule',
+  name: 'HomeStageSlide',
   components: {
     HomeStageContent,
     Bubble,
@@ -85,7 +85,8 @@ $home-stage-spacing-lg: 80px; // 100%
 $home-stage-spacing-md: calc($home-stage-spacing-lg * 0.8); // 80%
 $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
 
-.homestage {
+.homestage-slide {
+  width: 100vw;
   @apply tw-flex;
   @apply tw-relative;
   @apply tw-overflow-hidden;
@@ -106,6 +107,10 @@ $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
     height: $home-stage-height-xl;
   }
 
+  &__content-block {
+    z-index: 2;
+  }
+
   &__visual-wrapper {
     height: 154px;
 
@@ -119,6 +124,7 @@ $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
     @apply tw-h-auto;
     bottom: -$home-stage-spacing-xs;
     right: -$home-stage-spacing-xs;
+    z-index: 1;
 
     @screen sm {
       width: $home-stage-width-sm;
