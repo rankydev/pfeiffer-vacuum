@@ -1,5 +1,5 @@
 <template>
-  <a v-if="isAnchorLink" v-bind="bindings" @click="clickHandler">
+  <a v-if="isAnchorLink" v-bind="bindings" @click="beforeNavigation">
     <slot :isActive="false" :isExactActive="false" />
   </a>
 
@@ -62,11 +62,6 @@ export default defineComponent({
       return !isInternalLink || props.target !== '_self'
     })
 
-    const clickHandler = ($event) => {
-      const result = props.beforeNavigation($event)
-      return result
-    }
-
     const bindings = computed(() => ({
       ...(isAnchorLink.value && { href: props.href }),
       ...(isAnchorLink.value && { target: props.target }),
@@ -77,7 +72,6 @@ export default defineComponent({
     return {
       isAnchorLink,
       bindings,
-      clickHandler,
     }
   },
 })

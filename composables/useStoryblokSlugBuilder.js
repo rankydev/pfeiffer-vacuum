@@ -23,7 +23,7 @@ const useStoryblokSlugBuilder = ({ root: context }) => {
     const urlSegments = url.split('/').filter((segment) => segment !== '')
 
     /**
-     * splice the first segment, if itt is a valid language code
+     * splice the first segment, if it is a valid language code
      * returns default lanugage code otherwise
      */
     const language = LANGUAGE_CODES.includes(urlSegments[0])

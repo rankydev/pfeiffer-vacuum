@@ -24,7 +24,10 @@
           }"
           v-bind="entry"
           :before-navigation="
-            ($event) => (!hasSubmenu(entry) ? true : toggleActive($event, idx))
+            ($event) =>
+              !hasSubmenu(entry)
+                ? (activeElement = null) && true
+                : toggleActive($event, idx)
           "
         >
           <span :class="`${prefix}__label`">{{ entry.label }}</span>
