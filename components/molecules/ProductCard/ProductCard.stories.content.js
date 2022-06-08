@@ -29,7 +29,7 @@ export const product = {
       altText: 'HiPace® 80 for TCP 350, DN 63 ISO-K',
       format: 'product',
       imageType: 'PRIMARY',
-      url: '/medias/?context=bWFzdGVyfGltYWdlc3wzNTE0Njd8aW1hZ2UvcG5nfGgzNy9oMjMvODgxOTQ1NzA2NDk5MHw5MjM5ZmNhYWRkODlmYWZlMWY5ODhlODA5NWYwOGM2ODAzZDlkM2FlMzkxYWZkZjhlZjVlNzJmOWM1NjMwNTZm',
+      url: '/medias/product-image.png',
     },
   ],
   name: 'HiPace® 80',
