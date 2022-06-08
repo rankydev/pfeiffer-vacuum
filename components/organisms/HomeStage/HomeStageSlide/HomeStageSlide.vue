@@ -1,24 +1,24 @@
 <template>
   <div
     v-editable="stageContent"
-    class="homestage-slide"
+    class="home-stage-slide"
     :style="{
       backgroundImage: `url(${image.originalFilename})`,
     }"
   >
     <HomeStageContent
       v-if="stageContent.length"
-      class="homestage-slide__content-block"
+      class="home-stage-slide__content-block"
       v-bind="stageContent[0]"
     />
-    <div class="homestage-slide__visual-wrapper">
+    <div class="home-stage-slide__visual-wrapper">
       <NuxtImg
         :src="interlay.originalFilename"
         :alt="interlay.alt || ''"
         :title="interlay.title || ''"
         :provider="'storyblok'"
         :loading="undefined"
-        class="homestage-slide__image"
+        class="home-stage-slide__image"
       />
       <Bubble
         v-if="bubble[0]"
@@ -85,9 +85,8 @@ $home-stage-spacing-lg: 80px; // 100%
 $home-stage-spacing-md: calc($home-stage-spacing-lg * 0.8); // 80%
 $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
 
-.homestage-slide {
+.home-stage-slide {
   width: 100vw;
-  @apply tw-flex;
   @apply tw-relative;
   @apply tw-overflow-hidden;
   @apply tw-bg-no-repeat tw-bg-cover tw-bg-center;

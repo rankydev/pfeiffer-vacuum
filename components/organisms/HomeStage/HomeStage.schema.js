@@ -1,6 +1,6 @@
 export default {
-  name: 'HomeStageModule',
-  display_name: 'Home Stage Module',
+  name: 'HomeStage',
+  display_name: 'Home Stage',
   schema: {
     slides: {
       type: 'bloks',
@@ -38,6 +38,6 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'HomeStageModule',
+  real_name: 'HomeStage',
   component_group_uuid: null,
 }

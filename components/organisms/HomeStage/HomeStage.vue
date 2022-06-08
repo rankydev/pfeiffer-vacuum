@@ -5,7 +5,7 @@
     is-wide
     :autoplay="autoplay"
     :autoplay-speed="autoplaySpeed"
-    class="home-stage-module"
+    class="home-stage"
   />
 </template>
 
@@ -13,7 +13,7 @@
 import Carousel from '~/components/atoms/Carousel/Carousel'
 import tailwindconfig from '@/tailwind.config'
 export default {
-  name: 'HomeStageModule',
+  name: 'HomeStage',
   components: { Carousel },
   props: {
     /**
@@ -29,7 +29,7 @@ export default {
      */
     infinite: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     /**
      * enables/ disables autoplay
@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss">
-.home-stage-module {
+.home-stage {
   .slick-slider {
     padding: 0;
 
@@ -100,7 +100,7 @@ export default {
       .slick-slide {
         min-width: 100vw;
 
-        .homestage {
+        .home-stage-slide {
           // overwrite slick slide elements style
           display: flex !important;
         }

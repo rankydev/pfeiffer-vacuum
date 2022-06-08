@@ -1,28 +1,28 @@
-import HomeStageModule from './HomeStageModule.vue'
-import HomeStageModuleContent from './HomeStageModule.stories.content'
+import HomeStage from './HomeStage.vue'
+import HomeStageContent from './HomeStage.stories.content'
 
 const argTypes = {
   slides: {
     control: { type: 'array' },
-    defaultValue: HomeStageModuleContent.slides,
+    defaultValue: HomeStageContent.slides,
   },
   autoplay: {
     control: { type: 'boolean' },
-    defaultValue: HomeStageModuleContent.autoplay,
+    defaultValue: HomeStageContent.autoplay,
   },
   autoplaySpeed: {
     control: { type: 'number' },
-    defaultValue: HomeStageModuleContent.autoplaySpeed,
+    defaultValue: HomeStageContent.autoplaySpeed,
   },
   infinite: {
     control: { type: 'boolean' },
-    defaultValue: HomeStageModuleContent.infinite,
+    defaultValue: HomeStageContent.infinite,
   },
 }
 
 export default {
-  title: 'organisms/HomeStageModule',
-  component: HomeStageModule,
+  title: 'organisms/HomeStage',
+  component: HomeStage,
   parameters: {
     docs: {
       description: {
@@ -35,14 +35,14 @@ export default {
 }
 
 const Template = (args, { argTypes }) => ({
-  components: { HomeStageModule },
+  components: { HomeStage },
   props: Object.keys(argTypes),
   setup() {
     return { args }
   },
   template: `
     <div class="documentation-preview">
-      <HomeStageModule v-bind="args" />
+      <HomeStage v-bind="args" />
     </div>
   `,
 })
