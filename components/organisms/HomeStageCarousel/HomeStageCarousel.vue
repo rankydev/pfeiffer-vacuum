@@ -62,7 +62,7 @@ export default {
       fade: true,
       slidesToShow: 1,
       slidesToScroll: 1,
-      initialSlide: -1,
+      initialSlide: 0,
       infinite: props.infinite,
       responsive: [
         {
