@@ -106,10 +106,6 @@ $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
     height: $home-stage-height-xl;
   }
 
-  &__content-block {
-    z-index: 2;
-  }
-
   &__visual-wrapper {
     height: 154px;
 
@@ -123,7 +119,6 @@ $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
     @apply tw-h-auto;
     bottom: -$home-stage-spacing-xs;
     right: -$home-stage-spacing-xs;
-    z-index: 1;
 
     @screen sm {
       width: $home-stage-width-sm;
