@@ -91,6 +91,7 @@ export default defineComponent({
 .link {
   &--inline {
     @apply tw-text-pv-red;
+    @apply hover:tw-text-pv-red-lighter;
     @apply hover:tw-underline;
   }
 
