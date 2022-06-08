@@ -7,6 +7,7 @@ export default {
       display_name: 'Slides',
       restrict_components: true,
       component_whitelist: ['HomeStageModule'],
+      maximum: 5,
       required: true,
       pos: 1,
     },
@@ -25,7 +26,7 @@ export default {
     },
     infinite: {
       type: 'boolean',
-      display_name: 'Inifinite',
+      display_name: 'Infinite',
       description: 'Enables infinite wrap around slides on carousel.',
       pos: 4,
     },

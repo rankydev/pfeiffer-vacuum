@@ -1,11 +1,83 @@
 <template>
-  <div class="footer__newsletter">Newsletter Molecule</div>
+  <div v-editable="(headline, richtext, button)" class="newsletter">
+    <h2 v-if="headline" class="newsletter__headline">
+      {{ headline }}
+    </h2>
+
+    <NuxtDynamic
+      v-for="item in richtext"
+      :key="item._uid"
+      v-bind="item"
+      :name="item.uiComponent || item.component"
+      class="newsletter__description"
+    />
+    <div v-if="button.length">
+      <Button v-for="btn in button" :key="btn._uid" v-bind="btn" />
+    </div>
+  </div>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
-export default defineComponent({})
+export default defineComponent({
+  name: 'FooterNewsletter',
+  components: {},
+  props: {
+    /**
+     * This is a headline
+     */
+    headline: {
+      type: String,
+      default: '',
+    },
+    /**
+     * richtext element, containing the description
+     */
+    richtext: {
+      type: Array,
+      default: () => [],
+    },
+    /**
+     * This is a button
+     */
+    button: {
+      type: Array,
+      default: () => [],
+    },
+  },
+})
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.newsletter {
+  @apply tw-col-span-full;
+
+  @screen lg {
+    @apply tw-col-span-4;
+  }
+
+  &__headline {
+    @apply tw-text-pv-white;
+    @apply tw-pb-2;
+    @apply tw-text-base;
+    @apply tw-leading-6;
+
+    @screen lg {
+      @apply tw-text-xl;
+      @apply tw-leading-7;
+      @apply tw-pb-4;
+    }
+  }
+
+  &__description {
+    @apply tw-pb-2;
+    @apply tw-text-sm;
+
+    @screen lg {
+      @apply tw-text-base;
+      @apply tw-pb-4;
+    }
+  }
+}
+</style>

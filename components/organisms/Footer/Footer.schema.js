@@ -1,3 +1,5 @@
+import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter.schema'
+
 export default {
   name: 'Footer',
   display_name: 'Footer',
@@ -16,13 +18,7 @@ export default {
       component_whitelist: ['LinkList'],
       display_name: 'Navigation Columns',
     },
-    newsletter: {
-      type: 'bloks',
-      maximum: 1,
-      restrict_components: true,
-      component_whitelist: ['FooterNewsletter'],
-      display_name: 'Footer Newsletter',
-    },
+    ...FooterNewsletter.schema,
     copyright: {
       type: 'text',
       translatable: true,

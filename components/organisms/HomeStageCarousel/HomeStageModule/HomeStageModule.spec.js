@@ -2,14 +2,14 @@ import { createLocalVue, shallowMount } from '@vue/test-utils'
 import HomeStageModule from './HomeStageModule'
 import HomeStageContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/partials/HomeStageContent/HomeStageContent'
 import Bubble from '~/components/molecules/Bubble/Bubble'
-import content from './HomeStageModule.stories.content'
+import { homeStageModuleContent } from './HomeStageModule.stories.content'
 
 const nuxtImg = {
   template: '<div>some image</div>',
   props: ['src', 'modifiers', 'title', 'alt', 'provider'],
 }
 
-const defaultProps = () => JSON.parse(JSON.stringify(content))
+const defaultProps = () => JSON.parse(JSON.stringify(homeStageModuleContent))
 
 let wrapper
 
@@ -43,11 +43,11 @@ describe('HomeStageModule', () => {
       }
       createComponent(propsData)
       const contentElement = wrapper.findComponent(HomeStageContent)
-      expect(contentElement.vm.teaserText).toEqual(
-        propsData.stageContent[0][0].teaserText
+      expect(contentElement.vm.richtext[0].richtext).toEqual(
+        propsData.stageContent[0].richtext[0].richtext
       )
       expect(contentElement.vm.headline).toEqual(
-        propsData.stageContent[0][0].headline
+        propsData.stageContent[0].headline
       )
     })
 
