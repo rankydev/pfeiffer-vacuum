@@ -32,7 +32,6 @@ export default {
 
   router: {
     base: `/${process.env.CURRENT_REGION_CODE || 'global'}/`,
-    // base: '/',
     extendRoutes(routes) {
       // add root page to the routed object
       routes.push({

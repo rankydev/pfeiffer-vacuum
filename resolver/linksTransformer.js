@@ -3,7 +3,6 @@ function appendTrailingSlashIfRequired(url, append) {
 }
 
 export function transform(links, context) {
-  //TODO: get real base url
   const { DEFAULT_REGION_CODE, CURRENT_REGION_CODE, baseURL } = context.$config
 
   function transformUrl(url) {
