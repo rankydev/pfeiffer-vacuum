@@ -87,6 +87,30 @@ describe('Link', () => {
       })
     })
 
+    describe('given anchor', () => {
+      it('should render an a tag with the anchor as href', () => {
+        const propsData = {
+          anchor: '2',
+          label: 'Example.com',
+        }
+        createComponent(propsData)
+
+        const link = wrapper.find('a')
+        expect(link.exists()).toBeTruthy()
+        expect(link.attributes('href')).toBe('#2')
+      })
+      it('should not add # if it is already in the anchor', () => {
+        const propsData = {
+          anchor: '#2',
+          label: 'Example.com',
+        }
+        createComponent(propsData)
+
+        const link = wrapper.find('a')
+        expect(link.attributes('href')).toBe('#2')
+      })
+    })
+
     describe.each([
       ['none'],
       ['inline'],

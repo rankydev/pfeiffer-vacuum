@@ -65,6 +65,14 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    /**
+     * An optional anchor which can be used instead of href. If the anchor doesn't exist
+     * start with #, it will be added.
+     */
+    anchor: {
+      type: String,
+      default: '',
+    },
   },
   setup(props) {
     const isAnchorLink = computed(() => {
@@ -72,8 +80,14 @@ export default defineComponent({
       return !isInternalLink || props.target !== '_self'
     })
 
+    const anchor = computed(() =>
+      props.anchor.startsWith('#') ? props.anchor : `#${props.anchor}`
+    )
+
     const bindings = computed(() => ({
-      ...(isAnchorLink.value && { href: props.href }),
+      ...(isAnchorLink.value && {
+        href: props.anchor ? anchor.value : props.href,
+      }),
       ...(isAnchorLink.value && { target: props.target }),
       ...(!isAnchorLink.value && { to: props.href }),
       class: `link--${props.variant}`,

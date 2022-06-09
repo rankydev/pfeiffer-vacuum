@@ -9,7 +9,7 @@
       <Link
         v-for="item in quicklinks"
         :key="item._uid"
-        :href="`#${item.anchor}`"
+        :anchor="item.anchor"
         class="tw-paragraph"
         variant="quicklink"
       >
