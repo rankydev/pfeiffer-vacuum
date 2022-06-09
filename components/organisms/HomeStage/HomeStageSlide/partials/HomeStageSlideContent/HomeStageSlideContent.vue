@@ -58,7 +58,7 @@ export default {
   @apply tw-px-4;
   @apply tw-py-6;
   @apply tw-z-10;
-  min-width: 50%;
+  @apply tw-min-w-[50%];
 
   @screen md {
     @apply tw-px-10;

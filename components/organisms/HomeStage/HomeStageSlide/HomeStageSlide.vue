@@ -79,19 +79,24 @@ export default {
 </script>
 
 <style lang="scss">
+$home-stage-width: 100vw;
 $home-stage-height-xs: 512px;
 $home-stage-height-md: 768px;
 $home-stage-height-lg: 640px;
 $home-stage-height-xl: 853px;
-$home-stage-width-sm: 600px;
-$home-stage-min-width-md: 620px;
-$home-stage-width-lg: 1080px;
-$home-stage-spacing-lg: 80px; // 100%
-$home-stage-spacing-md: calc($home-stage-spacing-lg * 0.8); // 80%
-$home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
+$home-stage-interlay-width-sm: 600px;
+$home-stage-interlay-min-width-md: 620px;
+$home-stage-interlay-width-lg: 1080px;
+$home-stage-interlay-spacing-lg: 80px; // 100%
+$home-stage-interlay-spacing-md: calc(
+  $home-stage-interlay-spacing-lg * 0.8
+); // 80%
+$home-stage-interlay-spacing-xs: calc(
+  $home-stage-interlay-spacing-lg * 0.3
+); // 30%
 
 .home-stage-slide {
-  width: 100vw;
+  width: $home-stage-width;
   @apply tw-relative;
   @apply tw-overflow-hidden;
   @apply tw-bg-no-repeat tw-bg-cover tw-bg-center;
@@ -119,31 +124,31 @@ $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
     }
 
     @screen xl {
-      position: relative;
+      @apply tw-relative;
     }
   }
 
   &__image {
     @apply tw-absolute;
     @apply tw-h-auto;
-    bottom: -$home-stage-spacing-xs;
-    right: -$home-stage-spacing-xs;
+    bottom: -$home-stage-interlay-spacing-xs;
+    right: -$home-stage-interlay-spacing-xs;
 
     @screen sm {
-      width: $home-stage-width-sm;
+      width: $home-stage-interlay-width-sm;
     }
 
     @screen md {
       @apply tw-w-screen;
-      min-width: $home-stage-min-width-md;
-      bottom: -$home-stage-spacing-md;
-      right: -$home-stage-spacing-md;
+      min-width: $home-stage-interlay-min-width-md;
+      bottom: -$home-stage-interlay-spacing-md;
+      right: -$home-stage-interlay-spacing-md;
     }
 
     @screen lg {
-      width: $home-stage-width-lg;
-      bottom: -$home-stage-spacing-lg;
-      right: -$home-stage-spacing-lg;
+      width: $home-stage-interlay-width-lg;
+      bottom: -$home-stage-interlay-spacing-lg;
+      right: -$home-stage-interlay-spacing-lg;
     }
   }
 
@@ -153,7 +158,7 @@ $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
     }
 
     @screen md {
-      right: -$home-stage-spacing-md;
+      right: -$home-stage-interlay-spacing-md;
     }
   }
 }

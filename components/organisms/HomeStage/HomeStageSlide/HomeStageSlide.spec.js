@@ -31,9 +31,12 @@ function createComponent(propsData = {}) {
 describe('HomeStageSlide', () => {
   describe('initial state', () => {
     test('should render when no data was given', () => {
-      createComponent()
-      const homeStageWrapper = wrapper.find('.home-stage-slide')
-      expect(homeStageWrapper.exists()).toBeTruthy()
+      const propsData = {
+        ...defaultProps(),
+      }
+      createComponent(propsData)
+      const homeStageSlideWrapper = wrapper.find('.home-stage-slide')
+      expect(homeStageSlideWrapper.exists()).toBeTruthy()
     })
 
     // stageContent

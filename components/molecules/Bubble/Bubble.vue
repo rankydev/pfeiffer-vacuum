@@ -54,17 +54,19 @@ $bubble-height-md: 144px;
 $bubble-width-md: $bubble-height-md;
 $bubble-height-lg: 180px;
 $bubble-width-lg: $bubble-height-lg;
-$bubble-bottom-md: 144px;
-$bubble-left-md: 50%;
-$bubble-right-md: unset;
-$bubble-top-lg: 90px;
-$bubble-bottom-lg: unset;
-$bubble-left-lg: 66%;
-$bubble-right-lg: unset;
-$bubble-left-xl: 0%;
-$bubble-right-xl: unset;
-$bubble-top-xl: 180px;
 $bubble-text-xxs: 10px;
+$left-bubble-bottom-md: 144px;
+$left-bubble-left-md: 50%;
+$left-bubble-right-md: unset;
+$left-bubble-top-lg: 90px;
+$left-bubble-bottom-lg: unset;
+$left-bubble-left-lg: 66%;
+$left-bubble-right-lg: unset;
+$left-bubble-left-xl: 0%;
+$left-bubble-right-xl: unset;
+$left-bubble-top-xl: 180px;
+$right-bubble-top-xl: 510px;
+$right-bubble-right-xl: 180px;
 
 .bubble {
   &__wrapper {
@@ -108,8 +110,8 @@ $bubble-text-xxs: 10px;
     }
 
     @screen xl {
-      top: 510px;
-      right: 180px;
+      top: $right-bubble-top-xl;
+      right: $right-bubble-right-xl;
     }
   }
 
@@ -118,22 +120,22 @@ $bubble-text-xxs: 10px;
     @apply tw-left-6;
 
     @screen md {
-      bottom: $bubble-bottom-md;
-      left: $bubble-left-md;
-      right: $bubble-right-md;
+      bottom: $left-bubble-bottom-md;
+      left: $left-bubble-left-md;
+      right: $left-bubble-right-md;
     }
 
     @screen lg {
-      top: $bubble-top-lg;
-      bottom: $bubble-bottom-lg;
-      left: $bubble-left-lg;
-      right: $bubble-right-lg;
+      top: $left-bubble-top-lg;
+      bottom: $left-bubble-bottom-lg;
+      left: $left-bubble-left-lg;
+      right: $left-bubble-right-lg;
     }
 
     @screen xl {
-      left: $bubble-left-xl;
-      right: $bubble-right-xl;
-      top: $bubble-top-xl;
+      left: $left-bubble-left-xl;
+      right: $left-bubble-right-xl;
+      top: $left-bubble-top-xl;
     }
   }
 
