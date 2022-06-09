@@ -19,7 +19,7 @@
       :loading="undefined"
       :class="[
         'home-stage-slide__image',
-        bubble[0].position === 'left'
+        bubble || {}[0].position === 'left'
           ? 'home-stage-slide__image-right'
           : 'home-stage-slide__image-left',
       ]"
@@ -38,6 +38,7 @@
 <script>
 import HomeStageContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.vue'
 import Bubble from '~/components/molecules/Bubble/Bubble'
+import { computed } from '@nuxtjs/composition-api'
 
 export default {
   name: 'HomeStageSlide',
