@@ -140,6 +140,8 @@ $right-bubble-right-xl: 160px;
   }
 
   &__headline {
+    @apply tw-text-center;
+    @apply tw-break-all;
     @apply tw-text-pv-white;
     @apply tw-leading-4;
     @apply tw-transition;
@@ -159,6 +161,9 @@ $right-bubble-right-xl: 160px;
   }
 
   &__richtext {
+    @apply tw-text-center;
+    @apply tw-break-all;
+
     p {
       @apply tw-leading-4;
       font-size: $bubble-text-xxs;

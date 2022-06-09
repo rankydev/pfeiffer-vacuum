@@ -23,8 +23,8 @@
       :class="[
         'home-stage-slide__image',
         bubble || {}[0].position === 'left'
-          ? 'home-stage-slide__image-right'
-          : 'home-stage-slide__image-left',
+          ? 'home-stage-slide__image-left'
+          : '',
       ]"
     />
     <div class="home-stage-slide__visual-wrapper">
@@ -165,7 +165,11 @@ $home-stage-interlay-spacing-xs: calc(
     }
 
     @screen md {
-      right: -$home-stage-interlay-spacing-md;
+      right: 0;
+    }
+
+    @screen lg {
+      right: -$home-stage-interlay-spacing-lg;
     }
   }
 }
