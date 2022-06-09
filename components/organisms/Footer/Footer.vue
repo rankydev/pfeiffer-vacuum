@@ -30,12 +30,13 @@
           <p>{{ copyright }}</p>
         </div>
 
-        <TextLink
+        <Link
           v-if="hasVersionInfo"
           class="footer__version"
           :href="commitUrl"
           :label="versionInfo"
           target="_blank"
+          variant="textlink"
         />
       </ContentWrapper>
     </section>
@@ -49,7 +50,7 @@ import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import LinkList from '~/components/molecules/LinkList/LinkList'
 import LanguageSwitcher from '~/components/molecules/LanguageSwitcher/LanguageSwitcher'
-import TextLink from '~/components/molecules/TextLink/TextLink'
+import Link from '~/components/atoms/Link/Link'
 
 export default defineComponent({
   name: 'Footer',
@@ -59,7 +60,7 @@ export default defineComponent({
     ContentWrapper,
     LinkList,
     LanguageSwitcher,
-    TextLink,
+    Link,
   },
   props: {
     /**
