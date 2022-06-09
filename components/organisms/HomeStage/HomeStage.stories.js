@@ -26,8 +26,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component:
-          'Homestage carousel component used as the stage of the homepage.',
+        component: 'Homestage component used as the stage of the homepage.',
       },
     },
   },

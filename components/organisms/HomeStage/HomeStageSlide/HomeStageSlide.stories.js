@@ -23,7 +23,7 @@ export default {
     docs: {
       description: {
         component:
-          'This is the home stage of the application. <br>' +
+          'This is one home stage slide which is used in the home stage of the application. <br>' +
           'It nests the home-stage-content and the bubble component. <br><br>' +
           'Further information on how the home stage is structured can be found here: <br>' +
           'https://confluence.diva-e.com/display/PVWEB/HomeStage+Component',

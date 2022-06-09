@@ -1,7 +1,10 @@
 <template>
   <div
     v-editable="stageContent"
-    class="home-stage-slide"
+    :class="[
+      'home-stage-slide',
+      image === undefined ? '' : 'home-stage-slide__placeholder',
+    ]"
     :style="{
       backgroundImage: `url(${image.originalFilename})`,
     }"
@@ -12,9 +15,9 @@
       v-bind="stageContent[0]"
     />
     <NuxtImg
-      :src="interlay.originalFilename"
-      :alt="interlay.alt || ''"
-      :title="interlay.title || ''"
+      :src="interlay.originalFilename || 'default'"
+      :alt="interlay.alt || 'default'"
+      :title="interlay.title || 'default'"
       :provider="'storyblok'"
       :loading="undefined"
       :class="[
@@ -114,6 +117,10 @@ $home-stage-interlay-spacing-xs: calc(
 
   @screen xl {
     height: $home-stage-height-xl;
+  }
+
+  &__placeholder {
+    @apply tw-bg-pv-grey-16;
   }
 
   &__visual-wrapper {
