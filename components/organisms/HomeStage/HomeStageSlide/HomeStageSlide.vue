@@ -15,16 +15,16 @@
       v-bind="stageContent[0]"
     />
     <NuxtImg
-      :src="interlay.originalFilename || 'default'"
-      :alt="interlay.alt || 'default'"
-      :title="interlay.title || 'default'"
-      :provider="'storyblok'"
-      :loading="undefined"
+      v-if="interlay.originalFilename"
+      :src="interlay.originalFilename"
+      :alt="interlay.alt || ''"
+      :title="interlay.title || ''"
+      provider="storyblok"
       :class="[
         'home-stage-slide__image',
-        bubble || {}[0].position === 'left'
-          ? 'home-stage-slide__image-left'
-          : '',
+        (bubble[0] || {}).position === 'left'
+          ? 'home-stage-slide__image-right'
+          : 'home-stage-slide__image-left',
       ]"
     />
     <div class="home-stage-slide__visual-wrapper">
@@ -41,6 +41,7 @@
 <script>
 import HomeStageContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.vue'
 import Bubble from '~/components/molecules/Bubble/Bubble'
+import { computed } from '@nuxtjs/composition-api'
 
 export default {
   name: 'HomeStageSlide',

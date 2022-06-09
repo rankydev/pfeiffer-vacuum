@@ -65,7 +65,7 @@ $left-bubble-right-lg: unset;
 $left-bubble-left-xl: 0%;
 $left-bubble-right-xl: unset;
 $left-bubble-top-xl: 160px;
-$right-bubble-top-xl: 530px;
+$right-bubble-top-xl: 520px;
 $right-bubble-right-xl: 160px;
 
 .bubble {

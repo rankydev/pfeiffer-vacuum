@@ -12,8 +12,9 @@
 <script>
 import Carousel from '~/components/atoms/Carousel/Carousel'
 import tailwindconfig from '~/tailwind.config'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-export default {
+export default defineComponent({
   name: 'HomeStage',
   components: { Carousel },
   props: {
@@ -59,7 +60,7 @@ export default {
       return parseInt(split[0])
     }
 
-    const settings = {
+    const settings = computed(() => ({
       fade: true,
       slidesToShow: 1,
       slidesToScroll: 1,
@@ -81,13 +82,13 @@ export default {
           },
         },
       ],
-    }
+    }))
 
     return {
       settings,
     }
   },
-}
+})
 </script>
 
 <style lang="scss">
