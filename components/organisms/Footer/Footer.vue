@@ -16,10 +16,11 @@
             class="footer__menu-element"
           />
         </div>
-        <FooterNewsletter
-          :headline="headline"
-          :richtext="richtext"
-          :button="button"
+        <NuxtDynamic
+          v-for="item in newsletter"
+          :key="item._uid"
+          v-bind="item"
+          :name="item.uiComponent || item.component"
         />
 
         <hr class="footer__ruler" />
@@ -45,7 +46,6 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter'
 import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import LinkList from '~/components/molecules/LinkList/LinkList'
@@ -56,7 +56,6 @@ export default defineComponent({
   name: 'Footer',
   components: {
     SocialMedia,
-    FooterNewsletter,
     ContentWrapper,
     LinkList,
     LanguageSwitcher,
@@ -84,24 +83,7 @@ export default defineComponent({
       type: String,
       default: null,
     },
-    /**
-     * This is a headline
-     */
-    headline: {
-      type: String,
-      default: '',
-    },
-    /**
-     * richtext element, containing the description
-     */
-    richtext: {
-      type: Array,
-      default: () => [],
-    },
-    /**
-     * This is a button
-     */
-    button: {
+    newsletter: {
       type: Array,
       default: () => [],
     },
