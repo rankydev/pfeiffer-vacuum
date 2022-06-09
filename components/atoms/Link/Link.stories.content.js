@@ -1,4 +1,10 @@
-export const variants = ['none', 'inline', 'breadcrumb']
+export const variants = [
+  'none',
+  'inline',
+  'breadcrumb',
+  'quicklink',
+  'textlink',
+]
 export const targets = ['_self', '_blank']
 
 export default {

@@ -1,14 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
 import Button from './Button.vue'
+import Link from '~/components/atoms/Link/Link.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import {
-  buttonVariants,
-  variants,
-  shapes,
-  sizes,
-  icon,
-  label,
-} from '~/components/atoms/Button/Button.stories.content'
+import { icon, label } from '~/components/atoms/Button/Button.stories.content'
+import { expect } from '@jest/globals'
 
 describe('Button', () => {
   describe('initial state', () => {
@@ -181,6 +176,72 @@ describe('Button', () => {
 
         const button = wrapper.find('button')
         expect(button.attributes('disabled')).toBe('disabled')
+      })
+    })
+
+    describe('given href and target', () => {
+      it('should not use button tag', () => {
+        const propsData = { href: 'https://www.example.com', target: '_blank' }
+        const wrapper = shallowMount(Button, { propsData })
+
+        const button = wrapper.find('button')
+
+        expect(button.exists()).toBe(false)
+      })
+      it('should use Link', () => {
+        const propsData = { href: 'https://www.example.com', target: '_blank' }
+        const wrapper = shallowMount(Button, { propsData })
+
+        const link = wrapper.findComponent(Link)
+
+        expect(link.exists()).toBe(true)
+      })
+      it('should add href on Link', () => {
+        const propsData = { href: 'https://www.example.com', target: '_blank' }
+        const wrapper = shallowMount(Button, { propsData })
+
+        const link = wrapper.findComponent(Link)
+
+        expect(link.attributes('href')).toBe(propsData.href)
+      })
+      it('should add target on Link', () => {
+        const propsData = { href: 'https://www.example.com', target: '_blank' }
+        const wrapper = shallowMount(Button, { propsData })
+
+        const link = wrapper.findComponent(Link)
+
+        expect(link.attributes('target')).toBe(propsData.target)
+      })
+    })
+
+    describe('not given href and target', () => {
+      it('should use button tag', () => {
+        const wrapper = shallowMount(Button)
+
+        const button = wrapper.find('button')
+
+        expect(button.exists()).toBe(true)
+      })
+      it('should not use Link', () => {
+        const wrapper = shallowMount(Button)
+
+        const link = wrapper.findComponent(Link)
+
+        expect(link.exists()).toBe(false)
+      })
+      it('should not add href on button', () => {
+        const wrapper = shallowMount(Button)
+
+        const button = wrapper.findComponent('button')
+
+        expect(button.attributes('href')).toBeUndefined()
+      })
+      it('should not add target on button', () => {
+        const wrapper = shallowMount(Button)
+
+        const button = wrapper.findComponent('button')
+
+        expect(button.attributes('target')).toBeUndefined()
       })
     })
   })

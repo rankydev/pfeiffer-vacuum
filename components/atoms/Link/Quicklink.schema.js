@@ -14,6 +14,19 @@ export default {
       description:
         'Which anchor do you want to scroll to? (Must exist on the page or there will be no scroll)',
     },
+    'tab-advanced': {
+      type: 'tab',
+      display_name: 'Advanced',
+      keys: ['uiComponent', 'variant'],
+    },
+    uiComponent: {
+      type: 'text',
+      default_value: 'Link',
+    },
+    variant: {
+      type: 'text',
+      default_value: 'quicklink',
+    },
   },
   image: null,
   preview_field: null,

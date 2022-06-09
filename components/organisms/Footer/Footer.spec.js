@@ -2,7 +2,7 @@ import { createLocalVue, RouterLinkStub, shallowMount } from '@vue/test-utils'
 import Footer from './Footer'
 import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter'
-import TextLink from '~/components/molecules/TextLink/TextLink'
+import Link from '~/components/atoms/Link/Link'
 
 const localVue = createLocalVue()
 localVue.directive('editable', (el, key) => {
@@ -31,13 +31,14 @@ describe('Footer', () => {
       const stubs = { NuxtLink: RouterLinkStub }
       const wrapper = shallowMount(Footer, { stubs, localVue })
 
-      const textLink = wrapper.findComponent(TextLink)
+      const textLink = wrapper.findComponent(Link)
 
       expect(textLink.exists()).toBeTruthy()
       // not textLink.text() because of shallowMount, thus only stub with attributes available
       expect(textLink.attributes('label')).toBe(
         'Version: test_version_info/12345678'
       )
+      expect(textLink.attributes('variant')).toBe('textlink')
     })
 
     it('should NOT render version info and link given production variables', () => {
@@ -49,7 +50,7 @@ describe('Footer', () => {
       const stubs = { NuxtLink: RouterLinkStub }
       const wrapper = shallowMount(Footer, { stubs, localVue })
 
-      const textLink = wrapper.findComponent(TextLink)
+      const textLink = wrapper.findComponent(Link)
 
       expect(textLink.exists()).toBeFalsy()
     })
