@@ -11,7 +11,8 @@
 
 <script>
 import Carousel from '~/components/atoms/Carousel/Carousel'
-import tailwindconfig from '@/tailwind.config'
+import tailwindconfig from '~/tailwind.config'
+
 export default {
   name: 'HomeStage',
   components: { Carousel },

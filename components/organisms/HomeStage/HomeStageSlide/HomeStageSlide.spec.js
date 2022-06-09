@@ -1,15 +1,15 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import HomeStageModule from './HomeStageSlide'
-import HomeStageContent from '@/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent'
+import HomeStageSlide from './HomeStageSlide'
+import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent'
 import Bubble from '~/components/molecules/Bubble/Bubble'
-import { homeStageModuleContent } from './HomeStageSlide.stories.content'
+import { homeStageSlideContent } from './HomeStageSlide.stories.content'
 
 const nuxtImg = {
   template: '<div>some image</div>',
   props: ['src', 'modifiers', 'title', 'alt', 'provider'],
 }
 
-const defaultProps = () => JSON.parse(JSON.stringify(homeStageModuleContent))
+const defaultProps = () => JSON.parse(JSON.stringify(homeStageSlideContent))
 
 let wrapper
 
@@ -25,14 +25,14 @@ function createComponent(propsData = {}) {
     propsData,
   }
 
-  wrapper = shallowMount(HomeStageModule, options)
+  wrapper = shallowMount(HomeStageSlide, options)
 }
 
-describe('HomeStageModule', () => {
+describe('HomeStageSlide', () => {
   describe('initial state', () => {
     test('should render when no data was given', () => {
       createComponent()
-      const homeStageWrapper = wrapper.find('.homestage')
+      const homeStageWrapper = wrapper.find('.home-stage-slide')
       expect(homeStageWrapper.exists()).toBeTruthy()
     })
 
@@ -42,7 +42,7 @@ describe('HomeStageModule', () => {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const contentElement = wrapper.findComponent(HomeStageContent)
+      const contentElement = wrapper.findComponent(HomeStageSlideContent)
       expect(contentElement.vm.richtext[0].richtext).toEqual(
         propsData.stageContent[0].richtext[0].richtext
       )
@@ -71,7 +71,7 @@ describe('HomeStageModule', () => {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const homeStageWrapper = wrapper.find('.homestage')
+      const homeStageWrapper = wrapper.find('.home-stage-slide')
 
       expect(homeStageWrapper.element.style.backgroundImage).toBe(
         `url(${propsData.image.originalFilename})`

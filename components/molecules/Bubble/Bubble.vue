@@ -61,7 +61,7 @@ $bubble-top-lg: 90px;
 $bubble-bottom-lg: unset;
 $bubble-left-lg: 66%;
 $bubble-right-lg: unset;
-$bubble-left-xl: calc(50% + 55px);
+$bubble-left-xl: 55%;
 $bubble-right-xl: unset;
 $bubble-top-xl: 180px;
 $bubble-text-xxs: 10px;

@@ -1,6 +1,6 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import HomeStageCarouselContent from './HomeStage.stories.content'
-import HomeStageCarousel from './HomeStage'
+import HomeStageContent from './HomeStage.stories.content'
+import HomeStage from './HomeStage'
 
 let wrapper
 
@@ -22,19 +22,19 @@ function createComponent(propsData = {}) {
     propsData,
   }
 
-  wrapper = shallowMount(HomeStageCarousel, options)
+  wrapper = shallowMount(HomeStage, options)
 }
 
 // all other test scenarios are covered by the Carousel tests, as well as the
-// tests provided for the HomeStageModule and Content partials
-describe('HomeStageCarousel', () => {
+// tests provided for the HomeStageSlide and Content partials
+describe('HomeStage', () => {
   describe('initial state', () => {
-    test('should render HomeStageCarousel', () => {
-      createComponent({ slides: HomeStageCarouselContent.slides })
+    test('should render HomeStage', () => {
+      createComponent({ slides: HomeStageContent.slides })
 
-      const homeStageCarouselWrapper = wrapper.find('.home-stage-carousel')
+      const homeStageWrapper = wrapper.find('.home-stage')
 
-      expect(homeStageCarouselWrapper).toBeTruthy()
+      expect(homeStageWrapper).toBeTruthy()
     })
   })
 })
