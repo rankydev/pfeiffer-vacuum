@@ -1,4 +1,4 @@
-import Link from './Link.schema.js'
+import Link from './Link.schema.partial.js'
 
 export default {
   name: 'TextLink',
@@ -9,7 +9,7 @@ export default {
       translatable: true,
       display_name: 'Label',
     },
-    ...Link.schema,
+    ...Link,
     'tab-advanced': {
       type: 'tab',
       display_name: 'Advanced',

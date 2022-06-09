@@ -1,4 +1,4 @@
-import Link from '~/components/atoms/Link/Link.schema.js'
+import Link from '~/components/atoms/Link/Link.schema.partial.js'
 
 export default {
   name: 'Button',
@@ -82,7 +82,7 @@ export default {
         },
       ],
     },
-    ...Link.schema,
+    ...Link,
   },
   image: null,
   preview_field: null,

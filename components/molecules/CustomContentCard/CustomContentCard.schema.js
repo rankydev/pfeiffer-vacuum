@@ -1,4 +1,4 @@
-import Link from '~/components/atoms/Link/Link.schema.js'
+import Link from '~/components/atoms/Link/Link.schema.partial.js'
 
 export default {
   name: 'CustomContentCard',
@@ -29,7 +29,7 @@ export default {
       display_name: 'Description',
       max_length: '150',
     },
-    href: Link.schema.href,
+    href: Link.href,
   },
   image: null,
   preview_field: null,
