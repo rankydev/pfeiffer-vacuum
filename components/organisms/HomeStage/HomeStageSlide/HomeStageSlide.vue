@@ -11,15 +11,20 @@
       class="home-stage-slide__content-block"
       v-bind="stageContent[0]"
     />
+    <NuxtImg
+      :src="interlay.originalFilename"
+      :alt="interlay.alt || ''"
+      :title="interlay.title || ''"
+      :provider="'storyblok'"
+      :loading="undefined"
+      :class="[
+        'home-stage-slide__image',
+        bubble[0].position === 'left'
+          ? 'home-stage-slide__image-right'
+          : 'home-stage-slide__image-left',
+      ]"
+    />
     <div class="home-stage-slide__visual-wrapper">
-      <NuxtImg
-        :src="interlay.originalFilename"
-        :alt="interlay.alt || ''"
-        :title="interlay.title || ''"
-        :provider="'storyblok'"
-        :loading="undefined"
-        class="home-stage-slide__image"
-      />
       <Bubble
         v-if="bubble[0]"
         :title="bubble[0].title"
@@ -112,6 +117,10 @@ $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
     @screen lg {
       @apply tw-w-full;
     }
+
+    @screen xl {
+      position: relative;
+    }
   }
 
   &__image {
@@ -135,6 +144,16 @@ $home-stage-spacing-xs: calc($home-stage-spacing-lg * 0.3); // 30%
       width: $home-stage-width-lg;
       bottom: -$home-stage-spacing-lg;
       right: -$home-stage-spacing-lg;
+    }
+  }
+
+  &__image-left {
+    @screen sm {
+      right: 60px;
+    }
+
+    @screen md {
+      right: -$home-stage-spacing-md;
     }
   }
 }

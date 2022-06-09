@@ -61,7 +61,7 @@ $bubble-top-lg: 90px;
 $bubble-bottom-lg: unset;
 $bubble-left-lg: 66%;
 $bubble-right-lg: unset;
-$bubble-left-xl: 55%;
+$bubble-left-xl: 0%;
 $bubble-right-xl: unset;
 $bubble-top-xl: 180px;
 $bubble-text-xxs: 10px;
@@ -105,6 +105,11 @@ $bubble-text-xxs: 10px;
     @screen lg {
       @apply tw-bottom-20;
       @apply tw-right-20;
+    }
+
+    @screen xl {
+      top: 510px;
+      right: 180px;
     }
   }
 
