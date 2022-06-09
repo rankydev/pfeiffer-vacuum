@@ -1,7 +1,6 @@
 <template>
   <a v-if="isAnchorLink" v-bind="bindings" @click="beforeNavigation">
-    <template v-if="label">{{ label }}</template>
-    <slot v-else :isActive="false" :isExactActive="false" />
+    <slot :isActive="false" :isExactActive="false">{{ label }}</slot>
   </a>
 
   <NuxtLink
@@ -14,8 +13,9 @@
       :href="link"
       @click="($event) => beforeNavigation($event) && navigate($event)"
     >
-      <template v-if="label">{{ label }}</template>
-      <slot v-else :isActive="isActive" :isExactActive="isExactActive" />
+      <slot :isActive="isActive" :isExactActive="isExactActive">{{
+        label
+      }}</slot>
     </a>
   </NuxtLink>
 </template>
