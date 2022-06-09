@@ -58,15 +58,15 @@ $bubble-text-xxs: 10px;
 $left-bubble-bottom-md: 144px;
 $left-bubble-left-md: 50%;
 $left-bubble-right-md: unset;
-$left-bubble-top-lg: 90px;
+$left-bubble-top-lg: 80px;
 $left-bubble-bottom-lg: unset;
 $left-bubble-left-lg: 66%;
 $left-bubble-right-lg: unset;
 $left-bubble-left-xl: 0%;
 $left-bubble-right-xl: unset;
-$left-bubble-top-xl: 180px;
-$right-bubble-top-xl: 510px;
-$right-bubble-right-xl: 180px;
+$left-bubble-top-xl: 160px;
+$right-bubble-top-xl: 530px;
+$right-bubble-right-xl: 160px;
 
 .bubble {
   &__wrapper {

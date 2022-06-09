@@ -38,7 +38,6 @@
 <script>
 import HomeStageContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.vue'
 import Bubble from '~/components/molecules/Bubble/Bubble'
-import { computed } from '@nuxtjs/composition-api'
 
 export default {
   name: 'HomeStageSlide',
