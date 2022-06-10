@@ -26,6 +26,8 @@ export const newsletterButton = [
 ]
 
 export default {
+  _uid: '1232b093-e25f-4ff2-bc8c-f645ca6e0e11',
+  component: 'FooterNewsletter',
   headline: newsletterHeadline,
   richtext: newsletterRichtext,
   button: newsletterButton,

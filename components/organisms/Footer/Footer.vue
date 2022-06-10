@@ -20,6 +20,7 @@
           v-for="item in newsletter"
           :key="item._uid"
           v-bind="item"
+          v-editable="item"
           :name="item.uiComponent || item.component"
         />
 
