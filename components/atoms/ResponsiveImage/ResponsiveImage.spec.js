@@ -102,31 +102,6 @@ describe('ResponsiveImage', () => {
           expect(ResponsiveImageWrapper.vm.provider).toEqual(propsData.provider)
         })
 
-        // test('should have greyscale', () => {
-        //   const propsData = {
-        //     ...props,
-        //     blackAndWhite: true,
-        //   }
-        //   createComponent(propsData)
-        //   const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
-        //   expect(ResponsiveImageWrapper.vm.modifiers.filters).toEqual({
-        //     focal: null,
-        //     grayscale: '',
-        //   })
-        // })
-
-        // test('should have no greyscale', () => {
-        //   const propsData = {
-        //     ...props,
-        //   }
-        //   createComponent(propsData)
-        //   const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
-        //   expect(ResponsiveImageWrapper.vm.modifiers.filters).toEqual({
-        //     focal: null,
-        //     grayscale: false,
-        //   })
-        // })
-
         test('should have gradient', () => {
           const propsData = {
             ...props,
