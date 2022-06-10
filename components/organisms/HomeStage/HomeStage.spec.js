@@ -26,7 +26,7 @@ function createComponent(propsData = {}) {
 }
 
 // all other test scenarios are covered by the Carousel tests, as well as the
-// tests provided for the HomeStageSlide and Content partials
+// tests provided for the HomeStageSlide and HomeStageSlideContent(in the partials)
 describe('HomeStage', () => {
   describe('initial state', () => {
     test('should render HomeStage', () => {

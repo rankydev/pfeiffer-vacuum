@@ -43,7 +43,7 @@ describe('HomeStageSlideContent', () => {
     })
 
     // teaserText
-    test('should render teaserText (which is a richtext) given propsData', () => {
+    test('should render description (which is a richtext) given propsData', () => {
       const propsData = {
         ...defaultProps(),
       }

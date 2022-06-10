@@ -26,7 +26,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Homestage component used as the stage of the homepage.',
+        component: 'HomeStage component used as the stage of the homepage.',
       },
     },
   },

@@ -30,7 +30,7 @@ function createComponent(propsData = {}) {
 
 describe('HomeStageSlide', () => {
   describe('initial state', () => {
-    test('should render when no data was given', () => {
+    test('should render whole component', () => {
       const propsData = {
         ...defaultProps(),
       }
