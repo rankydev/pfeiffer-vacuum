@@ -3,20 +3,32 @@ import Footer from './Footer'
 import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter'
 import Link from '~/components/atoms/Link/Link'
+import newsletterContent from './partials/FooterNewsletter/FooterNewsletter.stories.content'
 
-const localVue = createLocalVue()
-localVue.directive('editable', (el, key) => {
-  el.innerText = key.value
-})
+let wrapper
+
+function createComponent(propsData = {}) {
+  const stubs = { NuxtDynamic: true, NuxtLink: RouterLinkStub }
+  const localVue = createLocalVue()
+  const editable = (el, key) => (el.innerText = key.value)
+  localVue.directive('editable', editable)
+
+  const options = {
+    localVue,
+    propsData,
+    stubs,
+  }
+  wrapper = shallowMount(Footer, options)
+}
 
 describe('Footer', () => {
   describe('initial state', () => {
     it('should render all partials', () => {
-      const stubs = { NuxtLink: RouterLinkStub }
-      const wrapper = shallowMount(Footer, { stubs, localVue })
+      const propsData = { newsletter: [newsletterContent] }
+      createComponent(propsData)
 
       const socialMedia = wrapper.findComponent(SocialMedia)
-      const footerNewsletter = wrapper.findComponent(FooterNewsletter)
+      const footerNewsletter = wrapper.find('[component="FooterNewsletter"]')
 
       expect(socialMedia.exists()).toBeTruthy()
       expect(footerNewsletter.exists()).toBeTruthy()
@@ -28,8 +40,7 @@ describe('Footer', () => {
       process.env.CI_COMMIT_REF_NAME = 'test_version_info'
       process.env.CI_PROJECT_URL = 'https://localhost/pvac/pvweb'
 
-      const stubs = { NuxtLink: RouterLinkStub }
-      const wrapper = shallowMount(Footer, { stubs, localVue })
+      createComponent()
 
       const textLink = wrapper.findComponent(Link)
 
@@ -47,8 +58,7 @@ describe('Footer', () => {
       process.env.CI_PROJECT_URL = 'https://localhost/pvac/pvweb'
       process.env.CI_COMMIT_REF_NAME = 'test_version_info'
 
-      const stubs = { NuxtLink: RouterLinkStub }
-      const wrapper = shallowMount(Footer, { stubs, localVue })
+      createComponent()
 
       const textLink = wrapper.findComponent(Link)
 

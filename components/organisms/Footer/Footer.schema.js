@@ -18,7 +18,13 @@ export default {
       component_whitelist: ['LinkList'],
       display_name: 'Navigation Columns',
     },
-    ...FooterNewsletter.schema,
+    newsletter: {
+      type: 'bloks',
+      restrict_components: true,
+      component_whitelist: ['FooterNewsletter'],
+      maximum: 1,
+      display_name: 'Newsletter',
+    },
     copyright: {
       type: 'text',
       translatable: true,
