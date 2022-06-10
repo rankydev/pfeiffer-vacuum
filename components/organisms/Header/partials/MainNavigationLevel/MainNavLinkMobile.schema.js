@@ -1,4 +1,4 @@
-import Link from '~/components/atoms/Link/Link.schema.js'
+import Link from '~/components/atoms/Link/Link.schema.partial.js'
 
 export default {
   name: 'MainNavLinkMobile',
@@ -10,7 +10,7 @@ export default {
       display_name: 'Label',
       required: true,
     },
-    ...Link.schema,
+    ...Link,
   },
   image: null,
   preview_field: null,

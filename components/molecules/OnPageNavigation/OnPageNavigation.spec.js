@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import OnPageNavigation from './OnPageNavigation'
 import { quicklinks } from './OnPageNavigation.stories.content'
 import Breadcrumb from '~/components/molecules/Breadcrumb/Breadcrumb.vue'
-import Quicklink from '~/components/molecules/Quicklink/Quicklink'
+import Link from '~/components/atoms/Link/Link.vue'
 import { expect } from '@jest/globals'
 
 let wrapper
@@ -18,7 +18,7 @@ describe('OnPageNavigation', () => {
         createComponent()
 
         const domBreadcrumb = wrapper.findComponent(Breadcrumb)
-        const domQuickLinks = wrapper.findAllComponents(Quicklink)
+        const domQuickLinks = wrapper.findAllComponents(Link)
 
         expect(domBreadcrumb.exists()).toBeTruthy
         expect(domQuickLinks.length).toBe(0)
@@ -37,7 +37,7 @@ describe('OnPageNavigation', () => {
         const propsData = { quicklinks }
         createComponent(propsData)
 
-        const domQuickLinks = wrapper.findAllComponents(Quicklink)
+        const domQuickLinks = wrapper.findAllComponents(Link)
 
         expect(domQuickLinks).toHaveLength(quicklinks.length)
       })

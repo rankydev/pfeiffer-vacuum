@@ -1,4 +1,4 @@
-import Link from '~/components/atoms/Link/Link.schema.js'
+import Link from '~/components/atoms/Link/Link.schema.partial.js'
 
 export default {
   name: 'SocialMediaIconLink',
@@ -44,7 +44,7 @@ export default {
       display_name: 'Title',
       translatable: true,
     },
-    ...Link.schema,
+    ...Link,
   },
   image: null,
   preview_field: null,

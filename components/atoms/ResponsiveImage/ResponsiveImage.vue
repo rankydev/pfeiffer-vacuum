@@ -97,7 +97,7 @@ export default defineComponent({
       type: String,
       default: '1:1',
       validator: (val) =>
-        ['1:1', '16:9', '2:3', '3:2', '3:1', '2:1'].includes(val),
+        ['1:1', '16:9', '2:3', '3:2', '3:1', '2:1', '21:28'].includes(val),
     },
     rounded: {
       type: Boolean,
