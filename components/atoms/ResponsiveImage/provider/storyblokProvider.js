@@ -85,9 +85,6 @@ export function useStoryblokProvider({ $img }) {
       })
     })
 
-    console.log('imageResolutions', imageResolutions.value)
-    console.log('webpSources', webpSources.value)
-
     return {
       src,
       alt,

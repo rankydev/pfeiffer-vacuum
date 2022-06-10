@@ -1,3 +1,14 @@
+export const hybrisResponsiveImageEntries = {
+  image: {
+    altText: 'HiPace® 80 for TCP 350, DN 63 ISO-K',
+    format: 'product',
+    imageType: 'PRIMARY',
+    url: '/medias/product-image.png',
+  },
+  provider: 'hybris',
+  component: 'ResponsiveImage',
+}
+
 export default {
   _uid: '0fbbfe8f-5ed3-4652-a2aa-08f10412b3e0',
   image: {
