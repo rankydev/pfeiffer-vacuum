@@ -5,7 +5,6 @@ export function useHybrisProvider() {
     const src = computed(() => props.image.url || '')
     const alt = computed(() => props.image.altText || '')
 
-    console.log(src.value)
     return {
       src,
       alt,

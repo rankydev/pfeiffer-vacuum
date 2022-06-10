@@ -39,8 +39,10 @@ export function useStoryblokProvider({ $img }) {
     const title = computed(() => props.image.title || '')
 
     const modifiers = computed(() => ({
-      focal: props.image.focus,
-      grayscale: props.blackAndWhite ? '' : false,
+      filters: {
+        focal: props.image.focus,
+        grayscale: props.blackAndWhite ? '' : false,
+      },
     }))
 
     /**
@@ -84,9 +86,6 @@ export function useStoryblokProvider({ $img }) {
         return { key, media, srcset: `${img1x} 1x, ${img2x} 2x` }
       })
     })
-
-    console.log('imageResolutions', imageResolutions.value)
-    console.log('webpSources', webpSources.value)
 
     return {
       src,

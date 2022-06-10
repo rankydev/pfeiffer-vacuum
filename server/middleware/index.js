@@ -16,9 +16,7 @@ app.use(
     changeOrigin: true,
     agent,
     pathRewrite: { '^/api/image': '/' },
-    onProxyReq: () => {
-      console.log('xyz')
-    },
+    onProxyReq: () => {},
   })
 )
 
