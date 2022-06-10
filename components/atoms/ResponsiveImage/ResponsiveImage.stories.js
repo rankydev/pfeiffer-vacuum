@@ -1,6 +1,6 @@
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 import ResponsiveImageContent from './ResponsiveImage.stories.content.js'
-import { aspectRatioOptions } from '/components/molecules/ImageWithDescription/ImageWithDescription.stories.content'
+import { aspectRatioOptions } from '~/components/molecules/ImageWithDescription/ImageWithDescription.stories.content'
 
 const argTypes = {
   image: {

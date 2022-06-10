@@ -46,7 +46,6 @@
 import { useHybrisProvider } from './provider/hybrisProvider'
 import { useStoryblokProvider } from './provider/storyblokProvider'
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
-import { theme } from '~/tailwind.config.js'
 import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
