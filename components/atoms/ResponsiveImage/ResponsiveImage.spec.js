@@ -8,7 +8,8 @@ const nuxtImg = {
   props: ['src', 'modifiers', 'title', 'alt', 'provider'],
 }
 
-const defaultProps = () => JSON.parse(JSON.stringify(responsiveImageEntries))
+const defaultPropsStoryblok = () =>
+  JSON.parse(JSON.stringify(responsiveImageEntries))
 const defaultPropsHybris = () =>
   JSON.parse(JSON.stringify(hybrisResponsiveImageEntries))
 
@@ -30,11 +31,85 @@ function createComponent(propsData = {}) {
 }
 
 describe('ResponsiveImage', () => {
-  describe('tests independent on provider', () => {})
+  describe('tests independent on provider', () => {
+    const aspectRatioArr = [
+      ['1:1', 'responsive-image__1-1'],
+      ['16:9', 'responsive-image__16-9'],
+      ['2:3', 'responsive-image__2-3'],
+      ['3:2', 'responsive-image__3-2'],
+      ['3:1', 'responsive-image__3-1'],
+      ['21:28', 'responsive-image__21-28'],
+    ]
+    test('should render responsive image when no data is provided', () => {
+      createComponent()
+      const ResponsiveImageWrapper = wrapper.find(
+        '.responsive-image__placeholder'
+      )
+      expect(ResponsiveImageWrapper.exists()).toBeTruthy()
+    })
+
+    test('should have gradient', () => {
+      const propsData = {
+        ...defaultPropsStoryblok(),
+        withGradient: true,
+      }
+      createComponent(propsData)
+
+      expect(
+        wrapper.find('.responsive-image__gradient-overlay').exists()
+      ).toBeTruthy()
+    })
+
+    test.each(aspectRatioArr)(
+      'should render placeholder with matching aspect-ratio-classes based on selected aspect ratio, when no image is provided',
+      (input, output) => {
+        const propsData = {
+          ...defaultPropsStoryblok(),
+          image: undefined,
+          aspectRatio: input,
+        }
+        createComponent(propsData)
+
+        const placeholderWrapper = wrapper.find(
+          '.responsive-image__placeholder'
+        )
+        expect(placeholderWrapper.exists()).toBeTruthy()
+        expect(placeholderWrapper.attributes('class')).toMatch(output)
+      }
+    )
+
+    test('should add rounded class given rounded=true', () => {
+      const propsData = {
+        ...defaultPropsStoryblok(),
+        rounded: true,
+      }
+      createComponent(propsData)
+
+      const picture = wrapper.find('.responsive-image')
+
+      expect(picture.attributes('class')).toMatch(
+        'responsive-image--corners-rounded'
+      )
+    })
+
+    test('should not add rounded class given rounded=false', () => {
+      const propsData = {
+        ...defaultPropsStoryblok(),
+        rounded: false,
+      }
+      createComponent(propsData)
+
+      const picture = wrapper.find('.responsive-image')
+
+      expect(picture.attributes('class')).not.toMatch(
+        'responsive-image--corners-rounded'
+      )
+    })
+  })
   describe('tests dependent on storyblok provider', () => {
     test('should have greyscale', () => {
       const propsData = {
-        ...defaultProps(),
+        ...defaultPropsStoryblok(),
         blackAndWhite: true,
       }
       createComponent(propsData)
@@ -48,7 +123,7 @@ describe('ResponsiveImage', () => {
 
     test('should have no greyscale', () => {
       const propsData = {
-        ...defaultProps(),
+        ...defaultPropsStoryblok(),
       }
       createComponent(propsData)
       const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
@@ -59,27 +134,10 @@ describe('ResponsiveImage', () => {
     })
   })
 
-  describe.each([[defaultProps()], [defaultPropsHybris()]])(
+  describe.each([[defaultPropsStoryblok()], [defaultPropsHybris()]])(
     'Given provider %# (0: storyblok, 1: hybris)',
     (props) => {
       describe('initial state', () => {
-        const aspectRatioArr = [
-          ['1:1', 'responsive-image__1-1'],
-          ['16:9', 'responsive-image__16-9'],
-          ['2:3', 'responsive-image__2-3'],
-          ['3:2', 'responsive-image__3-2'],
-          ['3:1', 'responsive-image__3-1'],
-          ['21:28', 'responsive-image__21-28'],
-        ]
-        test('should render responsive image when no data is provided', () => {
-          const propsData = {
-            ...props,
-          }
-          createComponent(propsData)
-          const ResponsiveImageWrapper = wrapper.find('.responsive-image')
-          expect(ResponsiveImageWrapper.exists()).toBeTruthy()
-        })
-
         test('should render a responsive image ', () => {
           const propsData = {
             ...props,
@@ -100,64 +158,6 @@ describe('ResponsiveImage', () => {
           createComponent(propsData)
           const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
           expect(ResponsiveImageWrapper.vm.provider).toEqual(propsData.provider)
-        })
-
-        test('should have gradient', () => {
-          const propsData = {
-            ...props,
-            withGradient: true,
-          }
-          createComponent(propsData)
-
-          expect(
-            wrapper.find('.responsive-image__gradient-overlay').exists()
-          ).toBeTruthy()
-        })
-
-        test.each(aspectRatioArr)(
-          'should render placeholder with matching aspect-ratio-classes based on selected aspect ratio, when no image is provided',
-          (input, output) => {
-            const propsData = {
-              ...props,
-              image: undefined,
-              aspectRatio: input,
-            }
-            createComponent(propsData)
-
-            const placeholderWrapper = wrapper.find(
-              '.responsive-image__placeholder'
-            )
-            expect(placeholderWrapper.exists()).toBeTruthy()
-            expect(placeholderWrapper.attributes('class')).toMatch(output)
-          }
-        )
-
-        test('should add rounded class given rounded=true', () => {
-          const propsData = {
-            ...props,
-            rounded: true,
-          }
-          createComponent(propsData)
-
-          const picture = wrapper.find('.responsive-image')
-
-          expect(picture.attributes('class')).toMatch(
-            'responsive-image--corners-rounded'
-          )
-        })
-
-        test('should not add rounded class given rounded=false', () => {
-          const propsData = {
-            ...props,
-            rounded: false,
-          }
-          createComponent(propsData)
-
-          const picture = wrapper.find('.responsive-image')
-
-          expect(picture.attributes('class')).not.toMatch(
-            'responsive-image--corners-rounded'
-          )
         })
       })
     }
