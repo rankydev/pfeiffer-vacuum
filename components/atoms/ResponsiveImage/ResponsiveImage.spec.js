@@ -74,7 +74,7 @@ describe('ResponsiveImage', () => {
       }
       createComponent(propsData)
       const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
-      expect(ResponsiveImageWrapper.vm.modifiers.filters).toEqual({
+      expect(ResponsiveImageWrapper.vm.modifiers).toEqual({
         focal: null,
         grayscale: '',
       })
@@ -86,7 +86,7 @@ describe('ResponsiveImage', () => {
       }
       createComponent(propsData)
       const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
-      expect(ResponsiveImageWrapper.vm.modifiers.filters).toEqual({
+      expect(ResponsiveImageWrapper.vm.modifiers).toEqual({
         focal: null,
         grayscale: false,
       })
