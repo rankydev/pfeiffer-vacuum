@@ -17,7 +17,7 @@ export default {
     items: {
       type: 'bloks',
       restrict_components: true,
-      component_whitelist: ['TextLink', 'Richtext', 'ImageWithDescription'],
+      component_whitelist: ['Richtext', 'ImageWithDescription'],
       display_name: 'Content',
     },
   },

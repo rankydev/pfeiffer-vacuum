@@ -27,7 +27,7 @@
     - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up --detach --no-deps --build ${DOCKER_SERVICE_NAME}
   environment:
     name: ${DOCKER_SERVICE_NAME}
-    url: https://dev-vacuum.westeurope.cloudapp.azure.com/${DOCKER_SERVICE_NAME}
+    url: "https://dev2.pvac.diva-e.com"
   tags:
     - pvac-frontend-dev2-deployment
 
@@ -96,6 +96,7 @@ deploy-uat-automatically:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
     name: uat
+    url: "https://uat2.pvac.diva-e.com"
   only:
     - main
   tags:
@@ -108,6 +109,7 @@ deploy-uat-manually:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
     name: uat
+    url: "https://uat2.pvac.diva-e.com"
   when: manual
   only:
     - tags
@@ -121,6 +123,7 @@ deploy-prd-manually:
     DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
   environment:
     name: prd
+    url: "https://prd.pvac.diva-e.com"
   when: manual
   only:
     - tags
