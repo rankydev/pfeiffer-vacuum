@@ -1,56 +1,64 @@
 <template>
-  <div v-editable="slides" class="carousel">
-    <ContentWrapper v-bind="contentWrapperProps">
-      <VueSlickCarousel
-        v-if="slides.length"
-        ref="carousel"
-        v-bind="{ ...defaultSettings, ...settings }"
-        :infinite="infiniteSetting"
-        :autoplay="autoplay"
-        :autoplay-speed="autoplaySpeedMilliseconds"
-        class="carousel__slider"
-        :class="{ 'carousel__slider--wide': isWide }"
-      >
-        <NuxtDynamic
-          v-for="slide in slides"
-          :key="slide._uid"
-          v-editable="slide"
-          v-bind="slide"
-          :name="slide.uiComponent || slide.component"
+  <ContentWrapper
+    v-bind="contentWrapperProps"
+    ref="wrapper"
+    v-editable="(slides, infinite, isWide)"
+    class="carousel"
+  >
+    <VueSlickCarousel
+      v-if="slides.length"
+      ref="carousel"
+      v-bind="{ ...defaultSettings, ...settings }"
+      :infinite="infiniteSetting"
+      :autoplay="autoplay"
+      :autoplay-speed="autoplaySpeedMilliseconds"
+      class="carousel__slider"
+      :class="{ 'carousel__slider--wide': isBreakout }"
+    >
+      <NuxtDynamic
+        v-for="slide in slides"
+        :key="slide._uid"
+        v-editable="slide"
+        v-bind="slide"
+        :name="slide.uiComponent || slide.component"
+      />
+      <template #prevArrow="{ currentSlide }">
+        <Button
+          class="slider__prev"
+          :class="{
+            'slider__prev--hide': isFirstSlide(currentSlide),
+          }"
+          variant="secondary"
+          icon="arrow_back"
+          cutaway="right"
         />
-        <template #prevArrow>
-          <Button
-            class="slider__prev"
-            :class="{ 'slider__prev--hide': isFirstSlide }"
-            variant="secondary"
-            icon="arrow_back"
-            cutaway="right"
-          />
-        </template>
-        <template #nextArrow>
-          <Button
-            class="slider__next"
-            :class="{ 'slider__next--hide': isLastSlide }"
-            variant="secondary"
-            icon="arrow_forward"
-            cutaway="left"
-          />
-        </template>
-      </VueSlickCarousel>
-    </ContentWrapper>
-  </div>
+      </template>
+      <template #nextArrow="{ currentSlide, slideCount }">
+        <Button
+          class="slider__next"
+          :class="{
+            'slider__next--hide': isLastSlide(currentSlide, slideCount),
+          }"
+          variant="secondary"
+          icon="arrow_forward"
+          cutaway="left"
+        />
+      </template>
+    </VueSlickCarousel>
+  </ContentWrapper>
 </template>
 <script>
 import {
   defineComponent,
   ref,
   computed,
-  watchEffect,
+  useContext,
 } from '@nuxtjs/composition-api'
-import VueSlickCarousel from 'vue-slick-carousel'
+import VueSlickCarousel from 'vue-slick-carousel/src/VueSlickCarousel.vue'
 import Button from '~/components/atoms/Button/Button'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import tailwindconfig from '~/tailwind.config'
+import { useResizeObserver } from '@vueuse/core'
 
 export default defineComponent({
   name: 'Carousel',
@@ -125,26 +133,32 @@ export default defineComponent({
     /**
      * Check if carousel is breakout (wide mode)
      */
-    const isBreakout = computed(() => props.isWide)
-
-    /**
-     * Get Carousel object by reference
-     */
-    const carousel = ref(null)
-
-    /**
-     * Get currentSlide of carousel
-     */
-    const currentSlide = computed(
-      () => carousel.value.$refs.innerSlider?.currentSlide
+    const { app } = useContext()
+    const isBreakout = computed(
+      () => !app.$breakpoints.isDesktop.value || props.isWide
     )
 
     /**
-     * set isFirstSlide && isLastSlide to initial values
-     * props enable/disable the buttons on the carousel
+     * Get object by reference
      */
-    let isFirstSlide = ref(false)
-    let isLastSlide = ref(false)
+    const wrapper = ref(null)
+    const carousel = ref(null)
+
+    /**
+     * slider controls
+     */
+    const visibleSlides = ref(0)
+
+    const isFirstSlide = (current) => current === 0
+    const isLastSlide = (current, total) =>
+      current >= Math.ceil(total - visibleSlides.value)
+
+    useResizeObserver(wrapper, () => {
+      const innerSlider = carousel.value.$refs.innerSlider
+      if (visibleSlides.value !== innerSlider?.slidesToShow) {
+        visibleSlides.value = innerSlider?.slidesToShow
+      }
+    })
 
     /**
      * Set computed property infinite
@@ -157,25 +171,6 @@ export default defineComponent({
       if (isBreakout.value) return false
 
       return props.infinite
-    })
-
-    /**
-     * watchEffect will be triggered once the carousel is mounted
-     */
-    watchEffect(() => {
-      if (!carousel.value || infiniteSetting.value) return
-
-      /*
-       * isFirstSlide and isLastSlide won't be set dynamically when the
-       * carousel is infinite, because then we always want to show the btns
-       */
-      const innerSlider = carousel.value.$refs.innerSlider
-      const slideCount = innerSlider?.slideCount
-      const slidesToShowCarousel = innerSlider?.slidesToShow
-      const totalSlidesCount = Math.ceil(slideCount - slidesToShowCarousel)
-
-      isFirstSlide.value = currentSlide.value === 0
-      isLastSlide.value = currentSlide.value >= totalSlidesCount
     })
 
     /**
@@ -212,7 +207,6 @@ export default defineComponent({
     const defaultSettings = {
       adaptiveHeight: true,
       arrows: true,
-      dotsClass: 'slick-dots',
       edgeFriction: 0.35,
       pauseOnFocus: true,
       speed: 300,
@@ -238,7 +232,9 @@ export default defineComponent({
     }
 
     return {
+      wrapper,
       carousel,
+      isBreakout,
       contentWrapperProps,
       defaultSettings,
       isFirstSlide,
@@ -249,34 +245,113 @@ export default defineComponent({
   },
 })
 </script>
+
 <style lang="scss">
-.carousel {
-  &__content {
-    @apply tw-mx-auto;
-    @apply tw-container;
-    @apply tw-px-0;
-    @apply tw-flex;
-    @apply tw-flex-wrap;
+.slick-slider {
+  @apply tw-relative;
+  user-select: none;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
 
-    h2 {
-      @apply tw-grow;
-      @apply tw-w-full;
-      @apply tw-block;
-    }
+.slick-list {
+  @apply tw-relative;
+  @apply tw-overflow-hidden;
 
-    .button {
-      @apply tw-grow;
-      @apply tw-justify-end;
-    }
-
-    @screen md {
-      @apply tw-flex-nowrap;
-      @apply tw-justify-between;
-      @apply tw-items-center;
-      @apply tw-pb-4;
-    }
+  &:focus {
+    @apply tw-outline-none;
   }
 
+  &.dragging {
+    @apply tw-cursor-pointer;
+  }
+}
+
+.slick-track {
+  @apply tw-relative;
+  @apply tw-top-0 tw-left-0;
+  @apply tw-flex;
+  @apply tw-gap-4;
+  font-size: 0;
+  line-height: 0;
+}
+
+.slick-slide {
+  @apply tw-hidden;
+  @apply tw-h-full;
+  min-height: 1px;
+
+  &.dragging img {
+    @apply tw-pointer-events-none;
+  }
+}
+
+.slick-loading {
+  .slick-track,
+  .slick-slide {
+    @apply tw-invisible;
+  }
+}
+
+.slick-initialized {
+  .slick-slide {
+    @apply tw-block;
+  }
+}
+
+.slick-dots {
+  @apply tw-w-full;
+  @apply tw-list-none;
+  @apply tw-text-center;
+  @apply tw-m-0 tw-p-0;
+  @apply tw-mt-3;
+
+  li {
+    @apply tw-relative;
+    @apply tw-inline-block;
+    @apply tw-w-4;
+    @apply tw-h-4;
+    @apply tw-m-0;
+    @apply tw-p-0;
+
+    button {
+      @apply tw-w-4;
+      @apply tw-h-4;
+      @apply tw-cursor-pointer;
+      @apply tw-text-pv-transparent;
+      @apply tw-outline-none;
+      font-size: 0;
+      line-height: 0;
+    }
+
+    &::before {
+      @apply tw-absolute;
+      @apply tw-top-0 tw-left-0;
+      @apply tw-text-base tw-text-center;
+      @apply tw-text-pv-grey-80;
+      @apply tw-leading-3;
+      @apply tw-pb-1;
+      @apply tw-w-4 tw-h-4;
+      content: '■';
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    &:hover,
+    &:focus {
+      @apply tw-outline-none;
+    }
+
+    &.slick-active button::before {
+      @apply tw-text-pv-red;
+      @apply tw-opacity-100;
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.carousel {
   &__slider {
     &--wide {
       @apply tw-px-4;
@@ -301,16 +376,7 @@ export default defineComponent({
       }
     }
 
-    .slick-track {
-      @apply tw-flex;
-      @apply tw-gap-4;
-
-      &::before,
-      &::after {
-        @apply tw-content-none;
-      }
-    }
-
+    // TODO: remove this
     .teaser-card {
       @apply tw-h-full;
     }
@@ -320,15 +386,10 @@ export default defineComponent({
 .slider {
   &__prev,
   &__next {
-    @apply tw-inline-flex;
     @apply tw-absolute;
     @apply tw-top-1/2;
     @apply tw-z-10;
-    @apply tw--translate-y-2/4;
-
-    &::before {
-      @apply tw-content-none;
-    }
+    @apply tw--translate-y-1/2;
 
     &--hide {
       @apply tw-hidden;
@@ -341,50 +402,6 @@ export default defineComponent({
 
   &__next {
     @apply tw-right-0;
-  }
-
-  &__dots {
-    display: flex !important;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-
-    li {
-      color: red;
-      opacity: 0;
-
-      &::before {
-        content: '+';
-      }
-    }
-  }
-}
-
-.slick-dots {
-  // set max-width due to dots position on wide mode
-  max-width: 92vw;
-
-  li {
-    @apply tw-w-3;
-    @apply tw-m-0;
-
-    button {
-      @apply tw-w-2;
-
-      &::before {
-        @apply tw-text-pv-grey-80;
-        @apply tw-opacity-100;
-        content: '■';
-        font-size: 0.5rem;
-      }
-    }
-  }
-
-  li.slick-active {
-    button::before {
-      @apply tw-text-pv-red;
-      @apply tw-opacity-100;
-    }
   }
 }
 </style>
