@@ -1,5 +1,13 @@
 <template>
+  <HomeStageSlide
+    v-if="slides.length <= 1"
+    :stage-content="slides[0].stageContent"
+    :image="slides[0].image"
+    :interlay="slides[0].interlay"
+    :bubble="slides[0].bubble"
+  />
   <Carousel
+    v-else
     :settings="settings"
     :slides="slides"
     is-wide
@@ -11,12 +19,13 @@
 
 <script>
 import Carousel from '~/components/atoms/Carousel/Carousel'
+import HomeStageSlide from '~/components/organisms/HomeStage/HomeStageSlide/HomeStageSlide'
 import tailwindconfig from '~/tailwind.config'
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'HomeStage',
-  components: { Carousel },
+  components: { Carousel, HomeStageSlide },
   props: {
     /**
      * Slider items
@@ -64,7 +73,7 @@ export default defineComponent({
       fade: true,
       slidesToShow: 1,
       slidesToScroll: 1,
-      initialSlide: 0,
+      initialSlide: -1,
       infinite: props.infinite,
       responsive: [
         {
