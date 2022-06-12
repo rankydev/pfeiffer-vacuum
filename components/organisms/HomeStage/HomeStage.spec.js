@@ -31,18 +31,19 @@ function createComponent(propsData = {}) {
 // tests provided for the HomeStageSlide and HomeStageSlideContent(in the partials)
 describe('HomeStage', () => {
   describe('initial state', () => {
+    test('should render HomeStage with no slide', () => {
+      createComponent({ slides: [] })
+      const homeStageWrapper = wrapper.find('.home-stage')
+      expect(homeStageWrapper).toBeTruthy()
+    })
     test('should render HomeStage with one single slide', () => {
       createComponent({ slides: homeStageSingleSlideContent.slides })
-
       const homeStageWrapper = wrapper.find('.home-stage')
-
       expect(homeStageWrapper).toBeTruthy()
     })
     test('should render HomeStage with several slides', () => {
       createComponent({ slides: HomeStageContent.slides })
-
       const homeStageWrapper = wrapper.find('.home-stage')
-
       expect(homeStageWrapper).toBeTruthy()
     })
   })

@@ -1,13 +1,6 @@
 <template>
-  <HomeStageSlide
-    v-if="slides.length <= 1"
-    :stage-content="slides[0].stageContent"
-    :image="slides[0].image"
-    :interlay="slides[0].interlay"
-    :bubble="slides[0].bubble"
-  />
   <Carousel
-    v-else
+    v-if="slides.length > 1"
     :settings="settings"
     :slides="slides"
     is-wide
@@ -15,6 +8,14 @@
     :autoplay-speed="autoplaySpeed"
     class="home-stage"
   />
+  <HomeStageSlide
+    v-else-if="slides.length === 1"
+    :stage-content="slides[0].stageContent"
+    :image="slides[0].image"
+    :interlay="slides[0].interlay"
+    :bubble="slides[0].bubble"
+  />
+  <div v-else />
 </template>
 
 <script>
@@ -73,7 +74,7 @@ export default defineComponent({
       fade: true,
       slidesToShow: 1,
       slidesToScroll: 1,
-      initialSlide: -1,
+      initialSlide: 0,
       infinite: props.infinite,
       responsive: [
         {
