@@ -130,6 +130,7 @@ COPY --from=frontend-build /src/.nuxt .nuxt/
 COPY --from=frontend-build /src/node_modules/ ./node_modules/
 COPY --from=frontend-build /src/static ./static/
 COPY --from=frontend-build /src/resolver ./resolver/
+COPY --from=frontend-build /src/server ./server/
 
 EXPOSE 3000
 
