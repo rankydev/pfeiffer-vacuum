@@ -122,6 +122,7 @@ COPY --from=frontend-build /src/build_logs ./build_logs/
 # where available (npm@5+)
 COPY --from=frontend-build /src/package*.json ./
 COPY --from=frontend-build /src/nuxt.config.js ./
+COPY --from=frontend-build /src/i18n.config.js ./
 COPY --from=frontend-build /src/.env ./
 
 # Bundle app source
