@@ -1,7 +1,7 @@
 {
   "button": {
     "signIn": {
-      "label": "Sign In"
+      "label": "로그인"
     },
     "overview": {
       "label": "Overview"
