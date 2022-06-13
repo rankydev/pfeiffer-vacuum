@@ -1,3 +1,5 @@
+import Carousel from '@/components/atoms/Carousel/Carousel.schema-template.js'
+
 export default {
   name: 'HomeStageCarousel',
   display_name: 'Home Stage Carousel',
@@ -11,25 +13,9 @@ export default {
       required: true,
       pos: 1,
     },
-    autoplay: {
-      type: 'boolean',
-      display_name: 'Autoplay',
-      description: 'Enables autoplay on carousel.',
-      pos: 2,
-    },
-    autoplaySpeed: {
-      type: 'number',
-      display_name: 'Autoplay Speed',
-      description: 'Autoplay Speed in milliseconds',
-      default_value: 5000,
-      pos: 3,
-    },
-    infinite: {
-      type: 'boolean',
-      display_name: 'Infinite',
-      description: 'Enables infinite wrap around slides on carousel.',
-      pos: 4,
-    },
+    autoplay: Carousel.autoplay,
+    autoplaySpeed: Carousel.autoplaySpeed,
+    infinite: Carousel.infinite,
   },
   image: null,
   preview_field: null,

@@ -2,11 +2,10 @@
   <ContentWrapper
     v-bind="contentWrapperProps"
     ref="wrapper"
-    v-editable="(slides, infinite, isWide)"
+    v-editable="(infinite, isWide)"
     class="carousel"
   >
     <VueSlickCarousel
-      v-if="slides.length"
       ref="carousel"
       v-bind="{ ...defaultSettings, ...settings }"
       :infinite="infiniteSetting"
@@ -15,13 +14,11 @@
       class="carousel__slider"
       :class="{ 'carousel__slider--wide': isBreakout }"
     >
-      <NuxtDynamic
-        v-for="slide in slides"
-        :key="slide._uid"
-        v-editable="slide"
-        v-bind="slide"
-        :name="slide.uiComponent || slide.component"
-      />
+      <!-- @slot carousel slides -->
+      <slot name="slides" />
+      <!-- empty element is needed, so the slider doesn't throw an error  -->
+      <div />
+
       <template #prevArrow="{ currentSlide }">
         <Button
           class="slider__prev"
@@ -83,14 +80,6 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
-    /**
-     * Slider items
-     */
-    slides: {
-      type: Array,
-      default: () => [],
-    },
-
     /**
      * enables/disables wide mode of carousel (breakout of ContentWrapper)
      */

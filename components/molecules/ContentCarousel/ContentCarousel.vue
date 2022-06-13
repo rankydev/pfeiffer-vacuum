@@ -9,12 +9,17 @@
         :name="btn.uiComponent || btn.component"
       />
     </div>
-    <Carousel v-bind="carouselData" />
+    <Carousel v-bind="carouselData">
+      <template #slides>
+        <!-- @slot carousel slides -->
+        <slot name="slides" />
+      </template>
+    </Carousel>
   </div>
 </template>
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import Carousel from '~/components/atoms/Carousel/Carousel'
+import Carousel from '@/components/atoms/Carousel/Carousel'
 
 export default defineComponent({
   name: 'ContentCarousel',

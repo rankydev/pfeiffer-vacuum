@@ -1,19 +1,29 @@
 <template>
   <Carousel
+    v-if="slides.length"
     :settings="settings"
-    :slides="slides"
     is-wide
     :autoplay="autoplay"
     :autoplay-speed="autoplaySpeed"
     class="home-stage-carousel"
-  />
+  >
+    <template #slides>
+      <HomeStageModule
+        v-for="slide in slides"
+        :key="slide._uid"
+        v-editable="slide"
+        v-bind="slide"
+      />
+    </template>
+  </Carousel>
 </template>
 
 <script>
-import Carousel from '~/components/atoms/Carousel/Carousel'
+import Carousel from '@/components/atoms/Carousel/Carousel'
+import HomeStageModule from '@/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule'
 export default {
   name: 'HomeStageCarousel',
-  components: { Carousel },
+  components: { HomeStageModule, Carousel },
   props: {
     /**
      * Slider items
