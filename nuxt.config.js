@@ -151,10 +151,8 @@ export default {
 
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL || 'https://localhost:3000',
-
     LANGUAGE_CODES: languageCodes,
     DEFAULT_LANGUAGE_CODE: defaultLanguageCode,
-
     REGION_CODES: (process.env.REGION_CODES || 'global').split(','),
     DEFAULT_REGION_CODE: process.env.DEFAULT_REGION_CODE || 'global',
     CURRENT_REGION_CODE: process.env.CURRENT_REGION_CODE || 'global',

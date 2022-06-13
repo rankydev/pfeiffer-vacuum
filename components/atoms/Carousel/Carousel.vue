@@ -152,6 +152,8 @@ export default defineComponent({
      * otherwise set infinite based on setting
      */
     const infiniteSetting = computed(() => {
+      //settings should override values
+      if (props.settings?.infinite) return props.settings?.infinite
       if (isBreakout.value) return false
 
       return props.infinite
@@ -216,7 +218,7 @@ export default defineComponent({
       speed: 300,
       slidesToShow: slidesToShow.value,
       slidesToScroll: 1,
-      initialSlide: isBreakout.value ? 0 : -1,
+      initialSlide: 0,
       responsive: [
         {
           breakpoint: splitBreakpointString(tailwindConfigScreens.lg),

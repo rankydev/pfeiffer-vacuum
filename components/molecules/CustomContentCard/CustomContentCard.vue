@@ -8,7 +8,7 @@
       <ResponsiveImage
         provider="storyblok"
         :image="image"
-        :aspect-ratio="'3:2'"
+        aspect-ratio="3:2"
         :rounded="false"
         class="custom-content-card__image"
       />

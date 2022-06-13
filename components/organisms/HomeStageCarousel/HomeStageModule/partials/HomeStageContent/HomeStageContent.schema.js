@@ -10,12 +10,12 @@ export default {
       max_length: '50',
       pos: 1,
     },
-    teaserText: {
-      type: 'textarea',
-      translatable: true,
-      display_name: 'Teaser Text',
-      max_length: '250',
-      pos: 3,
+    richtext: {
+      type: 'bloks',
+      maximum: 1,
+      restrict_components: true,
+      component_whitelist: ['RichtextBasic'],
+      display_name: 'Description',
     },
     buttons: {
       type: 'bloks',

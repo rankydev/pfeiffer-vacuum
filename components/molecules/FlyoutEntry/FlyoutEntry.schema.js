@@ -1,4 +1,4 @@
-import Link from '~/components/atoms/Link/Link.schema.js'
+import Link from '~/components/atoms/Link/Link.schema.partial.js'
 
 export default {
   name: 'FlyoutEntry',
@@ -15,7 +15,7 @@ export default {
       description:
         'Use an icon from https://jossef.github.io/material-design-icons-iconfont/ here (e.g. calculate)',
     },
-    ...Link.schema,
+    ...Link,
   },
   image: null,
   preview_field: null,

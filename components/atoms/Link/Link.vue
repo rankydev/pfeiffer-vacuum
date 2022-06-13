@@ -1,6 +1,6 @@
 <template>
   <a v-if="isAnchorLink" v-bind="bindings" @click="beforeNavigation">
-    <slot :isActive="false" :isExactActive="false" />
+    <slot :isActive="false" :isExactActive="false">{{ label }}</slot>
   </a>
 
   <NuxtLink
@@ -13,7 +13,9 @@
       :href="link"
       @click="($event) => beforeNavigation($event) && navigate($event)"
     >
-      <slot :isActive="isActive" :isExactActive="isExactActive" />
+      <slot :isActive="isActive" :isExactActive="isExactActive">{{
+        label
+      }}</slot>
     </a>
   </NuxtLink>
 </template>
@@ -48,12 +50,28 @@ export default defineComponent({
     },
     /**
      * variant defines if any style should be applied to the link itself
-     * @values none, inline, breadcrumb
+     * @values none, inline, breadcrumb, quicklink, textlink
      */
     variant: {
       type: String,
       default: 'none',
-      validator: (val) => ['none', 'inline', 'breadcrumb'].includes(val),
+      validator: (val) =>
+        ['none', 'inline', 'breadcrumb', 'quicklink', 'textlink'].includes(val),
+    },
+    /**
+     * The label of the link. Optional, can be used instead of providing content for the template slot.
+     */
+    label: {
+      type: String,
+      default: '',
+    },
+    /**
+     * An optional anchor which can be used instead of href. If the anchor doesn't exist
+     * start with #, it will be added.
+     */
+    anchor: {
+      type: String,
+      default: '',
     },
   },
   setup(props) {
@@ -62,8 +80,14 @@ export default defineComponent({
       return !isInternalLink || props.target !== '_self'
     })
 
+    const anchor = computed(() =>
+      props.anchor.startsWith('#') ? props.anchor : `#${props.anchor}`
+    )
+
     const bindings = computed(() => ({
-      ...(isAnchorLink.value && { href: props.href }),
+      ...(isAnchorLink.value && {
+        href: props.anchor ? anchor.value : props.href,
+      }),
       ...(isAnchorLink.value && { target: props.target }),
       ...(!isAnchorLink.value && { to: props.href }),
       class: `link--${props.variant}`,
@@ -81,19 +105,28 @@ export default defineComponent({
 .link {
   &--inline {
     @apply tw-text-pv-red;
-
-    &:hover {
-      @apply tw-underline;
-    }
+    @apply hover:tw-text-pv-red-lighter;
+    @apply hover:tw-underline;
   }
 
   &--breadcrumb {
     @apply tw-text-pv-grey-16;
+    @apply hover:tw-text-pv-red-lighter;
+    @apply hover:tw-underline;
+  }
 
-    &:hover {
-      @apply tw-text-pv-red-lighter;
-      @apply tw-underline;
-    }
+  &--quicklink {
+    @apply tw-font-bold;
+    @apply tw-text-pv-grey-16;
+    @apply hover:tw-text-pv-red-lighter;
+  }
+
+  &--textlink {
+    @apply tw-transition-colors;
+    @apply tw-duration-300;
+    @apply tw-ease-out;
+    @apply tw-leading-6;
+    @apply hover:tw-underline;
   }
 }
 </style>

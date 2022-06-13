@@ -80,7 +80,7 @@ FROM node:16-alpine
 ENV PORT=3000
 ENV HOST='0.0.0.0'
 
-ENV BASE_URL='https://localhost:3000'
+ENV BASE_URL="${BASE_URL}"
 
 # please read the note above
 ENV NODE_ENV=development
