@@ -19,8 +19,8 @@ export default {
     },
     autoplaySpeed: {
       type: 'number',
-      display_name: 'Autoplay Speed',
-      description: 'Autoplay Speed in seconds',
+      display_name: 'Autoplay speed',
+      description: 'Autoplay speed in seconds',
       default_value: 5,
       pos: 3,
     },

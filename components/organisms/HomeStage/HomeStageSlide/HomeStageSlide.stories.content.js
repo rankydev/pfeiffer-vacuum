@@ -49,7 +49,7 @@ export const homeStageSlideContent = {
   ...requiredContent,
 }
 
-export const homeStageSlideContent2 = {
+export const homeStageSecondSlideContent = {
   bubble: bubble2,
   interlay: {
     alt: 'Everest',
@@ -64,7 +64,7 @@ export const homeStageSlideContent2 = {
   ...requiredContent,
 }
 
-export const homeStageSlideContent3 = {
+export const homeStageThirdSlideContent = {
   bubble,
   interlay: {
     alt: 'Aurora',

@@ -1,7 +1,7 @@
 import {
   homeStageSlideContent,
-  homeStageSlideContent2,
-  homeStageSlideContent3,
+  homeStageSecondSlideContent,
+  homeStageThirdSlideContent,
 } from '~/components/organisms/HomeStage/HomeStageSlide/HomeStageSlide.stories.content'
 
 export const homeStageSingleSlideContent = {
@@ -11,8 +11,8 @@ export const homeStageSingleSlideContent = {
 export default {
   slides: [
     homeStageSlideContent,
-    homeStageSlideContent2,
-    homeStageSlideContent3,
+    homeStageSecondSlideContent,
+    homeStageThirdSlideContent,
   ],
   infinite: false,
   autoplay: true,
