@@ -74,7 +74,7 @@ export default defineComponent({
       fade: true,
       slidesToShow: 1,
       slidesToScroll: 1,
-      initialSlide: 0,
+      initialSlide: props.autoplay ? 0 : -1,
       infinite: props.infinite,
       responsive: [
         {
