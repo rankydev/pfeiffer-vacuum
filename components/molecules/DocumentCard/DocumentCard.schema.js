@@ -1,4 +1,4 @@
-import Link from '~/components/atoms/Link/Link.schema.js'
+import Link from '~/components/atoms/Link/Link.schema.partial.js'
 
 export default {
   name: 'DocumentCard',
@@ -15,7 +15,7 @@ export default {
       translatable: true,
       display_name: 'Alternative Text',
     },
-    href: Link.schema.href,
+    href: Link.href,
   },
   image: null,
   preview_field: null,
