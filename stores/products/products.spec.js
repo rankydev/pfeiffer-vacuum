@@ -7,20 +7,19 @@ describe('Page store', () => {
 
   describe('initial state', () => {
     test('should return all expected properties and getters', () => {
+      const exampleID = '128ee16d-cb90-45be-9986-c8006a5235e6_sample'
       const productStore = useProductStore()
       expect(productStore).toBeTruthy()
-      const product = productStore.getProductById(
-        '128ee16d-cb90-45be-9986-c8006a5235e6_sample'
-      )
+      const product = productStore.getProductById(exampleID)
       expect(product).toBeTruthy()
-      expect(product.code).toBe('128ee16d-cb90-45be-9986-c8006a5235e6_sample')
+      expect(product.code).toBe(exampleID)
       expect(product.name).toBe('HiPace® 80')
     })
     test('should return all products from store', () => {
       const productStore = useProductStore()
       const products = productStore.getAllProducts
       expect(products).toBeTruthy()
-      expect(productStore.products).toBe(productStore.getAllProducts)
+      expect(productStore.products).toBe(products)
     })
     test('should return no properties given no valid ID', () => {
       const productStore = useProductStore()
