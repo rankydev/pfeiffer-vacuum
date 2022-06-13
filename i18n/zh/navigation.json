@@ -1,16 +1,16 @@
 {
   "button": {
     "signIn": {
-      "label": "Anmelden"
+      "label": "登入"
     },
     "overview": {
-      "label": "Übersicht"
+      "label": "Overview"
     },
     "shop": {
       "label": "Shop"
     },
     "article": {
-      "label": "Zum Artikel"
+      "label": "Go to article"
     }
   }
 }

@@ -1,7 +1,7 @@
 {
   "input": {
     "search": {
-      "placeholder": "Suchen ..."
+      "placeholder": "검색..."
     }
   },
   "button": {}
