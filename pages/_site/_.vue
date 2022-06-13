@@ -13,19 +13,19 @@
 
 <script>
 import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
-import useInternationalizationUrlBuilder from '~/composables/useInternationalizationUrlBuilder'
+import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
 
 export default defineComponent({
   layout: 'default',
-  setup(props, context) {
+  setup(_, context) {
     const pageStore = usePageStore()
     const route = useRoute()
-    const { buildUrl } = useInternationalizationUrlBuilder(context)
+    const { buildSlugs } = useStoryblokSlugBuilder(context)
 
     pageStore.setPageType(CMS_PAGE)
     const currentPath = ref(route.value.path)
-    const { slug, fallbackSlug, language } = buildUrl(currentPath.value)
+    const { slug, fallbackSlug, language } = buildSlugs(currentPath.value)
 
     return {
       slug,

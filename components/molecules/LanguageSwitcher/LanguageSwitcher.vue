@@ -1,7 +1,7 @@
 <template>
   <div class="language-switcher">
     <Icon class="language-switcher__icon" icon="language" />
-    <span class="language-switcher__label">DE</span>
+    <span class="language-switcher__label">{{ $t('language.code') }}</span>
   </div>
 </template>
 

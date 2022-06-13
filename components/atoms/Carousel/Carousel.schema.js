@@ -6,7 +6,7 @@ export default {
       type: 'bloks',
       display_name: 'Slides',
       restrict_components: true,
-      component_whitelist: ['TeaserCard', 'CustomContentCard', 'DocumentCard'],
+      component_whitelist: ['TeaserCard', 'CustomContentCard'],
       maximum: 16,
       required: true,
     },

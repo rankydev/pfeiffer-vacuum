@@ -3,32 +3,26 @@ function appendTrailingSlashIfRequired(url, append) {
 }
 
 export function transform(links, context) {
-  const { REGION_CODES, DEFAULT_REGION_CODE } = context.$config
+  const { DEFAULT_REGION_CODE, CURRENT_REGION_CODE, baseURL } = context.$config
 
-  const urlsSegments = context.route.path
-    .split('/')
-    .filter((segment) => segment !== '')
+  function transformUrl(url) {
+    const hasTrailingSlash = url.endsWith('/')
+    const urlSegments = url.split('/').filter((segment) => segment !== '')
+    const language = urlSegments.shift()
+    const region = urlSegments.shift()
+    const slug = urlSegments.join('/')
 
-  const currentRegion = REGION_CODES.includes(urlsSegments[0])
-    ? urlsSegments.shift()
-    : DEFAULT_REGION_CODE
-
-  function transformUrl(url, currentRegion) {
-    const isTrailingSlash = url.endsWith('/')
-    const urlsSegments = url.split('/').filter((segment) => segment !== '')
-    const language = urlsSegments.shift()
-    const region = urlsSegments.shift()
-    const slug = urlsSegments.join('/')
-
-    if (region === DEFAULT_REGION_CODE) {
+    // stay in the current region if region is the current or the default one
+    if ([DEFAULT_REGION_CODE, CURRENT_REGION_CODE].includes(region)) {
       return appendTrailingSlashIfRequired(
-        `/${currentRegion}/${language}/${slug}`,
-        isTrailingSlash
+        `/${language}/${slug}`,
+        hasTrailingSlash
       )
+      // set the absoulte url to the new region otherwise
     } else {
       return appendTrailingSlashIfRequired(
-        `/${region}/${language}/${slug}`,
-        isTrailingSlash
+        `${baseURL}/${region}/${language}/${slug}`,
+        hasTrailingSlash
       )
     }
   }
@@ -36,10 +30,10 @@ export function transform(links, context) {
   const transformedLinks = {}
 
   for (const [key, value] of Object.entries(links)) {
-    const path = transformUrl(value.path, currentRegion, true)
+    const path = transformUrl(value.path)
     const translatedSlugs = value.translatedSlugs.map((item) => ({
       ...item,
-      path: transformUrl(item.path, currentRegion),
+      path: transformUrl(item.path),
     }))
 
     transformedLinks[key] = {
