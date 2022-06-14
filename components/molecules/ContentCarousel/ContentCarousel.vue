@@ -1,5 +1,11 @@
 <template>
-  <div v-editable="slides" class="content-carousel">
+  <div
+    v-editable="slides"
+    :class="[
+      'content-carousel',
+      { 'content-carousel--with-background': !transparent },
+    ]"
+  >
     <div class="content-carousel__content">
       <h2>{{ headline }}</h2>
       <NuxtDynamic
@@ -80,6 +86,13 @@ export default defineComponent({
       type: String,
       default: '5000',
     },
+    /**
+     * toggle transparent background if necessary
+     */
+    transparent: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const carouselData = {
@@ -99,8 +112,11 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .content-carousel {
-  @apply tw-bg-pv-grey-96;
   @apply tw-py-12;
+
+  &--with-background {
+    @apply tw-bg-pv-grey-96;
+  }
 
   &__content {
     @apply tw-mx-auto;
