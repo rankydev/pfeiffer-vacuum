@@ -17,7 +17,7 @@
     <template v-if="date" #subheading>
       <div class="custom-content-card__date">
         <Icon icon="date_range" size="xsmall" />
-        {{ $d(new Date(fixedDate), 'dateLong') }}
+        {{ $d(fixedDate, 'dateLong') }}
       </div>
     </template>
 
