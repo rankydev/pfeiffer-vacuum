@@ -1,19 +1,32 @@
 <template>
   <Carousel
+    v-if="slides.length > 1"
     :settings="settings"
     :slides="slides"
     is-wide
     :autoplay="autoplay"
     :autoplay-speed="autoplaySpeed"
-    class="home-stage-carousel"
+    class="home-stage"
   />
+  <HomeStageSlide
+    v-else-if="slides.length === 1"
+    :stage-content="slides[0].stageContent"
+    :image="slides[0].image"
+    :interlay="slides[0].interlay"
+    :bubble="slides[0].bubble"
+  />
+  <div v-else />
 </template>
 
 <script>
 import Carousel from '~/components/atoms/Carousel/Carousel'
-export default {
-  name: 'HomeStageCarousel',
-  components: { Carousel },
+import HomeStageSlide from '~/components/organisms/HomeStage/HomeStageSlide/HomeStageSlide'
+import tailwindconfig from '~/tailwind.config'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  name: 'HomeStage',
+  components: { Carousel, HomeStageSlide },
   props: {
     /**
      * Slider items
@@ -28,7 +41,7 @@ export default {
      */
     infinite: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     /**
      * enables/ disables autoplay
@@ -46,31 +59,50 @@ export default {
     },
   },
   setup(props) {
-    const settings = {
+    const tailwindConfigScreens = tailwindconfig.theme.screens
+
+    /**
+     * split string of tailwind breakpoint, so lib aknowledges breakpoint
+     */
+    const splitBreakpointString = (breakpointString) => {
+      const split = breakpointString.split('px')
+
+      return parseInt(split[0])
+    }
+
+    const settings = computed(() => ({
       fade: true,
       slidesToShow: 1,
       slidesToScroll: 1,
-      initialSlide: -1,
+      initialSlide: props.autoplay ? 0 : -1,
       infinite: props.infinite,
       responsive: [
         {
-          breakpoint: 1280,
+          breakpoint: splitBreakpointString(tailwindConfigScreens.lg),
           settings: {
             slidesToShow: 1,
           },
         },
+        {
+          breakpoint: splitBreakpointString(tailwindConfigScreens.md),
+          settings: {
+            slidesToShow: 1,
+            dots: true,
+            arrows: false,
+          },
+        },
       ],
-    }
+    }))
 
     return {
       settings,
     }
   },
-}
+})
 </script>
 
 <style lang="scss">
-.home-stage-carousel {
+.home-stage {
   .slick-slider {
     padding: 0;
 
@@ -80,7 +112,7 @@ export default {
       .slick-slide {
         min-width: 100vw;
 
-        .homestage {
+        .home-stage-slide {
           // overwrite slick slide elements style
           display: flex !important;
         }

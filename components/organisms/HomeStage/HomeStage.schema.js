@@ -1,12 +1,12 @@
 export default {
-  name: 'HomeStageCarousel',
-  display_name: 'Home Stage Carousel',
+  name: 'HomeStage',
+  display_name: 'Home Stage',
   schema: {
     slides: {
       type: 'bloks',
       display_name: 'Slides',
       restrict_components: true,
-      component_whitelist: ['HomeStageModule'],
+      component_whitelist: ['HomeStageSlide'],
       maximum: 5,
       required: true,
       pos: 1,
@@ -19,9 +19,9 @@ export default {
     },
     autoplaySpeed: {
       type: 'number',
-      display_name: 'Autoplay Speed',
-      description: 'Autoplay Speed in milliseconds',
-      default_value: 5000,
+      display_name: 'Autoplay speed',
+      description: 'Autoplay speed in seconds',
+      default_value: 5,
       pos: 3,
     },
     infinite: {
@@ -38,6 +38,6 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'HomeStageCarousel',
+  real_name: 'HomeStage',
   component_group_uuid: null,
 }

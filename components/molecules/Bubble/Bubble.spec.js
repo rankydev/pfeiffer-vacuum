@@ -1,6 +1,6 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Bubble from './Bubble'
-import { bubble } from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule.stories.content'
+import { bubble } from '~/components/organisms/HomeStage/HomeStageSlide/HomeStageSlide.stories.content'
 import { bubbleText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
 
 const defaultProps = () => JSON.parse(JSON.stringify(bubble[0]))

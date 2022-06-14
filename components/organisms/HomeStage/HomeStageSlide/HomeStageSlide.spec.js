@@ -1,15 +1,15 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import HomeStageModule from './HomeStageModule'
-import HomeStageContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/partials/HomeStageContent/HomeStageContent'
+import HomeStageSlide from './HomeStageSlide'
+import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent'
 import Bubble from '~/components/molecules/Bubble/Bubble'
-import { homeStageModuleContent } from './HomeStageModule.stories.content'
+import { homeStageSlideContent } from './HomeStageSlide.stories.content'
 
 const nuxtImg = {
   template: '<div>some image</div>',
   props: ['src', 'modifiers', 'title', 'alt', 'provider'],
 }
 
-const defaultProps = () => JSON.parse(JSON.stringify(homeStageModuleContent))
+const defaultProps = () => JSON.parse(JSON.stringify(homeStageSlideContent))
 
 let wrapper
 
@@ -25,15 +25,18 @@ function createComponent(propsData = {}) {
     propsData,
   }
 
-  wrapper = shallowMount(HomeStageModule, options)
+  wrapper = shallowMount(HomeStageSlide, options)
 }
 
-describe('HomeStageModule', () => {
+describe('HomeStageSlide', () => {
   describe('initial state', () => {
-    test('should render when no data was given', () => {
-      createComponent()
-      const homeStageWrapper = wrapper.find('.homestage')
-      expect(homeStageWrapper.exists()).toBeTruthy()
+    test('should render whole component', () => {
+      const propsData = {
+        ...defaultProps(),
+      }
+      createComponent(propsData)
+      const homeStageSlideWrapper = wrapper.find('.home-stage-slide')
+      expect(homeStageSlideWrapper.exists()).toBeTruthy()
     })
 
     // stageContent
@@ -42,7 +45,7 @@ describe('HomeStageModule', () => {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const contentElement = wrapper.findComponent(HomeStageContent)
+      const contentElement = wrapper.findComponent(HomeStageSlideContent)
       expect(contentElement.vm.richtext[0].richtext).toEqual(
         propsData.stageContent[0].richtext[0].richtext
       )
@@ -71,7 +74,7 @@ describe('HomeStageModule', () => {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const homeStageWrapper = wrapper.find('.homestage')
+      const homeStageWrapper = wrapper.find('.home-stage-slide')
 
       expect(homeStageWrapper.element.style.backgroundImage).toBe(
         `url(${propsData.image.originalFilename})`

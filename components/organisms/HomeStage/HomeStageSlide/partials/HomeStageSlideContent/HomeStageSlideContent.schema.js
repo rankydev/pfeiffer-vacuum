@@ -1,6 +1,6 @@
 export default {
-  name: 'HomeStageContent',
-  display_name: 'HomeStageContent',
+  name: 'HomeStageSlideContent',
+  display_name: 'HomeStageSlideContent',
   schema: {
     headline: {
       type: 'text',
@@ -31,6 +31,6 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'HomeStage',
+  real_name: 'HomeStageSlideContent',
   component_group_uuid: null,
 }
