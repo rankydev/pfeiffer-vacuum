@@ -1,5 +1,8 @@
 <template>
-  <InputField icon="search" placeholder="Suche ..." />
+  <InputField
+    icon="search"
+    :placeholder="$t('form.input.search.placeholder')"
+  />
 </template>
 
 <script>

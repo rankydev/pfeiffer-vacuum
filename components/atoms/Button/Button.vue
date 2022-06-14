@@ -1,5 +1,7 @@
 <template>
-  <button
+  <component
+    :is="href ? 'Link' : 'button'"
+    v-bind="href && { href, target }"
     class="button"
     :class="[
       `button--${variant}`,
@@ -23,17 +25,22 @@
         'button__icon--append': label && !prependIcon,
       }"
     />
-    <!--TODO: clarify why the next line is needed-->
+    <!-- This makes sure there is at least whitespace as
+    content in the button if no icon or label are provided -->
     <template v-if="!icon && !label">&nbsp;&nbsp;</template>
-  </button>
+  </component>
 </template>
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import Link from '~/components/atoms/Link/Link.vue'
 
 export default defineComponent({
-  components: { Icon },
+  components: {
+    Icon,
+    Link,
+  },
   props: {
     /**
      * The text displayed at the button
@@ -98,6 +105,22 @@ export default defineComponent({
       type: String,
       default: 'none',
       validator: (val) => ['none', 'left', 'right'].includes(val),
+    },
+    /**
+     * Defines button link if needed
+     */
+    href: {
+      type: String,
+      default: '',
+    },
+    /**
+     * Target can be defined for button link
+     * @values _self, _blank
+     */
+    target: {
+      type: String,
+      default: '_self',
+      validator: (val) => ['_self', '_blank'].includes(val),
     },
   },
   setup(props) {

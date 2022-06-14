@@ -74,30 +74,70 @@ describe('Link', () => {
       })
     })
 
-    describe.each([['none'], ['inline'], ['breadcrumb']])(
-      'given the variant %s',
-      (variant) => {
-        it('should render the variant when Link is a NuxtLink', () => {
-          const propsData = {
-            target: '_blank',
-            href: 'http://www.example.de',
-            variant,
-          }
-          createComponent(propsData)
+    describe('given label', () => {
+      it('should render the label text', () => {
+        const propsData = {
+          target: '_blank',
+          href: 'https://www.example.com',
+          label: 'Example.com',
+        }
+        createComponent(propsData)
 
-          const link = wrapper.find('a')
-          expect(link.attributes('class')).toBe(`link--${variant}`)
-        })
+        expect(wrapper.text()).toBe(propsData.label)
+      })
+    })
 
-        it('should render the variant when link is an anchor link', () => {
-          const propsData = { href: '/some/reltiv/path', variant }
-          createComponent(propsData)
+    describe('given anchor', () => {
+      it('should render an a tag with the anchor as href', () => {
+        const propsData = {
+          anchor: '2',
+          label: 'Example.com',
+        }
+        createComponent(propsData)
 
-          const link = wrapper.findComponent(RouterLinkStub)
-          expect(link.attributes('class')).toBe(`link--${variant}`)
-        })
-      }
-    )
+        const link = wrapper.find('a')
+        expect(link.exists()).toBeTruthy()
+        expect(link.attributes('href')).toBe('#2')
+      })
+      it('should not add # if it is already in the anchor', () => {
+        const propsData = {
+          anchor: '#2',
+          label: 'Example.com',
+        }
+        createComponent(propsData)
+
+        const link = wrapper.find('a')
+        expect(link.attributes('href')).toBe('#2')
+      })
+    })
+
+    describe.each([
+      ['none'],
+      ['inline'],
+      ['breadcrumb'],
+      ['quicklink'],
+      ['textlink'],
+    ])('given the variant %s', (variant) => {
+      it('should render the variant when Link is a NuxtLink', () => {
+        const propsData = {
+          target: '_blank',
+          href: 'http://www.example.de',
+          variant,
+        }
+        createComponent(propsData)
+
+        const link = wrapper.find('a')
+        expect(link.attributes('class')).toBe(`link--${variant}`)
+      })
+
+      it('should render the variant when link is an anchor link', () => {
+        const propsData = { href: '/some/reltiv/path', variant }
+        createComponent(propsData)
+
+        const link = wrapper.findComponent(RouterLinkStub)
+        expect(link.attributes('class')).toBe(`link--${variant}`)
+      })
+    })
   })
 
   describe('during interaction', () => {

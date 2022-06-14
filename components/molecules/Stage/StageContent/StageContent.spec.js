@@ -39,12 +39,7 @@ describe('StageContent', () => {
         const ctas = wrapper.findAllComponents(Button)
 
         expect(domButtonWrapper.exists()).toBeTruthy()
-
-        buttons.forEach((item, index) => {
-          expect(ctas.length).toBe(buttons.length)
-          expect(ctas.at(index).attributes('href')).toBe(item.href)
-          expect(ctas.at(index).attributes('target')).toBe(item.target)
-        })
+        expect(ctas.length).toBe(buttons.length)
       })
     })
   })

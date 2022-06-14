@@ -1,0 +1,16 @@
+{
+  "button": {
+    "signIn": {
+      "label": "Sign In"
+    },
+    "overview": {
+      "label": "Overview"
+    },
+    "shop": {
+      "label": "Shop"
+    },
+    "article": {
+      "label": "Go to article"
+    }
+  }
+}

@@ -8,7 +8,7 @@
       <ResponsiveImage
         provider="storyblok"
         :image="image"
-        :aspect-ratio="'3:2'"
+        aspect-ratio="3:2"
         :rounded="false"
         class="custom-content-card__image"
       />
@@ -17,7 +17,7 @@
     <template v-if="date" #subheading>
       <div class="custom-content-card__date">
         <Icon icon="date_range" size="xsmall" />
-        {{ date }}
+        {{ $d(new Date(date), 'dateLong') }}
       </div>
     </template>
 
@@ -31,7 +31,7 @@
 
     <template #actionItems>
       <Button
-        label="Zum Artikel"
+        :label="$t('navigation.button.article.label')"
         icon="arrow_forward"
         variant="secondary"
         shape="plain"
