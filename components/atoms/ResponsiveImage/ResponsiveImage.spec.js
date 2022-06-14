@@ -31,7 +31,7 @@ function createComponent(propsData = {}) {
 }
 
 describe('ResponsiveImage', () => {
-  describe('tests independent on provider', () => {
+  describe('initial state given no provider', () => {
     const aspectRatioArr = [
       ['1:1', 'responsive-image__1-1'],
       ['16:9', 'responsive-image__16-9'],
@@ -106,7 +106,7 @@ describe('ResponsiveImage', () => {
       )
     })
   })
-  describe('tests dependent on storyblok provider', () => {
+  describe('should handle greyscale and focal given storyblok provider', () => {
     test('should have greyscale', () => {
       const propsData = {
         ...defaultPropsStoryblok(),

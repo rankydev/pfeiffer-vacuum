@@ -3,7 +3,6 @@ import { setActivePinia, createPinia } from 'pinia'
 import { useProductStore } from '~/stores/products/products'
 import ProductCard from './ProductCard.vue'
 import { product, productID } from './ProductCard.stories.content.js'
-import { expect, it } from '@jest/globals'
 
 jest.mock('~/stores/products', () => {
   const { product } = require('./ProductCard.stories.content.js')

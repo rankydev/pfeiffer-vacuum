@@ -137,8 +137,6 @@ export default {
     storyblok: {
       baseURL: 'https://img2.storyblok.com',
     },
-    // domain whitelist
-    domains: [],
   },
   serverMiddleware: [
     // Will register file from project server-middleware directory to handle /server-middleware/* requires
