@@ -1,6 +1,6 @@
 import { useStoryblokProvider } from './storyblokProvider.js'
 
-describe('HybrisProvider', () => {
+describe('StoryblokProvider', () => {
   describe('initial state', () => {
     test('should render src and alt with empty String, when no image provided', () => {
       const storyblokProvider = useStoryblokProvider({})
