@@ -44,11 +44,8 @@ export default {
         'ImageWithDescription',
         'ContentMediaBlock',
         'ContentTextBlock',
-        'TeaserCard',
-        'Carousel',
-        'ContentCarousel',
-        'HomeStageCarousel',
-        'CustomContentCard',
+        'CustomContentCardCarousel',
+        'TeaserCardCarousel',
       ],
     },
     bottom: {

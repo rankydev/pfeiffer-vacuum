@@ -94,11 +94,17 @@ $card-image-height: 200px;
 .pv-card {
   @include box-shadow;
   @apply tw-bg-pv-white;
-  @apply tw-flex tw-flex-col;
+  @apply tw-flex-col;
   @apply tw-h-full;
   @apply tw-rounded-lg;
   @apply tw-overflow-hidden;
   @apply tw-p-4;
+
+  /**
+   * need to be important because the slick slider will
+   * append 'display: inline-block' onto the element
+   */
+  display: flex !important;
 
   @screen lg {
     @apply tw-py-6;
@@ -170,6 +176,7 @@ $card-image-height: 200px;
     @apply tw-block;
     @apply tw-overflow-hidden;
     @apply tw-text-base;
+    @apply tw-leading-6;
     @apply tw-mb-4;
 
     @include text-overflow;

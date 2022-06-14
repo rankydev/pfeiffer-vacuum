@@ -1,4 +1,4 @@
-import Carousel from '@/components/atoms/Carousel/Carousel.schema-template.js'
+import Carousel from '~/components/atoms/GenericCarousel/GenericCarousel.schema.partial.js'
 
 export default {
   name: 'HomeStageCarousel',

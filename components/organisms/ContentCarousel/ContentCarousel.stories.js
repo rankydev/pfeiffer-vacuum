@@ -26,10 +26,6 @@ const argTypes = {
     control: { type: 'boolean' },
     defaultValue: contentCarouselContent.infinite,
   },
-  settings: {
-    control: { type: 'object' },
-    defaultValue: contentCarouselContent.settings,
-  },
   slides: {
     control: { type: 'array' },
     defaultValue: contentCarouselContent.slides,
@@ -37,7 +33,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/ContentCarousel',
+  title: 'Organisms/ContentCarousel',
   component: ContentCarousel,
   parameters: {
     docs: {

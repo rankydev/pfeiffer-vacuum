@@ -1,11 +1,12 @@
 <template>
-  <Carousel
+  <GenericCarousel
     v-if="slides.length"
-    :settings="settings"
     is-wide
+    :infinite="infinite"
     :autoplay="autoplay"
     :autoplay-speed="autoplaySpeed"
     class="home-stage-carousel"
+    variant="homeStage"
   >
     <template #slides>
       <HomeStageModule
@@ -15,15 +16,15 @@
         v-bind="slide"
       />
     </template>
-  </Carousel>
+  </GenericCarousel>
 </template>
 
 <script>
-import Carousel from '~/components/atoms/Carousel/Carousel'
+import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.vue'
 import HomeStageModule from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule'
 export default {
   name: 'HomeStageCarousel',
-  components: { HomeStageModule, Carousel },
+  components: { HomeStageModule, GenericCarousel },
   props: {
     /**
      * Slider items
@@ -48,54 +49,14 @@ export default {
       default: false,
     },
     /**
-     * autoplay Speed in milliseconds, retrieves string from Storyblok
+     * autoplay Speed in seconds, retrieves string from Storyblok
      */
     autoplaySpeed: {
       type: String,
-      default: '5000',
+      default: '5',
     },
-  },
-  setup(props) {
-    const settings = {
-      fade: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      initialSlide: -1,
-      infinite: props.infinite,
-      responsive: [
-        {
-          breakpoint: 1280,
-          settings: {
-            slidesToShow: 1,
-          },
-        },
-      ],
-    }
-
-    return {
-      settings,
-    }
   },
 }
 </script>
 
-<style lang="scss">
-.home-stage-carousel {
-  .slick-slider {
-    padding: 0;
-
-    .slick-track {
-      @apply tw-gap-0;
-
-      .slick-slide {
-        min-width: 100vw;
-
-        .homestage {
-          // overwrite slick slide elements style
-          display: flex !important;
-        }
-      }
-    }
-  }
-}
-</style>
+<style lang="scss"></style>

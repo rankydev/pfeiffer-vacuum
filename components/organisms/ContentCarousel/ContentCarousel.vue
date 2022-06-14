@@ -9,22 +9,26 @@
         :name="btn.uiComponent || btn.component"
       />
     </div>
-    <Carousel v-bind="carouselData">
+    <GenericCarousel v-if="slides.length > 0" v-bind="carouselData">
       <template #slides>
-        <!-- @slot carousel slides -->
-        <slot name="slides" />
+        <NuxtDynamic
+          v-for="slide in slides"
+          :key="slide._uid"
+          v-bind="slide"
+          :name="slide.uiComponent || slide.component"
+        />
       </template>
-    </Carousel>
+    </GenericCarousel>
   </div>
 </template>
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import Carousel from '~/components/atoms/Carousel/Carousel'
+import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.vue'
 
 export default defineComponent({
   name: 'ContentCarousel',
   components: {
-    Carousel,
+    GenericCarousel,
   },
   props: {
     /**
@@ -58,13 +62,6 @@ export default defineComponent({
       default: false,
     },
     /**
-     * optional carousel settings for manual use
-     */
-    settings: {
-      type: Object,
-      default: () => ({}),
-    },
-    /**
      * enables/ disables infinite wrap around items on slider
      */
     infinite: {
@@ -79,18 +76,16 @@ export default defineComponent({
       default: false,
     },
     /**
-     * autoplay Speed in milliseconds, retrieves string from Storyblok
+     * autoplay Speed in seconds, retrieves string from Storyblok
      */
     autoplaySpeed: {
       type: String,
-      default: '5000',
+      default: '5',
     },
   },
   setup(props) {
     const carouselData = {
-      slides: props.slides,
       isWide: props.isWide,
-      settings: props.settings,
       infinite: props.infinite,
       autoplay: props.autoplay,
       autoplaySpeed: props.autoplaySpeed,

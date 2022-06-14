@@ -1,20 +1,39 @@
 import { createLocalVue, shallowMount, mount } from '@vue/test-utils'
-import { carouselEntries, mockContent } from './Carousel.stories.content'
+import { carouselEntries, mockContent } from './GenericCarousel.stories.content'
 import Button from '~/components/atoms/Button/Button'
-import Carousel from './Carousel'
+import GenericCarousel from './GenericCarousel'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import { ref } from '@nuxtjs/composition-api'
 
 let wrapper
+const slideMock = { template: '<div>Slide</div>' }
+
+const slides = [
+  slideMock,
+  slideMock,
+  slideMock,
+  slideMock,
+  slideMock,
+  slideMock,
+  slideMock,
+]
 
 const slickSliderStub = {
   template: `
       <div>
         <slot />
-        <slot name="prevArrow" />
-        <slot name="nextArrow" />
+        <slot name="prevArrow" v-bind="{ currentSlide: current }" />
+        <slot name="nextArrow" v-bind="{ currentSlide: current, slideCount: ${slides.length} }" />
       </div>
       `,
+  data() {
+    return { current: 0 }
+  },
+  methods: {
+    increase: function () {
+      this.current++
+    },
+  },
 }
 
 const nuxtDynamicStub = {
@@ -23,9 +42,7 @@ const nuxtDynamicStub = {
 
 function createComponent(
   propsData = {},
-  shallow = true,
-  noStub = false,
-  isDesktop = false
+  { shallow = true, noStub = false, isDesktop = false, children = [] } = {}
 ) {
   const $breakpoints = { isDesktop: ref(isDesktop || false) }
   const mocks = { $nuxt: { context: { app: { $breakpoints } } } }
@@ -46,12 +63,15 @@ function createComponent(
     stubs,
     propsData,
     mocks,
+    slots: { slides: children },
   }
 
-  wrapper = shallow ? shallowMount(Carousel, options) : mount(Carousel, options)
+  wrapper = shallow
+    ? shallowMount(GenericCarousel, options)
+    : mount(GenericCarousel, options)
 }
 
-describe('Carousel', () => {
+describe('GenericCarousel', () => {
   describe('initial state', () => {
     test('should render carousel when no entries are provided', () => {
       createComponent()
@@ -61,16 +81,8 @@ describe('Carousel', () => {
       expect(carouselWrapper).toBeTruthy()
     })
 
-    test('should render carousel entries given propsData', () => {
-      createComponent({ slides: carouselEntries })
-
-      const entries = wrapper.findAllComponents(nuxtDynamicStub)
-
-      expect(entries).toHaveLength(carouselEntries.length)
-    })
-
     test('should render carousel in wide mode given isWide prop', () => {
-      createComponent({ slides: carouselEntries, isWide: true })
+      createComponent({ isWide: true })
 
       const wideSlider = wrapper.find('.carousel__slider--wide')
       const contentWrapper = wrapper.findComponent(ContentWrapper)
@@ -81,42 +93,27 @@ describe('Carousel', () => {
       expect(contentWrapper.attributes('noPadding')).toBeFalsy()
     })
 
-    test('should extend default settings than overwriting them given example setting', () => {
-      createComponent({
-        slides: carouselEntries,
-        settings: { speed: 500 },
-      })
-
-      const slider = wrapper.find('.carousel__slider')
-
-      expect(slider.attributes('speed')).toBe('500')
-      expect(slider.attributes('autoplay-speed')).toBe('5000')
-    })
-
     describe('buttons', () => {
       test('should render next and no prev button given enough entries', async () => {
-        createComponent(
-          { slides: carouselEntries, settings: { initialSlide: 0 } },
-          false,
-          true
+        createComponent({}, { shallow: false, noStub: true, children: slides })
+
+        const prev = wrapper.find('.carousel__arrow-prev')
+        const next = wrapper.find('.carousel__arrow-next')
+
+        expect(prev.attributes('class')).toContain('carousel__arrow-prev--hide')
+        expect(next.attributes('class')).not.toContain(
+          'carousel__arrow-next--hide'
         )
-
-        await wrapper.vm.$nextTick()
-        await wrapper.vm.$nextTick()
-        await wrapper.vm.$nextTick()
-
-        const prev = wrapper.find('.slider__prev--hide')
-        const next = wrapper.find('.slider__next--hide')
-
-        expect(prev.exists()).toBeTruthy()
-        expect(next.exists()).toBeFalsy()
       })
 
       test('should render both buttons given prop infinite true', () => {
-        createComponent({ slides: carouselEntries, infinite: true })
+        createComponent(
+          { infinite: true },
+          { shallow: false, noStub: true, children: slides }
+        )
 
-        const prev = wrapper.find('.slider__prev')
-        const next = wrapper.find('.slider__next')
+        const prev = wrapper.find('.carousel__arrow-prev')
+        const next = wrapper.find('.carousel__arrow-next')
 
         expect(prev.exists()).toBeTruthy()
         expect(next.exists()).toBeTruthy()
@@ -125,12 +122,7 @@ describe('Carousel', () => {
 
     describe('infinite and autoplay', () => {
       test('should set correct infinite and autoplay state given only these props', () => {
-        createComponent({
-          slides: carouselEntries,
-          autoplay: true,
-          autoplaySpeed: '4',
-          infinite: true,
-        })
+        createComponent({ autoplay: true, autoplaySpeed: '4', infinite: true })
 
         const slider = wrapper.find('.carousel__slider')
 
@@ -139,48 +131,33 @@ describe('Carousel', () => {
         expect(slider.attributes('autoplay-speed')).toBe('4000')
       })
 
-      test('should set correct infinite state given homestage true', () => {
+      test('should set correct infinite state given infinite true', () => {
         createComponent({
-          slides: carouselEntries,
           infinite: true,
-          isHomeStage: true,
         })
 
         const slider = wrapper.find('.carousel__slider')
 
         expect(slider.attributes('infinite')).toBeTruthy()
       })
-
-      test('should set correct infinite state given isWide true', () => {
-        createComponent({
-          slides: carouselEntries,
-          infinite: true,
-          isWide: true,
-        })
-
-        const slider = wrapper.find('.carousel__slider')
-
-        expect(slider.attributes('infinite')).toBeFalsy()
-      })
     })
   })
 
   describe('during interaction', () => {
     test('should show both buttons given an active slide unequal to first or last one', async () => {
-      createComponent(
-        { slides: carouselEntries, settings: { initialSlide: 0 } },
-        false,
-        true
+      createComponent({}, { shallow: false, noStub: true, children: slides })
+
+      // TODO: mock the resizeObserver and trigger him manually to determine the visibleSlides
+      const prev = wrapper.find('.carousel__arrow-prev')
+      const next = wrapper.find('.carousel__arrow-next')
+
+      await next.trigger('click')
+      await wrapper.vm.$nextTick()
+
+      expect(prev.attributes('class')).not.toContain(
+        'carousel__arrow-prev--hide'
       )
-
-      await wrapper.vm.$nextTick()
-      await wrapper.vm.$nextTick()
-
-      const prev = wrapper.find('.slider__prev--hide')
-      const next = wrapper.find('.slider__next--hide')
-
-      expect(prev.exists()).toBeTruthy()
-      expect(next.exists()).toBeFalsy()
+      expect(next.attributes('class')).toContain('carousel__arrow-next--hide')
 
       const nextBtn = wrapper.findAllComponents(Button).at(1)
       await nextBtn.trigger('click')
@@ -193,16 +170,7 @@ describe('Carousel', () => {
     })
 
     test('should hide next button given last slide as active', async () => {
-      createComponent(
-        {
-          slides: carouselEntries,
-          settings: {
-            initialSlide: carouselEntries.length - 1,
-          },
-        },
-        false,
-        true
-      )
+      createComponent({}, { shallow: false, noStub: true })
 
       await wrapper.vm.$nextTick()
       await wrapper.vm.$nextTick()

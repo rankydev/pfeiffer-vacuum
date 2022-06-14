@@ -1,4 +1,4 @@
-import Carousel from '@/components/atoms/Carousel/Carousel.schema-template.js'
+import Carousel from '~/components/atoms/GenericCarousel/GenericCarousel.schema.partial.js'
 
 export default {
   headline: {
@@ -15,4 +15,13 @@ export default {
     pos: 2,
   },
   ...Carousel,
+  'tab-advanced': {
+    type: 'tab',
+    display_name: 'Advanced',
+    keys: ['uiComponent'],
+  },
+  uiComponent: {
+    type: 'text',
+    default_value: 'ContentCarousel',
+  },
 }
