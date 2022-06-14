@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import Carousel from '@/components/atoms/Carousel/Carousel'
-import HomeStageModule from '@/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule'
+import Carousel from '~/components/atoms/Carousel/Carousel'
+import HomeStageModule from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule'
 export default {
   name: 'HomeStageCarousel',
   components: { HomeStageModule, Carousel },

@@ -51,7 +51,7 @@ import {
   computed,
   useContext,
 } from '@nuxtjs/composition-api'
-import VueSlickCarousel from 'vue-slick-carousel/src/VueSlickCarousel.vue'
+import VueSlickCarousel from 'vue-slick-carousel'
 import Button from '~/components/atoms/Button/Button'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import tailwindconfig from '~/tailwind.config'

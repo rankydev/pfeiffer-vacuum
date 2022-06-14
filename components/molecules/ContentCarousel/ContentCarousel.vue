@@ -19,7 +19,7 @@
 </template>
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import Carousel from '@/components/atoms/Carousel/Carousel'
+import Carousel from '~/components/atoms/Carousel/Carousel'
 
 export default defineComponent({
   name: 'ContentCarousel',

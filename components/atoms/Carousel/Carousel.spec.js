@@ -3,6 +3,7 @@ import { carouselEntries, mockContent } from './Carousel.stories.content'
 import Button from '~/components/atoms/Button/Button'
 import Carousel from './Carousel'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import { ref } from '@nuxtjs/composition-api'
 
 let wrapper
 
@@ -20,7 +21,15 @@ const nuxtDynamicStub = {
   template: '<div />',
 }
 
-function createComponent(propsData = {}, shallow = true, noStub = false) {
+function createComponent(
+  propsData = {},
+  shallow = true,
+  noStub = false,
+  isDesktop = false
+) {
+  const $breakpoints = { isDesktop: ref(isDesktop || false) }
+  const mocks = { $nuxt: { context: { app: { $breakpoints } } } }
+
   const stubs = {
     Button: !noStub,
     VueSlickCarousel: noStub ? false : slickSliderStub,
@@ -36,6 +45,7 @@ function createComponent(propsData = {}, shallow = true, noStub = false) {
     localVue,
     stubs,
     propsData,
+    mocks,
   }
 
   wrapper = shallow ? shallowMount(Carousel, options) : mount(Carousel, options)
