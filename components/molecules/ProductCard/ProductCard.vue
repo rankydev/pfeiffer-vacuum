@@ -1,22 +1,24 @@
 <template>
-  <GenericCard :image-size="'contain'" :href="(product || {}).url || ''">
+  <GenericCard image-size="contain" :href="(product || {}).url || ''">
     <template #image>
       <ResponsiveImage
         :image="image || {}"
         aspect-ratio="16:9"
-        :provider="'hybris'"
+        provider="hybris"
       />
     </template>
     <template #subheading>
-      {{ ((product.categories || [])[0] || {}).name || '' }}
+      {{ categoryName || '' }}
     </template>
     <template #heading>
+      <!-- TODO: We need to bin in sanitizer for v-html -->
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-html="product.name || ''" />
+      <span v-html="name || ''" />
     </template>
     <template #description>
+      <!-- TODO: We need to bin in sanitizer for v-html -->
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <p v-html="product.description || ''" />
+      <p v-html="description || ''" />
     </template>
   </GenericCard>
 </template>
@@ -38,8 +40,11 @@ export default defineComponent({
   },
   setup(props) {
     const image = computed(() => props.product.images?.[0])
+    const description = computed(() => props.product.description)
+    const name = computed(() => props.product.name)
+    const categoryName = computed(() => props.product.categories?.[0]?.name)
 
-    return { image }
+    return { image, name, categoryName, description }
   },
 })
 </script>

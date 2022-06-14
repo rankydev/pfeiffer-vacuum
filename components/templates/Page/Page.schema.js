@@ -50,6 +50,7 @@ export default {
         'ContentCarousel',
         'HomeStageCarousel',
         'CustomContentCard',
+        'ProductCard',
       ],
     },
     bottom: {

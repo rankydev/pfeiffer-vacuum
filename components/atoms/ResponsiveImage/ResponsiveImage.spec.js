@@ -133,32 +133,32 @@ describe('ResponsiveImage', () => {
     })
   })
 
-  describe.each([[defaultPropsStoryblok()], [defaultPropsHybris()]])(
-    'Given provider %# (0: storyblok, 1: hybris)',
-    (props) => {
-      describe('initial state', () => {
-        test('should render a responsive image ', () => {
-          const propsData = {
-            ...props,
-          }
-          createComponent(propsData)
+  describe.each([
+    ['storyblok', defaultPropsStoryblok()],
+    ['hybris', defaultPropsHybris()],
+  ])('Given provider %s', (provider, props) => {
+    describe('initial state', () => {
+      test('should render a responsive image ', () => {
+        const propsData = {
+          ...props,
+        }
+        createComponent(propsData)
 
-          const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
+        const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
 
-          expect(ResponsiveImageWrapper.vm.src).toEqual(
-            propsData.image.originalFilename || propsData.image.url
-          )
-        })
-
-        test('should have matching provider', () => {
-          const propsData = {
-            ...props,
-          }
-          createComponent(propsData)
-          const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
-          expect(ResponsiveImageWrapper.vm.provider).toEqual(propsData.provider)
-        })
+        expect(ResponsiveImageWrapper.vm.src).toEqual(
+          propsData.image.originalFilename || propsData.image.url
+        )
       })
-    }
-  )
+
+      test('should have matching provider', () => {
+        const propsData = {
+          ...props,
+        }
+        createComponent(propsData)
+        const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
+        expect(ResponsiveImageWrapper.vm.provider).toEqual(propsData.provider)
+      })
+    })
+  })
 })
