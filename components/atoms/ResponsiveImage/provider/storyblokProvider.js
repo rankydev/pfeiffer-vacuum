@@ -2,21 +2,6 @@ import { theme } from '~/tailwind.config.js'
 import { computed } from '@nuxtjs/composition-api'
 
 /**
- * Sort array of sizes by breakpoint descending from xl to sm
- * @param sizesArr
- * @return Array sortedSizes
- */
-const sortByBreakpoints = (sizesArr) => {
-  const order = ['xl', 'lg', 'md', 'sm']
-  return sizesArr.sort((a, b) => {
-    return (
-      order.indexOf(a.media.toLowerCase()) -
-      order.indexOf(b.media.toLowerCase())
-    )
-  })
-}
-
-/**
  * Calculate image height by given width and aspect ratio
  * @return {number}
  * @param maxWidth
