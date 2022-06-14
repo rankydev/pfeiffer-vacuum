@@ -3,7 +3,7 @@
     v-editable="stageContent"
     :class="[
       'home-stage-slide',
-      image === undefined ? '' : 'home-stage-slide__placeholder',
+      image.originalFilename ? '' : 'home-stage-slide__placeholder',
     ]"
     :style="{
       backgroundImage: `url(${image.originalFilename})`,
