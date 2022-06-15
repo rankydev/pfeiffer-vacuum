@@ -272,7 +272,7 @@ export default defineComponent({
     &-next {
       @apply tw-absolute;
       @apply tw-top-1/2;
-      @apply tw-z-10;
+      @apply tw-z-20;
       @apply tw--translate-y-1/2;
 
       &--hide {

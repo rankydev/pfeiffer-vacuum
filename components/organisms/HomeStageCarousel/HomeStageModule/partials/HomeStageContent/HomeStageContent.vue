@@ -57,6 +57,7 @@ export default {
   @apply tw-grow;
   @apply tw-px-4;
   @apply tw-py-6;
+  @apply tw-min-w-[50%];
 
   @screen md {
     @apply tw-px-10;
