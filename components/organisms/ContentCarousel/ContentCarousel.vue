@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.vue'
 
 export default defineComponent({
@@ -84,12 +84,12 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const carouselData = {
+    const carouselData = computed(() => ({
       isWide: props.isWide,
       infinite: props.infinite,
       autoplay: props.autoplay,
       autoplaySpeed: props.autoplaySpeed,
-    }
+    }))
 
     return {
       carouselData,

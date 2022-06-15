@@ -2,7 +2,7 @@
   <ContentWrapper
     v-bind="contentWrapperProps"
     ref="wrapper"
-    v-editable="(infinite, isWide)"
+    v-editable="(infinite, isWide, autoplay, autoplaySpeedMilliseconds)"
     class="carousel"
   >
     <VueSlickCarousel
@@ -27,7 +27,8 @@
         <Button
           class="carousel__arrow-prev"
           :class="{
-            'carousel__arrow-prev--hide': isFirstSlide(currentSlide),
+            'carousel__arrow-prev--hide':
+              !infinite && isFirstSlide(currentSlide),
           }"
           variant="secondary"
           icon="arrow_back"
@@ -38,7 +39,8 @@
         <Button
           class="carousel__arrow-next"
           :class="{
-            'carousel__arrow-next--hide': isLastSlide(currentSlide, slideCount),
+            'carousel__arrow-next--hide':
+              !infinite && isLastSlide(currentSlide, slideCount),
           }"
           variant="secondary"
           icon="arrow_forward"
@@ -161,8 +163,8 @@ export default defineComponent({
     /**
      * convert autoplaySpeed from seconds into milliseconds
      */
-    const autoplaySpeedMilliseconds = Math.ceil(
-      parseInt(props.autoplaySpeed || 5) * 1000
+    const autoplaySpeedMilliseconds = computed(() =>
+      Math.ceil(parseInt(props.autoplaySpeed || 5) * 1000)
     )
 
     const defaultSettings = computed(() => ({
@@ -188,18 +190,13 @@ export default defineComponent({
     const homeStageSettings = computed(() => ({
       fade: true,
       slidesToShow: 1,
-      responsive: [
-        {
-          breakpoint: splitBreakpointString(tailwindConfigScreens.lg),
-          settings: {
-            slidesToShow: 1,
-          },
-        },
-      ],
     }))
 
+    /**
+     * Settings for slick carousel
+     * see: https://github.com/gs-shop/vue-slick-carousel/blob/master/docs/API.md#props
+     */
     const settings = computed(() => ({
-      adaptiveHeight: true,
       arrows: true,
       edgeFriction: 0.35,
       pauseOnFocus: true,
