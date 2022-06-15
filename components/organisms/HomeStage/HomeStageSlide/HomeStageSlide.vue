@@ -9,7 +9,7 @@
       backgroundImage: `url(${image.originalFilename})`,
     }"
   >
-    <HomeStageContent
+    <HomeStageSlideContent
       v-if="stageContent.length"
       class="home-stage-slide__content-block"
       v-bind="stageContent[0]"
@@ -39,14 +39,13 @@
 </template>
 
 <script>
-import HomeStageContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.vue'
+import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.vue'
 import Bubble from '~/components/molecules/Bubble/Bubble'
-import { computed } from '@nuxtjs/composition-api'
 
 export default {
   name: 'HomeStageSlide',
   components: {
-    HomeStageContent,
+    HomeStageSlideContent,
     Bubble,
   },
   props: {

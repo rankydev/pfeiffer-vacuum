@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import ContentCarousel from '~/components/molecules/ContentCarousel/ContentCarousel'
+import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
 export default {
   name: 'DocumentCardCarousel',
   components: { ContentCarousel },

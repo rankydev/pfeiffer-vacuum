@@ -9,7 +9,7 @@
     variant="homeStage"
   >
     <template #slides>
-      <HomeStageModule
+      <HomeStageSlide
         v-for="slide in slides"
         :key="slide._uid"
         v-editable="slide"
