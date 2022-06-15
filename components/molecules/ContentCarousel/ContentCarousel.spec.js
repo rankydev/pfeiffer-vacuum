@@ -48,5 +48,11 @@ describe('ContentCarousel', () => {
         ContentCarouselContent.button[0].label
       )
     })
+
+    test('should render no background given transparent prop', () => {
+      createComponent({ transparent: true })
+
+      expect(wrapper.find('.content-carousel--with-background')).toBeTruthy()
+    })
   })
 })
