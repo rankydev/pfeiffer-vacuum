@@ -1,4 +1,4 @@
-import HomeStageContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/partials/HomeStageContent/HomeStageContent.stories.content'
+import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.stories.content'
 import { bubbleText } from '~/components/atoms/Richtext/Richtext.stories.content'
 
 const requiredContent = {
@@ -12,8 +12,8 @@ const requiredContent = {
     copyright: '',
     fieldtype: 'asset',
   },
-  component: 'HomeStageModule',
-  stageContent: [HomeStageContent],
+  component: 'HomeStageSlide',
+  stageContent: [HomeStageSlideContent],
 }
 
 export const bubble = [
@@ -34,7 +34,7 @@ export const bubble2 = [
   },
 ]
 
-export const homeStageModuleContent = {
+export const homeStageSlideContent = {
   bubble,
   interlay: {
     alt: 'Astronaut',
@@ -49,7 +49,7 @@ export const homeStageModuleContent = {
   ...requiredContent,
 }
 
-export const homeStageModuleContent2 = {
+export const homeStageSecondSlideContent = {
   bubble: bubble2,
   interlay: {
     alt: 'Everest',
@@ -64,7 +64,7 @@ export const homeStageModuleContent2 = {
   ...requiredContent,
 }
 
-export const homeStageModuleContent3 = {
+export const homeStageThirdSlideContent = {
   bubble,
   interlay: {
     alt: 'Aurora',

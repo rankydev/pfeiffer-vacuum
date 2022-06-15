@@ -17,7 +17,7 @@
     <template v-if="date" #subheading>
       <div class="custom-content-card__date">
         <Icon icon="date_range" size="xsmall" />
-        {{ $d(new Date(date), 'dateLong') }}
+        {{ $d(fixedDate, 'dateLong') }}
       </div>
     </template>
 
@@ -97,7 +97,13 @@ export default defineComponent({
       return '' + hasDate + hasTitle + hasDesc
     })
 
-    return { key }
+    /**
+     * Workaround to make sure the date works in Safari:
+     * https://stackoverflow.com/questions/4310953/invalid-date-in-safari
+     */
+    const fixedDate = computed(() => new Date(props.date.replace(/-/g, '/')))
+
+    return { key, fixedDate }
   },
 })
 </script>

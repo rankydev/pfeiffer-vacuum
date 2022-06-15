@@ -1,21 +1,21 @@
-import Carousel from '~/components/atoms/GenericCarousel/GenericCarousel.schema.partial.js'
+import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.schema.partial.js'
 
 export default {
-  name: 'HomeStageCarousel',
-  display_name: 'Home Stage Carousel',
+  name: 'HomeStage',
+  display_name: 'Home Stage',
   schema: {
     slides: {
       type: 'bloks',
       display_name: 'Slides',
       restrict_components: true,
-      component_whitelist: ['HomeStageModule'],
+      component_whitelist: ['HomeStageSlide'],
       maximum: 5,
       required: true,
       pos: 1,
     },
-    autoplay: Carousel.autoplay,
-    autoplaySpeed: Carousel.autoplaySpeed,
-    infinite: Carousel.infinite,
+    autoplay: GenericCarousel.autoplay,
+    autoplaySpeed: GenericCarousel.autoplaySpeed,
+    infinite: GenericCarousel.infinite,
   },
   image: null,
   preview_field: null,
@@ -24,6 +24,6 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'HomeStageCarousel',
+  real_name: 'HomeStage',
   component_group_uuid: null,
 }

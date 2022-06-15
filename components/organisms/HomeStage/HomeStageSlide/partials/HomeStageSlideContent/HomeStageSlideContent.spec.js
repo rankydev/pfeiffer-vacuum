@@ -1,7 +1,7 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Button from '~/components/atoms/Button/Button'
-import HomeStageContent from '~/components/organisms/HomeStageCarousel/HomeStageModule/partials/HomeStageContent/HomeStageContent'
-import content from './HomeStageContent.stories.content'
+import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent'
+import content from './HomeStageSlideContent.stories.content'
 
 const defaultProps = () => JSON.parse(JSON.stringify(content))
 
@@ -19,14 +19,14 @@ function createComponent(propsData = {}) {
     stubs,
   }
 
-  wrapper = shallowMount(HomeStageContent, options)
+  wrapper = shallowMount(HomeStageSlideContent, options)
 }
 
-describe('HomeStageContent', () => {
+describe('HomeStageSlideContent', () => {
   describe('initial state', () => {
     test('should still render when no data was given', () => {
       createComponent()
-      const homeStageContentWrapper = wrapper.find('.homestage-content')
+      const homeStageContentWrapper = wrapper.find('.home-stage-slide-content')
       expect(homeStageContentWrapper.exists()).toBeTruthy()
     })
 
@@ -36,17 +36,18 @@ describe('HomeStageContent', () => {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const contentHeadline = wrapper.find('.homestage-content__headline')
+      const contentHeadline = wrapper.find(
+        '.home-stage-slide-content__headline'
+      )
       expect(contentHeadline.text()).toBe(propsData.headline)
     })
 
     // teaserText
-    test('should render teaserText given propsData', () => {
+    test('should render description (which is a richtext) given propsData', () => {
       const propsData = {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const contentHeadline = wrapper.find('.homestage-content__description')
       const domRichtext = wrapper.find('[name="Richtext"]')
       expect(domRichtext.attributes('richtext')).toBe(
         propsData.richtext[0].richtext

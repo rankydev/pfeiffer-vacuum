@@ -30,7 +30,7 @@ export default {
       type: 'bloks',
       display_name: 'Stage',
       restrict_components: true,
-      component_whitelist: ['Stage', 'HomeStageCarousel'],
+      component_whitelist: ['Stage', 'HomeStage'],
       maximum: 1,
     },
     body: {
@@ -46,6 +46,7 @@ export default {
         'ContentTextBlock',
         'CustomContentCardCarousel',
         'TeaserCardCarousel',
+        'DocumentCardCarousel',
       ],
     },
     bottom: {

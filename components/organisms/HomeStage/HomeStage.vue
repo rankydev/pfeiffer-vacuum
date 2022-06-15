@@ -1,11 +1,11 @@
 <template>
   <GenericCarousel
-    v-if="slides.length"
+    v-if="slides.length > 1"
     is-wide
     :infinite="infinite"
     :autoplay="autoplay"
     :autoplay-speed="autoplaySpeed"
-    class="home-stage-carousel"
+    class="home-stage"
     variant="homeStage"
   >
     <template #slides>
@@ -17,14 +17,26 @@
       />
     </template>
   </GenericCarousel>
+
+  <HomeStageSlide
+    v-else-if="slides.length === 1"
+    :stage-content="slides[0].stageContent"
+    :image="slides[0].image"
+    :interlay="slides[0].interlay"
+    :bubble="slides[0].bubble"
+  />
+
+  <div v-else />
 </template>
 
 <script>
 import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.vue'
-import HomeStageModule from '~/components/organisms/HomeStageCarousel/HomeStageModule/HomeStageModule'
-export default {
-  name: 'HomeStageCarousel',
-  components: { HomeStageModule, GenericCarousel },
+import HomeStageSlide from '~/components/organisms/HomeStage/HomeStageSlide/HomeStageSlide'
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  name: 'HomeStage',
+  components: { HomeStageSlide, GenericCarousel },
   props: {
     /**
      * Slider items
@@ -39,7 +51,7 @@ export default {
      */
     infinite: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     /**
      * enables/ disables autoplay
@@ -56,7 +68,7 @@ export default {
       default: '5',
     },
   },
-}
+})
 </script>
 
 <style lang="scss"></style>
