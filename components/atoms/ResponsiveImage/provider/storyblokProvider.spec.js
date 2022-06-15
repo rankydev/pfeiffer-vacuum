@@ -2,49 +2,88 @@ import { useStoryblokProvider } from './storyblokProvider.js'
 import responsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.stories.content'
 
 const imgMock = jest.fn((src, modifications, options) => {
-  // console.log(src, modifications, options, '------> TEST')
   return src
 })
 
-const modifiers = computed(() => ({
-  filters: {
-    focal: props.image.focus,
-    grayscale: props.blackAndWhite ? '' : false,
-  },
-}))
+const screenSizes = [
+  ['sm', 0],
+  ['md', 768],
+  ['lg', 1280],
+]
 
 describe('StoryblokProvider', () => {
   describe('initial state', () => {
-    test('should render src and alt with empty String, when no image provided', () => {
+    describe('should return image attributes correctly', () => {
+      test('given valid image', () => {
+        const storyblokProvider = useStoryblokProvider({ $img: imgMock })
+        const image = storyblokProvider.buildImage({
+          image: responsiveImage.image,
+          aspectRatio: '1:1',
+        })
+
+        const modifiers = {
+          filters: {
+            focal: null,
+            grayscale: false,
+          },
+        }
+
+        expect(image.src.value).toBe(responsiveImage.image.originalFilename)
+        expect(image.alt.value).toBe(responsiveImage.image.alt)
+        expect(image.title.value).toBe(responsiveImage.image.title)
+        expect(image.modifiers.value).toStrictEqual(modifiers)
+        screenSizes.forEach(([key, width], idx) => {
+          expect(image.webpSources.value[idx]).toStrictEqual({
+            key: key,
+            media: `(min-width: ${width}px)`,
+            srcset: `${responsiveImage.image.originalFilename} 1x, ${responsiveImage.image.originalFilename} 2x`,
+          })
+        })
+        screenSizes.forEach(([key, width], idx) => {
+          expect(image.pngSources.value[idx]).toStrictEqual({
+            key: key,
+            media: `(min-width: ${width}px)`,
+            srcset: `${responsiveImage.image.originalFilename} 1x, ${responsiveImage.image.originalFilename} 2x`,
+          })
+        })
+      })
+    })
+    test('given empty image object', () => {
       const storyblokProvider = useStoryblokProvider({ $img: imgMock })
       const image = storyblokProvider.buildImage({
-        image: responsiveImage.image,
+        image: {},
         aspectRatio: '1:1',
       })
-      console.log(image, 'IMAGE')
-      expect(image.src.value).toBe(responsiveImage.image.originalFilename)
-      expect(image.alt.value).toBe(responsiveImage.image.alt)
-      expect(image.title.value).toBe(responsiveImage.image.title)
-      expect(image.modifiers.value).toBe(modifiers)
-      // expect(image.webpSources.value).toBe(responsiveImage.image.)
-      // expect(image.pngSources.value).toBe(responsiveImage.image.)
+
+      const modifiersForEmptyImageObject = {
+        filters: {
+          focal: undefined,
+          grayscale: false,
+        },
+      }
+
+      expect(image.src.value).toBe('')
+      expect(image.alt.value).toBe('')
+      expect(image.title.value).toBe('')
+      expect(image.modifiers.value).toStrictEqual(modifiersForEmptyImageObject)
+      screenSizes.forEach(([key, width], idx) => {
+        expect(image.webpSources.value[idx]).toStrictEqual({
+          key: key,
+          media: `(min-width: ${width}px)`,
+          srcset: ' 1x,  2x',
+        })
+      })
+      screenSizes.forEach(([key, width], idx) => {
+        expect(image.pngSources.value[idx]).toStrictEqual({
+          key: key,
+          media: `(min-width: ${width}px)`,
+          srcset: ' 1x,  2x',
+        })
+      })
     })
   })
-  describe('initial state', () => {
-    test('should render src and alt with empty String, when no image provided', () => {
-      const storyblokProvider = useStoryblokProvider({ $img: imgMock })
-      const image = storyblokProvider.buildImage({
-        image: responsiveImage.image,
-        aspectRatio: '1:1',
-      })
-
-      console.log(image.webpSources.value)
-
-      // expect(imgMock).toBeCalledTimes(4)
-      // expect(imgMock).toBeCalledWidth()
-      //   expect(image.src.value).toBe('')
-      //   expect(image.alt.value).toBe('')
-      //   expect(image.title.value).toBe('')
-    })
+  describe('$img function should be called correctly', () => {
+    test('given $img function', () => {})
+    expect(imgMock).toBeTruthy()
   })
 })
