@@ -138,6 +138,6 @@ export default {
       baseURL: 'https://img2.storyblok.com',
     },
   },
-  // Will register file from project server-middleware directory to handle /server-middleware/* requires
+  // Will register file from project server/middleware directory to handle API calls
   serverMiddleware: [{ path: '/api', handler: '~/server/middleware/index.js' }],
 }

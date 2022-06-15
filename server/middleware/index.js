@@ -4,19 +4,17 @@ import https from 'https'
 
 const agent = new https.Agent({
   keepAlive: true,
-  rejectUnauthorized: false,
+  rejectUnauthorized: process.env.IGNORE_SSL_CERT !== 'true',
 })
 
 const app = express()
 app.use(
   '/image',
   createProxyMiddleware({
-    target:
-      'https://backgroundprocessing.cjgnymr4s2-pfeifferv1-d1-public.model-t.cc.commerce.ondemand.com',
+    target: process.env.SHOP_IMAGE_URL,
     changeOrigin: true,
     agent,
     pathRewrite: { '^/api/image': '/' },
-    onProxyReq: () => {},
   })
 )
 
