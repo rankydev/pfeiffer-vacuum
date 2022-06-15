@@ -190,7 +190,7 @@ export default defineComponent({
       slidesToShow: 1,
       responsive: [
         {
-          breakpoint: 1280,
+          breakpoint: splitBreakpointString(tailwindConfigScreens.lg),
           settings: {
             slidesToShow: 1,
           },
