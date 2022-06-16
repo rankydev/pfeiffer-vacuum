@@ -1,4 +1,4 @@
-import Carousel from './ContentCarousel.schema.partial.js'
+import Carousel from '../ContentCarousel.schema.partial.js'
 
 export default {
   name: 'CustomContentCardCarousel',
