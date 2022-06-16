@@ -1,6 +1,11 @@
 <template>
   <div class="document-card-carousel">
-    <ContentCarousel v-bind="{ headline, button, slides }" is-wide transparent>
+    <ContentCarousel
+      v-bind="{ headline, button, slides }"
+      is-wide
+      transparent
+      variant="documentCardCarousel"
+    >
       <template #slides>
         <DocumentCard
           v-for="slide in slides"

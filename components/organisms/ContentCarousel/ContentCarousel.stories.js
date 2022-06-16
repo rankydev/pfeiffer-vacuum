@@ -33,7 +33,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Organisms/ContentCarousel',
+  title: 'Organisms/Carousels/ContentCarousel',
   component: ContentCarousel,
   parameters: {
     docs: {

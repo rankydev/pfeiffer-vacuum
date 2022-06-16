@@ -95,6 +95,16 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    /**
+     * set the variant for different slider types
+     * @values default, homeStage
+     */
+    variant: {
+      type: String,
+      default: 'default',
+      validator: (val) =>
+        ['default', 'homeStage', 'documentCardCarousel'].includes(val),
+    },
   },
   setup(props) {
     const carouselData = computed(() => ({
@@ -102,6 +112,7 @@ export default defineComponent({
       infinite: props.infinite,
       autoplay: props.autoplay,
       autoplaySpeed: props.autoplaySpeed,
+      variant: props.variant,
     }))
 
     return {

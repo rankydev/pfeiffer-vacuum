@@ -85,7 +85,8 @@ export default defineComponent({
     variant: {
       type: String,
       default: 'default',
-      validator: (val) => ['default', 'homeStage'].includes(val),
+      validator: (val) =>
+        ['default', 'homeStage', 'documentCardCarousel'].includes(val),
     },
     /**
      * enables/ disables infinite wrap around items on slider
@@ -192,6 +193,19 @@ export default defineComponent({
       slidesToShow: 1,
     }))
 
+    const documentCardCarouselSettings = computed(() => ({
+      responsive: [
+        {
+          breakpoint: splitBreakpointString(tailwindConfigScreens.md),
+          settings: {
+            slidesToShow: 2,
+            dots: true,
+            arrows: false,
+          },
+        },
+      ],
+    }))
+
     /**
      * Settings for slick carousel
      * see: https://github.com/gs-shop/vue-slick-carousel/blob/master/docs/API.md#props
@@ -203,6 +217,8 @@ export default defineComponent({
       speed: 300,
       slidesToScroll: 1,
       initialSlide: 0,
+      ...(props.variant === 'documentCardCarousel' &&
+        documentCardCarouselSettings.value),
       ...(props.variant === 'homeStage' && homeStageSettings.value),
       ...(props.variant === 'default' && defaultSettings.value),
     }))
@@ -253,6 +269,12 @@ export default defineComponent({
     }
 
     &--default {
+      .slick-track {
+        @apply tw-gap-4;
+      }
+    }
+
+    &--documentCardCarousel {
       .slick-track {
         @apply tw-gap-4;
       }
