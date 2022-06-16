@@ -4,8 +4,8 @@ import { shallowMount, mount } from '@vue/test-utils'
 const defaultTextArea = {
   placeholder: 'Placeholder',
   text: '',
-  label: '',
-  required: true,
+  label: 'Test',
+  required: false,
   disabled: false,
 }
 
@@ -27,7 +27,8 @@ describe('TextArea', () => {
       const propsData = { ...defaultTextArea }
       const wrapper = shallowMount(TextArea, { propsData })
       const labelWrapper = wrapper.findAll('label')
-      expect(labelWrapper).toBeTruthy()
+      expect(labelWrapper.at(0).text()).toBe('Test')
+      expect(labelWrapper.at(1).text()).toBe('(optional)')
     })
     test('should render textarea correctly given props', () => {
       const propsData = { ...defaultTextArea }
