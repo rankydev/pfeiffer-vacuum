@@ -1,40 +1,45 @@
 <template>
-  <div
+  <ContentWrapper
     v-editable="slides"
+    breakout
     :class="[
       'content-carousel',
       { 'content-carousel--with-background': !transparent },
     ]"
   >
-    <div class="content-carousel__content">
-      <h2>{{ headline }}</h2>
-      <NuxtDynamic
-        v-for="btn in button"
-        :key="btn._uid"
-        v-bind="btn"
-        :name="btn.uiComponent || btn.component"
-      />
-    </div>
-    <GenericCarousel v-if="slides.length > 0" v-bind="carouselData">
-      <template #slides>
+    <ContentWrapper>
+      <div class="content-carousel__content">
+        <h2>{{ headline }}</h2>
         <NuxtDynamic
-          v-for="slide in slides"
-          :key="slide._uid"
-          v-bind="slide"
-          :name="slide.uiComponent || slide.component"
+          v-for="btn in button"
+          :key="btn._uid"
+          v-bind="btn"
+          :name="btn.uiComponent || btn.component"
         />
-      </template>
-    </GenericCarousel>
-  </div>
+      </div>
+      <GenericCarousel v-if="slides.length > 0" v-bind="carouselData">
+        <template #slides>
+          <NuxtDynamic
+            v-for="slide in slides"
+            :key="slide._uid"
+            v-bind="slide"
+            :name="slide.uiComponent || slide.component"
+          />
+        </template>
+      </GenericCarousel>
+    </ContentWrapper>
+  </ContentWrapper>
 </template>
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.vue'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper.vue'
 
 export default defineComponent({
   name: 'ContentCarousel',
   components: {
     GenericCarousel,
+    ContentWrapper,
   },
   props: {
     /**
@@ -65,7 +70,7 @@ export default defineComponent({
      */
     isWide: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     /**
      * enables/ disables infinite wrap around items on slider
@@ -82,7 +87,7 @@ export default defineComponent({
       default: false,
     },
     /**
-     * autoplay Speed in seconds, retrieves string from Storyblok
+     * autoplay speed in seconds, retrieves string from Storyblok
      */
     autoplaySpeed: {
       type: String,
@@ -130,9 +135,6 @@ export default defineComponent({
   }
 
   &__content {
-    @apply tw-mx-auto;
-    @apply tw-container;
-    @apply tw-px-0;
     @apply tw-flex;
     @apply tw-flex-wrap;
 

@@ -76,7 +76,7 @@ export default defineComponent({
      */
     isWide: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     /**
      * set the variant for different slider types

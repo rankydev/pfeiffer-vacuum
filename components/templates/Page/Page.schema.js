@@ -40,13 +40,13 @@ export default {
       component_whitelist: [
         'Accordion',
         'AnchorWrapper',
-        'VideoPlayer',
-        'ImageWithDescription',
         'ContentMediaBlock',
         'ContentTextBlock',
         'CustomContentCardCarousel',
-        'TeaserCardCarousel',
         'DocumentCardCarousel',
+        'ImageWithDescription',
+        'VideoPlayer',
+        'TeaserCardCarousel',
       ],
     },
     bottom: {
