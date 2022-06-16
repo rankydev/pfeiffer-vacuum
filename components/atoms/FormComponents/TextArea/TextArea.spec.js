@@ -38,7 +38,7 @@ describe('TextArea', () => {
         defaultTextArea.placeholder
       )
       console.log(textAreaWrapper.html())
-      expect(textAreaWrapper.attributes('required')).toBeTruthy()
+      expect(textAreaWrapper.attributes('required')).toBeFalsy()
       expect(textAreaWrapper.attributes('disabled')).toBeFalsy()
     })
   })
