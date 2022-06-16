@@ -1,5 +1,4 @@
 import { createLocalVue, shallowMount, mount } from '@vue/test-utils'
-import { carouselEntries, mockContent } from './GenericCarousel.stories.content'
 import Button from '~/components/atoms/Button/Button'
 import GenericCarousel from './GenericCarousel'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
@@ -157,27 +156,34 @@ describe('GenericCarousel', () => {
       expect(prev.attributes('class')).not.toContain(
         'carousel__arrow-prev--hide'
       )
-      expect(next.attributes('class')).toContain('carousel__arrow-next--hide')
+      expect(next.attributes('class')).not.toContain(
+        'carousel__arrow-next--hide'
+      )
 
       const nextBtn = wrapper.findAllComponents(Button).at(1)
       await nextBtn.trigger('click')
       await wrapper.vm.$nextTick()
 
-      const newPrev = wrapper.find('.slider__prev--hide')
-      const newNext = wrapper.find('.slider__next--hide')
+      const newPrev = wrapper.find('.carousel__arrow-prev--hide')
+      const newNext = wrapper.find('.carousel__arrow-next--hide')
       expect(newPrev.exists()).toBeFalsy()
       expect(newNext.exists()).toBeFalsy()
     })
 
-    test('should hide next button given last slide as active', async () => {
-      createComponent({}, { shallow: false, noStub: true })
+    test('should hide prev and next button given only one slide', async () => {
+      createComponent(
+        {},
+        { shallow: false, noStub: true, children: [slideMock] }
+      )
 
       await wrapper.vm.$nextTick()
       await wrapper.vm.$nextTick()
 
-      const next = wrapper.find('.slider__next--hide')
+      const prev = wrapper.find('.carousel__arrow-prev')
+      const next = wrapper.find('.carousel__arrow-next')
 
-      expect(next.exists()).toBeTruthy()
+      expect(prev.exists()).toBeFalsy()
+      expect(next.exists()).toBeFalsy()
     })
   })
 })

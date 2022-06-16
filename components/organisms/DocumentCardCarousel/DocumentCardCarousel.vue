@@ -1,10 +1,15 @@
 <template>
   <div class="document-card-carousel">
-    <ContentCarousel
-      v-bind="{ headline, button, slides }"
-      is-wide
-      transparent
-    />
+    <ContentCarousel v-bind="{ headline, button, slides }" is-wide transparent>
+      <template #slides>
+        <DocumentCard
+          v-for="slide in slides"
+          :key="slide._uid"
+          v-editable="slide"
+          v-bind="slide"
+        />
+      </template>
+    </ContentCarousel>
   </div>
 </template>
 <script>

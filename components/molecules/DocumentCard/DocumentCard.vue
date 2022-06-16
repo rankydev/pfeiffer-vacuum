@@ -1,5 +1,9 @@
 <template>
-  <Link v-editable="{ image, href }" v-bind="{ href }" class="document-card">
+  <Link
+    v-editable="{ image, href }"
+    v-bind="{ href, target: '_blank' }"
+    class="document-card"
+  >
     <ResponsiveImage :image="{ ...image, alt }" aspect-ratio="21:28" />
     <Icon class="document-card__icon" icon="download" />
   </Link>
