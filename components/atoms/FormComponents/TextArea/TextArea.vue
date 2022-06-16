@@ -63,8 +63,8 @@ export default defineComponent({
 
 <style lang="scss">
 .right-label {
-  position: relative;
-  float: right;
+  @apply tw-relative;
+  @apply tw-float-right;
   @apply tw-text-pv-grey-64;
 }
 
