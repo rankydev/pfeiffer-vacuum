@@ -1,5 +1,5 @@
 import DocumentCard from '~/components/molecules/DocumentCard/DocumentCard.vue'
-import { image, alt, href } from './DocumentCard.stories.content.js'
+import { image, href } from './DocumentCard.stories.content.js'
 
 const argTypes = {
   image: {
@@ -19,7 +19,7 @@ export default {
           'The aspect ratio of the card image is 21:28, as it is the default cover size of the brochures.',
       },
       source: {
-        code: '<DocumentCard v-bind="{ image, alt, href }"  />',
+        code: '<DocumentCard v-bind="{ image, href }"  />',
       },
     },
   },
@@ -40,6 +40,5 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {
-  alt,
   href,
 }

@@ -10,11 +10,6 @@ export default {
       translatable: true,
       required: true,
     },
-    altText: {
-      type: 'text',
-      translatable: true,
-      display_name: 'Alternative Text',
-    },
     href: Link.href,
   },
   image: null,

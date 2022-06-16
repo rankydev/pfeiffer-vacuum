@@ -4,7 +4,7 @@
     v-bind="{ href, target: '_blank' }"
     class="document-card"
   >
-    <ResponsiveImage :image="{ ...image, alt }" aspect-ratio="21:28" />
+    <ResponsiveImage :image="image" aspect-ratio="21:28" />
     <Icon class="document-card__icon" icon="download" />
   </Link>
 </template>
@@ -35,13 +35,6 @@ export default defineComponent({
     href: {
       type: String,
       default: '#',
-    },
-    /**
-     * Alternative fallback text for image
-     */
-    alt: {
-      type: String,
-      default: '',
     },
   },
 })

@@ -194,7 +194,14 @@ export default defineComponent({
     }))
 
     const documentCardCarouselSettings = computed(() => ({
+      slidesToShow: 6,
       responsive: [
+        {
+          breakpoint: splitBreakpointString(tailwindConfigScreens.lg),
+          settings: {
+            slidesToShow: 3,
+          },
+        },
         {
           breakpoint: splitBreakpointString(tailwindConfigScreens.md),
           settings: {

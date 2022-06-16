@@ -1,4 +1,6 @@
-import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel.schema.partial.js'
+import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.schema.partial.js'
+
+const { autoplay, autoplaySpeed, infinite } = GenericCarousel
 
 export default {
   name: 'DocumentCardCarousel',
@@ -27,6 +29,9 @@ export default {
       required: true,
       pos: 3,
     },
+    autoplay,
+    autoplaySpeed,
+    infinite,
   },
   image: null,
   preview_field: null,
