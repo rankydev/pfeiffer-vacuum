@@ -5,6 +5,8 @@ export default {
     restrict_content_types: true,
     required: true,
     translatable: true,
+    link_scope: '{0}/',
+    force_link_scope: true,
     component_whitelist: ['Page', 'ProductContentPage', 'StandardPage'],
   },
   target: {
