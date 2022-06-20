@@ -4,10 +4,7 @@
     <label v-if="!required" class="textarea__right-label">(optional)</label>
     <textarea
       :name="'textarea'"
-      :placeholder="placeholder"
-      :required="required"
-      :disabled="disabled"
-      v-bind="text"
+      v-bind="{ text, placeholder, required, disabled }"
       class="textarea__input"
       @focus="$emit('focus', true)"
       @blur="$emit('focus', false)"
