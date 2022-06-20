@@ -16,7 +16,6 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  components: {},
   props: {
     /**
      * The internal text

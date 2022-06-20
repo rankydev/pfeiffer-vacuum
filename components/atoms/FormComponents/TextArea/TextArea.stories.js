@@ -23,35 +23,35 @@ const Template = (args) => ({
   },
   template: `
   <div class="documentation-preview">
-    <TextArea v-bind="args[0]" />
+    <TextArea v-bind="args['Required']" />
     <br/>
-    <TextArea v-bind="args[1]" />
+    <TextArea v-bind="args['Required but disabled']" />
     <br/>
-    <TextArea v-bind="args[2]" />
+    <TextArea v-bind="args['With label']" />
     <br/>
-    <TextArea v-bind="args[3]" />
+    <TextArea v-bind="args['With label and disabled']" />
   </div>
 `,
 })
 
 export const Default = Template.bind({})
-Default.args = [
-  {
+Default.args = {
+  Required: {
     placeholder: 'Placeholder',
     required: true,
   },
-  {
+  'Required but disabled': {
     placeholder: 'Placeholder',
     required: true,
     disabled: true,
   },
-  {
+  'With label': {
     placeholder: 'Placeholder',
     label: 'Label',
   },
-  {
+  'With label and disabled': {
     placeholder: 'Placeholder',
     label: 'Label',
     disabled: true,
   },
-]
+}
