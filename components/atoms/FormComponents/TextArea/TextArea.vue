@@ -86,8 +86,6 @@ export default defineComponent({
 
     &:focus {
       @apply tw-border-pv-black;
-      @apply tw-ring-0;
-      @apply tw-outline-0;
       @apply tw-text-pv-black;
       outline: 0;
     }
