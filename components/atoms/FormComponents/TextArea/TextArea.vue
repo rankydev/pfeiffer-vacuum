@@ -29,7 +29,7 @@ export default defineComponent({
       default: '',
     },
     /**
-     * The text displayed at the textarea
+     * The text displayed at the textarea on the left
      */
     label: {
       type: String,
@@ -43,14 +43,14 @@ export default defineComponent({
       default: 'Placeholder',
     },
     /**
-     * The required prop, which defines if the field is required or not
+     * The required prop, which defines if the text field is required or not
      */
     required: {
       type: Boolean,
       default: false,
     },
     /**
-     * The disabled prop, which defines is disabled
+     * The disabled prop, which defines if it should be possible to enter text into text field or not
      */
     disabled: {
       type: Boolean,

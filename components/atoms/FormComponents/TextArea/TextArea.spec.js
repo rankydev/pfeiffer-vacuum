@@ -11,14 +11,14 @@ const defaultTextArea = {
 
 describe('TextArea', () => {
   describe('initial state', () => {
-    test('should be rendered correctly given no props', () => {
+    test('should be rendered correctly given empty props', () => {
       const propsData = {}
       const wrapper = shallowMount(TextArea, { propsData })
       const textareaWrapper = wrapper.find('div')
       expect(textareaWrapper.exists()).toBeTruthy()
     })
     test('should be rendered correctly given props', () => {
-      const propsData = {}
+      const propsData = { ...defaultTextArea }
       const wrapper = shallowMount(TextArea, { propsData })
       const textareaWrapper = wrapper.find('div')
       expect(textareaWrapper.exists()).toBeTruthy()

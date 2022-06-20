@@ -7,7 +7,7 @@ export default {
     docs: {
       description: {
         component:
-          'The text area field, which gives the possibility to enter a text, set a label and specify whether the text area is required or not.',
+          'The text area field, which offers the possibility to enter a text, set a label and specify whether the text area is required or not.',
       },
       source: {
         code: '<TextArea v-bind="{ placeholder text label required disabled }"/>',
@@ -30,7 +30,6 @@ const Template = (args) => ({
     <TextArea v-bind="args[2]" />
     <br/>
     <TextArea v-bind="args[3]" />
-    <br/>
   </div>
 `,
 })
