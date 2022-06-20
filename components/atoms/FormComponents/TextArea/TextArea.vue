@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div class="textarea">
     <label v-if="label || label !== ''" for="textarea">{{ label }}</label>
-    <label v-if="!required" class="right-label">(optional)</label>
+    <label v-if="!required" class="textarea__right-label">(optional)</label>
     <textarea
       :name="'textarea'"
       :placeholder="placeholder"
       :required="required"
       :disabled="disabled"
       v-bind="text"
-      class="pv-input__element"
+      class="textarea__input"
       @focus="$emit('focus', true)"
       @blur="$emit('focus', false)"
     ></textarea>
@@ -33,14 +33,14 @@ export default defineComponent({
      */
     label: {
       type: String,
-      default: 'Label',
+      default: '',
     },
     /**
      * The placeholder
      */
     placeholder: {
       type: String,
-      default: 'Placeholder',
+      default: '',
     },
     /**
      * The required prop, which defines if the text field is required or not
@@ -54,7 +54,7 @@ export default defineComponent({
      */
     disabled: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   setup(props) {},
@@ -62,16 +62,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.right-label {
-  @apply tw-relative;
-  @apply tw-float-right;
-  @apply tw-text-pv-grey-64;
-}
+.textarea {
+  &__right-label {
+    @apply tw-relative;
+    @apply tw-float-right;
+    @apply tw-text-pv-grey-64;
+  }
 
-.pv-input {
-  @apply tw-relative;
-
-  &__element {
+  &__input {
     @apply tw-block;
     @apply tw-px-3;
     @apply tw-py-2;
@@ -79,6 +77,7 @@ export default defineComponent({
     @apply tw-rounded;
     @apply tw-border-pv-grey-80;
     @apply tw-text-pv-black;
+    @apply tw-w-full;
 
     &:focus {
       @apply tw-border-pv-black;
