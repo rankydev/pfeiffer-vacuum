@@ -57,6 +57,15 @@ export default defineComponent({
       default: false,
     },
   },
+  emits: [
+    /**
+     * Fired on focus and blur.
+     *
+     * @event focus
+     * @property {boolean} isFocused
+     */
+    'focus',
+  ],
   setup(props) {},
 })
 </script>
