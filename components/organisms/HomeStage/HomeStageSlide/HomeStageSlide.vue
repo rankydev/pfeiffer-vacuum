@@ -107,8 +107,8 @@ $home-stage-interlay-spacing-xs: calc(
   height: $home-stage-height-xs;
 
   /**
-   * need to be important because the slick slider will
-   * append 'display: inline-block' onto the element
+   * needs to be important because the slick slider will
+   * append 'display: inline-block' on the element
    */
   display: flex !important;
 

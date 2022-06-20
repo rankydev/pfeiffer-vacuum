@@ -101,8 +101,8 @@ $card-image-height: 200px;
   @apply tw-p-4;
 
   /**
-   * need to be important because the slick slider will
-   * append 'display: inline-block' onto the element
+   * needs to be important because the slick slider will
+   * append 'display: inline-block' on the element
    */
   display: flex !important;
 

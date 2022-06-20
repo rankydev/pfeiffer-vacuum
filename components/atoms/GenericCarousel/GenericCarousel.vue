@@ -246,78 +246,6 @@ export default defineComponent({
 
 <style lang="scss">
 .carousel {
-  &__slider {
-    @apply tw-relative;
-    user-select: none;
-    touch-action: pan-y;
-    -webkit-tap-highlight-color: transparent;
-
-    &--wide {
-      @apply tw-px-4;
-      @apply tw-overflow-x-clip;
-
-      @screen md {
-        @apply tw-px-6;
-      }
-
-      @screen lg {
-        @apply tw-px-8;
-        padding-left: max(
-          calc(
-            (100vw - theme('container.screens.xl')) / 2 + theme('spacing.8')
-          ),
-          theme('spacing.8')
-        );
-      }
-
-      .slick-list {
-        @apply tw-overflow-visible;
-      }
-    }
-
-    &--default {
-      .slick-track {
-        @apply tw-gap-4;
-      }
-    }
-
-    &--documentCardCarousel {
-      .slick-track {
-        @apply tw-gap-4;
-      }
-    }
-
-    &--homeStage {
-      @apply tw-p-0;
-
-      .slick-track {
-        @apply tw-gap-0;
-      }
-    }
-  }
-
-  &__arrow {
-    &-prev,
-    &-next {
-      @apply tw-absolute;
-      @apply tw-top-1/2;
-      @apply tw-z-20;
-      @apply tw--translate-y-1/2;
-
-      &--hide {
-        @apply tw-hidden;
-      }
-    }
-
-    &-prev {
-      @apply tw-left-0;
-    }
-
-    &-next {
-      @apply tw-right-0;
-    }
-  }
-
   .slick-list {
     @apply tw-relative;
     @apply tw-overflow-hidden;
@@ -412,6 +340,78 @@ export default defineComponent({
         @apply tw-text-pv-red;
         @apply tw-opacity-100;
       }
+    }
+  }
+
+  &__slider {
+    @apply tw-relative;
+    user-select: none;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+
+    &--wide {
+      @apply tw-px-4;
+      @apply tw-overflow-x-clip;
+
+      @screen md {
+        @apply tw-px-6;
+      }
+
+      @screen lg {
+        @apply tw-px-8;
+        padding-left: max(
+          calc(
+            (100vw - theme('container.screens.xl')) / 2 + theme('spacing.8')
+          ),
+          theme('spacing.8')
+        );
+      }
+
+      .slick-list {
+        @apply tw-overflow-visible;
+      }
+    }
+
+    &--default {
+      .slick-track {
+        @apply tw-gap-4;
+      }
+    }
+
+    &--documentCardCarousel {
+      .slick-track {
+        @apply tw-gap-4;
+      }
+    }
+
+    &--homeStage {
+      @apply tw-p-0;
+
+      .slick-track {
+        @apply tw-gap-0;
+      }
+    }
+  }
+
+  &__arrow {
+    &-prev,
+    &-next {
+      @apply tw-absolute;
+      @apply tw-top-1/2;
+      @apply tw-z-20;
+      @apply tw--translate-y-1/2;
+
+      &--hide {
+        @apply tw-hidden;
+      }
+    }
+
+    &-prev {
+      @apply tw-left-0;
+    }
+
+    &-next {
+      @apply tw-right-0;
     }
   }
 }

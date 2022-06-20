@@ -147,6 +147,11 @@ export default defineComponent({
     .button {
       @apply tw-grow;
       @apply tw-justify-end;
+      @apply tw-mb-4;
+
+      @screen md {
+        @apply tw-mb-0;
+      }
     }
 
     @screen md {
