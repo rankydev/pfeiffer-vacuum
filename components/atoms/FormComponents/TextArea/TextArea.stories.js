@@ -38,30 +38,20 @@ export const Default = Template.bind({})
 Default.args = [
   {
     placeholder: 'Placeholder',
-    text: '',
-    label: '',
     required: true,
-    disabled: false,
   },
   {
     placeholder: 'Placeholder',
-    text: '',
-    label: '',
     required: true,
     disabled: true,
   },
   {
     placeholder: 'Placeholder',
-    text: '',
     label: 'Label',
-    required: false,
-    disabled: false,
   },
   {
     placeholder: 'Placeholder',
-    text: '',
     label: 'Label',
-    required: false,
     disabled: true,
   },
 ]
