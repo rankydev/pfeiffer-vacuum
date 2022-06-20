@@ -89,6 +89,7 @@ export default defineComponent({
       @apply tw-ring-0;
       @apply tw-outline-0;
       @apply tw-text-pv-black;
+      outline: 0;
     }
 
     &:disabled {
