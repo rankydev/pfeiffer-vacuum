@@ -6,6 +6,7 @@ import { ref } from '@nuxtjs/composition-api'
 
 let wrapper
 const slideMock = { template: '<div>Slide</div>' }
+const arrowClass = 'carousel__arrow'
 
 const slides = [
   slideMock,
@@ -34,6 +35,14 @@ const slickSliderStub = {
     },
   },
 }
+
+jest.mock('@vueuse/core', () => {
+  const Vue = require('vue')
+
+  return {
+    useResizeObserver: (_, cb) => Vue.nextTick(cb),
+  }
+})
 
 const nuxtDynamicStub = {
   template: '<div />',
@@ -99,9 +108,9 @@ describe('GenericCarousel', () => {
         const prev = wrapper.find('.carousel__arrow-prev')
         const next = wrapper.find('.carousel__arrow-next')
 
-        expect(prev.attributes('class')).toContain('carousel__arrow-prev--hide')
+        expect(prev.attributes('class')).toContain(`${arrowClass}-prev--hide`)
         expect(next.attributes('class')).not.toContain(
-          'carousel__arrow-next--hide'
+          `${arrowClass}-next--hide`
         )
       })
 
@@ -144,39 +153,53 @@ describe('GenericCarousel', () => {
 
   describe('during interaction', () => {
     test('should show both buttons given an active slide unequal to first or last one', async () => {
-      createComponent({}, { shallow: false, noStub: true, children: slides })
+      createComponent(
+        {},
+        { shallow: false, noStub: true, children: [...slides, slideMock] }
+      )
 
-      // TODO: mock the resizeObserver and trigger him manually to determine the visibleSlides
+      // Wait until resizeObserver was triggered
+      await wrapper.vm.$nextTick()
+
+      const nextButton = wrapper.find('.carousel__arrow-next')
+
+      await nextButton.trigger('click')
+
       const prev = wrapper.find('.carousel__arrow-prev')
       const next = wrapper.find('.carousel__arrow-next')
 
-      await next.trigger('click')
-      await wrapper.vm.$nextTick()
-
-      expect(prev.attributes('class')).not.toContain(
-        'carousel__arrow-prev--hide'
-      )
-      expect(next.attributes('class')).not.toContain(
-        'carousel__arrow-next--hide'
-      )
-
-      const nextBtn = wrapper.findAllComponents(Button).at(1)
-      await nextBtn.trigger('click')
-      await wrapper.vm.$nextTick()
-
-      const newPrev = wrapper.find('.carousel__arrow-prev--hide')
-      const newNext = wrapper.find('.carousel__arrow-next--hide')
-      expect(newPrev.exists()).toBeFalsy()
-      expect(newNext.exists()).toBeFalsy()
+      expect(prev.attributes('class')).not.toContain(`${arrowClass}-prev--hide`)
+      expect(next.attributes('class')).not.toContain(`${arrowClass}-next--hide`)
     })
 
-    test('should hide prev and next button given only one slide', async () => {
+    test('should show preview button only given an active slide which displays the last one', async () => {
+      createComponent({}, { shallow: false, noStub: true, children: slides })
+
+      // Wait until resizeObserver was triggered
+      await wrapper.vm.$nextTick()
+
+      const nextButton = wrapper.find('.carousel__arrow-next')
+
+      await nextButton.trigger('click')
+
+      const prev = wrapper.find('.carousel__arrow-prev')
+      const next = wrapper.find('.carousel__arrow-next')
+
+      expect(prev.attributes('class')).not.toContain(`${arrowClass}-prev--hide`)
+      expect(next.attributes('class')).toContain(`${arrowClass}-next--hide`)
+    })
+
+    test('should hide prev and next button given only one less slides than visible', async () => {
       createComponent(
         {},
-        { shallow: false, noStub: true, children: [slideMock] }
+        {
+          shallow: false,
+          noStub: true,
+          children: [slideMock, slideMock, slideMock, slideMock],
+        }
       )
 
-      await wrapper.vm.$nextTick()
+      // Wait until resizeObserver was triggered
       await wrapper.vm.$nextTick()
 
       const prev = wrapper.find('.carousel__arrow-prev')
