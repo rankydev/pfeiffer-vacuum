@@ -1,7 +1,6 @@
 <template>
   <div class="textarea">
-    <label v-if="label || label !== ''" for="textarea">{{ label }}</label>
-    <label v-if="!required" class="textarea__right-label">(optional)</label>
+    <Label :optional="!required" :label="label" />
     <textarea
       :name="'textarea'"
       v-bind="{ text, placeholder, required, disabled }"
@@ -14,8 +13,10 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 
 export default defineComponent({
+  components: { Label },
   props: {
     /**
      * The internal text
