@@ -111,6 +111,7 @@ export default {
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18nLanguage',
+      redirectOn: 'no prefix',
     },
     vueI18n: {
       fallbackLocale: defaultLanguageCode,
