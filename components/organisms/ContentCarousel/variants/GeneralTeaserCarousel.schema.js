@@ -1,8 +1,8 @@
 import Carousel from '../ContentCarousel.schema.partial.js'
 
 export default {
-  name: 'TeaserCardCarousel',
-  display_name: 'Carousel with teaser cards',
+  name: 'GeneralTeaserCarousel',
+  display_name: 'General-Teaser-Carousel',
   schema: {
     ...Carousel,
     slides: {
@@ -21,6 +21,6 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'TeaserCardCarousel',
+  real_name: 'GeneralTeaserCarousel',
   component_group_uuid: null,
 }

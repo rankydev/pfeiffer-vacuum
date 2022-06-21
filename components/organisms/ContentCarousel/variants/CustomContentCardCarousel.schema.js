@@ -2,7 +2,7 @@ import Carousel from '../ContentCarousel.schema.partial.js'
 
 export default {
   name: 'CustomContentCardCarousel',
-  display_name: 'Carousel with custom content',
+  display_name: 'Custom Content-Card-Carousel',
   schema: {
     ...Carousel,
     slides: {
