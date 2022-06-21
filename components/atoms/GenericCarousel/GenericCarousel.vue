@@ -246,100 +246,25 @@ export default defineComponent({
 
 <style lang="scss">
 .carousel {
-  .slick-list {
-    @apply tw-relative;
-    @apply tw-overflow-hidden;
+  &__arrow {
+    &-prev,
+    &-next {
+      @apply tw-absolute;
+      @apply tw-top-1/2;
+      @apply tw-z-20;
+      @apply tw--translate-y-1/2;
 
-    &:focus {
-      @apply tw-outline-none;
-    }
-
-    &.dragging {
-      @apply tw-cursor-pointer;
-    }
-  }
-
-  .slick-track {
-    @apply tw-relative;
-    @apply tw-top-0 tw-left-0;
-    @apply tw-flex;
-    font-size: 0;
-    line-height: 0;
-  }
-
-  .slick-slide {
-    @apply tw-hidden;
-    min-height: 1px;
-
-    & > div {
-      @apply tw-w-full;
-    }
-
-    &.dragging img {
-      @apply tw-pointer-events-none;
-    }
-  }
-
-  .slick-loading {
-    .slick-track,
-    .slick-slide {
-      @apply tw-invisible;
-    }
-  }
-
-  .slick-initialized {
-    .slick-slide {
-      @apply tw-flex;
-    }
-  }
-
-  .slick-dots {
-    @apply tw-w-full;
-    @apply tw-list-none;
-    @apply tw-text-center;
-    @apply tw-m-0 tw-p-0;
-    @apply tw-mt-3;
-
-    li {
-      @apply tw-relative;
-      @apply tw-inline-block;
-      @apply tw-w-4;
-      @apply tw-h-4;
-      @apply tw-m-0;
-      @apply tw-p-0;
-
-      button {
-        @apply tw-w-4;
-        @apply tw-h-4;
-        @apply tw-cursor-pointer;
-        @apply tw-text-pv-transparent;
-        @apply tw-outline-none;
-        font-size: 0;
-        line-height: 0;
+      &--hide {
+        @apply tw-hidden;
       }
+    }
 
-      &::before {
-        @apply tw-absolute;
-        @apply tw-top-0 tw-left-0;
-        @apply tw-text-base tw-text-center;
-        @apply tw-text-pv-grey-80;
-        @apply tw-leading-3;
-        @apply tw-pb-1;
-        @apply tw-w-4 tw-h-4;
-        content: '■';
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
+    &-prev {
+      @apply tw-left-0;
+    }
 
-      &:hover,
-      &:focus {
-        @apply tw-outline-none;
-      }
-
-      &.slick-active button::before {
-        @apply tw-text-pv-red;
-        @apply tw-opacity-100;
-      }
+    &-next {
+      @apply tw-right-0;
     }
   }
 
@@ -390,28 +315,6 @@ export default defineComponent({
       .slick-track {
         @apply tw-gap-0;
       }
-    }
-  }
-
-  &__arrow {
-    &-prev,
-    &-next {
-      @apply tw-absolute;
-      @apply tw-top-1/2;
-      @apply tw-z-20;
-      @apply tw--translate-y-1/2;
-
-      &--hide {
-        @apply tw-hidden;
-      }
-    }
-
-    &-prev {
-      @apply tw-left-0;
-    }
-
-    &-next {
-      @apply tw-right-0;
     }
   }
 }
