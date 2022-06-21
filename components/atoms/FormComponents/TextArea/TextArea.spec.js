@@ -1,4 +1,4 @@
-import TextArea from './TextArea.vue'
+import TextArea from '~/components/atoms/FormComponents/TextArea/TextArea.vue'
 import { shallowMount } from '@vue/test-utils'
 
 const propsTextArea = {
@@ -16,11 +16,10 @@ describe('TextArea', () => {
 
       expect(textareaWrapper.exists()).toBeTruthy()
     })
-    test('should render labels correctly given props', () => {
-      const labelWrapper = wrapper.findAll('label')
+    test('should render label component correctly given props', () => {
+      const labelWrapper = wrapper.find('Label')
 
-      expect(labelWrapper.at(0).text()).toBe('Test')
-      expect(labelWrapper.at(1).text()).toBe('(optional)')
+      expect(labelWrapper).toBeTruthy()
     })
     test('should render textarea correctly given props', () => {
       const textAreaWrapper = wrapper.find('.textarea__input')

@@ -1,8 +1,8 @@
 <template>
-  <div v-if="label" :for="tagName">
-    <label>{{ label }}</label>
-    <label v-if="!required" class="label__right-label">(optional)</label>
-  </div>
+  <label v-if="label" :for="tagName">
+    <span>{{ label }}</span>
+    <span v-if="!required" class="label__right-label">(optional)</span>
+  </label>
 </template>
 
 <script>
@@ -36,6 +36,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+span {
+  all: unset;
+}
+
 .label {
   &__right-label {
     @apply tw-relative;

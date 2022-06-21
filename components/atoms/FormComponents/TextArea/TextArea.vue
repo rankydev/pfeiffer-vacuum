@@ -16,6 +16,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 
 export default defineComponent({
+  name: 'TextArea',
   components: { Label },
   props: {
     /**

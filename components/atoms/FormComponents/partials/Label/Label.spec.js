@@ -11,9 +11,29 @@ describe('Label', () => {
     const wrapper = shallowMount(Label, { propsData })
 
     test('should be rendered correctly given props', () => {
-      const labelWrapper = wrapper.find('div')
+      const labelWrapper = wrapper.find('label')
 
       expect(labelWrapper.exists()).toBeTruthy()
+    })
+    test('should render labels correctly given prop label', () => {
+      const propsData = { ...propsLabel }
+      const wrapper = shallowMount(Label, { propsData })
+      const labelWrapper = wrapper.findAll('span')
+
+      expect(labelWrapper.at(0).text()).toBe('Test')
+      expect(labelWrapper.at(1).text()).toBe('(optional)')
+    })
+    test('should render labels correctly given props label, required, disabled', () => {
+      const propsData = {
+        label: 'Test',
+        required: true,
+        disabled: true,
+      }
+      const wrapper = shallowMount(Label, { propsData })
+      const labelWrapper = wrapper.findAll('span')
+
+      expect(labelWrapper.at(0).text()).toBe('Test')
+      expect(labelWrapper).toHaveLength(1)
     })
   })
 })
