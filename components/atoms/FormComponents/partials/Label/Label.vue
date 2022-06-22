@@ -44,7 +44,6 @@ export default defineComponent({
   @apply tw-justify-between;
 
   &__optional {
-    @apply tw-relative;
     @apply tw-text-pv-grey-64;
   }
 }
