@@ -1,22 +1,21 @@
-import ButtonGroup from './ButtonGroup'
-import values from './ButtonGroup.stories.content'
-import { examples } from './ButtonGroup.stories.content'
+import Checkbox from './Checkbox'
+import examples from './Checkbox.stories.content'
+import { label } from './Checkbox.stories.content'
 
 const argTypes = {
-  values,
+  label,
 }
 
 export default {
-  title: 'Form components/ButtonGroup',
-  component: ButtonGroup,
+  title: 'Form components/Checkbox',
+  component: Checkbox,
   parameters: {
     docs: {
       description: {
-        component:
-          'Form component used to display a button group consisting of up to 5 values.',
+        component: 'Form component used to display a checkbox with a label',
       },
       source: {
-        code: '<ButtonGroup v-bind="{ values }"  />',
+        code: '<Checkbox v-bind="{ label, checked, disabled }"  />',
       },
     },
   },
@@ -24,34 +23,36 @@ export default {
 }
 
 const Template = (args, { argTypes }) => ({
-  components: { ButtonGroup },
+  components: { Checkbox },
   props: Object.keys(argTypes),
   setup() {
     return { args }
   },
   template: `
     <div class="documentation-preview" style="max-width:500px;">
-      <ButtonGroup v-bind="args" />
+      <Checkbox v-bind="args" />
     </div>
   `,
 })
 
 export const Default = Template.bind({})
 Default.args = {
-  values,
+  label,
+  checked: false,
+  disabled: false,
 }
 
 const OverviewTemplate = (args) => ({
-  components: { ButtonGroup },
+  components: { Checkbox },
   setup() {
     return { examples }
   },
   template: `
-  <div class="documentation-preview" style="max-width:500px;">
+  <div class="documentation-preview">
     <div v-for="(ele, index) in examples" :key="index">
-      <ButtonGroup
+      <Checkbox
         :key="'button-group-' + index"
-        :values="ele"
+        v-bind="{ ...ele }"
         style="margin:10px;"
       />
     </div>
