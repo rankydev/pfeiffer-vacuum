@@ -1,5 +1,4 @@
-import { shallowMount, createLocalVue, mount } from '@vue/test-utils'
-import { setActivePinia, createPinia } from 'pinia'
+import { shallowMount } from '@vue/test-utils'
 import ProductCard from './ProductCard.vue'
 import { product } from './ProductCard.stories.content.js'
 
@@ -27,8 +26,6 @@ function createComponent(propsData = {}) {
 }
 
 describe('ProductCard', () => {
-  beforeEach(() => setActivePinia(createPinia()))
-
   describe('initial state', () => {
     test('should render empty component without warnings given no product', () => {
       createComponent()
