@@ -4,11 +4,21 @@
       v-bind="{ headline, button, slides }"
       is-wide
       transparent
-    />
+      variant="documentCardCarousel"
+    >
+      <template #slides>
+        <DocumentCard
+          v-for="slide in slides"
+          :key="slide._uid"
+          v-editable="slide"
+          v-bind="slide"
+        />
+      </template>
+    </ContentCarousel>
   </div>
 </template>
 <script>
-import ContentCarousel from '~/components/molecules/ContentCarousel/ContentCarousel'
+import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
 export default {
   name: 'DocumentCardCarousel',
   components: { ContentCarousel },

@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import DocumentCardCarousel from './DocumentCardCarousel'
-import ContentCarousel from '~/components/molecules/ContentCarousel/ContentCarousel'
+import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
 import { headline, slides } from './DocumentCardCarousel.stories.content'
 import { buttonOutlinedSecondary } from '~/components/atoms/Button/Button.stories.content'
 
