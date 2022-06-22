@@ -50,6 +50,8 @@ export default {
         'HomeStage',
         'DocumentCardCarousel',
         'CustomContentCard',
+        'TextArea',
+        'FormInput',
       ],
     },
     bottom: {

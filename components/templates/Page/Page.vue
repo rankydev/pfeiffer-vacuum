@@ -23,6 +23,13 @@
 
     <slot>
       <main>
+        <TextArea label="Hallo TestArea" placeholder="placeholder text" />
+        <Input label="Hallo TestArea" placeholder="placeholder text" />
+        <!-- <Input
+          label="Hallo TestArea"
+          placeholder="placeholder text"
+          :disabled="true"
+        /> -->
         <nuxt-dynamic
           v-for="item in stage"
           :key="item._uid"
@@ -67,12 +74,16 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
+import TextArea from '~/components/atoms/FormComponents/TextArea/TextArea.vue'
+import Input from '~/components/atoms/FormComponents/Input/Input.vue'
 
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
     OnPageNavigation,
+    TextArea,
+    Input,
   },
   props: {
     content: {
