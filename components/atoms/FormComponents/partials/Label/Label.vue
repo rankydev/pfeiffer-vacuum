@@ -1,7 +1,9 @@
 <template>
   <label v-if="label" :for="tagName">
     <span>{{ label }}</span>
-    <span v-if="!required" class="label__right-label">(optional)</span>
+    <span v-if="optional" class="label__optional">{{
+      $t('form.label.optional')
+    }}</span>
   </label>
 </template>
 
@@ -18,9 +20,9 @@ export default defineComponent({
       default: '',
     },
     /**
-     * The required prop, which defines if the form component is required or not
+     * The optional prop, which defines if the form component is optional
      */
-    required: {
+    optional: {
       type: Boolean,
       default: false,
     },
@@ -36,12 +38,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-span {
-  all: unset;
-}
-
 .label {
-  &__right-label {
+  &__optional {
     @apply tw-relative;
     @apply tw-float-right;
     @apply tw-text-pv-grey-64;

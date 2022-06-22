@@ -27,7 +27,7 @@ export default {
   },
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 span {
   @apply tw-inline-flex;
   @apply tw-items-center;

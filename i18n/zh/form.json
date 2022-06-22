@@ -4,5 +4,8 @@
       "placeholder": "搜索 ..."
     }
   },
-  "button": {}
+  "button": {},
+  "label": {
+    "optional": "(可选)"
+  }
 }
