@@ -40,10 +40,11 @@ export default defineComponent({
 <style lang="scss">
 .label {
   @apply tw-text-pv-grey-16;
+  @apply tw-flex;
+  @apply tw-justify-between;
 
   &__optional {
     @apply tw-relative;
-    @apply tw-float-right;
     @apply tw-text-pv-grey-64;
   }
 }

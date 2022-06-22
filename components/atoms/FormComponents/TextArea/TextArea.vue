@@ -1,8 +1,8 @@
 <template>
   <div class="textarea">
-    <Label :optional="!required" :label="label" />
+    <Label :optional="!required" :label="label" tag-name="textarea" />
     <textarea
-      :name="'textarea'"
+      name="textarea"
       v-bind="{ text, placeholder, required, disabled }"
       class="textarea__input"
       @focus="$emit('focus', true)"
