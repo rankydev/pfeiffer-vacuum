@@ -45,12 +45,10 @@ export default {
         'ContentMediaBlock',
         'ContentTextBlock',
         'TeaserCard',
-        'ProductCard',
         'Carousel',
         'ContentCarousel',
         'HomeStageCarousel',
         'CustomContentCard',
-        'ProductCard',
       ],
     },
     bottom: {

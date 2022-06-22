@@ -86,3 +86,5 @@ export function useStoryblokProvider({ $img }) {
     buildImage,
   }
 }
+
+export default {}

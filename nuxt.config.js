@@ -1,3 +1,5 @@
+import { PATH_SHOP, PATH_SHOP_IMAGES } from './server/constants.js'
+
 export default {
   srcDir: '',
   ssr: true,
@@ -139,5 +141,8 @@ export default {
     },
   },
   // Will register file from project server/middleware directory to handle API calls
-  serverMiddleware: [{ path: '/api', handler: '~/server/middleware/index.js' }],
+  serverMiddleware: [
+    { path: PATH_SHOP, handler: '~/server/middleware/shop-api.js' },
+    { path: PATH_SHOP_IMAGES, handler: '~/server/middleware/shop-images.js' },
+  ],
 }

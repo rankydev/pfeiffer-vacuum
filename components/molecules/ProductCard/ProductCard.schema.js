@@ -5,13 +5,7 @@ export default {
     product: {
       type: 'custom',
       required: true,
-      field_type: 'shop-url-selector',
-      options: [
-        {
-          name: 'domain',
-          value: 'https://dev.vacuum-shop.com/api/shop',
-        },
-      ],
+      field_type: 'pfeiffer-vacuum-shop-url-selector',
       display_name: 'Product-Picker',
     },
   },

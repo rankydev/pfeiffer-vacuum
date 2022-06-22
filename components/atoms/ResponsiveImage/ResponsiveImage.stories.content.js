@@ -1,4 +1,4 @@
-export const hybrisResponsiveImageEntries = {
+export const hybrisResponsiveImageEntry = {
   image: {
     altText: 'HiPace® 80 for TCP 350, DN 63 ISO-K',
     format: 'product',

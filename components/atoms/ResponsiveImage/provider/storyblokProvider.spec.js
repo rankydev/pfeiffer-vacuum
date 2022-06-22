@@ -1,5 +1,6 @@
 import { useStoryblokProvider } from './storyblokProvider.js'
 import responsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.stories.content'
+import { expect } from '@jest/globals'
 
 const imgMock = jest.fn((src, modifications, options) => {
   return src
@@ -48,6 +49,7 @@ describe('StoryblokProvider', () => {
         })
       })
     })
+
     test('given empty image object', () => {
       const storyblokProvider = useStoryblokProvider({ $img: imgMock })
       const image = storyblokProvider.buildImage({
@@ -82,8 +84,25 @@ describe('StoryblokProvider', () => {
       })
     })
   })
+
   describe('$img function should be called correctly', () => {
-    test('given $img function', () => {})
-    expect(imgMock).toBeTruthy()
+    test('given $img function', () => {
+      imgMock.mockClear()
+
+      const storyblokProvider = useStoryblokProvider({ $img: imgMock })
+      const image = storyblokProvider.buildImage({
+        image: responsiveImage.image,
+        aspectRatio: '1:1',
+        blackAndWhite: true,
+      })
+
+      expect(image.webpSources.value.length).toBe(3)
+      expect(imgMock).toBeCalledTimes(6)
+
+      imgMock.mockClear()
+
+      expect(image.pngSources.value.length).toBe(3)
+      expect(imgMock).toBeCalledTimes(6)
+    })
   })
 })

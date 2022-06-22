@@ -19,3 +19,5 @@ export function useHybrisProvider() {
     buildImage,
   }
 }
+
+export default {}

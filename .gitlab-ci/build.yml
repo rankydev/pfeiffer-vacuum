@@ -140,6 +140,7 @@ sonar-qube:
       --build-arg CI_PROJECT_URL="${CI_PROJECT_URL}"
       --build-arg REGION_CODES="${REGION_CODES}"
       --build-arg DEFAULT_REGION_CODE="${DEFAULT_REGION_CODE}"
+      --build-arg SHOP_BASE_URL="${SHOP_BASE_URL}"
       --build-arg SHOP_IMAGE_URL="${SHOP_IMAGE_URL}"
       -f docker/Dockerfile .
   after_script:
