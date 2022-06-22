@@ -1,28 +1,37 @@
-import TextArea from './TextArea.vue'
+import TextArea from '~/components/atoms/FormComponents/TextArea/TextArea.vue'
+import Label from '~/components/atoms/FormComponents/partials/Label/Label.vue'
 import { shallowMount } from '@vue/test-utils'
 
 const propsTextArea = {
   label: 'Test',
   placeholder: 'Placeholder',
+  required: false,
 }
 
 describe('TextArea', () => {
   describe('initial state', () => {
-    const propsData = { ...propsTextArea }
-    const wrapper = shallowMount(TextArea, { propsData })
-
     test('should be rendered correctly given props', () => {
-      const textareaWrapper = wrapper.find('div')
+      const propsData = { ...propsTextArea }
+      const wrapper = shallowMount(TextArea, { propsData })
+      const textareaWrapper = wrapper.find('.textarea')
 
       expect(textareaWrapper.exists()).toBeTruthy()
     })
-    test('should render labels correctly given props', () => {
-      const labelWrapper = wrapper.findAll('label')
+    test('should render label component correctly given props', () => {
+      const propsData = { ...propsTextArea }
+      const wrapper = shallowMount(TextArea, { propsData })
+      const labelWrapper = wrapper.findComponent(Label)
 
-      expect(labelWrapper.at(0).text()).toBe('Test')
-      expect(labelWrapper.at(1).text()).toBe('(optional)')
+      expect(labelWrapper.exists()).toBeTruthy()
+      expect(labelWrapper.attributes('label')).toBe(propsTextArea.label)
+      expect(labelWrapper.attributes('optional')).toBe(
+        `${!propsTextArea.required}`
+      )
+      expect(labelWrapper.attributes('tagname')).toBe('textarea')
     })
     test('should render textarea correctly given props', () => {
+      const propsData = { ...propsTextArea }
+      const wrapper = shallowMount(TextArea, { propsData })
       const textAreaWrapper = wrapper.find('.textarea__input')
       expect(textAreaWrapper.attributes('placeholder')).toEqual(
         propsTextArea.placeholder
@@ -38,14 +47,6 @@ describe('TextArea', () => {
 
       expect(textareaWrapper.exists()).toBeTruthy()
       expect(textareaLabel.exists()).toBeFalsy()
-    })
-    test('should render label correctly given required=true prop', () => {
-      const propsData = {
-        required: true,
-      }
-      const wrapper = shallowMount(TextArea, { propsData })
-      const optionalLabel = wrapper.find('.textarea__right-label')
-      expect(optionalLabel.exists()).toBeFalsy()
     })
   })
 })

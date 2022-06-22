@@ -11,7 +11,7 @@
         class="button-group__input"
         :value="item.value"
       />
-      <span>{{ item.label }}</span>
+      <span class="button-group__text">{{ item.label }}</span>
     </label>
   </div>
 </template>
@@ -28,22 +28,6 @@ export default {
 }
 </script>
 <style lang="scss">
-span {
-  @apply tw-inline-flex;
-  @apply tw-items-center;
-  @apply tw-justify-center;
-  @apply tw-h-full tw-w-full;
-  @apply tw-text-sm;
-  @apply tw-leading-4;
-  @apply tw-font-bold;
-  @apply tw-text-pv-grey-16;
-
-  @screen lg {
-    @apply tw-text-base;
-    @apply tw-leading-6;
-  }
-}
-
 .button-group {
   @apply tw-flex;
   @apply tw-h-12;
@@ -63,6 +47,22 @@ span {
 
     &:last-of-type {
       @apply tw-border-r-0;
+    }
+  }
+
+  &__text {
+    @apply tw-inline-flex;
+    @apply tw-items-center;
+    @apply tw-justify-center;
+    @apply tw-h-full tw-w-full;
+    @apply tw-text-sm;
+    @apply tw-leading-4;
+    @apply tw-font-bold;
+    @apply tw-text-pv-grey-16;
+
+    @screen lg {
+      @apply tw-text-base;
+      @apply tw-leading-6;
     }
   }
 
