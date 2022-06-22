@@ -1,5 +1,5 @@
 <template>
-  <label v-if="label" :for="tagName">
+  <label v-if="label" :for="tagName" class="label">
     <span>{{ label }}</span>
     <span v-if="optional" class="label__optional">{{
       $t('form.label.optional')
@@ -39,6 +39,8 @@ export default defineComponent({
 
 <style lang="scss">
 .label {
+  @apply tw-text-pv-grey-16;
+
   &__optional {
     @apply tw-relative;
     @apply tw-float-right;
