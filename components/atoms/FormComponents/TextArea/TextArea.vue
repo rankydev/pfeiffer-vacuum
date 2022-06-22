@@ -70,12 +70,6 @@ export default defineComponent({
 
 <style lang="scss">
 .textarea {
-  &__right-label {
-    @apply tw-relative;
-    @apply tw-float-right;
-    @apply tw-text-pv-grey-64;
-  }
-
   &__input {
     @apply tw-block;
     @apply tw-px-3;
