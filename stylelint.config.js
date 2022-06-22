@@ -29,6 +29,6 @@ module.exports = {
         ],
       },
     ],
-    "no-descending-specificity": null,
+    'no-descending-specificity': null,
   },
 }
