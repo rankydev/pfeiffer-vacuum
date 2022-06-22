@@ -11,8 +11,8 @@
       :infinite="infinite"
       :autoplay="autoplay"
       :autoplay-speed="autoplaySpeedMilliseconds"
-      class="carousel__slider"
       :class="[
+        'carousel__slider',
         `carousel__slider--${variant}`,
         { 'carousel__slider--wide': isBreakout },
       ]"
@@ -297,16 +297,8 @@ export default defineComponent({
       }
     }
 
-    &--default {
-      .slick-track {
-        @apply tw-gap-4;
-      }
-    }
-
-    &--documentCardCarousel {
-      .slick-track {
-        @apply tw-gap-4;
-      }
+    .slick-track {
+      @apply tw-gap-4;
     }
 
     &--homeStage {
