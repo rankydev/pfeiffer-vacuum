@@ -6,11 +6,11 @@
       class="button-group__label"
     >
       <input
+        v-bind="{ ...item }"
         type="radio"
         name="radio"
         class="button-group__input"
-        :value="item.value"
-        @input="$emit('update', $event.target.value)"
+        @input="$emit('update', item.value)"
       />
       <span class="button-group__text">{{ item.label }}</span>
     </label>

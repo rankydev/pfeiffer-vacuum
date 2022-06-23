@@ -31,7 +31,6 @@
           :name="item.uiComponent || item.component"
         />
         <ContentWrapper>
-          <Checkbox label="Checkbox" />
           <nuxt-dynamic
             v-for="item in body"
             :key="item._uid"
@@ -68,14 +67,12 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
-import Checkbox from '../../atoms/FormComponents/Checkbox/Checkbox'
 
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
     OnPageNavigation,
-    Checkbox,
   },
   props: {
     content: {
