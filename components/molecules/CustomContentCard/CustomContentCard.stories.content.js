@@ -1,4 +1,4 @@
-import responsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.stories.content.js'
+import responsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.stories.content'
 
 export const image = responsiveImage.image
 export const date = '2022-05-05 00:00'

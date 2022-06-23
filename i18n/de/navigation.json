@@ -1,0 +1,16 @@
+{
+  "button": {
+    "signIn": {
+      "label": "Anmelden"
+    },
+    "overview": {
+      "label": "Übersicht"
+    },
+    "shop": {
+      "label": "Shop"
+    },
+    "article": {
+      "label": "Zum Artikel"
+    }
+  }
+}

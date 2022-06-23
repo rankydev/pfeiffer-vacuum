@@ -21,6 +21,7 @@ module.exports = {
     '<rootDir>/mixins/**/*.{vue,js}',
     '<rootDir>/pages/**/*.{vue,js}',
     '<rootDir>/plugins/**/*.{vue,js}',
+    '<rootDir>/resolver/**/*.{vue,js}',
     '<rootDir>/stores/**/*.{vue,js}',
     '<rootDir>/providers/**/*.{vue,js}',
     '<rootDir>/utils/**/*.{vue,js}',
@@ -35,10 +36,10 @@ module.exports = {
   ],
   coverageThreshold: {
     global: {
-      statements: 96,
-      branches: 89,
-      functions: 96,
-      lines: 96,
+      statements: 98,
+      branches: 91,
+      functions: 98,
+      lines: 98,
     },
   },
 }

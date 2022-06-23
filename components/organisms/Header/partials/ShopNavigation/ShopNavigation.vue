@@ -2,7 +2,9 @@
   <div class="shop-navigation">
     <Link href="#" class="shop-navigation__account">
       <Icon class="shop-navigation__icon" icon="person" />
-      <span class="shop-navigation__account-name">Sign In</span>
+      <span class="shop-navigation__account-name">{{
+        $t('navigation.button.signIn.label')
+      }}</span>
     </Link>
 
     <Link href="#" class="shop-navigation__comparhension">

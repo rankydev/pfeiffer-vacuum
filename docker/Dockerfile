@@ -26,6 +26,7 @@ ARG LANGUAGE_CODES
 # please read the note above
 ARG REGION_CODES
 ARG DEFAULT_REGION_CODE
+ARG CURRENT_REGION_CODE
 
 # please read the note above
 ARG STORYBLOK_OAUTH_TOKEN
@@ -95,6 +96,7 @@ ENV LANGUAGE_CODES="${LANGUAGE_CODES}"
 # please read the note above
 ENV REGION_CODES="${REGION_CODES}"
 ENV DEFAULT_REGION_CODE="${DEFAULT_REGION_CODE}"
+ENV CURRENT_REGION_CODE="${CURRENT_REGION_CODE}"
 
 # please read the note above
 ENV STORYBLOK_OAUTH_TOKEN=''
@@ -128,6 +130,7 @@ COPY --from=frontend-build /src/build_logs ./build_logs/
 # where available (npm@5+)
 COPY --from=frontend-build /src/package*.json ./
 COPY --from=frontend-build /src/nuxt.config.js ./
+COPY --from=frontend-build /src/i18n.config.js ./
 COPY --from=frontend-build /src/.env ./
 
 # Bundle app source
@@ -135,6 +138,7 @@ COPY --from=frontend-build /src/.nuxt .nuxt/
 COPY --from=frontend-build /src/node_modules/ ./node_modules/
 COPY --from=frontend-build /src/static ./static/
 COPY --from=frontend-build /src/resolver ./resolver/
+COPY --from=frontend-build /src/server ./server/
 
 EXPOSE 3000
 

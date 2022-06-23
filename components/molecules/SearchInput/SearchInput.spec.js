@@ -11,7 +11,7 @@ describe('SearchInput', () => {
         const inputField = wrapper.findComponent(InputField)
 
         expect(inputField.vm.icon).toBe('search')
-        expect(inputField.vm.placeholder).toBe('Suche ...')
+        expect(inputField.vm.placeholder).toBe('form.input.search.placeholder')
       })
     })
   })

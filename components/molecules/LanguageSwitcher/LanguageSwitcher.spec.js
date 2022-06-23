@@ -12,7 +12,7 @@ describe('LanguageSwitcher', () => {
         const language = wrapper.find('.language-switcher__label')
 
         expect(icon.vm.icon).toBe('language')
-        expect(language.text()).toBe('DE')
+        expect(language.text()).toBe('language.code')
       })
     })
   })

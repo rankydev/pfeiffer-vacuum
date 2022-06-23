@@ -1,0 +1,11 @@
+{
+  "input": {
+    "search": {
+      "placeholder": "검색..."
+    }
+  },
+  "button": {},
+  "label": {
+    "optional": "(옵션)"
+  }
+}
