@@ -1,6 +1,10 @@
 import { parameters as nuxtParameters } from '~/.nuxt-storybook/storybook/preview.js'
 import '~/assets/scss/storybook.scss'
 
+export const globalTypes = {}
+
+export const decorators = []
+
 export const parameters = {
   ...nuxtParameters,
   viewMode: 'story',

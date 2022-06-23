@@ -33,7 +33,7 @@
     </Link>
 
     <div v-if="hasSlot('additionalInfo')" class="pv-card__additional-info">
-      <!-- @slot information which lives outside of the link continer of the card -->
+      <!-- @slot information which lives outside of the link container of the card -->
       <slot name="additionalInfo" />
     </div>
 

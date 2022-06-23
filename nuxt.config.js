@@ -1,3 +1,4 @@
+import { PATH_SHOP, PATH_SHOP_IMAGES } from './server/constants.js'
 import {
   languageCodes,
   defaultLanguageCode,
@@ -166,9 +167,20 @@ export default {
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
   image: {
+    // fallback if provider is not defined
     provider: 'storyblok',
+    providers: {
+      hybris: {
+        provider: '~/providers/images/hybrisProvider',
+      },
+    },
     storyblok: {
       baseURL: 'https://img2.storyblok.com',
     },
   },
+  // Will register file from project server/middleware directory to handle API calls
+  serverMiddleware: [
+    { path: PATH_SHOP, handler: '~/server/middleware/shop-api.js' },
+    { path: PATH_SHOP_IMAGES, handler: '~/server/middleware/shop-images.js' },
+  ],
 }
