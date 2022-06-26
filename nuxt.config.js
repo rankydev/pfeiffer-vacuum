@@ -43,10 +43,6 @@ export default {
     },
   },
 
-  serverMiddleware: [
-    { prefix: false, handler: '~/server/middleware/region-redirect.js' },
-  ],
-
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/storyblok-api-client', mode: 'client' },
@@ -180,6 +176,7 @@ export default {
   },
   // Will register file from project server/middleware directory to handle API calls
   serverMiddleware: [
+    { prefix: false, handler: '~/server/middleware/region-redirect.js' },
     { path: PATH_SHOP, handler: '~/server/middleware/shop-api.js' },
     { path: PATH_SHOP_IMAGES, handler: '~/server/middleware/shop-images.js' },
   ],
