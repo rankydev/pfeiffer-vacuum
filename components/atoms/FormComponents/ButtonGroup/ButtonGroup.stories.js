@@ -44,13 +44,16 @@ Default.args = {
 const OverviewTemplate = (args) => ({
   components: { ButtonGroup },
   setup() {
-    return { examples }
+    return {
+      examples: [...examples, examples[3]],
+    }
   },
   template: `
   <div class="documentation-preview" style="max-width:500px;">
     <div v-for="(ele, index) in examples" :key="index">
       <ButtonGroup
         :key="'button-group-' + index"
+        :disabled="index === 4"
         :values="ele"
         style="margin:10px;"
       />

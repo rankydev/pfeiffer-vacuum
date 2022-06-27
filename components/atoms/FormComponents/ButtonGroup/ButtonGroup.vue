@@ -6,13 +6,20 @@
       class="button-group__label"
     >
       <input
-        v-bind="{ ...item }"
+        v-bind="{ ...item, disabled }"
         type="radio"
         name="radio"
         class="button-group__input"
         @input="$emit('update', item.value)"
       />
-      <span class="button-group__text">{{ item.label }}</span>
+      <span
+        :class="[
+          'button-group__text',
+          { 'button-group__text--disabled': disabled },
+        ]"
+      >
+        {{ item.label }}
+      </span>
     </label>
   </div>
 </template>
@@ -24,6 +31,10 @@ export default {
       type: Array,
       required: true,
       validator: (val) => val.length > 1 && val.length < 6,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: ['update'],
@@ -37,22 +48,6 @@ export default {
   @apply tw-border-2;
   @apply tw-rounded-md;
   @apply tw-overflow-hidden;
-
-  &__text {
-    @apply tw-inline-flex;
-    @apply tw-items-center;
-    @apply tw-justify-center;
-    @apply tw-h-full tw-w-full;
-    @apply tw-text-sm;
-    @apply tw-leading-4;
-    @apply tw-font-bold;
-    @apply tw-text-pv-grey-16;
-
-    @screen lg {
-      @apply tw-text-base;
-      @apply tw-leading-6;
-    }
-  }
 
   &__label {
     @apply tw-grow;
@@ -81,6 +76,10 @@ export default {
     @screen lg {
       @apply tw-text-base;
       @apply tw-leading-6;
+    }
+
+    &--disabled {
+      @apply tw-text-pv-grey-80;
     }
   }
 
