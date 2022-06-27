@@ -2,14 +2,21 @@
   <div class="pv-input">
     <input
       v-model="internalValue"
+      v-bind="{ placeholder, required, disabled }"
       class="pv-input__element"
-      :class="{ 'pv-input__element--icon': icon }"
+      :class="[
+        icon ? 'pv-input__element--icon' : '',
+        hasError ? 'pv-input__element--error' : 'textarea__correct',
+      ]"
       :placeholder="placeholder"
       @keypress.enter="$emit('submit', $event)"
       @focus="$emit('focus', true)"
       @blur="$emit('focus', false)"
-      @input="$emit('change', internalValue)"
+      @input="$emit('update', internalValue)"
     />
+    <div v-if="hasError" class="forminput__error">Error</div>
+    <!-- Icon anpassen, wenn mitgegeben wie Suche anzeigen -->
+    <!-- Wenn keins mitgegeben soll bei Error ein Icon erscheinen -->
     <Icon
       v-if="icon"
       class="pv-input__icon"
@@ -53,6 +60,27 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    /**
+     * The required prop, which defines if the text field is required or not
+     */
+    required: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * The disabled prop, which defines if it should be possible to enter text into text field or not
+     */
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * The hasError is set by validation in parent component and shows if the input has an error
+     */
+    hasError: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: [
     /**
@@ -68,7 +96,7 @@ export default defineComponent({
      * @event change
      * @property {string} value
      */
-    'change',
+    'update',
     /**
      * Fired on icon clicked.
      *
@@ -138,6 +166,27 @@ export default defineComponent({
     &--icon {
       @apply tw-pr-10;
     }
+
+    &--error {
+      @apply tw-rounded-t;
+      @apply tw-border-pv-red;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
+
+.forminput {
+  &__error {
+    @apply tw-block;
+    @apply tw-px-3;
+    @apply tw-py-2;
+    @apply tw-border-2;
+    @apply tw-rounded-b;
+    @apply tw-border-pv-red;
+    @apply tw-bg-pv-red;
+    @apply tw-text-pv-white;
+    @apply tw-w-full;
   }
 }
 </style>

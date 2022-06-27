@@ -8,7 +8,7 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import InputField from '~/components/atoms/InputField/InputField.vue'
+import InputField from '~/components/atoms/FormComponents/InputField/InputField.vue'
 
 export default defineComponent({
   components: {

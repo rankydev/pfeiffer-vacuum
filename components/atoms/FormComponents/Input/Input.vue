@@ -5,14 +5,15 @@
       placeholder="hold this place"
       :disabled="disabled"
     /> -->
-    <textarea
+    <input
       :name="'textarea'"
       v-bind="{ text, placeholder, required, disabled }"
       class="textarea__input"
       :class="hasError ? 'textarea__error' : 'textarea__correct'"
       @focus="$emit('focus', true)"
       @blur="$emit('focus', false)"
-    ></textarea>
+      @click="$emit('test', true)"
+    />
     <div v-if="hasError" class="forminput__error">Error Message</div>
   </div>
 </template>
@@ -75,8 +76,13 @@ export default defineComponent({
      * @property {boolean} isFocused
      */
     'focus',
+    'test',
+    'update',
   ],
-  setup(props) {},
+  setup(props) {
+    // const emit = defineEmits(['focus', 'test'])
+    // emit('test', 'focus')
+  },
 })
 </script>
 

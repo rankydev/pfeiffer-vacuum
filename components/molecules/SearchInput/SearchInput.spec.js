@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import SearchInput from './SearchInput.vue'
-import InputField from '~/components/atoms/InputField/InputField.vue'
+import InputField from '~/components/atoms/FormComponents/InputField/InputField.vue'
 
 describe('SearchInput', () => {
   describe('initial state', () => {

@@ -24,7 +24,17 @@
     <slot>
       <main>
         <TextArea label="Hallo TestArea" placeholder="placeholder text" />
-        <Input label="Hallo TestArea" placeholder="placeholder text" />
+        <Input
+          label="Hallo TestArea"
+          placeholder="placeholder text"
+          @test="test"
+        />
+        <Input
+          label="Hallo TestArea"
+          placeholder="placeholder text"
+          :has-error="false"
+        />
+        <InputField placeholder="Input Field" @submit="test" />
         <!-- <Input
           label="Hallo TestArea"
           placeholder="placeholder text"
@@ -76,6 +86,7 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
 import TextArea from '~/components/atoms/FormComponents/TextArea/TextArea.vue'
 import Input from '~/components/atoms/FormComponents/Input/Input.vue'
+import InputField from '~/components/atoms/FormComponents/InputField/InputField.vue'
 
 export default defineComponent({
   name: 'Page',
@@ -84,6 +95,7 @@ export default defineComponent({
     OnPageNavigation,
     TextArea,
     Input,
+    InputField,
   },
   props: {
     content: {
@@ -103,6 +115,10 @@ export default defineComponent({
       context
     )
 
+    const test = () => {
+      console.log('clicked test')
+    }
+
     return {
       top,
       header,
@@ -112,6 +128,7 @@ export default defineComponent({
       footer,
       quicklinks: content.value.quicklinks,
       metaData: getMetaData(),
+      test,
     }
   },
   head() {
