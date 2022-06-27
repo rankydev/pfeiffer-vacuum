@@ -176,8 +176,17 @@ export default {
   },
   // Will register file from project server/middleware directory to handle API calls
   serverMiddleware: [
-    { prefix: false, handler: '~/server/middleware/region-redirect.js' },
-    { path: PATH_SHOP, handler: '~/server/middleware/shop-api.js' },
-    { path: PATH_SHOP_IMAGES, handler: '~/server/middleware/shop-images.js' },
+    {
+      prefix: false,
+      handler: '~/server/middleware/region-redirect.js',
+    },
+    {
+      path: PATH_SHOP,
+      handler: '~/server/middleware/shop-api.js',
+    },
+    {
+      path: PATH_SHOP_IMAGES,
+      handler: '~/server/middleware/shop-images.js',
+    },
   ],
 }
