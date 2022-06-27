@@ -24,7 +24,7 @@
     <slot>
       <main>
         <InputField
-          :has-error="error"
+          :has-error="false"
           placeholder="Input Field"
           @submit="test"
         />
@@ -72,8 +72,6 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
-import TextArea from '~/components/atoms/FormComponents/TextArea/TextArea.vue'
-import Input from '~/components/atoms/FormComponents/Input/Input.vue'
 import InputField from '~/components/atoms/FormComponents/InputField/InputField.vue'
 
 export default defineComponent({
@@ -81,8 +79,6 @@ export default defineComponent({
   components: {
     ContentWrapper,
     OnPageNavigation,
-    TextArea,
-    Input,
     InputField,
   },
   props: {
