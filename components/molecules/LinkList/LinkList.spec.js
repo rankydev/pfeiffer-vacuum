@@ -13,6 +13,16 @@ const defaultProps = () => ({ links, title })
 
 describe('LinkList', () => {
   describe('initial state', () => {
+    it('should render a list given no props', () => {
+      const wrapper = shallowMount(LinkList, {
+        stubs: {
+          NuxtLink: RouterLinkStub,
+        },
+        localVue,
+      })
+      expect(wrapper.exists()).toBeTruthy()
+    })
+
     it('should render a list with a title given example links', () => {
       const propsData = { ...defaultProps() }
       const wrapper = shallowMount(LinkList, {
