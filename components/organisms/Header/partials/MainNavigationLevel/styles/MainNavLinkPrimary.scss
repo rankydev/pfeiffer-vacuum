@@ -80,6 +80,8 @@
       &:hover {
         @apply tw-outline-none;
         @apply tw-text-pv-red-lighter;
+        @apply tw-pb-5;
+        @apply tw-border-b-4;
 
         &::after {
           @apply tw-border-pv-red;
