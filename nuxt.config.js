@@ -28,7 +28,7 @@ export default {
   css: ['~/assets/scss/style.scss'],
 
   router: {
-    base: `/${process.env.CURRENT_REGION_CODE || 'global'}/`,
+    base: `/${process.env.CURRENT_REGION_CODE || process.env.DEFAULT_REGION_CODE}/`,
     extendRoutes(routes) {
       // add root page to the routed object
       routes.push({
