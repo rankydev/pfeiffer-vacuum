@@ -6,7 +6,7 @@
       class="pv-input__element"
       :class="[
         icon ? 'pv-input__element--icon' : '',
-        hasError ? 'pv-input__element--error' : 'textarea__correct',
+        hasError ? 'pv-input__element--error' : '',
       ]"
       :placeholder="placeholder"
       @keypress.enter="$emit('submit', $event)"

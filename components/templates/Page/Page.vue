@@ -23,23 +23,11 @@
 
     <slot>
       <main>
-        <TextArea label="Hallo TestArea" placeholder="placeholder text" />
-        <Input
-          label="Hallo TestArea"
-          placeholder="placeholder text"
-          @test="test"
+        <InputField
+          :has-error="error"
+          placeholder="Input Field"
+          @submit="test"
         />
-        <Input
-          label="Hallo TestArea"
-          placeholder="placeholder text"
-          :has-error="false"
-        />
-        <InputField placeholder="Input Field" @submit="test" />
-        <!-- <Input
-          label="Hallo TestArea"
-          placeholder="placeholder text"
-          :disabled="true"
-        /> -->
         <nuxt-dynamic
           v-for="item in stage"
           :key="item._uid"
