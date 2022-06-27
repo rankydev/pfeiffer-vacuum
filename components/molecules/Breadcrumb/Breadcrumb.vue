@@ -52,6 +52,8 @@ export default defineComponent({
   @apply tw-my-2;
   @apply tw-overflow-x-auto;
   @apply tw-whitespace-nowrap;
+  @apply tw-text-xs;
+  @apply tw-leading-6;
 
   &__entry {
     & + .breadcrumb__entry::before {
