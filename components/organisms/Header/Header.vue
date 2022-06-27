@@ -77,7 +77,7 @@ export default defineComponent({
 
 .header {
   @apply tw-relative;
-  @apply tw-z-10;
+  @apply tw-z-20;
 
   &::before {
     @apply tw-absolute;

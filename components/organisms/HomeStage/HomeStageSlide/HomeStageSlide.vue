@@ -9,7 +9,7 @@
       backgroundImage: `url(${image.originalFilename})`,
     }"
   >
-    <HomeStageContent
+    <HomeStageSlideContent
       v-if="stageContent.length"
       class="home-stage-slide__content-block"
       v-bind="stageContent[0]"
@@ -39,14 +39,13 @@
 </template>
 
 <script>
-import HomeStageContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.vue'
+import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.vue'
 import Bubble from '~/components/molecules/Bubble/Bubble'
-import { computed } from '@nuxtjs/composition-api'
 
 export default {
   name: 'HomeStageSlide',
   components: {
-    HomeStageContent,
+    HomeStageSlideContent,
     Bubble,
   },
   props: {
@@ -107,6 +106,12 @@ $home-stage-interlay-spacing-xs: calc(
   @apply tw-flex tw-flex-col tw-justify-between;
   height: $home-stage-height-xs;
 
+  /**
+   * needs to be important because the slick slider will
+   * append 'display: inline-block' on the element
+   */
+  display: flex !important;
+
   @screen md {
     height: $home-stage-height-md;
   }
@@ -118,6 +123,10 @@ $home-stage-interlay-spacing-xs: calc(
 
   @screen xl {
     height: $home-stage-height-xl;
+  }
+
+  &__content-block {
+    @apply tw-z-10;
   }
 
   &__placeholder {
@@ -139,6 +148,7 @@ $home-stage-interlay-spacing-xs: calc(
   &__image {
     @apply tw-absolute;
     @apply tw-h-auto;
+    @apply tw-pointer-events-none;
     bottom: -$home-stage-interlay-spacing-xs;
     right: -$home-stage-interlay-spacing-xs;
 

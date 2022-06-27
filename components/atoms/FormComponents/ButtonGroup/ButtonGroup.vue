@@ -68,6 +68,22 @@ export default {
     }
   }
 
+  &__text {
+    @apply tw-inline-flex;
+    @apply tw-items-center;
+    @apply tw-justify-center;
+    @apply tw-h-full tw-w-full;
+    @apply tw-text-sm;
+    @apply tw-leading-4;
+    @apply tw-font-bold;
+    @apply tw-text-pv-grey-16;
+
+    @screen lg {
+      @apply tw-text-base;
+      @apply tw-leading-6;
+    }
+  }
+
   &__input {
     @apply tw-hidden;
 

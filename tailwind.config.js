@@ -51,6 +51,7 @@ module.exports = {
       '6xl': '3.5rem', // 56px
     },
     lineHeight: {
+      3: '0.75rem', // 12px
       4: '1rem', // 16px
       5: '1.25rem', // 20px
       6: '1.5rem', // 24px

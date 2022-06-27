@@ -1,3 +1,7 @@
+import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.schema.partial.js'
+
+const { autoplay, autoplaySpeed, infinite } = GenericCarousel
+
 export default {
   name: 'DocumentCardCarousel',
   display_name: 'Document Card Carousel',
@@ -25,6 +29,9 @@ export default {
       required: true,
       pos: 3,
     },
+    autoplay,
+    autoplaySpeed,
+    infinite,
   },
   image: null,
   preview_field: null,

@@ -1,3 +1,5 @@
+import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.schema.partial.js'
+
 export default {
   name: 'HomeStage',
   display_name: 'Home Stage',
@@ -11,25 +13,9 @@ export default {
       required: true,
       pos: 1,
     },
-    autoplay: {
-      type: 'boolean',
-      display_name: 'Autoplay',
-      description: 'Enables autoplay on carousel.',
-      pos: 2,
-    },
-    autoplaySpeed: {
-      type: 'number',
-      display_name: 'Autoplay speed',
-      description: 'Autoplay speed in seconds',
-      default_value: 5,
-      pos: 3,
-    },
-    infinite: {
-      type: 'boolean',
-      display_name: 'Infinite',
-      description: 'Enables infinite wrap around slides on carousel.',
-      pos: 4,
-    },
+    autoplay: GenericCarousel.autoplay,
+    autoplaySpeed: GenericCarousel.autoplaySpeed,
+    infinite: GenericCarousel.infinite,
   },
   image: null,
   preview_field: null,

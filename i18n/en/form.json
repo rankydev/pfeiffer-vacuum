@@ -4,5 +4,8 @@
       "placeholder": "Search ..."
     }
   },
-  "button": {}
+  "button": {},
+  "label": {
+    "optional": "(optional)"
+  }
 }
