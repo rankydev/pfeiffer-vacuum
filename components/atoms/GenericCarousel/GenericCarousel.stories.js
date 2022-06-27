@@ -1,5 +1,5 @@
-import Carousel from './Carousel'
-import carouselContent from './Carousel.stories.content'
+import GenericCarousel from './GenericCarousel'
+import carouselContent from './GenericCarousel.stories.content'
 
 const argTypes = {
   autoplay: {
@@ -14,13 +14,13 @@ const argTypes = {
     control: { type: 'boolean' },
     defaultValue: carouselContent.isWide,
   },
+  variant: {
+    options: carouselContent.variants,
+    control: { type: 'inline-radio' },
+  },
   infinite: {
     control: { type: 'boolean' },
     defaultValue: carouselContent.infinite,
-  },
-  settings: {
-    control: { type: 'object' },
-    defaultValue: carouselContent.settings,
   },
   slides: {
     control: { type: 'array' },
@@ -29,8 +29,8 @@ const argTypes = {
 }
 
 export default {
-  title: 'Technical components/Carousel',
-  component: Carousel,
+  title: 'Technical components/GenericCarousel',
+  component: GenericCarousel,
   parameters: {
     docs: {
       description: {
@@ -43,14 +43,23 @@ export default {
 }
 
 const Template = (args, { argTypes }) => ({
-  components: { Carousel },
+  components: { GenericCarousel },
   props: Object.keys(argTypes),
   setup() {
     return { args }
   },
   template: `
     <div class="documentation-preview">
-      <Carousel v-bind="args" />
+      <GenericCarousel v-bind="args">
+        <template #slides>
+          <NuxtDynamic
+            v-for="slide in args.slides"
+            :key="slide._uid"
+            v-bind="slide"
+            :name="slide.uiComponent || slide.component"
+          />
+        </template>
+      </GenericCarousel>
     </div>
   `,
 })

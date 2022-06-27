@@ -1,3 +1,4 @@
+import { PATH_SHOP, PATH_SHOP_IMAGES } from './server/constants.js'
 import {
   languageCodes,
   defaultLanguageCode,
@@ -24,11 +25,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    '~/assets/scss/style.scss',
-    'vue-slick-carousel/dist/vue-slick-carousel.css',
-    'vue-slick-carousel/dist/vue-slick-carousel-theme.css',
-  ],
+  css: ['~/assets/scss/style.scss'],
 
   router: {
     base: `/${process.env.CURRENT_REGION_CODE || 'global'}/`,
@@ -45,10 +42,6 @@ export default {
       }
     },
   },
-
-  serverMiddleware: [
-    { prefix: false, handler: '~/server/middleware/region-redirect.js' },
-  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -170,9 +163,30 @@ export default {
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
   image: {
+    // fallback if provider is not defined
     provider: 'storyblok',
+    providers: {
+      hybris: {
+        provider: '~/providers/images/hybrisProvider',
+      },
+    },
     storyblok: {
       baseURL: 'https://img2.storyblok.com',
     },
   },
+  // Will register file from project server/middleware directory to handle API calls
+  serverMiddleware: [
+    {
+      prefix: false,
+      handler: '~/server/middleware/region-redirect.js',
+    },
+    {
+      path: PATH_SHOP,
+      handler: '~/server/middleware/shop-api.js',
+    },
+    {
+      path: PATH_SHOP_IMAGES,
+      handler: '~/server/middleware/shop-images.js',
+    },
+  ],
 }
