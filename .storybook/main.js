@@ -13,5 +13,5 @@ module.exports = {
     '@storybook/addon-a11y',
     '@storybook/theming',
     '@storybook/addon-actions'
-  ]
+  ],
 }

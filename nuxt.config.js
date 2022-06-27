@@ -87,6 +87,10 @@ export default {
   // Storybook Configuration, see https://storybook.nuxtjs.org/options
   storybook: {
     port: 4000,
+    webpackFinal(config, { configDir }) {
+      config.output.publicPath = '/storybook/';
+      return config;
+     }
   },
 
   // internationalization configuration, see https://i18n.nuxtjs.org/options-reference
