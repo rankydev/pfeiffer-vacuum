@@ -14,9 +14,7 @@
       @blur="$emit('focus', false)"
       @input="$emit('update', internalValue)"
     />
-    <div v-if="hasError" class="forminput__error">Error</div>
-    <!-- Icon anpassen, wenn mitgegeben wie Suche anzeigen -->
-    <!-- Wenn keins mitgegeben soll bei Error ein Icon erscheinen -->
+    <div v-if="hasError" class="forminput__error">{{ errorMessage }}</div>
     <Icon
       v-if="internalIcon"
       class="pv-input__icon"
@@ -82,6 +80,13 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    /**
+     * A text describing which error occured, it is displayed if hasError is true
+     */
+    errorMessage: {
+      type: String,
+      default: '',
+    },
   },
   emits: [
     /**
@@ -118,7 +123,7 @@ export default defineComponent({
     let internalIcon = ref(props.icon)
 
     if (props.hasError) {
-      internalIcon = 'compare_arrows'
+      internalIcon = 'error'
     }
 
     return {
@@ -138,6 +143,11 @@ export default defineComponent({
     @apply tw-top-1/2 tw-right-2;
     @apply tw-cursor-pointer tw-text-pv-grey-64;
     transform: translateY(-50%);
+
+    &--error {
+      @apply tw-top-1/4 tw-right-2;
+      @apply tw-text-pv-red;
+    }
   }
 
   &__element {
@@ -186,12 +196,13 @@ export default defineComponent({
 .forminput {
   &__error {
     @apply tw-block;
-    @apply tw-px-3;
-    @apply tw-py-2;
+    @apply tw-px-2;
+    @apply tw-py-1;
     @apply tw-border-2;
     @apply tw-rounded-b;
     @apply tw-border-pv-red;
     @apply tw-bg-pv-red;
+    @apply tw-text-xs;
     @apply tw-text-pv-white;
     @apply tw-w-full;
   }

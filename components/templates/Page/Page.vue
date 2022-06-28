@@ -25,6 +25,7 @@
       <main>
         <InputField
           :has-error="true"
+          error-message="Sorry, an error occured"
           :icon="'search'"
           placeholder="Input Field"
           @submit="test"
