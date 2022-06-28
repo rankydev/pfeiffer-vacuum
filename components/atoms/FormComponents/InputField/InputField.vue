@@ -18,9 +18,10 @@
     <!-- Icon anpassen, wenn mitgegeben wie Suche anzeigen -->
     <!-- Wenn keins mitgegeben soll bei Error ein Icon erscheinen -->
     <Icon
-      v-if="icon"
+      v-if="internalIcon"
       class="pv-input__icon"
-      :icon="icon"
+      :class="hasError ? 'pv-input__icon--error' : 'pv-input__icon'"
+      :icon="internalIcon"
       @click.native="$emit('click:icon', $event)"
     />
   </div>
@@ -114,9 +115,15 @@ export default defineComponent({
   ],
   setup(props) {
     const internalValue = ref(props.value)
+    let internalIcon = ref(props.icon)
+
+    if (props.hasError) {
+      internalIcon = 'compare_arrows'
+    }
 
     return {
       internalValue,
+      internalIcon,
     }
   },
 })

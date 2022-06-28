@@ -24,9 +24,11 @@
     <slot>
       <main>
         <InputField
-          :has-error="false"
+          :has-error="true"
+          :icon="'search'"
           placeholder="Input Field"
           @submit="test"
+          @update="test"
         />
         <nuxt-dynamic
           v-for="item in stage"
