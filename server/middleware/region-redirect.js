@@ -17,12 +17,9 @@ export default function (req, res, next) {
   const isEmptyBase = (routerBase || '').length === 0
   const isRootBase = routerBase === '/'
   const isCurrentBase = decodeURI(req.url).startsWith(routerBase)
-  const isStorybook = decodeURI(req.url).startsWith('/storybook')
   const regionCodes = config.publicRuntimeConfig.REGION_CODES
 
-  console.log(decodeURI(req.url), req.url)
-
-  if (isEmptyBase || isRootBase || isCurrentBase || isStorybook) {
+  if (isEmptyBase || isRootBase || isCurrentBase) {
     return next()
   }
 
