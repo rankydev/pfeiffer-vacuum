@@ -3,7 +3,7 @@
     <div
       v-for="(entry, idx) in accordionEntries"
       :key="idx"
-      :class="{ 'tw-pb-6': isActive(idx) }"
+      :class="{ 'tw-scroll-pb-6': isActive(idx) }"
     >
       <component :is="level === 'h3' ? level : 'p'" class="accordion__heading">
         <button
