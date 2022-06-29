@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import Input from './InputField.vue'
-import Icon from '../Icon/Icon.vue'
+import Icon from '../../Icon/Icon.vue'
 
 describe('Input', () => {
   describe('initial state', () => {
@@ -40,15 +40,15 @@ describe('Input', () => {
   })
 
   describe('during interaction', () => {
-    it('should emit an change event when a key is pressed', () => {
+    it('should emit update event when a key is pressed', () => {
       const value = 'Some Value'
       const wrapper = shallowMount(Input)
       const input = wrapper.find('input')
 
       input.setValue(value)
 
-      expect(wrapper.emitted().change.length).toBe(1)
-      expect(wrapper.emitted().change[0]).toEqual([value])
+      expect(wrapper.emitted().update.length).toBe(1)
+      expect(wrapper.emitted().update[0]).toEqual([value])
     })
 
     it('should emit an submit event when the enter key is pressed', () => {
