@@ -1,15 +1,13 @@
-import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.schema.partial.js'
-import ContentCarousel from '../ContentCarousel.schema.partial.js'
+import Carousel from '../ContentCarousel.schema.partial.js'
 
-const { autoplay, autoplaySpeed, infinite } = GenericCarousel
-const { headline, button, uiComponent } = ContentCarousel
+const CarouselOptions = { ...Carousel }
+delete CarouselOptions.isWide
 
 export default {
   name: 'DocumentCardCarousel',
   display_name: 'Document Card Carousel',
   schema: {
-    headline,
-    button,
+    ...CarouselOptions,
     slides: {
       type: 'bloks',
       display_name: 'Slides',
@@ -19,11 +17,6 @@ export default {
       required: true,
       pos: 3,
     },
-    autoplay,
-    autoplaySpeed,
-    infinite,
-    'tab-advanced': ContentCarousel['tab-advanced'],
-    uiComponent,
   },
   image: null,
   preview_field: null,
