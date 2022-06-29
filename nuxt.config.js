@@ -6,6 +6,8 @@ import {
   dateTimeFormats,
 } from './i18n.config'
 
+const isStorybook = process.env.STORYBOOK
+
 export default {
   srcDir: '',
   ssr: true,
@@ -27,21 +29,25 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/scss/style.scss'],
 
-  router: {
-    base: `/${process.env.CURRENT_REGION_CODE || 'global'}/`,
-    extendRoutes(routes) {
-      // add root page to the routed object
-      routes.push({
-        name: 'Home',
-        path: '/',
-        component: '~/pages/_site/_.vue',
-      })
+  ...(!isStorybook && {
+    router: {
+      base: `/${
+        process.env.CURRENT_REGION_CODE || process.env.DEFAULT_REGION_CODE
+      }/`,
+      extendRoutes(routes) {
+        // add root page to the routed object
+        routes.push({
+          name: 'Home',
+          path: '/',
+          component: '~/pages/_site/_.vue',
+        })
 
-      for (const key in routes) {
-        routes[key].caseSensitive = true
-      }
+        for (const key in routes) {
+          routes[key].caseSensitive = true
+        }
+      },
     },
-  },
+  }),
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -84,16 +90,11 @@ export default {
     },
   },
 
-  // Storybook Configuration, see https://storybook.nuxtjs.org/options
-  storybook: {
-    port: 4000,
-  },
-
   // internationalization configuration, see https://i18n.nuxtjs.org/options-reference
   i18n: {
     locales: locales,
     defaultLocale: defaultLanguageCode,
-    strategy: 'prefix',
+    strategy: isStorybook ? 'no_prefix' : 'prefix',
     langDir: '~/i18n/',
     /*
         Browser language from 'nuxt-i18n' detection disabled,
@@ -176,10 +177,14 @@ export default {
   },
   // Will register file from project server/middleware directory to handle API calls
   serverMiddleware: [
-    {
-      prefix: false,
-      handler: '~/server/middleware/region-redirect.js',
-    },
+    ...(isStorybook
+      ? []
+      : [
+          {
+            prefix: false,
+            handler: '~/server/middleware/region-redirect.js',
+          },
+        ]),
     {
       path: PATH_SHOP,
       handler: '~/server/middleware/shop-api.js',

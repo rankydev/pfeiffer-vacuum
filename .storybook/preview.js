@@ -1,9 +1,46 @@
 import { parameters as nuxtParameters } from '~/.nuxt-storybook/storybook/preview.js'
 import '~/assets/scss/storybook.scss'
 
-export const globalTypes = {}
+import { locales, defaultLanguageCode } from '~/i18n.config'
 
-export const decorators = []
+let currentLocale = defaultLanguageCode;
+
+export const globalTypes = {
+  locale: {
+    name: 'Locale',
+    description: 'Internationalization locale',
+    defaultValue: currentLocale,
+    toolbar: {
+      icon: 'globe',
+      items: locales.map(({ code, name }) => ({ 
+        value: code, 
+        right: code.toUpperCase(),
+        title: name 
+      }))
+    },
+  },
+};
+
+export const decorators = [
+  (_, { globals }) => {
+    if (globals.locale !== currentLocale) {
+      currentLocale = globals.locale;
+    }
+    return {
+      template: '<story />',
+      created () {
+        if (this.$i18n) {
+          this.$i18n.setLocale(currentLocale);
+        }
+      },
+      updated () {
+        if (this.$i18n) {
+          this.$i18n.setLocale(currentLocale);
+        }
+      },
+    };
+  },
+];
 
 export const parameters = {
   ...nuxtParameters,
