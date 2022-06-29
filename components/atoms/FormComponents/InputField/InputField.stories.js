@@ -1,7 +1,7 @@
 import InputField from '~/components/atoms/FormComponents/InputField/InputField.vue'
 
 export default {
-  title: 'Atoms/InputField',
+  title: 'Form components/InputField',
   component: InputField,
   parameters: {
     docs: {
@@ -27,4 +27,11 @@ const Template = (args) => ({
 export const Default = Template.bind({})
 Default.args = {
   placeholder: 'Some placeholder',
+}
+
+export const Error = Template.bind({})
+Error.args = {
+  placeholder: 'Some placeholder',
+  hasError: true,
+  errorMessage: 'Sorry, an error occured',
 }
