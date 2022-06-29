@@ -42,23 +42,26 @@ export default defineComponent({
 
 <style lang="scss">
 .link-list {
+  @apply tw-mb-2;
+  @screen lg {
+    @apply tw-mb-0;
+  }
+
   &__title {
-    @apply tw-mb-2;
+    @apply tw-mb-1;
 
     @screen lg {
-      @apply tw-mb-4;
+      @apply tw-mb-2;
     }
   }
 
   &__item {
-    @apply tw-mb-1;
-    @apply tw-pb-2;
+    @apply tw-pt-1;
     @apply tw-text-sm;
 
     @screen lg {
-      @apply tw-mb-2;
+      @apply tw-pt-2;
       @apply tw-text-base;
-      @apply tw-pb-4;
     }
   }
 }
