@@ -32,8 +32,6 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import { ref } from '@nuxtjs/composition-api'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 
-// import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage.vue'
-
 export default defineComponent({
   components: {
     Icon,
