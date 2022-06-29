@@ -14,7 +14,7 @@
       @blur="$emit('focus', false)"
       @input="$emit('update', internalValue)"
     />
-    <div v-if="hasError" class="forminput__error">{{ errorMessage }}</div>
+    <ErrorMessage v-if="hasError" :error-message="errorMessage" />
     <Icon
       v-if="internalIcon"
       class="pv-input__icon"
@@ -30,10 +30,14 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import { ref } from '@nuxtjs/composition-api'
+import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
+
+// import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage.vue'
 
 export default defineComponent({
   components: {
     Icon,
+    ErrorMessage,
   },
   props: {
     /**
@@ -190,21 +194,6 @@ export default defineComponent({
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
     }
-  }
-}
-
-.forminput {
-  &__error {
-    @apply tw-block;
-    @apply tw-px-2;
-    @apply tw-py-1;
-    @apply tw-border-2;
-    @apply tw-rounded-b;
-    @apply tw-border-pv-red;
-    @apply tw-bg-pv-red;
-    @apply tw-text-xs;
-    @apply tw-text-pv-white;
-    @apply tw-w-full;
   }
 }
 </style>
