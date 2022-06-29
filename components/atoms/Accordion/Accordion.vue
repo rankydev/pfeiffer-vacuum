@@ -131,6 +131,7 @@ export default defineComponent({
     @apply tw-items-center;
     @apply tw-w-full;
     @apply tw-py-4;
+    -webkit-tap-highlight-color: transparent;
 
     @apply tw-duration-200;
     @apply tw-ease-in-out;
