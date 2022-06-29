@@ -4,6 +4,7 @@ export default {
   headline: {
     type: 'text',
     display_name: 'Headline',
+    translatable: true,
     pos: 1,
   },
   button: {
