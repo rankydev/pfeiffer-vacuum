@@ -14,6 +14,7 @@ export default [
   {
     label: 'Val 1',
     value: 1,
+    checked: true,
   },
   {
     label: 'Val 2',

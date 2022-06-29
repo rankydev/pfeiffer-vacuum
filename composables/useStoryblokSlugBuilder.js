@@ -26,7 +26,7 @@ const useStoryblokSlugBuilder = ({ root: context }) => {
      * splice the first segment, if it is a valid language code
      * returns default lanugage code otherwise
      */
-    const language = LANGUAGE_CODES.includes(urlSegments[0])
+    const language = (LANGUAGE_CODES || []).includes(urlSegments[0])
       ? urlSegments.shift()
       : DEFAULT_LANGUAGE_CODE
 
