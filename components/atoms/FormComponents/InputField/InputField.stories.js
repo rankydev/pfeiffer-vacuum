@@ -29,6 +29,18 @@ Default.args = {
   placeholder: 'Some placeholder',
 }
 
+export const Icon = Template.bind({})
+Icon.args = {
+  placeholder: 'Some placeholder',
+  icon: 'search',
+}
+
+export const Disabled = Template.bind({})
+Disabled.args = {
+  placeholder: 'Some placeholder',
+  disabled: true,
+}
+
 export const Error = Template.bind({})
 Error.args = {
   placeholder: 'Some placeholder',
