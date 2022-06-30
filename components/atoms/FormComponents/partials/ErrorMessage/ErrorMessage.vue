@@ -1,5 +1,5 @@
 <template>
-  <div class="forminput__error">
+  <div class="error-message">
     {{ errorMessage }}
   </div>
 </template>
@@ -21,18 +21,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.forminput {
-  &__error {
-    @apply tw-block;
-    @apply tw-px-2;
-    @apply tw-py-1;
-    @apply tw-border-2;
-    @apply tw-rounded-b;
-    @apply tw-border-pv-red;
-    @apply tw-bg-pv-red;
-    @apply tw-text-xs;
-    @apply tw-text-pv-white;
-    @apply tw-w-full;
-  }
+.error-message {
+  @apply tw-block;
+  @apply tw-px-2;
+  @apply tw-py-1;
+  @apply tw-border-2;
+  @apply tw-rounded-b;
+  @apply tw-border-pv-red;
+  @apply tw-bg-pv-red;
+  @apply tw-text-xs;
+  @apply tw-text-pv-white;
+  @apply tw-w-full;
 }
 </style>

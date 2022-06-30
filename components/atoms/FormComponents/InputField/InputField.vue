@@ -1,27 +1,30 @@
 <template>
   <div class="pv-input">
-    <input
-      v-model="internalValue"
-      v-bind="{ placeholder, required, disabled }"
-      class="pv-input__element"
-      :class="[
-        icon ? 'pv-input__element--icon' : '',
-        hasError ? 'pv-input__element--error' : '',
-      ]"
-      :placeholder="placeholder"
-      @keypress.enter="$emit('submit', $event)"
-      @focus="$emit('focus', true)"
-      @blur="$emit('focus', false)"
-      @input="$emit('update', internalValue)"
-    />
+    <Label :label="label" />
+    <div class="pv-input__wrapper">
+      <input
+        v-model="internalValue"
+        v-bind="{ placeholder, required, disabled }"
+        class="pv-input__element"
+        :class="[
+          icon ? 'pv-input__element--icon' : '',
+          hasError ? 'pv-input__element--error' : '',
+        ]"
+        :placeholder="placeholder"
+        @keypress.enter="$emit('submit', $event)"
+        @focus="$emit('focus', true)"
+        @blur="$emit('focus', false)"
+        @input="$emit('update', internalValue)"
+      />
+      <Icon
+        v-if="internalIcon"
+        class="pv-input__icon"
+        :class="hasError ? 'pv-input__icon--error' : 'pv-input__icon'"
+        :icon="internalIcon"
+        @click.native="$emit('click:icon', $event)"
+      />
+    </div>
     <ErrorMessage v-if="hasError" :error-message="errorMessage" />
-    <Icon
-      v-if="internalIcon"
-      class="pv-input__icon"
-      :class="hasError ? 'pv-input__icon--error' : 'pv-input__icon'"
-      :icon="internalIcon"
-      @click.native="$emit('click:icon', $event)"
-    />
   </div>
 </template>
 
@@ -31,10 +34,12 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import { ref } from '@nuxtjs/composition-api'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
+import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 
 export default defineComponent({
   components: {
     Icon,
+    Label,
     ErrorMessage,
   },
   props: {
@@ -58,6 +63,13 @@ export default defineComponent({
      * A text which is displayed if no value given
      */
     placeholder: {
+      type: String,
+      default: '',
+    },
+    /**
+     * The text displayed over the form component via Label component
+     */
+    label: {
       type: String,
       default: '',
     },
@@ -140,6 +152,10 @@ export default defineComponent({
 .pv-input {
   @apply tw-relative;
 
+  &__wrapper {
+    @apply tw-relative;
+  }
+
   &__icon {
     @apply tw-absolute;
     @apply tw-top-1/2 tw-right-2;
@@ -147,7 +163,6 @@ export default defineComponent({
     transform: translateY(-50%);
 
     &--error {
-      @apply tw-top-1/4 tw-right-2;
       @apply tw-text-pv-red;
     }
   }

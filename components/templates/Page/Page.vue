@@ -24,6 +24,7 @@
     <slot>
       <main>
         <InputField
+          label="Some Input Field"
           :has-error="true"
           error-message="Sorry, an error occured"
           :icon="'search'"
