@@ -1,9 +1,23 @@
 import { shallowMount } from '@vue/test-utils'
 import Input from './InputField.vue'
 import Icon from '../../Icon/Icon.vue'
+import Label from '../../FormComponents/partials/Label/Label.vue'
+import errorMessage from '../../FormComponents/partials/errorMessage/errorMessage.vue'
+import { expect } from '@jest/globals'
 
 describe('Input', () => {
   describe('initial state', () => {
+    it('should render empty component when no data provided', () => {
+      const wrapper = shallowMount(Input)
+      const icon = wrapper.findComponent(Icon)
+      const input = wrapper.findComponent(Input)
+      const label = wrapper.findComponent(Label)
+
+      expect(icon.exists()).toBeFalsy()
+      expect(input.exists()).toBeTruthy()
+      expect(label.exists()).toBeTruthy()
+    })
+
     it('should set the value to the input when provided', () => {
       const propsData = { value: 'Some Value' }
       const wrapper = shallowMount(Input, { propsData })
@@ -18,6 +32,30 @@ describe('Input', () => {
       const input = wrapper.find('input')
 
       expect(input.attributes('placeholder')).toBe(propsData.placeholder)
+    })
+
+    it('should set a label when provided', () => {
+      const propsData = { label: 'Some Label' }
+      const wrapper = shallowMount(Input, { propsData })
+      const input = wrapper.findComponent(Label)
+
+      expect(input.attributes('label')).toBe(propsData.label)
+    })
+
+    it('should set error class on input element when hasError is true', () => {
+      const propsData = { hasError: true }
+      const wrapper = shallowMount(Input, { propsData })
+      const input = wrapper.find('.pv-input__element--error')
+
+      expect(input.exists()).toBeTruthy()
+    })
+
+    it('should set an error message when provided', () => {
+      const propsData = { errorMessage: 'Some error occured', hasError: true }
+      const wrapper = shallowMount(Input, { propsData })
+      const input = wrapper.findComponent(errorMessage)
+
+      expect(input.attributes('errormessage')).toBe(propsData.errorMessage)
     })
 
     describe('given an icon', () => {
@@ -35,6 +73,15 @@ describe('Input', () => {
         const input = wrapper.find('input')
 
         expect(input.attributes('class')).toMatch('pv-input__element--icon')
+      })
+
+      it('should set icon error class when hasError is true', () => {
+        const propsData = { icon: 'someIcon', hasError: true }
+        const wrapper = shallowMount(Input, { propsData })
+        const errorIcon = wrapper.find('.pv-input__icon--error')
+
+        expect(errorIcon.attributes('icon')).toBe('error')
+        expect(errorIcon.exists()).toBeTruthy()
       })
     })
   })
