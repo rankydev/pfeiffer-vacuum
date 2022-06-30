@@ -54,27 +54,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-$base-sm: 90px;
-$base-md: 75px;
-$base-lg: 100px;
-
 .teaser-card {
   @apply tw-relative;
   @apply tw-block;
   @apply tw-overflow-hidden;
   @apply tw-rounded-lg;
-  width: calc($base-sm * 3);
-  height: calc($base-sm * 2);
-
-  @screen md {
-    width: calc($base-md * 3);
-    height: calc($base-md * 2);
-  }
-
-  @screen lg {
-    width: calc($base-lg * 3);
-    height: calc($base-lg * 2);
-  }
 
   .responsive-image {
     @apply tw-ease-linear;

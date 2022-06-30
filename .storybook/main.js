@@ -12,6 +12,7 @@ module.exports = {
     '@storybook/addon-backgrounds',
     '@storybook/addon-a11y',
     '@storybook/theming',
-    '@storybook/addon-actions'
-  ]
+    '@storybook/addon-actions',
+    '@storybook/addon-toolbars',
+  ],
 }

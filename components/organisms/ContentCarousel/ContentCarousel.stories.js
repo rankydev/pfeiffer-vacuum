@@ -1,5 +1,7 @@
 import ContentCarousel from './ContentCarousel'
 import contentCarouselContent from './ContentCarousel.stories.content'
+import contentCustomContentCardCarousel from '~/components/organisms/ContentCarousel/variants/CustomContentCardCarousel.stories.content.js'
+import documentCardCarousel from '~/components/organisms/ContentCarousel/variants/DocumentCardCarousel.stories.content.js'
 
 const argTypes = {
   autoplay: {
@@ -26,10 +28,6 @@ const argTypes = {
     control: { type: 'boolean' },
     defaultValue: contentCarouselContent.infinite,
   },
-  settings: {
-    control: { type: 'object' },
-    defaultValue: contentCarouselContent.settings,
-  },
   slides: {
     control: { type: 'array' },
     defaultValue: contentCarouselContent.slides,
@@ -37,7 +35,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/ContentCarousel',
+  title: 'Organisms/Carousels/ContentCarousel',
   component: ContentCarousel,
   parameters: {
     docs: {
@@ -63,5 +61,17 @@ const Template = (args, { argTypes }) => ({
   `,
 })
 
-export const Default = Template.bind({})
-Default.args = {}
+export const TeaserCardCarousel = Template.bind({})
+TeaserCardCarousel.args = {
+  ...contentCarouselContent,
+}
+
+export const CustomContentCarousel = Template.bind({})
+CustomContentCarousel.args = {
+  ...contentCustomContentCardCarousel,
+}
+
+export const DocumentCardCarousel = Template.bind({})
+DocumentCardCarousel.args = {
+  ...documentCardCarousel,
+}

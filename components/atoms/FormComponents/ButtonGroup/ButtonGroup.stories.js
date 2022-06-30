@@ -15,7 +15,9 @@ export default {
         component:
           'Form component used to display a button group consisting of up to 5 values.',
       },
-      code: '<ButtonGroup v-bind="{ values }"  />',
+      source: {
+        code: '<ButtonGroup v-bind="{ values }"  />',
+      },
     },
   },
   argTypes,
@@ -42,13 +44,16 @@ Default.args = {
 const OverviewTemplate = (args) => ({
   components: { ButtonGroup },
   setup() {
-    return { examples }
+    return {
+      examples: [...examples, examples[3]],
+    }
   },
   template: `
   <div class="documentation-preview" style="max-width:500px;">
     <div v-for="(ele, index) in examples" :key="index">
       <ButtonGroup
         :key="'button-group-' + index"
+        :disabled="index === 4"
         :values="ele"
         style="margin:10px;"
       />

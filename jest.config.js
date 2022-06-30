@@ -23,6 +23,7 @@ module.exports = {
     '<rootDir>/plugins/**/*.{vue,js}',
     '<rootDir>/resolver/**/*.{vue,js}',
     '<rootDir>/stores/**/*.{vue,js}',
+    '<rootDir>/providers/**/*.{vue,js}',
     '<rootDir>/utils/**/*.{vue,js}',
   ],
   coveragePathIgnorePatterns: [

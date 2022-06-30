@@ -30,6 +30,6 @@ export default {
   autoplaySpeed: '5',
   infinite: false,
   isWide: true,
-  settings: {},
   slides: carouselEntries,
+  variants: ['default', 'homeStage'],
 }

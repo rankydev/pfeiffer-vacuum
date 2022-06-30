@@ -6,12 +6,20 @@
       class="button-group__label"
     >
       <input
+        v-bind="{ ...item, disabled }"
         type="radio"
         name="radio"
         class="button-group__input"
-        :value="item.value"
+        @input="$emit('update', item.value)"
       />
-      <span>{{ item.label }}</span>
+      <span
+        :class="[
+          'button-group__text',
+          { 'button-group__text--disabled': disabled },
+        ]"
+      >
+        {{ item.label }}
+      </span>
     </label>
   </div>
 </template>
@@ -24,26 +32,15 @@ export default {
       required: true,
       validator: (val) => val.length > 1 && val.length < 6,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
+  emits: ['update'],
 }
 </script>
 <style lang="scss">
-span {
-  @apply tw-inline-flex;
-  @apply tw-items-center;
-  @apply tw-justify-center;
-  @apply tw-h-full tw-w-full;
-  @apply tw-text-sm;
-  @apply tw-leading-4;
-  @apply tw-font-bold;
-  @apply tw-text-pv-grey-16;
-
-  @screen lg {
-    @apply tw-text-base;
-    @apply tw-leading-6;
-  }
-}
-
 .button-group {
   @apply tw-flex;
   @apply tw-h-12;
@@ -63,6 +60,26 @@ span {
 
     &:last-of-type {
       @apply tw-border-r-0;
+    }
+  }
+
+  &__text {
+    @apply tw-inline-flex;
+    @apply tw-items-center;
+    @apply tw-justify-center;
+    @apply tw-h-full tw-w-full;
+    @apply tw-text-sm;
+    @apply tw-leading-4;
+    @apply tw-font-bold;
+    @apply tw-text-pv-grey-16;
+
+    @screen lg {
+      @apply tw-text-base;
+      @apply tw-leading-6;
+    }
+
+    &--disabled {
+      @apply tw-text-pv-grey-80;
     }
   }
 

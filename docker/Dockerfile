@@ -46,6 +46,10 @@ ARG CI_COMMIT_SHORT_SHA
 ARG CI_COMMIT_REF_NAME
 ARG CI_PROJECT_URL
 
+# hybris
+ARG SHOP_BASE_URL
+ARG SHOP_IMAGE_URL
+
 RUN \
   apk update \
   && apk add gettext
@@ -112,6 +116,10 @@ ENV CI_COMMIT_SHORT_SHA="${CI_COMMIT_SHORT_SHA}"
 ENV CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}"
 ENV CI_PROJECT_URL="${CI_PROJECT_URL}"
 
+#hybris
+ENV SHOP_BASE_URL="${SHOP_BASE_URL}"
+ENV SHOP_IMAGE_URL="${SHOP_IMAGE_URL}"
+
 # Create app directory
 WORKDIR /opt/pvac-frontend
 
@@ -131,6 +139,7 @@ COPY --from=frontend-build /src/node_modules/ ./node_modules/
 COPY --from=frontend-build /src/static ./static/
 COPY --from=frontend-build /src/resolver ./resolver/
 COPY --from=frontend-build /src/server ./server/
+COPY --from=frontend-build /src/providers ./providers/
 
 EXPOSE 3000
 

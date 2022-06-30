@@ -13,7 +13,7 @@ export default {
       },
       description: {
         component:
-          'The Breadcrum is a generic component which determines the values from the current route. Storybook can not diplay a breadcrumb longer than a single entry, because he has only the iframe.hmtl route.',
+          'The Breadcrumb is a generic component which determines the values from the current route. Storybook can not display a breadcrumb longer than a single entry, because he has only the iframe.hmtl route.',
       },
     },
   },
@@ -23,7 +23,6 @@ const Template = () => ({
   components: { Breadcrumb },
   setup() {
     const cmsStore = useCmsStore()
-
     watch(
       () => cmsStore.cmsLinks,
       () => {

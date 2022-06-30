@@ -36,8 +36,8 @@ services:
       #Storefront
       #- STOREFRONT_BASE_URL=${CI_ENVIRONMENT_URL}
       # hybris
-      #- SHOP_BASE_URL=
-      #- SHOP_IMAGE_URL=,
+      - SHOP_BASE_URL=${SHOP_BASE_URL}
+      - SHOP_IMAGE_URL=${SHOP_IMAGE_URL}
       #- SHOP_CLIENT_ID=pfeiffer_viewer
       #- SHOP_SECRET=secret,
       # vsm
