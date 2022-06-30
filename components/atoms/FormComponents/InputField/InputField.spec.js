@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import Input from './InputField.vue'
 import Icon from '../../Icon/Icon.vue'
 import Label from '../../FormComponents/partials/Label/Label.vue'
-import errorMessage from '../../FormComponents/partials/errorMessage/errorMessage.vue'
+import errorMessage from '../../FormComponents/partials/ErrorMessage/ErrorMessage.vue'
 import { expect } from '@jest/globals'
 
 describe('Input', () => {
