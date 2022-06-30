@@ -36,6 +36,7 @@
 
     &--active {
       &::after {
+        content: '';
         @apply tw-border-pv-red;
       }
     }
@@ -73,6 +74,7 @@
         @apply tw-text-pv-red-lighter;
 
         &::after {
+          content: '';
           @apply tw-border-pv-red;
         }
       }
@@ -80,11 +82,9 @@
       &:hover {
         @apply tw-outline-none;
         @apply tw-text-pv-red-lighter;
-        @apply tw-pb-5;
-        @apply tw-border-b-4;
-        @apply tw-border-pv-red;
 
         &::after {
+          content: '';
           @apply tw-border-pv-red;
         }
       }
