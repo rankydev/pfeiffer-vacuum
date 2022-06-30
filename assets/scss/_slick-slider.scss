@@ -89,7 +89,7 @@
         @apply tw-outline-none;
       }
 
-      &.slick-active button::before {
+      &.slick-active::before {
         @apply tw-text-pv-red;
         @apply tw-opacity-100;
       }

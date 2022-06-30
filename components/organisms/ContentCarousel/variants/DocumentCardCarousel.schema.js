@@ -1,25 +1,10 @@
-import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.schema.partial.js'
-
-const { autoplay, autoplaySpeed, infinite } = GenericCarousel
+import Carousel from '../ContentCarousel.schema.partial.js'
 
 export default {
   name: 'DocumentCardCarousel',
   display_name: 'Document Card Carousel',
   schema: {
-    headline: {
-      type: 'text',
-      display_name: 'Headline',
-      required: true,
-      pos: 1,
-    },
-    button: {
-      type: 'bloks',
-      display_name: 'Button',
-      restrict_components: true,
-      component_whitelist: ['Button'],
-      maximum: 1,
-      pos: 2,
-    },
+    ...Carousel,
     slides: {
       type: 'bloks',
       display_name: 'Slides',
@@ -29,9 +14,6 @@ export default {
       required: true,
       pos: 3,
     },
-    autoplay,
-    autoplaySpeed,
-    infinite,
   },
   image: null,
   preview_field: null,

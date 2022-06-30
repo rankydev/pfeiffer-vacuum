@@ -41,7 +41,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .document-card {
-  @apply tw-inline-block;
+  @apply tw-block;
   @apply tw-relative;
   @apply tw-rounded-lg;
   @apply tw-border-2 tw-border-pv-grey-80;
