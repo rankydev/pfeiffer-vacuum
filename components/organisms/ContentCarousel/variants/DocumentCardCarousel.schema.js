@@ -1,13 +1,10 @@
 import Carousel from '../ContentCarousel.schema.partial.js'
 
-const CarouselOptions = { ...Carousel }
-delete CarouselOptions.isWide
-
 export default {
   name: 'DocumentCardCarousel',
   display_name: 'Document Card Carousel',
   schema: {
-    ...CarouselOptions,
+    ...Carousel,
     slides: {
       type: 'bloks',
       display_name: 'Slides',

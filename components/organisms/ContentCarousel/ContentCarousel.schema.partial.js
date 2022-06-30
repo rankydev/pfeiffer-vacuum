@@ -1,4 +1,4 @@
-import Carousel from '~/components/atoms/GenericCarousel/GenericCarousel.schema.partial.js'
+import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.schema.partial.js'
 
 export default {
   headline: {
@@ -15,7 +15,9 @@ export default {
     display_name: 'Button',
     pos: 2,
   },
-  ...Carousel,
+  autoplay: GenericCarousel.autoplay,
+  autoplaySpeed: GenericCarousel.autoplaySpeed,
+  infinite: GenericCarousel.infinite,
   'tab-advanced': {
     type: 'tab',
     display_name: 'Advanced',
