@@ -203,6 +203,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      @apply tw-text-pv-grey-64;
     }
   }
 
