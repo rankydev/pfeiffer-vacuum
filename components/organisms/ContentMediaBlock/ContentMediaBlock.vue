@@ -15,15 +15,15 @@
         />
       </div>
     </div>
-    <NuxtDynamic
-      v-for="item in media"
-      :key="item._uid"
-      v-editable="item"
-      class="content-media-block__media"
-      :class="mediaClass"
-      v-bind="item"
-      :name="item.uiComponent || item.component"
-    />
+    <div class="content-media-block__media" :class="mediaClass">
+      <NuxtDynamic
+        v-for="item in media"
+        :key="item._uid"
+        v-editable="item"
+        v-bind="item"
+        :name="item.uiComponent || item.component"
+      />
+    </div>
   </div>
 </template>
 
