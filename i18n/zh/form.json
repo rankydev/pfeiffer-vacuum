@@ -7,5 +7,8 @@
   "button": {},
   "label": {
     "optional": "(可选)"
+  },
+  "select": {
+    "placeholder": "请选择..."
   }
 }
