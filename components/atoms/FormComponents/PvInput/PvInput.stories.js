@@ -6,7 +6,11 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'The basic input field',
+        component:
+          'The basic input field, which offers the possibility to enter a text, set a label and specify whether the input field is required or not. Over a boolean hasError can a error message be displayed. The input field can hold an optional icon and will render an error icon if an error occures.',
+      },
+      source: {
+        code: '<PvInput v-bind="{ value icon placeholder label required disabled hasError errorMessage }"/>',
       },
     },
   },
