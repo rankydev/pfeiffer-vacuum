@@ -1,8 +1,8 @@
-import InputField from '~/components/atoms/FormComponents/InputField/InputField.vue'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 
 export default {
-  title: 'Form components/InputField',
-  component: InputField,
+  title: 'Form components/PvInput',
+  component: PvInput,
   parameters: {
     docs: {
       description: {
@@ -13,13 +13,13 @@ export default {
 }
 
 const Template = (args) => ({
-  components: { InputField },
+  components: { PvInput },
   setup() {
     return { args }
   },
   template: `
   <div class="documentation-preview">
-    <InputField v-bind="args" />
+    <PvInput v-bind="args" />
   </div>
 `,
 })

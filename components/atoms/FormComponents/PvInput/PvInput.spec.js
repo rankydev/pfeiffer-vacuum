@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import Input from './InputField.vue'
+import Input from './PvInput.vue'
 import Icon from '../../Icon/Icon.vue'
 import Label from '../../FormComponents/partials/Label/Label.vue'
 import errorMessage from '../../FormComponents/partials/ErrorMessage/ErrorMessage.vue'

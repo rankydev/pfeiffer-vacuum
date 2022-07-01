@@ -23,7 +23,7 @@
 
     <slot>
       <main>
-        <InputField
+        <PvInput
           label="Some Input Field"
           :has-error="true"
           error-message="Sorry, an error occured"
@@ -76,14 +76,14 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
-import InputField from '~/components/atoms/FormComponents/InputField/InputField.vue'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
     OnPageNavigation,
-    InputField,
+    PvInput,
   },
   props: {
     content: {
