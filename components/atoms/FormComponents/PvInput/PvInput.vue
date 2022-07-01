@@ -204,8 +204,7 @@ export default defineComponent({
     &--error {
       @apply tw-rounded-t;
       @apply tw-border-pv-red;
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
+      @apply tw-rounded-b-none;
     }
   }
 }
