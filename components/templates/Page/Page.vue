@@ -23,15 +23,6 @@
 
     <slot>
       <main>
-        <PvInput
-          label="Some Input Field"
-          :has-error="true"
-          error-message="Sorry, an error occured"
-          :icon="'search'"
-          placeholder="Input Field"
-          @submit="test"
-          @update="test"
-        />
         <nuxt-dynamic
           v-for="item in stage"
           :key="item._uid"
@@ -76,14 +67,12 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
-import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
     OnPageNavigation,
-    PvInput,
   },
   props: {
     content: {
