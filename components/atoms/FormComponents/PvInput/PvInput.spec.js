@@ -80,7 +80,7 @@ describe('Input', () => {
         const wrapper = shallowMount(Input, { propsData })
         const errorIcon = wrapper.find('.pv-input__icon--error')
 
-        expect(errorIcon.attributes('icon')).toBe('error')
+        expect(errorIcon.attributes('icon')).toBe('error_outline')
         expect(errorIcon.exists()).toBeTruthy()
       })
     })
