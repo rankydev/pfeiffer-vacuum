@@ -1,23 +1,20 @@
-export default {
-  hasError: true,
-  errorMessage: 'Sorry, an error occured',
-  label: 'Label',
+export const normal = {
   disableField: 'selectable',
   disabled: false,
   hidePlaceholder: false,
   multiple: false,
   options: [
     {
-      displayValue: 'Test',
+      displayValue: 'OptionValue1',
       selectable: true,
       selected: false,
-      value: 'Test',
+      value: 'OptionValue1',
     },
     {
-      displayValue: 'Test2',
+      displayValue: 'OptionValue2',
       selectable: true,
       selected: false,
-      value: 'Test2',
+      value: 'OptionValue2',
     },
   ],
   placeholder: null,
@@ -27,4 +24,20 @@ export default {
   variantSelection: true,
   valueField: 'value',
   name: 'Test123',
+}
+
+export const disabled = {
+  ...normal,
+  disabled: true,
+}
+
+export const error = {
+  hasError: true,
+  errorMessage: 'Sorry, an error occured',
+  ...normal,
+}
+
+export const label = {
+  label: 'Label',
+  ...normal,
 }

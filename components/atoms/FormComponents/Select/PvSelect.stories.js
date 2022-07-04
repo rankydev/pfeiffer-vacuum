@@ -1,8 +1,8 @@
 import PvSelect from './PvSelect.vue'
-import values from './PvSelect.stories.content'
+import { normal, disabled, error, label } from './PvSelect.stories.content'
 
 const argTypes = {
-  values,
+  error,
 }
 
 export default {
@@ -27,12 +27,22 @@ const Template = (args, { argTypes }) => ({
   },
   template: `
     <div class="documentation-preview" style="max-width:500px;">
-      <PvSelect v-bind="args" />
+    <PvSelect v-bind="args['Normal']" />
+    <br/>
+    <PvSelect v-bind="args['Disabled']" />
+    <br/>
+    <PvSelect v-bind="args['Error']" />
+    <br/>
+    <PvSelect v-bind="args['Label']" />
+    <br/>
     </div>
   `,
 })
 
 export const Default = Template.bind({})
 Default.args = {
-  ...values,
+  Normal: { ...normal },
+  Disabled: { ...disabled },
+  Error: { ...error },
+  Label: { ...label },
 }
