@@ -1,4 +1,6 @@
 export default {
+  hasError: true,
+  errorMessage: 'Sorry, an error occured',
   label: 'Label',
   disableField: 'selectable',
   disabled: false,

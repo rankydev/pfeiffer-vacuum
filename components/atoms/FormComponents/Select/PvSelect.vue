@@ -6,7 +6,7 @@
       :disabled="disabled"
       :options="options"
       class="pv-select"
-      :class="{ 'pv-select--error': hasError }"
+      :class="{ 'pv-select__error': hasError }"
       :label="textField"
       :multiple="multiple"
       :placeholder="placeholder || $t('form.select.placeholder')"
@@ -19,6 +19,13 @@
       <!-- :error="hasErrors"
       :success="isValid" -->
       <template #open-indicator>
+        <Icon
+          v-if="hasError"
+          class="pv-input__icon"
+          :class="'pv-select__error--icon'"
+          :icon="'error'"
+          @click.native="$emit('click:icon', $event)"
+        />
         <Icon class="vs__open-indicator" icon="arrow_drop_down" />
       </template>
       <template v-if="multiple" #option="option">
@@ -44,6 +51,7 @@
         <span v-html="option[textField]" />
       </template>
     </v-select>
+    <ErrorMessage v-if="hasError" :error-message="errorMessage" />
   </div>
 </template>
 
@@ -51,6 +59,7 @@
 import vSelect from 'vue-select'
 import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
+import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Icon from '~/components/atoms/Icon/Icon'
 
 export default {
@@ -59,6 +68,7 @@ export default {
     Checkbox,
     Icon,
     Label,
+    ErrorMessage,
   },
   props: {
     // must be included in props
@@ -107,6 +117,13 @@ export default {
       default: false,
     },
     label: {
+      type: String,
+      default: '',
+    },
+    /**
+     * A text describing which error occured, it is displayed if hasError is true
+     */
+    errorMessage: {
       type: String,
       default: '',
     },
@@ -218,7 +235,7 @@ export default {
     @apply tw-border-pv-grey-80;
     @apply tw-border-2;
     @apply tw-border-solid;
-    border-radius: 6px;
+    @apply tw-rounded-md;
 
     .vs__dropdown-option {
       padding: 8px 16px;
@@ -258,9 +275,15 @@ export default {
     }
   }
 
-  &--error {
+  &__error {
     .vs__dropdown-toggle {
       @apply tw-border-pv-red;
+      @apply tw-rounded-b-none;
+    }
+
+    &--icon {
+      @apply tw-text-pv-red;
+      margin-right: 35px;
     }
   }
 }
