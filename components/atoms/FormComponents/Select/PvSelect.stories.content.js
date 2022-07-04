@@ -1,4 +1,5 @@
 export default {
+  label: 'Label',
   disableField: 'selectable',
   disabled: false,
   hidePlaceholder: false,

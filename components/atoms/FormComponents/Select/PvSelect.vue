@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Label :label="label" />
     <v-select
       v-model="innerValue"
       :disabled="disabled"
@@ -49,6 +50,7 @@
 <script>
 import vSelect from 'vue-select'
 import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox'
+import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 import Icon from '~/components/atoms/Icon/Icon'
 
 export default {
@@ -56,6 +58,7 @@ export default {
     vSelect,
     Checkbox,
     Icon,
+    Label,
   },
   props: {
     // must be included in props
