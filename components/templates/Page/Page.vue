@@ -92,10 +92,6 @@ export default defineComponent({
       context
     )
 
-    const test = () => {
-      console.log('clicked test')
-    }
-
     return {
       top,
       header,
@@ -105,7 +101,6 @@ export default defineComponent({
       footer,
       quicklinks: content.value.quicklinks,
       metaData: getMetaData(),
-      test,
     }
   },
   head() {
