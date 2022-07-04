@@ -137,7 +137,7 @@ export default defineComponent({
     let internalIcon = ref(props.icon)
 
     if (props.hasError) {
-      internalIcon = 'error'
+      internalIcon = 'error_outline'
     }
 
     return {
