@@ -174,7 +174,7 @@ export default defineComponent({
     @apply tw-px-3;
     @apply tw-py-2;
     @apply tw-border-2;
-    @apply tw-rounded;
+    @apply tw-rounded-md;
     @apply tw-border-pv-grey-80;
 
     &:focus {
@@ -202,7 +202,7 @@ export default defineComponent({
     }
 
     &--error {
-      @apply tw-rounded-t;
+      @apply tw-rounded-t-md;
       @apply tw-border-pv-red;
       @apply tw-rounded-b-none;
     }
