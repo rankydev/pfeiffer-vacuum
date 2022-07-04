@@ -41,13 +41,15 @@
       </template>
       <template v-else #option="option">
         <!--  TODO sanitizer -->
-        <div
+        <Icon icon="arrow_forward" />
+        <span
           :class="{ disabled: disableField && !option[disableField] }"
           v-html="option[textField]"
         />
       </template>
       <template #selected-option="option">
         <!--  TODO sanitizer -->
+        <Icon v-if="value" icon="arrow_forward" />
         <span v-html="option[textField]" />
       </template>
     </v-select>
@@ -130,7 +132,7 @@ export default {
   },
   emits: ['change'],
   data: () => ({
-    innerValue: '',
+    innerValue: [],
     Deselect: {
       render: (createElement) =>
         createElement('span', { class: ['deselect-option'] }),
@@ -190,7 +192,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 4px 0 4px 16px;
+    padding: 4px 0 4px 8px;
     @apply tw-border-pv-grey-80;
     @apply tw-border-2;
     @apply tw-border-solid;
@@ -202,9 +204,13 @@ export default {
     }
 
     .vs__selected-options {
+      align-items: center;
+
       .vs__selected {
         margin: 0 8px 0 0;
         padding: 3px 5px;
+        @apply tw-flex tw-items-center;
+        @apply tw-gap-2;
 
         &:last-of-type {
           margin-right: 0;
@@ -239,6 +245,8 @@ export default {
 
     .vs__dropdown-option {
       padding: 8px 16px;
+      @apply tw-flex tw-items-center;
+      @apply tw-gap-2;
 
       .form-group {
         margin-bottom: 0;
