@@ -49,7 +49,6 @@
       </template>
       <template #selected-option="option">
         <!--  TODO sanitizer -->
-        <Icon v-if="value" icon="arrow_forward" />
         <span v-html="option[textField]" />
       </template>
     </v-select>
@@ -177,7 +176,7 @@ export default {
 <style lang="scss">
 .pv-select {
   .v-select {
-    background-color: white;
+    @apply tw-bg-pv-white;
 
     &[error='true'] .vs__dropdown-toggle {
       @apply tw-border-pv-red;
@@ -189,67 +188,62 @@ export default {
   }
 
   .vs__dropdown-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 4px 0 4px 8px;
+    @apply tw-flex tw-items-center tw-justify-between;
+    @apply tw-py-1 tw-pl-2;
     @apply tw-border-pv-grey-80;
     @apply tw-border-2;
     @apply tw-border-solid;
-    border-radius: 6px;
+    @apply tw-rounded-md;
 
     .vs__deselect::after,
     .vs__clear::after {
-      font-size: 20px;
+      @apply tw-text-lg;
     }
 
     .vs__selected-options {
-      align-items: center;
+      @apply tw-items-center;
 
       .vs__selected {
-        margin: 0 8px 0 0;
-        padding: 3px 5px;
+        @apply tw-mr-2;
         @apply tw-flex tw-items-center;
         @apply tw-gap-2;
 
         &:last-of-type {
-          margin-right: 0;
+          @apply tw-mr-0;
         }
       }
     }
 
     .vs__open-indicator {
-      font-size: 32px;
+      @apply tw-text-3xl;
       margin-top: -5px;
     }
 
     .vs__search {
-      padding: 0;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      @apply tw-p-0;
+      @apply tw-m-0;
+      @apply tw-flex tw-items-center tw-justify-between;
       @apply tw-text-pv-grey-64;
     }
   }
 
   .vs__dropdown-menu {
-    padding: 0;
+    @apply tw-p-0;
     @apply tw-mt-1;
-    border-style: solid;
-    box-shadow: 0 48px 48px -48px grey; // box-shadow: 0 48px 48px -48px $pv-grey-80;
+    @apply tw-border-solid;
+    @apply tw-shadow-select;
     @apply tw-border-pv-grey-80;
     @apply tw-border-2;
     @apply tw-border-solid;
     @apply tw-rounded-md;
 
     .vs__dropdown-option {
-      padding: 8px 16px;
+      @apply tw-py-2 tw-px-4;
       @apply tw-flex tw-items-center;
       @apply tw-gap-2;
 
       .form-group {
-        margin-bottom: 0;
+        @apply tw-mb-0;
       }
 
       &--highlight {
@@ -260,15 +254,15 @@ export default {
 
   .v-select.vs--open {
     .vs__dropdown-toggle {
-      border-color: black;
+      @apply tw-border-pv-grey-16;
 
       .vs__search::placeholder {
-        color: black;
+        @apply tw-text-pv-grey-16;
       }
 
       .vs__selected-options {
         .vs__selected {
-          opacity: 1;
+          @apply tw-opacity-100;
         }
       }
     }
@@ -277,8 +271,8 @@ export default {
   .v-select.vs--searchable.vs--single {
     .vs__selected-options {
       .vs__selected {
-        margin: 0;
-        padding: 0;
+        @apply tw-m-0;
+        @apply tw-p-0;
       }
     }
   }
