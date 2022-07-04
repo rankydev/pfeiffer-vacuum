@@ -26,7 +26,7 @@ export default defineComponent({
   @apply tw-px-2;
   @apply tw-py-1;
   @apply tw-border-2;
-  @apply tw-rounded-b;
+  @apply tw-rounded-b-md;
   @apply tw-border-pv-red;
   @apply tw-bg-pv-red;
   @apply tw-text-xs;
