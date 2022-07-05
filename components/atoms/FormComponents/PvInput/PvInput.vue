@@ -6,10 +6,10 @@
         v-model="internalValue"
         v-bind="{ placeholder, required, disabled }"
         class="pv-input__element"
-        :class="[
-          icon ? 'pv-input__element--icon' : '',
-          hasError ? 'pv-input__element--error' : '',
-        ]"
+        :class="{
+          'pv-input__element--icon': icon,
+          'pv-input__element--error': hasError,
+        }"
         :placeholder="placeholder"
         @keypress.enter="$emit('submit', $event)"
         @focus="$emit('focus', true)"
@@ -19,7 +19,7 @@
       <Icon
         v-if="internalIcon"
         class="pv-input__icon"
-        :class="hasError ? 'pv-input__icon--error' : 'pv-input__icon'"
+        :class="{ 'pv-input__icon--error': hasError }"
         :icon="internalIcon"
         @click.native="$emit('click:icon', $event)"
       />
@@ -135,9 +135,10 @@ export default defineComponent({
   setup(props) {
     const internalValue = ref(props.value)
     let internalIcon = ref(props.icon)
+    const hasErrorIcon = ref(props.hasError)
 
-    if (props.hasError) {
-      internalIcon = 'error'
+    if (hasErrorIcon.value) {
+      internalIcon = 'error_outline'
     }
 
     return {
