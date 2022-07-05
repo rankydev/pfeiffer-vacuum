@@ -11,8 +11,9 @@ const argTypes = {
     control: { type: 'array' },
   },
   newsletter: {
-    // defaultValue: footerContent.newsletterContent,
-    control: { type: 'object' },
+    name: 'newsletter',
+    defaultValue: footerContent.newsletter,
+    control: { type: 'array' },
   },
   copyright: {
     defaultValue: footerContent.copyright,

@@ -1,0 +1,11 @@
+{
+  "input": {
+    "search": {
+      "placeholder": "Suchen ..."
+    }
+  },
+  "button": {},
+  "label": {
+    "optional": "(optional)"
+  }
+}

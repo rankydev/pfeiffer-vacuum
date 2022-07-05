@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import SearchInput from './SearchInput.vue'
-import InputField from '~/components/atoms/InputField/InputField.vue'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 
 describe('SearchInput', () => {
   describe('initial state', () => {
@@ -8,10 +8,10 @@ describe('SearchInput', () => {
       it('should render', () => {
         const wrapper = shallowMount(SearchInput)
 
-        const inputField = wrapper.findComponent(InputField)
+        const inputField = wrapper.findComponent(PvInput)
 
         expect(inputField.vm.icon).toBe('search')
-        expect(inputField.vm.placeholder).toBe('Suche ...')
+        expect(inputField.vm.placeholder).toBe('form.input.search.placeholder')
       })
     })
   })

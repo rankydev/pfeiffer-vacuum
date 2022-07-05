@@ -8,7 +8,7 @@
       <ResponsiveImage
         provider="storyblok"
         :image="image"
-        :aspect-ratio="'3:2'"
+        aspect-ratio="3:2"
         :rounded="false"
         class="custom-content-card__image"
       />
@@ -17,7 +17,7 @@
     <template v-if="date" #subheading>
       <div class="custom-content-card__date">
         <Icon icon="date_range" size="xsmall" />
-        {{ date }}
+        {{ $d(fixedDate, 'dateLong') }}
       </div>
     </template>
 
@@ -31,7 +31,7 @@
 
     <template #actionItems>
       <Button
-        label="Zum Artikel"
+        :label="$t('navigation.button.article.label')"
         icon="arrow_forward"
         variant="secondary"
         shape="plain"
@@ -97,7 +97,13 @@ export default defineComponent({
       return '' + hasDate + hasTitle + hasDesc
     })
 
-    return { key }
+    /**
+     * Workaround to make sure the date works in Safari:
+     * https://stackoverflow.com/questions/4310953/invalid-date-in-safari
+     */
+    const fixedDate = computed(() => new Date(props.date.replace(/-/g, '/')))
+
+    return { key, fixedDate }
   },
 })
 </script>

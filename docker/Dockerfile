@@ -26,6 +26,7 @@ ARG LANGUAGE_CODES
 # please read the note above
 ARG REGION_CODES
 ARG DEFAULT_REGION_CODE
+ARG CURRENT_REGION_CODE
 
 # please read the note above
 ARG STORYBLOK_OAUTH_TOKEN
@@ -44,6 +45,10 @@ ARG STORYBLOK_EXCLUDE_ROUTES
 ARG CI_COMMIT_SHORT_SHA
 ARG CI_COMMIT_REF_NAME
 ARG CI_PROJECT_URL
+
+# hybris
+ARG SHOP_BASE_URL
+ARG SHOP_IMAGE_URL
 
 RUN \
   apk update \
@@ -79,7 +84,7 @@ FROM node:16-alpine
 ENV PORT=3000
 ENV HOST='0.0.0.0'
 
-ENV BASE_URL='https://localhost:3000'
+ENV BASE_URL="${BASE_URL}"
 
 # please read the note above
 ENV NODE_ENV=development
@@ -91,6 +96,7 @@ ENV LANGUAGE_CODES="${LANGUAGE_CODES}"
 # please read the note above
 ENV REGION_CODES="${REGION_CODES}"
 ENV DEFAULT_REGION_CODE="${DEFAULT_REGION_CODE}"
+ENV CURRENT_REGION_CODE="${CURRENT_REGION_CODE}"
 
 # please read the note above
 ENV STORYBLOK_OAUTH_TOKEN=''
@@ -110,6 +116,10 @@ ENV CI_COMMIT_SHORT_SHA="${CI_COMMIT_SHORT_SHA}"
 ENV CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}"
 ENV CI_PROJECT_URL="${CI_PROJECT_URL}"
 
+#hybris
+ENV SHOP_BASE_URL="${SHOP_BASE_URL}"
+ENV SHOP_IMAGE_URL="${SHOP_IMAGE_URL}"
+
 # Create app directory
 WORKDIR /opt/pvac-frontend
 
@@ -120,6 +130,7 @@ COPY --from=frontend-build /src/build_logs ./build_logs/
 # where available (npm@5+)
 COPY --from=frontend-build /src/package*.json ./
 COPY --from=frontend-build /src/nuxt.config.js ./
+COPY --from=frontend-build /src/i18n.config.js ./
 COPY --from=frontend-build /src/.env ./
 
 # Bundle app source
@@ -127,6 +138,8 @@ COPY --from=frontend-build /src/.nuxt .nuxt/
 COPY --from=frontend-build /src/node_modules/ ./node_modules/
 COPY --from=frontend-build /src/static ./static/
 COPY --from=frontend-build /src/resolver ./resolver/
+COPY --from=frontend-build /src/server ./server/
+COPY --from=frontend-build /src/providers ./providers/
 
 EXPOSE 3000
 

@@ -5,7 +5,7 @@
   >
     <ContentWrapper class="header__outer">
       <div class="header__inner">
-        <NuxtLink to="/global/en" class="header__logo"><Logo /></NuxtLink>
+        <NuxtLink :to="localePath('/')" class="header__logo"><Logo /></NuxtLink>
         <SearchHeader :has-opacity="active" class="header__search-input" />
         <TopNavigation
           v-model="active"
@@ -77,7 +77,7 @@ export default defineComponent({
 
 .header {
   @apply tw-relative;
-  @apply tw-z-10;
+  @apply tw-z-20;
 
   &::before {
     @apply tw-absolute;

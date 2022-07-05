@@ -15,15 +15,15 @@
         />
       </div>
     </div>
-    <NuxtDynamic
-      v-for="item in media"
-      :key="item._uid"
-      v-editable="item"
-      class="content-media-block__media"
-      :class="mediaClass"
-      v-bind="item"
-      :name="item.uiComponent || item.component"
-    />
+    <div class="content-media-block__media" :class="mediaClass">
+      <NuxtDynamic
+        v-for="item in media"
+        :key="item._uid"
+        v-editable="item"
+        v-bind="item"
+        :name="item.uiComponent || item.component"
+      />
+    </div>
   </div>
 </template>
 
@@ -89,7 +89,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const getClass = (type) => {
+    const getClass = (props, type) => {
       const ratios = props.ratio.split('/')
       const orders = props.order.split('/')
       const index = orders.findIndex((val) => val === type)
@@ -100,8 +100,8 @@ export default defineComponent({
       ]
     }
 
-    const contentClass = computed(() => getClass('content'))
-    const mediaClass = computed(() => getClass('media'))
+    const contentClass = computed(() => getClass(props, 'content'))
+    const mediaClass = computed(() => getClass(props, 'media'))
 
     const enrichedRichtext = computed(() =>
       [

@@ -1,35 +1,30 @@
 <template>
   <div>
     <picture
-      v-if="hasImage"
+      v-if="src"
       class="responsive-image"
       :class="{ 'responsive-image--corners-rounded': rounded }"
     >
       <source
-        v-for="size in sortedSizes"
-        :key="'webp_' + size.media"
-        :media="'(min-width: ' + mediaQuery(size.media) + ')'"
-        :srcset="buildSrcset(image, size, 'webp')"
+        v-for="webpSource in webpSources"
+        :key="'webp_' + webpSource.key"
+        :media="webpSource.media"
+        :srcset="webpSource.srcset"
         type="image/webp"
       />
+
       <source
-        :srcset="buildSrcset(image, defaultSize, 'webp')"
-        type="image/webp"
+        v-for="pngSource in pngSources"
+        :key="'png_' + pngSource.key"
+        :media="pngSource.media"
+        :srcset="pngSource.srcset"
       />
-      <source
-        v-for="size in sortedSizes"
-        :key="size.media"
-        :media="'(min-width: ' + mediaQuery(size.media) + ')'"
-        :srcset="buildSrcset(image, size)"
-      />
-      <source :srcset="buildSrcset(image, defaultSize)" />
+
       <NuxtImg
-        :src="image.originalFilename"
-        :modifiers="{
-          filters: { focal: image.focus, grayscale: grayscaleVal },
-        }"
-        :alt="image.alt || ''"
-        :title="image.title || ''"
+        :src="src"
+        :modifiers="modifiers"
+        :alt="alt"
+        :title="title"
         :provider="provider"
         :loading="lazy ? 'lazy' : undefined"
       />
@@ -48,9 +43,9 @@
 </template>
 
 <script>
+import { useHybrisProvider } from './provider/hybrisProvider'
+import { useStoryblokProvider } from './provider/storyblokProvider'
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
-import { theme } from '~/tailwind.config.js'
-import tailwindconfig from '~/tailwind.config.js'
 import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
@@ -93,6 +88,7 @@ export default defineComponent({
     provider: {
       type: String,
       default: 'storyblok',
+      validator: (val) => ['storyblok', 'hybris'].includes(val),
     },
     /**
      * Parameter for the aspect ratio of the image
@@ -101,7 +97,7 @@ export default defineComponent({
       type: String,
       default: '1:1',
       validator: (val) =>
-        ['1:1', '16:9', '2:3', '3:2', '3:1', '2:1'].includes(val),
+        ['1:1', '16:9', '2:3', '3:2', '3:1', '2:1', '21:28'].includes(val),
     },
     rounded: {
       type: Boolean,
@@ -109,177 +105,26 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const tailwindConfigScreens = tailwindconfig.theme.screens
-    const configScreensArr = Object.entries(tailwindConfigScreens)
-
-    const { $img } = useContext()
-
-    /**
-     * Sort array of sizes by breakpoint descending from xl to sm
-     * @param sizesArr
-     * @return Array sortedSizes
-     */
-    const sortByBreakpoints = (sizesArr) => {
-      const order = ['xl', 'lg', 'md', 'sm']
-      return sizesArr.sort((a, b) => {
-        return (
-          order.indexOf(a.media.toLowerCase()) -
-          order.indexOf(b.media.toLowerCase())
-        )
-      })
-    }
-
-    /**
-     * Property returns if component has image
-     */
-    const hasImage = computed(() => {
-      return props.image && props.image.originalFilename && defaultSize
-    })
-
-    /**
-     * Property returns modified string for aspect ratio classes
-     */
     const aspectRatioString = computed(() =>
       props.aspectRatio.replace(':', '-')
     )
 
-    /**
-     * sorts Array from smallest to biggest breakpoint (sm to xl)
-     */
-    const sortedSizes = computed(() => {
-      return sortByBreakpoints([...imageSizes.value])
-    })
+    const context = useContext()
+    let buildImage = () => ({})
 
-    /**
-     * property for black and white filter of image api
-     */
-    const grayscaleVal = computed(() => (props.blackAndWhite ? '' : false))
-
-    /**
-     * loads breakpoints from tailwind.config into a medias Array
-     */
-    const medias = { ...theme.screens }
-
-    const mediaQuery = (media) => {
-      return medias[media]
-    }
-
-    /**
-     * Builds modifiers fro image, size and format
-     */
-    const buildModifiers = (image, size, format) => {
-      if (size) {
-        return {
-          filters: {
-            focal: image?.focus,
-            grayscale: grayscaleVal.value,
-          },
-          format,
-          height: size.height,
-          width: size.width,
-        }
-      }
-      return null
-    }
-
-    /**
-     * builds the Sourceset for rendering the image
-     */
-    const buildSrcset = (image, size, format) => {
-      if (!size) {
-        return null
-      }
-
-      const width = parseInt(size.width)
-      const height = parseInt(size.height)
-      const retinaWidth = width * 2
-      const retinaHeight = height * 2
-
-      const img1x = $img(
-        image.originalFilename,
-        buildModifiers(image, size, format),
-        { provider: image.provider }
-      )
-      const img2x = $img(
-        image.originalFilename,
-        buildModifiers(
-          image,
-          { height: retinaHeight, width: retinaWidth },
-          format
-        ),
-        { provider: image.provider }
-      )
-
-      return `${img1x} 1x, ${img2x} 2x`
-    }
-
-    /**
-     * Calculate max width of current breakpoint by start width of next breakpoint
-     * @param startWidthNextBreakpoint
-     * @return {number}
-     */
-    const calculateMaxWidthByBreakpoint = (startWidthNextBreakpoint) => {
-      return Math.floor(parseInt(startWidthNextBreakpoint, 10) - 1)
-    }
-
-    /**
-     * Calculate image height by given width and aspect ratio
-     * @return {number}
-     * @param maxWidth
-     * @param aspectRatio
-     */
-    const calculateHeight = (maxWidth, aspectRatio) => {
-      const aspectRatioArr = aspectRatio.split(':')
-      const aspectRatioA = aspectRatioArr[0]
-      const aspectRatioB = aspectRatioArr[1]
-
-      return Math.floor((maxWidth / aspectRatioA) * aspectRatioB)
-    }
-
-    /**
-     * calculate width, as well as height of image for each breakpoint
-     * @return Array
-     */
-    const imageSizes = computed(() =>
-      configScreensArr.map((objectEntry, index) => {
-        if (index !== 3) {
-          const startWidthNextBreakpoint = configScreensArr[index + 1][1]
-          const maxWidthBreakpoint = calculateMaxWidthByBreakpoint(
-            startWidthNextBreakpoint
-          )
-
-          return {
-            media: objectEntry[0],
-            width: maxWidthBreakpoint,
-            height: calculateHeight(maxWidthBreakpoint, props.aspectRatio),
-          }
-        } else {
-          // last entry is xl, no next element given, 1440px is maxWidth
-          return {
-            media: objectEntry[0],
-            width: 1440,
-            height: calculateHeight(1440, props.aspectRatio),
-          }
-        }
-      })
-    )
-
-    /**
-     * default size of the image using sm-breakpoint
-     */
-    const defaultSize = {
-      width: imageSizes.value[0].width,
-      height: imageSizes.value[0].height,
+    switch (props.provider) {
+      case 'storyblok':
+        buildImage = useStoryblokProvider(context).buildImage
+        break
+      case 'hybris':
+        buildImage = useHybrisProvider(context).buildImage
+        break
+      default:
     }
 
     return {
-      mediaQuery,
-      sortedSizes,
-      defaultSize,
-      grayscaleVal,
-      hasImage,
       aspectRatioString,
-      buildSrcset,
+      ...buildImage(props),
     }
   },
 })

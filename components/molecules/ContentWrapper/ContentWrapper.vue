@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -19,11 +19,11 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const classList = {
+    const classList = computed(() => ({
       'content-wrapper': !props.breakout,
       'content-wrapper--breakout': props.breakout,
       'content-wrapper--no-padding': props.noPadding,
-    }
+    }))
 
     return {
       classList,

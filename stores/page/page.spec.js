@@ -5,7 +5,7 @@ describe('Page store', () => {
   beforeEach(() => setActivePinia(createPinia()))
 
   describe('initial state', () => {
-    test('should return all expeted properties', () => {
+    test('should return all expected properties', () => {
       const pageStore = usePageStore()
 
       expect(pageStore.pageType).toBe(CMS_PAGE)

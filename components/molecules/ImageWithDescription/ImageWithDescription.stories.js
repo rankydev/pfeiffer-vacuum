@@ -1,4 +1,4 @@
-import ImageWithDescription from '@/components/molecules/ImageWithDescription/ImageWithDescription.vue'
+import ImageWithDescription from '~/components/molecules/ImageWithDescription/ImageWithDescription.vue'
 import {
   aspectRatioOptions,
   imageWithDescriptionContent,

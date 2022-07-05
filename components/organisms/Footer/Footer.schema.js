@@ -1,3 +1,5 @@
+import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter.schema'
+
 export default {
   name: 'Footer',
   display_name: 'Footer',
@@ -18,10 +20,10 @@ export default {
     },
     newsletter: {
       type: 'bloks',
-      maximum: 1,
       restrict_components: true,
       component_whitelist: ['FooterNewsletter'],
-      display_name: 'Footer Newsletter',
+      maximum: 1,
+      display_name: 'Newsletter',
     },
     copyright: {
       type: 'text',

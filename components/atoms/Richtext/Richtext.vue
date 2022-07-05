@@ -84,10 +84,8 @@ export default defineComponent({
 
   a {
     @apply tw-text-pv-red;
-
-    &:hover {
-      @apply tw-underline;
-    }
+    @apply hover:tw-text-pv-red-lighter;
+    @apply hover:tw-underline;
   }
 
   ul,

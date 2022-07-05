@@ -3,7 +3,7 @@
     <div
       v-for="(entry, idx) in accordionEntries"
       :key="idx"
-      :class="{ 'tw-pb-6': isActive(idx) }"
+      :class="{ 'tw-scroll-pb-6': isActive(idx) }"
     >
       <component :is="level === 'h3' ? level : 'p'" class="accordion__heading">
         <button
@@ -131,6 +131,7 @@ export default defineComponent({
     @apply tw-items-center;
     @apply tw-w-full;
     @apply tw-py-4;
+    -webkit-tap-highlight-color: transparent;
 
     @apply tw-duration-200;
     @apply tw-ease-in-out;

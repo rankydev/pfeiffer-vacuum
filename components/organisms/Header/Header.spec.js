@@ -36,7 +36,7 @@ describe('Header', () => {
 
       const link = wrapper.findComponent(RouterLinkStub)
       expect(link.exists()).toBeTruthy()
-      expect(link.vm.to).toBe('/global/en')
+      expect(link.vm.to).toBe('/')
 
       const logo = link.findComponent(Logo)
       expect(logo.exists()).toBeTruthy()

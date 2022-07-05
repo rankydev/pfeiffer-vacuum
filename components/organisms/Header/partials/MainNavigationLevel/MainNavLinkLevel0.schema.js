@@ -1,4 +1,4 @@
-import Link from '~/components/atoms/Link/Link.schema.js'
+import Link from '~/components/atoms/Link/Link.schema.partial.js'
 
 export default {
   name: 'MainNavLinkLevel0',
@@ -10,9 +10,9 @@ export default {
       display_name: 'Label',
       required: true,
     },
-    ...Link.schema,
+    ...Link,
     shopLink: {
-      ...Link.schema.href,
+      ...Link.href,
       display_name: 'Shop Link',
       required: false,
     },

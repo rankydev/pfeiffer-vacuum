@@ -7,7 +7,7 @@
         :key="index"
         class="link-list__item"
       >
-        <TextLink v-bind="linkItem" />
+        <Link v-bind="linkItem" variant="textlink" />
       </li>
     </ul>
   </div>
@@ -15,11 +15,11 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import TextLink from '~/components/molecules/TextLink/TextLink'
+import Link from '~/components/atoms/Link/Link'
 
 export default defineComponent({
   name: 'LinkList',
-  components: { TextLink },
+  components: { Link },
   props: {
     /**
      * title
@@ -42,19 +42,26 @@ export default defineComponent({
 
 <style lang="scss">
 .link-list {
-  &__title {
-    @apply tw-mb-2;
-
-    @screen lg {
-      @apply tw-mb-4;
-    }
+  @apply tw-mb-2;
+  @screen lg {
+    @apply tw-mb-0;
   }
 
-  &__item {
+  &__title {
     @apply tw-mb-1;
 
     @screen lg {
       @apply tw-mb-2;
+    }
+  }
+
+  &__item {
+    @apply tw-pt-1;
+    @apply tw-text-sm;
+
+    @screen lg {
+      @apply tw-pt-2;
+      @apply tw-text-base;
     }
   }
 }

@@ -16,6 +16,7 @@ services:
       # Region
       - REGION_CODES=${REGION_CODES}
       - DEFAULT_REGION_CODE=${DEFAULT_REGION_CODE}
+      - CURRENT_REGION_CODE=${CURRENT_REGION_CODE}
       # storyblok
       - STORYBLOK_ACCESS_TOKEN=${STORYBLOK_ACCESS_TOKEN}
       - STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
@@ -35,8 +36,8 @@ services:
       #Storefront
       #- STOREFRONT_BASE_URL=${CI_ENVIRONMENT_URL}
       # hybris
-      #- SHOP_BASE_URL=
-      #- SHOP_IMAGE_URL=,
+      - SHOP_BASE_URL=${SHOP_BASE_URL}
+      - SHOP_IMAGE_URL=${SHOP_IMAGE_URL}
       #- SHOP_CLIENT_ID=pfeiffer_viewer
       #- SHOP_SECRET=secret,
       # vsm

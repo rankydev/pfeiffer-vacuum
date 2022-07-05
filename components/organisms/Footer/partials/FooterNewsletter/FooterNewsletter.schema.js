@@ -1,18 +1,27 @@
+import RichtextBasic from '~/components/atoms/Richtext/RichtextBasic.schema'
+
 export default {
   name: 'FooterNewsletter',
   display_name: 'Footer Newsletter',
   schema: {
-    title: {
+    headline: {
       type: 'text',
+      display_name: 'Newsletter Headline',
       translatable: true,
-      display_name: 'Title',
-      max_length: '30',
     },
-    text: {
-      type: 'text',
-      translatable: true,
-      display_name: 'Text',
-      max_length: '120',
+    richtext: {
+      type: 'bloks',
+      maximum: 1,
+      restrict_components: true,
+      component_whitelist: ['RichtextBasic'],
+      display_name: 'Newsletter Description',
+    },
+    button: {
+      type: 'bloks',
+      maximum: 1,
+      restrict_components: true,
+      component_whitelist: ['Button'],
+      display_name: 'Newsletter Button',
     },
   },
   image: null,

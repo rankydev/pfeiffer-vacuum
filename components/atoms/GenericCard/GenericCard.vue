@@ -33,7 +33,7 @@
     </Link>
 
     <div v-if="hasSlot('additionalInfo')" class="pv-card__additional-info">
-      <!-- @slot information which lives outside of the link continer of the card -->
+      <!-- @slot information which lives outside of the link container of the card -->
       <slot name="additionalInfo" />
     </div>
 
@@ -94,11 +94,17 @@ $card-image-height: 200px;
 .pv-card {
   @include box-shadow;
   @apply tw-bg-pv-white;
-  @apply tw-flex tw-flex-col;
+  @apply tw-flex-col;
   @apply tw-h-full;
   @apply tw-rounded-lg;
   @apply tw-overflow-hidden;
   @apply tw-p-4;
+
+  /**
+   * needs to be important because the slick slider will
+   * append 'display: inline-block' on the element
+   */
+  display: flex !important;
 
   @screen lg {
     @apply tw-py-6;
@@ -170,6 +176,7 @@ $card-image-height: 200px;
     @apply tw-block;
     @apply tw-overflow-hidden;
     @apply tw-text-base;
+    @apply tw-leading-6;
     @apply tw-mb-4;
 
     @include text-overflow;
