@@ -1,7 +1,16 @@
 import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import Link from './Link.vue'
+import { useRoute, ref } from '@nuxtjs/composition-api'
 
 let wrapper
+
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  return { __esModule: true, ...originalModule, useRoute: jest.fn() }
+})
+
+const path = '/germany/en/test/de-test'
+useRoute.mockImplementation(() => ref({ path }))
 
 function createComponent(propsData = {}, { CustomStub } = {}) {
   const stubs = { NuxtLink: CustomStub || RouterLinkStub }
@@ -88,16 +97,16 @@ describe('Link', () => {
     })
 
     describe('given anchor', () => {
-      it('should render an a tag with the anchor as href', () => {
+      it('should render the current path with the anchor', () => {
         const propsData = {
           anchor: '2',
           label: 'Example.com',
         }
         createComponent(propsData)
 
-        const link = wrapper.find('a')
+        const link = wrapper.findComponent(RouterLinkStub)
         expect(link.exists()).toBeTruthy()
-        expect(link.attributes('href')).toBe('#2')
+        expect(link.vm.to).toBe(`${path}#2`)
       })
       it('should not add # if it is already in the anchor', () => {
         const propsData = {
@@ -106,8 +115,9 @@ describe('Link', () => {
         }
         createComponent(propsData)
 
-        const link = wrapper.find('a')
-        expect(link.attributes('href')).toBe('#2')
+        const link = wrapper.findComponent(RouterLinkStub)
+        expect(link.exists()).toBeTruthy()
+        expect(link.vm.to).toBe(`${path}#2`)
       })
     })
 
