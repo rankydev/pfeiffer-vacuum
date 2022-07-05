@@ -6,9 +6,10 @@ export const breadcrumb = [
 
 export default [
   {
-    alternates: [],
-    slug: 'iframe.html',
-    is_folder: false,
+    path: 'iframe.html',
     name: 'Some breadcrumb entry',
+    isFolder: false,
+    isStartpage: false,
+    translatedSlugs: [],
   },
 ]
