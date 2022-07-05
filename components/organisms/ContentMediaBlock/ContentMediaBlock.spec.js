@@ -6,6 +6,7 @@ import {
   subline,
   mediaVideo,
   mediaImage,
+  mediaCTA,
   buttons,
   richtext,
 } from './ContentMediaBlock.stories.content.js'
@@ -57,7 +58,7 @@ describe('ContentMediaBlock', () => {
 
       const domMedia = wrapper.find('.content-media-block__media')
 
-      expect(domMedia.attributes('component')).toBe(mediaVideo[0].component)
+      expect(domMedia.html()).toContain(mediaVideo[0].component)
     })
 
     it('should add Image to the media area when it is provided', () => {
@@ -66,7 +67,16 @@ describe('ContentMediaBlock', () => {
 
       const domMedia = wrapper.find('.content-media-block__media')
 
-      expect(domMedia.attributes('component')).toBe(mediaImage[0].component)
+      expect(domMedia.html()).toContain(mediaImage[0].component)
+    })
+
+    it('should add CTABox to the media area when it is provided', () => {
+      const propsData = { richtext, media: mediaCTA }
+      createComponent(propsData)
+
+      const domMedia = wrapper.find('.content-media-block__media')
+
+      expect(domMedia.html()).toContain(mediaCTA[0].component)
     })
 
     it('should apply correct classes given a half/half ratio', () => {
