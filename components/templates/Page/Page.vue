@@ -23,6 +23,28 @@
 
     <slot>
       <main>
+        <PvSelect
+          :placeholder="'Hallo hier auswählen ...?!'"
+          :options="[
+            {
+              displayValue: 'OptionValue1',
+              selectable: true,
+              selected: false,
+              value: 'OptionValue1',
+              icon: 'arrow_forward',
+            },
+            {
+              displayValue: 'OptionValue2',
+              selectable: true,
+              selected: false,
+              value: 'OptionValue2',
+              icon: 'arrow_forward',
+            },
+          ]"
+          :has-error="false"
+          label-key="displayValue"
+          @update="logUpdate($event)"
+        />
         <nuxt-dynamic
           v-for="item in stage"
           :key="item._uid"
@@ -67,12 +89,14 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
+import PvSelect from '~/components/atoms/FormComponents/Select/PvSelect.vue'
 
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
     OnPageNavigation,
+    PvSelect,
   },
   props: {
     content: {
@@ -92,6 +116,10 @@ export default defineComponent({
       context
     )
 
+    const logUpdate = (x) => {
+      console.log(x, 'innerValue')
+    }
+
     return {
       top,
       header,
@@ -101,6 +129,7 @@ export default defineComponent({
       footer,
       quicklinks: content.value.quicklinks,
       metaData: getMetaData(),
+      logUpdate,
     }
   },
   head() {

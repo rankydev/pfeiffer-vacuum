@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div>
     <Label :label="label" />
@@ -7,14 +8,12 @@
       :options="options"
       class="pv-select"
       :class="{ 'pv-select__error': hasError }"
-      :label="textField"
-      :multiple="multiple"
+      :label="labelKey"
       :placeholder="placeholder || $t('form.select.placeholder')"
       :components="{ Deselect }"
       :reduce="reduce"
       v-bind="$attrs"
-      :selectable="(option) => (variantSelection ? option.selectable : true)"
-      @change="$emit('change')"
+      @change="$emit('update', innerValue)"
     >
       <!-- :error="hasErrors"
       :success="isValid" -->
@@ -26,30 +25,19 @@
           :icon="'error'"
           @click.native="$emit('click:icon', $event)"
         />
-        <Icon class="vs__open-indicator" icon="arrow_drop_down" />
+        <Icon v-else class="vs__open-indicator" icon="arrow_drop_down" />
       </template>
-      <template v-if="multiple" #option="option">
-        <!-- TODO insert new checkbox -->
-        <Checkbox
-          :value="
-            !!innerValue.find((i) => i.value === option[$attrs['value-field']])
-          "
-        >
-          <!--  TODO sanitizer -->
-          <b v-html="option[textField]" />
-        </Checkbox>
-      </template>
-      <template v-else #option="option">
+      <template #option="option">
         <!--  TODO sanitizer -->
         <Icon icon="arrow_forward" />
         <span
           :class="{ disabled: disableField && !option[disableField] }"
-          v-html="option[textField]"
+          v-html="option[labelKey]"
         />
       </template>
       <template #selected-option="option">
         <!--  TODO sanitizer -->
-        <span v-html="option[textField]" />
+        <span v-html="option[labelKey]" />
       </template>
     </v-select>
     <ErrorMessage v-if="hasError" :error-message="errorMessage" />
@@ -58,15 +46,14 @@
 
 <script>
 import vSelect from 'vue-select'
-import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Icon from '~/components/atoms/Icon/Icon'
 
 export default {
+  name: 'PvSelect',
   components: {
     vSelect,
-    Checkbox,
     Icon,
     Label,
     ErrorMessage,
@@ -77,43 +64,37 @@ export default {
       type: Array,
       required: true,
     },
-    value: {
-      type: null,
-      required: true,
-    },
-    multiple: {
-      type: Boolean,
-      default: false,
-    },
+    // Value of selected option
+    // value: {
+    //   type: String,
+    //   required: true,
+    // },
     placeholder: {
       type: String,
       default: null,
     },
-    hidePlaceholder: {
-      type: Boolean,
-      default: false,
-    },
+    // we can use the reduce prop to receive only the data that's required
+    // https://vue-select.org/guide/values.html#transforming-selections
     reduce: {
       type: Function,
       default: (option) => option,
     },
-    textField: {
+    // searches option for this key to set it as label for option
+    labelKey: {
       type: String,
       default: 'text',
     },
+    // disables an option
     disableField: {
       type: String,
       default: null,
     },
+    // disables complete selectbox
     disabled: {
       type: Boolean,
       default: false,
     },
     hasError: {
-      type: Boolean,
-      default: false,
-    },
-    variantSelection: {
       type: Boolean,
       default: false,
     },
@@ -129,7 +110,7 @@ export default {
       default: '',
     },
   },
-  emits: ['change'],
+  emits: ['change', 'click:icon', 'input', 'update'],
   data: () => ({
     innerValue: [],
     Deselect: {
@@ -137,39 +118,24 @@ export default {
         createElement('span', { class: ['deselect-option'] }),
     },
   }),
-  computed: {
-    displayValue: function () {
-      if (this.innerValue) {
-        const value = this.innerValue?.isocode || this.innerValue
-        const findDisplayValue = (e) => e.value === value || e.isocode === value
-        const filteredOption = this.options.find(findDisplayValue)
+  // computed: {
+  //   displayValue: function () {
+  //     if (this.innerValue) {
+  //       const value = this.innerValue?.isocode || this.innerValue
+  //       const findDisplayValue = (e) => e.value === value || e.isocode === value
+  //       const filteredOption = this.options.find(findDisplayValue)
 
-        if (filteredOption) {
-          const { displayValue, name, isocode } = filteredOption
-          return displayValue || name || isocode || this.innerValue
-        } else {
-          return this.innerValue
-        }
-      } else {
-        return null
-      }
-    },
-  },
-  watch: {
-    // Handles internal model changes.
-    innerValue(newVal) {
-      this.$emit('input', newVal)
-    },
-    // Handles external model changes.
-    value(newVal) {
-      this.innerValue = newVal
-    },
-  },
-  created() {
-    if (this.value) {
-      this.innerValue = this.value
-    }
-  },
+  //       if (filteredOption) {
+  //         const { displayValue, name, isocode } = filteredOption
+  //         return displayValue || name || isocode || this.innerValue
+  //       } else {
+  //         return this.innerValue
+  //       }
+  //     } else {
+  //       return null
+  //     }
+  //   },
+  // },
 }
 </script>
 
