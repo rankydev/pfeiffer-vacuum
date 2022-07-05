@@ -140,6 +140,8 @@ export default defineComponent({
 
 <style lang="scss">
 .button {
+  all: unset;
+
   @apply tw-rounded-md;
   @apply tw-inline-flex;
   @apply tw-items-center;
