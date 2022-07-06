@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import { ref } from '@nuxtjs/composition-api'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
@@ -138,14 +138,7 @@ export default defineComponent({
   ],
   setup(props) {
     const internalValue = ref(props.value)
-    const visible = ref({
-      get() {
-        return props.visibility
-      },
-      set(newValue) {
-        return newValue
-      },
-    })
+    const visible = ref(props.visibility)
 
     function changeVisibility() {
       visible.value = !visible.value
