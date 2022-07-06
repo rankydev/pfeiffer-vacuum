@@ -72,6 +72,16 @@ export default {
       @apply tw-cursor-pointer;
     }
 
+    &:focus {
+      @apply tw-border-pv-red-lighter;
+      @apply tw-ring-0;
+      @apply tw-text-pv-red-lighter;
+      @apply tw-shadow-border-red-lighter;
+
+      // safari fix to prevent focus outline
+      outline: 0;
+    }
+
     &:disabled {
       @apply tw-border-pv-grey-64;
     }
