@@ -1,5 +1,14 @@
 import PvSelect from './PvSelect.vue'
-import { normal, disabled, error, label } from './PvSelect.stories.content'
+import {
+  normal,
+  withValue,
+  icon,
+  optionIcon,
+  disabled,
+  disabledWithValue,
+  error,
+  label,
+} from './PvSelect.stories.content'
 
 const argTypes = {
   error,
@@ -29,7 +38,15 @@ const Template = (args, { argTypes }) => ({
     <div class="documentation-preview" style="max-width:500px;">
     <PvSelect v-bind="args['Normal']" />
     <br/>
+    <PvSelect v-bind="args['WithValue']" />
+    <br/>
+    <PvSelect v-bind="args['Icon']" />
+    <br/>
+    <PvSelect v-bind="args['OptionIcon']" />
+    <br/>
     <PvSelect v-bind="args['Disabled']" />
+    <br/>
+    <PvSelect v-bind="args['DisabledWithValue']" />
     <br/>
     <PvSelect v-bind="args['Error']" />
     <br/>
@@ -42,7 +59,11 @@ const Template = (args, { argTypes }) => ({
 export const Default = Template.bind({})
 Default.args = {
   Normal: { ...normal },
+  WithValue: { ...withValue },
+  Icon: { ...icon },
+  OptionIcon: { ...optionIcon },
   Disabled: { ...disabled },
+  DisabledWithValue: { ...disabledWithValue },
   Error: { ...error },
   Label: { ...label },
 }

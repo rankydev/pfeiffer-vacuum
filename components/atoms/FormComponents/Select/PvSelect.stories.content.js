@@ -1,31 +1,49 @@
 export const normal = {
-  disableField: 'selectable',
   disabled: false,
-  hidePlaceholder: false,
-  multiple: false,
   options: [
     {
-      displayValue: 'OptionValue1',
-      selectable: true,
-      selected: false,
+      displayValue: 'OptionValue 1',
       value: 'OptionValue1',
-      icon: 'arrow_forward',
+      disabled: true,
     },
     {
-      displayValue: 'OptionValue2',
-      selectable: true,
-      selected: false,
+      displayValue: 'OptionValue 2',
       value: 'OptionValue2',
-      icon: 'arrow_forward',
+    },
+    {
+      displayValue: 'OptionValue 3',
+      value: 'OptionValue2',
     },
   ],
-  placeholder: null,
-  reduce: () => {},
-  textField: 'displayValue',
-  value: undefined,
-  variantSelection: true,
-  valueField: 'value',
-  name: 'Test123',
+  optionLabel: 'displayValue',
+}
+
+export const withValue = {
+  ...normal,
+  value: normal.options[1].displayValue,
+}
+
+export const icon = {
+  ...normal,
+  prependIcon: 'info',
+}
+
+export const optionIcon = {
+  ...normal,
+  options: [
+    {
+      ...normal.options[0],
+      icon: 'table_chart',
+    },
+    {
+      ...normal.options[1],
+      icon: 'privacy_tip',
+    },
+    {
+      ...normal.options[2],
+      icon: 'stacked_line_chart',
+    },
+  ],
 }
 
 export const disabled = {
@@ -33,13 +51,20 @@ export const disabled = {
   disabled: true,
 }
 
+export const disabledWithValue = {
+  ...withValue,
+  disabled: true,
+}
+
 export const error = {
+  ...normal,
   hasError: true,
   errorMessage: 'Sorry, an error occured',
-  ...normal,
 }
 
 export const label = {
-  label: 'Label',
   ...normal,
+  label: 'Label',
 }
+
+export default {}

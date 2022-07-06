@@ -9,6 +9,7 @@
     "optional": "(optional)"
   },
   "select": {
-    "placeholder": "Please select..."
+    "placeholder": "Please select...",
+    "noOptions": "Sorry, no matching options."
   }
 }

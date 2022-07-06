@@ -9,6 +9,7 @@
     "optional": "(可选)"
   },
   "select": {
-    "placeholder": "请选择..."
+    "placeholder": "请选择...",
+    "noOptions": "对不起。没有匹配的选项。"
   }
 }

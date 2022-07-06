@@ -9,6 +9,7 @@
     "optional": "(optional)"
   },
   "select": {
-    "placeholder": "Bitte auswählen..."
+    "placeholder": "Bitte auswählen...",
+    "noOptions": "Leider keine passenden Optionen gefunden."
   }
 }
