@@ -1,4 +1,4 @@
-import ContentCarousel from '~/components/molecules/ContentCarousel/ContentCarousel.schema.js'
+import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel.schema.partial.js'
 
 export default {
   name: 'ProductCardCarousel',

@@ -1,9 +1,14 @@
 <template>
-  <ContentCarousel v-bind="$args"></ContentCarousel>
+  <div>
+    <ContentCarousel v-bind="$args"></ContentCarousel>
+    {{ prds }}
+  </div>
 </template>
 
 <script>
-import ContentCarousel from '@/components/molecules/ContentCarousel/ContentCarousel'
+import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
+import { useFetch, useContext, useAsync } from '@nuxtjs/composition-api'
+import { useProductStore } from '~/stores/products/products'
 
 export default {
   name: 'ProductCardCarousel',
@@ -67,6 +72,20 @@ export default {
       type: String,
       default: '5',
     },
+  },
+  setup() {
+    const { $hybrisApi } = useContext()
+    const productStore = useProductStore()
+
+    productStore.fetchProducts(['128ee16d-cb90-45be-9986-c8006a5235e6_sample'])
+
+    const products = useAsync(() =>
+      $hybrisApi.productApi.getProducts([
+        '128ee16d-cb90-45be-9986-c8006a5235e6_sample',
+      ])
+    )
+
+    return { products }
   },
 }
 </script>
