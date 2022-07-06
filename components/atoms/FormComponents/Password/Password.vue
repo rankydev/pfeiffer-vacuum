@@ -18,6 +18,13 @@
         @input="$emit('update', internalValue)"
       />
       <Icon
+        v-if="hasError"
+        class="pv-input__icon"
+        :class="'pv-input__icon--error'"
+        :icon="'error'"
+        @click.native="$emit('click:icon', $event)"
+      />
+      <Icon
         class="pv-input__icon"
         :class="{ 'pv-input__icon--visibility': !disabled }"
         icon="visibility"
@@ -165,6 +172,7 @@ export default defineComponent({
 
     &--error {
       @apply tw-text-pv-red;
+      margin-right: 35px;
     }
 
     &--visibility {
