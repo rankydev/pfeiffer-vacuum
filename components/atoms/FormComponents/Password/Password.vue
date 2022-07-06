@@ -21,14 +21,13 @@
         class="pv-password__icon"
         :class="'pv-password__icon--error'"
         :icon="'error'"
-        onclick="changeVisibility"
         @click.native="$emit('click:icon', $event)"
       />
       <Icon
         class="pv-password__icon"
         :class="{ 'pv-password__icon--visibility': !disabled }"
         icon="visibility"
-        @click.native="$emit('click:icon', $event)"
+        @click.native="$emit('click:icon', changeVisibility())"
       />
     </div>
     <ErrorMessage v-if="hasError" :error-message="errorMessage" />
@@ -139,12 +138,17 @@ export default defineComponent({
   ],
   setup(props) {
     const internalValue = ref(props.value)
-    let visible = computed(() => {
-      return props.visibility
+    const visible = ref({
+      get() {
+        return props.visibility
+      },
+      set(newValue) {
+        return newValue
+      },
     })
+
     function changeVisibility() {
-      console.log('executed')
-      visible = true
+      visible.value = !visible.value
     }
 
     return {
