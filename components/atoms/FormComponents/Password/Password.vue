@@ -1,15 +1,14 @@
 <template>
-  <div class="pv-input">
+  <div class="pv-password">
     <Label :label="label" />
-    <div class="pv-input__wrapper">
+    <div class="pv-password__wrapper">
       <input
         v-model="internalValue"
         v-bind="{ placeholder, required, disabled }"
-        type="password"
-        class="pv-input__element"
+        :type="visible ? 'text' : 'password'"
+        class="pv-password__element pv-password__element--icon"
         :class="{
-          'pv-input__element--icon': icon,
-          'pv-input__element--error': hasError,
+          'pv-password__element--error': hasError,
         }"
         :placeholder="placeholder"
         @keypress.enter="$emit('submit', $event)"
@@ -19,14 +18,15 @@
       />
       <Icon
         v-if="hasError"
-        class="pv-input__icon"
-        :class="'pv-input__icon--error'"
+        class="pv-password__icon"
+        :class="'pv-password__icon--error'"
         :icon="'error'"
+        onclick="changeVisibility"
         @click.native="$emit('click:icon', $event)"
       />
       <Icon
-        class="pv-input__icon"
-        :class="{ 'pv-input__icon--visibility': !disabled }"
+        class="pv-password__icon"
+        :class="{ 'pv-password__icon--visibility': !disabled }"
         icon="visibility"
         @click.native="$emit('click:icon', $event)"
       />
@@ -36,8 +36,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import { ref } from '@nuxtjs/composition-api'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
@@ -57,14 +56,6 @@ export default defineComponent({
     value: {
       type: String,
       default: '',
-    },
-    /**
-     * An optional icon that can be shown
-     * @see [Icon List] (https://fonts.google.com/icons?selected=Material+Icons)
-     */
-    icon: {
-      type: String,
-      default: null,
     },
     /**
      * A text which is displayed if no value given
@@ -108,6 +99,13 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    /**
+     * Defines if the password is visible or not
+     */
+    visibility: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: [
     /**
@@ -141,23 +139,25 @@ export default defineComponent({
   ],
   setup(props) {
     const internalValue = ref(props.value)
-    let internalIcon = ref(props.icon)
-    const hasErrorIcon = ref(props.hasError)
-
-    if (hasErrorIcon.value) {
-      internalIcon = 'error_outline'
+    let visible = computed(() => {
+      return props.visibility
+    })
+    function changeVisibility() {
+      console.log('executed')
+      visible = true
     }
 
     return {
       internalValue,
-      internalIcon,
+      visible,
+      changeVisibility,
     }
   },
 })
 </script>
 
 <style lang="scss">
-.pv-input {
+.pv-password {
   @apply tw-relative;
 
   &__wrapper {
@@ -209,7 +209,7 @@ export default defineComponent({
       @apply tw-text-pv-grey-64;
     }
 
-    &:focus + .pv-input__icon {
+    &:focus + .pv-password__icon {
       @apply tw-text-pv-black;
     }
 
