@@ -1,13 +1,12 @@
 <template>
   <div>
     <ContentCarousel v-bind="$args"></ContentCarousel>
-    {{ prds }}
+    {{ products }}
   </div>
 </template>
 
 <script>
 import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
-import { useFetch, useContext, useAsync } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/products/products'
 
 export default {
@@ -74,18 +73,11 @@ export default {
     },
   },
   setup() {
-    const { $hybrisApi } = useContext()
     const productStore = useProductStore()
 
     productStore.fetchProducts(['128ee16d-cb90-45be-9986-c8006a5235e6_sample'])
 
-    const products = useAsync(() =>
-      $hybrisApi.productApi.getProducts([
-        '128ee16d-cb90-45be-9986-c8006a5235e6_sample',
-      ])
-    )
-
-    return { products }
+    return { products: productStore.products }
   },
 }
 </script>
