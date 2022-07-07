@@ -177,6 +177,9 @@ export default defineComponent({
     @apply tw-shadow-border-grey-80;
     @apply tw-rounded-md;
 
+    // fix for mobile safari to show box-shadow
+    appearance: none;
+
     &:focus {
       @apply tw-border-pv-black;
       @apply tw-ring-0;
