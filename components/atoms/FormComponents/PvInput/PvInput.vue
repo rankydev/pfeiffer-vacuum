@@ -209,7 +209,7 @@ export default defineComponent({
 
     &--error {
       @apply tw-rounded-t-md;
-      @apply tw-border-pv-red;
+      @apply tw-shadow-border-red;
       @apply tw-rounded-b-none;
     }
   }
