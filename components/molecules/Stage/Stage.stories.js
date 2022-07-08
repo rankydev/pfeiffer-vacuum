@@ -13,7 +13,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/Stage',
+  title: 'Molecules/Stage Module',
   component: Stage,
   parameters: {
     docs: {
