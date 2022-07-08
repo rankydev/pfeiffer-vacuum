@@ -171,18 +171,23 @@ export default defineComponent({
   &__element {
     @apply tw-block;
     @apply tw-w-full;
-    @apply tw-text-pv-grey-64;
-    @apply tw-px-3;
-    @apply tw-py-2;
-    @apply tw-border-2;
+    @apply tw-text-pv-black;
+    @apply tw-px-4;
+    @apply tw-py-3;
+    @apply tw-shadow-border-grey-80;
     @apply tw-rounded-md;
-    @apply tw-border-pv-grey-80;
+
+    // fix for mobile safari to show box-shadow
+    appearance: none;
 
     &:focus {
       @apply tw-border-pv-black;
       @apply tw-ring-0;
-      @apply tw-outline-0;
       @apply tw-text-pv-black;
+      @apply tw-shadow-border-black;
+
+      // safari fix to prevent focus outline
+      outline: 0;
     }
 
     &:disabled {
@@ -204,7 +209,7 @@ export default defineComponent({
 
     &--error {
       @apply tw-rounded-t-md;
-      @apply tw-border-pv-red;
+      @apply tw-shadow-border-red;
       @apply tw-rounded-b-none;
     }
   }

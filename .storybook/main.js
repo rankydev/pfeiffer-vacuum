@@ -15,4 +15,8 @@ module.exports = {
     '@storybook/addon-actions',
     '@storybook/addon-toolbars',
   ],
+  env: (config) => ({
+    ...config,
+    NODE_ENV: 'development',
+  }),
 }
