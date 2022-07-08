@@ -23,7 +23,7 @@
         v-if="hasError"
         class="pv-password__icon"
         :class="'pv-password__icon--error'"
-        :icon="'error'"
+        :icon="'error_outline'"
         @click.native="$emit('click:icon', $event)"
       />
       <Icon
