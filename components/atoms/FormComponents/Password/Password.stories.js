@@ -31,6 +31,8 @@ const Template = (args) => ({
     <br/>
     <Password v-bind="args['Error']" />
     <br/>
+    <Password v-bind="args['Validate']" />
+    <br/>
   </div>
 `,
 })
@@ -52,5 +54,9 @@ Default.args = {
     placeholder: 'Some placeholder',
     hasError: true,
     errorMessage: 'Sorry, an error occured',
+  },
+  Validate: {
+    placeholder: 'Some placeholder',
+    validate: true,
   },
 }

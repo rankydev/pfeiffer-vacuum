@@ -7,9 +7,12 @@
         v-bind="{ placeholder, required, disabled }"
         :type="visible ? 'text' : 'password'"
         class="pv-password__element pv-password__element--icon"
-        :class="{
-          'pv-password__element--error': hasError,
-        }"
+        :class="[
+          validate
+            ? 'pv-password__element--validated'
+            : 'pv-password__element--NotValidated',
+          hasError ? 'pv-password__element--error' : '',
+        ]"
         :placeholder="placeholder"
         @keypress.enter="$emit('submit', $event)"
         @focus="$emit('focus', true)"
@@ -31,6 +34,33 @@
       />
     </div>
     <ErrorMessage v-if="hasError" :error-message="errorMessage" />
+    <div v-if="validate" class="pv-password__strength-indicator">
+      <div
+        class="pv-password__strength-indicator--inner"
+        :style="{ width: indicatorWidth() }"
+      />
+    </div>
+    <ul v-if="validate" class="pv-password__rules">
+      <li class="pv-password__rules--entry" :class="{ fulfilled: minLength() }">
+        <Icon size="xsmall" icon="check_circle" />
+        Consists of at least 8 letters
+      </li>
+      <li
+        class="pv-password__rules--entry"
+        :class="{ fulfilled: hasCapital() }"
+      >
+        <Icon size="xsmall" icon="check_circle" />
+        Contains at least 1 capital letter
+      </li>
+      <li class="pv-password__rules--entry" :class="{ fulfilled: hasDigit() }">
+        <Icon size="xsmall" icon="check_circle" />
+        Contains at least 1 digit
+      </li>
+      <li v-if="tooLong" class="password-too-long">
+        <Icon size="xsmall" icon="info" />
+        {{ $t('login.passwordTooLong') }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -105,6 +135,20 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    /**
+     * Defines if the password should be validated or not
+     */
+    validate: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * Defines if the password should be validated or not
+     */
+    tooLong: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: [
     /**
@@ -144,10 +188,47 @@ export default defineComponent({
       visible.value = !visible.value
     }
 
+    function minLength() {
+      return this.internalValue && this.internalValue.length >= 8
+    }
+
+    function hasCapital() {
+      return (
+        new RegExp('.*[A-Z].*').test(this.internalValue) &&
+        new RegExp('.*[a-z].*').test(this.internalValue)
+      )
+    }
+
+    function hasDigit() {
+      return new RegExp('\\d').test(this.internalValue)
+    }
+
+    function indicatorWidth() {
+      let result = 0
+
+      if (this.internalValue && this.internalValue.length >= 8) {
+        result += 33
+      }
+
+      if (this.hasCapital()) {
+        result += 33
+      }
+
+      if (this.hasDigit()) {
+        result += 34
+      }
+
+      return result + '%'
+    }
+
     return {
       internalValue,
       visible,
       changeVisibility,
+      minLength,
+      hasCapital,
+      hasDigit,
+      indicatorWidth,
     }
   },
 })
@@ -187,11 +268,26 @@ export default defineComponent({
     @apply tw-px-3;
     @apply tw-py-2;
     @apply tw-border-2;
-    @apply tw-rounded-md;
     @apply tw-border-pv-grey-80;
 
+    &--NotValidated {
+      @apply tw-rounded-md;
+
+      &:focus {
+        @apply tw-border-pv-black;
+      }
+    }
+
+    &--validated {
+      @apply tw-rounded-t-md;
+
+      &:focus {
+        @apply tw-border-t-pv-black;
+        @apply tw-border-x-pv-black;
+      }
+    }
+
     &:focus {
-      @apply tw-border-pv-black;
       @apply tw-ring-0;
       @apply tw-outline-0;
       @apply tw-text-pv-black;
@@ -218,6 +314,39 @@ export default defineComponent({
       @apply tw-rounded-t-md;
       @apply tw-border-pv-red;
       @apply tw-rounded-b-none;
+    }
+  }
+
+  &__strength-indicator {
+    @apply tw-h-2;
+    @apply tw-w-full;
+    @apply tw-mb-4;
+    @apply tw-bg-pv-grey-80;
+    @apply tw-rounded-b-md;
+
+    &--inner {
+      @apply tw-bg-pv-green;
+      @apply tw-h-2;
+      @apply tw-rounded-b-md;
+    }
+  }
+
+  &__rules {
+    &--entry {
+      @apply tw-text-pv-grey-64;
+      @apply tw-flex tw-items-center;
+      @apply tw-text-xs;
+      @apply tw-leading-4;
+      gap: 5.33px;
+
+      &.fulfilled {
+        @apply tw-text-pv-green;
+      }
+
+      &.password-too-long {
+        color: red;
+        font-size: 15px;
+      }
     }
   }
 }
