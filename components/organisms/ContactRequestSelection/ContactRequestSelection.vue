@@ -1,9 +1,15 @@
 <template>
   <div class="contact-request-selection">
     <div class="contact-request-selection__content">
-      <h1>{{ mainHeadline }}</h1>
-      <h3>{{ selectionHeadline }}</h3>
-      <p class="tw-teaser">{{ text }}</p>
+      <h1 class="contact-request-selection__content--mainHeadline">
+        {{ mainHeadline }}
+      </h1>
+      <h3 class="contact-request-selection__content--selectionHeadline">
+        {{ selectionHeadline }}
+      </h3>
+      <p class="tw-teaser contact-request-selection__content--text">
+        {{ text }}
+      </p>
     </div>
     <div class="contact-request-selection__subjects">
       <NuxtDynamic

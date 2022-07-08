@@ -1,22 +1,30 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import ContactRequestSelection from './ContactRequestSelection.vue'
+import Accordion from '~/components/atoms/Accordion/Accordion.vue'
 import {
   mainHeadline,
   selectionHeadline,
   text,
   contactRequests,
 } from './ContactRequestSelection.stories.content.js'
+import { expect } from '@jest/globals'
+
+const subjectAccordion = [
+  {
+    _uid: '35f17f46-a1c5-413e-a278-62ca514e1fd8',
+    level: 'h3',
+    multiple: false,
+    component: 'Accordion',
+    accordionEntries: contactRequests,
+  },
+]
 
 let wrapper
 
 function createComponent(propsData = {}) {
   const stubs = { NuxtDynamic: true }
-  // const localVue = createLocalVue()
-  // const editable = (el, key) => (el.innerText = key.value)
-  // localVue.directive('editable', editable)
 
   const options = {
-    // localVue,
     stubs,
     propsData,
   }
@@ -26,128 +34,33 @@ function createComponent(propsData = {}) {
 
 describe('ContactRequestSelection', () => {
   describe('initial state', () => {
-    it('should provide headline subline and richtext to richtext component when these are provided', () => {
-      const propsData = { headline, subline, richtext }
-      createComponent(propsData)
-      const domRichtext = wrapper.findComponent(Richtext)
-
-      expect(domRichtext.vm.richtext).toMatch(headline)
-      expect(domRichtext.vm.richtext).toMatch(subline)
-      expect(domRichtext.vm.richtext).toMatch(richtext)
-    })
-
-    it('should add buttons to the button area when they are provided', () => {
-      const propsData = { buttons }
+    it('should provide mainHeadline, selectionHeadline, text and contactRequests when provided', () => {
+      const propsData = {
+        mainHeadline,
+        selectionHeadline,
+        text,
+        subjectAccordion,
+      }
       createComponent(propsData)
 
-      const domButtons = wrapper.findAll('.content-media-block__button')
-
-      expect(domButtons.length).toBe(buttons.length)
-      domButtons.wrappers.forEach((domButton, idx) => {
-        expect(domButton.attributes('component')).toBe(buttons[idx].component)
-      })
-    })
-
-    it('should add Video to the media area when it is provided', () => {
-      const propsData = { richtext, media: mediaVideo }
-      createComponent(propsData)
-
-      const domMedia = wrapper.find('.content-media-block__media')
-
-      expect(domMedia.html()).toContain(mediaVideo[0].component)
-    })
-
-    it('should add Image to the media area when it is provided', () => {
-      const propsData = { richtext, media: mediaImage }
-      createComponent(propsData)
-
-      const domMedia = wrapper.find('.content-media-block__media')
-
-      expect(domMedia.html()).toContain(mediaImage[0].component)
-    })
-
-    it('should add CTABox to the media area when it is provided', () => {
-      const propsData = { richtext, media: mediaCTA }
-      createComponent(propsData)
-
-      const domMedia = wrapper.find('.content-media-block__media')
-
-      expect(domMedia.html()).toContain(mediaCTA[0].component)
-    })
-
-    it('should apply correct classes given a half/half ratio', () => {
-      const propsData = { richtext, media: mediaVideo, ratio: 'half/half' }
-      createComponent(propsData)
-
-      const domContent = wrapper.find('.content-media-block__content')
-      const domMedia = wrapper.find('.content-media-block__media')
-
-      expect(domContent.attributes('class')).toMatch(
-        'content-media-block__content--half'
+      const mainHl = wrapper.find(
+        '.contact-request-selection__content--mainHeadline'
       )
-      expect(domMedia.attributes('class')).toMatch(
-        'content-media-block__media--half'
+      const selectionHl = wrapper.find(
+        '.contact-request-selection__content--selectionHeadline'
       )
-    })
-
-    it('should apply correct classes given a one/three ratio', () => {
-      const propsData = { richtext, media: mediaVideo, ratio: 'one/three' }
-      createComponent(propsData)
-
-      const domContent = wrapper.find('.content-media-block__content')
-      const domMedia = wrapper.find('.content-media-block__media')
-
-      expect(domContent.attributes('class')).toMatch(
-        'content-media-block__content--one'
+      const selectionText = wrapper.find(
+        '.contact-request-selection__content--text'
       )
-      expect(domMedia.attributes('class')).toMatch(
-        'content-media-block__media--three'
-      )
-    })
 
-    it('should apply correct classes given a three/one ratio', () => {
-      const propsData = { richtext, media: mediaVideo, ratio: 'three/one' }
-      createComponent(propsData)
+      // ToDo: Needs a test for testing ContactRequestSubjects later, at the moment uses Accordion but will be replaced
+      const accordion = wrapper.findComponent(Accordion)
 
-      const domContent = wrapper.find('.content-media-block__content')
-      const domMedia = wrapper.find('.content-media-block__media')
+      // expect(accordion.exists()).toBeTruthy()
 
-      expect(domContent.attributes('class')).toMatch(
-        'content-media-block__content--three'
-      )
-      expect(domMedia.attributes('class')).toMatch(
-        'content-media-block__media--one'
-      )
-    })
-
-    it('should apply correct classes given a content/media order', () => {
-      const propsData = { richtext, media: mediaVideo, order: 'content/media' }
-      createComponent(propsData)
-
-      const domContent = wrapper.find('.content-media-block__content')
-      const domMedia = wrapper.find('.content-media-block__media')
-
-      expect(domContent.attributes('class')).toMatch(
-        'content-media-block__content--first'
-      )
-      expect(domMedia.attributes('class')).toMatch(
-        'content-media-block__media--last'
-      )
-    })
-
-    it('should apply correct classes given a media/content order', () => {
-      const propsData = { richtext, media: mediaVideo, order: 'media/content' }
-      createComponent(propsData)
-
-      const domContent = wrapper.find('.content-media-block__content')
-      const domMedia = wrapper.find('.content-media-block__media')
-
-      expect(domContent.attributes('class')).toMatch(
-        'content-media-block__content--last'
-      )
-      expect(domMedia.attributes('class')).toMatch(
-        'content-media-block__media--first'
-      )
+      expect(mainHl.text()).toMatch(mainHeadline)
+      expect(selectionHl.text()).toMatch(selectionHeadline)
+      expect(selectionText.text()).toMatch(text)
     })
   })
 
