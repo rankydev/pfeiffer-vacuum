@@ -4,7 +4,11 @@ export default {
   name: 'ProductCardCarousel',
   display_name: 'ProductCardCarousel',
   schema: {
-    ...ContentCarousel,
+    headline: ContentCarousel.headline,
+    button: ContentCarousel.button,
+    autoplay: ContentCarousel.autoplay,
+    autoplaySpeed: ContentCarousel.autoplaySpeed,
+    infinite: ContentCarousel.infinite,
     slides: {
       type: 'bloks',
       display_name: 'Slides',

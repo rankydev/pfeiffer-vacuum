@@ -6,9 +6,7 @@ export function getHybrisApi(ctx) {
   const { $axios, app } = ctx
 
   const api = $axios.create()
-  api.setBaseURL(
-    'https://api.cjgnymr4s2-pfeifferv1-d1-public.model-t.cc.commerce.ondemand.com/'
-  )
+  api.setBaseURL(process.env.SHOP_BASE_URL)
   api.setHeader('Content-Type', 'application/json')
 
   return {

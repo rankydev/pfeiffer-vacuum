@@ -1,15 +1,22 @@
 <template>
   <div>
-    <ContentCarousel v-bind="$args"></ContentCarousel>
-    {{ products }}
+    <ContentCarousel
+      :headline="headline"
+      :button="button"
+      :autoplay="autoplay"
+      :autoplay-speed="autoplaySpeed"
+      :infinite="infinite"
+      :slides="productSlides"
+    />
   </div>
 </template>
 
 <script>
 import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
 import { useProductStore } from '~/stores/products/products'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 
-export default {
+export default defineComponent({
   name: 'ProductCardCarousel',
   components: { ContentCarousel },
   props: {
@@ -35,21 +42,6 @@ export default {
       type: Array,
       default: () => [],
     },
-
-    /**
-     * enables/disables wide mode of carousel (breakout of ContentWrapper)
-     */
-    isWide: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * optional carousel settings for manual use
-     */
-    settings: {
-      type: Object,
-      default: () => ({}),
-    },
     /**
      * enables/ disables infinite wrap around items on slider
      */
@@ -72,14 +64,43 @@ export default {
       default: '5',
     },
   },
-  setup() {
+  setup(props) {
     const productStore = useProductStore()
+    const productSlides = computed(() =>
+      props.slides.filter((slide) => slide.product?.code)
+    )
+    const products = computed(() => productStore.products)
 
-    productStore.fetchProducts(['128ee16d-cb90-45be-9986-c8006a5235e6_sample'])
+    let productCodes = []
 
-    return { products: productStore.products }
+    /**
+     * extract product codes
+     */
+    productSlides.value.forEach((slide) => {
+      const code = slide.product?.code
+      if (productCodes.includes(code)) return
+
+      productCodes.push(code)
+    })
+    productStore.fetchProducts(productCodes)
+
+    //if products are getting updated after fetch, the following logic will be retriggered
+    if (products.value && products.value.length) {
+      /**
+       * get productData for each slide
+       */
+      productSlides.value.forEach((slide, index) => {
+        const code = slide.product?.code
+
+        const productData = computed(() => productStore.getProductById(code))
+
+        slide.product = productData.value
+      })
+    }
+
+    return { products: productStore.products, productSlides }
   },
-}
+})
 </script>
 
 <style scoped></style>

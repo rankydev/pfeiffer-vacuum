@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useFetch, useContext, useAsync } from '@nuxtjs/composition-api'
+import { useContext, useAsync } from '@nuxtjs/composition-api'
 
 export const useProductStore = defineStore('product', {
   state: () => {
@@ -10,8 +10,14 @@ export const useProductStore = defineStore('product', {
 
   getters: {
     getProductById: (state) => {
-      return (productId) =>
-        [...state.products].find((product) => product.code === productId) || {}
+      return (productId) => {
+        if (!state.products) return
+
+        return (
+          [...state.products].find((product) => product.code === productId) ||
+          {}
+        )
+      }
     },
     getAllProducts: (state) => {
       return state.products
