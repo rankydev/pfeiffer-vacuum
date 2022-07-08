@@ -1,5 +1,5 @@
-import PvSelect from '~/components/atoms/FormComponents/Select/PvSelect.vue'
-import { icon, label } from './PvSelect.stories.content'
+import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect.vue'
+import { icon, label, normal } from './PvSelect.stories.content'
 import { shallowMount } from '@vue/test-utils'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 import errorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
@@ -44,7 +44,7 @@ describe('Select', () => {
     })
 
     describe('given an options object', () => {
-      it.only('should be prepend an icon given one within the options object', () => {
+      it('should be prepend an icon given one within the options object', () => {
         const propsData = { ...icon }
         createComponent(propsData)
         const search = wrapper.find('.search')
@@ -53,18 +53,30 @@ describe('Select', () => {
         expect(prependIcon.exists()).toBeTruthy()
         expect(prependIcon.vm.icon).toBe(propsData.prependIcon)
       })
-      it('should use the optionLabel given a custom one', () => {})
+      it('should use the optionLabel given a custom one', () => {
+        const propsData = { ...normal }
+        createComponent(propsData)
+        const labelWrapper = wrapper.find('span')
+        expect(propsData.optionLabel).toBe('displayValue')
+        expect(labelWrapper.text()).toBe(propsData.options[0].displayValue)
+      })
     })
 
     describe('given an prependIcon', () => {
-      it('should set the correct class on v-select', () => {})
-      it('should prepend the icon in the search slot', () => {})
+      it('should set the correct class on v-select', () => {
+        // @todo add test
+      })
+      it('should prepend the icon in the search slot', () => {
+        // @todo add test
+      })
     })
 
     describe('given an error', () => {
       const propsData = { hasError: true, errorMessage: 'Some error message' }
 
-      it('should add the correct error class on v-select', () => {})
+      it('should add the correct error class on v-select', () => {
+        // @todo add test
+      })
       it('should render an error message component', () => {
         createComponent(propsData)
 
@@ -75,7 +87,9 @@ describe('Select', () => {
   })
 
   describe('during interaction', () => {
-    it('should emit an update event when innerValue has changed', () => {})
+    it('should emit an update event when innerValue has changed', () => {
+      // @todo add emit test
+    })
   })
 
   // describe('business requirements', () => {})

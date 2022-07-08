@@ -89,7 +89,7 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
-import PvSelect from '~/components/atoms/FormComponents/Select/PvSelect.vue'
+import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect.vue'
 
 export default defineComponent({
   name: 'Page',
