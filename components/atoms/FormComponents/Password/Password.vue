@@ -56,10 +56,6 @@
         <Icon size="xsmall" icon="check_circle" />
         Contains at least 1 digit
       </li>
-      <li v-if="tooLong" class="password-too-long">
-        <Icon size="xsmall" icon="info" />
-        {{ $t('login.passwordTooLong') }}
-      </li>
     </ul>
   </div>
 </template>
@@ -139,13 +135,6 @@ export default defineComponent({
      * Defines if the password should be validated or not
      */
     validate: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Defines if the password should be validated or not
-     */
-    tooLong: {
       type: Boolean,
       default: false,
     },
@@ -341,11 +330,6 @@ export default defineComponent({
 
       &.fulfilled {
         @apply tw-text-pv-green;
-      }
-
-      &.password-too-long {
-        color: red;
-        font-size: 15px;
       }
     }
   }
