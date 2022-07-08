@@ -62,6 +62,7 @@ export default defineComponent({
 .contact-request-selection {
   &__content {
     @apply tw-mb-4;
+    @apply tw-mt-16;
 
     h1 {
       @apply tw-mb-8;
