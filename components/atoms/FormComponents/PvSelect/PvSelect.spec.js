@@ -35,7 +35,7 @@ function createComponent(propsData = {}, {} = {}) {
 
 describe('Select', () => {
   describe('initial state', () => {
-    it('should render label component correctly given as a prop', () => {
+    it.only('should render label component correctly given as a prop', () => {
       const propsData = { ...label }
       createComponent(propsData)
 
@@ -44,7 +44,7 @@ describe('Select', () => {
     })
 
     describe('given an options object', () => {
-      it('should be prepend an icon given one within the options object', () => {
+      it.only('should be prepend an icon given one within the options object', () => {
         const propsData = { ...icon }
         createComponent(propsData)
         const search = wrapper.find('.search')
@@ -53,7 +53,7 @@ describe('Select', () => {
         expect(prependIcon.exists()).toBeTruthy()
         expect(prependIcon.vm.icon).toBe(propsData.prependIcon)
       })
-      it('should use the optionLabel given a custom one', () => {
+      it.only('should use the optionLabel given a custom one', () => {
         const propsData = { ...normal }
         createComponent(propsData)
         const labelWrapper = wrapper.find('span')
