@@ -120,15 +120,17 @@ describe('Password', () => {
       expect(wrapper.emitted().focus[0]).toEqual([false])
     })
 
-    it('should emit an icon click event when icon was clicked', () => {
+    it('should emit an icon click event when icon was clicked', async () => {
       const propsData = { visibility: false }
       const wrapper = shallowMount(Password, { propsData })
       const input = wrapper.find('input')
       const iconDom = wrapper.find('.pv-password__icon--visibility')
 
       iconDom.trigger('click')
+      await wrapper.vm.$nextTick()
 
       expect(wrapper.emitted()['click:icon'].length).toBe(1)
+      expect(input.attributes('type')).toBe('text')
     })
   })
 

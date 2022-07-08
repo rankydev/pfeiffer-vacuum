@@ -7,5 +7,12 @@
   "button": {},
   "label": {
     "optional": "(optional)"
+  },
+  "password": {
+    "minLength": "Consists of at least 8 letters",
+    "capitalLetter":
+    "Contains at least 1 capital letter and 1 lower case",
+    "digit": "Contains at least 1 digit",
+    "tooLong": "Your password may be too long (max. 255 characters)"
   }
 }

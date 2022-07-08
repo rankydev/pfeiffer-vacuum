@@ -37,24 +37,28 @@
     <div v-if="validate" class="pv-password__strength-indicator">
       <div
         class="pv-password__strength-indicator--inner"
+        :class="{
+          'pv-password__strength-indicator--full':
+            indicatorWidth().toString() === '100%',
+        }"
         :style="{ width: indicatorWidth() }"
       />
     </div>
     <ul v-if="validate" class="pv-password__rules">
       <li class="pv-password__rules--entry" :class="{ fulfilled: minLength() }">
         <Icon size="xsmall" icon="check_circle" />
-        Consists of at least 8 letters
+        {{ $t('form.password.minLength') }}
       </li>
       <li
         class="pv-password__rules--entry"
-        :class="{ fulfilled: hasCapital() }"
+        :class="{ fulfilled: hasCapitalAndLowercase() }"
       >
         <Icon size="xsmall" icon="check_circle" />
-        Contains at least 1 capital letter
+        {{ $t('form.password.capitalLetter') }}
       </li>
       <li class="pv-password__rules--entry" :class="{ fulfilled: hasDigit() }">
         <Icon size="xsmall" icon="check_circle" />
-        Contains at least 1 digit
+        {{ $t('form.password.digit') }}
       </li>
     </ul>
   </div>
@@ -181,7 +185,7 @@ export default defineComponent({
       return this.internalValue && this.internalValue.length >= 8
     }
 
-    function hasCapital() {
+    function hasCapitalAndLowercase() {
       return (
         new RegExp('.*[A-Z].*').test(this.internalValue) &&
         new RegExp('.*[a-z].*').test(this.internalValue)
@@ -199,7 +203,7 @@ export default defineComponent({
         result += 33
       }
 
-      if (this.hasCapital()) {
+      if (this.hasCapitalAndLowercase()) {
         result += 33
       }
 
@@ -215,7 +219,7 @@ export default defineComponent({
       visible,
       changeVisibility,
       minLength,
-      hasCapital,
+      hasCapitalAndLowercase,
       hasDigit,
       indicatorWidth,
     }
@@ -269,6 +273,7 @@ export default defineComponent({
 
     &--validated {
       @apply tw-rounded-t-md;
+      border-bottom-style: none;
 
       &:focus {
         @apply tw-border-t-pv-black;
@@ -316,7 +321,12 @@ export default defineComponent({
     &--inner {
       @apply tw-bg-pv-green;
       @apply tw-h-2;
-      @apply tw-rounded-b-md;
+      border-bottom-left-radius: 6px;
+      transition: all 0.5s ease-in;
+    }
+
+    &--full {
+      border-bottom-right-radius: 6px;
     }
   }
 
