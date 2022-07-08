@@ -3,6 +3,7 @@ import Link from '~/components/atoms/Link/Link.schema.partial.js'
 
 export default {
   name: 'TeaserCard',
+  display_name: 'General Teaser Component',
   schema: {
     headline: {
       type: 'text',
