@@ -42,6 +42,15 @@ describe('Password', () => {
       expect(input.attributes('type')).toBe('text')
     })
 
+    it('should disable input when disabled is set to true', () => {
+      const propsData = { disabled: true }
+      const wrapper = shallowMount(Password, { propsData })
+      const input = wrapper.find('input')
+
+      expect(input.attributes('disabled')).toBeTruthy()
+      expect(input.attributes('required')).toBeFalsy()
+    })
+
     it('should set a label when provided', () => {
       const propsData = { label: 'Some Label' }
       const wrapper = shallowMount(Password, { propsData })

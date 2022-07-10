@@ -5,6 +5,12 @@ import Label from '../../FormComponents/partials/Label/Label.vue'
 import errorMessage from '../../FormComponents/partials/ErrorMessage/ErrorMessage.vue'
 import { expect } from '@jest/globals'
 
+const propsInput = {
+  label: 'Test',
+  placeholder: 'Placeholder',
+  required: false,
+}
+
 describe('Input', () => {
   describe('initial state', () => {
     it('should render empty component when no data provided', () => {
@@ -32,6 +38,15 @@ describe('Input', () => {
       const input = wrapper.find('input')
 
       expect(input.attributes('placeholder')).toBe(propsData.placeholder)
+    })
+
+    it('should disable input when disabled is set to true', () => {
+      const propsData = { disabled: true }
+      const wrapper = shallowMount(Input, { propsData })
+      const inputWrapper = wrapper.find('.pv-input__element')
+
+      expect(inputWrapper.attributes('disabled')).toBeTruthy()
+      expect(inputWrapper.attributes('required')).toBeFalsy()
     })
 
     it('should set a label when provided', () => {
@@ -143,6 +158,5 @@ describe('Input', () => {
       })
     })
   })
-
   // describe('business requirements', () => {})
 })
