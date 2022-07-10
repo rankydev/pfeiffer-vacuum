@@ -5,12 +5,6 @@ import Label from '../../FormComponents/partials/Label/Label.vue'
 import errorMessage from '../../FormComponents/partials/ErrorMessage/ErrorMessage.vue'
 import { expect } from '@jest/globals'
 
-const propsInput = {
-  label: 'Test',
-  placeholder: 'Placeholder',
-  required: false,
-}
-
 describe('Input', () => {
   describe('initial state', () => {
     it('should render empty component when no data provided', () => {
