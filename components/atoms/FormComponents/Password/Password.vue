@@ -309,6 +309,10 @@ export default defineComponent({
       @apply tw-rounded-t-md;
       @apply tw-border-pv-red;
       @apply tw-rounded-b-none;
+
+      &::-webkit-credentials-auto-fill-button {
+        margin-right: 38px;
+      }
     }
   }
 
