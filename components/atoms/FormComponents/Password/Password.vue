@@ -60,6 +60,14 @@
         <Icon size="xsmall" icon="check_circle" />
         {{ $t('form.password.digit') }}
       </li>
+      <li
+        v-if="maxLengthReached()"
+        class="pv-password__rules--entry"
+        :class="'pv-password__rules--entryTooLong'"
+      >
+        <Icon size="xsmall" icon="info" />
+        {{ $t('form.password.tooLong') }}
+      </li>
     </ul>
   </div>
 </template>
@@ -142,6 +150,13 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    /**
+     * Defines if the password is too long or not
+     */
+    tooLong: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: [
     /**
@@ -185,6 +200,10 @@ export default defineComponent({
       return this.internalValue && this.internalValue.length >= 8
     }
 
+    function maxLengthReached() {
+      return this.internalValue.length > 128
+    }
+
     function hasCapitalAndLowercase() {
       return (
         new RegExp('.*[A-Z].*').test(this.internalValue) &&
@@ -219,6 +238,7 @@ export default defineComponent({
       visible,
       changeVisibility,
       minLength,
+      maxLengthReached,
       hasCapitalAndLowercase,
       hasDigit,
       indicatorWidth,
@@ -347,6 +367,10 @@ export default defineComponent({
       &.fulfilled {
         @apply tw-text-pv-green;
       }
+    }
+
+    &--entryTooLong {
+      @apply tw-text-pv-red;
     }
   }
 }
