@@ -49,7 +49,7 @@ export default {
         'ImageWithDescription',
         'VideoPlayer',
         'TeaserCardCarousel',
-        'GeneralTeaserCarousel',
+        'ContactFormSection',
       ],
     },
     bottom: {
