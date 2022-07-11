@@ -3,7 +3,7 @@
     <div class="contactFormSection__wrapper">
       <div class="contactFormSection__wrapper--left-side">
         <NuxtDynamic
-          v-for="entry in requests"
+          v-for="entry in requestForms"
           :key="entry._uid"
           v-editable="entry"
           class="request-entries"
@@ -12,7 +12,14 @@
         />
       </div>
       <div class="contactFormSection__wrapper--right-side">
-        {{ headline }}
+        <NuxtDynamic
+          v-for="entry in contactPersons"
+          :key="entry._uid"
+          v-editable="entry"
+          class="request-entries"
+          v-bind="entry"
+          :name="entry.uiComponent || entry.component"
+        />
       </div>
     </div>
   </div>
@@ -26,14 +33,14 @@ export default defineComponent({
     /**
      * Headline of the carousel
      */
-    headline: {
-      type: String,
-      default: '',
+    contactPersons: {
+      type: Array,
+      default: () => [],
     },
     /**
      * Button which will be displayed above the carousel
      */
-    requests: {
+    requestForms: {
       type: Array,
       default: () => [],
     },

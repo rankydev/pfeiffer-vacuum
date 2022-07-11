@@ -2,14 +2,15 @@ export default {
   name: 'ContactFormSection',
   display_name: 'Contact Form Section',
   schema: {
-    headline: {
-      type: 'text',
-      display_name: 'Headline',
-      translatable: true,
-      pos: 1,
+    contactPersons: {
+      display_name: 'Contact Persons',
+      type: 'bloks',
+      maximum: 10,
+      restrict_components: true,
+      component_whitelist: ['Accordion'],
     },
-    requests: {
-      display_name: 'Linke Seite',
+    requestForms: {
+      display_name: 'Request Forms',
       type: 'bloks',
       maximum: 10,
       restrict_components: true,
