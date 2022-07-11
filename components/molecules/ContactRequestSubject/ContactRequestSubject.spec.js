@@ -1,6 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
 import content from './ContactRequestSubject.stories.content'
-
 import ContactRequestSubject from './ContactRequestSubject.vue'
 
 describe('ContactRequestSubject', () => {
