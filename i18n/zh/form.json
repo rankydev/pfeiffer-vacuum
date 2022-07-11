@@ -9,9 +9,10 @@
     "optional": "(可选)"
   },
   "password": {
-    "minLength": "Mindestens 8 Zeichen",
-    "capitalLetter": "Mindestens ein Großbuchstabe",
-    "digit": "Mindestens eine Ziffer",
-    "tooLong": "Ihr Passwort ist zu lang (max. 128 Charaktere)"
+    "minLength": "Consists of at least 8 letters",
+    "capitalLetter":
+    "Contains at least 1 capital letter and 1 lower case",
+    "digit": "Contains at least 1 digit",
+    "tooLong": "Your password may be too long (max. 128 characters)"
   }
 }
