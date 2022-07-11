@@ -257,7 +257,7 @@ export default defineComponent({
   &__element {
     @apply tw-block;
     @apply tw-w-full;
-    @apply tw-text-pv-grey-64;
+    @apply tw-text-pv-black;
     @apply tw-px-3;
     @apply tw-py-2;
     @apply tw-border-2;
@@ -297,10 +297,6 @@ export default defineComponent({
       @apply tw-text-pv-grey-64;
     }
 
-    &:focus + .pv-password__icon {
-      @apply tw-text-pv-black;
-    }
-
     &--icon {
       @apply tw-pr-10;
     }
@@ -309,6 +305,11 @@ export default defineComponent({
       @apply tw-rounded-t-md;
       @apply tw-border-pv-red;
       @apply tw-rounded-b-none;
+      @apply tw-text-pv-red;
+
+      &:focus {
+        @apply tw-border-pv-red;
+      }
 
       &::-webkit-credentials-auto-fill-button {
         margin-right: 38px;
