@@ -1,15 +1,16 @@
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect.vue'
-import { icon, label, normal } from './PvSelect.stories.content'
+import { icon, label, normal, error } from './PvSelect.stories.content'
 import { shallowMount } from '@vue/test-utils'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 import errorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Icon from '~/components/atoms/Icon/Icon'
+import VSelect from 'vue-select'
 import { describe, expect, it } from '@jest/globals'
 
 let wrapper
 
 function createComponent(propsData = {}, {} = {}) {
-  const vSelect = {
+  const vSelectStub = {
     props: [
       'options',
       'label',
@@ -28,35 +29,41 @@ function createComponent(propsData = {}, {} = {}) {
     </div>`,
   }
 
-  const options = { stubs: { vSelect }, propsData }
+  const options = {
+    stubs: { vSelectStub },
+    propsData,
+  }
 
   wrapper = shallowMount(PvSelect, options)
 }
 
 describe('Select', () => {
   describe('initial state', () => {
-    it.only('should render label component correctly given as a prop', () => {
+    it('should render label component correctly given as a prop', () => {
       const propsData = { ...label }
       createComponent(propsData)
-
       const labelWrapper = wrapper.findComponent(Label)
+
       expect(labelWrapper.attributes('label')).toBe(propsData.label)
     })
 
     describe('given an options object', () => {
-      it.only('should be prepend an icon given one within the options object', () => {
+      it('should be prepend an icon given one within the options object', () => {
         const propsData = { ...icon }
         createComponent(propsData)
         const search = wrapper.find('.search')
         const prependIcon = search.findComponent(Icon)
 
+        console.log('###', search.html())
+
         expect(prependIcon.exists()).toBeTruthy()
         expect(prependIcon.vm.icon).toBe(propsData.prependIcon)
       })
-      it.only('should use the optionLabel given a custom one', () => {
+      it('should use the optionLabel given a custom one', () => {
         const propsData = { ...normal }
         createComponent(propsData)
         const labelWrapper = wrapper.find('span')
+
         expect(propsData.optionLabel).toBe('displayValue')
         expect(labelWrapper.text()).toBe(propsData.options[0].displayValue)
       })
@@ -64,18 +71,22 @@ describe('Select', () => {
 
     describe('given an prependIcon', () => {
       it('should set the correct class on v-select', () => {
-        // @todo add test
-      })
-      it('should prepend the icon in the search slot', () => {
-        // @todo add test
+        const propsData = { ...icon }
+        createComponent(propsData)
+        const selectWrapper = wrapper.findComponent(VSelect)
+
+        expect(selectWrapper.attributes('class')).toMatch('pv-select--icon')
       })
     })
 
     describe('given an error', () => {
-      const propsData = { hasError: true, errorMessage: 'Some error message' }
+      const propsData = { ...error }
 
       it('should add the correct error class on v-select', () => {
-        // @todo add test
+        createComponent(propsData)
+        const selectWrapper = wrapper.findComponent(VSelect)
+
+        expect(selectWrapper.attributes('class')).toMatch('pv-select--error')
       })
       it('should render an error message component', () => {
         createComponent(propsData)
@@ -87,8 +98,16 @@ describe('Select', () => {
   })
 
   describe('during interaction', () => {
-    it('should emit an update event when innerValue has changed', () => {
-      // @todo add emit test
+    it('should emit an update event when innerValue has changed', async () => {
+      const value = 'Some Value'
+      const propsData = { ...normal }
+      createComponent(propsData)
+
+      const emitMock = jest.fn()
+      wrapper.vm.$emit = emitMock
+      await wrapper.setData({ innerValue: value })
+      expect(emitMock).toBeCalledTimes(1)
+      expect(emitMock).toBeCalledWith('update', value)
     })
   })
 
