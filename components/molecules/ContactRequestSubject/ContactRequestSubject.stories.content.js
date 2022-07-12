@@ -1,17 +1,16 @@
 import richtext from '~/components/atoms/Richtext/Richtext.stories.content.js'
 import { nanoid } from 'nanoid'
 
-const subjectEntry = () => ({
+export const generalQuery = {
   _uid: nanoid(),
-  title: 'Lorem title',
+  type: 'general_query',
+  title: 'Allgemeine Anfrage',
+  component: 'ContactRequestSubject',
   description: [
     { ...richtext.content, richtext: 'Lorem ipsum dolor sit amet' },
   ],
-  type: 'Lorem type',
   _editable: '',
-})
-
-export const subjectEntries = [subjectEntry(), subjectEntry(), subjectEntry()]
+}
 
 export default {
   title: 'Lorem title',
