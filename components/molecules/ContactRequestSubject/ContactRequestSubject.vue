@@ -21,6 +21,7 @@
 import Icon from '~/components/atoms/Icon/Icon'
 
 export default {
+  name: 'ContactRequestSubject',
   components: {
     Icon,
   },

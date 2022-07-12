@@ -5,6 +5,8 @@ import {
   levels,
 } from './Accordion.stories.content.js'
 
+console.log(accordionEntries)
+
 const argTypes = {
   accordionEntries: {
     defaultValue: accordionEntries,

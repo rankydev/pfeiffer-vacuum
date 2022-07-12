@@ -22,7 +22,7 @@ export default {
       type: 'bloks',
       restrict_components: true,
       required: true,
-      component_whitelist: ['ContactRequestSubject', 'Accordion'],
+      component_whitelist: ['ContactRequestSubject'],
     },
   },
   image: null,
