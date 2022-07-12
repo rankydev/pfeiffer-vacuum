@@ -16,7 +16,6 @@
         v-for="item in contactRequests"
         :key="item._uid"
         v-editable="item"
-        class="accordionTest"
         v-bind="item"
         :name="item.uiComponent || item.component"
       />
@@ -60,8 +59,6 @@ export default defineComponent({
       default: () => [],
     },
   },
-
-  setup(props) {},
 })
 </script>
 

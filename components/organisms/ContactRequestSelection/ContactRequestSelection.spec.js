@@ -1,6 +1,6 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import ContactRequestSelection from './ContactRequestSelection.vue'
-import Accordion from '~/components/atoms/Accordion/Accordion.vue'
+
 import {
   mainHeadline,
   selectionHeadline,
@@ -54,7 +54,6 @@ describe('ContactRequestSelection', () => {
       )
 
       // ToDo: Needs a test for testing ContactRequestSubjects later, at the moment uses Accordion but will be replaced
-      const accordion = wrapper.findComponent(Accordion)
 
       // expect(accordion.exists()).toBeTruthy()
 
