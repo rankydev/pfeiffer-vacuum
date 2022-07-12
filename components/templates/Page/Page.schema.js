@@ -50,6 +50,8 @@ export default {
         'VideoPlayer',
         'TeaserCardCarousel',
         'ContactFormSection',
+        'GeneralTeaserCarousel',
+        'ContactRequestSelection',
       ],
     },
     bottom: {
