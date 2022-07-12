@@ -142,6 +142,4 @@ describe('Password', () => {
       expect(input.attributes('type')).toBe('text')
     })
   })
-
-  // describe('business requirements', () => {})
 })

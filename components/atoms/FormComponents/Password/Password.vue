@@ -5,7 +5,7 @@
       <input
         v-model="internalValue"
         v-bind="{ placeholder, required, disabled }"
-        :type="visible ? 'text' : 'password'"
+        :type="inputType"
         class="pv-password__element pv-password__element--icon"
         :class="[
           validate
@@ -190,10 +190,14 @@ export default defineComponent({
   ],
   setup(props) {
     const internalValue = ref(props.value)
-    const visible = ref(props.visibility)
+    const inputType = ref(props.visibility ? 'text' : 'password')
 
     function changeVisibility() {
-      visible.value = !visible.value
+      if (inputType.value === 'password') {
+        inputType.value = 'text'
+      } else {
+        inputType.value = 'password'
+      }
     }
 
     function minLength() {
@@ -235,7 +239,7 @@ export default defineComponent({
 
     return {
       internalValue,
-      visible,
+      inputType,
       changeVisibility,
       minLength,
       maxLengthReached,
