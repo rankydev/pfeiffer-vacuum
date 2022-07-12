@@ -5,26 +5,20 @@ import {
   mainHeadline,
   selectionHeadline,
   text,
-  contactRequests,
+  requestSubjects,
 } from './ContactRequestSelection.stories.content.js'
-import { expect } from '@jest/globals'
-
-const subjectAccordion = [
-  {
-    _uid: '35f17f46-a1c5-413e-a278-62ca514e1fd8',
-    level: 'h3',
-    multiple: false,
-    component: 'Accordion',
-    accordionEntries: contactRequests,
-  },
-]
+import { expect, it } from '@jest/globals'
 
 let wrapper
 
 function createComponent(propsData = {}) {
   const stubs = { NuxtDynamic: true }
+  const localVue = createLocalVue()
+  const editable = (el, key) => (el.innerText = key.value)
+  localVue.directive('editable', editable)
 
   const options = {
+    localVue,
     stubs,
     propsData,
   }
@@ -34,12 +28,12 @@ function createComponent(propsData = {}) {
 
 describe('ContactRequestSelection', () => {
   describe('initial state', () => {
-    it('should provide mainHeadline, selectionHeadline, text and contactRequests when provided', () => {
+    it('should provide mainHeadline, selectionHeadline, text and requestSubjects when provided', () => {
       const propsData = {
         mainHeadline,
         selectionHeadline,
         text,
-        subjectAccordion,
+        requestSubjects,
       }
       createComponent(propsData)
 
@@ -60,6 +54,18 @@ describe('ContactRequestSelection', () => {
       expect(mainHl.text()).toMatch(mainHeadline)
       expect(selectionHl.text()).toMatch(selectionHeadline)
       expect(selectionText.text()).toMatch(text)
+    })
+    it('bla NuxtDynamic', () => {
+      const propsData = {
+        mainHeadline,
+        selectionHeadline,
+        text,
+        requestSubjects,
+      }
+      createComponent(propsData)
+
+      const subjects = wrapper.findAll('[name="ContactRequestSubject"]')
+      expect(subjects).toHaveLength(3)
     })
   })
 

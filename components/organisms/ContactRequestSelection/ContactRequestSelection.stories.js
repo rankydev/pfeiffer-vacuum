@@ -5,7 +5,7 @@ import {
   mainHeadline,
   selectionHeadline,
   text,
-  contactRequests,
+  requestSubjects,
 } from './ContactRequestSelection.stories.content.js'
 
 const argTypes = {}
@@ -43,5 +43,5 @@ Default.args = {
   mainHeadline,
   selectionHeadline,
   text,
-  contactRequests: contactRequests,
+  requestSubjects: requestSubjects,
 }
