@@ -1,6 +1,6 @@
 export default {
   name: 'Stage',
-  display_name: 'Stage',
+  display_name: 'Stage Module',
   schema: {
     image: {
       type: 'asset',
