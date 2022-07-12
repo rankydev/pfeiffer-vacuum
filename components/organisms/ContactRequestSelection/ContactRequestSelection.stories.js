@@ -16,10 +16,10 @@ export default {
     docs: {
       description: {
         component:
-          'The product card is a component which shows a product. The product is handed into the ContactRequestSelection by a parent component.',
+          'The Contact Request Selection has a main headline a section headline & text and also wraps the Contact Request Subjects in it.',
       },
       source: {
-        code: `<ContactRequestSelection v-bind="{ product }" />`,
+        code: `<ContactRequestSelection v-bind="{ mainHeadline, selectionHeadline, text, requestSubjects }" />`,
       },
     },
   },
