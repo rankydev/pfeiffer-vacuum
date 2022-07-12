@@ -2,15 +2,15 @@ export default {
   name: 'ContactFormSection',
   display_name: 'Contact Form Section',
   schema: {
-    contactPersons: {
-      display_name: 'Contact Persons',
-      type: 'bloks',
-      maximum: 10,
-      restrict_components: true,
-      component_whitelist: ['Accordion'],
-    },
     requestForms: {
       display_name: 'Request Forms',
+      type: 'bloks',
+      maximum: 1,
+      restrict_components: true,
+      component_whitelist: ['ContactRequestSelection'],
+    },
+    contactPersons: {
+      display_name: 'Contact Persons',
       type: 'bloks',
       maximum: 10,
       restrict_components: true,
