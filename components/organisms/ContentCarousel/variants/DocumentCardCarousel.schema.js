@@ -1,10 +1,10 @@
-import Carousel from '../ContentCarousel.schema.partial.js'
+import ContentCarousel from '../ContentCarousel.schema.partial.js'
 
 export default {
   name: 'DocumentCardCarousel',
   display_name: 'Document Card Carousel',
   schema: {
-    ...Carousel,
+    ...ContentCarousel,
     slides: {
       type: 'bloks',
       display_name: 'Slides',

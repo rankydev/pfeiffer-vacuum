@@ -1,34 +1,34 @@
 import ContentCarousel from '../ContentCarousel'
-import contentCarouselContent from './GeneralTeaserCarousel.stories.content'
+import generalTeaserCarouselContent from './GeneralTeaserCarousel.stories.content'
 
 const argTypes = {
   autoplay: {
     control: { type: 'boolean' },
-    defaultValue: contentCarouselContent.autoplay,
+    defaultValue: generalTeaserCarouselContent.autoplay,
   },
   autoplaySpeed: {
     control: { type: 'number' },
-    defaultValue: contentCarouselContent.autoplaySpeed,
+    defaultValue: generalTeaserCarouselContent.autoplaySpeed,
   },
   button: {
     control: { type: 'array' },
-    defaultValue: contentCarouselContent.button,
+    defaultValue: generalTeaserCarouselContent.button,
   },
   headline: {
     control: { type: 'text' },
-    defaultValue: contentCarouselContent.headline,
+    defaultValue: generalTeaserCarouselContent.headline,
   },
   isWide: {
     control: { type: 'boolean' },
-    defaultValue: contentCarouselContent.isWide,
+    defaultValue: generalTeaserCarouselContent.isWide,
   },
   infinite: {
     control: { type: 'boolean' },
-    defaultValue: contentCarouselContent.infinite,
+    defaultValue: generalTeaserCarouselContent.infinite,
   },
   slides: {
     control: { type: 'array' },
-    defaultValue: contentCarouselContent.slides,
+    defaultValue: generalTeaserCarouselContent.slides,
   },
 }
 
@@ -61,5 +61,5 @@ const Template = (args, { argTypes }) => ({
 
 export const Default = Template.bind({})
 Default.args = {
-  ...contentCarouselContent,
+  ...generalTeaserCarouselContent,
 }
