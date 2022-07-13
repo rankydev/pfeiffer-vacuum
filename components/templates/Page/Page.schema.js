@@ -44,7 +44,6 @@ export default {
         'ContentTextBlock',
         'CustomContentCardCarousel',
         'DocumentCardCarousel',
-        'CustomContentCard',
         'TextArea',
         'FormInput',
         'ImageWithDescription',
