@@ -3,7 +3,7 @@ import ContactRequestSelection from './ContactRequestSelection.vue'
 
 import {
   mainHeadline,
-  selectionHeadline,
+  sectionHeadline,
   text,
   requestSubjects,
 } from './ContactRequestSelection.stories.content.js'
@@ -28,37 +28,29 @@ function createComponent(propsData = {}) {
 
 describe('ContactRequestSelection', () => {
   describe('initial state', () => {
-    it('should provide mainHeadline, selectionHeadline, text and requestSubjects when provided', () => {
+    it('should provide mainHeadline, sectionHeadline, text and requestSubjects when provided', () => {
       const propsData = {
         mainHeadline,
-        selectionHeadline,
+        sectionHeadline,
         text,
         requestSubjects,
       }
       createComponent(propsData)
 
-      const mainHl = wrapper.find(
-        '.contact-request-selection__content--mainHeadline'
-      )
+      const mainHl = wrapper.find('.contact-request-selection__main-headline')
       const selectionHl = wrapper.find(
-        '.contact-request-selection__content--selectionHeadline'
+        '.contact-request-selection__section-headline'
       )
-      const selectionText = wrapper.find(
-        '.contact-request-selection__content--text'
-      )
-
-      // ToDo: Needs a test for testing ContactRequestSubjects later, at the moment uses Accordion but will be replaced
-
-      // expect(accordion.exists()).toBeTruthy()
+      const selectionText = wrapper.find('.contact-request-selection__text')
 
       expect(mainHl.text()).toMatch(mainHeadline)
-      expect(selectionHl.text()).toMatch(selectionHeadline)
+      expect(selectionHl.text()).toMatch(sectionHeadline)
       expect(selectionText.text()).toMatch(text)
     })
     it('bla NuxtDynamic', () => {
       const propsData = {
         mainHeadline,
-        selectionHeadline,
+        sectionHeadline,
         text,
         requestSubjects,
       }

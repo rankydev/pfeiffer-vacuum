@@ -1,9 +1,8 @@
 import ContactRequestSelection from '~/components/organisms/ContactRequestSelection/ContactRequestSelection.vue'
-// import { subjectEntries } from '~/components/molecules/ContactRequestSubject/ContactRequestSubject.stories.content'
 
 import {
   mainHeadline,
-  selectionHeadline,
+  sectionHeadline,
   text,
   requestSubjects,
 } from './ContactRequestSelection.stories.content.js'
@@ -16,10 +15,10 @@ export default {
     docs: {
       description: {
         component:
-          'The Contact Request Selection has a main headline a section headline & text and also wraps the Contact Request Subjects in it.',
+          'The Contact Request Selection has a main headline, a section headline & text and also wraps the Contact Request Subjects in it.',
       },
       source: {
-        code: `<ContactRequestSelection v-bind="{ mainHeadline, selectionHeadline, text, requestSubjects }" />`,
+        code: `<ContactRequestSelection v-bind="{ mainHeadline, sectionHeadline, text, requestSubjects }" />`,
       },
     },
   },
@@ -41,7 +40,7 @@ const Template = (args) => ({
 export const Default = Template.bind({})
 Default.args = {
   mainHeadline,
-  selectionHeadline,
+  sectionHeadline,
   text,
   requestSubjects: requestSubjects,
 }

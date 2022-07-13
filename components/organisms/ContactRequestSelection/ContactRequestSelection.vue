@@ -1,13 +1,13 @@
 <template>
   <div class="contact-request-selection">
     <div class="contact-request-selection__content">
-      <h1 class="contact-request-selection__content--mainHeadline">
+      <h1 class="contact-request-selection__main-headline">
         {{ mainHeadline }}
       </h1>
-      <h3 class="contact-request-selection__content--selectionHeadline">
-        {{ selectionHeadline }}
+      <h3 class="contact-request-selection__section-headline">
+        {{ sectionHeadline }}
       </h3>
-      <p class="tw-teaser contact-request-selection__content--text">
+      <p class="tw-teaser contact-request-selection__text">
         {{ text }}
       </p>
     </div>
@@ -37,9 +37,9 @@ export default defineComponent({
       default: '',
     },
     /**
-     * headline of the selection rendred as h3
+     * headline of the section rendred as h3
      */
-    selectionHeadline: {
+    sectionHeadline: {
       type: String,
       default: '',
     },
@@ -65,15 +65,14 @@ export default defineComponent({
 .contact-request-selection {
   &__content {
     @apply tw-mb-4;
-    @apply tw-mt-16;
+  }
 
-    h1 {
-      @apply tw-mb-8;
-    }
+  &__main-headline {
+    @apply tw-mb-8;
+  }
 
-    h3 {
-      @apply tw-mb-4;
-    }
+  .section-headline {
+    @apply tw-mb-4;
   }
 
   &__subjects {

@@ -1,5 +1,3 @@
-import RichtextBasic from '~/components/atoms/Richtext/RichtextBasic.schema.js'
-
 export default {
   name: 'ContactRequestSelection',
   display_name: 'Contact Request Selection',
@@ -9,7 +7,7 @@ export default {
       max_length: '55',
       translatable: true,
     },
-    selectionHeadline: {
+    sectionHeadline: {
       type: 'text',
       max_length: '55',
       translatable: true,
