@@ -28,8 +28,9 @@ export const useProductStore = defineStore('product', {
     fetchProducts(productCodes) {
       const { $hybrisApi } = useContext()
 
-      const products = useAsync(() =>
-        $hybrisApi.productApi.getProducts(productCodes)
+      const products = useAsync(
+        () => $hybrisApi.productApi.getProducts(productCodes),
+        'manual-key'
       )
 
       this.products = products.value

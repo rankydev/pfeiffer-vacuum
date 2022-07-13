@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="product-card-carousel">
     <ContentCarousel
+      v-if="productSlides"
       :headline="headline"
       :button="button"
       :autoplay="autoplay"
@@ -102,5 +103,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped></style>

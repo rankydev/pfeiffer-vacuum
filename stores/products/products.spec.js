@@ -10,11 +10,12 @@ describe('Page store', () => {
       const productStore = useProductStore()
       expect(productStore).toBeTruthy()
       const product = productStore.getProductById(
-        '128ee16d-cb90-45be-9986-c8006a5235e6_sample'
+        'f35d5da3-6db5-4175-aa5b-0ba195e3789a_sample'
       )
       expect(product).toBeTruthy()
-      expect(product.code).toBe('128ee16d-cb90-45be-9986-c8006a5235e6_sample')
-      expect(product.name).toBe('HiPace® 80')
+      // TODO: test fails (returns undefined instead of code)
+      expect(product.code).toBe('f35d5da3-6db5-4175-aa5b-0ba195e3789a_sample')
+      expect(product.name).toBe('HiPace® 800')
     })
     test('should return all products from store', () => {
       const productStore = useProductStore()
@@ -28,5 +29,6 @@ describe('Page store', () => {
       const product = productStore.getProductById('715')
       expect(product).toStrictEqual({})
     })
+    // TODO: more test scenarios needed?
   })
 })
