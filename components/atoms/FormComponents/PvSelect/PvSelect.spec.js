@@ -4,13 +4,12 @@ import { shallowMount } from '@vue/test-utils'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 import errorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Icon from '~/components/atoms/Icon/Icon'
-import VSelect from 'vue-select'
 import { describe, expect, it } from '@jest/globals'
 
 let wrapper
 
 function createComponent(propsData = {}, {} = {}) {
-  const vSelectStub = {
+  const vSelect = {
     props: [
       'options',
       'label',
@@ -20,7 +19,7 @@ function createComponent(propsData = {}, {} = {}) {
       'components',
       'reduce',
     ],
-    template: `<div>
+    template: `<div class="v-select">
       <div class="search"><slot name="search"  v-bind="{ attributes: {}, events: {}}"/></div>
       <div class="open-indicator"><slot name="open-indicator" /></div>
       <div class="option"><slot name="option" v-bind="options[0]" /></div>
@@ -30,7 +29,7 @@ function createComponent(propsData = {}, {} = {}) {
   }
 
   const options = {
-    stubs: { vSelectStub },
+    stubs: { vSelect },
     propsData,
   }
 
@@ -54,8 +53,6 @@ describe('Select', () => {
         const search = wrapper.find('.search')
         const prependIcon = search.findComponent(Icon)
 
-        console.log('###', search.html())
-
         expect(prependIcon.exists()).toBeTruthy()
         expect(prependIcon.vm.icon).toBe(propsData.prependIcon)
       })
@@ -73,7 +70,7 @@ describe('Select', () => {
       it('should set the correct class on v-select', () => {
         const propsData = { ...icon }
         createComponent(propsData)
-        const selectWrapper = wrapper.findComponent(VSelect)
+        const selectWrapper = wrapper.find('.v-select')
 
         expect(selectWrapper.attributes('class')).toMatch('pv-select--icon')
       })
@@ -84,10 +81,11 @@ describe('Select', () => {
 
       it('should add the correct error class on v-select', () => {
         createComponent(propsData)
-        const selectWrapper = wrapper.findComponent(VSelect)
+        const selectWrapper = wrapper.find('.v-select')
 
         expect(selectWrapper.attributes('class')).toMatch('pv-select--error')
       })
+
       it('should render an error message component', () => {
         createComponent(propsData)
 
