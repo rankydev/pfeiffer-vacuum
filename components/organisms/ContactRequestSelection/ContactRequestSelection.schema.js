@@ -18,7 +18,7 @@ export default {
       type: 'text',
       translatable: true,
     },
-    contactRequests: {
+    requestSubjects: {
       type: 'bloks',
       restrict_components: true,
       required: true,

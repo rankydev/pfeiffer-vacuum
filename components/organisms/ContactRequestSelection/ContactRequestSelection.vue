@@ -13,10 +13,9 @@
     </div>
     <div class="contact-request-selection__subjects">
       <NuxtDynamic
-        v-for="item in contactRequests"
+        v-for="item in requestSubjects"
         :key="item._uid"
         v-editable="item"
-        class="accordionTest"
         v-bind="item"
         :name="item.uiComponent || item.component"
       />
@@ -29,7 +28,6 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'ContactRequestSelection',
-  // components: { Richtext },
   props: {
     /**
      * main headline rendred as h1
@@ -53,15 +51,13 @@ export default defineComponent({
       default: '',
     },
     /**
-     * the list of contact accordions
+     * the list of request subjects
      */
-    contactRequests: {
+    requestSubjects: {
       type: Array,
       default: () => [],
     },
   },
-
-  setup(props) {},
 })
 </script>
 
