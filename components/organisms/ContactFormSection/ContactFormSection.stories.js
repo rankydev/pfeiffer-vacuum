@@ -1,9 +1,8 @@
 import ContactFormSection from '~/components/organisms/ContactFormSection/ContactFormSection.vue'
 import {
-  contactPersons,
   requestForms,
-} from './ContactFormSection.stories.content.js'
-
+  contactPersons,
+} from './ContactFormSection.stories.content'
 const argTypes = {}
 export default {
   title: 'Organisms/ContactFormSection',
@@ -12,7 +11,7 @@ export default {
     docs: {
       description: {
         component:
-          'The product card is a component which shows a product. The product is handed into the ContactFormSection by a parent component.',
+          'The contact form section is used to display the contact request options in a two-column view',
       },
       source: {
         code: `<ContactFormSection v-bind="{ contactPersons, requestForms }" />`,
@@ -36,23 +35,7 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {
-  // ToDo: replace Accordion with content request subject array
-  contactPersons: [
-    {
-      _uid: '35f17f46-a1c5-413e-a278-62ca514e1fd8',
-      level: 'h3',
-      multiple: false,
-      component: 'Accordion',
-      accordionEntries: contactPersons,
-    },
-  ],
-  requestForms: [
-    {
-      _uid: '35f17f46-a1c5-413e-a278-62ca514e1fd8',
-      level: 'h3',
-      multiple: false,
-      component: 'Accordion',
-      accordionEntries: requestForms,
-    },
-  ],
+  requestForms: requestForms,
+  // ToDo: replace ContactRequestSelection with Array of Contact Persons for contactPersons
+  contactPersons: contactPersons,
 }

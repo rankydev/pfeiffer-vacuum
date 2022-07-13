@@ -31,22 +31,19 @@ export default defineComponent({
   components: {},
   props: {
     /**
-     * Headline of the carousel
-     */
-    contactPersons: {
-      type: Array,
-      default: () => [],
-    },
-    /**
-     * Button which will be displayed above the carousel
+     * Array of requestForms rendered on the left side
      */
     requestForms: {
       type: Array,
       default: () => [],
     },
-  },
-  setup(props) {
-    return {}
+    /**
+     * Array of contact details for contact persons rendered on the right side
+     */
+    contactPersons: {
+      type: Array,
+      default: () => [],
+    },
   },
 })
 </script>

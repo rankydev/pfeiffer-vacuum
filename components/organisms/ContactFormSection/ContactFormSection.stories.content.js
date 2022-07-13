@@ -1,6 +1,7 @@
-import { accordionEntries } from '~/components/atoms/Accordion/Accordion.stories.content'
+import contactRequestSelection from '~/components/organisms/ContactRequestSelection/ContactRequestSelection.stories.content'
 
-export const contactPersons = accordionEntries
-export const requestForms = accordionEntries
+export const requestForms = [contactRequestSelection]
+// ToDo: replace ContactRequestSelection with Array of Contact Persons for contactPersons
+export const contactPersons = [contactRequestSelection]
 
 export default {}
