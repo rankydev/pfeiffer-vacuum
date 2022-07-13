@@ -1,5 +1,5 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import ContentCarouselContent from './ContentCarousel.stories.content'
+import ContentCarouselContent from './variants/GeneralTeaserCarousel.stories.content'
 import ContentCarousel from './ContentCarousel'
 
 let wrapper

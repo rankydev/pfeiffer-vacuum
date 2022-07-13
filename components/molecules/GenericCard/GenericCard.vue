@@ -51,7 +51,7 @@
  * pv-card__image--cover
  **/
 import { defineComponent } from '@nuxtjs/composition-api'
-import Link from '~/components/atoms/Link/Link'
+import Link from '@/components/atoms/Link/Link'
 
 export default defineComponent({
   components: { Link },

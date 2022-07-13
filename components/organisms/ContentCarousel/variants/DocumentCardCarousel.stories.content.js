@@ -1,5 +1,5 @@
 import documentCard from '~/components/molecules/DocumentCard/DocumentCard.stories.content.js'
-import contentCarouselContent from '~/components/organisms/ContentCarousel/ContentCarousel.stories.content'
+import contentCarouselContent from './GeneralTeaserCarousel.stories.content'
 
 const carouselEntry = {
   ...documentCard,

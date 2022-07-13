@@ -1,7 +1,6 @@
-import ContentCarousel from './ContentCarousel'
-import contentCarouselContent from './ContentCarousel.stories.content'
+import ContentCarousel from '../ContentCarousel'
+import contentCarouselContent from './GeneralTeaserCarousel.stories.content'
 import contentCustomContentCardCarousel from '~/components/organisms/ContentCarousel/variants/CustomContentCardCarousel.stories.content.js'
-import documentCardCarousel from '~/components/organisms/ContentCarousel/variants/DocumentCardCarousel.stories.content.js'
 
 const argTypes = {
   autoplay: {
@@ -35,13 +34,13 @@ const argTypes = {
 }
 
 export default {
-  title: 'Organisms/Carousels/ContentCarousel',
+  title: 'Organisms/o_111 Custom content-Card-Carousel',
   component: ContentCarousel,
   parameters: {
     docs: {
       description: {
         component:
-          'Carousel component rendering the generic carousel component, with added content above the carousel.',
+          'Carousel component rendering the custom content card carousel component, with added content above the carousel.',
       },
     },
   },
@@ -61,17 +60,7 @@ const Template = (args, { argTypes }) => ({
   `,
 })
 
-export const TeaserCardCarousel = Template.bind({})
-TeaserCardCarousel.args = {
-  ...contentCarouselContent,
-}
-
 export const CustomContentCarousel = Template.bind({})
 CustomContentCarousel.args = {
   ...contentCustomContentCardCarousel,
-}
-
-export const DocumentCardCarousel = Template.bind({})
-DocumentCardCarousel.args = {
-  ...documentCardCarousel,
 }

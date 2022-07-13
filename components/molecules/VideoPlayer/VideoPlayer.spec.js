@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import VideoPlayer from '~/components/atoms/VideoPlayer/VideoPlayer.vue'
+import VideoPlayer from '@/components/molecules/VideoPlayer/VideoPlayer.vue'
 import { title, description } from './VideoPlayer.stories.content.js'
 
 let wrapper

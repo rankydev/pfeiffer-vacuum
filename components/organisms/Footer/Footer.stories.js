@@ -21,7 +21,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Organisms/Footer',
+  title: 'Organisms/o_101 Footer',
   component: PvFooter,
   parameters: {
     docs: {

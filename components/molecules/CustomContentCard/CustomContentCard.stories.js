@@ -15,7 +15,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/Cards/CustomContentCard',
+  title: 'Molecules/m_110 Custom content-Card',
   component: CustomContentCard,
   parameters: {
     docs: {

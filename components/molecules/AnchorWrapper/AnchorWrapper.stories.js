@@ -9,7 +9,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/AnchorWrapper',
+  title: 'Technical Components/Anchor Wrapper',
   component: AnchorWrapper,
   parameters: {
     docs: {

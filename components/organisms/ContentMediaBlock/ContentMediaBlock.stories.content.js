@@ -1,4 +1,4 @@
-import Video from '~/components/atoms/VideoPlayer/VideoPlayer.stories.content.js'
+import Video from '~/components/molecules/VideoPlayer/VideoPlayer.stories.content.js'
 import CTABox from '~/components/molecules/CTABox/CTABox.stories.content.js'
 import { imageWithDescriptionContent } from '~/components/molecules/ImageWithDescription/ImageWithDescription.stories.content.js'
 import { smallText } from '~/components/atoms/Richtext/Richtext.stories.content.js'

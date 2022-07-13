@@ -7,7 +7,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Form components/ButtonGroup',
+  title: 'Atoms/a_104 ButtonGroup',
   component: ButtonGroup,
   parameters: {
     docs: {

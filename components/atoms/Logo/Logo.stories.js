@@ -1,7 +1,7 @@
 import Logo from '~/components/atoms/Logo/Logo.vue'
 
 export default {
-  title: 'Atoms/Logo',
+  title: 'Atoms/a_102 Logo',
   component: Logo,
   parameters: {
     docs: {

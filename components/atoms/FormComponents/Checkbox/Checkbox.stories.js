@@ -7,7 +7,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Form components/Checkbox',
+  title: 'Atoms/a_104 Checkbox',
   component: Checkbox,
   parameters: {
     docs: {

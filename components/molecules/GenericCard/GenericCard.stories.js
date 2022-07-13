@@ -1,4 +1,4 @@
-import GenericCard from '~/components/atoms/GenericCard/GenericCard.vue'
+import GenericCard from '@/components/molecules/GenericCard/GenericCard.vue'
 import {
   imageSizes,
   subheading,
@@ -7,7 +7,7 @@ import {
   description,
   additionalInfo,
   image,
-} from '~/components/atoms/GenericCard/GenericCard.stories.content.js'
+} from '@/components/molecules/GenericCard/GenericCard.stories.content.js'
 
 const argTypes = {
   imageSize: {
@@ -66,7 +66,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Technical Components/GenericCard',
+  title: 'Technical Components/Generic Card',
   component: GenericCard,
   parameters: {
     docs: {

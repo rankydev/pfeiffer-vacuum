@@ -42,7 +42,7 @@
 
 <script>
 import { defineComponent, watch, reactive } from '@nuxtjs/composition-api'
-import Icon from '~/components/atoms/Icon/Icon.vue'
+import Icon from '@/components/atoms/Icon/Icon.vue'
 import { useYoutube } from './player/youtube.js'
 
 const DEFAULT_DATA = {

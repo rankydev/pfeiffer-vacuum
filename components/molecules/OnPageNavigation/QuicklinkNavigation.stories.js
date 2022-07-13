@@ -5,7 +5,7 @@ import { watch } from '@nuxtjs/composition-api'
 import cmsLinks from '~/components/molecules/Breadcrumb/Breadcrumb.stories.content.js'
 
 export default {
-  title: 'Molecules/m_101 On-Page Navigation',
+  title: 'Molecules/m_102 Quicklink Navigation',
   component: OnPageNavigation,
   parameters: {
     docs: {
@@ -14,7 +14,7 @@ export default {
       },
       description: {
         component:
-          'On page navigation component, which consists of the breadcrumbs and quicklink section.',
+          'Quicklink Navigation component, which consists of the quicklink section.',
       },
     },
   },
@@ -23,21 +23,11 @@ export default {
 const Template = (args) => ({
   components: { OnPageNavigation },
   setup() {
-    const cmsStore = useCmsStore()
-
-    watch(
-      () => cmsStore.cmsLinks,
-      () => {
-        if (cmsStore.cmsLinks?.length === cmsLinks.length) return
-        cmsStore.cmsLinks = cmsLinks
-      },
-      { immediate: true }
-    )
     return { args }
   },
   template: `
   <div class="documentation-preview">
-    <OnPageNavigation v-bind="args" />
+    <OnPageNavigation v-bind="args" :hide-breadcrumb="true" />
   </div>
 `,
 })

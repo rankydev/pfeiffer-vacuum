@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 
-import GenericCard from '~/components/atoms/GenericCard/GenericCard.vue'
+import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 
 import CustomContentCard from './CustomContentCard.vue'

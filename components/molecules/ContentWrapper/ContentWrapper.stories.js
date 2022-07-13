@@ -1,7 +1,7 @@
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 
 export default {
-  title: 'Molecules/ContentWrapper',
+  title: 'Technical Components/Content Wrapper',
   component: ContentWrapper,
   parameters: {
     docs: {

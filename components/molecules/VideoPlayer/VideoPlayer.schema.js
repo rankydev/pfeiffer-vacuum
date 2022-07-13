@@ -1,6 +1,6 @@
 export default {
   name: 'VideoPlayer',
-  display_name: 'VideoPlayer',
+  display_name: 'Video Player Module',
   schema: {
     url: {
       type: 'text',
