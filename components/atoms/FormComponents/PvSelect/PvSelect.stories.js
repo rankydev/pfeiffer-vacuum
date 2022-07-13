@@ -15,7 +15,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Form components/PvSelect',
+  title: 'Atoms/a_104 Select',
   component: PvSelect,
   parameters: {
     docs: {
