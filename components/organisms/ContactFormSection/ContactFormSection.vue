@@ -1,31 +1,30 @@
 <template>
-  <div class="contactFormSection">
-    <div class="contactFormSection__wrapper">
-      <div class="contactFormSection__wrapper--left-side">
-        <NuxtDynamic
-          v-for="entry in requestForms"
-          :key="entry._uid"
-          v-editable="entry"
-          class="request-entries"
-          v-bind="entry"
-          :name="entry.uiComponent || entry.component"
-        />
-      </div>
-      <div class="contactFormSection__wrapper--right-side">
-        <NuxtDynamic
-          v-for="entry in contactPersons"
-          :key="entry._uid"
-          v-editable="entry"
-          class="request-entries"
-          v-bind="entry"
-          :name="entry.uiComponent || entry.component"
-        />
-      </div>
+  <div class="contact-form-section">
+    <div class="contact-form-section__left-side">
+      <NuxtDynamic
+        v-for="entry in requestForms"
+        :key="entry._uid"
+        v-editable="entry"
+        v-bind="entry"
+        :name="entry.uiComponent || entry.component"
+      />
+    </div>
+    <div class="contact-form-section__right-side">
+      <NuxtDynamic
+        v-for="entry in contactPersons"
+        :key="entry._uid"
+        v-editable="entry"
+        v-bind="entry"
+        :name="entry.uiComponent || entry.component"
+      />
     </div>
   </div>
 </template>
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
+// ToDo: only for moch purpose until contactPerson Component is defined
+import richtext from '~/components/atoms/Richtext/Richtext.stories.content.js'
+
 export default defineComponent({
   name: 'ContactFormSection',
   components: {},
@@ -42,47 +41,46 @@ export default defineComponent({
      */
     contactPersons: {
       type: Array,
-      default: () => [],
+      default: () => [richtext.content],
     },
   },
 })
 </script>
 <style lang="scss">
-.contactFormSection {
-  &__wrapper {
-    @apply tw-flex;
-    @apply tw-flex-col;
-    @apply tw-relative;
+.contact-form-section {
+  @apply tw-flex;
+  @apply tw-flex-col;
+  @apply tw-relative;
+  @apply tw-w-full;
+  @apply tw-mt-16;
+
+  @screen lg {
+    @apply tw-flex-row;
+  }
+
+  &__left-side {
     @apply tw-w-full;
-    @apply tw-mt-16;
 
     @screen lg {
-      @apply tw-flex-row;
+      @apply tw-w-1/2;
+    }
+  }
+
+  &__right-side {
+    @apply tw-w-full;
+    @apply tw-mt-8;
+
+    @screen lg {
+      @apply tw-w-1/2;
+      @apply tw-mt-0;
+      @apply tw-ml-12;
     }
 
-    &--left-side {
-      @apply tw-w-full;
+    @screen xl {
+      margin-left: 149px;
 
-      @screen lg {
-        @apply tw-w-1/2;
-      }
-    }
-
-    &--right-side {
-      @apply tw-w-full;
-      @apply tw-mt-8;
-
-      @screen lg {
-        @apply tw-w-1/2;
-        @apply tw-mt-0;
-        @apply tw-ml-12;
-      }
-
-      @screen xl {
-        margin-left: 149px;
-
-        // @apply tw-ml-36; / 144px
-      }
+      // ToDo: clarify if design intended spacing from tailwind or added custom spacing on purpose
+      // @apply tw-ml-36; / 144px
     }
   }
 }
