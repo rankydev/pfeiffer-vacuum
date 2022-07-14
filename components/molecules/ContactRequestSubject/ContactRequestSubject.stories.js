@@ -4,7 +4,7 @@ import content from './ContactRequestSubject.stories.content'
 const { title, description, type } = content
 
 export default {
-  title: 'Molecules/ContactRequestSubject',
+  title: 'Molecules/m_115 Contact Request Subject',
   component: ContactRequestSubject,
   parameters: {
     docs: {

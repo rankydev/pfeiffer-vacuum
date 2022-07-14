@@ -4,7 +4,7 @@ import { watch } from '@nuxtjs/composition-api'
 import cmsLinks from './Breadcrumb.stories.content'
 
 export default {
-  title: 'Technical Components/Breadcrumb',
+  title: 'Molecules/m_105 Breadcrumbs',
   component: Breadcrumb,
   parameters: {
     docs: {

@@ -1,8 +1,8 @@
-import contentCarouselContent from '~/components/organisms/ContentCarousel/ContentCarousel.stories.content'
-import CustomContentCardContent from '~/components/molecules/CustomContentCard/CustomContentCard.stories.content'
+import generalTeaserCarouselContent from './GeneralTeaserCarousel.stories.content'
+import customContentCardContent from '~/components/molecules/CustomContentCard/CustomContentCard.stories.content'
 
 export const carouselEntry = {
-  ...CustomContentCardContent,
+  ...customContentCardContent,
   component: 'CustomContentCard',
 }
 
@@ -37,6 +37,6 @@ export default {
     },
   ],
   headline: 'Headline',
-  ...contentCarouselContent,
+  ...generalTeaserCarouselContent,
   slides: carouselEntries,
 }

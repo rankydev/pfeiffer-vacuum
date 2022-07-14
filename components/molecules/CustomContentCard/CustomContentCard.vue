@@ -43,7 +43,7 @@
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
-import GenericCard from '~/components/atoms/GenericCard/GenericCard.vue'
+import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 
 export default defineComponent({

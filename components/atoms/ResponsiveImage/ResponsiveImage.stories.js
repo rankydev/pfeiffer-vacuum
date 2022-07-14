@@ -31,7 +31,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Atoms/Responsive Image',
+  title: 'Technical Components/Responsive Image',
   component: ResponsiveImage,
   parameters: {
     docs: {

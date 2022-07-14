@@ -1,7 +1,7 @@
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 
 export default {
-  title: 'Form components/PvInput',
+  title: 'Atoms/a_104 Input',
   component: PvInput,
   parameters: {
     docs: {
