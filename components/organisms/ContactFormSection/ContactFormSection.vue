@@ -1,5 +1,5 @@
 <template>
-  <div class="contact-form-section">
+  <div class="contact-form-section tw-grid-container">
     <div class="contact-form-section__left-side">
       <NuxtDynamic
         v-for="entry in requestForms"
@@ -48,39 +48,20 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .contact-form-section {
-  @apply tw-flex;
-  @apply tw-flex-col;
-  @apply tw-relative;
-  @apply tw-w-full;
-  @apply tw-mt-16;
-
-  @screen lg {
-    @apply tw-flex-row;
-  }
-
   &__left-side {
     @apply tw-w-full;
 
     @screen lg {
-      @apply tw-w-1/2;
+      @apply tw-col-span-6;
     }
   }
 
   &__right-side {
     @apply tw-w-full;
-    @apply tw-mt-8;
 
     @screen lg {
-      @apply tw-w-1/2;
-      @apply tw-mt-0;
-      @apply tw-ml-12;
-    }
-
-    @screen xl {
-      margin-left: 149px;
-
-      // ToDo: clarify if design intended spacing from tailwind or added custom spacing on purpose
-      // @apply tw-ml-36; / 144px
+      @apply tw-col-span-5;
+      @apply tw-col-start-8;
     }
   }
 }
