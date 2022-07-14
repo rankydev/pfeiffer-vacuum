@@ -67,7 +67,7 @@ describe('Password', () => {
       expect(input.exists()).toBeTruthy()
     })
 
-    it('should set an error message and render error icon when hasError is true', () => {
+    it('should set an error message when hasError is true', () => {
       const propsData = { errorMessage: 'Some error occured', hasError: true }
       const wrapper = shallowMount(Password, { propsData })
       const input = wrapper.findComponent(errorMessage)
