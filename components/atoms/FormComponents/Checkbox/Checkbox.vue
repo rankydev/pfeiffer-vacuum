@@ -73,7 +73,7 @@ export default {
     }
 
     &:focus {
-      @apply tw-border-pv-red-lighter;
+      @apply tw-border tw-border-pv-red-lighter;
       @apply tw-ring-0;
       @apply tw-text-pv-red-lighter;
       @apply tw-shadow-border-red-lighter;
