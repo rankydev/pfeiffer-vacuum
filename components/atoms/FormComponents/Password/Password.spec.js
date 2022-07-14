@@ -82,6 +82,22 @@ describe('Password', () => {
 
       expect(errorIcon.exists()).toBeTruthy()
     })
+
+    it('should render criterias given prop validate with value true', () => {
+      const propsData = { validate: true }
+      const wrapper = shallowMount(Password, { propsData })
+      const passwordCriterias = wrapper.find('.pv-password__rules')
+
+      expect(passwordCriterias.exists()).toBeTruthy()
+    })
+
+    it('should add class fulfilled to criterias given valid password', () => {
+      const propsData = { validate: true, value: 'Aas12esd' }
+      const wrapper = shallowMount(Password, { propsData })
+      const passwordCriterias = wrapper.findAll('.fulfilled')
+
+      expect(passwordCriterias.length).toBe(3)
+    })
   })
 
   describe('during interaction', () => {
