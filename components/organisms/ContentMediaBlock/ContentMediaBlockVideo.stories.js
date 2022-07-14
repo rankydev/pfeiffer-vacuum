@@ -3,8 +3,6 @@ import {
   headline,
   subline,
   mediaVideo,
-  mediaCTA,
-  mediaImage,
   order,
   orders,
   ratio,
@@ -25,7 +23,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Organisms/ContentMediaBlock',
+  title: 'Organisms/o_104 Content Media block with video',
   component: ContentMediaBlock,
   parameters: {
     docs: {
@@ -53,33 +51,11 @@ const Template = (args) => ({
 `,
 })
 
-export const WithVideo = Template.bind({})
-WithVideo.args = {
+export const Default = Template.bind({})
+Default.args = {
   headline,
   subline,
   media: mediaVideo,
-  order,
-  ratio,
-  buttons,
-  richtext,
-}
-
-export const WithCTA = Template.bind({})
-WithCTA.args = {
-  headline,
-  subline,
-  media: mediaCTA,
-  order,
-  ratio,
-  buttons,
-  richtext,
-}
-
-export const WithImage = Template.bind({})
-WithImage.args = {
-  headline,
-  subline,
-  media: mediaImage,
   order,
   ratio,
   buttons,

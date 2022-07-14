@@ -16,7 +16,9 @@ module.exports = {
       'border-red-lighter': 'inset 0 0 0 2px #ff184b',
       'border-grey-80': 'inset 0 0 0 2px #CCCCCC',
       'border-black': 'inset 0 0 0 2px #000000',
+      'border-grey-16': 'inset 0 0 0 2px #292929',
       'border-white': 'inset 0 0 0 2px #ffffff',
+      select: '0 48px 48px -48px #CCCCCC',
     },
     colors: {
       'pv-red': '#dd1541',

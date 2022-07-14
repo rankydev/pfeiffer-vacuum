@@ -2,7 +2,7 @@ import RichtextBasic from '~/components/atoms/Richtext/RichtextBasic.schema'
 
 export default {
   name: 'FooterNewsletter',
-  display_name: 'Footer Newsletter',
+  display_name: 'Newsletter Module',
   schema: {
     headline: {
       type: 'text',

@@ -1,7 +1,7 @@
 import LanguageSwitcher from '~/components/molecules/LanguageSwitcher/LanguageSwitcher.vue'
 
 export default {
-  title: 'Molecules/LanguageSwitcher',
+  title: 'Molecules/m_119 Language Switcher',
   component: LanguageSwitcher,
   parameters: {
     docs: {

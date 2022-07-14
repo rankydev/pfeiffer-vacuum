@@ -7,5 +7,9 @@
   "button": {},
   "label": {
     "optional": "(옵션)"
+  },
+  "select": {
+    "placeholder": "선택하십시오...",
+    "noOptions": "죄송합니다. 일치하는 옵션이 없습니다."
   }
 }

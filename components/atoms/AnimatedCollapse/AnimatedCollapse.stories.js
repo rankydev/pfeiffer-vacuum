@@ -3,7 +3,7 @@ import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollap
 import { ref } from '@nuxtjs/composition-api'
 
 export default {
-  title: 'Atoms/Animated Collapse',
+  title: 'Technical Components/Animated Collapse',
   component: AnimatedCollapse,
   parameters: {
     docs: {
@@ -35,7 +35,7 @@ const Template = (args) => ({
   <div class="documentation-preview">
     <button @click="visible = !visible">Toggle</button>
     <AnimatedCollapse v-bind="args">
-        <div 
+        <div
           v-show="visible"
           v-html="text"
           style="white-space: nowrap; overflow: hidden; max-width: 200px; background-color: #f5f5f5;"

@@ -5,7 +5,7 @@ import { watch } from '@nuxtjs/composition-api'
 import cmsLinks from '~/components/molecules/Breadcrumb/Breadcrumb.stories.content.js'
 
 export default {
-  title: 'Molecules/OnPage Navigation',
+  title: 'Molecules/m_101 On-Page Navigation',
   component: OnPageNavigation,
   parameters: {
     docs: {

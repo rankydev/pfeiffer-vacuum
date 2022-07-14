@@ -17,7 +17,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Atoms/Accordion',
+  title: 'Atoms/a_101 Accordion',
   component: Accordion,
   parameters: {
     docs: {

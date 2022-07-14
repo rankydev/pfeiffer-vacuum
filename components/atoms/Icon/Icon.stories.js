@@ -1,7 +1,7 @@
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default {
-  title: 'Atoms/Icon',
+  title: 'Atoms/a_106 Icon',
   component: Icon,
   parameters: {
     docs: {

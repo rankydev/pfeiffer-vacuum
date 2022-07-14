@@ -2,7 +2,7 @@ import responsiveImage from './../../atoms/ResponsiveImage/ResponsiveImage.schem
 
 export default {
   name: 'ImageWithDescription',
-  display_name: 'Image with description',
+  display_name: 'Image module with source',
   schema: {
     description: {
       type: 'bloks',

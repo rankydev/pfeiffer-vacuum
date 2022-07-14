@@ -7,5 +7,9 @@
   "button": {},
   "label": {
     "optional": "(optional)"
+  },
+  "select": {
+    "placeholder": "Please select...",
+    "noOptions": "Sorry, no matching options."
   }
 }

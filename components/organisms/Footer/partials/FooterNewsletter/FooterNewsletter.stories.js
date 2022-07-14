@@ -24,7 +24,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Organisms/FooterNewsletter',
+  title: 'Organisms/o_113 Newsletter Module',
   component: FooterNewsletter,
   parameters: {
     docs: {

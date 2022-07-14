@@ -3,7 +3,7 @@ import LinkContent from './Link.stories.content'
 import { variants, targets } from './Link.stories.content'
 
 export default {
-  title: 'Atoms/Link',
+  title: 'Atoms/a_105 Link',
   component: Link,
   parameters: {
     docs: {
