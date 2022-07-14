@@ -7,12 +7,7 @@
         v-bind="{ placeholder, required, disabled }"
         :type="inputType"
         class="pv-password__element pv-password__element--icon"
-        :class="[
-          validate
-            ? 'pv-password__element--validated'
-            : 'pv-password__element--NotValidated',
-          hasError ? 'pv-password__element--error' : '',
-        ]"
+        :class="inputStylings"
         :placeholder="placeholder"
         @keypress.enter="$emit('submit', $event)"
         @focus="$emit('focus', true)"
@@ -38,30 +33,29 @@
       <div
         class="pv-password__strength-indicator--inner"
         :class="{
-          'pv-password__strength-indicator--full':
-            indicatorWidth().toString() === '100%',
+          'pv-password__strength-indicator--full': indicatorWidthFull,
         }"
-        :style="{ width: indicatorWidth() }"
+        :style="{ width: indicatorWidth }"
       />
     </div>
     <ul v-if="validate" class="pv-password__rules">
-      <li class="pv-password__rules--entry" :class="{ fulfilled: minLength() }">
+      <li class="pv-password__rules--entry" :class="{ fulfilled: minLength }">
         <Icon size="xsmall" icon="check_circle" />
         {{ $t('form.password.minLength') }}
       </li>
       <li
         class="pv-password__rules--entry"
-        :class="{ fulfilled: hasCapitalAndLowercase() }"
+        :class="{ fulfilled: hasCapitalAndLowercase }"
       >
         <Icon size="xsmall" icon="check_circle" />
         {{ $t('form.password.capitalLetter') }}
       </li>
-      <li class="pv-password__rules--entry" :class="{ fulfilled: hasDigit() }">
+      <li class="pv-password__rules--entry" :class="{ fulfilled: hasDigit }">
         <Icon size="xsmall" icon="check_circle" />
         {{ $t('form.password.digit') }}
       </li>
       <li
-        v-if="maxLengthReached()"
+        v-if="maxLengthReached"
         class="pv-password__rules--entry"
         :class="'pv-password__rules--entryTooLong'"
       >
@@ -73,7 +67,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import { ref } from '@nuxtjs/composition-api'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
@@ -191,61 +185,64 @@ export default defineComponent({
   setup(props) {
     const internalValue = ref(props.value)
     const inputType = ref(props.visibility ? 'text' : 'password')
+    const inputStylings = ref([
+      props.validate
+        ? 'pv-password__element--validated'
+        : 'pv-password__element--NotValidated',
+      props.hasError ? 'pv-password__element--error' : '',
+    ]).value
 
-    function changeVisibility() {
-      if (inputType.value === 'password') {
-        inputType.value = 'text'
-      } else {
-        inputType.value = 'password'
-      }
+    const changeVisibility = () => {
+      inputType.value = inputType.value === 'password' ? 'text' : 'password'
+      return inputType.value
     }
 
-    function minLength() {
-      return this.internalValue && this.internalValue.length >= 8
-    }
+    const minLength = computed(
+      () => internalValue.value && internalValue.value.length >= 8
+    )
 
-    function maxLengthReached() {
-      return this.internalValue.length > 128
-    }
-
-    function hasCapitalAndLowercase() {
+    const hasCapitalAndLowercase = computed(() => {
       return (
-        new RegExp('.*[A-Z].*').test(this.internalValue) &&
-        new RegExp('.*[a-z].*').test(this.internalValue)
+        new RegExp('.*[A-Z].*').test(internalValue.value) &&
+        new RegExp('.*[a-z].*').test(internalValue.value)
       )
-    }
+    })
 
-    function hasDigit() {
-      return new RegExp('\\d').test(this.internalValue)
-    }
+    const maxLengthReached = computed(() => internalValue.value.length > 128)
 
-    function indicatorWidth() {
+    const hasDigit = computed(() => {
+      return new RegExp('\\d').test(internalValue.value)
+    })
+
+    const indicatorWidth = computed(() => {
       let result = 0
-
-      if (this.internalValue && this.internalValue.length >= 8) {
+      if (minLength.value) {
         result += 33
       }
-
-      if (this.hasCapitalAndLowercase()) {
+      if (hasCapitalAndLowercase.value) {
         result += 33
       }
-
-      if (this.hasDigit()) {
+      if (hasDigit.value) {
         result += 34
       }
-
       return result + '%'
-    }
+    })
+
+    const indicatorWidthFull = computed(
+      () => indicatorWidth.value.toString() === '100%'
+    )
 
     return {
       internalValue,
       inputType,
+      inputStylings,
       changeVisibility,
       minLength,
       maxLengthReached,
       hasCapitalAndLowercase,
       hasDigit,
       indicatorWidth,
+      indicatorWidthFull,
     }
   },
 })
@@ -267,7 +264,7 @@ export default defineComponent({
 
     &--error {
       @apply tw-text-pv-red;
-      margin-right: 35px;
+      @apply tw-mr-9;
     }
 
     &--visibility {
