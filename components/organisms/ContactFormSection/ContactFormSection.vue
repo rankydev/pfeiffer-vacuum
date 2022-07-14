@@ -50,6 +50,7 @@ export default defineComponent({
 .contact-form-section {
   &__left-side {
     @apply tw-w-full;
+    @apply tw-col-span-12;
 
     @screen lg {
       @apply tw-col-span-6;
@@ -58,6 +59,8 @@ export default defineComponent({
 
   &__right-side {
     @apply tw-w-full;
+    @apply tw-col-start-1;
+    @apply tw-col-span-12;
 
     @screen lg {
       @apply tw-col-span-5;
