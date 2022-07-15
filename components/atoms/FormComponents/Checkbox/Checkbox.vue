@@ -42,6 +42,7 @@ export default {
   @apply tw-items-center;
   @apply tw-text-pv-grey-16;
   @apply tw-text-base;
+  -webkit-tap-highlight-color: transparent;
 
   &--disabled {
     @apply tw-text-pv-grey-48;
