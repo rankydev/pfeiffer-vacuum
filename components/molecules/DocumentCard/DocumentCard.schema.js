@@ -2,7 +2,7 @@ import Link from '~/components/atoms/Link/Link.schema.partial.js'
 
 export default {
   name: 'DocumentCard',
-  display_name: 'DocumentCard',
+  display_name: 'Document-Card',
   schema: {
     image: {
       type: 'asset',

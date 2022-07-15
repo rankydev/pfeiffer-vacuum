@@ -8,6 +8,10 @@
   "label": {
     "optional": "(optional)"
   },
+  "select": {
+    "placeholder": "Please select...",
+    "noOptions": "Sorry, no matching options."
+  },
   "password": {
     "minLength": "Consists of at least 8 letters",
     "capitalLetter":

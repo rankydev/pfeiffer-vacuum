@@ -1,7 +1,7 @@
 import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
 
 export default {
-  title: 'Molecules/SearchInput',
+  title: 'Molecules/m_104 Search-Input',
   component: SearchInput,
   parameters: {
     docs: {

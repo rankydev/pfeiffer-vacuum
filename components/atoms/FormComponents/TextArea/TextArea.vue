@@ -75,7 +75,7 @@ export default defineComponent({
     @apply tw-px-3;
     @apply tw-py-2;
     @apply tw-border-2;
-    @apply tw-rounded;
+    @apply tw-rounded-md;
     @apply tw-border-pv-grey-80;
     @apply tw-text-pv-black;
     @apply tw-w-full;

@@ -21,7 +21,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Organisms/HomeStage',
+  title: 'Organisms/o_103 Home Stage Module',
   component: HomeStage,
   parameters: {
     docs: {

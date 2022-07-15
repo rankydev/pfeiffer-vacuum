@@ -6,7 +6,7 @@ const props = {
 }
 
 export default {
-  title: 'Atoms/Richtext',
+  title: 'Atoms/a_103 Richtext',
   component: Richtext,
   parameters: {
     docs: {

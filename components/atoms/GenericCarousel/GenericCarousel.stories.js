@@ -29,7 +29,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Technical components/GenericCarousel',
+  title: 'Technical components/Generic Carousel',
   component: GenericCarousel,
   parameters: {
     docs: {

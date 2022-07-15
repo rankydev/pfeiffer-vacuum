@@ -1,5 +1,5 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import ContentCarouselContent from './ContentCarousel.stories.content'
+import generalTeaserCarouselContent from './variants/GeneralTeaserCarousel.stories.content'
 import ContentCarousel from './ContentCarousel'
 
 let wrapper
@@ -37,15 +37,17 @@ describe('ContentCarousel', () => {
     })
 
     test('should render headline and interaction button given propsData', () => {
-      createComponent(ContentCarouselContent)
+      createComponent(generalTeaserCarouselContent)
 
       const content = wrapper.find('.content-carousel__content')
       const contentHeadline = content.find('h2')
       const contentButton = content.find('[component="Button"]')
 
-      expect(contentHeadline.text()).toEqual(ContentCarouselContent.headline)
+      expect(contentHeadline.text()).toEqual(
+        generalTeaserCarouselContent.headline
+      )
       expect(contentButton.attributes('label')).toEqual(
-        ContentCarouselContent.button[0].label
+        generalTeaserCarouselContent.button[0].label
       )
     })
 

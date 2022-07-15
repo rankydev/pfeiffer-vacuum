@@ -13,7 +13,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Organisms/Header',
+  title: 'Organisms/o_100 Header',
   component: Header,
   parameters: {
     docs: {

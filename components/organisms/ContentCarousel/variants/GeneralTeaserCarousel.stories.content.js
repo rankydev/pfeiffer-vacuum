@@ -1,4 +1,4 @@
-import carouselContent from '~/components/atoms/GenericCarousel/GenericCarousel.stories.content'
+import genericCarouselContent from '~/components/atoms/GenericCarousel/GenericCarousel.stories.content'
 
 export default {
   button: [
@@ -15,5 +15,5 @@ export default {
     },
   ],
   headline: 'Headline',
-  ...carouselContent,
+  ...genericCarouselContent,
 }

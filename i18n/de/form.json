@@ -8,6 +8,10 @@
   "label": {
     "optional": "(optional)"
   },
+  "select": {
+    "placeholder": "Bitte auswählen...",
+    "noOptions": "Leider keine passenden Optionen gefunden."
+  },
   "password": {
     "minLength": "Mindestens 8 Zeichen",
     "capitalLetter": "Mindestens ein Großbuchstabe",

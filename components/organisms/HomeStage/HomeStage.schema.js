@@ -2,7 +2,7 @@ import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.
 
 export default {
   name: 'HomeStage',
-  display_name: 'Home Stage',
+  display_name: 'Home Stage Module',
   schema: {
     slides: {
       type: 'bloks',

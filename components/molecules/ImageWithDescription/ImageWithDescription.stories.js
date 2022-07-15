@@ -21,7 +21,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/Image Module with source',
+  title: 'Molecules/m_116 Image Module with source',
   component: ImageWithDescription,
   parameters: {
     docs: {

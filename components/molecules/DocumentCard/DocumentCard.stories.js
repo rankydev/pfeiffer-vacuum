@@ -9,7 +9,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/Cards/DocumentCard',
+  title: 'Molecules/m_107 Document-Card',
   component: DocumentCard,
   parameters: {
     docs: {
