@@ -1,10 +1,10 @@
 <template>
-  <div class="textarea">
+  <div class="pv-textarea">
     <Label :optional="!required" :label="label" tag-name="textarea" />
     <textarea
       name="textarea"
       v-bind="{ text, placeholder, required, disabled }"
-      class="textarea__input"
+      class="pv-textarea__input"
       @focus="$emit('focus', true)"
       @blur="$emit('focus', false)"
     ></textarea>
@@ -16,7 +16,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 
 export default defineComponent({
-  name: 'TextArea',
+  name: 'PvTextArea',
   components: { Label },
   props: {
     /**
@@ -64,12 +64,11 @@ export default defineComponent({
      */
     'focus',
   ],
-  setup(props) {},
 })
 </script>
 
 <style lang="scss">
-.textarea {
+.pv-textarea {
   &__input {
     @apply tw-block;
     @apply tw-px-3;

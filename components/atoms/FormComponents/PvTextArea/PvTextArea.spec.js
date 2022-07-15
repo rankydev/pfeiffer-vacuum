@@ -1,4 +1,4 @@
-import TextArea from '~/components/atoms/FormComponents/TextArea/TextArea.vue'
+import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea.vue'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label.vue'
 import { shallowMount } from '@vue/test-utils'
 
@@ -12,14 +12,14 @@ describe('TextArea', () => {
   describe('initial state', () => {
     test('should be rendered correctly given props', () => {
       const propsData = { ...propsTextArea }
-      const wrapper = shallowMount(TextArea, { propsData })
+      const wrapper = shallowMount(PvTextArea, { propsData })
       const textareaWrapper = wrapper.find('.textarea')
 
       expect(textareaWrapper.exists()).toBeTruthy()
     })
     test('should render label component correctly given props', () => {
       const propsData = { ...propsTextArea }
-      const wrapper = shallowMount(TextArea, { propsData })
+      const wrapper = shallowMount(PvTextArea, { propsData })
       const labelWrapper = wrapper.findComponent(Label)
 
       expect(labelWrapper.exists()).toBeTruthy()
@@ -31,7 +31,7 @@ describe('TextArea', () => {
     })
     test('should render textarea correctly given props', () => {
       const propsData = { ...propsTextArea }
-      const wrapper = shallowMount(TextArea, { propsData })
+      const wrapper = shallowMount(PvTextArea, { propsData })
       const textAreaWrapper = wrapper.find('.textarea__input')
       expect(textAreaWrapper.attributes('placeholder')).toEqual(
         propsTextArea.placeholder
@@ -41,7 +41,7 @@ describe('TextArea', () => {
     })
     test('should be rendered correctly given empty props', () => {
       const propsData = {}
-      const wrapper = shallowMount(TextArea, { propsData })
+      const wrapper = shallowMount(PvTextArea, { propsData })
       const textareaWrapper = wrapper.find('div')
       const textareaLabel = wrapper.find('[for="textarea"]')
 
