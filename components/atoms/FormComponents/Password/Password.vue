@@ -331,7 +331,6 @@ export default defineComponent({
       @apply tw-rounded-t-md;
       @apply tw-border-pv-red;
       @apply tw-rounded-b-none;
-      @apply tw-text-pv-red;
 
       &:focus {
         @apply tw-border-pv-red;
