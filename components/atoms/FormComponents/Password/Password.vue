@@ -297,6 +297,7 @@ export default defineComponent({
     }
 
     &--validated {
+      @apply tw-rounded-b-none;
       @apply tw-rounded-t-md;
       border-bottom-style: none;
 

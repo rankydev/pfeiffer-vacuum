@@ -13,10 +13,10 @@
     "noOptions": "죄송합니다. 일치하는 옵션이 없습니다."
   },
   "password": {
-    "minLength": "Consists of at least 8 letters",
+    "minLength": "至少包含8个字符",
     "capitalLetter":
-    "Contains at least 1 capital letter and 1 lower case",
-    "digit": "Contains at least 1 digit",
-    "tooLong": "Your password may be too long (max. 128 characters)"
+    "至少包含1个大写字母和1个小写字母",
+    "digit": "至少包含1位数字",
+    "tooLong": "您的密码过长（不得超过128个字节）"
   }
 }
