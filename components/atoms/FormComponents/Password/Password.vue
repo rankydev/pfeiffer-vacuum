@@ -254,6 +254,10 @@ export default defineComponent({
 
   &__wrapper {
     @apply tw-relative;
+
+    ::-ms-reveal {
+      @apply tw-hidden;
+    }
   }
 
   &__icon {
