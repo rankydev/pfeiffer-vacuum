@@ -13,7 +13,7 @@ describe('TextArea', () => {
     test('should be rendered correctly given props', () => {
       const propsData = { ...propsTextArea }
       const wrapper = shallowMount(PvTextArea, { propsData })
-      const textareaWrapper = wrapper.find('.textarea')
+      const textareaWrapper = wrapper.find('.pv-textarea')
 
       expect(textareaWrapper.exists()).toBeTruthy()
     })
@@ -32,7 +32,7 @@ describe('TextArea', () => {
     test('should render textarea correctly given props', () => {
       const propsData = { ...propsTextArea }
       const wrapper = shallowMount(PvTextArea, { propsData })
-      const textAreaWrapper = wrapper.find('.textarea__input')
+      const textAreaWrapper = wrapper.find('.pv-textarea__input')
       expect(textAreaWrapper.attributes('placeholder')).toEqual(
         propsTextArea.placeholder
       )
