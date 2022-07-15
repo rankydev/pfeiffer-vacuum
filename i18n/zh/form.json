@@ -13,10 +13,19 @@
     "noOptions": "对不起。没有匹配的选项。"
   },
   "password": {
-    "minLength": "Consists of at least 8 letters",
+    "minLength": "至少包含 8 个字母",
     "capitalLetter":
-    "Contains at least 1 capital letter and 1 lower case",
-    "digit": "Contains at least 1 digit",
-    "tooLong": "Your password may be too long (max. 128 characters)"
+    "至少包含 1 个大写字母和 1 个小写字母",
+    "digit": "至少包含 1 个数字",
+    "tooLong": "您的密码可能太长（最多 128 个字符）"
+  },
+  "contactRequest": {
+    "generalRequest": {
+      "forename": "名",
+      "surname": "姓",
+      "mail": "电子邮件",
+      "country": "国家",
+      "message": "你的信息"
+    }
   }
 }

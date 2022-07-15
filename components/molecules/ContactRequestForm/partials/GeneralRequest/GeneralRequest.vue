@@ -1,20 +1,32 @@
 <template>
   <div class="general-request">
-    <PvInput label="Vorname" placeholder="Placeholder" required="true" />
-    <PvInput label="Nachname" placeholder="Placeholder" required="true" />
-    <PvInput label="E-Mail" placeholder="Placeholder" required="true" />
+    <PvInput
+      :label="$t('form.contactRequest.generalRequest.forename')"
+      placeholder="Placeholder"
+      required="true"
+    />
+    <PvInput
+      :label="$t('form.contactRequest.generalRequest.surname')"
+      placeholder="Placeholder"
+      required="true"
+    />
+    <PvInput
+      :label="$t('form.contactRequest.generalRequest.mail')"
+      placeholder="Placeholder"
+      required="true"
+    />
     <PvSelect
-      label="Land"
+      :label="$t('form.contactRequest.generalRequest.country')"
       :options="[
         {
           displayValue: 'Deutschland',
           value: 'Deutschland',
         },
       ]"
-      :option-label="'label'"
+      :option-label="'displayValue'"
     />
     <PvTextArea
-      label="Ihre Nachricht"
+      :label="$t('form.contactRequest.generalRequest.message')"
       placeholder="Placeholder"
       required="false"
     />
