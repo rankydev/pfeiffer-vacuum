@@ -3,8 +3,6 @@ import ContactRequestForm from '~/components/molecules/ContactRequestForm/Contac
 import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 
-// const propsData = { contactRequestType: 'QUOTE' }
-
 describe('ContactRequestForm', () => {
   describe('initial state', () => {
     test('should render correctly', () => {
