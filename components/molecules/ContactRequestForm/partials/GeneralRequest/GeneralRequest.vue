@@ -3,17 +3,17 @@
     <PvInput
       :label="$t('form.contactRequest.forename')"
       placeholder="Placeholder"
-      required="true"
+      :required="true"
     />
     <PvInput
       :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
-      required="true"
+      :required="true"
     />
     <PvInput
       :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
-      required="true"
+      :required="true"
     />
     <PvSelect
       :label="$t('form.contactRequest.country')"
@@ -28,7 +28,7 @@
     <PvTextArea
       :label="$t('form.contactRequest.message')"
       placeholder="Placeholder"
-      required="false"
+      :required="false"
     />
   </div>
 </template>
