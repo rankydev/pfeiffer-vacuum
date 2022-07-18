@@ -4,7 +4,7 @@ import content from './ContactCTABox.stories.content'
 const { headline, description, button } = content
 
 export default {
-  title: 'Molecules/Contact CTA Box',
+  title: 'Molecules/m_120 Contact CTA Box',
   component: ContactCTABox,
   parameters: {
     docs: {
