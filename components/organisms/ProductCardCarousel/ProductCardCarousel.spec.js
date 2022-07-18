@@ -3,16 +3,25 @@ import { setActivePinia, createPinia } from 'pinia'
 import productCardCarouselContent from './ProductCardCarousel.stories.content'
 import ProductCardCarousel from './ProductCardCarousel'
 
-jest.mock('~/stores/products', () => {
+const mockFetch = jest.fn()
+const mockGetById = () => {}
+
+jest.mock('~/stores/products/products', () => {
   const {
     product,
   } = require('../../molecules/ProductCard/ProductCard.stories.content.js')
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
 
+  const mockKey = '' + Math.random()
+
   return {
     __esModule: true,
-    useProductStore: () => ({ products: [product, product, product] }),
-    useAsync: (cb) => originalModule.useAsync(cb, key),
+    useProductStore: () => ({
+      products: [product, product, product],
+      fetchProducts: mockFetch,
+      getProductById: mockGetById,
+    }),
+    useAsync: (cb) => originalModule.useAsync(cb, mockKey),
   }
 })
 
@@ -46,15 +55,22 @@ describe('ProductCardCarousel', () => {
   describe('initial state', () => {
     test('should render ProductCardCarousel when no entries are provided', () => {
       createComponent()
-      // TODO: fix The module factory of `jest.mock()` is not allowed to reference any out-of-scope variables. error
-      const productCardCarouselWrapper = wrapper.find('.product-card-carousel')
 
-      expect(productCardCarouselWrapper).toBeTruthy()
+      const productCardCarouselWrapper = wrapper.find('.product-card-carousel')
+      const carousel = wrapper.find('contentcarousel-stub')
+
+      expect(productCardCarouselWrapper.exists()).toBeTruthy()
+      expect(carousel.exists()).toBeFalsy()
     })
 
     test('should render ContentCarousel when products have been fetched from api', () => {
       createComponent(productCardCarouselContent)
-      // TODO add test
+
+      const carousel = wrapper.find('contentcarousel-stub')
+
+      console.log(wrapper.vm.products)
+
+      expect(carousel.exists()).toBeTruthy()
     })
   })
 })

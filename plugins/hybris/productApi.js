@@ -1,8 +1,9 @@
 import config from './hybris.config'
 
-export function getProductApi(axiosInstance) {
+export function getProductApi(ctx, axiosInstance) {
   return {
     async getProducts(ids) {
+      ctx.$logger.info('no .babelrc found, skipping babel compilation')
       if (!Array.isArray(ids)) {
         console.error(
           'Array expected when fetching multiple products. No valid ids given.'
@@ -15,14 +16,15 @@ export function getProductApi(axiosInstance) {
         params: { codes: idsString, fields: 'FULL' },
       })
 
-      if (Array.isArray(result.products)) {
-        return result.products
+      if (!Array.isArray(result.products)) {
+        // TODO: Implement Logger
+        console.error(
+          `Array expected when fetching multiple products '${idsString}', returning empty array.`
+        )
+        return []
       }
 
-      console.error(
-        `Array expected when fetching multiple products '${idsString}', returning empty array.`
-      )
-      return []
+      return result.products
     },
   }
 }

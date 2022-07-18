@@ -50,7 +50,7 @@ const Template = (args, { argTypes }) => ({
   },
   template: `
     <div class="documentation-preview">
-      <ProductCardCarousel v-bind="args" />
+    <ProductCardCarousel v-bind="args" />
     </div>
   `,
 })

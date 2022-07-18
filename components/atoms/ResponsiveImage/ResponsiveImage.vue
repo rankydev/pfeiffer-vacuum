@@ -88,7 +88,7 @@ export default defineComponent({
     provider: {
       type: String,
       default: 'storyblok',
-      validator: (val) => ['storyblok', 'hybris'].includes(val),
+      validator: (val) => ['storyblok', 'hybris', 'static'].includes(val),
     },
     /**
      * Parameter for the aspect ratio of the image

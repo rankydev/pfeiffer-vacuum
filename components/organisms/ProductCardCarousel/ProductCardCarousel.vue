@@ -1,21 +1,25 @@
 <template>
   <div class="product-card-carousel">
     <ContentCarousel
-      v-if="productSlides"
+      v-if="enrichedSlides"
       :headline="headline"
       :button="button"
       :autoplay="autoplay"
       :autoplay-speed="autoplaySpeed"
       :infinite="infinite"
-      :slides="productSlides"
+      :slides="enrichedSlides"
     />
   </div>
 </template>
 
 <script>
 import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
-import { useProductStore } from '~/stores/products/products'
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import {
+  ref,
+  defineComponent,
+  useContext,
+  onMounted,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'ProductCardCarousel',
@@ -66,40 +70,29 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const productStore = useProductStore()
-    const productSlides = computed(() =>
-      props.slides.filter((slide) => slide.product?.code)
-    )
-    const products = computed(() => productStore.products)
+    const { $hybrisApi } = useContext()
 
-    let productCodes = []
+    // Extracted codes from slides
+    const productCodes = props.slides.map((e) => e.product?.code)
 
-    /**
-     * extract product codes
-     */
-    productSlides.value.forEach((slide) => {
-      const code = slide.product?.code
-      if (productCodes.includes(code)) return
+    // Enriched slides with hybris data
+    let enrichedSlides = ref([])
 
-      productCodes.push(code)
-    })
-    productStore.fetchProducts(productCodes)
+    onMounted(async () => {
+      // Fetched hybris products
+      let fetchedProducts = await $hybrisApi.productApi.getProducts(
+        productCodes
+      )
 
-    //if products are getting updated after fetch, the following logic will be retriggered
-    if (products.value && products.value.length) {
-      /**
-       * get productData for each slide
-       */
-      productSlides.value.forEach((slide, index) => {
-        const code = slide.product?.code
-
-        const productData = computed(() => productStore.getProductById(code))
-
-        slide.product = productData.value
+      props.slides.forEach((e) => {
+        enrichedSlides.value.push({
+          ...e,
+          ...fetchedProducts?.find((i) => i.code === e.code),
+        })
       })
-    }
+    })
 
-    return { products: productStore.products, productSlides }
+    return { enrichedSlides }
   },
 })
 </script>

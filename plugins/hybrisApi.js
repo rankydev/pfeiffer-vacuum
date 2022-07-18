@@ -3,7 +3,7 @@ import Vue from 'vue'
 import { getProductApi } from './hybris/productApi'
 
 export function getHybrisApi(ctx) {
-  const { $axios, app } = ctx
+  const { $axios } = ctx
 
   const api = $axios.create()
   api.setBaseURL(process.env.SHOP_BASE_URL)
