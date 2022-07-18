@@ -2,30 +2,19 @@ export default {
   name: 'ContactRequestForm',
   display_name: 'Contact Request Form',
   schema: {
-    type: {
-      type: 'option',
-      options: [
-        {
-          value: 'quote',
-          name: 'Quote',
-        },
-        {
-          value: 'service_request',
-          name: 'Service Request',
-        },
-        {
-          value: 'product_information',
-          name: 'Product Information',
-        },
-        {
-          value: 'general_query',
-          name: 'General Query',
-        },
-      ],
-      description:
-        'Please choose the type of the contact form to show when clicking the subject.',
-      default_value: 'quote',
-      exclude_empty_option: true,
+    contactRequestType: {
+      type: 'custom',
+      required: true,
+      field_type: 'pfeiffer-vacuum-contact-request-selector',
+      display_name: 'Contact Request Picker',
+    },
+    buttons: {
+      type: 'bloks',
+      restrict_components: true,
+      required: true,
+      maximum: 1,
+      component_whitelist: ['Button'],
+      display_name: 'Buttons',
     },
   },
   image: null,
