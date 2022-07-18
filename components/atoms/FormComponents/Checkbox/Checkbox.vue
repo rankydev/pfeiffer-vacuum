@@ -42,6 +42,7 @@ export default {
   @apply tw-items-center;
   @apply tw-text-pv-grey-16;
   @apply tw-text-base;
+  -webkit-tap-highlight-color: transparent;
 
   &--disabled {
     @apply tw-text-pv-grey-48;
@@ -70,6 +71,16 @@ export default {
 
     &:hover {
       @apply tw-cursor-pointer;
+    }
+
+    &:focus {
+      @apply tw-border tw-border-pv-red-lighter;
+      @apply tw-ring-0;
+      @apply tw-text-pv-red-lighter;
+      @apply tw-shadow-border-red-lighter;
+
+      // safari fix to prevent focus outline
+      outline: 0;
     }
 
     &:disabled {
