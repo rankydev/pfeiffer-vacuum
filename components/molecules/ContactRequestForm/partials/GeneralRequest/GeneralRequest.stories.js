@@ -1,12 +1,13 @@
 import GeneralRequest from './GeneralRequest'
 
 export default {
-  title: 'Molecules/General Request',
+  title: 'Molecules/m_115 General Request',
   component: GeneralRequest,
   parameters: {
     docs: {
       description: {
-        component: 'Hallo',
+        component:
+          'This component is a selectable type for the contact form subject component',
       },
       source: {
         code: '<GeneralRequest />',

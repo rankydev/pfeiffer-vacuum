@@ -1,12 +1,13 @@
 import TopicRequest from './TopicRequest'
 
 export default {
-  title: 'Molecules/Topic Request',
+  title: 'Molecules/m_115 Topic Request',
   component: TopicRequest,
   parameters: {
     docs: {
       description: {
-        component: 'Hallo',
+        component:
+          'This component is a selectable type for the contact form subject component',
       },
       source: {
         code: '<TopicRequest />',
