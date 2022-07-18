@@ -1,5 +1,6 @@
 <template>
-  <GeneralRequest />
+  <GeneralRequest v-if="type === 'GeneralRequest'" />
+  <TopicRequest v-else />
 </template>
 
 <script>
