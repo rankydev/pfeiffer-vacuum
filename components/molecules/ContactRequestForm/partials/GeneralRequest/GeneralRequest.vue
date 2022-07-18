@@ -1,22 +1,22 @@
 <template>
   <div class="general-request">
     <PvInput
-      :label="$t('form.contactRequest.generalRequest.forename')"
+      :label="$t('form.contactRequest.forename')"
       placeholder="Placeholder"
       required="true"
     />
     <PvInput
-      :label="$t('form.contactRequest.generalRequest.surname')"
+      :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
       required="true"
     />
     <PvInput
-      :label="$t('form.contactRequest.generalRequest.mail')"
+      :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
       required="true"
     />
     <PvSelect
-      :label="$t('form.contactRequest.generalRequest.country')"
+      :label="$t('form.contactRequest.country')"
       :options="[
         {
           displayValue: 'Deutschland',
@@ -26,7 +26,7 @@
       :option-label="'displayValue'"
     />
     <PvTextArea
-      :label="$t('form.contactRequest.generalRequest.message')"
+      :label="$t('form.contactRequest.message')"
       placeholder="Placeholder"
       required="false"
     />
@@ -35,12 +35,13 @@
 <script>
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
-import PvTextArea from '@/components/atoms/FormComponents/PvTextArea/PvTextArea'
+import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
+import { defineComponent } from '@nuxtjs/composition-api'
 
-export default {
+export default defineComponent({
   name: 'GeneralRequest',
   components: { PvTextArea, PvInput, PvSelect },
-}
+})
 </script>
 <style lang="scss">
 .general-request {

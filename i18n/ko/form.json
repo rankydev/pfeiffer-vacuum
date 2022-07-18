@@ -20,12 +20,15 @@
     "tooLong": "비밀번호가 너무 길 수 있습니다(최대 128자)"
   },
   "contactRequest": {
-    "generalRequest": {
-      "forename": "이름",
-      "surname": "성",
-      "mail": "이메일",
-      "country": "국가",
-      "message": "당신의 메시지"
-    }
+    "forename": "이름",
+    "surname": "성",
+    "company": "회사/대학",
+    "mail": "이메일",
+    "country": "국가",
+    "message": "당신의 메시지",
+    "street": "거리",
+    "houseNumber": "숫자",
+    "postCode": "우편번호",
+    "city": "도시"
   }
 }

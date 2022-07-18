@@ -1,28 +1,28 @@
-import GeneralRequest from './GeneralRequest'
+import TopicRequest from './TopicRequest'
 
 export default {
-  title: 'Molecules/General Request',
-  component: GeneralRequest,
+  title: 'Molecules/Topic Request',
+  component: TopicRequest,
   parameters: {
     docs: {
       description: {
         component: 'Hallo',
       },
       source: {
-        code: '<GeneralRequest />',
+        code: '<TopicRequest />',
       },
     },
   },
 }
 
 const Template = (args) => ({
-  components: { GeneralRequest },
+  components: { TopicRequest },
   setup() {
     return { args }
   },
   template: `
   <div class="documentation-preview">
-    <GeneralRequest />
+    <TopicRequest />
   </div>
 `,
 })

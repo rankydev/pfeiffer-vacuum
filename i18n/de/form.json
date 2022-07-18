@@ -19,12 +19,15 @@
     "tooLong": "Ihr Passwort ist zu lang (max. 128 Charaktere)"
   },
   "contactRequest": {
-    "generalRequest": {
-      "forename": "Vorname",
-      "surname": "Nachname",
-      "mail": "E-Mail",
-      "country": "Land",
-      "message": "Ihre Nachricht"
-    }
+    "forename": "Vorname",
+    "surname": "Nachname",
+    "company": "Firma/Universität",
+    "mail": "E-Mail",
+    "country": "Land",
+    "message": "Ihre Nachricht",
+    "street": "Straße",
+    "houseNumber": "Nummer",
+    "postCode": "PLZ",
+    "city": "Stadt"
   }
 }
