@@ -4,7 +4,6 @@
     <!-- Find out what forms to render for selection options -->
     <GeneralRequest v-if="contactRequestType === 'GENERAL_QUERY'" />
     <TopicRequest v-else />
-    <!-- Make Button static -->
     <Button
       label="Anfrage absenden"
       variant="secondary"
@@ -37,11 +36,6 @@ export default defineComponent({
       required: true,
       // default: 'QUOTE',
     },
-    // Hard coded not from schema
-    // buttons: {
-    //   type: Array,
-    //   default: () => [],
-    // },
   },
 })
 </script>
