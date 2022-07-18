@@ -1,6 +1,11 @@
 <template>
-  <GeneralRequest v-if="type === 'GeneralRequest'" />
-  <TopicRequest v-else />
+  <div>
+    <div>
+      {{ type }}
+    </div>
+    <GeneralRequest v-if="type === 'general_request'" />
+    <TopicRequest v-else />
+  </div>
 </template>
 
 <script>
@@ -18,6 +23,7 @@ export default defineComponent({
     type: {
       type: String,
       required: true,
+      default: 'general_request',
     },
   },
 })
