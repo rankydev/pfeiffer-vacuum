@@ -3,17 +3,17 @@
     <PvInput
       :label="$t('form.contactRequest.forename')"
       placeholder="Placeholder"
-      required="true"
+      :required="true"
     />
     <PvInput
       :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
-      required="true"
+      :required="true"
     />
     <PvInput
       :label="$t('form.contactRequest.company')"
       placeholder="Placeholder"
-      required="true"
+      :required="true"
     />
     <PvSelect
       :label="$t('form.contactRequest.country')"
@@ -30,13 +30,13 @@
         class="topic-request__address--street"
         :label="$t('form.contactRequest.street')"
         placeholder="Placeholder"
-        required="true"
+        :required="true"
       />
       <PvInput
         class="topic-request__address--number"
         :label="$t('form.contactRequest.houseNumber')"
         placeholder="Placeholder"
-        required="true"
+        :required="true"
       />
     </div>
     <div class="topic-request__address">
@@ -44,24 +44,24 @@
         class="topic-request__address--postcode"
         :label="$t('form.contactRequest.postCode')"
         placeholder="Placeholder"
-        required="true"
+        :required="true"
       />
       <PvInput
         class="topic-request__address--city"
         :label="$t('form.contactRequest.city')"
         placeholder="Placeholder"
-        required="true"
+        :required="true"
       />
     </div>
     <PvInput
       :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
-      required="true"
+      :required="true"
     />
     <PvTextArea
       :label="$t('form.contactRequest.message')"
       placeholder="Placeholder"
-      required="false"
+      :required="false"
     />
   </div>
 </template>
