@@ -15,4 +15,10 @@ export const text =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non, libero sapien sodales placerat lorem tincidunt.'
 export const requestSubjects = subjects
 
-export default {}
+export default {
+  component: 'ContactRequestSelection',
+  mainHeadline,
+  selectionHeadline,
+  text,
+  requestSubjects,
+}

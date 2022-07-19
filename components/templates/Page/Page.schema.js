@@ -49,6 +49,7 @@ export default {
         'ImageWithDescription',
         'VideoPlayer',
         'TeaserCardCarousel',
+        'ContactFormSection',
         'GeneralTeaserCarousel',
         'ContactRequestSelection',
       ],
