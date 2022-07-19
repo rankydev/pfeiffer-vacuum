@@ -20,7 +20,7 @@
     "tooLong": "Your password may be too long (max. 128 characters)"
   },
   "contactRequest": {
-    "forename": "first name",
+    "firstname": "first name",
     "surname": "last name",
     "company": "company/university",
     "mail": "e-mail",

@@ -1,7 +1,7 @@
 <template>
   <div class="topic-request">
     <PvInput
-      :label="$t('form.contactRequest.forename')"
+      :label="$t('form.contactRequest.firstname')"
       placeholder="Placeholder"
       :required="true"
     />

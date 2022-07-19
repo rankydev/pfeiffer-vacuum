@@ -20,7 +20,7 @@
     "tooLong": "您的密码可能太长（最多 128 个字符）"
   },
   "contactRequest": {
-    "forename": "名",
+    "firstname": "名",
     "surname": "姓",
     "company": "公司/大学",
     "mail": "电子邮件",
