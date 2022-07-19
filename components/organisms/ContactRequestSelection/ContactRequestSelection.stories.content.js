@@ -18,7 +18,7 @@ export const requestSubjects = subjects
 export default {
   component: 'ContactRequestSelection',
   mainHeadline,
-  selectionHeadline,
+  sectionHeadline,
   text,
   requestSubjects,
 }
