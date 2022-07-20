@@ -1,13 +1,6 @@
 import { computed } from '@nuxtjs/composition-api'
 import useVuelidate from '@vuelidate/core'
 
-// export const useValidatorProps = {
-//   rules: {
-//     type: Object,
-//     default: () => {},
-//   },
-// }
-
 export const useInputValidator = (rules, data) => {
   const v$ = useVuelidate(rules, data)
 

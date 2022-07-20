@@ -41,7 +41,6 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 import { useInputValidator } from '~/composables/useValidator'
-import { required } from '@vuelidate/validators'
 
 export default defineComponent({
   components: {
@@ -160,7 +159,6 @@ export default defineComponent({
         {
           internalValue: {
             ...props.rules,
-            required,
           },
         },
         { internalValue }

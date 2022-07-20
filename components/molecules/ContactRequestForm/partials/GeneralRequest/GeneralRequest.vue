@@ -4,16 +4,19 @@
       :label="$t('form.contactRequest.firstname')"
       placeholder="Placeholder"
       :required="true"
+      :rules="{ required }"
     />
     <PvInput
       :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
       :required="true"
+      :rules="{ required }"
     />
     <PvInput
       :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
       :required="true"
+      :rules="{ required }"
     />
     <PvSelect
       :label="$t('form.contactRequest.country')"
@@ -37,10 +40,14 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
 import { defineComponent } from '@nuxtjs/composition-api'
+import { required } from '@vuelidate/validators'
 
 export default defineComponent({
   name: 'GeneralRequest',
   components: { PvTextArea, PvInput, PvSelect },
+  setup() {
+    return { required }
+  },
 })
 </script>
 <style lang="scss">
