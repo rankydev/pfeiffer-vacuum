@@ -4,7 +4,8 @@
     <div class="pv-input__wrapper">
       <input
         v-model="internalValue"
-        v-bind="{ placeholder, required, disabled }"
+        v-bind="{ placeholder, disabled }"
+        :required="isRequired"
         class="pv-input__element"
         :class="{
           'pv-input__element--icon': icon,
@@ -39,10 +40,7 @@ import { defineComponent, ref } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
-import {
-  useInputValidator,
-  useValidatorProps,
-} from '~/composables/useValidator'
+import { useInputValidator } from '~/composables/useValidator'
 import { required } from '@vuelidate/validators'
 
 export default defineComponent({
@@ -83,9 +81,9 @@ export default defineComponent({
       default: '',
     },
     /**
-     * The required prop, which defines if the text field is required or not
+     * The isRequired prop, which defines if the text field is isRequired or not
      */
-    required: {
+    isRequired: {
       type: Boolean,
       default: false,
     },
@@ -110,7 +108,13 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    ...useValidatorProps,
+    /**
+     * rules that will be passed into Validator
+     */
+    rules: {
+      type: Object,
+      default: () => {},
+    },
   },
   emits: [
     /**
@@ -145,13 +149,23 @@ export default defineComponent({
   setup(props) {
     const internalValue = ref(props.value)
     let internalIcon = ref(props.icon)
-    const rules = {
-      internalValue: {
-        required,
-      },
-    }
+    // const rules = {
+    //   internalValue: {
+    //     isRequired,
+    //   },
+    // }
 
-    const validation = ref(useInputValidator(rules, { internalValue }))
+    const validation = ref(
+      useInputValidator(
+        {
+          internalValue: {
+            ...props.rules,
+            required,
+          },
+        },
+        { internalValue }
+      )
+    )
 
     return {
       internalValue,
