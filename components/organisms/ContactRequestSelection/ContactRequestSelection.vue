@@ -14,17 +14,19 @@
     <div class="contact-request-selection__subjects">
       <NuxtDynamic
         v-for="item in requestSubjects"
+        v-show="selectedSubjectId === item._uid || !selectedSubjectId"
         :key="item._uid"
         v-editable="item"
         v-bind="item"
         :name="item.uiComponent || item.component"
+        @selected="changeSelection"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'ContactRequestSelection',
@@ -57,6 +59,14 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
+  },
+  setup() {
+    const selectedSubjectId = ref(undefined)
+    const changeSelection = (id) => {
+      selectedSubjectId.value = id
+    }
+
+    return { changeSelection, selectedSubjectId }
   },
 })
 </script>
