@@ -10,7 +10,7 @@ export function getHybrisApi(ctx) {
   api.setHeader('Content-Type', 'application/json')
 
   return {
-    productApi: getProductApi(api),
+    productApi: getProductApi(api, ctx),
     axiosInstance: api,
   }
 }

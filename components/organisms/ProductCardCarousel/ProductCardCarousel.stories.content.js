@@ -1,4 +1,4 @@
-import contentCarouselContent from '~/components/organisms/ContentCarousel/ContentCarousel.stories.content'
+import contentCarouselContent from '~/components/organisms/ContentCarousel/variants/CustomContentCardCarousel.stories.content'
 import { product } from '~/components/molecules/ProductCard/ProductCard.stories.content'
 
 export const carouselEntry = {

@@ -30,6 +30,10 @@ const argTypes = {
     control: { type: 'array' },
     defaultValue: generalTeaserCarouselContent.slides,
   },
+  transparent: {
+    control: { type: 'boolean' },
+    defaultValue: true,
+  },
 }
 
 export default {

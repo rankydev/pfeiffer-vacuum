@@ -103,9 +103,10 @@ export default defineComponent({
 
 <style lang="scss">
 .accordion {
+  $root: &;
+
   @apply tw-flex;
   @apply tw-flex-col;
-
   @apply tw-border-b-2;
   @apply tw-border-pv-grey-96;
   @apply tw-overflow-hidden;
@@ -138,7 +139,9 @@ export default defineComponent({
     transition-property: color;
 
     &--active {
-      @apply tw-text-pv-red;
+      #{$root}__label {
+        @apply tw-text-pv-red;
+      }
     }
 
     &:hover,

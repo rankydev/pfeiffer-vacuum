@@ -62,6 +62,7 @@ export default defineComponent({
 
 <style lang="scss">
 .cta-box {
+  @apply tw-inline-block;
   @apply tw-overflow-hidden;
   @apply tw-rounded-lg;
 

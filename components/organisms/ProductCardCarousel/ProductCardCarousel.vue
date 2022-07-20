@@ -1,7 +1,7 @@
 <template>
   <div class="product-card-carousel">
     <ContentCarousel
-      v-if="enrichedSlides"
+      v-if="enrichedSlides.length"
       :headline="headline"
       :button="button"
       :autoplay="autoplay"

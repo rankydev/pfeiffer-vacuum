@@ -1,21 +1,15 @@
 import Vue from 'vue'
-import { useInfiniteScroll } from '@vueuse/core'
 const consola = require('consola')
 
 let initialized = false
 
-/**
- * Initialized the consola and wraps all console-calls to consola.
- */
-export function init() {
-  if (!initialized) {
-    initialized = true
-    consola
-      .create({
-        level: process.env.CONSOLA_LEVEL || 4,
-      })
-      .wrapConsole() // wrap regular console to consola
-  }
+if (!initialized) {
+  initialized = true
+  consola
+    .create({
+      level: process.env.CONSOLA_LEVEL || 4,
+    })
+    .wrapConsole() // wrap regular console to consola
 }
 
 /**
@@ -51,18 +45,11 @@ export function getLogger(label) {
   return Logger
 }
 
-export default (ctx) => {
-  const { app, store } = ctx
-
-  init()
-
+export default (context, inject) => {
   const logger = getLogger()
 
   Vue.prototype.$logger = logger
 
-  app.$logger = logger
-  ctx.$logger = logger
-  if (store) {
-    store.$logger = logger
-  }
+  // Inject $hello(msg) in Vue, context and store.
+  inject('logger', logger)
 }

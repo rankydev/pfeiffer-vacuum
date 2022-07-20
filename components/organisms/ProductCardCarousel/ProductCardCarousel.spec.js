@@ -1,76 +1,51 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils'
-import { setActivePinia, createPinia } from 'pinia'
-import productCardCarouselContent from './ProductCardCarousel.stories.content'
 import ProductCardCarousel from './ProductCardCarousel'
-
-const mockFetch = jest.fn()
-const mockGetById = () => {}
-
-jest.mock('~/stores/products/products', () => {
-  const {
-    product,
-  } = require('../../molecules/ProductCard/ProductCard.stories.content.js')
-  const originalModule = jest.requireActual('@nuxtjs/composition-api')
-
-  const mockKey = '' + Math.random()
-
-  return {
-    __esModule: true,
-    useProductStore: () => ({
-      products: [product, product, product],
-      fetchProducts: mockFetch,
-      getProductById: mockGetById,
-    }),
-    useAsync: (cb) => originalModule.useAsync(cb, mockKey),
-  }
-})
+import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { carouselEntries } from './ProductCardCarousel.stories.content'
 
 let wrapper
-
-const nuxtDynamicStub = {
-  template: '<div />',
-}
+const getProducts = jest.fn((e) => {
+  return e
+})
 
 function createComponent(propsData = {}) {
-  const stubs = {
-    Template: true,
-    NuxtDynamic: nuxtDynamicStub,
-  }
   const localVue = createLocalVue()
-  const editable = (el, key) => (el.innerText = key.value)
-  localVue.directive('editable', editable)
 
-  const options = {
-    localVue,
-    stubs,
-    propsData,
+  localVue.prototype.$nuxt = {
+    context: {
+      $hybrisApi: {
+        productApi: {
+          getProducts: getProducts,
+        },
+      },
+    },
   }
 
-  wrapper = shallowMount(ProductCardCarousel, options)
+  wrapper = shallowMount(ProductCardCarousel, {
+    localVue,
+    propsData,
+  })
 }
 
 describe('ProductCardCarousel', () => {
-  beforeEach(() => setActivePinia(createPinia()))
-
   describe('initial state', () => {
-    test('should render ProductCardCarousel when no entries are provided', () => {
+    test('should render component without props', () => {
       createComponent()
 
-      const productCardCarouselWrapper = wrapper.find('.product-card-carousel')
-      const carousel = wrapper.find('contentcarousel-stub')
-
-      expect(productCardCarouselWrapper.exists()).toBeTruthy()
+      const carousel = wrapper.findComponent(ContentCarousel)
       expect(carousel.exists()).toBeFalsy()
+      expect(getProducts).toBeCalledTimes(1)
     })
 
-    test('should render ContentCarousel when products have been fetched from api', () => {
-      createComponent(productCardCarouselContent)
+    test('should render component given slides', async () => {
+      createComponent({ slides: carouselEntries })
 
-      const carousel = wrapper.find('contentcarousel-stub')
+      await wrapper.vm.$nextTick()
+      await wrapper.vm.$nextTick()
 
-      console.log(wrapper.vm.products)
-
+      const carousel = wrapper.findComponent(ContentCarousel)
       expect(carousel.exists()).toBeTruthy()
+      expect(wrapper.vm.enrichedSlides).toHaveLength(carouselEntries.length)
     })
   })
 })
