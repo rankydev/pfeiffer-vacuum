@@ -1,3 +1,5 @@
+import { required } from '@vuelidate/validators'
+
 export const normal = {
   disabled: false,
   options: [
@@ -58,8 +60,7 @@ export const disabledWithValue = {
 
 export const error = {
   ...normal,
-  hasError: true,
-  errorMessage: 'Sorry, an error occured',
+  rules: { required },
 }
 
 export const label = {

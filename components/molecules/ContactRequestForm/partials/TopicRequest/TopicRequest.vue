@@ -4,16 +4,19 @@
       :label="$t('form.contactRequest.firstname')"
       placeholder="Placeholder"
       :required="true"
+      :rules="{ required }"
     />
     <PvInput
       :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
       :required="true"
+      :rules="{ required }"
     />
     <PvInput
       :label="$t('form.contactRequest.company')"
       placeholder="Placeholder"
       :required="true"
+      :rules="{ required }"
     />
     <PvSelect
       :label="$t('form.contactRequest.country')"
@@ -24,6 +27,7 @@
         },
       ]"
       :option-label="'displayValue'"
+      :rules="{ required }"
     />
     <div class="topic-request__address">
       <PvInput
@@ -37,6 +41,7 @@
         :label="$t('form.contactRequest.houseNumber')"
         placeholder="Placeholder"
         :required="true"
+        :rules="{ required }"
       />
     </div>
     <div class="topic-request__address">
@@ -45,23 +50,27 @@
         :label="$t('form.contactRequest.postCode')"
         placeholder="Placeholder"
         :required="true"
+        :rules="{ required }"
       />
       <PvInput
         class="topic-request__address--city"
         :label="$t('form.contactRequest.city')"
         placeholder="Placeholder"
         :required="true"
+        :rules="{ required }"
       />
     </div>
     <PvInput
       :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
       :required="true"
+      :rules="{ required }"
     />
     <PvTextArea
       :label="$t('form.contactRequest.message')"
       placeholder="Placeholder"
       :required="false"
+      :rules="{ required }"
     />
   </div>
 </template>
@@ -70,10 +79,14 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
 import { defineComponent } from '@nuxtjs/composition-api'
+import { required } from '@vuelidate/validators'
 
 export default defineComponent({
   name: 'TopicRequest',
   components: { PvTextArea, PvInput, PvSelect },
+  setup() {
+    return { required }
+  },
 })
 </script>
 <style lang="scss">

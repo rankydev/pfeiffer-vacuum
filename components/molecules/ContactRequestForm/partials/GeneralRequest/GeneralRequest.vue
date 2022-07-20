@@ -27,6 +27,7 @@
         },
       ]"
       :option-label="'displayValue'"
+      :rules="{ required }"
     />
     <PvTextArea
       :label="$t('form.contactRequest.message')"

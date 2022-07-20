@@ -6,7 +6,6 @@ export const useInputValidator = (rules, data) => {
 
   const validateInput = async () => {
     await v$.value.$validate()
-    console.log(data)
   }
 
   const getError = computed(() => {

@@ -96,14 +96,14 @@ describe('Select', () => {
   })
 
   describe('during interaction', () => {
-    it('should emit an update event when innerValue has changed', async () => {
+    it('should emit an update event when internalValue has changed', async () => {
       const value = 'Some Value'
       const propsData = { ...normal }
       createComponent(propsData)
 
       const emitMock = jest.fn()
       wrapper.vm.$emit = emitMock
-      await wrapper.setData({ innerValue: value })
+      await wrapper.setData({ internalValue: value })
       expect(emitMock).toBeCalledTimes(1)
       expect(emitMock).toBeCalledWith('update', value)
     })

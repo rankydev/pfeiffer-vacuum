@@ -3,9 +3,12 @@
   <div>
     <Label v-if="label" :label="label" />
     <v-select
-      v-model="innerValue"
+      v-model="internalValue"
       :options="options"
-      :class="{ 'pv-select--error': hasError, 'pv-select--icon': prependIcon }"
+      :class="{
+        'pv-select--error': !!validation.getError(),
+        'pv-select--icon': prependIcon,
+      }"
       :disabled="disabled"
       :label="optionLabel"
       :placeholder="$t('form.select.placeholder')"
@@ -24,7 +27,7 @@
 
       <template #open-indicator>
         <Icon
-          v-if="hasError"
+          v-if="!!validation.getError()"
           class="pv-select__icon-error"
           icon="error_outline"
         />
@@ -59,7 +62,12 @@
       </template>
     </v-select>
 
-    <ErrorMessage v-if="hasError" :error-message="errorMessage" />
+    <ErrorMessage
+      v-if="!!validation.getError()"
+      :error-message="validation.getError()"
+    />
+    {{ internalValue }}
+    <pre>{{ validation.v$ }}</pre>
   </div>
 </template>
 
@@ -68,7 +76,8 @@ import vSelect from 'vue-select'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Icon from '~/components/atoms/Icon/Icon'
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
+import { useInputValidator } from '@/composables/useValidator'
 
 export default defineComponent({
   name: 'PvSelect',
@@ -132,20 +141,16 @@ export default defineComponent({
       default: false,
     },
     /**
-     * The following fields are temporarly and should be removed if the validator is inserted
+     * rules that will be passed into validator
      */
-    hasError: {
-      type: Boolean,
-      default: false,
-    },
-    errorMessage: {
-      type: String,
-      default: '',
+    rules: {
+      type: Object,
+      default: () => {},
     },
   },
   emits: ['update'],
   setup(props, { emit }) {
-    const innerValue = computed({
+    const internalValue = computed({
       get: () => props.value,
       set: (value) => emit('update', value),
     })
@@ -154,7 +159,18 @@ export default defineComponent({
       render: (h) => h('span', { class: ['deselect-option'] }),
     }
 
-    return { innerValue, Deselect }
+    const validation = ref(
+      useInputValidator(
+        {
+          internalValue: {
+            ...props.rules,
+          },
+        },
+        { internalValue }
+      )
+    )
+
+    return { internalValue, Deselect, validation }
   },
 })
 </script>
