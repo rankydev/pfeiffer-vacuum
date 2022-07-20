@@ -1,6 +1,5 @@
 <template>
   <div class="contact-request-form">
-    <div>{{ contactRequestType }}</div>
     <!-- Find out what forms to render for selection options -->
     <GeneralRequest v-if="contactRequestType === 'GENERAL_QUERY'" />
     <TopicRequest v-else />
