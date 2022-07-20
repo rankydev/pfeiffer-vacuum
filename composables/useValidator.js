@@ -1,39 +1,34 @@
-import { required } from '@vuelidate/validators'
-import { computed, reactive } from '@nuxtjs/composition-api'
+import { computed } from '@nuxtjs/composition-api'
 import useVuelidate from '@vuelidate/core'
 
-const useInputValidator = () => {
-  const rules = {
-    firstname: {
-      required,
-    },
-  }
+export const useValidatorProps = {
+  rules: {
+    type: Object,
+    default: () => {},
+  },
+}
 
-  const formData = reactive({
-    firstname: '',
-  })
-
-  const v$ = useVuelidate(rules, formData)
+export const useInputValidator = (rules, data) => {
+  const v$ = useVuelidate(rules, data)
 
   const validateInput = async () => {
-    const result = await v$.value.$validate()
+    await v$.value.$validate()
+    console.log(data)
   }
 
   const getError = computed(() => {
-    return (field) => {
-      const error = v$.value.$errors?.find((i) => i.$property === field)
+    return () => {
+      const error = v$.value.$errors?.find(
+        (i) => i.$property === 'internalValue'
+      )
       const errorMsg = error?.$message
       return error ? errorMsg : null
     }
   })
 
   return {
-    formData,
-    rules,
     v$,
     validateInput,
     getError,
   }
 }
-
-export default useInputValidator

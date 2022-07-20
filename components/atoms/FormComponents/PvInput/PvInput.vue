@@ -8,33 +8,42 @@
         class="pv-input__element"
         :class="{
           'pv-input__element--icon': icon,
-          'pv-input__element--error': hasError,
+          'pv-input__element--error': !!validation.getError(),
         }"
         :placeholder="placeholder"
         @keypress.enter="$emit('submit', $event)"
         @focus="$emit('focus', true)"
         @blur="$emit('focus', false)"
-        @input="$emit('update', internalValue)"
+        @input="
+          $emit('update', internalValue)
+          validation.validateInput()
+        "
       />
       <Icon
-        v-if="internalIcon"
+        v-if="internalIcon || validation.getError()"
         class="pv-input__icon"
-        :class="{ 'pv-input__icon--error': hasError }"
-        :icon="internalIcon"
+        :class="{ 'pv-input__icon--error': !!validation.getError() }"
+        :icon="!!validation.getError() ? 'error_outline' : internalIcon"
         @click.native="$emit('click:icon', $event)"
       />
     </div>
-    <ErrorMessage v-if="hasError" :error-message="errorMessage" />
+    <ErrorMessage
+      v-if="!!validation.getError()"
+      :error-message="validation.getError()"
+    />
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import { ref } from '@nuxtjs/composition-api'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
+import {
+  useInputValidator,
+  useValidatorProps,
+} from '~/composables/useValidator'
+import { required } from '@vuelidate/validators'
 
 export default defineComponent({
   components: {
@@ -101,6 +110,7 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    ...useValidatorProps,
   },
   emits: [
     /**
@@ -135,15 +145,18 @@ export default defineComponent({
   setup(props) {
     const internalValue = ref(props.value)
     let internalIcon = ref(props.icon)
-    const hasErrorIcon = ref(props.hasError)
-
-    if (hasErrorIcon.value) {
-      internalIcon = 'error_outline'
+    const rules = {
+      internalValue: {
+        required,
+      },
     }
+
+    const validation = ref(useInputValidator(rules, { internalValue }))
 
     return {
       internalValue,
       internalIcon,
+      validation,
     }
   },
 })
