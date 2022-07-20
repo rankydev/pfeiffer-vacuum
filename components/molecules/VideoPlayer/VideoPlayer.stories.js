@@ -1,8 +1,8 @@
-import VideoPlayer from '~/components/atoms/VideoPlayer/VideoPlayer.vue'
+import VideoPlayer from '@/components/molecules/VideoPlayer/VideoPlayer.vue'
 import { url, title, description } from './VideoPlayer.stories.content.js'
 
 export default {
-  title: 'Atoms/VideoPlayer',
+  title: 'Molecules/m_117 Video Player Module',
   component: VideoPlayer,
   parameters: {
     docs: {

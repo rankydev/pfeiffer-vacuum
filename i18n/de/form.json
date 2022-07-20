@@ -7,5 +7,15 @@
   "button": {},
   "label": {
     "optional": "(optional)"
+  },
+  "select": {
+    "placeholder": "Bitte auswählen...",
+    "noOptions": "Leider keine passenden Optionen gefunden."
+  },
+  "password": {
+    "minLength": "Mindestens 8 Zeichen",
+    "capitalLetter": "Mindestens ein Großbuchstabe",
+    "digit": "Mindestens eine Ziffer",
+    "tooLong": "Ihr Passwort ist zu lang (max. 128 Charaktere)"
   }
 }

@@ -1,6 +1,6 @@
 export default {
   name: 'ProductCard',
-  display_name: 'ProductCard',
+  display_name: 'Product-Card',
   schema: {
     product: {
       type: 'custom',

@@ -34,6 +34,15 @@ describe('Input', () => {
       expect(input.attributes('placeholder')).toBe(propsData.placeholder)
     })
 
+    it('should disable input when disabled is set to true', () => {
+      const propsData = { disabled: true }
+      const wrapper = shallowMount(Input, { propsData })
+      const inputWrapper = wrapper.find('.pv-input__element')
+
+      expect(inputWrapper.attributes('disabled')).toBeTruthy()
+      expect(inputWrapper.attributes('required')).toBeFalsy()
+    })
+
     it('should set a label when provided', () => {
       const propsData = { label: 'Some Label' }
       const wrapper = shallowMount(Input, { propsData })
@@ -143,6 +152,5 @@ describe('Input', () => {
       })
     })
   })
-
   // describe('business requirements', () => {})
 })

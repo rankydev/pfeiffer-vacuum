@@ -1,8 +1,8 @@
-import documentCard from '~/components/molecules/DocumentCard/DocumentCard.stories.content.js'
-import contentCarouselContent from '~/components/organisms/ContentCarousel/ContentCarousel.stories.content'
+import documentCardContent from '~/components/molecules/DocumentCard/DocumentCard.stories.content.js'
+import GeneralTeaserCarouselContent from './GeneralTeaserCarousel.stories.content'
 
 const carouselEntry = {
-  ...documentCard,
+  ...documentCardContent,
   component: 'DocumentCard',
 }
 
@@ -36,6 +36,6 @@ export default {
     },
   ],
   headline: 'Document Card Carousel',
-  ...contentCarouselContent,
+  ...GeneralTeaserCarouselContent,
   slides,
 }

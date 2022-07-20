@@ -2,7 +2,7 @@ import CTABox from '~/components/molecules/CTABox/CTABox.vue'
 import { image, description, button } from './CTABox.stories.content.js'
 
 export default {
-  title: 'Molecules/CTABox',
+  title: 'Molecules/m_109 CTA-Box',
   component: CTABox,
   parameters: {
     docs: {

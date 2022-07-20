@@ -1,7 +1,7 @@
 import TextArea from '~/components/atoms/FormComponents/TextArea/TextArea.vue'
 
 export default {
-  title: 'Form components/TextArea',
+  title: 'Atoms/a_104 Textarea',
   component: TextArea,
   parameters: {
     docs: {

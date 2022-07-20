@@ -7,5 +7,16 @@
   "button": {},
   "label": {
     "optional": "(옵션)"
+  },
+  "select": {
+    "placeholder": "선택하십시오...",
+    "noOptions": "죄송합니다. 일치하는 옵션이 없습니다."
+  },
+  "password": {
+    "minLength": "至少包含8个字符",
+    "capitalLetter":
+    "至少包含1个大写字母和1个小写字母",
+    "digit": "至少包含1位数字",
+    "tooLong": "您的密码过长（不得超过128个字节）"
   }
 }

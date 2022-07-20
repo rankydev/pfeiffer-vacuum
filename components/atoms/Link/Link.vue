@@ -1,5 +1,5 @@
 <template>
-  <a v-if="isAnchorLink" v-bind="bindings" @click="beforeNavigation">
+  <a v-if="isExternalLink" v-bind="bindings" @click="beforeNavigation">
     <slot :isActive="false" :isExactActive="false">{{ label }}</slot>
   </a>
 
@@ -21,7 +21,12 @@
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  useRoute,
+  unref,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -75,26 +80,32 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const isAnchorLink = computed(() => {
+    const route = useRoute()
+
+    const isExternalLink = computed(() => {
+      const isAnchor = !!props.anchor
       const isInternalLink = /^\/(\w+|$)/.test(props.href)
-      return !isInternalLink || props.target !== '_self'
+      return !(isAnchor || isInternalLink) || props.target !== '_self'
     })
 
-    const anchor = computed(() =>
-      props.anchor.startsWith('#') ? props.anchor : `#${props.anchor}`
-    )
+    const anchor = computed(() => {
+      if (!props.anchor) return null
+      const { path } = unref(route)
+      const hasHastag = props.anchor.startsWith('#')
+      return `${path}${hasHastag ? '' : '#'}${props.anchor}`
+    })
 
     const bindings = computed(() => ({
-      ...(isAnchorLink.value && {
-        href: props.anchor ? anchor.value : props.href,
+      ...(isExternalLink.value && {
+        href: props.href,
       }),
-      ...(isAnchorLink.value && { target: props.target }),
-      ...(!isAnchorLink.value && { to: props.href }),
+      ...(isExternalLink.value && { target: props.target }),
+      ...(!isExternalLink.value && { to: anchor.value || props.href }),
       class: `link--${props.variant}`,
     }))
 
     return {
-      isAnchorLink,
+      isExternalLink,
       bindings,
     }
   },

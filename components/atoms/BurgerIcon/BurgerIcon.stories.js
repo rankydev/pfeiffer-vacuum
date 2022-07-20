@@ -1,7 +1,7 @@
 import BurgerIcon from '~/components/atoms/BurgerIcon/BurgerIcon.vue'
 
 export default {
-  title: 'Atoms/BurgerIcon',
+  title: 'Technical Components/Burger Icon',
   component: BurgerIcon,
   parameters: {
     docs: {

@@ -18,7 +18,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/TeaserCard',
+  title: 'Molecules/m_111 General Teaser Component',
   component: TeaserCard,
   parameters: {
     docs: {

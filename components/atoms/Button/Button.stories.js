@@ -9,7 +9,7 @@ import {
 } from '~/components/atoms/Button/Button.stories.content'
 
 export default {
-  title: 'Atoms/Button',
+  title: 'Atoms/a_100 Button',
   component: Button,
   parameters: {
     docs: {
