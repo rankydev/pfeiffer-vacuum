@@ -4,16 +4,16 @@
       :label="$t('form.contactRequest.firstname')"
       placeholder="Placeholder"
       :required="true"
-      :has-error="!!getError('firstname')"
-      :error-message="getError('firstname')"
+      :has-error="!!validation.getError('firstname')"
+      :error-message="validation.getError('firstname')"
       @update="
-        formData.firstname = $event
-        validateInput()
+        validation.formData.firstname = $event
+        validation.validateInput()
       "
     />
 
-    {{ formData.firstname }}
-    <pre>{{ v$.$errors }}</pre>
+    {{ validation.formData.firstname }}
+    <pre>{{ validation.v$.$errors }}</pre>
 
     <PvInput
       :label="$t('form.contactRequest.surname')"
@@ -46,45 +46,19 @@
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
-import { defineComponent, reactive, computed } from '@nuxtjs/composition-api'
-import useVuelidate from '@vuelidate/core'
-import { required } from '@vuelidate/validators'
+import { defineComponent } from '@nuxtjs/composition-api'
+import useInputValidator from '~/composables/useValidator'
+import { ref } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'GeneralRequest',
   components: { PvTextArea, PvInput, PvSelect },
 
   setup() {
-    const rules = {
-      firstname: {
-        required,
-      },
-    }
-
-    const formData = reactive({
-      firstname: '',
-    })
-
-    const v$ = useVuelidate(rules, formData)
-
-    const validateInput = async () => {
-      const result = await v$.value.$validate()
-    }
-
-    const getError = computed(() => {
-      return (field) => {
-        const error = v$.value.$errors?.find((i) => i.$property === field)
-        const errorMsg = error?.$message
-        return error ? errorMsg : null
-      }
-    })
+    const validation = ref(useInputValidator())
 
     return {
-      formData,
-      rules,
-      v$,
-      validateInput,
-      getError,
+      validation,
     }
   },
 })
