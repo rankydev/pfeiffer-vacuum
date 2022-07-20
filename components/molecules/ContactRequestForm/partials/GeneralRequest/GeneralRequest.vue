@@ -6,12 +6,12 @@
       :required="true"
       :has-error="!!getError('firstname')"
       :error-message="getError('firstname')"
-      type="firstname"
       @update="
         formData.firstname = $event
         validateInput()
       "
     />
+
     {{ formData.firstname }}
     <pre>{{ v$.$errors }}</pre>
 
@@ -40,7 +40,6 @@
       placeholder="Placeholder"
       :required="false"
     />
-    <button @click="validateInput">Click me</button>
   </div>
 </template>
 <script>
@@ -75,7 +74,6 @@ export default defineComponent({
     const getError = computed(() => {
       return (field) => {
         const error = v$.value.$errors?.find((i) => i.$property === field)
-        console.log(field, error)
         const errorMsg = error?.$message
         return error ? errorMsg : null
       }
