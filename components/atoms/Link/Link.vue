@@ -80,6 +80,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    console.log('####', props)
+
     const route = useRoute()
 
     const isExternalLink = computed(() => {

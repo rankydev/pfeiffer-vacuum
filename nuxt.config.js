@@ -24,6 +24,15 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     // @todo add link alternate href lang
+    script: [
+      {
+        src: 'https://app.usercentrics.eu/browser-ui/latest/loader.js',
+        id: 'usercentrics-cmp',
+        'data-settings-id': process.env.USERCENTRICS_ID || 'qWSlEU19Q',
+        'data-tcf-enabled': true,
+        defer: true,
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -151,6 +160,7 @@ export default {
     REGION_CODES: (process.env.REGION_CODES || 'global').split(','),
     DEFAULT_REGION_CODE: process.env.DEFAULT_REGION_CODE || 'global',
     CURRENT_REGION_CODE: process.env.CURRENT_REGION_CODE || 'global',
+    USERCENTRICS_PRIVACY_PATH: process.env.USERCENTRICS_PRIVACY_PATH,
   },
 
   env: {
