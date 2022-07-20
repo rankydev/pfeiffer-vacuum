@@ -14,29 +14,12 @@ export default {
       display_name: 'Description',
     },
     type: {
-      type: 'option',
-      options: [
-        {
-          value: 'quote',
-          name: 'Quote',
-        },
-        {
-          value: 'service_request',
-          name: 'Service Request',
-        },
-        {
-          value: 'product_information',
-          name: 'Product Information',
-        },
-        {
-          value: 'general_query',
-          name: 'General Query',
-        },
-      ],
+      type: 'bloks',
+      display_name: 'Contact Request Type',
+      restrict_components: true,
+      component_whitelist: ['ContactCTABox'],
       description:
         'Please choose the type of the contact form to show when clicking the subject.',
-      default_value: 'quote',
-      exclude_empty_option: true,
     },
   },
   image: null,
