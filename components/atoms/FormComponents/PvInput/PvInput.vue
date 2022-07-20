@@ -94,20 +94,6 @@ export default defineComponent({
       default: false,
     },
     /**
-     * The hasError is set by validation in parent component and shows if the input has an error
-     */
-    hasError: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * A text describing which error occured, it is displayed if hasError is true
-     */
-    errorMessage: {
-      type: String,
-      default: '',
-    },
-    /**
      * rules that will be passed into Validator
      */
     rules: {
@@ -148,11 +134,6 @@ export default defineComponent({
   setup(props) {
     const internalValue = ref(props.value)
     let internalIcon = ref(props.icon)
-    // const rules = {
-    //   internalValue: {
-    //     isRequired,
-    //   },
-    // }
 
     const validation = ref(
       useInputValidator(
