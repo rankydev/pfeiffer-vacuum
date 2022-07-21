@@ -4,12 +4,41 @@ import hybrisApi from './hybrisApi.js'
 describe('HybrisApiPlugin', () => {
   describe('initial state', () => {
     test('should inject hybrisApi into nuxt', () => {
-      const injectMock = jest.fn()
-      hybrisApi(null, injectMock)
+      const context = {
+        app: {},
+        $axios: {
+          create: jest.fn(() => {
+            return {
+              setBaseURL: jest.fn(),
+              setHeader: jest.fn(),
+            }
+          }),
+        },
+      }
 
-      // TODO: add test
-      expect(injectMock).toBeCalledTimes(1)
-      expect(injectMock).toBeCalledWith('hybrisApi', expect.any(hybrisApi))
+      hybrisApi(context)
+
+      expect(typeof context.app.$hybrisApi).toBe('object')
+      expect(typeof context.$hybrisApi).toBe('object')
+    })
+
+    test('should inject hybrisApi into store if present', () => {
+      const context = {
+        app: {},
+        store: {},
+        $axios: {
+          create: jest.fn(() => {
+            return {
+              setBaseURL: jest.fn(),
+              setHeader: jest.fn(),
+            }
+          }),
+        },
+      }
+
+      hybrisApi(context)
+
+      expect(typeof context.store.$hybrisApi).toBe('object')
     })
   })
 })
