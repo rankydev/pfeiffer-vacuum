@@ -77,7 +77,7 @@ import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Icon from '~/components/atoms/Icon/Icon'
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
-import { useInputValidator } from '@/composables/useValidator'
+import { useInputValidator } from '~/composables/useValidator'
 
 export default defineComponent({
   name: 'PvSelect',

@@ -64,7 +64,7 @@
       :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
       :required="true"
-      :rules="{ required }"
+      :rules="{ required, email }"
     />
     <PvTextArea
       :label="$t('form.contactRequest.message')"
@@ -79,13 +79,13 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
 import { defineComponent } from '@nuxtjs/composition-api'
-import { required } from '@vuelidate/validators'
+import { required, email } from '@vuelidate/validators'
 
 export default defineComponent({
   name: 'TopicRequest',
   components: { PvTextArea, PvInput, PvSelect },
   setup() {
-    return { required }
+    return { required, email }
   },
 })
 </script>
