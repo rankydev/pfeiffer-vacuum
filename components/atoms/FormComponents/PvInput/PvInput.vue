@@ -100,6 +100,10 @@ export default defineComponent({
       type: Object,
       default: () => {},
     },
+    validate: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: [
     /**
@@ -145,6 +149,10 @@ export default defineComponent({
         { internalValue }
       )
     )
+
+    if (ref(props.validate).value === true) {
+      validation.value.validateInput()
+    }
 
     return {
       internalValue,

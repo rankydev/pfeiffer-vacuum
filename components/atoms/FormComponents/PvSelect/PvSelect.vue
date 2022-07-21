@@ -66,8 +66,6 @@
       v-if="!!validation.getError()"
       :error-message="validation.getError()"
     />
-    {{ internalValue }}
-    <pre>{{ validation.v$ }}</pre>
   </div>
 </template>
 

@@ -5,18 +5,21 @@
       placeholder="Placeholder"
       :required="true"
       :rules="{ required }"
+      :validate="validate"
     />
     <PvInput
       :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
       :required="true"
       :rules="{ required }"
+      :validate="validate"
     />
     <PvInput
       :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
       :required="true"
       :rules="{ required, email }"
+      :validate="validate"
     />
     <PvSelect
       :label="$t('form.contactRequest.country')"
@@ -28,6 +31,7 @@
       ]"
       :option-label="'displayValue'"
       :rules="{ required }"
+      :validate="validate"
     />
     <PvTextArea
       :label="$t('form.contactRequest.message')"
@@ -46,6 +50,12 @@ import { required, email } from '@vuelidate/validators'
 export default defineComponent({
   name: 'GeneralRequest',
   components: { PvTextArea, PvInput, PvSelect },
+  props: {
+    validate: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup() {
     return { required, email }
   },
