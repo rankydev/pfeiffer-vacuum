@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
@@ -148,6 +148,15 @@ export default defineComponent({
         },
         { internalValue }
       )
+    )
+
+    watch(
+      () => props.validate,
+      (value) => {
+        if (value === true) {
+          validation.value.validateInput()
+        }
+      }
     )
 
     if (ref(props.validate).value === true) {

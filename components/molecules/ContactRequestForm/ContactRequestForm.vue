@@ -44,10 +44,6 @@ export default defineComponent({
       required: true,
       // default: 'QUOTE',
     },
-    validated: {
-      type: Boolean,
-      default: false,
-    },
   },
   setup() {
     // this will collect all nested component’s validation results
