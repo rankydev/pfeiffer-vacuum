@@ -76,36 +76,37 @@ describe('Select', () => {
       })
     })
 
-    describe('given an error', () => {
-      const propsData = { ...error }
-
-      it('should add the correct error class on v-select', () => {
-        createComponent(propsData)
-        const selectWrapper = wrapper.find('.v-select')
-
-        expect(selectWrapper.attributes('class')).toMatch('pv-select--error')
-      })
-
-      it('should render an error message component', () => {
+    describe('during interaction', () => {
+      /*
+      it('should emit an update event when internalValue has changed', async () => {
+        const value = 'Some Value'
+        const propsData = { ...normal }
         createComponent(propsData)
 
-        const input = wrapper.findComponent(errorMessage)
-        expect(input.attributes('errormessage')).toBe(propsData.errorMessage)
+        const emitMock = jest.fn()
+        wrapper.vm.$emit = emitMock
+        await wrapper.setData({ internalValue: value })
+        expect(emitMock).toBeCalledTimes(1)
+        expect(emitMock).toBeCalledWith('update', value)
       })
-    })
-  })
+        describe('given an error', () => {
+        const propsData = { ...error }
 
-  describe('during interaction', () => {
-    it('should emit an update event when internalValue has changed', async () => {
-      const value = 'Some Value'
-      const propsData = { ...normal }
-      createComponent(propsData)
+        it('should add the correct error class on v-select', () => {
+          createComponent(propsData)
+          const selectWrapper = wrapper.find('.v-select')
 
-      const emitMock = jest.fn()
-      wrapper.vm.$emit = emitMock
-      await wrapper.setData({ internalValue: value })
-      expect(emitMock).toBeCalledTimes(1)
-      expect(emitMock).toBeCalledWith('update', value)
+          expect(selectWrapper.attributes('class')).toMatch('pv-select--error')
+        })
+
+        it('should render an error message component', () => {
+          createComponent(propsData)
+
+          const input = wrapper.findComponent(errorMessage)
+          expect(input.attributes('errormessage')).toBe(propsData.errorMessage)
+        })
+      })
+ */
     })
   })
 
