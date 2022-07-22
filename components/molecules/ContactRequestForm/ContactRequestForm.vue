@@ -52,6 +52,10 @@ export default defineComponent({
     let validate = ref(false)
     const submit = () => {
       validate.value = true
+      if (v.value.$errors.length === 0) {
+        // in diesem Fall kann der request abgeschickt werden, denn das error array ist leer und es gibt keine Form errors mehr
+        // ToDo implement send request logic
+      }
     }
 
     return { v, validate, submit }
