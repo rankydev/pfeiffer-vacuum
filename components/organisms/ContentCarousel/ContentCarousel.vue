@@ -20,8 +20,8 @@
       <GenericCarousel v-if="slides.length > 0" v-bind="carouselData">
         <template #slides>
           <NuxtDynamic
-            v-for="slide in slides"
-            :key="slide._uid"
+            v-for="(slide, index) in slides"
+            :key="index"
             v-bind="slide"
             :name="slide.uiComponent || slide.component"
           />

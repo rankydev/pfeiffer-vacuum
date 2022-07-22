@@ -14,6 +14,11 @@ export default {
       required: true,
       pos: 3,
     },
+    transparent: {
+      type: 'boolean',
+      display_name: 'Transparent',
+      default_value: 'true',
+    },
   },
   image: null,
   preview_field: null,

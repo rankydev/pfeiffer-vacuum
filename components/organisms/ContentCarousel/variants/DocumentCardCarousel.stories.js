@@ -27,6 +27,10 @@ const argTypes = {
     control: { type: 'boolean' },
     defaultValue: generalTeaserCarouselContent.infinite,
   },
+  transparent: {
+    control: { type: 'boolean' },
+    defaultValue: true,
+  },
   slides: {
     control: { type: 'array' },
     defaultValue: generalTeaserCarouselContent.slides,

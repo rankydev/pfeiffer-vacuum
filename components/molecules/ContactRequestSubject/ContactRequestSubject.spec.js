@@ -5,7 +5,7 @@ import ContactRequestSubject from './ContactRequestSubject.vue'
 describe('ContactRequestSubject', () => {
   describe('initial state', () => {
     test('should render given only required prop type', () => {
-      const propsData = { type: content.type }
+      const propsData = { type: [content.type] }
       const wrapper = shallowMount(ContactRequestSubject, { propsData })
 
       expect(wrapper.exists()).toBeTruthy()
