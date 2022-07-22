@@ -8,15 +8,10 @@
         class="link-list__item"
       >
         <NuxtDynamic
-          v-editable="linkItem"
           v-bind="linkItem"
           variant="textlink"
           :name="linkItem.uiComponent || linkItem.component"
         />
-
-        <!--
-        <Link v-bind="linkItem" variant="textlink" />
-        -->
       </li>
     </ul>
   </div>
@@ -24,10 +19,9 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-// import Link from '~/components/atoms/Link/Link'
 
 export default defineComponent({
-  name: 'LinkList',
+  name: 'FooterLinkList',
   components: {},
   props: {
     /**

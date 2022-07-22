@@ -2,7 +2,7 @@ import {
   footerMenuOne,
   footerMenuThree,
   footerMenuTwo,
-} from '~/components/molecules/LinkList/LinkList.stories.content'
+} from '~/components/molecules/FooterLinkList/FooterLinkList.stories.content'
 import socialMedia from '~/components/molecules/SocialMedia/SocialMedia.stories.content'
 import newsletterContent from '~/components/organisms/Footer/partials/FooterNewsletter/FooterNewsletter.stories.content.js'
 

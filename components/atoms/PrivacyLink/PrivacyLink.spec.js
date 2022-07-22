@@ -18,9 +18,11 @@ function createComponent(propsData = {}) {
 describe('PrivacyLink', () => {
   describe('initial state', () => {
     test('should render empty component without warnings given no product', () => {
-      createComponent()
-
-      console.log('###', wrapper.html())
+      const propsData = { label: 'label' }
+      createComponent(propsData)
+      const link = wrapper.find('.privacy-link')
+      expect(link.exists()).toBeTruthy()
+      expect(link.vm.label).toBe(propsData.label)
     })
   })
 })

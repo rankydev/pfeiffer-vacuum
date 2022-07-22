@@ -20,8 +20,8 @@ function createComponent(propsData = {}, { CustomStub } = {}) {
 describe('Link', () => {
   describe('initial state', () => {
     describe('given no target', () => {
-      it('should render a NuxtLink component when it is a realtive href', () => {
-        const propsData = { href: '/some/reltiv/path' }
+      it('should render a NuxtLink component when it is a relative href', () => {
+        const propsData = { href: '/some/relative/path' }
         createComponent(propsData)
 
         const link = wrapper.findComponent(RouterLinkStub)
