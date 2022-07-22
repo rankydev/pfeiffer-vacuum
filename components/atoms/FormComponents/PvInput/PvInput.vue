@@ -80,7 +80,7 @@ export default defineComponent({
       default: '',
     },
     /**
-     * The isRequired prop, which defines if the text field is isRequired or not
+     * The isRequired prop, which defines if the text field is required or not
      */
     isRequired: {
       type: Boolean,
@@ -158,10 +158,6 @@ export default defineComponent({
         }
       }
     )
-
-    if (ref(props.validate).value === true) {
-      validation.value.validateInput()
-    }
 
     return {
       internalValue,

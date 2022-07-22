@@ -30,6 +30,7 @@
         },
       ]"
       :option-label="'displayValue'"
+      :required="true"
       :rules="{ required }"
       :validate="validate"
     />

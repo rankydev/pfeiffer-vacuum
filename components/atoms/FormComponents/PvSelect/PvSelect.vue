@@ -4,6 +4,7 @@
     <Label v-if="label" :label="label" />
     <v-select
       v-model="internalValue"
+      :required="isRequired"
       :options="options"
       :class="{
         'pv-select--error': !!validation.getError(),
@@ -15,6 +16,10 @@
       :selectable="(option) => option.disabled !== true"
       :components="{ Deselect }"
       :reduce="reduce"
+      @input="
+        $emit('update', internalValue)
+        validation.validateInput()
+      "
     >
       <template #search="{ attributes, events }">
         <Icon
@@ -74,7 +79,7 @@ import vSelect from 'vue-select'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Icon from '~/components/atoms/Icon/Icon'
-import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
+import { defineComponent, computed, ref, watch } from '@nuxtjs/composition-api'
 import { useInputValidator } from '~/composables/useValidator'
 
 export default defineComponent({
@@ -90,8 +95,15 @@ export default defineComponent({
      * The input’s value
      */
     value: {
-      type: [String, Object, Boolean],
-      default: undefined,
+      type: String,
+      default: '',
+    },
+    /**
+     * The isRequired prop, which defines if the select field is required or not
+     */
+    isRequired: {
+      type: Boolean,
+      default: false,
     },
     /**
      * Can be an array of objects or array of strings. When using objects, will look for a label, value, icon and disabled keys. T
@@ -145,12 +157,19 @@ export default defineComponent({
       type: Object,
       default: () => {},
     },
+    validate: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update'],
-  setup(props, { emit }) {
+  setup(props) {
+    const innerValue = ref(props.value)
     const internalValue = computed({
-      get: () => props.value,
-      set: (value) => emit('update', value),
+      get: () => innerValue.value,
+      set: (newValue) => {
+        innerValue.value = newValue?.value
+      },
     })
 
     const Deselect = {
@@ -166,6 +185,15 @@ export default defineComponent({
         },
         { internalValue }
       )
+    )
+
+    watch(
+      () => props.validate,
+      (value) => {
+        if (value === true) {
+          validation.value.validateInput()
+        }
+      }
     )
 
     return { internalValue, Deselect, validation }
