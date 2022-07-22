@@ -5,18 +5,21 @@
       placeholder="Placeholder"
       :required="true"
       :rules="{ required }"
+      :validate="validate"
     />
     <PvInput
       :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
       :required="true"
       :rules="{ required }"
+      :validate="validate"
     />
     <PvInput
       :label="$t('form.contactRequest.company')"
       placeholder="Placeholder"
       :required="true"
       :rules="{ required }"
+      :validate="validate"
     />
     <PvSelect
       :label="$t('form.contactRequest.country')"
@@ -27,7 +30,9 @@
         },
       ]"
       :option-label="'displayValue'"
+      :required="true"
       :rules="{ required }"
+      :validate="validate"
     />
     <div class="topic-request__address">
       <PvInput
@@ -35,6 +40,8 @@
         :label="$t('form.contactRequest.street')"
         placeholder="Placeholder"
         :required="true"
+        :rules="{ required }"
+        :validate="validate"
       />
       <PvInput
         class="topic-request__address--number"
@@ -42,6 +49,7 @@
         placeholder="Placeholder"
         :required="true"
         :rules="{ required }"
+        :validate="validate"
       />
     </div>
     <div class="topic-request__address">
@@ -51,6 +59,7 @@
         placeholder="Placeholder"
         :required="true"
         :rules="{ required }"
+        :validate="validate"
       />
       <PvInput
         class="topic-request__address--city"
@@ -58,6 +67,7 @@
         placeholder="Placeholder"
         :required="true"
         :rules="{ required }"
+        :validate="validate"
       />
     </div>
     <PvInput
@@ -65,12 +75,12 @@
       placeholder="Placeholder"
       :required="true"
       :rules="{ required, email }"
+      :validate="validate"
     />
     <PvTextArea
       :label="$t('form.contactRequest.message')"
       placeholder="Placeholder"
       :required="false"
-      :rules="{ required }"
     />
   </div>
 </template>
@@ -84,6 +94,12 @@ import { required, email } from '@vuelidate/validators'
 export default defineComponent({
   name: 'TopicRequest',
   components: { PvTextArea, PvInput, PvSelect },
+  props: {
+    validate: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup() {
     return { required, email }
   },

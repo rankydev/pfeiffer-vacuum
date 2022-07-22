@@ -5,7 +5,7 @@
       v-if="contactRequestType === 'GENERAL_QUERY'"
       :validate="validate"
     />
-    <TopicRequest v-else />
+    <TopicRequest v-else :validate="validate" />
     <Button
       label="Anfrage absenden"
       variant="secondary"
