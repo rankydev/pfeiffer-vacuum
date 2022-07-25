@@ -24,10 +24,11 @@
     "company": "Firma/Universität",
     "mail": "E-Mail",
     "country": "Land",
-    "message": "Ihre Nachricht",
+    "message": "Nachricht",
     "street": "Straße",
     "houseNumber": "Nummer",
     "postCode": "PLZ",
-    "city": "Stadt"
+    "city": "Stadt",
+    "submit": "Absenden"
   }
 }

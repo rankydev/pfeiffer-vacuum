@@ -20,15 +20,15 @@
     "tooLong": "Your password may be too long (max. 128 characters)"
   },
   "contactRequest": {
-    "firstname": "first name",
-    "surname": "last name",
-    "company": "company/university",
-    "mail": "e-mail",
-    "country": "country",
-    "message": "your message",
-    "street": "street",
-    "houseNumber": "number",
-    "postCode": "postcode",
-    "city": "city"
+    "firstname": "First name",
+    "surname": "Last name",
+    "company": "Company / University",
+    "mail": "Email",
+    "country": "Country / Location",
+    "message": "Your message",
+    "street": "Street",
+    "houseNumber": "No.",
+    "postCode": "ZIP Code",
+    "city": "City"
   }
 }
