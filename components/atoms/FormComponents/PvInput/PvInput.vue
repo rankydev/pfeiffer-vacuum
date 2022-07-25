@@ -94,12 +94,15 @@ export default defineComponent({
       default: false,
     },
     /**
-     * rules that will be passed into Validator
+     * defines what should be validated
      */
     rules: {
       type: Object,
       default: () => {},
     },
+    /**
+     * determines whether a validation can be executed
+     */
     validate: {
       type: Boolean,
       default: false,

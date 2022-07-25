@@ -16,9 +16,6 @@
       @click.native="submit()"
     />
     <p v-for="error of v.$errors" :key="error.$uid"></p>
-    <!--
-    <pre>{{ v.$errors }}</pre>
-    -->
   </div>
 </template>
 
@@ -42,7 +39,6 @@ export default defineComponent({
     contactRequestType: {
       type: String,
       required: true,
-      // default: 'QUOTE',
     },
   },
   setup() {
