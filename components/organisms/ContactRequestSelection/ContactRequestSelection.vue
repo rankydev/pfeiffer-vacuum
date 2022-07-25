@@ -12,34 +12,42 @@
       </p>
     </div>
     <div class="contact-request-selection__subjects">
-      <transition v-for="item in requestSubjects" :key="item._uid" name="fade">
+      <AnimatedCollapse
+        v-for="item in requestSubjects"
+        :key="item._uid"
+        name="fade"
+        speed="fast"
+      >
         <NuxtDynamic
           v-show="selectedSubjectId === item._uid || !selectedSubjectId"
           v-editable="item"
           v-bind="item"
+          class="contact-request-selection__subject"
           :name="item.uiComponent || item.component"
           @selected="changeSelection"
         />
-      </transition>
+      </AnimatedCollapse>
     </div>
-    <!-- <transition name="delayed-fade"> -->
-    <div v-show="formType.length" class="contact-request-subject__form">
-      <NuxtDynamic
-        v-for="item in formType"
-        :key="item._uid"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      />
-    </div>
-    <!-- </transition> -->
+    <AnimatedCollapse speed="fast">
+      <div v-if="formType.length" class="contact-request-selection__form">
+        <NuxtDynamic
+          v-for="item in formType"
+          :key="item._uid"
+          v-bind="item"
+          :name="item.uiComponent || item.component"
+        />
+      </div>
+    </AnimatedCollapse>
   </div>
 </template>
 
 <script>
 import { defineComponent, ref } from '@nuxtjs/composition-api'
+import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
 
 export default defineComponent({
   name: 'ContactRequestSelection',
+  components: { AnimatedCollapse },
   props: {
     /**
      * main headline rendred as h1
@@ -77,7 +85,6 @@ export default defineComponent({
       selectedSubjectId.value = data.id || undefined
       formType.value = data.type || []
     }
-
     return { changeSelection, selectedSubjectId, formType }
   },
 })
@@ -85,6 +92,8 @@ export default defineComponent({
 
 <style lang="scss">
 .contact-request-selection {
+  height: 100%;
+
   &__content {
     @apply tw-mb-4;
   }
@@ -102,8 +111,13 @@ export default defineComponent({
     @apply tw-gap-2;
   }
 
+  &__subject {
+    @apply tw-overflow-hidden;
+  }
+
   &__form {
     @apply tw-mt-4;
+    @apply tw-overflow-hidden;
   }
 }
 </style>
