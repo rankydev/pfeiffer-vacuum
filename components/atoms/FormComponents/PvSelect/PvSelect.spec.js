@@ -1,8 +1,7 @@
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect.vue'
 import { icon, label, normal, error } from './PvSelect.stories.content'
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, mount } from '@vue/test-utils'
 import Label from '~/components/atoms/FormComponents/partials/Label/Label'
-import errorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Icon from '~/components/atoms/Icon/Icon'
 import { describe, expect, it } from '@jest/globals'
 
@@ -77,38 +76,18 @@ describe('Select', () => {
     })
 
     describe('during interaction', () => {
-      /*
-      it('should emit an update event when internalValue has changed', async () => {
-        const value = 'Some Value'
-        const propsData = { ...normal }
+      it('should return error when selected option is invalid', async () => {
+        const propsData = {
+          ...error,
+        }
         createComponent(propsData)
+        const selectedOption = { value: '' }
+        await wrapper.setData({ internalValue: selectedOption })
+        wrapper.vm.validation.validateInput()
 
-        const emitMock = jest.fn()
-        wrapper.vm.$emit = emitMock
-        await wrapper.setData({ internalValue: value })
-        expect(emitMock).toBeCalledTimes(1)
-        expect(emitMock).toBeCalledWith('update', value)
+        expect(wrapper.vm.validation.getError()).toBe('Value is required')
       })
-        describe('given an error', () => {
-        const propsData = { ...error }
-
-        it('should add the correct error class on v-select', () => {
-          createComponent(propsData)
-          const selectWrapper = wrapper.find('.v-select')
-
-          expect(selectWrapper.attributes('class')).toMatch('pv-select--error')
-        })
-
-        it('should render an error message component', () => {
-          createComponent(propsData)
-
-          const input = wrapper.findComponent(errorMessage)
-          expect(input.attributes('errormessage')).toBe(propsData.errorMessage)
-        })
-      })
- */
     })
   })
-
   // describe('business requirements', () => {})
 })
