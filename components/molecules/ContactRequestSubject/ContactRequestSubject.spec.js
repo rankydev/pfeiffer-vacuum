@@ -46,7 +46,10 @@ describe('ContactRequestSubject', () => {
       await subject.trigger('click')
 
       expect(emitMock).toBeCalledTimes(3)
-      expect(emitMock).toBeCalledWith('selected', undefined) // TODO content.type[0]._uid
+      expect(emitMock).toBeCalledWith('selected', {
+        id: undefined,
+        type: content.type,
+      })
     })
   })
 })

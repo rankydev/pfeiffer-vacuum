@@ -12,16 +12,26 @@
       </p>
     </div>
     <div class="contact-request-selection__subjects">
+      <transition v-for="item in requestSubjects" :key="item._uid" name="fade">
+        <NuxtDynamic
+          v-show="selectedSubjectId === item._uid || !selectedSubjectId"
+          v-editable="item"
+          v-bind="item"
+          :name="item.uiComponent || item.component"
+          @selected="changeSelection"
+        />
+      </transition>
+    </div>
+    <!-- <transition name="delayed-fade"> -->
+    <div v-show="formType.length" class="contact-request-subject__form">
       <NuxtDynamic
-        v-for="item in requestSubjects"
-        v-show="selectedSubjectId === item._uid || !selectedSubjectId"
+        v-for="item in formType"
         :key="item._uid"
-        v-editable="item"
         v-bind="item"
         :name="item.uiComponent || item.component"
-        @selected="changeSelection"
       />
     </div>
+    <!-- </transition> -->
   </div>
 </template>
 
@@ -62,11 +72,13 @@ export default defineComponent({
   },
   setup() {
     const selectedSubjectId = ref(undefined)
-    const changeSelection = (id) => {
-      selectedSubjectId.value = id
+    const formType = ref([])
+    const changeSelection = (data) => {
+      selectedSubjectId.value = data.id || undefined
+      formType.value = data.type || []
     }
 
-    return { changeSelection, selectedSubjectId }
+    return { changeSelection, selectedSubjectId, formType }
   },
 })
 </script>
@@ -88,6 +100,10 @@ export default defineComponent({
   &__subjects {
     @apply tw-grid;
     @apply tw-gap-2;
+  }
+
+  &__form {
+    @apply tw-mt-4;
   }
 }
 </style>

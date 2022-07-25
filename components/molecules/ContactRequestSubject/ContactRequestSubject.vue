@@ -17,16 +17,6 @@
         class="contact-request-subject__icon"
       />
     </div>
-    <AnimatedCollapse speed="medium">
-      <div v-show="isSelected" class="contact-request-subject__details">
-        <NuxtDynamic
-          v-for="item in type"
-          :key="item._uid"
-          v-bind="item"
-          :name="item.uiComponent || item.component"
-        />
-      </div>
-    </AnimatedCollapse>
   </div>
 </template>
 <script>
@@ -54,16 +44,17 @@ export default defineComponent({
     },
   },
   emits: ['selected'],
-  setup(_, { emit, attrs }) {
+  setup(props, { emit, attrs }) {
     const isSelected = ref(false)
 
     const openSubject = () => {
       if (isSelected.value) {
         isSelected.value = false
-        emit('selected', undefined)
+        emit('selected', {})
       } else {
         isSelected.value = true
-        emit('selected', attrs._uid)
+
+        emit('selected', { id: attrs._uid, type: props.type })
       }
     }
 
@@ -99,10 +90,6 @@ export default defineComponent({
 
   &__icon {
     @apply tw-text-pv-red;
-  }
-
-  &__details {
-    @apply tw-mt-4;
   }
 }
 </style>
