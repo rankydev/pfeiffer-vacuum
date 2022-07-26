@@ -21,7 +21,7 @@ export default {
   'tab-advanced': {
     type: 'tab',
     display_name: 'Advanced',
-    keys: ['uiComponent'],
+    keys: ['uiComponent', 'transparent'],
   },
   uiComponent: {
     type: 'text',

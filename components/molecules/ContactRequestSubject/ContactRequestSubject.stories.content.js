@@ -5,6 +5,6 @@ export default {
   description: [
     { ...richtext.content, richtext: 'Lorem ipsum dolor sit amet' },
   ],
-  type: 'Lorem type',
+  type: ['Lorem type'],
   component: 'ContactRequestSubject',
 }

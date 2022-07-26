@@ -35,7 +35,7 @@ export default {
       default: () => [],
     },
     type: {
-      type: String,
+      type: Array,
       required: true,
     },
   },
@@ -56,20 +56,21 @@ export default {
     @apply tw-transition-colors tw-duration-150;
   }
 
+  &__icon {
+    @apply tw-text-pv-red;
+  }
+
   &:hover {
     @apply tw-cursor-pointer;
 
-    #{$root}__title {
-      @apply tw-text-pv-red;
+    #{$root}__title,
+    #{$root}__icon {
+      @apply tw-text-pv-red-lighter;
     }
   }
 
   &__text {
     @apply tw-flex tw-flex-col;
-  }
-
-  &__icon {
-    @apply tw-text-pv-red;
   }
 }
 </style>

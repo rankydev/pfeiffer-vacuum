@@ -63,6 +63,8 @@ export default {
     { src: '~/plugins/storyblok-api-client', mode: 'client' },
     { src: '~/plugins/breakpoints' },
     { src: '~/plugins/service.plugin', mode: 'client' },
+    { src: '~/plugins/hybrisApi' },
+    { src: '~/plugins/logger' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -87,7 +89,12 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@txp-cms/storyblok', '@nuxt/image', '@nuxtjs/i18n'],
+  modules: [
+    '@txp-cms/storyblok',
+    '@nuxt/image',
+    '@nuxtjs/i18n',
+    '@nuxtjs/axios',
+  ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -204,4 +211,9 @@ export default {
       handler: '~/server/middleware/shop-images.js',
     },
   ],
+
+  axios: {
+    // See: https://axios.nuxtjs.org/options
+    baseURL: process.env.SHOP_BASE_URL,
+  },
 }

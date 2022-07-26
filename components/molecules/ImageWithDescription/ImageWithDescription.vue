@@ -64,6 +64,7 @@ export default defineComponent({
     @apply tw-mt-2;
     @apply tw-text-xs;
     @apply tw-leading-4;
+    @apply tw-rounded-lg;
   }
 
   &__component {
