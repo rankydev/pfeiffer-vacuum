@@ -7,7 +7,7 @@
     />
     <TopicRequest v-else :validate="validate" />
     <Button
-      label="Anfrage absenden"
+      :label="$t('form.contactRequest.submit')"
       variant="secondary"
       shape="filled"
       size="normal"
@@ -34,7 +34,7 @@ export default defineComponent({
   },
   props: {
     /**
-     * The contactRequestType
+     * defines which input fields are included in the form. There are two types: GeneralRequest and TopicRequest
      */
     contactRequestType: {
       type: String,

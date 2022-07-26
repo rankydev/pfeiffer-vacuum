@@ -29,6 +29,7 @@
     "street": "거리",
     "houseNumber": "숫자",
     "postCode": "우편번호",
-    "city": "도시"
+    "city": "도시",
+    "submit": "제출하다"
   }
 }

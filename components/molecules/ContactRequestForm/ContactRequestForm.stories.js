@@ -10,7 +10,7 @@ export default {
           'This component is a form that can be filled out with inputs as well as validated. In addition to that it offers the possibility to send a contact request.',
       },
       source: {
-        code: '<ContactRequestForm />',
+        code: '<ContactRequestForm v-bind="{ contactRequestType }"/>',
       },
     },
   },
@@ -35,5 +35,5 @@ GeneralRequest.args = {
 
 export const TopicRequest = Template.bind({})
 TopicRequest.args = {
-  contactRequestType: 'PRODUCT',
+  contactRequestType: 'SERVICE_REQUEST',
 }

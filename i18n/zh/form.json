@@ -29,6 +29,7 @@
     "street": "街道",
     "houseNumber": "门牌号码",
     "postCode": "邮政编码",
-    "city": "城市"
+    "city": "城市",
+    "submit": "提交"
   }
 }

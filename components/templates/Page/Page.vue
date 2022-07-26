@@ -68,12 +68,10 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
-// import ContactRequestForm from '~/components/molecules/ContactRequestForm/ContactRequestForm'
 
 export default defineComponent({
   name: 'Page',
   components: {
-    // ContactRequestForm,
     ContentWrapper,
     OnPageNavigation,
   },

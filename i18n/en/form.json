@@ -29,6 +29,7 @@
     "street": "Street",
     "houseNumber": "No.",
     "postCode": "ZIP Code",
-    "city": "City"
+    "city": "City",
+    "submit": "Submit"
   }
 }
