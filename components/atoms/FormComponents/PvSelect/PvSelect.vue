@@ -164,11 +164,11 @@ export default defineComponent({
   },
   emits: ['update'],
   setup(props) {
-    const innerValue = ref(props.value)
+    const valueFromProps = ref(props.value)
     const internalValue = computed({
-      get: () => innerValue.value,
+      get: () => valueFromProps.value,
       set: (newValue) => {
-        innerValue.value = newValue?.value
+        valueFromProps.value = newValue?.value
       },
     })
 

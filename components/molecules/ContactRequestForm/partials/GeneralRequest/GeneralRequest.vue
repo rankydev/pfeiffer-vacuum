@@ -6,6 +6,10 @@
       :required="true"
       :rules="{ required }"
       :validate="validate"
+      @update="
+        requestData.firstname = $event
+        $emit('update', requestData)
+      "
     />
     <PvInput
       :label="$t('form.contactRequest.surname')"
@@ -13,6 +17,10 @@
       :required="true"
       :rules="{ required }"
       :validate="validate"
+      @update="
+        requestData.surname = $event
+        $emit('update', requestData)
+      "
     />
     <PvInput
       :label="$t('form.contactRequest.mail')"
@@ -20,6 +28,10 @@
       :required="true"
       :rules="{ required, email }"
       :validate="validate"
+      @update="
+        requestData.mail = $event
+        $emit('update', requestData)
+      "
     />
     <PvSelect
       :label="$t('form.contactRequest.country')"
@@ -33,11 +45,19 @@
       :required="true"
       :rules="{ required }"
       :validate="validate"
+      @update="
+        requestData.country = $event
+        $emit('update', requestData)
+      "
     />
     <PvTextArea
       :label="$t('form.contactRequest.message')"
       placeholder="Placeholder"
       :required="false"
+      @update="
+        requestData.message = $event
+        $emit('update', requestData)
+      "
     />
   </div>
 </template>
@@ -45,7 +65,7 @@
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { required, email } from '@vuelidate/validators'
 
 export default defineComponent({
@@ -61,7 +81,15 @@ export default defineComponent({
     },
   },
   setup() {
-    return { required, email }
+    const requestData = ref({
+      firstname: '',
+      surname: '',
+      country: '',
+      mail: '',
+      message: '',
+    })
+
+    return { required, email, requestData }
   },
 })
 </script>

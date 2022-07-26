@@ -4,8 +4,9 @@
     <GeneralRequest
       v-if="contactRequestType === 'GENERAL_QUERY'"
       :validate="validate"
+      @update="requestData = $event"
     />
-    <TopicRequest v-else :validate="validate" />
+    <TopicRequest v-else :validate="validate" @update="requestData = $event" />
     <Button
       :label="$t('form.contactRequest.submit')"
       variant="secondary"
@@ -61,7 +62,9 @@ export default defineComponent({
       }
     }
 
-    return { v, validate, submit }
+    const requestData = ref({})
+
+    return { v, validate, submit, requestData }
   },
 })
 </script>

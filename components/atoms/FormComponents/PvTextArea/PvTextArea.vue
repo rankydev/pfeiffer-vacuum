@@ -2,17 +2,19 @@
   <div class="pv-textarea">
     <PvLabel :optional="!required" :label="label" tag-name="textarea" />
     <textarea
+      v-model="internalValue"
       name="textarea"
       v-bind="{ text, placeholder, required, disabled }"
       class="pv-textarea__input"
       @focus="$emit('focus', true)"
       @blur="$emit('focus', false)"
+      @input="$emit('update', internalValue)"
     ></textarea>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 
 export default defineComponent({
@@ -64,6 +66,10 @@ export default defineComponent({
      */
     'focus',
   ],
+  setup(props) {
+    const internalValue = ref(props.text)
+    return { internalValue }
+  },
 })
 </script>
 
