@@ -39,6 +39,13 @@ export default defineComponent({
     contactRequestType: {
       type: String,
       required: true,
+      validator: (val) =>
+        [
+          'QUOTE',
+          'SERVICE_REQUEST',
+          'PRODUCT_INFORMATION',
+          'GENERAL_QUERY',
+        ].includes(val),
     },
   },
   setup() {

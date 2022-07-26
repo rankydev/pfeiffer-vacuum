@@ -23,7 +23,6 @@
 
     <slot>
       <main>
-        <!-- <ContactRequestForm /> -->
         <nuxt-dynamic
           v-for="item in stage"
           :key="item._uid"
