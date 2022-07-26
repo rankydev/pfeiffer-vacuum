@@ -2,11 +2,11 @@ import contactRequestSubject from '~/components/molecules/ContactRequestSubject/
 
 const subjects = [
   {
-    ...contactRequestSubject,
+    ...contactRequestSubject(),
     uiComponent: 'ContactRequestSubject',
   },
-  contactRequestSubject,
-  contactRequestSubject,
+  contactRequestSubject(),
+  contactRequestSubject(),
 ]
 
 export const mainHeadline = 'Kontakt'
