@@ -15,6 +15,7 @@ export default {
     },
     type: {
       type: 'bloks',
+      maximum: 1,
       display_name: 'Contact Request Type',
       restrict_components: true,
       component_whitelist: ['ContactCTABox', 'ContactRequestForm'],
