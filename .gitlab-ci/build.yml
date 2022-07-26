@@ -144,6 +144,7 @@ sonar-qube:
       --build-arg SHOP_IMAGE_URL="${SHOP_IMAGE_URL}"
       --build-arg CURRENT_REGION_CODE="${CURRENT_REGION_CODE}"
       --build-arg USERCENTRICS_PRIVACY_PATH="${USERCENTRICS_PRIVACY_PATH}"
+      --build-arg USERCENTRICS_ID="${USERCENTRICS_ID}"
       -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
