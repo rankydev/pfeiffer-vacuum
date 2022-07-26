@@ -15,7 +15,6 @@
       <AnimatedCollapse
         v-for="item in requestSubjects"
         :key="item._uid"
-        name="fade"
         speed="fast"
       >
         <NuxtDynamic
@@ -92,8 +91,6 @@ export default defineComponent({
 
 <style lang="scss">
 .contact-request-selection {
-  height: 100%;
-
   &__content {
     @apply tw-mb-4;
   }
