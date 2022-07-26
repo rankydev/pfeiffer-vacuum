@@ -31,7 +31,7 @@
               !infinite && isFirstSlide(currentSlide),
           }"
           variant="secondary"
-          icon="arrow_back"
+          icon="arrow_back_ios"
           cutaway="right"
         />
       </template>
@@ -43,7 +43,7 @@
               !infinite && isLastSlide(currentSlide, slideCount),
           }"
           variant="secondary"
-          icon="arrow_forward"
+          icon="arrow_forward_ios"
           cutaway="left"
         />
       </template>

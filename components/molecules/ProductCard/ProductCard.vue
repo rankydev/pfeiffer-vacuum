@@ -4,7 +4,7 @@
       <ResponsiveImage
         :image="image || {}"
         aspect-ratio="16:9"
-        provider="hybris"
+        :provider="provider"
       />
     </template>
     <template #subheading>
@@ -36,6 +36,10 @@ export default defineComponent({
     product: {
       type: Object,
       default: () => ({}),
+    },
+    provider: {
+      type: String,
+      default: 'hybris',
     },
   },
   setup(props) {
