@@ -13,11 +13,11 @@
     "noOptions": "对不起。没有匹配的选项。"
   },
   "password": {
-    "minLength": "至少包含 8 个字母",
+    "minLength": "至少包含8个字符",
     "capitalLetter":
-    "至少包含 1 个大写字母和 1 个小写字母",
-    "digit": "至少包含 1 个数字",
-    "tooLong": "您的密码可能太长（最多 128 个字符）"
+    "至少包含1个大写字母和1个小写字母",
+    "digit": "至少包含1位数字",
+    "tooLong": "您的密码过长（不得超过128个字节）"
   },
   "contactRequest": {
     "firstname": "名",
