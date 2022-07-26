@@ -49,14 +49,14 @@ export default defineComponent({
   components: { AnimatedCollapse },
   props: {
     /**
-     * main headline rendred as h1
+     * main headline rendered as h1
      */
     mainHeadline: {
       type: String,
       default: '',
     },
     /**
-     * headline of the section rendred as h3
+     * headline of the section rendered as h3
      */
     sectionHeadline: {
       type: String,
