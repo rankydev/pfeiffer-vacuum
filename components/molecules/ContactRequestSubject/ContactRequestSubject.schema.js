@@ -17,7 +17,7 @@ export default {
       type: 'bloks',
       display_name: 'Contact Request Type',
       restrict_components: true,
-      component_whitelist: ['ContactCTABox'],
+      component_whitelist: ['ContactCTABox', 'ContactRequestForm'],
       description:
         'Please choose the type of the contact form to show when clicking the subject.',
     },
