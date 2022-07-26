@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'PrivacyLink',
@@ -19,9 +19,12 @@ export default defineComponent({
     },
   },
   setup() {
+    const { app } = useContext()
+
     const openConsentLayer = () => {
       if (process.client && !!window?.UC_UI && window?.UC_UI.isInitialized()) {
-        // @todo window?.UC_UI.updateLanguage()
+        const locale = app?.i18n.locale
+        window?.UC_UI.updateLanguage(locale)
         window?.UC_UI.showSecondLayer()
       }
     }

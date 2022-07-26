@@ -2,6 +2,10 @@ import { shallowMount, RouterLinkStub, createLocalVue } from '@vue/test-utils'
 import FooterLinkList from '~/components/molecules/FooterLinkList/FooterLinkList.vue'
 import { footerMenuOne } from '~/components/molecules/FooterLinkList/FooterLinkList.stories.content'
 
+const nuxtDynamicStub = {
+  template: '<div />',
+}
+
 const localVue = createLocalVue()
 localVue.directive('editable', (el, key) => {
   el.innerText = key.value
@@ -17,6 +21,7 @@ describe('FooterLinkList', () => {
       const wrapper = shallowMount(FooterLinkList, {
         stubs: {
           NuxtLink: RouterLinkStub,
+          NuxtDynamic: nuxtDynamicStub,
         },
         localVue,
       })
@@ -29,6 +34,7 @@ describe('FooterLinkList', () => {
         propsData,
         stubs: {
           NuxtLink: RouterLinkStub,
+          NuxtDynamic: nuxtDynamicStub,
         },
         localVue,
       })
@@ -42,6 +48,7 @@ describe('FooterLinkList', () => {
         propsData,
         stubs: {
           NuxtLink: RouterLinkStub,
+          NuxtDynamic: nuxtDynamicStub,
         },
         localVue,
       })
