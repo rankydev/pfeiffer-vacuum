@@ -129,9 +129,5 @@ export default defineComponent({
   &--fast {
     @apply tw-duration-200;
   }
-
-  &--overflow-hidden {
-    overflow: hidden;
-  }
 }
 </style>
