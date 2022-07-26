@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <div>
-    <Label v-if="label" :label="label" />
+    <PvLabel v-if="label" :label="label" />
     <v-select
       v-model="internalValue"
       :required="isRequired"
@@ -76,7 +76,7 @@
 
 <script>
 import vSelect from 'vue-select'
-import Label from '~/components/atoms/FormComponents/partials/Label/Label'
+import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Icon from '~/components/atoms/Icon/Icon'
 import { defineComponent, computed, ref, watch } from '@nuxtjs/composition-api'
@@ -87,7 +87,7 @@ export default defineComponent({
   components: {
     vSelect,
     Icon,
-    Label,
+    PvLabel,
     ErrorMessage,
   },
   props: {

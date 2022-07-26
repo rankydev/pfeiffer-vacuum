@@ -1,5 +1,5 @@
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea.vue'
-import Label from '~/components/atoms/FormComponents/partials/Label/Label.vue'
+import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel.vue'
 import { shallowMount } from '@vue/test-utils'
 
 const propsTextArea = {
@@ -20,7 +20,7 @@ describe('TextArea', () => {
     test('should render label component correctly given props', () => {
       const propsData = { ...propsTextArea }
       const wrapper = shallowMount(PvTextArea, { propsData })
-      const labelWrapper = wrapper.findComponent(Label)
+      const labelWrapper = wrapper.findComponent(PvLabel)
 
       expect(labelWrapper.exists()).toBeTruthy()
       expect(labelWrapper.attributes('label')).toBe(propsTextArea.label)

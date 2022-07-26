@@ -1,6 +1,6 @@
 <template>
   <div class="pv-textarea">
-    <Label :optional="!required" :label="label" tag-name="textarea" />
+    <PvLabel :optional="!required" :label="label" tag-name="textarea" />
     <textarea
       name="textarea"
       v-bind="{ text, placeholder, required, disabled }"
@@ -13,11 +13,11 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import Label from '~/components/atoms/FormComponents/partials/Label/Label'
+import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 
 export default defineComponent({
   name: 'PvTextArea',
-  components: { Label },
+  components: { PvLabel },
   props: {
     /**
      * The internal text

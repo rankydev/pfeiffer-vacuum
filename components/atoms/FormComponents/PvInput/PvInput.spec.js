@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import Input from './PvInput.vue'
 import Icon from '../../Icon/Icon.vue'
-import Label from '../../FormComponents/partials/Label/Label.vue'
+import PvLabel from '../partials/PvLabel/PvLabel.vue'
 import { expect } from '@jest/globals'
 import { required, email } from '@vuelidate/validators'
 
@@ -11,7 +11,7 @@ describe('Input', () => {
       const wrapper = shallowMount(Input)
       const icon = wrapper.findComponent(Icon)
       const input = wrapper.findComponent(Input)
-      const label = wrapper.findComponent(Label)
+      const label = wrapper.findComponent(PvLabel)
 
       expect(icon.exists()).toBeFalsy()
       expect(input.exists()).toBeTruthy()
@@ -46,7 +46,7 @@ describe('Input', () => {
     it('should set a label when provided', () => {
       const propsData = { label: 'Some Label' }
       const wrapper = shallowMount(Input, { propsData })
-      const input = wrapper.findComponent(Label)
+      const input = wrapper.findComponent(PvLabel)
 
       expect(input.attributes('label')).toBe(propsData.label)
     })

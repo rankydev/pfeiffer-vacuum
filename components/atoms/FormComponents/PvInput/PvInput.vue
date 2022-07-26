@@ -1,6 +1,6 @@
 <template>
   <div class="pv-input">
-    <Label :label="label" />
+    <PvLabel :label="label" />
     <div class="pv-input__wrapper">
       <input
         v-model="internalValue"
@@ -39,13 +39,13 @@
 import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
-import Label from '~/components/atoms/FormComponents/partials/Label/Label'
+import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import { useInputValidator } from '~/composables/useValidator'
 
 export default defineComponent({
   components: {
     Icon,
-    Label,
+    PvLabel,
     ErrorMessage,
   },
   props: {
@@ -73,7 +73,7 @@ export default defineComponent({
       default: '',
     },
     /**
-     * The text displayed over the form component via Label component
+     * The text displayed over the form component via PvLabel component
      */
     label: {
       type: String,

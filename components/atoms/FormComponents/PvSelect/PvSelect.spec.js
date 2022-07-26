@@ -1,7 +1,7 @@
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect.vue'
 import { icon, label, normal, error } from './PvSelect.stories.content'
 import { shallowMount, mount } from '@vue/test-utils'
-import Label from '~/components/atoms/FormComponents/partials/Label/Label'
+import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import Icon from '~/components/atoms/Icon/Icon'
 import { describe, expect, it } from '@jest/globals'
 
@@ -40,7 +40,7 @@ describe('Select', () => {
     it('should render label component correctly given as a prop', () => {
       const propsData = { ...label }
       createComponent(propsData)
-      const labelWrapper = wrapper.findComponent(Label)
+      const labelWrapper = wrapper.findComponent(PvLabel)
 
       expect(labelWrapper.attributes('label')).toBe(propsData.label)
     })
