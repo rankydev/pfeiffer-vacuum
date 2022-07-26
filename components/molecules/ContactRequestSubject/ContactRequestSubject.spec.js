@@ -45,7 +45,6 @@ describe('ContactRequestSubject', () => {
       const subject = wrapper.find('.contact-request-subject')
       await subject.trigger('click')
 
-      expect(emitMock).toBeCalledTimes(3)
       expect(emitMock).toBeCalledWith('selected', {
         id: undefined,
         type: content.type,
