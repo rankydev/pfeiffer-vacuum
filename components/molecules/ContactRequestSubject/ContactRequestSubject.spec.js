@@ -1,7 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
-import content from './ContactRequestSubject.stories.content'
+import subjectContent from './ContactRequestSubject.stories.content'
 import ContactRequestSubject from './ContactRequestSubject.vue'
 
+const content = subjectContent()
 describe('ContactRequestSubject', () => {
   describe('initial state', () => {
     test('should render given only required prop type', () => {
