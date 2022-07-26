@@ -30,18 +30,14 @@ describe('PrivacyLink', () => {
       expect(link.vm.label).toBe(propsData.label)
     })
 
-    test('should set the correct locale to the consent banner', () => {
-      // @todo test client locale
-    })
-
     test('', () => {
       const propsData = { label: 'label' }
       createComponent(propsData)
       const link = wrapper.find('.privacy-link')
 
+      const spy = (wrapper.vm.openConsentLayer = jest.fn())
       link.trigger('click')
-
-      // @todo check for consent banner is visible
+      expect(spy).toHaveBeenCalledTimes(1)
     })
   })
 })
