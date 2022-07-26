@@ -1,9 +1,16 @@
 import { shallowMount, RouterLinkStub, createLocalVue } from '@vue/test-utils'
 import FooterLinkList from '~/components/molecules/FooterLinkList/FooterLinkList.vue'
-import { footerMenuOne } from '~/components/molecules/FooterLinkList/FooterLinkList.stories.content'
+import {
+  footerMenuOne,
+  footerMenuTwo,
+} from '~/components/molecules/FooterLinkList/FooterLinkList.stories.content'
 
 const nuxtDynamicStub = {
   template: '<div />',
+}
+
+const privacyLinkStub = {
+  template: '<div class="privacy-link" />',
 }
 
 const localVue = createLocalVue()
@@ -55,6 +62,24 @@ describe('FooterLinkList', () => {
 
       const links = wrapper.findAll('.link-list__item')
       expect(links).toHaveLength(5)
+    })
+
+    it('should render a privacy link given an privacy link entry', () => {
+      const { links, title } = footerMenuTwo
+      const privacyProps = () => ({ links, title })
+      const propsData = { ...privacyProps() }
+      const wrapper = shallowMount(FooterLinkList, {
+        propsData,
+        stubs: {
+          NuxtLink: RouterLinkStub,
+          NuxtDynamic: nuxtDynamicStub,
+          PrivacyLink: privacyLinkStub,
+        },
+        localVue,
+      })
+
+      const privacyLink = wrapper.findAll('[name="PrivacyLink"]')
+      expect(privacyLink.exists()).toBeTruthy()
     })
   })
 })

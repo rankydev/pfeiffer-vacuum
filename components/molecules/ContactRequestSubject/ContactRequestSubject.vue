@@ -35,7 +35,7 @@ export default {
       default: () => [],
     },
     type: {
-      type: String,
+      type: Array,
       required: true,
     },
   },
