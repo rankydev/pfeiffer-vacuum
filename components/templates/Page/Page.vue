@@ -31,6 +31,7 @@
           :name="item.uiComponent || item.component"
         />
         <ContentWrapper>
+          <Button variant="secondary" label="Submit Form" @click="submitForm" />
           <nuxt-dynamic
             v-for="item in body"
             :key="item._uid"
@@ -62,17 +63,25 @@
 </template>
 
 <script>
-import { defineComponent, inject, toRefs } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  inject,
+  toRefs,
+  useContext,
+} from '@nuxtjs/composition-api'
 import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
+
+import Button from '../../atoms/Button/Button'
 
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
     OnPageNavigation,
+    Button,
   },
   props: {
     content: {
@@ -81,6 +90,7 @@ export default defineComponent({
     },
   },
   setup(props, context) {
+    const { $hybrisApi } = useContext()
     const { content } = toRefs(props)
     const translatedSlugs = inject('getTranslatedSlugs', () => [])()
     const defaultFullSlug = inject('getDefaultFullSlug', () => '')()
@@ -92,6 +102,10 @@ export default defineComponent({
       context
     )
 
+    async function submitForm() {
+      await $hybrisApi.contactApi.submitContact({})
+    }
+
     return {
       top,
       header,
@@ -101,6 +115,7 @@ export default defineComponent({
       footer,
       quicklinks: content.value.quicklinks,
       metaData: getMetaData(),
+      submitForm,
     }
   },
   head() {

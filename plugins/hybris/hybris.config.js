@@ -5,4 +5,6 @@ const BASE_API_PATH = SHOP_CONTEXT + '/' + BASE_SITE
 export default {
   // Products
   PRODUCTS_API: BASE_API_PATH + '/products',
+  // Contact
+  CONTACT_API: BASE_API_PATH + '/contact',
 }
