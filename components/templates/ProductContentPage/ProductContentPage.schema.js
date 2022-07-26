@@ -28,6 +28,7 @@ export default {
         'CustomContentCardCarousel',
         'DocumentCardCarousel',
         'ImageWithDescription',
+        'ProductCardCarousel',
         'TeaserCard',
         'TeaserCardCarousel',
         'VideoPlayer',

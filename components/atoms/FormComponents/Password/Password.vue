@@ -254,6 +254,10 @@ export default defineComponent({
 
   &__wrapper {
     @apply tw-relative;
+
+    ::-ms-reveal {
+      @apply tw-hidden;
+    }
   }
 
   &__icon {
@@ -293,6 +297,7 @@ export default defineComponent({
     }
 
     &--validated {
+      @apply tw-rounded-b-none;
       @apply tw-rounded-t-md;
       border-bottom-style: none;
 
@@ -326,7 +331,6 @@ export default defineComponent({
       @apply tw-rounded-t-md;
       @apply tw-border-pv-red;
       @apply tw-rounded-b-none;
-      @apply tw-text-pv-red;
 
       &:focus {
         @apply tw-border-pv-red;
