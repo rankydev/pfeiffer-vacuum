@@ -8,4 +8,5 @@ export default {
   ],
   type: [ctabox],
   component: 'ContactRequestSubject',
+  _uid: 'test123',
 }

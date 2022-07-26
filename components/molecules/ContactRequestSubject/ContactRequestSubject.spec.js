@@ -46,7 +46,7 @@ describe('ContactRequestSubject', () => {
       await subject.trigger('click')
 
       expect(emitMock).toBeCalledWith('selected', {
-        id: undefined,
+        id: content._uid,
         type: content.type,
       })
     })
