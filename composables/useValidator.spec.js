@@ -6,14 +6,7 @@ describe('useInputValidator ', () => {
   it('should pass validation given a valid mail address', () => {
     const internalValue = 'test@mail.com'
     const rules = { required, email }
-    const validation = ref(
-      useInputValidator(
-        {
-          internalValue: rules,
-        },
-        { internalValue }
-      )
-    )
+    const validation = ref(useInputValidator(rules, internalValue))
     validation.value.validateInput()
 
     expect(!!validation.value.getError()).toBeFalsy()
@@ -22,14 +15,7 @@ describe('useInputValidator ', () => {
   it('should not pass mail validation given an invalid mail address', () => {
     const internalValue = 'test'
     const rules = { email }
-    const validation = ref(
-      useInputValidator(
-        {
-          internalValue: rules,
-        },
-        { internalValue }
-      )
-    )
+    const validation = ref(useInputValidator(rules, internalValue))
     validation.value.validateInput()
 
     expect(!!validation.value.getError()).toBeTruthy()
@@ -41,14 +27,7 @@ describe('useInputValidator ', () => {
   it('should not pass required validation given an empty string', () => {
     const internalValue = ''
     const rules = { required }
-    const validation = ref(
-      useInputValidator(
-        {
-          internalValue: rules,
-        },
-        { internalValue }
-      )
-    )
+    const validation = ref(useInputValidator(rules, internalValue))
     validation.value.validateInput()
 
     expect(!!validation.value.getError()).toBeTruthy()

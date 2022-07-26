@@ -176,16 +176,7 @@ export default defineComponent({
       render: (h) => h('span', { class: ['deselect-option'] }),
     }
 
-    const validation = ref(
-      useInputValidator(
-        {
-          internalValue: {
-            ...props.rules,
-          },
-        },
-        { internalValue }
-      )
-    )
+    const validation = ref(useInputValidator(props.rules, internalValue))
 
     watch(
       () => props.validate,

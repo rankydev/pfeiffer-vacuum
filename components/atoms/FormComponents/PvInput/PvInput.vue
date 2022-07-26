@@ -142,16 +142,7 @@ export default defineComponent({
     const internalValue = ref(props.value)
     let internalIcon = ref(props.icon)
 
-    const validation = ref(
-      useInputValidator(
-        {
-          internalValue: {
-            ...props.rules,
-          },
-        },
-        { internalValue }
-      )
-    )
+    const validation = ref(useInputValidator(props.rules, internalValue))
 
     watch(
       () => props.validate,
