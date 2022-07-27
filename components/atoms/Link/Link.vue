@@ -13,9 +13,9 @@
       :href="link"
       @click="($event) => beforeNavigation($event) && navigate($event)"
     >
-      <slot :isActive="isActive" :isExactActive="isExactActive">{{
-        label
-      }}</slot>
+      <slot :isActive="isActive" :isExactActive="isExactActive"
+        >{{ label }}
+      </slot>
     </a>
   </NuxtLink>
 </template>

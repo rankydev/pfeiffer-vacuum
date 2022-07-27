@@ -1,5 +1,5 @@
 export default {
-  name: 'LinkList',
+  name: 'FooterLinkList',
   display_name: 'Link List',
   schema: {
     title: {
@@ -10,7 +10,7 @@ export default {
     links: {
       type: 'bloks',
       restrict_components: true,
-      component_whitelist: ['TextLink'],
+      component_whitelist: ['Link', 'PrivacyLink'],
       display_name: 'Links',
     },
   },
@@ -21,6 +21,6 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'LinkList',
+  real_name: 'FooterLinkList',
   component_group_uuid: null,
 }

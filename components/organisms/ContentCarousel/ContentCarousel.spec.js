@@ -4,14 +4,14 @@ import ContentCarousel from './ContentCarousel'
 
 let wrapper
 
-const nuxtDynamicStub = {
+const NuxtDynamicStub = {
   template: '<div />',
 }
 
 function createComponent(propsData = {}) {
   const stubs = {
     Template: true,
-    NuxtDynamic: nuxtDynamicStub,
+    NuxtDynamic: NuxtDynamicStub,
   }
   const localVue = createLocalVue()
   const editable = (el, key) => (el.innerText = key.value)

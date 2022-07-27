@@ -1,5 +1,4 @@
 import { createLocalVue, shallowMount, mount } from '@vue/test-utils'
-import Button from '~/components/atoms/Button/Button'
 import GenericCarousel from './GenericCarousel'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import { ref } from '@nuxtjs/composition-api'
@@ -44,7 +43,7 @@ jest.mock('@vueuse/core', () => {
   }
 })
 
-const nuxtDynamicStub = {
+const NuxtDynamicStub = {
   template: '<div />',
 }
 
@@ -59,7 +58,7 @@ function createComponent(
     Button: !noStub,
     VueSlickCarousel: noStub ? false : slickSliderStub,
     Template: true,
-    NuxtDynamic: nuxtDynamicStub,
+    NuxtDynamic: NuxtDynamicStub,
   }
 
   const localVue = createLocalVue()

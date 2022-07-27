@@ -6,10 +6,6 @@ import HomeStage from './HomeStage'
 
 let wrapper
 
-const nuxtDynamicStub = {
-  template: '<div />',
-}
-
 function createComponent(propsData = {}) {
   const stubs = {
     Template: true,

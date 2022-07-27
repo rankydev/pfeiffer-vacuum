@@ -9,7 +9,7 @@
     <section class="footer__bottom tw-text-inverse">
       <ContentWrapper class="footer__bottom-content tw-grid-container">
         <div class="footer__menu">
-          <LinkList
+          <FooterLinkList
             v-for="menu in navigationColumns"
             v-bind="menu"
             :key="menu._uid"
@@ -49,7 +49,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import LinkList from '~/components/molecules/LinkList/LinkList'
+import FooterLinkList from '~/components/molecules/FooterLinkList/FooterLinkList'
 import LanguageSwitcher from '~/components/molecules/LanguageSwitcher/LanguageSwitcher'
 import Link from '~/components/atoms/Link/Link'
 
@@ -58,7 +58,7 @@ export default defineComponent({
   components: {
     SocialMedia,
     ContentWrapper,
-    LinkList,
+    FooterLinkList,
     LanguageSwitcher,
     Link,
   },
