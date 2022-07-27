@@ -62,7 +62,12 @@
 </template>
 
 <script>
-import { defineComponent, inject, toRefs } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  inject,
+  toRefs,
+  useContext,
+} from '@nuxtjs/composition-api'
 import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'

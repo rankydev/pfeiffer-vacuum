@@ -7,7 +7,7 @@
       :rules="{ required }"
       :validate="validate"
       @update="
-        requestData.firstname = $event
+        requestData.contact.firstName = $event
         $emit('update', requestData)
       "
     />
@@ -18,7 +18,7 @@
       :rules="{ required }"
       :validate="validate"
       @update="
-        requestData.surname = $event
+        requestData.contact.lastName = $event
         $emit('update', requestData)
       "
     />
@@ -29,7 +29,7 @@
       :rules="{ required, email }"
       :validate="validate"
       @update="
-        requestData.mail = $event
+        requestData.contact.email = $event
         $emit('update', requestData)
       "
     />
@@ -37,23 +37,23 @@
       :label="$t('form.contactRequest.country')"
       :options="[
         {
-          displayValue: 'Deutschland',
-          value: 'Deutschland',
+          name: 'Deutschland',
+          isocode: 'DE',
         },
       ]"
-      :option-label="'displayValue'"
+      :option-label="'name'"
       :required="true"
       :rules="{ required }"
       :validate="validate"
       @update="
-        requestData.country = $event
+        requestData.contact.address.country = $event
         $emit('update', requestData)
       "
     />
     <PvTextArea
       :label="$t('form.contactRequest.message')"
       placeholder="Placeholder"
-      :required="false"
+      :required="true"
       @update="
         requestData.message = $event
         $emit('update', requestData)
@@ -79,6 +79,17 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    type: {
+      type: String,
+      required: true,
+      validator: (val) =>
+        [
+          'QUOTE',
+          'SERVICE_REQUEST',
+          'PRODUCT_INFORMATION',
+          'GENERAL_QUERY',
+        ].includes(val),
+    },
   },
   emits: [
     /**
@@ -89,13 +100,20 @@ export default defineComponent({
      */
     'update',
   ],
-  setup() {
+  setup(props) {
     const requestData = ref({
-      firstname: '',
-      surname: '',
-      country: '',
-      mail: '',
+      contact: {
+        address: {
+          country: {},
+        },
+        firstName: '',
+        lastName: '',
+        email: '',
+      },
       message: '',
+      type: {
+        code: props.type,
+      },
     })
 
     return { required, email, requestData }

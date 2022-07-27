@@ -167,8 +167,8 @@ export default defineComponent({
     const valueFromProps = ref(props.value)
     const internalValue = computed({
       get: () => valueFromProps.value,
-      set: (newValue) => {
-        valueFromProps.value = newValue?.value
+      set: (val) => {
+        valueFromProps.value = val
       },
     })
 

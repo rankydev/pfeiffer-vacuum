@@ -246,7 +246,19 @@ describe('Button', () => {
     })
   })
 
-  // describe('during interaction', () => {})
+  describe('during interaction', () => {
+    it('should emit click event on click', async () => {
+      const wrapper = shallowMount(Button)
+      const btn = wrapper.find('.button')
+      const mockEmit = jest.fn()
+
+      wrapper.vm.$emit = mockEmit
+
+      await btn.trigger('click')
+
+      expect(mockEmit).toBeCalledWith('click')
+    })
+  })
 
   // describe('business requirements', () => {})
 })

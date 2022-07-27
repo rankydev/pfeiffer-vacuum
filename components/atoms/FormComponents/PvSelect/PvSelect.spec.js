@@ -81,7 +81,7 @@ describe('Select', () => {
           ...error,
         }
         createComponent(propsData)
-        const selectedOption = { value: '' }
+        const selectedOption = undefined
         await wrapper.setData({ internalValue: selectedOption })
         wrapper.vm.validation.validateInput()
 

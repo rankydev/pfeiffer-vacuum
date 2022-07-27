@@ -37,7 +37,7 @@ module.exports = {
     '/stores/menu/index.js',
     '/stores/page/index.js',
     '/pages/_site/_.vue',
-    '/plugins/logger.js',
+    '/plugins/helper/logger.js',
   ],
   coverageThreshold: {
     global: {
