@@ -5,6 +5,7 @@ export default {
     headline: {
       type: 'text',
       display_name: 'Headline',
+      translatable: true,
     },
     description: {
       type: 'bloks',
