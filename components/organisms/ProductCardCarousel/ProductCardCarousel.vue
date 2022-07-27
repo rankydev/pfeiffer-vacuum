@@ -18,7 +18,7 @@ import {
   ref,
   defineComponent,
   useContext,
-  onMounted,
+  useAsync,
 } from '@nuxtjs/composition-api'
 
 export default defineComponent({
@@ -78,7 +78,9 @@ export default defineComponent({
     // Enriched slides with hybris data
     let enrichedSlides = ref([])
 
-    onMounted(async () => {
+    useAsync(async () => {
+      console.log('### ProductCardCarousel', $hybrisApi)
+
       // Fetched hybris products
       let fetchedProducts = await $hybrisApi.productApi.getProducts(
         productCodes
