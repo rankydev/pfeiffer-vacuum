@@ -5,7 +5,6 @@ import {
 } from './ContactRequestSubject.stories.content'
 import ContactRequestSubject from './ContactRequestSubject.vue'
 
-// const content = subjectContent()
 describe('ContactRequestSubject', () => {
   describe('initial state', () => {
     test('should render given only required prop type', () => {
