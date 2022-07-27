@@ -22,10 +22,10 @@ export default defineComponent({
     const { app } = useContext()
 
     const openConsentLayer = () => {
-      if (process.client && !!window?.UC_UI && window?.UC_UI.isInitialized()) {
+      if (process.client && window?.UC_UI.isInitialized()) {
         const locale = app?.i18n.locale
-        window?.UC_UI.updateLanguage(locale)
-        window?.UC_UI.showSecondLayer()
+        window.UC_UI.updateLanguage(locale)
+        window.UC_UI.showSecondLayer()
       }
     }
 

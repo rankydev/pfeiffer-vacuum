@@ -30,7 +30,7 @@ describe('PrivacyLink', () => {
       expect(link.vm.label).toBe(propsData.label)
     })
 
-    test('', () => {
+    test('should call open layer function on click', () => {
       const propsData = { label: 'label' }
       createComponent(propsData)
       const link = wrapper.find('.privacy-link')

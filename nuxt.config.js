@@ -28,7 +28,7 @@ export default {
       {
         src: 'https://app.usercentrics.eu/browser-ui/latest/loader.js',
         id: 'usercentrics-cmp',
-        'data-settings-id': process.env.USERCENTRICS_ID || 'qWSlEU19Q',
+        'data-settings-id': process.env.USERCENTRICS_ID,
         'data-tcf-enabled': true,
         defer: true,
       },
