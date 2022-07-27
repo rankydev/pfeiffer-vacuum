@@ -79,8 +79,6 @@ export default defineComponent({
     let enrichedSlides = ref([])
 
     useAsync(async () => {
-      console.log('### ProductCardCarousel', $hybrisApi)
-
       // Fetched hybris products
       let fetchedProducts = await $hybrisApi.productApi.getProducts(
         productCodes
@@ -92,7 +90,7 @@ export default defineComponent({
           ...fetchedProducts?.find((i) => i.code === e.code),
         })
       })
-    })
+    }, productCodes)
 
     return { enrichedSlides }
   },
