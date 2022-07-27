@@ -17,5 +17,18 @@
     "capitalLetter": "Mindestens ein Großbuchstabe",
     "digit": "Mindestens eine Ziffer",
     "tooLong": "Ihr Passwort ist zu lang (max. 128 Charaktere)"
+  },
+  "contactRequest": {
+    "firstname": "Vorname",
+    "surname": "Nachname",
+    "company": "Firma/Universität",
+    "mail": "E-Mail",
+    "country": "Land",
+    "message": "Nachricht",
+    "street": "Straße",
+    "houseNumber": "Nummer",
+    "postCode": "PLZ",
+    "city": "Stadt",
+    "submit": "Absenden"
   }
 }

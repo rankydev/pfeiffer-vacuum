@@ -1,9 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
 import Input from './PvInput.vue'
 import Icon from '../../Icon/Icon.vue'
-import Label from '../../FormComponents/partials/Label/Label.vue'
-import errorMessage from '../../FormComponents/partials/ErrorMessage/ErrorMessage.vue'
+import PvLabel from '../partials/PvLabel/PvLabel.vue'
 import { expect } from '@jest/globals'
+import { required, email } from '@vuelidate/validators'
 
 describe('Input', () => {
   describe('initial state', () => {
@@ -11,7 +11,7 @@ describe('Input', () => {
       const wrapper = shallowMount(Input)
       const icon = wrapper.findComponent(Icon)
       const input = wrapper.findComponent(Input)
-      const label = wrapper.findComponent(Label)
+      const label = wrapper.findComponent(PvLabel)
 
       expect(icon.exists()).toBeFalsy()
       expect(input.exists()).toBeTruthy()
@@ -46,25 +46,56 @@ describe('Input', () => {
     it('should set a label when provided', () => {
       const propsData = { label: 'Some Label' }
       const wrapper = shallowMount(Input, { propsData })
-      const input = wrapper.findComponent(Label)
+      const input = wrapper.findComponent(PvLabel)
 
       expect(input.attributes('label')).toBe(propsData.label)
     })
 
-    it('should set error class on input element when hasError is true', () => {
-      const propsData = { hasError: true }
+    it('should set error class on input element when validation throws error', async () => {
+      const propsData = {
+        required: true,
+        rules: { required, email },
+        validate: true,
+      }
       const wrapper = shallowMount(Input, { propsData })
-      const input = wrapper.find('.pv-input__element--error')
+      const input = wrapper.find('input')
 
-      expect(input.exists()).toBeTruthy()
+      input.setValue('test')
+      await wrapper.vm.$nextTick()
+
+      expect(wrapper.find('.pv-input__element--error').exists()).toBeTruthy()
     })
 
-    it('should set an error message when provided', () => {
-      const propsData = { errorMessage: 'Some error occured', hasError: true }
-      const wrapper = shallowMount(Input, { propsData })
-      const input = wrapper.findComponent(errorMessage)
+    it('should throw correct error message when required input is not set yet', () => {
+      const propsData = {
+        required: true,
+        rules: { required },
+        validate: true,
+      }
 
-      expect(input.attributes('errormessage')).toBe(propsData.errorMessage)
+      const wrapper = shallowMount(Input, { propsData })
+      const input = wrapper.find('input')
+
+      input.setValue('')
+
+      expect(wrapper.vm.validation.getError()).toBe('Value is required')
+    })
+
+    it('should throw correct error message when email input is invalid', () => {
+      const propsData = {
+        required: true,
+        rules: { email },
+        validate: true,
+      }
+
+      const wrapper = shallowMount(Input, { propsData })
+      const input = wrapper.find('input')
+
+      input.setValue('test')
+
+      expect(wrapper.vm.validation.getError()).toBe(
+        'Value is not a valid email address'
+      )
     })
 
     describe('given an icon', () => {
@@ -84,13 +115,22 @@ describe('Input', () => {
         expect(input.attributes('class')).toMatch('pv-input__element--icon')
       })
 
-      it('should set icon error class when hasError is true', () => {
-        const propsData = { icon: 'someIcon', hasError: true }
+      it('should set icon error class when hasError is true', async () => {
+        const propsData = {
+          icon: 'someIcon',
+          required: true,
+          rules: { required, email },
+          validate: true,
+        }
         const wrapper = shallowMount(Input, { propsData })
-        const errorIcon = wrapper.find('.pv-input__icon--error')
+        const input = wrapper.find('input')
 
-        expect(errorIcon.attributes('icon')).toBe('error_outline')
+        input.setValue('test')
+        await wrapper.vm.$nextTick()
+
+        const errorIcon = wrapper.find('.pv-input__icon--error')
         expect(errorIcon.exists()).toBeTruthy()
+        expect(errorIcon.attributes('icon')).toBe('error_outline')
       })
     })
   })

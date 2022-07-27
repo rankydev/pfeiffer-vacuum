@@ -1,8 +1,7 @@
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect.vue'
 import { icon, label, normal, error } from './PvSelect.stories.content'
-import { shallowMount } from '@vue/test-utils'
-import Label from '~/components/atoms/FormComponents/partials/Label/Label'
-import errorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
+import { shallowMount, mount } from '@vue/test-utils'
+import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import Icon from '~/components/atoms/Icon/Icon'
 import { describe, expect, it } from '@jest/globals'
 
@@ -41,7 +40,7 @@ describe('Select', () => {
     it('should render label component correctly given as a prop', () => {
       const propsData = { ...label }
       createComponent(propsData)
-      const labelWrapper = wrapper.findComponent(Label)
+      const labelWrapper = wrapper.findComponent(PvLabel)
 
       expect(labelWrapper.attributes('label')).toBe(propsData.label)
     })
@@ -76,38 +75,19 @@ describe('Select', () => {
       })
     })
 
-    describe('given an error', () => {
-      const propsData = { ...error }
-
-      it('should add the correct error class on v-select', () => {
+    describe('during interaction', () => {
+      it('should return error when selected option is invalid', async () => {
+        const propsData = {
+          ...error,
+        }
         createComponent(propsData)
-        const selectWrapper = wrapper.find('.v-select')
+        const selectedOption = { value: '' }
+        await wrapper.setData({ internalValue: selectedOption })
+        wrapper.vm.validation.validateInput()
 
-        expect(selectWrapper.attributes('class')).toMatch('pv-select--error')
-      })
-
-      it('should render an error message component', () => {
-        createComponent(propsData)
-
-        const input = wrapper.findComponent(errorMessage)
-        expect(input.attributes('errormessage')).toBe(propsData.errorMessage)
+        expect(wrapper.vm.validation.getError()).toBe('Value is required')
       })
     })
   })
-
-  describe('during interaction', () => {
-    it('should emit an update event when innerValue has changed', async () => {
-      const value = 'Some Value'
-      const propsData = { ...normal }
-      createComponent(propsData)
-
-      const emitMock = jest.fn()
-      wrapper.vm.$emit = emitMock
-      await wrapper.setData({ innerValue: value })
-      expect(emitMock).toBeCalledTimes(1)
-      expect(emitMock).toBeCalledWith('update', value)
-    })
-  })
-
   // describe('business requirements', () => {})
 })

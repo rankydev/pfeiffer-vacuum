@@ -1,45 +1,51 @@
 <template>
   <div class="pv-input">
-    <Label :label="label" />
+    <PvLabel :label="label" />
     <div class="pv-input__wrapper">
       <input
         v-model="internalValue"
-        v-bind="{ placeholder, required, disabled }"
+        v-bind="{ placeholder, disabled }"
+        :required="isRequired"
         class="pv-input__element"
         :class="{
           'pv-input__element--icon': icon,
-          'pv-input__element--error': hasError,
+          'pv-input__element--error': !!validation.getError(),
         }"
         :placeholder="placeholder"
         @keypress.enter="$emit('submit', $event)"
         @focus="$emit('focus', true)"
         @blur="$emit('focus', false)"
-        @input="$emit('update', internalValue)"
+        @input="
+          $emit('update', internalValue)
+          validation.validateInput()
+        "
       />
       <Icon
-        v-if="internalIcon"
+        v-if="internalIcon || validation.getError()"
         class="pv-input__icon"
-        :class="{ 'pv-input__icon--error': hasError }"
-        :icon="internalIcon"
+        :class="{ 'pv-input__icon--error': !!validation.getError() }"
+        :icon="!!validation.getError() ? 'error_outline' : internalIcon"
         @click.native="$emit('click:icon', $event)"
       />
     </div>
-    <ErrorMessage v-if="hasError" :error-message="errorMessage" />
+    <ErrorMessage
+      v-if="!!validation.getError()"
+      :error-message="validation.getError()"
+    />
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-
+import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import { ref } from '@nuxtjs/composition-api'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
-import Label from '~/components/atoms/FormComponents/partials/Label/Label'
+import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
+import { useInputValidator } from '~/composables/useValidator'
 
 export default defineComponent({
   components: {
     Icon,
-    Label,
+    PvLabel,
     ErrorMessage,
   },
   props: {
@@ -67,16 +73,16 @@ export default defineComponent({
       default: '',
     },
     /**
-     * The text displayed over the form component via Label component
+     * The text displayed over the form component via PvLabel component
      */
     label: {
       type: String,
       default: '',
     },
     /**
-     * The required prop, which defines if the text field is required or not
+     * The isRequired prop, which defines if the text field is required or not
      */
-    required: {
+    isRequired: {
       type: Boolean,
       default: false,
     },
@@ -88,18 +94,18 @@ export default defineComponent({
       default: false,
     },
     /**
-     * The hasError is set by validation in parent component and shows if the input has an error
+     * defines what should be validated
      */
-    hasError: {
-      type: Boolean,
-      default: false,
+    rules: {
+      type: Object,
+      default: () => {},
     },
     /**
-     * A text describing which error occured, it is displayed if hasError is true
+     * determines whether a validation can be executed
      */
-    errorMessage: {
-      type: String,
-      default: '',
+    validate: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: [
@@ -135,15 +141,22 @@ export default defineComponent({
   setup(props) {
     const internalValue = ref(props.value)
     let internalIcon = ref(props.icon)
-    const hasErrorIcon = ref(props.hasError)
 
-    if (hasErrorIcon.value) {
-      internalIcon = 'error_outline'
-    }
+    const validation = ref(useInputValidator(props.rules, internalValue))
+
+    watch(
+      () => props.validate,
+      (value) => {
+        if (value === true) {
+          validation.value.validateInput()
+        }
+      }
+    )
 
     return {
       internalValue,
       internalIcon,
+      validation,
     }
   },
 })

@@ -18,5 +18,18 @@
     "Contains at least 1 capital letter and 1 lower case",
     "digit": "Contains at least 1 digit",
     "tooLong": "Your password may be too long (max. 128 characters)"
+  },
+  "contactRequest": {
+    "firstname": "First name",
+    "surname": "Last name",
+    "company": "Company / University",
+    "mail": "Email",
+    "country": "Country / Location",
+    "message": "Your message",
+    "street": "Street",
+    "houseNumber": "No.",
+    "postCode": "ZIP Code",
+    "city": "City",
+    "submit": "Submit"
   }
 }
