@@ -177,6 +177,7 @@ export default {
     CI_PROJECT_URL: process.env.CI_PROJECT_URL,
     NODE_ENV: process.env.NODE_ENV,
     STORYBLOK_ACCESS_TOKEN: process.env.STORYBLOK_ACCESS_TOKEN,
+    SHOP_BASE_URL: process.env.SHOP_BASE_URL,
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
