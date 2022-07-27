@@ -10,7 +10,7 @@ export default {
     links: {
       type: 'bloks',
       restrict_components: true,
-      component_whitelist: ['Link', 'PrivacyLink'],
+      component_whitelist: ['TextLink', 'PrivacyLink'],
       display_name: 'Links',
     },
   },
