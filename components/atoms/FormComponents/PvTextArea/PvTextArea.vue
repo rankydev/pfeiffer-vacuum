@@ -1,23 +1,25 @@
 <template>
-  <div class="textarea">
-    <Label :optional="!required" :label="label" tag-name="textarea" />
+  <div class="pv-textarea">
+    <PvLabel :optional="!required" :label="label" tag-name="textarea" />
     <textarea
+      v-model="internalValue"
       name="textarea"
       v-bind="{ text, placeholder, required, disabled }"
-      class="textarea__input"
+      class="pv-textarea__input"
       @focus="$emit('focus', true)"
       @blur="$emit('focus', false)"
+      @input="$emit('update', internalValue)"
     ></textarea>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-import Label from '~/components/atoms/FormComponents/partials/Label/Label'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 
 export default defineComponent({
-  name: 'TextArea',
-  components: { Label },
+  name: 'PvTextArea',
+  components: { PvLabel },
   props: {
     /**
      * The internal text
@@ -63,13 +65,23 @@ export default defineComponent({
      * @property {boolean} isFocused
      */
     'focus',
+    /**
+     * Fired on keystroke.
+     *
+     * @event change
+     * @property {string} value
+     */
+    'update',
   ],
-  setup(props) {},
+  setup(props) {
+    const internalValue = ref(props.text)
+    return { internalValue }
+  },
 })
 </script>
 
 <style lang="scss">
-.textarea {
+.pv-textarea {
   &__input {
     @apply tw-block;
     @apply tw-px-3;

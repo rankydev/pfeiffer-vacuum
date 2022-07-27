@@ -1,26 +1,29 @@
 <template>
-  <div class="contact-request-subject" @click="$emit('selected', type)">
-    <div class="contact-request-subject__text">
-      <h5 class="contact-request-subject__title">{{ title }}</h5>
-      <NuxtDynamic
-        v-for="item in description"
-        :key="item._uid"
-        class="contact-request-subject__description"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
+  <div>
+    <div class="contact-request-subject" @click="openSubject">
+      <div class="contact-request-subject__text">
+        <h5 class="contact-request-subject__title">{{ title }}</h5>
+        <NuxtDynamic
+          v-for="item in description"
+          :key="item._uid"
+          class="contact-request-subject__description"
+          v-bind="item"
+          :name="item.uiComponent || item.component"
+        />
+      </div>
+      <Icon
+        size="large"
+        :icon="isSelected ? 'edit' : 'arrow_forward'"
+        class="contact-request-subject__icon"
       />
     </div>
-    <Icon
-      size="large"
-      icon="arrow_forward"
-      class="contact-request-subject__icon"
-    />
   </div>
 </template>
 <script>
 import Icon from '~/components/atoms/Icon/Icon'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 
-export default {
+export default defineComponent({
   name: 'ContactRequestSubject',
   components: {
     Icon,
@@ -36,11 +39,28 @@ export default {
     },
     type: {
       type: Array,
+      default: () => [],
       required: true,
     },
   },
   emits: ['selected'],
-}
+  setup(props, { emit, attrs }) {
+    const isSelected = ref(false)
+
+    const openSubject = () => {
+      if (isSelected.value) {
+        isSelected.value = false
+        emit('selected', {})
+      } else {
+        isSelected.value = true
+
+        emit('selected', { id: attrs._uid, type: props.type })
+      }
+    }
+
+    return { isSelected, openSubject }
+  },
+})
 </script>
 <style lang="scss">
 .contact-request-subject {

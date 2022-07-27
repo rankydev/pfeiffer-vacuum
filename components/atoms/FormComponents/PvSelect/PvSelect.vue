@@ -1,17 +1,25 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <div>
-    <Label v-if="label" :label="label" />
+    <PvLabel v-if="label" :label="label" />
     <v-select
-      v-model="innerValue"
+      v-model="internalValue"
+      :required="isRequired"
       :options="options"
-      :class="{ 'pv-select--error': hasError, 'pv-select--icon': prependIcon }"
+      :class="{
+        'pv-select--error': !!validation.getError(),
+        'pv-select--icon': prependIcon,
+      }"
       :disabled="disabled"
       :label="optionLabel"
       :placeholder="$t('form.select.placeholder')"
       :selectable="(option) => option.disabled !== true"
       :components="{ Deselect }"
       :reduce="reduce"
+      @input="
+        $emit('update', internalValue)
+        validation.validateInput()
+      "
     >
       <template #search="{ attributes, events }">
         <Icon
@@ -24,7 +32,7 @@
 
       <template #open-indicator>
         <Icon
-          v-if="hasError"
+          v-if="!!validation.getError()"
           class="pv-select__icon-error"
           icon="error_outline"
         />
@@ -59,23 +67,27 @@
       </template>
     </v-select>
 
-    <ErrorMessage v-if="hasError" :error-message="errorMessage" />
+    <ErrorMessage
+      v-if="!!validation.getError()"
+      :error-message="validation.getError()"
+    />
   </div>
 </template>
 
 <script>
 import vSelect from 'vue-select'
-import Label from '~/components/atoms/FormComponents/partials/Label/Label'
+import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Icon from '~/components/atoms/Icon/Icon'
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed, ref, watch } from '@nuxtjs/composition-api'
+import { useInputValidator } from '~/composables/useValidator'
 
 export default defineComponent({
   name: 'PvSelect',
   components: {
     vSelect,
     Icon,
-    Label,
+    PvLabel,
     ErrorMessage,
   },
   props: {
@@ -83,8 +95,15 @@ export default defineComponent({
      * The input’s value
      */
     value: {
-      type: [String, Object, Boolean],
-      default: undefined,
+      type: String,
+      default: '',
+    },
+    /**
+     * The isRequired prop, which defines if the select field is required or not
+     */
+    isRequired: {
+      type: Boolean,
+      default: false,
     },
     /**
      * Can be an array of objects or array of strings. When using objects, will look for a label, value, icon and disabled keys. T
@@ -132,29 +151,43 @@ export default defineComponent({
       default: false,
     },
     /**
-     * The following fields are temporarly and should be removed if the validator is inserted
+     * rules that will be passed into validator
      */
-    hasError: {
+    rules: {
+      type: Object,
+      default: () => {},
+    },
+    validate: {
       type: Boolean,
       default: false,
     },
-    errorMessage: {
-      type: String,
-      default: '',
-    },
   },
   emits: ['update'],
-  setup(props, { emit }) {
-    const innerValue = computed({
-      get: () => props.value,
-      set: (value) => emit('update', value),
+  setup(props) {
+    const valueFromProps = ref(props.value)
+    const internalValue = computed({
+      get: () => valueFromProps.value,
+      set: (newValue) => {
+        valueFromProps.value = newValue?.value
+      },
     })
 
     const Deselect = {
       render: (h) => h('span', { class: ['deselect-option'] }),
     }
 
-    return { innerValue, Deselect }
+    const validation = ref(useInputValidator(props.rules, internalValue))
+
+    watch(
+      () => props.validate,
+      (value) => {
+        if (value === true) {
+          validation.value.validateInput()
+        }
+      }
+    )
+
+    return { internalValue, Deselect, validation }
   },
 })
 </script>

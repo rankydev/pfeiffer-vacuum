@@ -1,4 +1,5 @@
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
+import { required } from '@vuelidate/validators'
 
 export default {
   title: 'Atoms/a_104 Input',
@@ -48,6 +49,5 @@ Disabled.args = {
 export const Error = Template.bind({})
 Error.args = {
   placeholder: 'Some placeholder',
-  hasError: true,
-  errorMessage: 'Sorry, an error occured',
+  rules: { required },
 }

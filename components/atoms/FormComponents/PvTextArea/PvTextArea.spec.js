@@ -1,5 +1,5 @@
-import TextArea from '~/components/atoms/FormComponents/TextArea/TextArea.vue'
-import Label from '~/components/atoms/FormComponents/partials/Label/Label.vue'
+import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea.vue'
+import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel.vue'
 import { shallowMount } from '@vue/test-utils'
 
 const propsTextArea = {
@@ -12,15 +12,15 @@ describe('TextArea', () => {
   describe('initial state', () => {
     test('should be rendered correctly given props', () => {
       const propsData = { ...propsTextArea }
-      const wrapper = shallowMount(TextArea, { propsData })
-      const textareaWrapper = wrapper.find('.textarea')
+      const wrapper = shallowMount(PvTextArea, { propsData })
+      const textareaWrapper = wrapper.find('.pv-textarea')
 
       expect(textareaWrapper.exists()).toBeTruthy()
     })
     test('should render label component correctly given props', () => {
       const propsData = { ...propsTextArea }
-      const wrapper = shallowMount(TextArea, { propsData })
-      const labelWrapper = wrapper.findComponent(Label)
+      const wrapper = shallowMount(PvTextArea, { propsData })
+      const labelWrapper = wrapper.findComponent(PvLabel)
 
       expect(labelWrapper.exists()).toBeTruthy()
       expect(labelWrapper.attributes('label')).toBe(propsTextArea.label)
@@ -31,8 +31,8 @@ describe('TextArea', () => {
     })
     test('should render textarea correctly given props', () => {
       const propsData = { ...propsTextArea }
-      const wrapper = shallowMount(TextArea, { propsData })
-      const textAreaWrapper = wrapper.find('.textarea__input')
+      const wrapper = shallowMount(PvTextArea, { propsData })
+      const textAreaWrapper = wrapper.find('.pv-textarea__input')
       expect(textAreaWrapper.attributes('placeholder')).toEqual(
         propsTextArea.placeholder
       )
@@ -41,7 +41,7 @@ describe('TextArea', () => {
     })
     test('should be rendered correctly given empty props', () => {
       const propsData = {}
-      const wrapper = shallowMount(TextArea, { propsData })
+      const wrapper = shallowMount(PvTextArea, { propsData })
       const textareaWrapper = wrapper.find('div')
       const textareaLabel = wrapper.find('[for="textarea"]')
 

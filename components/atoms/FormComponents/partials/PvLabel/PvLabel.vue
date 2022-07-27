@@ -1,7 +1,7 @@
 <template>
-  <label v-if="label" :for="tagName" class="label">
+  <label v-if="label" :for="tagName" class="pv-label">
     <span>{{ label }}</span>
-    <span v-if="optional" class="label__optional">{{
+    <span v-if="optional" class="pv-label__optional">{{
       $t('form.label.optional')
     }}</span>
   </label>
@@ -38,7 +38,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.label {
+.pv-label {
   @apply tw-text-pv-grey-16;
   @apply tw-flex;
   @apply tw-justify-between;
