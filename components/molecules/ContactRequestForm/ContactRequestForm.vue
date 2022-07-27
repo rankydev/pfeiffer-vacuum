@@ -1,12 +1,17 @@
 <template>
   <div class="contact-request-form">
-    <!-- Find out what forms to render for selection options -->
     <GeneralRequest
       v-if="contactRequestType === 'GENERAL_QUERY'"
       :validate="validate"
+      :type="contactRequestType"
       @update="requestData = $event"
     />
-    <TopicRequest v-else :validate="validate" @update="requestData = $event" />
+    <TopicRequest
+      v-else
+      :validate="validate"
+      :type="contactRequestType"
+      @update="requestData = $event"
+    />
     <Button
       :label="$t('form.contactRequest.submit')"
       variant="secondary"
@@ -21,7 +26,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 import Button from '~/components/atoms/Button/Button.vue'
@@ -50,19 +55,27 @@ export default defineComponent({
     },
   },
   setup() {
+    const { $hybrisApi } = useContext()
     // this will collect all nested component’s validation results
     const v = useVuelidate()
+    const requestData = ref({})
 
     let validate = ref(false)
-    const submit = () => {
+    const submit = async () => {
       validate.value = true
       if (v.value.$errors.length === 0) {
-        // in diesem Fall kann der request abgeschickt werden, denn das error array ist leer und es gibt keine Form errors mehr
-        // ToDo implement send request logic
+        await $hybrisApi.contactApi
+          .submitContact(requestData.value)
+          .then(() => {
+            // TODO: Implement Toast
+            alert('Contact request successfully sent!')
+          })
+          .catch((e) => {
+            // TODO: Implement Toast
+            alert(e)
+          })
       }
     }
-
-    const requestData = ref({})
 
     return { v, validate, submit, requestData }
   },

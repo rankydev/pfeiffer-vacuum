@@ -13,7 +13,6 @@ export function getContactApi(axiosInstance, ctx) {
       )
 
       if (result.status === 200) {
-        alert('PASSED')
         return true
       }
 
