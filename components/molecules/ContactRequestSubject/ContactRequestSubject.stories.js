@@ -3,6 +3,8 @@ import content from './ContactRequestSubject.stories.content'
 
 const { title, description, type } = content
 
+const subjectContent = content()
+
 export default {
   title: 'Molecules/m_115 Contact Request Subject',
   component: ContactRequestSubject,
@@ -32,4 +34,4 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
-Default.args = { title, description, type }
+Default.args = subjectContent
