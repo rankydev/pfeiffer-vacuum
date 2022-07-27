@@ -5,6 +5,7 @@ export default {
     title: {
       type: 'text',
       display_name: 'Title',
+      translatable: true,
     },
     description: {
       type: 'bloks',

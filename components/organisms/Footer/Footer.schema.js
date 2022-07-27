@@ -15,7 +15,7 @@ export default {
       type: 'bloks',
       maximum: 3,
       restrict_components: true,
-      component_whitelist: ['LinkList'],
+      component_whitelist: ['FooterLinkList'],
       display_name: 'Navigation Columns',
     },
     newsletter: {
