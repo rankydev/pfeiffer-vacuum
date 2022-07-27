@@ -1,9 +1,8 @@
 import ContactRequestSubject from './ContactRequestSubject'
-import content from './ContactRequestSubject.stories.content'
-
-const { title, description, type } = content
-
-const subjectContent = content()
+import {
+  subjectCTA,
+  subjectForm,
+} from './ContactRequestSubject.stories.content'
 
 export default {
   title: 'Molecules/m_115 Contact Request Subject',
@@ -33,5 +32,8 @@ const Template = (args) => ({
 `,
 })
 
-export const Default = Template.bind({})
-Default.args = subjectContent
+export const CTA = Template.bind({})
+CTA.args = subjectCTA
+
+export const Form = Template.bind({})
+Form.args = subjectForm
