@@ -22,6 +22,7 @@ export default {
       restrict_components: true,
       component_whitelist: [
         'Accordion',
+        'ContactFormSection',
         'ContentMediaBlock',
         'ContentTextBlock',
         'CustomContentCardCarousel',
