@@ -1,14 +1,14 @@
-import Label from './Label.vue'
+import PvLabel from './PvLabel.vue'
 import { shallowMount } from '@vue/test-utils'
 
 const propsLabel = {
   label: 'Test',
 }
 
-describe('Label', () => {
+describe('PvLabel', () => {
   describe('initial state', () => {
     const propsData = { ...propsLabel }
-    const wrapper = shallowMount(Label, { propsData })
+    const wrapper = shallowMount(PvLabel, { propsData })
 
     test('should be rendered correctly given props', () => {
       const labelWrapper = wrapper.find('label')
@@ -17,7 +17,7 @@ describe('Label', () => {
     })
     test('should render labels correctly given prop label', () => {
       const propsData = { ...propsLabel }
-      const wrapper = shallowMount(Label, { propsData })
+      const wrapper = shallowMount(PvLabel, { propsData })
       const labelWrapper = wrapper.findAll('span')
 
       expect(labelWrapper.at(0).text()).toBe(propsLabel.label)
@@ -29,7 +29,7 @@ describe('Label', () => {
         optional: true,
         disabled: true,
       }
-      const wrapper = shallowMount(Label, { propsData })
+      const wrapper = shallowMount(PvLabel, { propsData })
       const labelWrapper = wrapper.findAll('span')
 
       expect(labelWrapper.at(0).text()).toBe(propsLabel.label)

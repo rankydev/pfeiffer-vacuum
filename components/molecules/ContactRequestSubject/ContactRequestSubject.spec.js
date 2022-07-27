@@ -1,12 +1,16 @@
 import { shallowMount } from '@vue/test-utils'
-import content from './ContactRequestSubject.stories.content'
+import subjectContent from './ContactRequestSubject.stories.content'
 import ContactRequestSubject from './ContactRequestSubject.vue'
 
+const content = subjectContent()
 describe('ContactRequestSubject', () => {
   describe('initial state', () => {
     test('should render given only required prop type', () => {
-      const propsData = { type: [content.type] }
-      const wrapper = shallowMount(ContactRequestSubject, { propsData })
+      const propsData = { type: content.type }
+      const wrapper = shallowMount(ContactRequestSubject, {
+        stubs: { AnimatedCollapse: true, NuxtDynamic: true },
+        propsData,
+      })
 
       expect(wrapper.exists()).toBeTruthy()
     })
@@ -14,7 +18,7 @@ describe('ContactRequestSubject', () => {
     test('should render correct content given all props', () => {
       const propsData = content
       const wrapper = shallowMount(ContactRequestSubject, {
-        stubs: { NuxtDynamic: true },
+        stubs: { AnimatedCollapse: true, NuxtDynamic: true },
         propsData,
       })
 
@@ -32,18 +36,20 @@ describe('ContactRequestSubject', () => {
     test('should emit type when clicking the subject', async () => {
       const propsData = content
       const wrapper = shallowMount(ContactRequestSubject, {
-        stubs: { NuxtDynamic: true },
+        stubs: { AnimatedCollapse: true, NuxtDynamic: true },
         propsData,
       })
 
       const emitMock = jest.fn()
-      const subject = wrapper.find('.contact-request-subject')
       wrapper.vm.$emit = emitMock
 
+      const subject = wrapper.find('.contact-request-subject')
       await subject.trigger('click')
 
-      expect(emitMock).toBeCalledTimes(1)
-      expect(emitMock).toBeCalledWith('selected', content.type)
+      expect(emitMock).toBeCalledWith('selected', {
+        id: content._uid,
+        type: content.type,
+      })
     })
   })
 })

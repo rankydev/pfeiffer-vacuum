@@ -54,6 +54,7 @@ export default {
         'VideoPlayer',
         'ContactFormSection',
         'GeneralTeaserCarousel',
+        'ContactRequestForm',
         'ContactRequestSelection',
       ],
     },

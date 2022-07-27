@@ -1,7 +1,7 @@
 import Password from '~/components/atoms/FormComponents/Password/Password.vue'
 
 export default {
-  title: 'Form components/Password',
+  title: 'Atoms/a_104 Password',
   component: Password,
   parameters: {
     docs: {
