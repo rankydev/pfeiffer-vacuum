@@ -65,6 +65,13 @@ export default defineComponent({
      * @property {boolean} isFocused
      */
     'focus',
+    /**
+     * Fired on keystroke.
+     *
+     * @event change
+     * @property {string} value
+     */
+    'update',
   ],
   setup(props) {
     const internalValue = ref(props.text)

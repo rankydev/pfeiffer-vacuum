@@ -80,6 +80,15 @@ export default defineComponent({
       default: false,
     },
   },
+  emits: [
+    /**
+     * Fired on keystroke.
+     *
+     * @event change
+     * @property {string} value
+     */
+    'update',
+  ],
   setup() {
     const requestData = ref({
       firstname: '',
