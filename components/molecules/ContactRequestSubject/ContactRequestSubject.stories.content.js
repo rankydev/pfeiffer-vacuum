@@ -1,5 +1,5 @@
 import richtext from '~/components/atoms/Richtext/Richtext.stories.content.js'
-import ctabox from '~/components/molecules/CTABox/CTABox.stories.content.js'
+import contactctabox from '~/components/molecules/ContactCTABox/ContactCTABox.stories.content'
 import { nanoid } from 'nanoid'
 
 export default () => {
@@ -8,7 +8,7 @@ export default () => {
     description: [
       { ...richtext.content, richtext: 'Lorem ipsum dolor sit amet' },
     ],
-    type: [ctabox],
+    type: [contactctabox],
     component: 'ContactRequestSubject',
     _uid: nanoid(),
   }
