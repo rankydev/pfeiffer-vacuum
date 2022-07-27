@@ -5,11 +5,11 @@ import {
   footerMenuTwo,
 } from '~/components/molecules/FooterLinkList/FooterLinkList.stories.content'
 
-const nuxtDynamicStub = {
+const NuxtDynamicStub = {
   template: '<div />',
 }
 
-const privacyLinkStub = {
+const PrivacyLinkStub = {
   template: '<div class="privacy-link" />',
 }
 
@@ -28,7 +28,7 @@ describe('FooterLinkList', () => {
       const wrapper = shallowMount(FooterLinkList, {
         stubs: {
           NuxtLink: RouterLinkStub,
-          NuxtDynamic: nuxtDynamicStub,
+          NuxtDynamic: NuxtDynamicStub,
         },
         localVue,
       })
@@ -41,12 +41,12 @@ describe('FooterLinkList', () => {
         propsData,
         stubs: {
           NuxtLink: RouterLinkStub,
-          NuxtDynamic: nuxtDynamicStub,
+          NuxtDynamic: NuxtDynamicStub,
         },
         localVue,
       })
-      const FooterLinkListTitle = wrapper.find('.link-list__title')
-      expect(FooterLinkListTitle.text()).toBe('Pfeiffer Vacuum')
+      const footerLinkListTitle = wrapper.find('.link-list__title')
+      expect(footerLinkListTitle.text()).toBe('Pfeiffer Vacuum')
     })
 
     it('should render a list of 5 entries given an array of 5 links', () => {
@@ -55,7 +55,7 @@ describe('FooterLinkList', () => {
         propsData,
         stubs: {
           NuxtLink: RouterLinkStub,
-          NuxtDynamic: nuxtDynamicStub,
+          NuxtDynamic: NuxtDynamicStub,
         },
         localVue,
       })
@@ -72,8 +72,8 @@ describe('FooterLinkList', () => {
         propsData,
         stubs: {
           NuxtLink: RouterLinkStub,
-          NuxtDynamic: nuxtDynamicStub,
-          PrivacyLink: privacyLinkStub,
+          NuxtDynamic: NuxtDynamicStub,
+          PrivacyLink: PrivacyLinkStub,
         },
         localVue,
       })

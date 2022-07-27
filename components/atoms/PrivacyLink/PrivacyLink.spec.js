@@ -3,7 +3,7 @@ import PrivacyLink from './PrivacyLink.vue'
 
 let wrapper
 
-const nuxtDynamicStub = {
+const NuxtDynamicStub = {
   template: '<div />',
 }
 
@@ -12,7 +12,7 @@ function createComponent(propsData = {}) {
     propsData,
     stubs: {
       PrivacyLink,
-      NuxtDynamic: nuxtDynamicStub,
+      NuxtDynamic: NuxtDynamicStub,
     },
   }
 

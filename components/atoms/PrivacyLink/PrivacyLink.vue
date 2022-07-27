@@ -43,6 +43,9 @@ export default defineComponent({
   @apply tw-ease-out;
   @apply tw-leading-6;
   @apply tw-cursor-pointer;
-  @apply hover:tw-underline;
+
+  &:hover {
+    @apply tw-underline;
+  }
 }
 </style>
