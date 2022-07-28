@@ -40,6 +40,10 @@
           displayValue: 'Deutschland',
           value: 'Deutschland',
         },
+        {
+          displayValue: 'USA',
+          value: 'USA',
+        },
       ]"
       :option-label="'displayValue'"
       :required="true"
@@ -47,6 +51,24 @@
       :validate="validate"
       @update="
         requestData.country = $event
+        $emit('update', requestData)
+      "
+    />
+    <PvSelect
+      v-if="requestData.country === 'USA'"
+      :label="$t('form.contactRequest.country')"
+      :options="[
+        {
+          displayValue: 'NY',
+          value: 'NY',
+        },
+      ]"
+      :option-label="'displayValue'"
+      :required="true"
+      :rules="{ required }"
+      :validate="validate"
+      @update="
+        requestData.state = $event
         $emit('update', requestData)
       "
     />
@@ -94,6 +116,7 @@ export default defineComponent({
       firstname: '',
       surname: '',
       country: '',
+      state: '',
       mail: '',
       message: '',
     })
