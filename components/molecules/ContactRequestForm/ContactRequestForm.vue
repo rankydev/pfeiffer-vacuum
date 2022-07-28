@@ -63,7 +63,7 @@ export default defineComponent({
     let validate = ref(false)
     const submit = async () => {
       validate.value = true
-      if (v.value.$errors.length === 0) {
+      if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
         await $hybrisApi.contactApi
           .submitContact(requestData.value)
           .then(() => {
