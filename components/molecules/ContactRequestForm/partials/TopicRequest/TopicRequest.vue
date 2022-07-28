@@ -55,8 +55,8 @@
       "
     />
     <PvSelect
-      v-if="requestData.contact.address.country === 'USA'"
-      :label="$t('form.contactRequest.state')"
+      v-if="requestData.contact.address.country.name === 'USA'"
+      :label="$t('form.contactRequest.region')"
       :options="[
         {
           displayValue: 'NY',
@@ -68,7 +68,7 @@
       :rules="{ required }"
       :validate="validate"
       @update="
-        requestData.state = $event
+        requestData.contact.address.region = $event
         $emit('update', requestData)
       "
     />
@@ -187,7 +187,7 @@ export default defineComponent({
       contact: {
         address: {
           country: {},
-          state: {},
+          region: {},
           town: '',
           postalCode: '',
           line1: '',

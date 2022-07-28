@@ -24,6 +24,7 @@
     "company": "Firma/Universität",
     "mail": "E-Mail",
     "country": "Land",
+    "region": "Bundesstaat",
     "message": "Nachricht",
     "street": "Straße",
     "houseNumber": "Nummer",

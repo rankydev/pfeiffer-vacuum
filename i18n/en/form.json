@@ -25,6 +25,7 @@
     "company": "Company / University",
     "mail": "Email",
     "country": "Country / Location",
+    "region": "Region",
     "message": "Your message",
     "street": "Street",
     "houseNumber": "No.",
