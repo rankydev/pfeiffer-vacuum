@@ -1,4 +1,4 @@
-import { StoryblokApiClient } from './storyblok-api-client'
+import { StoryblokApiClient } from '~/plugins/storyblok/storyblok-api-client'
 
 describe('StoryblokApiClient', () => {
   describe('initial state', () => {

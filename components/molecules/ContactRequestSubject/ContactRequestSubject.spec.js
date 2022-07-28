@@ -1,12 +1,14 @@
 import { shallowMount } from '@vue/test-utils'
-import subjectContent from './ContactRequestSubject.stories.content'
+import {
+  subjectCTA,
+  subjectForm,
+} from './ContactRequestSubject.stories.content'
 import ContactRequestSubject from './ContactRequestSubject.vue'
 
-const content = subjectContent()
 describe('ContactRequestSubject', () => {
   describe('initial state', () => {
     test('should render given only required prop type', () => {
-      const propsData = { type: content.type }
+      const propsData = { type: subjectCTA.type }
       const wrapper = shallowMount(ContactRequestSubject, {
         stubs: { AnimatedCollapse: true, NuxtDynamic: true },
         propsData,
@@ -16,7 +18,7 @@ describe('ContactRequestSubject', () => {
     })
 
     test('should render correct content given all props', () => {
-      const propsData = content
+      const propsData = subjectCTA
       const wrapper = shallowMount(ContactRequestSubject, {
         stubs: { AnimatedCollapse: true, NuxtDynamic: true },
         propsData,
@@ -27,14 +29,14 @@ describe('ContactRequestSubject', () => {
         '.contact-request-subject__description'
       )
 
-      expect(headline.text()).toBe(content.title)
+      expect(headline.text()).toBe(subjectCTA.title)
       expect(description.exists()).toBeTruthy()
     })
   })
 
   describe('during interaction', () => {
     test('should emit type when clicking the subject', async () => {
-      const propsData = content
+      const propsData = subjectCTA
       const wrapper = shallowMount(ContactRequestSubject, {
         stubs: { AnimatedCollapse: true, NuxtDynamic: true },
         propsData,
@@ -47,8 +49,8 @@ describe('ContactRequestSubject', () => {
       await subject.trigger('click')
 
       expect(emitMock).toBeCalledWith('selected', {
-        id: content._uid,
-        type: content.type,
+        id: subjectCTA._uid,
+        type: subjectCTA.type,
       })
     })
   })

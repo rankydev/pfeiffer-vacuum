@@ -14,6 +14,7 @@
       },
     ]"
     :disabled="disabled"
+    @click="$emit('click')"
   >
     <span v-if="label" class="button__label">{{ label }}</span>
     <Icon
@@ -123,6 +124,7 @@ export default defineComponent({
       validator: (val) => ['_self', '_blank'].includes(val),
     },
   },
+  emits: ['click'],
   setup(props) {
     const iconSize = computed(() =>
       props.size === 'xsmall' ? 'xsmall' : 'base'

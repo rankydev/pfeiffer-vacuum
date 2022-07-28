@@ -99,7 +99,7 @@ export default defineComponent({
     @apply tw-mb-8;
   }
 
-  .section-headline {
+  &__section-headline {
     @apply tw-mb-4;
   }
 

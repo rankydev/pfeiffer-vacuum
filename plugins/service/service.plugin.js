@@ -1,4 +1,4 @@
-import { StoryblokApiClient } from './storyblok-api-client'
+import { StoryblokApiClient } from '~/plugins/storyblok/storyblok-api-client'
 
 export default (_, inject) => {
   const storyblokApiClient = new StoryblokApiClient('pvweb')

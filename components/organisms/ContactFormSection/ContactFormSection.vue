@@ -48,6 +48,17 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .contact-form-section {
+  @apply tw-mb-4;
+  @apply tw-pt-6;
+
+  @screen md {
+    @apply tw-pt-4;
+  }
+
+  @screen lg {
+    @apply tw-pt-12;
+  }
+
   &__left-side {
     @apply tw-w-full;
     @apply tw-col-span-12;

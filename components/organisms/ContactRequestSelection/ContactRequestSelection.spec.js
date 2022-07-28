@@ -57,7 +57,7 @@ describe('ContactRequestSelection', () => {
       createComponent(propsData)
 
       const subjects = wrapper.findAll('[name="ContactRequestSubject"]')
-      expect(subjects).toHaveLength(3)
+      expect(subjects).toHaveLength(2)
     })
   })
 

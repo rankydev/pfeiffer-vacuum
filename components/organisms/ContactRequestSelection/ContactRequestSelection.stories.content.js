@@ -1,13 +1,9 @@
-import contactRequestSubject from '~/components/molecules/ContactRequestSubject/ContactRequestSubject.stories.content'
+import {
+  subjectCTA,
+  subjectForm,
+} from '~/components/molecules/ContactRequestSubject/ContactRequestSubject.stories.content'
 
-const subjects = [
-  {
-    ...contactRequestSubject(),
-    uiComponent: 'ContactRequestSubject',
-  },
-  contactRequestSubject(),
-  contactRequestSubject(),
-]
+const subjects = [subjectCTA, subjectForm]
 
 export const mainHeadline = 'Kontakt'
 export const sectionHeadline = 'Ihre Anfrage'

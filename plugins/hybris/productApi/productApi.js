@@ -1,4 +1,4 @@
-import config from './hybris.config'
+import config from '../hybris.config'
 
 export function getProductApi(axiosInstance, ctx) {
   return {

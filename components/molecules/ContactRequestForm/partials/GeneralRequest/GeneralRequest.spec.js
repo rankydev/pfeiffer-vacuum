@@ -7,7 +7,9 @@ import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
 describe('GeneralRequest', () => {
   describe('initial state', () => {
     test('should render correctly', () => {
-      const wrapper = shallowMount(GeneralRequest)
+      const wrapper = shallowMount(GeneralRequest, {
+        propsData: { type: 'QUOTE' },
+      })
       const inputArr = wrapper.findAllComponents(PvInput)
       const select = wrapper.findComponent(PvSelect)
       const textarea = wrapper.findComponent(PvTextArea)
