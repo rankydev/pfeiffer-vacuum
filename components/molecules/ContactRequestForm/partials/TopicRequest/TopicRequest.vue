@@ -59,11 +59,11 @@
       :label="$t('form.contactRequest.region')"
       :options="[
         {
-          displayValue: 'NY',
-          value: 'NY',
+          name: 'NY',
+          isocode: 'NY',
         },
       ]"
-      :option-label="'displayValue'"
+      :option-label="'name'"
       :required="true"
       :rules="{ required }"
       :validate="validate"

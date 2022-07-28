@@ -4,6 +4,8 @@
       v-if="contactRequestType === 'GENERAL_QUERY'"
       :validate="validate"
       :type="contactRequestType"
+      :countries="countries"
+      :regions="regions"
       @update="requestData = $event"
     />
     <TopicRequest
@@ -26,7 +28,12 @@
 </template>
 
 <script>
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  useAsync,
+} from '@nuxtjs/composition-api'
 import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 import Button from '~/components/atoms/Button/Button.vue'
@@ -61,6 +68,29 @@ export default defineComponent({
     const requestData = ref({})
 
     let validate = ref(false)
+
+    // TODO: outsource into pinia store
+    const countries = ref([])
+    const regions = ref([])
+    useAsync(async () => {
+      // Fetched hybris countries
+      await $hybrisApi.countriesApi.getCountries().then((res) => {
+        countries.value = res
+      })
+    })
+
+    useAsync(async () => {
+      // Fetched hybris regions
+      console.log('region async')
+      //const iso = requestData.contact?.address?.country?.isocode
+      const iso = 'US'
+      if (iso) {
+        await $hybrisApi.countriesApi.getRegions(iso).then((res) => {
+          regions.value = res
+        })
+      }
+    }, requestData.value)
+
     const submit = async () => {
       validate.value = true
       if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
@@ -77,7 +107,7 @@ export default defineComponent({
       }
     }
 
-    return { v, validate, submit, requestData }
+    return { v, validate, submit, requestData, countries, regions }
   },
 })
 </script>

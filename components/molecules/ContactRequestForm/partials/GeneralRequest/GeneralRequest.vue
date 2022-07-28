@@ -35,16 +35,7 @@
     />
     <PvSelect
       :label="$t('form.contactRequest.country')"
-      :options="[
-        {
-          name: 'Deutschland',
-          isocode: 'DE',
-        },
-        {
-          name: 'USA',
-          isocode: 'USA',
-        },
-      ]"
+      :options="countries"
       :option-label="'name'"
       :required="true"
       :rules="{ required }"
@@ -55,15 +46,10 @@
       "
     />
     <PvSelect
-      v-if="requestData.contact.address.country.name === 'USA'"
-      :label="$t('form.contactRequest.country')"
-      :options="[
-        {
-          name: 'NY',
-          isocode: 'NY',
-        },
-      ]"
-      :option-label="'displayValue'"
+      v-if="regions.length"
+      :label="$t('form.contactRequest.region')"
+      :options="regions"
+      :option-label="'name'"
       :required="true"
       :rules="{ required }"
       :validate="validate"
@@ -111,6 +97,14 @@ export default defineComponent({
           'PRODUCT_INFORMATION',
           'GENERAL_QUERY',
         ].includes(val),
+    },
+    countries: {
+      type: Array,
+      default: () => [],
+    },
+    regions: {
+      type: Array,
+      default: () => [],
     },
   },
   emits: [
