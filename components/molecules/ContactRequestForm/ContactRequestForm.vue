@@ -23,7 +23,6 @@
       class="contact-request-form__button"
       @click.native="submit()"
     />
-    <p v-for="error of v.$errors" :key="error.$uid"></p>
   </div>
 </template>
 
@@ -76,7 +75,7 @@ export default defineComponent({
       await $hybrisApi.countriesApi.getCountries().then((res) => {
         countries.value = res
       })
-    })
+    }, 'getCountries')
 
     const submit = async () => {
       validate.value = true
