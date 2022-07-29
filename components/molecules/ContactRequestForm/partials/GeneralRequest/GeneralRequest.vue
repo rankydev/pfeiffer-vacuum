@@ -42,6 +42,7 @@
       :validate="validate"
       @update="
         requestData.contact.address.country = $event
+        getRegions()
         $emit('update', requestData)
       "
     />
@@ -73,7 +74,7 @@
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import { required, email } from '@vuelidate/validators'
 
 export default defineComponent({
@@ -99,10 +100,6 @@ export default defineComponent({
         ].includes(val),
     },
     countries: {
-      type: Array,
-      default: () => [],
-    },
-    regions: {
       type: Array,
       default: () => [],
     },
@@ -133,7 +130,20 @@ export default defineComponent({
       },
     })
 
-    return { required, email, requestData }
+    const { $hybrisApi } = useContext()
+    const regions = ref([])
+    const getRegions = async () => {
+      const iso = requestData.value.contact?.address?.country?.isocode
+      if (iso) {
+        await $hybrisApi.countriesApi.getRegions(iso).then((res) => {
+          regions.value = res
+        })
+      } else {
+        regions.value = []
+      }
+    }
+
+    return { required, email, requestData, getRegions, regions }
   },
 })
 </script>

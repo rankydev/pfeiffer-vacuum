@@ -256,6 +256,8 @@ export default defineComponent({
     @apply tw-border-2;
     @apply tw-border-solid;
     @apply tw-rounded-md;
+    @apply tw-static;
+    @apply tw-h-48;
   }
 
   &__dropdown-option,

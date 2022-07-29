@@ -5,7 +5,6 @@
       :validate="validate"
       :type="contactRequestType"
       :countries="countries"
-      :regions="regions"
       @update="requestData = $event"
     />
     <TopicRequest
@@ -71,25 +70,12 @@ export default defineComponent({
 
     // TODO: outsource into pinia store
     const countries = ref([])
-    const regions = ref([])
     useAsync(async () => {
       // Fetched hybris countries
       await $hybrisApi.countriesApi.getCountries().then((res) => {
         countries.value = res
       })
     })
-
-    useAsync(async () => {
-      // Fetched hybris regions
-      console.log('region async')
-      //const iso = requestData.contact?.address?.country?.isocode
-      const iso = 'US'
-      if (iso) {
-        await $hybrisApi.countriesApi.getRegions(iso).then((res) => {
-          regions.value = res
-        })
-      }
-    }, requestData.value)
 
     const submit = async () => {
       validate.value = true
@@ -107,7 +93,7 @@ export default defineComponent({
       }
     }
 
-    return { v, validate, submit, requestData, countries, regions }
+    return { v, validate, submit, requestData, countries }
   },
 })
 </script>
