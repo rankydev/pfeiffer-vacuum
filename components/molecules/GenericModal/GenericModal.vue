@@ -2,7 +2,6 @@
   <!-- Transition setzen für fade in/out -->
   <transition name="fade">
     <div v-if="isOpen" class="modal">
-      <!-- <div class="modal"> -->
       <div class="modal__content">
         <div class="modal__box">
           <!-- Hier soll ein Slot rein, in dem eine ganze Box reingesetzt wird -->
@@ -42,7 +41,6 @@ import {
   defineComponent,
   onMounted,
   onBeforeUnmount,
-  ref,
 } from '@nuxtjs/composition-api'
 import { emit } from 'process'
 import Button from '~/components/atoms/Button/Button.vue'
@@ -61,7 +59,7 @@ export default defineComponent({
   },
   emits: ['closeModal'],
   setup(props, { emit }) {
-    const handleKeyUp = (ev) => {
+    const toggleModal = (ev) => {
       if (ev.keyCode === 27) {
         emit('closeModal')
       }
@@ -69,12 +67,12 @@ export default defineComponent({
 
     onMounted(() => {
       document.querySelector('body').style.overflow = 'hidden'
-      window.addEventListener('keyup', handleKeyUp)
+      window.addEventListener('keyup', toggleModal)
     })
 
     onBeforeUnmount(() => {
       document.querySelector('body').style.overflow = 'visible'
-      window.removeEventListener('keyup', handleKeyUp)
+      window.removeEventListener('keyup', toggleModal)
     })
   },
 })

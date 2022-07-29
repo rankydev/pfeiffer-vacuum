@@ -32,6 +32,7 @@ module.exports = {
       'pv-grey-16': '#292929',
       'pv-grey-32': '#515151',
       'pv-grey-48': '#7a7a7a',
+      'pv-grey-48-opacity': '#7a7a7a8b',
       'pv-grey-64': '#a3a3a3',
       'pv-grey-80': '#cccccc',
       'pv-grey-96': '#f5f5f5',

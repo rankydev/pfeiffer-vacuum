@@ -28,9 +28,14 @@
         </template>
       </GenericCard>
     </div>
-
+    <!-- v-if kann gerade noch nicht entfernt werden, weil Modal auf onMounted das document abfragt und overflow setzte -->
     <div>
-      <InformationModal v-if="isModalOpen" @closeModal="toggleModal()" />
+      {{ isModalOpen }}
+      <InformationModal
+        v-if="isModalOpen"
+        :is-open="isModalOpen"
+        @closeModal="toggleModal()"
+      />
     </div>
   </div>
 </template>
