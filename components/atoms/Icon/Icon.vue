@@ -4,11 +4,13 @@
     :name="icon"
     :title="title"
     :class="['icon__svg', `icon--${size}`]"
+    @click="$emit('click')"
   />
   <span
     v-else
     class="material-icons"
     :class="['icon__material', `icon--${size}`]"
+    @click="$emit('click')"
   >
     {{ icon }}
   </span>
@@ -62,6 +64,7 @@ export default defineComponent({
       validator: (val) => ['material-icon', 'svg'].includes(val),
     },
   },
+  emits: ['click'],
 })
 </script>
 

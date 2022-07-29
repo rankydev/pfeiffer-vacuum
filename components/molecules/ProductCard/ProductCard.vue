@@ -1,7 +1,11 @@
 <template>
   <div>
     <div @click="toggleModal()">
-      <GenericCard image-size="contain" :href="(product || {}).url || ''">
+      <GenericCard
+        :has-link="false"
+        image-size="contain"
+        :href="(product || {}).url || ''"
+      >
         <template #image>
           <ResponsiveImage
             :image="image || {}"

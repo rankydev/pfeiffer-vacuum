@@ -1,9 +1,32 @@
 <template>
   <div class="modal">
     <div class="modal__content">
-      <div>Hello Info</div>
+      <div class="modal__box">
+        <Icon
+          class="modal__icon"
+          icon="close"
+          size="small"
+          @click="$emit('closeModal')"
+        />
+        <h3>Your personal price</h3>
+        <div>
+          <span
+            >This price is your price ...Lorem ipsum dolor sit amet, consetetur
+            sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
+            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+            no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+            dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+            tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+            voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
+            dolor sit amet.</span
+          >
+          <!-- <button @click="$emit('closeModal')">Click</button> -->
+        </div>
+        <Button label="Close" @click="$emit('closeModal')"></Button>
+      </div>
       <!-- hier an Parent emitten, damit im Parent Component entfernt wird und Unmounted stattfindet -->
-      <button @click="$emit('closeModal')">Click</button>
     </div>
   </div>
 </template>
@@ -11,39 +34,36 @@
 <script>
 import {
   defineComponent,
-  computed,
   onMounted,
   onBeforeUnmount,
 } from '@nuxtjs/composition-api'
-// import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import { emit } from 'process'
+import Button from '~/components/atoms/Button/Button.vue'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
   components: {
-    // ContentWrapper,
+    Button,
+    Icon,
   },
   props: {},
   emits: ['closeModal'],
-  setup() {
-    // const bodyEl = ref(document.querySelector('body'))
+  setup(props, { emit }) {
+    const toggleModal = (ev) => {
+      if (ev.keyCode === 27) {
+        emit('closeModal')
+      }
+    }
 
     onMounted(() => {
       document.querySelector('body').style.overflow = 'hidden'
+      window.addEventListener('keyup', toggleModal)
     })
 
     onBeforeUnmount(() => {
       document.querySelector('body').style.overflow = 'visible'
+      window.removeEventListener('keyup', toggleModal)
     })
-
-    /**
-     * set ContentWrapper props based on isBreakout value
-     * ContentWrapper should have noPadding when the carousel will be rendered normally
-     */
-    const contentWrapperProps = computed(() => ({
-      breakout: true,
-      noPadding: true,
-    }))
-
-    return { contentWrapperProps }
   },
 })
 </script>
@@ -59,11 +79,26 @@ export default defineComponent({
   background-color: #f003;
 
   &__content {
-    color: white;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  &__box {
+    width: 1200px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background-color: grey;
+    padding: 16px;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
   }
 }
 </style>
