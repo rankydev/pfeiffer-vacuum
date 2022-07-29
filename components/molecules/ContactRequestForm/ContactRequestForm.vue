@@ -27,16 +27,12 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  useContext,
-  useAsync,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 import Button from '~/components/atoms/Button/Button.vue'
 import useVuelidate from '@vuelidate/core'
+import { useMiscStore } from '~/stores/misc'
 
 export default defineComponent({
   components: {
@@ -68,14 +64,7 @@ export default defineComponent({
 
     let validate = ref(false)
 
-    // TODO: outsource into pinia store
-    const countries = ref([])
-    useAsync(async () => {
-      // Fetched hybris countries
-      await $hybrisApi.countriesApi.getCountries().then((res) => {
-        countries.value = res
-      })
-    }, 'getCountries')
+    const { countries } = useMiscStore()
 
     const submit = async () => {
       validate.value = true
