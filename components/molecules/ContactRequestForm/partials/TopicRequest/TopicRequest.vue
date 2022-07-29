@@ -35,34 +35,21 @@
     />
     <PvSelect
       :label="$t('form.contactRequest.country')"
-      :options="[
-        {
-          name: 'Deutschland',
-          isocode: 'DE',
-        },
-        {
-          name: 'USA',
-          isocode: 'USA',
-        },
-      ]"
+      :options="countries"
       :option-label="'name'"
       :required="true"
       :rules="{ required }"
       :validate="validate"
       @update="
         requestData.contact.address.country = $event
+        getRegions()
         $emit('update', requestData)
       "
     />
     <PvSelect
-      v-if="requestData.contact.address.country.name === 'USA'"
+      v-if="regions.length"
       :label="$t('form.contactRequest.region')"
-      :options="[
-        {
-          name: 'NY',
-          isocode: 'NY',
-        },
-      ]"
+      :options="regions"
       :option-label="'name'"
       :required="true"
       :rules="{ required }"
@@ -152,6 +139,7 @@ import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { required, email } from '@vuelidate/validators'
+import { useRegions } from '~/composables/useRegions'
 
 export default defineComponent({
   name: 'TopicRequest',
@@ -161,6 +149,9 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    /**
+     * defines what kind of request type is selected
+     */
     type: {
       type: String,
       required: true,
@@ -171,6 +162,13 @@ export default defineComponent({
           'PRODUCT_INFORMATION',
           'GENERAL_QUERY',
         ].includes(val),
+    },
+    /**
+     * all countries that are contained in the select component
+     */
+    countries: {
+      type: Array,
+      default: () => [],
     },
   },
   emits: [
@@ -204,7 +202,9 @@ export default defineComponent({
       },
     })
 
-    return { required, email, requestData }
+    const { getRegions, regions } = useRegions(requestData)
+
+    return { required, email, requestData, getRegions, regions }
   },
 })
 </script>

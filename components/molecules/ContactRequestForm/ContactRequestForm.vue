@@ -11,6 +11,7 @@
       v-else
       :validate="validate"
       :type="contactRequestType"
+      :countries="countries"
       @update="requestData = $event"
     />
     <Button

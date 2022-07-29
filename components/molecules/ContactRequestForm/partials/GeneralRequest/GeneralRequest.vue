@@ -74,8 +74,9 @@
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { required, email } from '@vuelidate/validators'
+import { useRegions } from '~/composables/useRegions'
 
 export default defineComponent({
   name: 'GeneralRequest',
@@ -88,6 +89,9 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    /**
+     * defines what kind of request type is selected
+     */
     type: {
       type: String,
       required: true,
@@ -99,6 +103,9 @@ export default defineComponent({
           'GENERAL_QUERY',
         ].includes(val),
     },
+    /**
+     * all countries that are contained in the select component
+     */
     countries: {
       type: Array,
       default: () => [],
@@ -130,18 +137,7 @@ export default defineComponent({
       },
     })
 
-    const { $hybrisApi } = useContext()
-    const regions = ref([])
-    const getRegions = async () => {
-      const iso = requestData.value.contact?.address?.country?.isocode
-      if (iso) {
-        await $hybrisApi.countriesApi.getRegions(iso).then((res) => {
-          regions.value = res
-        })
-      } else {
-        regions.value = []
-      }
-    }
+    const { getRegions, regions } = useRegions(requestData)
 
     return { required, email, requestData, getRegions, regions }
   },
