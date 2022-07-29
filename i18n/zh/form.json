@@ -32,5 +32,9 @@
     "postCode": "邮政编码",
     "city": "城市",
     "submit": "提交"
+  },
+  "validationErrorMessages": {
+    "required": "值是必需的",
+    "email": "值不是有效的电子邮件地址"
   }
 }

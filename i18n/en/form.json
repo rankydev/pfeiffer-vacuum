@@ -32,5 +32,9 @@
     "postCode": "ZIP Code",
     "city": "City",
     "submit": "Submit"
+  },
+  "validationErrorMessages": {
+    "required": "Value is required",
+    "email": "Value is not a valid email address"
   }
 }

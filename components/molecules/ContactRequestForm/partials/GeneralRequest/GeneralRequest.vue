@@ -4,7 +4,12 @@
       :label="$t('form.contactRequest.firstname')"
       placeholder="Placeholder"
       :required="true"
-      :rules="{ required }"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+      }"
       :validate="validate"
       @update="
         requestData.contact.firstName = $event
@@ -15,7 +20,12 @@
       :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
       :required="true"
-      :rules="{ required }"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+      }"
       :validate="validate"
       @update="
         requestData.contact.lastName = $event
@@ -26,7 +36,16 @@
       :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
       :required="true"
-      :rules="{ required, email }"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+        email: helpers.withMessage(
+          $t('form.validationErrorMessages.email'),
+          email
+        ),
+      }"
       :validate="validate"
       @update="
         requestData.contact.email = $event
@@ -38,7 +57,12 @@
       :options="countries"
       :option-label="'name'"
       :required="true"
-      :rules="{ required }"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+      }"
       :validate="validate"
       @update="
         requestData.contact.address.country = $event
@@ -52,7 +76,12 @@
       :options="regions"
       :option-label="'name'"
       :required="true"
-      :rules="{ required }"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+      }"
       :validate="validate"
       @update="
         requestData.contact.address.region = $event
@@ -75,7 +104,7 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { required, email } from '@vuelidate/validators'
+import { required, email, helpers } from '@vuelidate/validators'
 import { useRegions } from '~/composables/useRegions'
 
 export default defineComponent({
@@ -139,7 +168,7 @@ export default defineComponent({
 
     const { getRegions, regions } = useRegions(requestData)
 
-    return { required, email, requestData, getRegions, regions }
+    return { required, email, helpers, requestData, getRegions, regions }
   },
 })
 </script>

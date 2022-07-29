@@ -31,5 +31,9 @@
     "postCode": "PLZ",
     "city": "Stadt",
     "submit": "Absenden"
+  },
+  "validationErrorMessages": {
+    "required": "Wert ist erforderlich",
+    "email": "Der Wert ist keine gültige E-Mail-Adresse"
   }
 }
