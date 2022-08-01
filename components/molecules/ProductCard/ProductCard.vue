@@ -31,11 +31,14 @@
     <!-- v-if kann gerade noch nicht entfernt werden, weil Modal auf onMounted das document abfragt und overflow setzte -->
     <div>
       {{ isModalOpen }}
-      <InformationModal
-        v-if="isModalOpen"
-        :is-open="isModalOpen"
-        @closeModal="toggleModal()"
-      />
+      <GenericModal v-if="isModalOpen">
+        <InformationModal
+          :is-open="isModalOpen"
+          :headline="'You personalPrice'"
+          :text="'<p>Plain text can be added <u>also with underline</u> or <strong>strong</strong></p>'"
+          @closeModal="toggleModal()"
+        />
+      </GenericModal>
     </div>
   </div>
 </template>
@@ -44,9 +47,10 @@
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import InformationModal from '~/components/molecules/InformationModal/InformationModal'
+import GenericModal from '~/components/molecules/GenericModal/GenericModal.vue'
 
 export default defineComponent({
-  components: { ResponsiveImage, InformationModal },
+  components: { ResponsiveImage, GenericModal, InformationModal },
   props: {
     /**
      * productData that specifies Product Card

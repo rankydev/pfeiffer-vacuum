@@ -1,9 +1,9 @@
 <template>
   <!-- Transition setzen für fade in/out -->
   <transition name="fade">
-    <div v-if="isOpen" class="modal">
+    <div class="modal">
       <div class="modal__content">
-        <slot />
+        <slot @closeModal="$emit('closeModal')" />
         <!-- hier an Parent emitten, damit im Parent Component entfernt wird und Unmounted stattfindet -->
       </div>
     </div>
@@ -27,20 +27,11 @@ export default defineComponent({
   },
   emits: ['closeModal'],
   setup(props, { emit }) {
-    const toggleModal = (ev) => {
-      if (ev.keyCode === 27) {
-        emit('closeModal')
-      }
-    }
-
     onMounted(() => {
       document.querySelector('body').style.overflow = 'hidden'
-      window.addEventListener('keyup', toggleModal)
     })
-
     onBeforeUnmount(() => {
       document.querySelector('body').style.overflow = 'visible'
-      window.removeEventListener('keyup', toggleModal)
     })
   },
 })
@@ -61,22 +52,6 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  &__box {
-    width: 1200px;
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    background-color: white;
-    padding: 16px;
-  }
-
-  &__icon {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    cursor: pointer;
   }
 }
 </style>
