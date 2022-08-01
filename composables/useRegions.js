@@ -8,9 +8,11 @@ export const useRegions = (data) => {
   async function getRegions() {
     const iso = computed(() => data.value.contact?.address?.country?.isocode)
     if (iso.value) {
-      await $hybrisApi.countriesApi.getRegions(iso.value).then((res) => {
-        regions.value = res
-      })
+      await Promise.resolve($hybrisApi.countriesApi.getRegions(iso.value)).then(
+        (res) => {
+          regions.value = res
+        }
+      )
     } else {
       regions.value = []
     }
