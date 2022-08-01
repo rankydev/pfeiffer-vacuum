@@ -167,7 +167,7 @@ describe('Link', () => {
       })
 
       let navigateSpy = null
-      const customRouterStub = () => {
+      const customRouterStub = (isActive = true) => {
         navigateSpy = jest.fn()
         return {
           data() {
@@ -177,14 +177,14 @@ describe('Link', () => {
             <slot
               href="/"
               :navigate="navigateSpy"
-              :isActive="false"
+              :isActive="${isActive}"
               :isExactActive="false"
             />
           </div>`,
         }
       }
 
-      it('should can cancel a Nuxt Link navigate action when returning false', () => {
+      it('should cancel a Nuxt Link navigate action when returning false', () => {
         const propsData = {
           target: '_self',
           href: '/',
@@ -212,6 +212,21 @@ describe('Link', () => {
 
         expect(propsData.beforeNavigation).toBeCalledTimes(1)
         expect(navigateSpy).toBeCalledTimes(1)
+      })
+
+      it('should cancel a Nuxt Link navigate action when isActive is false', () => {
+        const propsData = {
+          target: '_self',
+          href: '/',
+          beforeNavigation: jest.fn(() => true),
+        }
+        createComponent(propsData, { CustomStub: customRouterStub(false) })
+
+        const link = wrapper.find('a')
+        link.trigger('click')
+
+        expect(propsData.beforeNavigation).toBeCalledTimes(0)
+        expect(navigateSpy).toBeCalledTimes(0)
       })
     })
   })

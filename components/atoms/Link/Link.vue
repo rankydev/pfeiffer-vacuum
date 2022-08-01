@@ -11,7 +11,11 @@
   >
     <a
       :href="link"
-      @click="($event) => beforeNavigation($event) && navigate($event)"
+      @click="
+        ($event) => {
+          isActive && beforeNavigation($event) && navigate($event)
+        }
+      "
     >
       <slot :isActive="isActive" :isExactActive="isExactActive"
         >{{ label }}
