@@ -3,33 +3,7 @@
   <transition name="fade">
     <div v-if="isOpen" class="modal">
       <div class="modal__content">
-        <div class="modal__box">
-          <!-- Hier soll ein Slot rein, in dem eine ganze Box reingesetzt wird -->
-          <!-- Zweite Komponente: Gemeric Modal und Information Modal -> GenericModal wrapped dann InformartionModal -->
-          <Icon
-            class="modal__icon"
-            icon="close"
-            size="small"
-            @click="$emit('closeModal')"
-          />
-          <h3>Your personal price</h3>
-          <div>
-            <span
-              >This price is your price ...Lorem ipsum dolor sit amet,
-              consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-              invidunt ut labore et dolore magna aliquyam erat, sed diam
-              voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-              dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-              elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
-              magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-              justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-              takimata sanctus est Lorem ipsum dolor sit amet.</span
-            >
-            <!-- <button @click="$emit('closeModal')">Click</button> -->
-          </div>
-          <Button label="Close" @click="$emit('closeModal')"></Button>
-        </div>
+        <slot />
         <!-- hier an Parent emitten, damit im Parent Component entfernt wird und Unmounted stattfindet -->
       </div>
     </div>
@@ -42,15 +16,9 @@ import {
   onMounted,
   onBeforeUnmount,
 } from '@nuxtjs/composition-api'
-import { emit } from 'process'
-import Button from '~/components/atoms/Button/Button.vue'
-import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
-  components: {
-    Button,
-    Icon,
-  },
+  components: {},
   props: {
     isOpen: {
       type: Boolean,

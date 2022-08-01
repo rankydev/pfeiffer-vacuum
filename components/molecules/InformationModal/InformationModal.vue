@@ -1,5 +1,4 @@
 <template>
-  <!-- Transition setzen für fade in/out -->
   <transition name="fade">
     <div v-if="isOpen" class="modal">
       <!-- <div class="modal"> -->
@@ -27,7 +26,6 @@
               justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
               takimata sanctus est Lorem ipsum dolor sit amet.</span
             >
-            <!-- <button @click="$emit('closeModal')">Click</button> -->
           </div>
           <Button label="Close" @click="$emit('closeModal')"></Button>
         </div>
