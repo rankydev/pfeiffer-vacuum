@@ -3,18 +3,7 @@ import ContactRequestForm from '~/components/molecules/ContactRequestForm/Contac
 import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 import Button from '~/components/atoms/Button/Button'
-
-const mocks = {
-  $nuxt: {
-    context: {
-      $hybrisApi: {
-        countriesApi: {
-          getCountries: jest.fn((e) => e),
-        },
-      },
-    },
-  },
-}
+import { setActivePinia, createPinia } from 'pinia'
 
 const localVue = createLocalVue()
 localVue.prototype.$nuxt = {
@@ -29,8 +18,22 @@ localVue.prototype.$nuxt = {
   },
 }
 
+const mockLoadCountries = jest.fn()
+jest.mock('~/stores/misc', () => {
+  return {
+    __esModule: true,
+    useMiscStore: () => {
+      return {
+        loadCountries: mockLoadCountries,
+        countries: ['Land1'],
+      }
+    },
+  }
+})
+
 describe('ContactRequestForm', () => {
   describe('initial state', () => {
+    beforeEach(() => setActivePinia(createPinia()))
     test('should render general request correctly', () => {
       const propsData = { contactRequestType: 'GENERAL_QUERY' }
 
@@ -40,6 +43,7 @@ describe('ContactRequestForm', () => {
       })
       const generalForm = wrapper.findComponent(GeneralRequest)
 
+      expect(mockLoadCountries).toBeCalledTimes(1)
       expect(generalForm.exists()).toBeTruthy()
       expect(wrapper.exists()).toBeTruthy()
     })

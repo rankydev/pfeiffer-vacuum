@@ -27,7 +27,12 @@
 </template>
 
 <script>
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
 import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 import Button from '~/components/atoms/Button/Button.vue'
@@ -64,7 +69,9 @@ export default defineComponent({
 
     let validate = ref(false)
 
-    const { countries } = useMiscStore()
+    const countriesStore = useMiscStore()
+    countriesStore.loadCountries()
+    const countries = computed(() => countriesStore.countries)
 
     const submit = async () => {
       validate.value = true
