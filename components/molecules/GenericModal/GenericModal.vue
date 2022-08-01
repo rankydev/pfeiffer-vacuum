@@ -35,18 +35,18 @@ export default defineComponent({
 <style lang="scss">
 .modal {
   z-index: 100;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  background-color: #7a7a7a8b;
+  @apply tw-top-0;
+  @apply tw-right-0;
+  @apply tw-h-screen;
+  @apply tw-w-screen;
+  @apply tw-fixed;
+  @apply tw-bg-pv-grey-48-opacity;
 
   &__content {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @apply tw-h-full;
+    @apply tw-flex;
+    @apply tw-items-center;
+    @apply tw-justify-center;
   }
 }
 </style>

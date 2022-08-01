@@ -88,19 +88,19 @@ export default defineComponent({
 .modal {
   &__box {
     @apply tw-rounded-md;
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-relative;
+    @apply tw-p-4;
+    @apply tw-bg-pv-white;
     width: 1200px;
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    background-color: white;
-    padding: 16px;
   }
 
   &__icon {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    cursor: pointer;
+    @apply tw-absolute;
+    @apply tw-top-4;
+    @apply tw-right-4;
+    @apply tw-cursor-pointer;
 
     &:hover,
     &:focus-visible {
