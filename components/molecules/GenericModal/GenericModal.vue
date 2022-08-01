@@ -19,12 +19,7 @@ import {
 
 export default defineComponent({
   components: {},
-  props: {
-    isOpen: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  props: {},
   emits: ['closeModal'],
   setup(props, { emit }) {
     onMounted(() => {

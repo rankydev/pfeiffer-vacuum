@@ -23,7 +23,9 @@ const Template = (args, { argTypes }) => ({
     return { args }
   },
   template: `<div>
-    <GenericModal v-bind="args" />
+  <GenericModal>
+    <InformationModal v-bind="args" />
+    </GenericModal>
   </div>`,
 })
 
