@@ -92,7 +92,7 @@ export default defineComponent({
           ...fetchedProducts?.find((i) => i.code === e.code),
         })
       })
-    }, String(productCodes))
+    }, String(productCodes) || 'empty')
 
     return { enrichedSlides }
   },
