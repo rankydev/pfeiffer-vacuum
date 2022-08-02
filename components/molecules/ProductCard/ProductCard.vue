@@ -31,7 +31,7 @@
     <div>
       <InformationModal
         :is-open="isModalOpen"
-        :headline="'You personalPrice'"
+        :headline="'Your personal Price'"
         :text="'<p>Plain text can be added <u>also with underline</u> or <strong>strong</strong></p>'"
         @closeModal="toggleModal()"
       />

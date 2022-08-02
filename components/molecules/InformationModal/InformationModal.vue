@@ -1,11 +1,16 @@
 <template>
-  <GenericModal :is-open="isOpen" @closeModal="$emit('closeModal')">
-    <h3>Your personal price</h3>
+  <GenericModal
+    class="information-modal"
+    :is-open="isOpen"
+    @closeModal="$emit('closeModal')"
+  >
+    <h3 class="information-modal__headline">{{ headline }}</h3>
     <div>
-      <Richtext :richtext="text" />
+      <Richtext class="information-modal__text" :richtext="text" />
     </div>
     <div>
       <Button
+        class="information-modal__btn"
         variant="secondary"
         label="Need any help?"
         shape="outlined"
@@ -16,11 +21,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  onMounted,
-  onBeforeUnmount,
-} from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import GenericModal from '../GenericModal/GenericModal.vue'
@@ -46,7 +47,7 @@ export default defineComponent({
     },
   },
   emits: ['closeModal'],
-  setup(props, { emit }) {},
+  setup() {},
 })
 </script>
 
