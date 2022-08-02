@@ -31,6 +31,8 @@ services:
       - CI_COMMIT_SHORT_SHA=${CI_COMMIT_SHORT_SHA}
       - CI_COMMIT_REF_NAME=${CI_COMMIT_REF_NAME}
       - CI_PROJECT_URL=${CI_PROJECT_URL}
+      - USERCENTRICS_PRIVACY_PATH=${USERCENTRICS_PRIVACY_PATH}
+      - USERCENTRICS_ID=${USERCENTRICS_ID}
       # node setup
       #- REJECT_UNAUTHORIZED=true #don't trust all certificates
       #Storefront
