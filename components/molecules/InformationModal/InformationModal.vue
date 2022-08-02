@@ -4,7 +4,7 @@
     :is-open="isOpen"
     @closeModal="$emit('closeModal')"
   >
-    <h3 class="information-modal__headline">{{ headline }}</h3>
+    <h2 class="information-modal__headline">{{ headline }}</h2>
     <div>
       <Richtext class="information-modal__text" :richtext="text" />
     </div>
@@ -14,7 +14,6 @@
         variant="secondary"
         label="Need any help?"
         shape="outlined"
-        @click="$emit('closeModal')"
       ></Button>
     </div>
   </GenericModal>
@@ -54,13 +53,13 @@ export default defineComponent({
 <style lang="scss">
 .modal {
   &__box {
-    @apply tw-rounded-md;
+    @apply tw-rounded-lg;
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-relative;
     @apply tw-p-4;
     @apply tw-bg-pv-white;
-    padding: 24px;
+    @apply tw-p-8;
 
     // width: 250px;
 
@@ -75,14 +74,25 @@ export default defineComponent({
 
   &__icon {
     @apply tw-absolute;
-    @apply tw-top-4;
-    @apply tw-right-4;
+    @apply tw-top-8;
+    @apply tw-right-8;
+    @apply tw-ml-4;
     @apply tw-cursor-pointer;
 
     &:hover,
     &:focus-visible {
       @apply tw-text-pv-red-lighter;
     }
+  }
+}
+
+.information-modal {
+  &__headline {
+    @apply tw-mb-4;
+  }
+
+  &__btn {
+    @apply tw-mt-4;
   }
 }
 </style>

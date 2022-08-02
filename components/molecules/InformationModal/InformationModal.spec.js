@@ -28,18 +28,5 @@ describe('InformationModal', () => {
       expect(btn.exists()).toBeTruthy()
     })
   })
-  describe('during interaction', () => {
-    test('should emit close event on button click', async () => {
-      const wrapper = shallowMount(InformationModal, {
-        propsData,
-      })
-      const mockEmit = jest.fn()
-      wrapper.vm.$emit = mockEmit
-      const btn = wrapper.findComponent(Button)
-      await btn.vm.$emit('click')
-      await wrapper.vm.$nextTick()
-
-      expect(mockEmit).toBeCalledWith('closeModal')
-    })
-  })
+  describe('during interaction', () => {})
 })
