@@ -191,7 +191,7 @@
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import { required, email, helpers } from '@vuelidate/validators'
 import { useRegions } from '~/composables/useRegions'
 
@@ -256,7 +256,9 @@ export default defineComponent({
       },
     })
 
-    const { getRegions, regions } = useRegions(requestData)
+    const { getRegions, regions } = useRegions(
+      computed(() => requestData.value.contact?.address?.country?.isocode)
+    )
 
     return { required, email, helpers, requestData, getRegions, regions }
   },
