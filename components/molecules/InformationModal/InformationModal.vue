@@ -1,29 +1,18 @@
 <template>
-  <transition name="fade">
-    <GenericModal>
-      <div class="modal__box">
-        <Icon
-          class="modal__icon"
-          icon="close"
-          size="small"
-          @click="$emit('closeModal')"
-        />
-        <h3>Your personal price</h3>
-        <div>
-          <Richtext :richtext="text" />
-          >
-        </div>
-        <div>
-          <Button
-            variant="secondary"
-            label="Need any help?"
-            shape="outlined"
-            @click="$emit('closeModal')"
-          ></Button>
-        </div>
-      </div>
-    </GenericModal>
-  </transition>
+  <GenericModal :is-open="isOpen" @closeModal="$emit('closeModal')">
+    <h3>Your personal price</h3>
+    <div>
+      <Richtext :richtext="text" />
+    </div>
+    <div>
+      <Button
+        variant="secondary"
+        label="Need any help?"
+        shape="outlined"
+        @click="$emit('closeModal')"
+      ></Button>
+    </div>
+  </GenericModal>
 </template>
 
 <script>
@@ -33,14 +22,12 @@ import {
   onBeforeUnmount,
 } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
-import Icon from '~/components/atoms/Icon/Icon.vue'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import GenericModal from '../GenericModal/GenericModal.vue'
 
 export default defineComponent({
   components: {
     Button,
-    Icon,
     Richtext,
     GenericModal,
   },
@@ -59,28 +46,7 @@ export default defineComponent({
     },
   },
   emits: ['closeModal'],
-  setup(props, { emit }) {
-    const toggleModal = (ev) => {
-      if (ev.keyCode === 27) {
-        emit('closeModal')
-      }
-    }
-
-    const handleBgClick = (ev) => {
-      if (ev.target.className === 'modal__content') {
-        emit('closeModal')
-      }
-    }
-
-    onMounted(() => {
-      window.addEventListener('keyup', toggleModal)
-      window.addEventListener('click', handleBgClick)
-    })
-    onBeforeUnmount(() => {
-      window.removeEventListener('keyup', toggleModal)
-      window.removeEventListener('click', handleBgClick)
-    })
-  },
+  setup(props, { emit }) {},
 })
 </script>
 
@@ -93,7 +59,17 @@ export default defineComponent({
     @apply tw-relative;
     @apply tw-p-4;
     @apply tw-bg-pv-white;
-    width: 1200px;
+    padding: 24px;
+
+    // width: 250px;
+
+    @screen md {
+      // width: 500px;
+    }
+
+    @screen lg {
+      width: 1200px;
+    }
   }
 
   &__icon {

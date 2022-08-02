@@ -24,7 +24,7 @@ const Template = (args, { argTypes }) => ({
   },
   template: `<div>
   <GenericModal>
-    <InformationModal v-bind="args" />
+    <h1>Hallo I bims 1 Salami</h1>
     </GenericModal>
   </div>`,
 })

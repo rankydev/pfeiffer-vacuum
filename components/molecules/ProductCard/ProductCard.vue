@@ -30,7 +30,7 @@
     </div>
     <div>
       <InformationModal
-        v-if="isModalOpen"
+        :is-open="isModalOpen"
         :headline="'You personalPrice'"
         :text="'<p>Plain text can be added <u>also with underline</u> or <strong>strong</strong></p>'"
         @closeModal="toggleModal()"
