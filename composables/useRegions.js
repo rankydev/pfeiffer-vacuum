@@ -1,11 +1,11 @@
-import { useContext, ref, computed } from '@nuxtjs/composition-api'
+import { useContext, ref } from '@nuxtjs/composition-api'
 
 const regions = ref([])
 
 export const useRegions = (isocode) => {
   const { $hybrisApi } = useContext()
 
-  async function getRegions() {
+  async function loadRegions() {
     if (isocode.value) {
       await Promise.resolve(
         $hybrisApi.countriesApi.getRegions(isocode.value)
@@ -16,5 +16,5 @@ export const useRegions = (isocode) => {
       regions.value = []
     }
   }
-  return { getRegions, regions }
+  return { loadRegions, regions }
 }

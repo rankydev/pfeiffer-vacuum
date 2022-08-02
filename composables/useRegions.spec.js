@@ -50,7 +50,7 @@ describe('useRegion', () => {
       },
     })
 
-    await wrapper.vm.getRegions()
+    await wrapper.vm.loadRegions()
     expect(wrapper.vm.regions).toBe(regions)
   })
   it('should return empty regions array when no isocode is provided', async () => {
@@ -82,7 +82,7 @@ describe('useRegion', () => {
       },
     })
 
-    await wrapper.vm.getRegions()
+    await wrapper.vm.loadRegions()
     expect(wrapper.vm.regions).toStrictEqual([])
   })
 })

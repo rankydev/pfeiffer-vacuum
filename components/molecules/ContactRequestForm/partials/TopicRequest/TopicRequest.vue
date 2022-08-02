@@ -62,7 +62,7 @@
       :validate="validate"
       @update="
         requestData.contact.address.country = $event
-        getRegions()
+        loadRegions()
         $emit('update', requestData)
       "
     />
@@ -256,11 +256,11 @@ export default defineComponent({
       },
     })
 
-    const { getRegions, regions } = useRegions(
+    const { loadRegions, regions } = useRegions(
       computed(() => requestData.value.contact?.address?.country?.isocode)
     )
 
-    return { required, email, helpers, requestData, getRegions, regions }
+    return { required, email, helpers, requestData, loadRegions, regions }
   },
 })
 </script>
