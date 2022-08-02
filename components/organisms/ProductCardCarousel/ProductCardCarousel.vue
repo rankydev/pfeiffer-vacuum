@@ -90,7 +90,7 @@ export default defineComponent({
           ...fetchedProducts?.find((i) => i.code === e.code),
         })
       })
-    }, productCodes)
+    }, String(productCodes))
 
     return { enrichedSlides }
   },
