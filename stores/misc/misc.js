@@ -15,21 +15,4 @@ export const useMiscStore = defineStore('misc', {
       )
     },
   },
-  /*
-  const countries = ref([])
-  const { $hybrisApi } = useContext()
-
-  useAsync(async () => {
-    // Fetched hybris countries
-    await Promise.resolve($hybrisApi.countriesApi.getCountries()).then(
-      (res) => {
-        countries.value = res
-        console.log(countries.value)
-      }
-    )
-  }, 'getCountries')
-
-  console.log(countries)
-  return { countries }
-   */
 })
