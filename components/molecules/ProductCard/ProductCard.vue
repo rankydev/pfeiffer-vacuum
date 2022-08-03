@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div @click="toggleModal()">
+    <div>
       <GenericCard
         :has-link="false"
         image-size="contain"
