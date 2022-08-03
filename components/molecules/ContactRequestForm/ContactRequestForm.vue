@@ -70,7 +70,6 @@ export default defineComponent({
     let validate = ref(false)
 
     const countriesStore = useMiscStore()
-    countriesStore.loadCountries()
     const countries = computed(() => countriesStore.countries)
 
     const submit = async () => {

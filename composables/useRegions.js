@@ -7,11 +7,7 @@ export const useRegions = (isocode) => {
 
   async function loadRegions() {
     if (isocode.value) {
-      await Promise.resolve(
-        $hybrisApi.countriesApi.getRegions(isocode.value)
-      ).then((res) => {
-        regions.value = res
-      })
+      regions.value = await $hybrisApi.countriesApi.getRegions(isocode.value)
     } else {
       regions.value = []
     }

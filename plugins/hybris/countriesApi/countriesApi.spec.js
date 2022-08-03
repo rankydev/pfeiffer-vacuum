@@ -11,14 +11,17 @@ function createInstance(hasCountries, hasRegions, hasError) {
       error: jest.fn(),
     },
   }
+
+  const mockGet = jest.fn(() => {
+    return Promise.resolve({
+      error: hasError ? mockError : undefined,
+      countries: hasCountries ? mockCountries : undefined,
+      regions: hasRegions ? mockRegions : undefined,
+    })
+  })
+
   const axiosInstance = {
-    $get: jest.fn(() => {
-      return {
-        error: hasError ? mockError : undefined,
-        countries: hasCountries ? mockCountries : undefined,
-        regions: hasRegions ? mockRegions : undefined,
-      }
-    }),
+    $get: mockGet,
   }
   return { ctx, axiosInstance }
 }
@@ -28,11 +31,11 @@ describe('countriesApi', () => {
     it('should return countries when hybris call is successful', () => {
       const { ctx, axiosInstance } = createInstance(true, false, null)
       const countriesApi = getCountriesApi(axiosInstance, ctx)
-      countriesApi.getCountries()
 
+      const result = countriesApi.getCountries()
       expect(axiosInstance.$get).toBeCalledWith(config.COUNTRIES_API, {})
-      countriesApi.getCountries().then(function (result) {
-        expect(result).toStrictEqual(['Land1'])
+      result.then(function (r) {
+        expect(r).toStrictEqual(['Land1'])
       })
     })
     it('should throw error when hybris returns no countries', async () => {
@@ -62,8 +65,8 @@ describe('countriesApi', () => {
     it('should return regions when hybris call is successful', () => {
       const { ctx, axiosInstance } = createInstance(false, true, false)
       const countriesApi = getCountriesApi(axiosInstance, ctx)
-      countriesApi.getRegions('US').then(function (result) {
-        expect(result).toStrictEqual(['Region1'])
+      countriesApi.getRegions('US').then(function (r) {
+        expect(r).toStrictEqual(['Region1'])
       })
     })
     it('should throw error when hybris returns no regions', async () => {

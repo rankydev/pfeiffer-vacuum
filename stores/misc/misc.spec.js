@@ -23,8 +23,7 @@ describe('useMiscStore', () => {
   beforeEach(() => setActivePinia(createPinia()))
 
   test('should return all countries', async () => {
-    const countriesStore = useMiscStore()
-    await countriesStore.loadCountries()
+    const countriesStore = await useMiscStore()
     const storeCountries = countriesStore.countries
 
     expect(storeCountries).toStrictEqual(countries)

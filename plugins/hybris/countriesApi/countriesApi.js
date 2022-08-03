@@ -5,11 +5,7 @@ export function getCountriesApi(axiosInstance, ctx) {
     async getCountries() {
       const result = await axiosInstance.$get(config.COUNTRIES_API, {})
 
-      if (
-        typeof result === 'object' &&
-        !result.error &&
-        Array.isArray(result.countries)
-      ) {
+      if (!result.error && Array.isArray(result.countries)) {
         return result.countries
       }
 
@@ -25,18 +21,14 @@ export function getCountriesApi(axiosInstance, ctx) {
         `${config.COUNTRIES_API}/${iso}/regions`
       )
 
-      if (
-        typeof result === 'object' &&
-        !result.error &&
-        Array.isArray(result.regions)
-      ) {
+      if (!result.error && Array.isArray(result.regions)) {
         return result.regions
       }
-
       ctx.$logger.error(
         'Error when fetching regions. Returning empty array.',
         result.error || ''
       )
+
       return []
     },
   }

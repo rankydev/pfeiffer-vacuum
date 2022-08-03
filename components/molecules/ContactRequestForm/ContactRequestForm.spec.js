@@ -42,8 +42,6 @@ describe('ContactRequestForm', () => {
         localVue,
       })
       const generalForm = wrapper.findComponent(GeneralRequest)
-
-      expect(mockLoadCountries).toBeCalledTimes(1)
       expect(generalForm.exists()).toBeTruthy()
       expect(wrapper.exists()).toBeTruthy()
     })
