@@ -94,7 +94,7 @@ export default defineComponent({
     @apply tw-bg-pv-white;
     @apply tw-p-4;
     @apply tw-max-h-screen;
-    @apply tw-overflow-y-scroll;
+    @apply tw-overflow-y-auto;
 
     @screen md {
       @apply tw-p-6;
