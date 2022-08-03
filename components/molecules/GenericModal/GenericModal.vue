@@ -1,16 +1,24 @@
 <template>
   <transition name="fade">
     <div v-if="isOpen" class="modal">
-      <div class="modal__background">
-        <div class="modal__box">
-          <Icon
-            class="modal__icon"
-            icon="close"
-            size="small"
-            @click="$emit('closeModal')"
-          />
-          <slot @closeModal="$emit('closeModal')" />
-        </div>
+      <div class="modal__background closeModal">
+        <ContentWrapper
+          class="modal__box tw-grid-container tw-grid-cols-12 closeModal"
+        >
+          <div
+            class="modal__grid-box tw-col-span-4 tw-col-start-1 md:tw-col-span-6 md:tw-col-start-2 lg:tw-col-span-10 lg:tw-col-start-2"
+          >
+            <div class="modal__box-wrapper">
+              <Icon
+                class="modal__icon"
+                icon="close"
+                size="small"
+                @click="$emit('closeModal')"
+              />
+              <slot @closeModal="$emit('closeModal')" />
+            </div>
+          </div>
+        </ContentWrapper>
       </div>
     </div>
   </transition>
@@ -19,9 +27,11 @@
 <script>
 import { defineComponent, watch } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 
 export default defineComponent({
-  components: { Icon },
+  name: 'GenericModal',
+  components: { Icon, ContentWrapper },
   props: {
     isOpen: {
       type: Boolean,
@@ -37,7 +47,8 @@ export default defineComponent({
     }
 
     const handleBgClick = (ev) => {
-      if (ev.target.className === 'modal__background') {
+      console.log(ev.target.className.includes('closeModal'))
+      if (ev.target.className.includes('closeModal')) {
         emit('closeModal')
       }
     }
@@ -75,6 +86,27 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-items-center;
     @apply tw-justify-center;
+  }
+
+  &__box-wrapper {
+    @apply tw-relative;
+    @apply tw-rounded-lg;
+    @apply tw-bg-pv-white;
+    @apply tw-p-4;
+    @apply tw-p-8;
+  }
+
+  &__icon {
+    @apply tw-absolute;
+    @apply tw-top-8;
+    @apply tw-right-8;
+    @apply tw-ml-4;
+    @apply tw-cursor-pointer;
+
+    &:hover,
+    &:focus-visible {
+      @apply tw-text-pv-red-lighter;
+    }
   }
 }
 </style>
