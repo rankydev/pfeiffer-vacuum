@@ -11,9 +11,13 @@ export function getProductApi(axiosInstance, ctx) {
       }
 
       const idsString = ids.join()
-      const result = await axiosInstance.$get(config.PRODUCTS_API, {
-        params: { codes: idsString, fields: 'FULL' },
-      })
+      const result = await axiosInstance
+        .$get(config.PRODUCTS_API, {
+          params: { codes: idsString, fields: 'FULL' },
+        })
+        .catch((error) => {
+          ctx.$logger.error(error.toJSON())
+        })
 
       if (!Array.isArray(result.products)) {
         ctx.$logger.error(
