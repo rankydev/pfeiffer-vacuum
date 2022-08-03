@@ -9,13 +9,13 @@
             class="modal__grid-box tw-col-span-4 tw-col-start-1 md:tw-col-span-6 md:tw-col-start-2 lg:tw-col-span-10 lg:tw-col-start-2"
           >
             <div class="modal__box-wrapper">
+              <slot @closeModal="$emit('closeModal')" />
               <Icon
                 class="modal__icon"
                 icon="close"
                 size="small"
                 @click="$emit('closeModal')"
               />
-              <slot @closeModal="$emit('closeModal')" />
             </div>
           </div>
         </ContentWrapper>
@@ -89,17 +89,21 @@ export default defineComponent({
   }
 
   &__box-wrapper {
-    @apply tw-relative;
+    @apply tw-flex;
     @apply tw-rounded-lg;
     @apply tw-bg-pv-white;
     @apply tw-p-4;
-    @apply tw-p-8;
+
+    @screen md {
+      @apply tw-p-6;
+    }
+
+    @screen lg {
+      @apply tw-p-8;
+    }
   }
 
   &__icon {
-    @apply tw-absolute;
-    @apply tw-top-8;
-    @apply tw-right-8;
     @apply tw-ml-4;
     @apply tw-cursor-pointer;
 

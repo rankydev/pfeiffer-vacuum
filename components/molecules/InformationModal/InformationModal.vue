@@ -4,17 +4,19 @@
     :is-open="isOpen"
     @closeModal="$emit('closeModal')"
   >
-    <h2 class="information-modal__headline">{{ headline }}</h2>
-    <div>
-      <Richtext class="information-modal__text" :richtext="text" />
-    </div>
-    <div>
-      <Button
-        class="information-modal__btn"
-        variant="secondary"
-        label="Need any help?"
-        shape="outlined"
-      ></Button>
+    <div class="information-modal__content">
+      <h2 class="information-modal__headline">{{ headline }}</h2>
+      <div>
+        <Richtext class="information-modal__text" :richtext="text" />
+      </div>
+      <div>
+        <Button
+          class="information-modal__btn"
+          variant="secondary"
+          label="Need any help?"
+          shape="outlined"
+        ></Button>
+      </div>
     </div>
   </GenericModal>
 </template>
@@ -52,6 +54,11 @@ export default defineComponent({
 
 <style lang="scss">
 .information-modal {
+  &__content {
+    @apply tw-flex;
+    @apply tw-flex-col;
+  }
+
   &__headline {
     @apply tw-mb-4;
   }
