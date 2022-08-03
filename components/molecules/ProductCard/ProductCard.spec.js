@@ -1,6 +1,10 @@
 import { shallowMount } from '@vue/test-utils'
 import ProductCard from './ProductCard.vue'
-import { product } from './ProductCard.stories.content.js'
+import {
+  product,
+  productWithVariants,
+  productWithOrderNumber,
+} from './ProductCard.stories.content.js'
 
 let wrapper
 
@@ -10,6 +14,7 @@ const GenericCard = {
   <div class="subheading"><slot name="subheading" /></div>
   <div class="heading"><slot name="heading" /></div>
   <div class="description"><slot name="description" /></div>
+  <div class="additionalInfo"><slot name="additionalInfo" /></div>
     </div>`,
 }
 
@@ -19,6 +24,10 @@ function createComponent(propsData = {}) {
     stubs: {
       GenericCard,
       ResponsiveImage: true,
+      Icon: true,
+    },
+    mocks: {
+      $tc: (key, count) => `${key} ${count}`,
     },
   }
 
@@ -46,10 +55,42 @@ describe('ProductCard', () => {
       const subheading = wrapper.find('.subheading').text()
       const heading = wrapper.find('.heading').text()
       const description = wrapper.find('.description').text()
+      const additionalInfo = wrapper.find('.additionalInfo').text()
 
       expect(subheading).toBe(product.categories[0].name)
       expect(heading).toBe(product.name)
       expect(description).toBe(product.description)
+      expect(additionalInfo).toBe('')
+    })
+
+    test('should render product data given a product with variants', () => {
+      createComponent({ product: productWithVariants })
+
+      const subheading = wrapper.find('.subheading').text()
+      const heading = wrapper.find('.heading').text()
+      const description = wrapper.find('.description').text()
+      const additionalInfo = wrapper.find('.additionalInfo').text()
+
+      expect(subheading).toBe(productWithVariants.categories[0].name)
+      expect(heading).toBe(productWithVariants.name)
+      expect(description).toBe(productWithVariants.description)
+      expect(additionalInfo).toBe(
+        `product.variantsAvailable ${productWithVariants.numberOfVariants}`
+      )
+    })
+
+    test('should render product data given a product with order number', () => {
+      createComponent({ product: productWithOrderNumber })
+
+      const subheading = wrapper.find('.subheading').text()
+      const heading = wrapper.find('.heading').text()
+      const description = wrapper.find('.description').text()
+      const additionalInfo = wrapper.find('.additionalInfo').text()
+
+      expect(subheading).toBe(productWithOrderNumber.categories[0].name)
+      expect(heading).toBe(productWithOrderNumber.name)
+      expect(description).toBe(productWithOrderNumber.description)
+      expect(additionalInfo).toBe(productWithOrderNumber.orderNumber)
     })
   })
 })
