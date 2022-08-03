@@ -68,6 +68,11 @@ export default defineComponent({
       }
     )
   },
+  // This has to be placed inside the parent component of this component to trigger modal
+  // const isModalOpen = ref(false)
+  // const toggleModal = () => {
+  //  isModalOpen.value = !isModalOpen.value
+  // }
 })
 </script>
 
