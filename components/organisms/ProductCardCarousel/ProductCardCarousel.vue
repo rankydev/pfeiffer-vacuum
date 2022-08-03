@@ -89,7 +89,9 @@ export default defineComponent({
       slides.value.forEach((e) => {
         enrichedSlides.value.push({
           ...e,
-          ...fetchedProducts?.find((i) => i.code === e.code),
+          product: {
+            ...fetchedProducts?.find((i) => i.code === e.product.code),
+          },
         })
       })
     }, String(productCodes) || 'empty')

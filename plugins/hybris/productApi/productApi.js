@@ -11,7 +11,7 @@ export function getProductApi(axiosInstance, ctx) {
       }
 
       const idsString = ids.join()
-      const result = axiosInstance
+      const result = await axiosInstance
         .$get(config.PRODUCTS_API, {
           params: { codes: idsString, fields: 'FULL' },
         })
