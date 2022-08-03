@@ -4,12 +4,14 @@
       v-if="contactRequestType === 'GENERAL_QUERY'"
       :validate="validate"
       :type="contactRequestType"
+      :countries="countries"
       @update="requestData = $event"
     />
     <TopicRequest
       v-else
       :validate="validate"
       :type="contactRequestType"
+      :countries="countries"
       @update="requestData = $event"
     />
     <Button
@@ -21,16 +23,21 @@
       class="contact-request-form__button"
       @click.native="submit()"
     />
-    <p v-for="error of v.$errors" :key="error.$uid"></p>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
 import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 import Button from '~/components/atoms/Button/Button.vue'
 import useVuelidate from '@vuelidate/core'
+import { useMiscStore } from '~/stores/misc'
 
 export default defineComponent({
   components: {
@@ -61,9 +68,13 @@ export default defineComponent({
     const requestData = ref({})
 
     let validate = ref(false)
+
+    const countriesStore = useMiscStore()
+    const countries = computed(() => countriesStore.countries)
+
     const submit = async () => {
       validate.value = true
-      if (v.value.$errors.length === 0) {
+      if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
         await $hybrisApi.contactApi
           .submitContact(requestData.value)
           .then(() => {
@@ -77,7 +88,7 @@ export default defineComponent({
       }
     }
 
-    return { v, validate, submit, requestData }
+    return { v, validate, submit, requestData, countries }
   },
 })
 </script>

@@ -25,11 +25,16 @@
     "company": "Company / University",
     "mail": "Email",
     "country": "Country / Location",
+    "region": "Region",
     "message": "Your message",
     "street": "Street",
     "houseNumber": "No.",
     "postCode": "ZIP Code",
     "city": "City",
     "submit": "Submit"
+  },
+  "validationErrorMessages": {
+    "required": "Value is required",
+    "email": "Value is not a valid email address"
   }
 }

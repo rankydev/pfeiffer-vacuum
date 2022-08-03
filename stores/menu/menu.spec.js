@@ -1,4 +1,3 @@
-import { shallowMount } from '@vue/test-utils'
 import { useMenuStore } from '~/stores/menu'
 
 let menu = null
