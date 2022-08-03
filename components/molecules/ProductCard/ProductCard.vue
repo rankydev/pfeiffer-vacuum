@@ -56,7 +56,7 @@ export default defineComponent({
     const name = computed(() => props.product.name)
     const categoryName = computed(() => props.product.categories?.[0]?.name)
 
-    return { image, name, categoryName, description, toggleModal, isModalOpen }
+    return { image, name, categoryName, description }
   },
 })
 </script>
