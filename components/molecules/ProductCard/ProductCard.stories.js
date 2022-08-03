@@ -1,5 +1,9 @@
 import ProductCard from '~/components/molecules/ProductCard/ProductCard.vue'
-import { product } from './ProductCard.stories.content'
+import {
+  product,
+  productWithVariants,
+  productWithOrderNumber,
+} from './ProductCard.stories.content'
 
 const argTypes = {
   product: {
@@ -41,4 +45,16 @@ const Template = (args) => ({
 export const Default = Template.bind({})
 Default.args = {
   provider: 'static',
+}
+
+export const WithOrderNumber = Template.bind({})
+WithOrderNumber.args = {
+  provider: 'static',
+  product: productWithOrderNumber,
+}
+
+export const WithVariants = Template.bind({})
+WithVariants.args = {
+  provider: 'static',
+  product: productWithVariants,
 }
