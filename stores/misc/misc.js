@@ -14,6 +14,7 @@ export const useMiscStore = () => {
     },
   })
   const innerStore = storeCreator()
+  // the initial store initialization
   if (innerStore.countries.length === 0) {
     innerStore.loadCountries()
   }

@@ -1,7 +1,7 @@
 import { useMiscStore } from '~/stores/misc'
 import { setActivePinia, createPinia } from 'pinia'
 
-const countries = ['Land1']
+let mockCountries = ['Land1']
 
 jest.mock('@nuxtjs/composition-api', () => {
   return {
@@ -10,7 +10,7 @@ jest.mock('@nuxtjs/composition-api', () => {
         $hybrisApi: {
           countriesApi: {
             getCountries: jest.fn(() => {
-              return countries
+              return mockCountries
             }),
           },
         },
@@ -22,10 +22,20 @@ jest.mock('@nuxtjs/composition-api', () => {
 describe('useMiscStore', () => {
   beforeEach(() => setActivePinia(createPinia()))
 
-  test('should return all countries', async () => {
+  test('should return initally all countries', async () => {
     const countriesStore = await useMiscStore()
     const storeCountries = countriesStore.countries
 
-    expect(storeCountries).toStrictEqual(countries)
+    expect(storeCountries).toStrictEqual(mockCountries)
+  })
+  test('should return inital country list after second initialization of store', async () => {
+    const initialCountries = mockCountries
+    await useMiscStore()
+    mockCountries = ['Land2']
+    const countriesStore = await useMiscStore()
+    const storeCountries = countriesStore.countries
+    mockCountries = initialCountries
+
+    expect(storeCountries).toStrictEqual(initialCountries)
   })
 })
