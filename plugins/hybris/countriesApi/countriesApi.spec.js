@@ -5,7 +5,12 @@ const mockCountries = ['Land1']
 const mockRegions = ['Region1']
 const mockError = 'fehler'
 
-function createInstance(hasCountries, hasRegions, hasError) {
+function createInstance(
+  hasCountries,
+  hasRegions,
+  hasError,
+  hasErrorMessage = false
+) {
   const ctx = {
     $logger: {
       error: jest.fn(),
@@ -13,10 +18,15 @@ function createInstance(hasCountries, hasRegions, hasError) {
   }
 
   const mockGet = jest.fn(() => {
-    return Promise.resolve({
-      error: hasError ? mockError : undefined,
-      countries: hasCountries ? mockCountries : undefined,
-      regions: hasRegions ? mockRegions : undefined,
+    return new Promise((resolve, reject) => {
+      if (hasError) {
+        reject(hasErrorMessage ? mockError : '')
+      } else {
+        resolve({
+          countries: hasCountries ? mockCountries : undefined,
+          regions: hasRegions ? mockRegions : undefined,
+        })
+      }
     })
   })
 
@@ -39,7 +49,7 @@ describe('countriesApi', () => {
       })
     })
     it('should throw error when hybris returns no countries', async () => {
-      const { ctx, axiosInstance } = createInstance(false, false, true)
+      const { ctx, axiosInstance } = createInstance(false, false, true, true)
       const countriesApi = getCountriesApi(axiosInstance, ctx)
 
       await countriesApi.getCountries().then(function (result) {
@@ -52,7 +62,7 @@ describe('countriesApi', () => {
       )
     })
     it('should log empty string when no error is present', async () => {
-      const { ctx, axiosInstance } = createInstance(false, false, false)
+      const { ctx, axiosInstance } = createInstance(false, false, true)
       const countriesApi = getCountriesApi(axiosInstance, ctx)
       await countriesApi.getCountries()
       expect(ctx.$logger.error).toBeCalledWith(
@@ -70,7 +80,7 @@ describe('countriesApi', () => {
       })
     })
     it('should throw error when hybris returns no regions', async () => {
-      const { ctx, axiosInstance } = createInstance(false, false, true)
+      const { ctx, axiosInstance } = createInstance(false, false, true, true)
       const countriesApi = getCountriesApi(axiosInstance, ctx)
       await countriesApi.getRegions('US').then(function (result) {
         expect(result).toStrictEqual([])
@@ -81,7 +91,7 @@ describe('countriesApi', () => {
       )
     })
     it('should log empty string when no error is present', async () => {
-      const { ctx, axiosInstance } = createInstance(false, false, false)
+      const { ctx, axiosInstance } = createInstance(false, false, true)
       const countriesApi = getCountriesApi(axiosInstance, ctx)
       await countriesApi.getRegions()
       expect(ctx.$logger.error).toBeCalledWith(
