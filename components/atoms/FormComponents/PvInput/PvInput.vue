@@ -44,9 +44,9 @@ import { useInputValidator } from '~/composables/useValidator'
 
 export default defineComponent({
   components: {
-    Icon,
     PvLabel,
     ErrorMessage,
+    Icon,
   },
   props: {
     /**

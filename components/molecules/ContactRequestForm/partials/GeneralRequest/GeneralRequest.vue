@@ -92,6 +92,13 @@
       :label="$t('form.contactRequest.message')"
       placeholder="Placeholder"
       :required="true"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+      }"
+      :validate="validate"
       @update="
         requestData.message = $event
         $emit('update', requestData)
