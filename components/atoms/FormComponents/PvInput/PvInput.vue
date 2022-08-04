@@ -224,6 +224,10 @@ export default defineComponent({
       @apply tw-rounded-t-md;
       @apply tw-shadow-border-red;
       @apply tw-rounded-b-none;
+
+      &::-webkit-contacts-auto-fill-button {
+        @apply tw-mr-6;
+      }
     }
   }
 }

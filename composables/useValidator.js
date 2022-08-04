@@ -1,4 +1,4 @@
-import { computed, ref } from '@nuxtjs/composition-api'
+import { computed } from '@nuxtjs/composition-api'
 import useVuelidate from '@vuelidate/core'
 
 export const useInputValidator = (rules, data) => {
