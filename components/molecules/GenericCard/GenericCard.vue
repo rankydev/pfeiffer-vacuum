@@ -32,6 +32,12 @@
       </div>
     </Link>
 
+    <div v-if="hasSlot('description')" class="pv-card__description">
+      <!-- @slot short description which displays up to 4 lines of text -->
+      <slot name="description" />
+    </div>
+    <!-- </Link> -->
+
     <div v-if="hasSlot('additionalInfo')" class="pv-card__additional-info">
       <!-- @slot information which lives outside of the link container of the card -->
       <slot name="additionalInfo" />
@@ -51,10 +57,10 @@
  * pv-card__image--cover
  **/
 import { defineComponent } from '@nuxtjs/composition-api'
-import Link from '~/components/atoms/Link/Link'
+// import Link from '~/components/atoms/Link/Link'
 
 export default defineComponent({
-  components: { Link },
+  // components: { Link },
   props: {
     /**
      * Link where the card points to
