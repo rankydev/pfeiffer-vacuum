@@ -89,6 +89,7 @@ export default defineComponent({
 
   &__box-wrapper {
     @apply tw-flex;
+    @apply tw-justify-end;
     @apply tw-rounded-lg;
     @apply tw-bg-pv-white;
     @apply tw-p-4;
