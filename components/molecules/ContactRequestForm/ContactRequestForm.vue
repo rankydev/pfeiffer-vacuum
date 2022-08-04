@@ -78,9 +78,9 @@ export default defineComponent({
     const countries = computed(() => countriesStore.countries)
 
     const submit = async () => {
-      loading.value = true
       validate.value = true
       if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
+        loading.value = true
         await $hybrisApi.contactApi
           .submitContact(requestData.value)
           .then(() => {
