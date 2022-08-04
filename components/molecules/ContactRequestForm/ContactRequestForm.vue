@@ -1,28 +1,30 @@
 <template>
   <div class="contact-request-form">
-    <GeneralRequest
-      v-if="contactRequestType === 'GENERAL_QUERY'"
-      :validate="validate"
-      :type="contactRequestType"
-      :countries="countries"
-      @update="requestData = $event"
-    />
-    <TopicRequest
-      v-else
-      :validate="validate"
-      :type="contactRequestType"
-      :countries="countries"
-      @update="requestData = $event"
-    />
-    <Button
-      :label="$t('form.contactRequest.submit')"
-      variant="secondary"
-      shape="filled"
-      size="normal"
-      icon="send"
-      class="contact-request-form__button"
-      @click.native="submit()"
-    />
+    <LoadingSpinner :show="loading">
+      <GeneralRequest
+        v-if="contactRequestType === 'GENERAL_QUERY'"
+        :validate="validate"
+        :type="contactRequestType"
+        :countries="countries"
+        @update="requestData = $event"
+      />
+      <TopicRequest
+        v-else
+        :validate="validate"
+        :type="contactRequestType"
+        :countries="countries"
+        @update="requestData = $event"
+      />
+      <Button
+        :label="$t('form.contactRequest.submit')"
+        variant="secondary"
+        shape="filled"
+        size="normal"
+        icon="send"
+        class="contact-request-form__button"
+        @click.native="submit()"
+      />
+    </LoadingSpinner>
   </div>
 </template>
 
@@ -36,11 +38,13 @@ import {
 import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 import Button from '~/components/atoms/Button/Button.vue'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import useVuelidate from '@vuelidate/core'
 import { useMiscStore } from '~/stores/misc'
 
 export default defineComponent({
   components: {
+    LoadingSpinner,
     GeneralRequest,
     TopicRequest,
     Button,
@@ -62,6 +66,7 @@ export default defineComponent({
     },
   },
   setup() {
+    const loading = ref(false)
     const { $hybrisApi } = useContext()
     // this will collect all nested component’s validation results
     const v = useVuelidate()
@@ -73,6 +78,7 @@ export default defineComponent({
     const countries = computed(() => countriesStore.countries)
 
     const submit = async () => {
+      loading.value = true
       validate.value = true
       if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
         await $hybrisApi.contactApi
@@ -85,10 +91,11 @@ export default defineComponent({
             // TODO: Implement Toast
             alert(e)
           })
+        loading.value = false
       }
     }
 
-    return { v, validate, submit, requestData, countries }
+    return { v, validate, submit, requestData, countries, loading }
   },
 })
 </script>
