@@ -72,6 +72,8 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
+// import ContentBanner from '~/components/molecules/ContentBanner/ContentBanner.vue'
+// import HelpContainer from '~/components/molecules/HelpContainer/HelpContainer.vue'
 
 export default defineComponent({
   name: 'Page',

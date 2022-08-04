@@ -51,6 +51,7 @@ export default {
         'ProductCardCarousel',
         'TeaserCardCarousel',
         'VideoPlayer',
+        'HelpContainer',
       ],
     },
     bottom: {

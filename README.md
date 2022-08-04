@@ -41,3 +41,21 @@ npm run storyblok:sync ./components/atoms/YourComponent
 ```bash
 npm run lsg
 ```
+
+## Make Storyblok v2 work
+Start a development server with https proxy:
+
+```bash
+# Install mkcert for creating a valid certificate (Mac OS):
+$ brew install mkcert
+$ mkcert -install
+$ mkcert localhost
+
+# Then install and run the proxy (make sure to run it globally, not in the project folder)
+
+$ npm install -g local-ssl-proxy
+$ local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem
+```
+
+Got o space settings and set port to 3010
+https is now running on port 3010 and forwarding requests to http 3000

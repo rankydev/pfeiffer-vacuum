@@ -32,6 +32,7 @@ export default {
         'TeaserCard',
         'TeaserCardCarousel',
         'VideoPlayer',
+        'HelpContainer',
       ],
     },
     ...Seo,
