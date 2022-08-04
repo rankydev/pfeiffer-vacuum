@@ -85,13 +85,14 @@ export default defineComponent({
           .submitContact(requestData.value)
           .then(() => {
             // TODO: Implement Toast
-            alert('Contact request successfully sent!')
+            loading.value = false
+            console.log('Contact request successfully sent!')
           })
           .catch((e) => {
+            loading.value = false
             // TODO: Implement Toast
-            alert(e)
+            console.log(e)
           })
-        loading.value = false
       }
     }
 
