@@ -71,8 +71,6 @@ export const GridLayout = (args) => ({
     <div class="${defaultClasses} tw-bg-pv-red-lighter tw-col-span-3 md:tw-col-span-5 lg:tw-col-span-8">.tw-col-span-8</div>
     <div class="${defaultClasses} tw-bg-pv-red-lighter tw-col-span-1 md:tw-col-span-3 lg:tw-col-span-4">.tw-col-span-4</div>
 
-    <div class="${defaultClasses} tw-bg-pv-red-lighter tw-col-span-1 md:tw-col-span-3 lg:tw-col-span-10 tw-col-start-2">.SALAMI</div>
-
     <div class="${defaultClasses} tw-bg-pv-red-darker tw-col-span-1 md:tw-col-span-2 lg:tw-col-span-2">.tw-col-span-2</div>
     <div class="${defaultClasses} tw-bg-pv-red-darker tw-col-span-2 md:tw-col-span-4 lg:tw-col-span-8">.tw-col-span-8</div>
     <div class="${defaultClasses} tw-bg-pv-red-darker tw-col-span-1 md:tw-col-span-2 lg:tw-col-span-2">.tw-col-span-2</div>

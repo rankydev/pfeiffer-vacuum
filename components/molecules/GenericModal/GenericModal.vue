@@ -47,7 +47,6 @@ export default defineComponent({
     }
 
     const handleBgClick = (ev) => {
-      console.log(ev.target.className.includes('closeModal'))
       if (ev.target.className.includes('closeModal')) {
         emit('closeModal')
       }

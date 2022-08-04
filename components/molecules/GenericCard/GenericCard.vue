@@ -1,30 +1,36 @@
 <template>
   <div class="pv-card">
-    <!-- <Link class="pv-card__content" v-bind="{ href }"> -->
-    <div class="pv-card__image" :class="`pv-card__image--${imageSize}`">
-      <div v-if="hasSlot('tag')" class="pv-card__tag">
-        <!-- @slot displays a text on top of the image.
+    <Link class="pv-card__content" v-bind="{ href }">
+      <div class="pv-card__image" :class="`pv-card__image--${imageSize}`">
+        <div v-if="hasSlot('tag')" class="pv-card__tag">
+          <!-- @slot displays a text on top of the image.
           Should only be used with imageSize cover -->
-        <slot name="tag" />
+          <slot name="tag" />
+        </div>
+        <!-- @slot the card image -->
+        <slot name="image" />
       </div>
-      <!-- @slot the card image -->
-      <slot name="image" />
-    </div>
 
-    <div v-if="hasSlot('subheading')" class="pv-card__subheading">
-      <!-- @slot To show additional informations above the heading  -->
-      <slot name="subheading" />
-    </div>
+      <div v-if="hasSlot('subheading')" class="pv-card__subheading">
+        <!-- @slot To show additional informations above the heading  -->
+        <slot name="subheading" />
+      </div>
 
-    <h3 class="pv-card__heading">
-      <!-- @slot the main heading of the card component -->
-      <slot name="heading" />
-    </h3>
+      <h3 class="pv-card__heading">
+        <!-- @slot the main heading of the card component -->
+        <slot name="heading" />
+      </h3>
 
-    <div v-if="hasSlot('tags')" class="pv-card__tags">
-      <!-- @slot tags normally displayed between heading and description -->
-      <slot name="tags" />
-    </div>
+      <div v-if="hasSlot('tags')" class="pv-card__tags">
+        <!-- @slot tags normally displayed between heading and description -->
+        <slot name="tags" />
+      </div>
+
+      <div v-if="hasSlot('description')" class="pv-card__description">
+        <!-- @slot short description which displays up to 4 lines of text -->
+        <slot name="description" />
+      </div>
+    </Link>
 
     <div v-if="hasSlot('description')" class="pv-card__description">
       <!-- @slot short description which displays up to 4 lines of text -->
