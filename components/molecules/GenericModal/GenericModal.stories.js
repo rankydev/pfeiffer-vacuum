@@ -1,4 +1,5 @@
 import GenericModal from './GenericModal'
+import { ref } from '@nuxtjs/composition-api'
 
 const argTypes = {
   isOpen: true,
@@ -20,16 +21,21 @@ export default {
 const Template = (args) => ({
   components: { GenericModal },
   setup() {
-    return { args }
+    const isOpen = ref(args.isOpen)
+    function toggleModal() {
+      isOpen.value = !isOpen.value
+    }
+    return { args, toggleModal, isOpen }
   },
   template: `<div>
-  <GenericModal v-bind="args">
+  <GenericModal :isOpen="isOpen" @closeModal="toggleModal">
     <h1>Hallo hier steht eine Komponente</h1>
     </GenericModal>
+    <button @click="toggleModal">open Modal</button>
   </div>`,
 })
 
 export const Default = Template.bind({})
 Default.args = {
-  isOpen: true,
+  isOpen: false,
 }

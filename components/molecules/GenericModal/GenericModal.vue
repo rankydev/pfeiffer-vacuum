@@ -41,7 +41,6 @@ export default defineComponent({
   emits: ['closeModal'],
   setup(props, { emit }) {
     const toggleModal = (ev) => {
-      console.log(ev)
       if (ev.keyCode === 27) {
         emit('closeModal')
       }
