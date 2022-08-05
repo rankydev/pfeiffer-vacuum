@@ -149,7 +149,6 @@ export default defineComponent({
   @apply tw-items-center;
   @apply tw-cursor-pointer;
   @apply tw-font-bold;
-  @apply tw-whitespace-nowrap;
   @apply tw-justify-between;
 
   &--disabled {
