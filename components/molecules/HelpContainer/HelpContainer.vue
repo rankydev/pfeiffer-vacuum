@@ -31,7 +31,6 @@
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
-// import { renderHeadline, renderSubline } from '~/utils/richtext'
 
 export default defineComponent({
   components: { Richtext, Icon },
@@ -109,6 +108,7 @@ export default defineComponent({
   &__headline-wrapper {
     @apply tw-flex;
     @apply tw-justify-between;
+    @apply tw-mb-4;
   }
 
   &__headline-icon {
@@ -125,6 +125,15 @@ export default defineComponent({
 
   &__subline {
     @apply tw-text-pv-white;
+    @apply tw-text-lg;
+    @apply tw-leading-7;
+    @apply tw-font-normal;
+
+    @screen lg {
+      @apply tw-text-2xl;
+      @apply tw-leading-9;
+      @apply tw-font-normal;
+    }
   }
 
   &__content {
