@@ -24,13 +24,18 @@ export default {
       restrict_components: true,
       component_whitelist: ['Button'],
     },
-    media: {
-      type: 'bloks',
-      maximum: 1,
-      restrict_components: true,
-      required: true,
-      component_whitelist: ['ImageWithDescription'],
+    icon: {
+      type: 'text',
+      description:
+        'Use an icon from https://fonts.google.com/icons here (e.g. calculate)',
     },
+    // media: {
+    //   type: 'bloks',
+    //   maximum: 1,
+    //   restrict_components: true,
+    //   required: true,
+    //   component_whitelist: ['ImageWithDescription'],
+    // },
     ratio: {
       type: 'option',
       use_uuid: true,

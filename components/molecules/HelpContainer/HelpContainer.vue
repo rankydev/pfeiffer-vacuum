@@ -1,6 +1,6 @@
 <template>
   <div class="help-container tw-grid-container tw-my-component-wide">
-    <div class="help-container__content" :class="contentClass">
+    <div class="help-container__content">
       <h2 class="help-container__headline">{{ headline }}</h2>
       <h3 class="help-container__subline">{{ subline }}</h3>
       <Richtext :richtext="enrichedRichtext" class="help-container__richtext" />
@@ -14,14 +14,15 @@
         />
       </div>
     </div>
-    <div class="help-container__media" :class="mediaClass">
-      <NuxtDynamic
+    <div class="help-container__media">
+      <Icon :icon="icon" size="xlarge" />
+      <!-- <NuxtDynamic
         v-for="item in media"
         :key="item._uid"
         v-editable="item"
         v-bind="item"
         :name="item.uiComponent || item.component"
-      />
+      /> -->
     </div>
   </div>
 </template>
@@ -29,10 +30,11 @@
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 // import { renderHeadline, renderSubline } from '~/utils/richtext'
 
 export default defineComponent({
-  components: { Richtext },
+  components: { Richtext, Icon },
   props: {
     /**
      * headline of the media element rendred as h2
@@ -62,13 +64,17 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
+    icon: {
+      type: String,
+      default: 'contact_support',
+    },
     /**
      * Media item which will be rendered beside
      */
-    media: {
-      type: Array,
-      default: () => [],
-    },
+    // media: {
+    //   type: Array,
+    //   default: () => [],
+    // },
     /**
      * Aspect ratio between both elements
      */
@@ -88,19 +94,19 @@ export default defineComponent({
   },
 
   setup(props) {
-    const getClass = (props, type) => {
-      const ratios = props.ratio.split('/')
-      const orders = props.order.split('/')
-      const index = orders.findIndex((val) => val === type)
-      const order = index === 0 ? 'first' : 'last'
-      return [
-        `help-container__${type}--${ratios[index]}`,
-        `help-container__${type}--${order}`,
-      ]
-    }
+    // const getClass = (props, type) => {
+    //   const ratios = props.ratio.split('/')
+    //   const orders = props.order.split('/')
+    //   const index = orders.findIndex((val) => val === type)
+    //   const order = index === 0 ? 'first' : 'last'
+    //   return [
+    //     `help-container__${type}--${ratios[index]}`,
+    //     `help-container__${type}--${order}`,
+    //   ]
+    // }
 
-    const contentClass = computed(() => getClass(props, 'content'))
-    const mediaClass = computed(() => getClass(props, 'media'))
+    // const contentClass = computed(() => getClass(props, 'content'))
+    // const mediaClass = computed(() => getClass(props, 'media'))
 
     const enrichedRichtext = computed(() =>
       [
@@ -110,7 +116,7 @@ export default defineComponent({
       ].join('')
     )
 
-    return { contentClass, mediaClass, enrichedRichtext }
+    return { enrichedRichtext }
   },
 })
 </script>
@@ -120,65 +126,44 @@ export default defineComponent({
   @apply tw-items-center;
   @apply tw-bg-pv-grey-32;
   @apply tw-rounded-lg;
-  color: white;
+  @apply tw-text-pv-white;
 
   &__headline {
-    color: white;
+    @apply tw-text-pv-white;
   }
 
   &__subline {
-    color: white;
+    @apply tw-text-pv-white;
   }
 
   &__content {
-    color: white;
     @apply tw-p-12;
-
-    &--three {
-      @apply tw-col-span-5;
-    }
-  }
-
-  &__media {
-    &--one {
-      @apply tw-col-span-3;
-    }
-  }
-
-  &__content,
-  &__media {
-    @apply tw-col-span-full;
+    @apply tw-col-span-12;
 
     @screen md {
-      &--half {
-        @apply tw-col-span-4;
-      }
-
-      &--one {
-        @apply tw-col-span-3;
-      }
-
-      &--three {
-        @apply tw-col-span-5;
-      }
+      @apply tw-col-span-6;
     }
 
     @screen lg {
-      &--half {
-        @apply tw-col-span-6;
-      }
+      @apply tw-col-span-9;
+    }
+  }
 
-      &--one {
-        @apply tw-col-span-4;
-      }
+  &__media {
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-justify-center;
+    @apply tw-items-center;
+    @apply tw-bg-pv-red;
+    @apply tw-h-full;
+    @apply tw-rounded-r-lg;
 
-      &--three {
-        @apply tw-col-span-8;
-      }
+    @screen md {
+      @apply tw-col-span-2;
     }
 
-    &--first {
-      @apply tw-order-first;
+    @screen lg {
+      @apply tw-col-span-3;
     }
   }
 
