@@ -1,9 +1,16 @@
 <template>
   <div class="help-container tw-grid-container tw-my-component-wide">
     <div class="help-container__content">
-      <h2 class="help-container__headline">{{ headline }}</h2>
-      <h3 class="help-container__subline">{{ subline }}</h3>
-      <Richtext :richtext="enrichedRichtext" class="help-container__richtext" />
+      <div class="help-container__headline-wrapper">
+        <div class="help-container__headline-text">
+          <h2 class="help-container__headline">{{ headline }}</h2>
+          <h3 class="help-container__subline">{{ subline }}</h3>
+        </div>
+        <div class="help-container__headline-icon">
+          <Icon :icon="icon" size="xlarge" />
+        </div>
+      </div>
+      <Richtext :richtext="richtext" class="help-container__richtext" />
       <div class="help-container__buttons">
         <NuxtDynamic
           v-for="item in buttons"
@@ -16,13 +23,6 @@
     </div>
     <div class="help-container__media">
       <Icon :icon="icon" size="xlarge" />
-      <!-- <NuxtDynamic
-        v-for="item in media"
-        :key="item._uid"
-        v-editable="item"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      /> -->
     </div>
   </div>
 </template>
@@ -94,29 +94,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    // const getClass = (props, type) => {
-    //   const ratios = props.ratio.split('/')
-    //   const orders = props.order.split('/')
-    //   const index = orders.findIndex((val) => val === type)
-    //   const order = index === 0 ? 'first' : 'last'
-    //   return [
-    //     `help-container__${type}--${ratios[index]}`,
-    //     `help-container__${type}--${order}`,
-    //   ]
-    // }
-
-    // const contentClass = computed(() => getClass(props, 'content'))
-    // const mediaClass = computed(() => getClass(props, 'media'))
-
-    const enrichedRichtext = computed(() =>
-      [
-        // props.headline ? renderHeadline(props.headline, 2) : '',
-        // props.subline ? renderSubline(props.subline, 3) : '',
-        props.richtext,
-      ].join('')
-    )
-
-    return { enrichedRichtext }
+    return {}
   },
 })
 </script>
@@ -128,6 +106,19 @@ export default defineComponent({
   @apply tw-rounded-lg;
   @apply tw-text-pv-white;
 
+  &__headline-wrapper {
+    @apply tw-flex;
+    @apply tw-justify-between;
+  }
+
+  &__headline-icon {
+    @apply tw-block;
+
+    @screen md {
+      @apply tw-hidden;
+    }
+  }
+
   &__headline {
     @apply tw-text-pv-white;
   }
@@ -137,28 +128,33 @@ export default defineComponent({
   }
 
   &__content {
-    @apply tw-p-12;
     @apply tw-col-span-12;
+    @apply tw-px-4;
+    @apply tw-py-6;
 
     @screen md {
       @apply tw-col-span-6;
+      @apply tw-px-6;
+      @apply tw-py-8;
     }
 
     @screen lg {
       @apply tw-col-span-9;
+      @apply tw-p-12;
     }
   }
 
   &__media {
-    @apply tw-flex;
-    @apply tw-flex-col;
-    @apply tw-justify-center;
-    @apply tw-items-center;
-    @apply tw-bg-pv-red;
-    @apply tw-h-full;
-    @apply tw-rounded-r-lg;
+    @apply tw-hidden;
 
     @screen md {
+      @apply tw-flex;
+      @apply tw-flex-col;
+      @apply tw-justify-center;
+      @apply tw-items-center;
+      @apply tw-bg-pv-red;
+      @apply tw-h-full;
+      @apply tw-rounded-r-lg;
       @apply tw-col-span-2;
     }
 
