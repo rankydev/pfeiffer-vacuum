@@ -1,9 +1,9 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Button from '~/components/atoms/Button/Button'
 import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent'
-import content from './HomeStageSlideContent.stories.content'
+import { homeStageSlideContent } from './HomeStageSlideContent.stories.content'
 
-const defaultProps = () => JSON.parse(JSON.stringify(content))
+const defaultProps = () => JSON.parse(JSON.stringify(homeStageSlideContent))
 
 let wrapper
 
