@@ -6,7 +6,7 @@
     :language="language"
   >
     <template #default="{ result: { data } }">
-      <CmsRootComponent v-bind="data" />
+      <CmsRootComponent v-if="data" v-bind="data" />
     </template>
   </CmsQuery>
 </template>
