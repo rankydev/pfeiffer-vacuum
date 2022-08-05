@@ -2,6 +2,7 @@ import Vue from 'vue'
 
 import { getProductApi } from './productApi/productApi'
 import { getContactApi } from './contactApi/contactApi'
+import { getCountriesApi } from './countriesApi/countriesApi'
 
 export function getHybrisApi(ctx) {
   const { $axios } = ctx
@@ -13,6 +14,7 @@ export function getHybrisApi(ctx) {
   return {
     productApi: getProductApi(api, ctx),
     contactApi: getContactApi(api, ctx),
+    countriesApi: getCountriesApi(api, ctx),
     axiosInstance: api,
   }
 }

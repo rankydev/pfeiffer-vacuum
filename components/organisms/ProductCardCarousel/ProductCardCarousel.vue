@@ -72,8 +72,10 @@ export default defineComponent({
   setup(props) {
     const { $hybrisApi } = useContext()
 
+    const slides = ref(props.slides.slice(0, 16))
+
     // Extracted codes from slides
-    const productCodes = props.slides.map((e) => e.product?.code)
+    const productCodes = slides.value.map((e) => e.product?.code)
 
     // Enriched slides with hybris data
     let enrichedSlides = ref([])
@@ -84,13 +86,15 @@ export default defineComponent({
         productCodes
       )
 
-      props.slides.forEach((e) => {
+      slides.value.forEach((e) => {
         enrichedSlides.value.push({
           ...e,
-          ...fetchedProducts?.find((i) => i.code === e.code),
+          product: {
+            ...fetchedProducts?.find((i) => i.code === e.product.code),
+          },
         })
       })
-    }, productCodes)
+    }, String(productCodes) || 'empty')
 
     return { enrichedSlides }
   },

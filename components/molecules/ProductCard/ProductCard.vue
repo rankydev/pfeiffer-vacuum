@@ -1,5 +1,9 @@
 <template>
-  <GenericCard image-size="contain" :href="(product || {}).url || ''">
+  <GenericCard
+    :has-link="false"
+    image-size="contain"
+    :href="(product || {}).url || ''"
+  >
     <template #image>
       <ResponsiveImage
         :image="image || {}"
@@ -19,6 +23,18 @@
       <!-- TODO: We need to bin in sanitizer for v-html -->
       <!-- eslint-disable-next-line vue/no-v-html -->
       <p v-html="description || ''" />
+    </template>
+    <template #additionalInfo>
+      <template v-if="product.orderNumber">
+        <span>{{ product.orderNumber }}</span>
+      </template>
+
+      <template v-else-if="product.numberOfVariants">
+        <span class="product-card__variants">
+          <Icon class="tw-mr-1 tw-font-bold" icon="menu" size="small" />
+          {{ $tc('product.variantsAvailable', product.numberOfVariants) }}
+        </span>
+      </template>
     </template>
   </GenericCard>
 </template>
@@ -53,4 +69,13 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.product-card {
+  &__variants {
+    @apply tw-flex;
+    @apply tw-items-center;
+    @apply tw-text-pv-red;
+    @apply tw-font-bold;
+  }
+}
+</style>

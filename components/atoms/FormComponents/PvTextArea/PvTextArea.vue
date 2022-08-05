@@ -1,25 +1,43 @@
 <template>
   <div class="pv-textarea">
     <PvLabel :optional="!required" :label="label" tag-name="textarea" />
-    <textarea
-      v-model="internalValue"
-      name="textarea"
-      v-bind="{ text, placeholder, required, disabled }"
-      class="pv-textarea__input"
-      @focus="$emit('focus', true)"
-      @blur="$emit('focus', false)"
-      @input="$emit('update', internalValue)"
-    ></textarea>
+    <div class="pv-textarea__wrapper">
+      <textarea
+        v-model="internalValue"
+        name="textarea"
+        v-bind="{ text, placeholder, required, disabled }"
+        class="pv-textarea__input"
+        :class="{ 'pv-textarea__input--error': !!validation.getError() }"
+        @focus="$emit('focus', true)"
+        @blur="$emit('focus', false)"
+        @input="
+          $emit('update', internalValue)
+          validation.validateInput()
+        "
+      />
+      <Icon
+        v-if="!!validation.getError()"
+        class="pv-textarea__icon-error"
+        icon="error_outline"
+      />
+    </div>
+    <ErrorMessage
+      v-if="!!validation.getError()"
+      :error-message="validation.getError()"
+    />
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
+import Icon from '~/components/atoms/Icon/Icon.vue'
+import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
+import { useInputValidator } from '~/composables/useValidator'
 
 export default defineComponent({
   name: 'PvTextArea',
-  components: { PvLabel },
+  components: { PvLabel, ErrorMessage, Icon },
   props: {
     /**
      * The internal text
@@ -56,6 +74,20 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    /**
+     * defines what should be validated
+     */
+    rules: {
+      type: Object,
+      default: () => {},
+    },
+    /**
+     * determines whether a validation can be executed
+     */
+    validate: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: [
     /**
@@ -75,13 +107,29 @@ export default defineComponent({
   ],
   setup(props) {
     const internalValue = ref(props.text)
-    return { internalValue }
+
+    const validation = ref(useInputValidator(props.rules, internalValue))
+
+    watch(
+      () => props.validate,
+      (value) => {
+        if (value === true) {
+          validation.value.validateInput()
+        }
+      }
+    )
+
+    return { internalValue, validation }
   },
 })
 </script>
 
 <style lang="scss">
 .pv-textarea {
+  &__wrapper {
+    @apply tw-relative;
+  }
+
   &__input {
     @apply tw-block;
     @apply tw-px-3;
@@ -106,6 +154,19 @@ export default defineComponent({
     &::placeholder {
       @apply tw-text-pv-grey-64;
     }
+
+    &--error {
+      @apply tw-rounded-t-md;
+      @apply tw-rounded-b-none;
+      @apply tw-border-pv-red;
+    }
+  }
+
+  &__icon-error {
+    @apply tw-absolute;
+    @apply tw-top-0 tw-right-2;
+    margin-top: 10px;
+    @apply tw-text-pv-red;
   }
 }
 </style>

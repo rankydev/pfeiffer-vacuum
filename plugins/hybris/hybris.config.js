@@ -7,4 +7,6 @@ export default {
   PRODUCTS_API: BASE_API_PATH + '/products',
   // Contact
   CONTACT_API: BASE_API_PATH + '/contact',
+  // Countries
+  COUNTRIES_API: BASE_API_PATH + '/countries',
 }

@@ -25,11 +25,16 @@
     "company": "회사/대학",
     "mail": "이메일",
     "country": "국가",
+    "region": "지역",
     "message": "당신의 메시지",
     "street": "거리",
     "houseNumber": "숫자",
     "postCode": "우편번호",
     "city": "도시",
     "submit": "제출하다"
+  },
+  "validationErrorMessages": {
+    "required": "값은 필수 항목입니다",
+    "email": "값이 유효한 이메일 주소가 아닙니다"
   }
 }

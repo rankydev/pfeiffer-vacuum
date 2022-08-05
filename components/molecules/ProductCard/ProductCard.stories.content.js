@@ -33,7 +33,6 @@ export const product = {
     },
   ],
   name: 'HiPace® 80',
-  numberOfVariants: 21,
   priceRange: {},
   productType: 'MASTERPRODUCT',
   purchasable: false,
@@ -43,6 +42,16 @@ export const product = {
   },
   summary: '',
   url: '/Pumps/Turbopumps/HiPace%C2%AE-80/HiPace%C2%AE-80/p/128ee16d-cb90-45be-9986-c8006a5235e6_sample',
+}
+
+export const productWithVariants = {
+  ...product,
+  numberOfVariants: 21,
+}
+
+export const productWithOrderNumber = {
+  ...product,
+  orderNumber: 'PM P04 391 A',
 }
 
 export default {}

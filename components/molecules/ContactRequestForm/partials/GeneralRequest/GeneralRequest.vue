@@ -4,7 +4,12 @@
       :label="$t('form.contactRequest.firstname')"
       placeholder="Placeholder"
       :required="true"
-      :rules="{ required }"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+      }"
       :validate="validate"
       @update="
         requestData.contact.firstName = $event
@@ -15,7 +20,12 @@
       :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
       :required="true"
-      :rules="{ required }"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+      }"
       :validate="validate"
       @update="
         requestData.contact.lastName = $event
@@ -26,7 +36,16 @@
       :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
       :required="true"
-      :rules="{ required, email }"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+        email: helpers.withMessage(
+          $t('form.validationErrorMessages.email'),
+          email
+        ),
+      }"
       :validate="validate"
       @update="
         requestData.contact.email = $event
@@ -35,18 +54,37 @@
     />
     <PvSelect
       :label="$t('form.contactRequest.country')"
-      :options="[
-        {
-          name: 'Deutschland',
-          isocode: 'DE',
-        },
-      ]"
+      :options="countries"
       :option-label="'name'"
       :required="true"
-      :rules="{ required }"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+      }"
       :validate="validate"
       @update="
         requestData.contact.address.country = $event
+        loadRegions()
+        $emit('update', requestData)
+      "
+    />
+    <PvSelect
+      v-if="regions.length"
+      :label="$t('form.contactRequest.region')"
+      :options="regions"
+      :option-label="'name'"
+      :required="true"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+      }"
+      :validate="validate"
+      @update="
+        requestData.contact.address.region = $event
         $emit('update', requestData)
       "
     />
@@ -54,6 +92,13 @@
       :label="$t('form.contactRequest.message')"
       placeholder="Placeholder"
       :required="true"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+      }"
+      :validate="validate"
       @update="
         requestData.message = $event
         $emit('update', requestData)
@@ -65,8 +110,9 @@
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { required, email } from '@vuelidate/validators'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { required, email, helpers } from '@vuelidate/validators'
+import { useRegions } from '~/composables/useRegions'
 
 export default defineComponent({
   name: 'GeneralRequest',
@@ -79,6 +125,9 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    /**
+     * defines what kind of request type is selected
+     */
     type: {
       type: String,
       required: true,
@@ -89,6 +138,13 @@ export default defineComponent({
           'PRODUCT_INFORMATION',
           'GENERAL_QUERY',
         ].includes(val),
+    },
+    /**
+     * all countries that are contained in the select component
+     */
+    countries: {
+      type: Array,
+      default: () => [],
     },
   },
   emits: [
@@ -105,6 +161,7 @@ export default defineComponent({
       contact: {
         address: {
           country: {},
+          region: {},
         },
         firstName: '',
         lastName: '',
@@ -116,7 +173,11 @@ export default defineComponent({
       },
     })
 
-    return { required, email, requestData }
+    const { loadRegions, regions } = useRegions(
+      computed(() => requestData.value.contact?.address?.country?.isocode)
+    )
+
+    return { required, email, helpers, requestData, loadRegions, regions }
   },
 })
 </script>
