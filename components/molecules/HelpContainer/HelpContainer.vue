@@ -67,29 +67,6 @@ export default defineComponent({
       type: String,
       default: 'contact_support',
     },
-    /**
-     * Media item which will be rendered beside
-     */
-    // media: {
-    //   type: Array,
-    //   default: () => [],
-    // },
-    /**
-     * Aspect ratio between both elements
-     */
-    ratio: {
-      type: String,
-      default: 'half/half',
-      validator: (val) => ['half/half', 'one/three', 'three/one'].includes(val),
-    },
-    /**
-     * sort order of text and media item
-     */
-    order: {
-      type: String,
-      default: 'content/media',
-      validator: (val) => ['content/media', 'media/content'].includes(val),
-    },
   },
 
   setup(props) {

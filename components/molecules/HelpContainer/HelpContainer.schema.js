@@ -29,51 +29,6 @@ export default {
       description:
         'Use an icon from https://fonts.google.com/icons here (e.g. calculate)',
     },
-    // media: {
-    //   type: 'bloks',
-    //   maximum: 1,
-    //   restrict_components: true,
-    //   required: true,
-    //   component_whitelist: ['ImageWithDescription'],
-    // },
-    ratio: {
-      type: 'option',
-      use_uuid: true,
-      description: 'Aspect ratio between both elements',
-      exclude_empty_option: true,
-      options: [
-        {
-          value: 'half/half',
-          name: '50:50',
-        },
-        {
-          value: 'one/three',
-          name: '33:66',
-        },
-        {
-          value: 'three/one',
-          name: '66:33',
-        },
-      ],
-      default_value: 'three/one',
-    },
-    order: {
-      type: 'option',
-      use_uuid: true,
-      description: 'sort order of text and media item',
-      exclude_empty_option: true,
-      options: [
-        {
-          value: 'content/media',
-          name: ' Text | Media',
-        },
-        {
-          value: 'media/content',
-          name: 'Media | Text',
-        },
-      ],
-      default_value: 'content/media',
-    },
   },
   image: null,
   preview_field: null,
