@@ -1,7 +1,6 @@
 <template>
   <div v-editable="image" class="image-with-description">
     <ResponsiveImage
-      class="image-with-description__img"
       provider="storyblok"
       :image="image"
       :aspect-ratio="aspectRatio"
@@ -59,6 +58,10 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .image-with-description {
+  img {
+    @apply tw-rounded-lg;
+  }
+
   &__copyright {
     @apply tw-text-pv-grey-48;
     @apply tw-mt-2;
