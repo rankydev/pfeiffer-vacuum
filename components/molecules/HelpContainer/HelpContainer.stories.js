@@ -16,7 +16,7 @@ export default {
     docs: {
       description: {
         component:
-          'The HelpContainer component is used to display an questionmark-icon on red background along with some text. Above the text can a headline and a subline be defined. Below the text the editor has the posibility to add a button.',
+          'The HelpContainer component is used to display an questionmark-icon on red background along with some text. Above the text can a headline and a subline be defined. Below the text the editor has the possibility to add a button.',
       },
       source: {
         code: '<HelpContainer v-bind="{ headline, subline, icon, buttons, richtext }"  />',

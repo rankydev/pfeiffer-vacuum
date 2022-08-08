@@ -63,14 +63,13 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
+    /**
+     * icon displayed in the red field on the right side
+     */
     icon: {
       type: String,
       default: 'contact_support',
     },
-  },
-
-  setup(props) {
-    return {}
   },
 })
 </script>
@@ -83,8 +82,7 @@ export default defineComponent({
   @apply tw-text-pv-white;
 
   &__headline-wrapper {
-    @apply tw-flex;
-    @apply tw-justify-between;
+    @apply tw-flex tw-justify-between;
     @apply tw-mb-4;
   }
 
@@ -134,10 +132,7 @@ export default defineComponent({
     @apply tw-hidden;
 
     @screen md {
-      @apply tw-flex;
-      @apply tw-flex-col;
-      @apply tw-justify-center;
-      @apply tw-items-center;
+      @apply tw-flex tw-flex-col tw-justify-center tw-items-center;
       @apply tw-bg-pv-red;
       @apply tw-h-full;
       @apply tw-rounded-r-lg;
