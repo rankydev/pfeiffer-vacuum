@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="help-container__media">
-      <Icon :icon="icon" size="xlarge" />
+      <Icon :icon="icon" size="xxlarge" />
     </div>
   </div>
 </template>
