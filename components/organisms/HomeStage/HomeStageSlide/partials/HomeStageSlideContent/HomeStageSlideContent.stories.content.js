@@ -1,6 +1,6 @@
 import { homestageSlideContentText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
 
-export const homeStageSlideContent = {
+export const homeStageSlideContentMock = {
   headline: 'Komplettlösungen für jeden Vakuumbereich',
   component: 'HomeStageSlideContent',
   richtext: [homestageSlideContentText],

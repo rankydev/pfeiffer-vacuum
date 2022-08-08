@@ -1,9 +1,9 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Button from '~/components/atoms/Button/Button'
 import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent'
-import { homeStageSlideContent } from './HomeStageSlideContent.stories.content'
+import { homeStageSlideContentMock } from './HomeStageSlideContent.stories.content'
 
-const defaultProps = () => JSON.parse(JSON.stringify(homeStageSlideContent))
+const defaultProps = () => JSON.parse(JSON.stringify(homeStageSlideContentMock))
 
 let wrapper
 

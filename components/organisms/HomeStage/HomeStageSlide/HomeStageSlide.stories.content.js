@@ -1,4 +1,4 @@
-import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.stories.content'
+import { homeStageSlideContentMock } from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.stories.content'
 import { bubbleText } from '~/components/atoms/Richtext/Richtext.stories.content'
 
 const requiredContent = {
@@ -13,7 +13,7 @@ const requiredContent = {
     fieldtype: 'asset',
   },
   component: 'HomeStageSlide',
-  stageContent: [HomeStageSlideContent],
+  stageContent: [homeStageSlideContentMock],
 }
 
 export const bubble = [
