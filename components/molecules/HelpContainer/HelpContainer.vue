@@ -76,7 +76,6 @@ export default defineComponent({
 
 <style lang="scss">
 .help-container {
-  @apply tw-items-center;
   @apply tw-bg-pv-grey-32;
   @apply tw-rounded-lg;
   @apply tw-text-pv-white;
