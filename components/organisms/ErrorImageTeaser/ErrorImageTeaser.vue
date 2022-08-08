@@ -188,18 +188,18 @@ $shooting-time: 3000ms;
 .shooting-star {
   @apply tw-absolute;
   @apply tw-h-0.5;
-  left: 50%;
-  top: 50%;
-  height: 2px;
+  @apply tw-top-1/2;
+  @apply tw-left-1/2;
+  @apply tw-rounded-full;
   /* stylelint-disable */
   background: linear-gradient(
     -45deg,
+    rgba(255, 0, 0, 0%),
     rgba(204, 0, 51, 100%),
     rgba(255, 0, 0, 0%)
   );
   filter: drop-shadow(0 0 6px rgba(211, 133, 150, 100%));
   /* stylelint-enable */
-  @apply tw-rounded-full;
   animation: tail $shooting-time ease-in-out infinite,
     shooting $shooting-time ease-in-out infinite;
 
@@ -208,8 +208,10 @@ $shooting-time: 3000ms;
     @apply tw-rounded-full;
     @apply tw-right-0;
     @apply tw-h-0.5;
+    animation: shining $shooting-time ease-in-out infinite;
     content: '';
     top: calc(50% - 1px);
+    transform: translateX(50%) rotateZ(45deg);
     /* stylelint-disable */
     background: linear-gradient(
       -45deg,
@@ -218,8 +220,6 @@ $shooting-time: 3000ms;
       rgba(0, 0, 255, 0%)
     );
     /* stylelint-enable */
-    transform: translateX(50%) rotateZ(45deg);
-    animation: shining $shooting-time ease-in-out infinite;
   }
 
   &::after {
@@ -228,8 +228,10 @@ $shooting-time: 3000ms;
     @apply tw-rounded-full;
     @apply tw-right-0;
     @apply tw-h-0.5;
+    animation: shining $shooting-time ease-in-out infinite;
     content: '';
     top: calc(50% - 1px);
+    transform: translateX(50%) rotateZ(-45deg);
     /* stylelint-disable */
     background: linear-gradient(
       -45deg,
@@ -238,8 +240,6 @@ $shooting-time: 3000ms;
       rgba(0, 0, 255, 0%)
     );
     /* stylelint-enable */
-    animation: shining $shooting-time ease-in-out infinite;
-    transform: translateX(50%) rotateZ(-45deg);
   }
 
   @for $i from 1 through 20 {

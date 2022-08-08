@@ -17,13 +17,13 @@ const argTypes = {
 }
 
 export default {
-  title: 'Organisms/o_10X Error Image Teaser Module',
+  title: 'Organisms/o_115 Error Image Teaser Module',
   component: ErrorImageTeaser,
   parameters: {
     docs: {
       description: {
         component:
-          'ErrorImageTeaser component used as the stage of the homepage.',
+          'ErrorImageTeaser component used as the stage of the errorpage.',
       },
     },
   },
