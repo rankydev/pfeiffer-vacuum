@@ -13,10 +13,11 @@
     <div v-if="showStars" class="night">
       <div v-for="index in starsAmount" :key="index" class="shooting-star" />
     </div>
+
     <div class="tw-grid-container">
       <HomeStageSlideContent
         v-if="stageContent.length"
-        class="error-image-teaser__content-block tw-col-span-12 md:tw-col-span-6 lg:tw-col-span-6 lg:tw-col-start-1"
+        class="error-image-teaser__content-block"
         v-bind="stageContent[0]"
       />
     </div>
@@ -26,7 +27,7 @@
       :alt="interlay.alt || ''"
       :title="interlay.title || ''"
       provider="storyblok"
-      :class="['error-image-teaser__image']"
+      class="error-image-teaser__image"
     />
   </div>
 </template>
@@ -126,10 +127,7 @@ $home-stage-interlay-spacing-xs: calc(
 
   &__content-block {
     @apply tw-z-10;
-
-    &::selection {
-      background-color: transparent;
-    }
+    @apply tw-col-span-12 md:tw-col-span-6 lg:tw-col-span-6 lg:tw-col-start-1;
   }
 
   &__placeholder {
@@ -160,20 +158,6 @@ $home-stage-interlay-spacing-xs: calc(
       right: -$home-stage-interlay-spacing-lg;
     }
   }
-
-  &__image-left {
-    @screen sm {
-      right: 60px;
-    }
-
-    @screen md {
-      right: 0;
-    }
-
-    @screen lg {
-      right: -$home-stage-interlay-spacing-lg;
-    }
-  }
 }
 
 $shooting-time: 3000ms;
@@ -188,13 +172,11 @@ $shooting-time: 3000ms;
 .shooting-star {
   @apply tw-absolute;
   @apply tw-h-0.5;
-  @apply tw-top-1/2;
   @apply tw-left-1/2;
-  @apply tw-rounded-full;
+  @apply tw-top-1/2;
   /* stylelint-disable */
   background: linear-gradient(
     -45deg,
-    rgba(255, 0, 0, 0%),
     rgba(204, 0, 51, 100%),
     rgba(255, 0, 0, 0%)
   );

@@ -39,9 +39,7 @@ export const errorImageTeaserContent = {
       label: 'Startseite',
       shape: 'filled',
       variant: 'inverted',
-      disabled: false,
       component: 'Button',
-      prependIcon: false,
     },
     {
       icon: 'arrow_forward',
@@ -49,9 +47,7 @@ export const errorImageTeaserContent = {
       label: 'Kontakt',
       shape: 'outlined',
       variant: 'inverted',
-      disabled: false,
       component: 'Button',
-      prependIcon: false,
     },
   ],
 }

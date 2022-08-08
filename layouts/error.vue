@@ -36,8 +36,6 @@ export default defineComponent({
     const { buildSlugs } = useStoryblokSlugBuilder(context)
     const { slug, fallbackSlug, language } = buildSlugs(path)
 
-    console.log('buildSlugs', slug, fallbackSlug, language)
-
     return {
       slug,
       fallbackSlug,
