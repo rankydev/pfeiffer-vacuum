@@ -6,7 +6,7 @@ import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
 
 describe('GeneralRequest', () => {
   describe('initial state', () => {
-    test('should render correctly', () => {
+    test('should render component correctly given valid type prop', () => {
       const wrapper = shallowMount(GeneralRequest, {
         propsData: { type: 'GENERAL_QUERY' },
       })
@@ -21,14 +21,17 @@ describe('GeneralRequest', () => {
     })
 
     test('select should contain countries given countries propsData', () => {
-      const propsData = { type: 'GENERAL_QUERY', countries: ['Land1', 'Land2'] }
+      const propsData = {
+        type: 'GENERAL_QUERY',
+        countries: ['Country1', 'Country2'],
+      }
       const wrapper = shallowMount(GeneralRequest, { propsData })
       const select = wrapper.findComponent(PvSelect)
 
       expect(select.vm.options).toBe(propsData.countries)
     })
 
-    test('should validate given validate propsData', () => {
+    test('should validate input fields given validate propsData', () => {
       const propsData = { type: 'GENERAL_QUERY', validate: true }
       const wrapper = shallowMount(GeneralRequest, { propsData })
 
