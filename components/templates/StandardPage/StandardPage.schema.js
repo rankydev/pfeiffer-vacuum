@@ -35,6 +35,12 @@ export default {
         'HelpContainer',
       ],
     },
+    bottom: {
+      type: 'bloks',
+      display_name: 'Bottom',
+      restrict_components: true,
+      component_whitelist: ['HelpContainer'],
+    },
     ...Seo,
     ...Social,
     ...Template,

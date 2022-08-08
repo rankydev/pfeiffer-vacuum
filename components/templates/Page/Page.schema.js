@@ -58,7 +58,7 @@ export default {
       type: 'bloks',
       display_name: 'Bottom',
       restrict_components: true,
-      component_whitelist: [],
+      component_whitelist: ['HelpContainer'],
     },
     ...Seo,
     ...Social,
