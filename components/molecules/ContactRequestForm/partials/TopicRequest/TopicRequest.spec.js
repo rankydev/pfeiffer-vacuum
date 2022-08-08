@@ -4,9 +4,9 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
 
-describe('GeneralRequest', () => {
+describe('TopicRequest', () => {
   describe('initial state', () => {
-    test('should render correctly', () => {
+    test('should render component correctly given valid type prop', () => {
       const wrapper = shallowMount(TopicRequest, {
         propsData: { type: 'QUOTE' },
       })
@@ -18,6 +18,21 @@ describe('GeneralRequest', () => {
       expect(inputArr).toHaveLength(8)
       expect(select).toBeTruthy()
       expect(textarea).toBeTruthy()
+    })
+
+    test('select should contain countries given countries propsData', () => {
+      const propsData = { type: 'QUOTE', countries: ['Country1', 'Country2'] }
+      const wrapper = shallowMount(TopicRequest, { propsData })
+      const select = wrapper.findComponent(PvSelect)
+
+      expect(select.vm.options).toBe(propsData.countries)
+    })
+
+    test('should validate input fields given validate propsData', () => {
+      const propsData = { type: 'QUOTE', validate: true }
+      const wrapper = shallowMount(TopicRequest, { propsData })
+
+      expect(wrapper.exists()).toBeTruthy()
     })
   })
 })
