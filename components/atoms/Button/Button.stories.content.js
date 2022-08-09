@@ -72,4 +72,15 @@ export const buttonFilledThird = {
   _editable:
     '<!--#storyblok#{"name": "Button", "space": "152017", "uid": "3dd3700b-9e95-46d5-87ab-fd917b80848f", "id": "119228911"}-->',
 }
+
+export const buttonOutlinedThird = {
+  _uid: '3dd3700b-9e95-46d5-87ab-fd917b80848f',
+  icon: 'mail_outline',
+  label: 'Outlined Button',
+  shape: 'outlined',
+  variant: 'inverted',
+  component: 'Button',
+  _editable:
+    '<!--#storyblok#{"name": "Button", "space": "152017", "uid": "2b6af927-5f0e-4c1a-be88-29bb5d04076d", "id": "119228911"}-->',
+}
 export default {}
