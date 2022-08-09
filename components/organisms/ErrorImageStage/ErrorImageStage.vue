@@ -2,8 +2,8 @@
   <div
     v-editable="stageContent"
     :class="[
-      'error-image-teaser',
-      image.originalFilename ? '' : 'error-image-teaser__placeholder',
+      'error-image-stage',
+      image.originalFilename ? '' : 'error-image-stage__placeholder',
     ]"
     :style="{
       backgroundImage: `url(${image.originalFilename})`,
@@ -17,7 +17,7 @@
     <div class="tw-grid-container">
       <HomeStageSlideContent
         v-if="stageContent.length"
-        class="error-image-teaser__content-block"
+        class="error-image-stage__content-block"
         v-bind="stageContent[0]"
       />
     </div>
@@ -27,7 +27,7 @@
       :alt="interlay.alt || ''"
       :title="interlay.title || ''"
       provider="storyblok"
-      class="error-image-teaser__image"
+      class="error-image-stage__image"
     />
   </div>
 </template>
@@ -37,7 +37,7 @@ import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSli
 import { ref } from '@nuxtjs/composition-api'
 
 export default {
-  name: 'ErrorImageTeaser',
+  name: 'ErrorImageStage',
   components: {
     HomeStageSlideContent,
   },
@@ -104,7 +104,7 @@ $home-stage-interlay-spacing-xs: calc(
   $home-stage-interlay-spacing-lg * 0.3
 ); // 30%
 
-.error-image-teaser {
+.error-image-stage {
   @apply tw-relative;
   @apply tw-overflow-hidden;
   @apply tw-bg-no-repeat tw-bg-cover tw-bg-center;

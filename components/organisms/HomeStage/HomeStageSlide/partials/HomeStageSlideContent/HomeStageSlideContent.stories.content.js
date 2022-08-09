@@ -28,7 +28,7 @@ export const homeStageSlideContentMock = {
   ],
 }
 
-export const errorImageTeaserContent = {
+export const errorStageTeaserContent = {
   headline: '404 – Hier ist die Luft raus!',
   component: 'HomeStageSlideContent',
   richtext: [homestageSlideContentText],

@@ -1,29 +1,29 @@
-import ErrorImageTeaser from './ErrorImageTeaser.vue'
-import { errorTeaserContent } from './ErrorImageTeaser.stories.content'
+import ErrorImageStage from './ErrorImageStage.vue'
+import { errorStageContent } from './ErrorImageStage.stories.content'
 
 const argTypes = {
   stageContent: {
     control: { type: 'object' },
-    defaultValue: errorTeaserContent.stageContent,
+    defaultValue: errorStageContent.stageContent,
   },
   image: {
     control: { type: 'object' },
-    defaultValue: errorTeaserContent.image,
+    defaultValue: errorStageContent.image,
   },
   interlay: {
     control: { type: 'object' },
-    defaultValue: errorTeaserContent.interlay,
+    defaultValue: errorStageContent.interlay,
   },
 }
 
 export default {
-  title: 'Organisms/o_115 Error Image Teaser Module',
-  component: ErrorImageTeaser,
+  title: 'Organisms/o_115 Error Image Stage Module',
+  component: ErrorImageStage,
   parameters: {
     docs: {
       description: {
         component:
-          'ErrorImageTeaser component used as the stage of the errorpage.',
+          'ErrorImageStage component used as the stage of the errorpages (e.g. 404).',
       },
     },
   },
@@ -31,7 +31,7 @@ export default {
 }
 
 const Template = (args, { argTypes }) => ({
-  components: { ErrorImageTeaser },
+  components: { ErrorImageStage },
   props: Object.keys(argTypes),
   setup() {
     return { args }

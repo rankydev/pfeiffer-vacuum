@@ -1,13 +1,13 @@
 export default {
-  name: 'ErrorImageTeaser',
-  display_name: 'ErrorImageTeaser',
+  name: 'ErrorImageStage',
+  display_name: 'ErrorImageStage',
   schema: {
     stageContent: {
       type: 'bloks',
       maximum: 1,
       restrict_components: true,
       component_whitelist: ['HomeStageSlideContent'],
-      display_name: 'Error Teaser Content',
+      display_name: 'Error Stage Content',
       required: true,
     },
     image: {
@@ -30,5 +30,5 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'ErrorImageTeaser',
+  real_name: 'ErrorImageStage',
 }

@@ -1,7 +1,7 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import ErrorImageTeaser from './ErrorImageTeaser'
+import ErrorImageStage from './ErrorImageStage'
 import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent'
-import { errorTeaserContent } from './ErrorImageTeaser.stories.content'
+import { errorTeaserContent } from './ErrorImageStage.stories.content'
 
 const nuxtImg = {
   template: '<div>some image</div>',
@@ -24,10 +24,10 @@ function createComponent(propsData = {}) {
     propsData,
   }
 
-  wrapper = shallowMount(ErrorImageTeaser, options)
+  wrapper = shallowMount(ErrorImageStage, options)
 }
 
-describe('ErrorImageTeaser', () => {
+describe('ErrorImageStage', () => {
   describe('initial state', () => {
     test('should render whole component', () => {
       const propsData = {

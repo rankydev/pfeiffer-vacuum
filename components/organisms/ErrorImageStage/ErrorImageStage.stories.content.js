@@ -1,4 +1,4 @@
-import { errorImageTeaserContent } from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.stories.content'
+import { errorStageTeaserContent } from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.stories.content'
 
 const requiredContent = {
   image: {
@@ -12,10 +12,10 @@ const requiredContent = {
     fieldtype: 'asset',
   },
   component: 'HomeStageSlide',
-  stageContent: [errorImageTeaserContent],
+  stageContent: [errorStageTeaserContent],
 }
 
-export const errorTeaserContent = {
+export const errorStageContent = {
   interlay: {
     alt: 'Astronaut',
     name: '',
