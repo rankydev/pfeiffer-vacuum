@@ -1,14 +1,14 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import ErrorImageStage from './ErrorImageStage'
 import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent'
-import { errorTeaserContent } from './ErrorImageStage.stories.content'
+import { errorStageContent } from './ErrorImageStage.stories.content'
 
 const nuxtImg = {
   template: '<div>some image</div>',
   props: ['src', 'modifiers', 'title', 'alt', 'provider'],
 }
 
-const defaultProps = () => JSON.parse(JSON.stringify(errorTeaserContent))
+const defaultProps = () => JSON.parse(JSON.stringify(errorStageContent))
 
 let wrapper
 
@@ -34,7 +34,7 @@ describe('ErrorImageStage', () => {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const homeStageSlideWrapper = wrapper.find('.error-image-teaser')
+      const homeStageSlideWrapper = wrapper.find('.error-image-stage')
       expect(homeStageSlideWrapper.exists()).toBeTruthy()
     })
 
@@ -73,7 +73,7 @@ describe('ErrorImageStage', () => {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const homeStageWrapper = wrapper.find('.error-image-teaser')
+      const homeStageWrapper = wrapper.find('.error-image-stage')
 
       expect(homeStageWrapper.element.style.backgroundImage).toBe(
         `url(${propsData.image.originalFilename})`
@@ -81,15 +81,23 @@ describe('ErrorImageStage', () => {
     })
 
     // stars
-    test('should render stars on click 5 times', async () => {
+    test('should render stars on click 5 times', () => {
       const propsData = {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const homeStageWrapper = wrapper.find('.error-image-teaser')
+      const homeStageWrapper = wrapper.find('.error-image-stage')
 
-      await homeStageWrapper.trigger('click')
-      // @todo trigger click 5 times and check for .night class
+      async function clickTimes(x) {
+        for (let i = 0; i < x; i++) {
+          await homeStageWrapper.trigger('click')
+        }
+      }
+
+      clickTimes(5).then(() => {
+        const starsWrapper = wrapper.find('.night')
+        expect(starsWrapper.exists()).toBeTruthy()
+      })
     })
   })
 })
