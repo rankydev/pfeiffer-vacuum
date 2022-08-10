@@ -35,7 +35,6 @@
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
-// import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
   components: { Richtext, ResponsiveImage },
@@ -75,10 +74,6 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
-    icon: {
-      type: String,
-      default: 'contact_support',
-    },
   },
 
   setup(props) {
@@ -89,10 +84,15 @@ export default defineComponent({
 
 <style lang="scss">
 .image-banner {
-  @apply tw-items-center;
+  margin-top: 42px;
+  @apply tw-overflow-hidden;
+  @apply tw-text-pv-white;
   @apply tw-bg-pv-grey-32;
   @apply tw-rounded-lg;
-  @apply tw-text-pv-white;
+
+  @screen md {
+    @apply tw-items-center;
+  }
 
   &__headline-wrapper {
     @apply tw-flex;
@@ -100,13 +100,6 @@ export default defineComponent({
     @apply tw-mb-4;
   }
 
-  // &__headline-icon {
-  //   @apply tw-block;
-
-  //   @screen md {
-  //     @apply tw-hidden;
-  //   }
-  // }
   &__headline {
     @apply tw-text-pv-white;
   }
@@ -125,58 +118,40 @@ export default defineComponent({
   }
 
   &__content {
-    @apply tw-col-span-12;
-    @apply tw-px-4;
-    @apply tw-py-6;
+    @apply tw-p-8;
+    @apply tw-col-span-8;
+    grid-row: 2;
 
     @screen md {
-      @apply tw-col-span-5;
-      @apply tw-px-6;
-      @apply tw-py-8;
+      @apply tw-col-span-4;
+      @apply tw-pl-16;
+      grid-row: initial;
     }
 
     @screen lg {
       @apply tw-col-span-8;
-      @apply tw-p-12;
+
+      @apply tw-pl-16;
     }
   }
 
   &__media {
-    // @apply tw-hidden;
-    position: relative;
-    overflow: hidden;
-    height: 100%;
+    @apply tw-col-span-8;
+    grid-row: 1;
 
     @screen md {
-      // @apply tw-flex;
-      // @apply tw-flex-col;
-      // @apply tw-justify-center;
-      // @apply tw-items-center;
-      position: relative;
-      overflow: hidden;
-      height: 100%;
-      @apply tw-bg-pv-red;
-      @apply tw-rounded-r-lg;
-      @apply tw-col-span-3;
+      @apply tw-col-span-4;
+      grid-row: initial;
     }
 
     @screen lg {
-      position: relative;
-      overflow: hidden;
-      height: 100%;
       @apply tw-col-span-4;
+      @apply tw-rounded-t-lg;
     }
   }
 
   &__image {
-    position: absolute;
-    top: 0;
-    right: 0;
-    @apply tw-rounded-r-lg;
-
-    // height: 100%;
-    // width: 100%;
-    // object-fit: contain;
+    @apply tw-rounded-t-lg;
   }
 
   &__buttons {
