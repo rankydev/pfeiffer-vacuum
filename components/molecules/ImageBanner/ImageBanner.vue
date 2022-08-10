@@ -9,13 +9,15 @@
       </div>
       <Richtext :richtext="richtext" class="image-banner__richtext" />
       <div class="image-banner__buttons">
-        <NuxtDynamic
-          v-for="item in buttons"
-          :key="item._uid"
-          class="image-banner__button"
-          v-bind="item"
-          :name="item.uiComponent || item.component"
-        />
+        <div>
+          <NuxtDynamic
+            v-for="item in buttons"
+            :key="item._uid"
+            class="image-banner__button"
+            v-bind="item"
+            :name="item.uiComponent || item.component"
+          />
+        </div>
       </div>
     </div>
     <div class="image-banner__media">
