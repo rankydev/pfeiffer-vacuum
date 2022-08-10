@@ -29,7 +29,7 @@ export default {
       maximum: 1,
       restrict_components: true,
       required: true,
-      component_whitelist: ['ImageWithDescription'],
+      component_whitelist: ['ResponsiveImage'],
     },
     icon: {
       type: 'text',

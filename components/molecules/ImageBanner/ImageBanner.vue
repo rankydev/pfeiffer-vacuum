@@ -6,9 +6,6 @@
           <h2 class="image-banner__headline">{{ headline }}</h2>
           <h3 class="image-banner__subline">{{ subline }}</h3>
         </div>
-        <!-- <div class="image-banner__headline-icon">
-          <Icon :icon="icon" size="xlarge" />
-        </div> -->
       </div>
       <Richtext :richtext="richtext" class="image-banner__richtext" />
       <div class="image-banner__buttons">
@@ -22,13 +19,13 @@
       </div>
     </div>
     <div class="image-banner__media">
-      <NuxtDynamic
+      <ResponsiveImage
         v-for="item in image"
         :key="item._uid"
         v-editable="item"
         class="image-banner__image"
         v-bind="item"
-        :name="item.uiComponent || item.component"
+        :aspect-ratio="'3:2'"
       />
     </div>
   </div>
@@ -37,10 +34,11 @@
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 // import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
-  components: { Richtext },
+  components: { Richtext, ResponsiveImage },
   props: {
     /**
      * headline of the media element rendred as h2
@@ -102,14 +100,13 @@ export default defineComponent({
     @apply tw-mb-4;
   }
 
-  &__headline-icon {
-    @apply tw-block;
+  // &__headline-icon {
+  //   @apply tw-block;
 
-    @screen md {
-      @apply tw-hidden;
-    }
-  }
-
+  //   @screen md {
+  //     @apply tw-hidden;
+  //   }
+  // }
   &__headline {
     @apply tw-text-pv-white;
   }

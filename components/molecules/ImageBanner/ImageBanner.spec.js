@@ -1,5 +1,6 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
+import Responsivemage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 // import Icon from '~/components/atoms/Icon/Icon.vue'
 import ImageBanner from './ImageBanner.vue'
 import {
