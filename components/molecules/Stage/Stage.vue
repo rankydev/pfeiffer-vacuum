@@ -91,7 +91,6 @@ export default {
         @apply tw-w-full;
         @apply tw-rounded-none;
         @apply tw-object-cover;
-        height: 180px;
 
         @screen md {
           height: 372px;
