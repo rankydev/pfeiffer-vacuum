@@ -43,13 +43,15 @@
     </slot>
 
     <slot name="footer">
-      <nuxt-dynamic
-        v-for="item in bottom"
-        :key="item._uid"
-        v-editable="item"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      />
+      <ContentWrapper>
+        <nuxt-dynamic
+          v-for="item in bottom"
+          :key="item._uid"
+          v-editable="item"
+          v-bind="item"
+          :name="item.uiComponent || item.component"
+        />
+      </ContentWrapper>
 
       <nuxt-dynamic
         v-for="item in footer"
