@@ -1,6 +1,5 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
-import Responsivemage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 import ImageBanner from './ImageBanner.vue'
 import {
   headline,
@@ -30,7 +29,7 @@ function createComponent(propsData = {}) {
 describe('ImageBanner', () => {
   describe('initial state', () => {
     it('should provide headline subline, icon and richtext to richtext component when these are provided', () => {
-      const propsData = { headline, subline, richtext }
+      const propsData = { headline, subline, richtext, mediaImage }
       createComponent(propsData)
       const domHeadline = wrapper.find('.image-banner__headline')
       const domSubline = wrapper.find('.image-banner__subline')
