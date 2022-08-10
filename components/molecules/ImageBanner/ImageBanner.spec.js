@@ -1,12 +1,10 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import Responsivemage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
-// import Icon from '~/components/atoms/Icon/Icon.vue'
 import ImageBanner from './ImageBanner.vue'
 import {
   headline,
   subline,
-  // icon,
   mediaImage,
   buttons,
   richtext,
@@ -37,12 +35,10 @@ describe('ImageBanner', () => {
       const domHeadline = wrapper.find('.image-banner__headline')
       const domSubline = wrapper.find('.image-banner__subline')
       const domRichtext = wrapper.findComponent(Richtext)
-      // const domIcon = wrapper.findComponent(Icon)
 
       expect(domHeadline.text()).toMatch(headline)
       expect(domSubline.text()).toMatch(subline)
       expect(domRichtext.vm.richtext).toMatch(richtext)
-      // expect(domIcon.vm.icon).toMatch(icon)
     })
 
     it('should add button to the button area when it is provided', () => {

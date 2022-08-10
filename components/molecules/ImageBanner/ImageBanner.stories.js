@@ -2,7 +2,6 @@ import ImageBanner from './ImageBanner.vue'
 import {
   headline,
   subline,
-  icon,
   mediaImage,
   buttons,
   richtext,
@@ -20,7 +19,7 @@ export default {
           'The ImageBanner component is used to display an questionmark-icon on red background along with some text. Above the text can a headline and a subline be defined. Below the text the editor has the posibility to add a button.',
       },
       source: {
-        code: '<ImageBanner v-bind="{ headline, subline, icon, buttons, richtext }"  />',
+        code: '<ImageBanner v-bind="{ headline, subline, buttons, richtext }"  />',
       },
     },
   },
@@ -43,7 +42,6 @@ export const Default = Template.bind({})
 Default.args = {
   headline,
   subline,
-  icon,
   image: mediaImage,
   buttons,
   richtext,
