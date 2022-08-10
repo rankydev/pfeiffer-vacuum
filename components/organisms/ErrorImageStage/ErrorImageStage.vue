@@ -8,9 +8,8 @@
     :style="{
       backgroundImage: `url(${image.originalFilename})`,
     }"
-    @click="handleClick"
   >
-    <div v-if="showStars" class="night">
+    <div class="night">
       <div v-for="index in starsAmount" :key="index" class="shooting-star" />
     </div>
 
@@ -65,23 +64,10 @@ export default {
     },
   },
   setup() {
-    const starsAmount = 20
-    const showStars = ref(false)
-    const counter = ref(0)
-
-    const handleClick = () => {
-      counter.value += 1
-
-      if (counter.value >= 5) {
-        showStars.value = true
-      }
-    }
+    const starsAmount = 12
 
     return {
       starsAmount,
-      showStars,
-      counter,
-      handleClick,
     }
   },
 }
@@ -177,8 +163,8 @@ $shooting-time: 3000ms;
   /* stylelint-disable */
   background: linear-gradient(
     -45deg,
-    rgba(204, 0, 51, 100%),
-    rgba(255, 0, 0, 0%)
+    rgba(255, 255, 255, 100%),
+    rgba(255, 255, 255, 0%)
   );
   filter: drop-shadow(0 0 6px rgba(211, 133, 150, 100%));
   /* stylelint-enable */
@@ -197,9 +183,9 @@ $shooting-time: 3000ms;
     /* stylelint-disable */
     background: linear-gradient(
       -45deg,
-      rgba(0, 0, 255, 0%),
-      rgba(204, 0, 51, 100%),
-      rgba(0, 0, 255, 0%)
+      rgba(255, 255, 255, 0%),
+      rgba(255, 255, 255, 100%),
+      rgba(255, 255, 255, 0%)
     );
     /* stylelint-enable */
   }
@@ -217,9 +203,9 @@ $shooting-time: 3000ms;
     /* stylelint-disable */
     background: linear-gradient(
       -45deg,
-      rgba(0, 0, 255, 0%),
-      rgba(204, 0, 51, 100%),
-      rgba(0, 0, 255, 0%)
+      rgba(255, 255, 255, 0%),
+      rgba(255, 255, 255, 100%),
+      rgba(255, 255, 255, 0%)
     );
     /* stylelint-enable */
   }

@@ -86,18 +86,8 @@ describe('ErrorImageStage', () => {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const homeStageWrapper = wrapper.find('.error-image-stage')
-
-      async function clickTimes(x) {
-        for (let i = 0; i < x; i++) {
-          await homeStageWrapper.trigger('click')
-        }
-      }
-
-      clickTimes(5).then(() => {
-        const starsWrapper = wrapper.find('.night')
-        expect(starsWrapper.exists()).toBeTruthy()
-      })
+      const starsWrapper = wrapper.find('.night')
+      expect(starsWrapper.exists()).toBeTruthy()
     })
   })
 })
