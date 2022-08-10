@@ -1,6 +1,9 @@
 import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
+import { useContext } from '@nuxtjs/composition-api'
 
-export const useToast = ($toast) => {
+export const useToast = () => {
+  const { $toast } = useContext()
+
   function success(content = {}, options = {}) {
     $toast.success(
       {

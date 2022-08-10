@@ -2,12 +2,23 @@ import { useToast } from './useToast'
 import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 import messageProps from '~/components/organisms/GlobalMessage/GlobalMessage.stories.content.js'
 
-describe('useToast', () => {
-  const mockToastLibrary = {
-    success: jest.fn(),
-    warning: jest.fn(),
-    error: jest.fn(),
+const mockToastLibrary = {
+  success: jest.fn(),
+  warning: jest.fn(),
+  error: jest.fn(),
+}
+
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  return {
+    ...originalModule,
+    useContext: () => ({
+      $toast: mockToastLibrary,
+    }),
   }
+})
+
+describe('useToast', () => {
   const toast = useToast(mockToastLibrary)
   describe('should trigger toast functions given content', () => {
     test('should trigger success function', () => {

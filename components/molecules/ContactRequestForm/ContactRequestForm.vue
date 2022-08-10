@@ -68,8 +68,8 @@ export default defineComponent({
   },
   setup() {
     const loading = ref(false)
-    const { $hybrisApi, $toast } = useContext()
-    const toast = useToast($toast)
+    const { $hybrisApi } = useContext()
+    const toast = useToast()
     // this will collect all nested component’s validation results
     const v = useVuelidate()
     const requestData = ref({})
@@ -87,6 +87,7 @@ export default defineComponent({
           .submitContact(requestData.value)
           .then(() => {
             loading.value = false
+            // TODO: Localize values
             toast.success(
               {
                 headline: 'Successfully sent',
@@ -99,6 +100,7 @@ export default defineComponent({
           })
           .catch(() => {
             loading.value = false
+            // TODO: Localize values
             toast.error({
               headline: 'An error occured',
               description: 'The request could not be sent successfully.',
