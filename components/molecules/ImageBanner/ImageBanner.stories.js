@@ -16,10 +16,10 @@ export default {
     docs: {
       description: {
         component:
-          'The ImageBanner component is used to display an questionmark-icon on red background along with some text. Above the text can a headline and a subline be defined. Below the text the editor has the posibility to add a button.',
+          'The ImageBanner component is used to display an image along with some text. Above the text can a headline and a subline be defined. Below the text the editor has the posibility to add a button.',
       },
       source: {
-        code: '<ImageBanner v-bind="{ headline, subline, buttons, richtext }"  />',
+        code: '<ImageBanner v-bind="{ headline, subline, buttons, richtext, image }"  />',
       },
     },
   },
