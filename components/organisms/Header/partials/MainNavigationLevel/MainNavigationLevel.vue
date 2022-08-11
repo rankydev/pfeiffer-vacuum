@@ -20,7 +20,8 @@
           :class="{
             [`${prefix}__link`]: true,
             [`${prefix}__link--passive`]: ![null, idx].includes(activeElement),
-            [`${prefix}__link--active`]: activeElement === idx,
+            [`${prefix}__link--active`]:
+              activeElement === idx || selectedPrimaryLink === idx,
           }"
           v-bind="entry"
           :before-navigation="
@@ -110,8 +111,10 @@ import {
   defineComponent,
   ref,
   useContext,
+  useRoute,
   computed,
   watch,
+  toRefs,
 } from '@nuxtjs/composition-api'
 
 import Link from '~/components/atoms/Link/Link.vue'
@@ -154,6 +157,17 @@ export default defineComponent({
     const isDesktop = app.$breakpoints.isDesktop
     const isHovered = ref(false)
 
+    const route = useRoute()
+    const { navigationEntries } = toRefs(props)
+    const selectedPrimaryLink = computed(() => {
+      for (const [idx, entry] of navigationEntries.value.entries()) {
+        if (entry?.href === route.value.path) {
+          return idx
+        }
+      }
+      return null
+    })
+
     watch(menu.isActive, (isActive) => {
       if (!isActive) activeElement.value = null
     })
@@ -187,6 +201,7 @@ export default defineComponent({
       isDesktop,
       isHovered,
       hasSubmenu,
+      selectedPrimaryLink,
     }
   },
 })
