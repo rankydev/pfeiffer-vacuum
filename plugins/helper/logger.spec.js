@@ -1,7 +1,7 @@
 import { expect, jest, test } from '@jest/globals'
 import logger, { getLoggerFor } from './logger.js'
 
-jest.useFakeTimers().setSystemTime(new Date('2023-01-01'))
+jest.useFakeTimers().setSystemTime(new Date('2023-01-01T02:00:00'))
 
 describe('Logger', () => {
   describe('initial state', () => {
@@ -30,7 +30,7 @@ describe('Logger', () => {
 
       loggerInstance.info('This is an info')
       expect(info).toBeCalledWith(
-        '[01.01.2023, 01:00:00,000]',
+        '[01.01.2023, 02:00:00,000]',
         '[Test]',
         'This is an info'
       )
@@ -42,7 +42,7 @@ describe('Logger', () => {
 
       loggerInstance.warn('This looks weird')
       expect(warn).toBeCalledWith(
-        '[01.01.2023, 01:00:00,000]',
+        '[01.01.2023, 02:00:00,000]',
         '[Test]',
         'This looks weird'
       )
@@ -54,7 +54,7 @@ describe('Logger', () => {
 
       loggerInstance.error('Something went wrong')
       expect(error).toBeCalledWith(
-        '[01.01.2023, 01:00:00,000]',
+        '[01.01.2023, 02:00:00,000]',
         '[Test]',
         'Something went wrong'
       )
