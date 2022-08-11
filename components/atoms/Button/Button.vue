@@ -151,6 +151,10 @@ export default defineComponent({
   @apply tw-font-bold;
   @apply tw-justify-between;
 
+  @screen md {
+    @apply tw-whitespace-nowrap;
+  }
+
   &--disabled {
     @apply tw-cursor-default;
   }
