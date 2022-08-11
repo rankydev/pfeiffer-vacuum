@@ -4,6 +4,7 @@ import config from '../hybris.config'
 const mockCountries = ['Land1']
 const mockRegions = ['Region1']
 const mockError = 'fehler'
+const mockedErrorFunc = jest.fn()
 
 function createInstance(
   hasCountries,
@@ -12,9 +13,9 @@ function createInstance(
   hasErrorMessage = false
 ) {
   const ctx = {
-    $logger: {
-      error: jest.fn(),
-    },
+    $getLoggerFor: () => ({
+      error: mockedErrorFunc,
+    }),
   }
 
   const mockGet = jest.fn(() => {
@@ -56,7 +57,7 @@ describe('countriesApi', () => {
         expect(result).toStrictEqual([])
       })
       expect(axiosInstance.$get).toBeCalledWith(config.COUNTRIES_API, {})
-      expect(ctx.$logger.error).toBeCalledWith(
+      expect(mockedErrorFunc).toBeCalledWith(
         'Error when fetching countries. Returning empty array.',
         mockError
       )
@@ -65,7 +66,7 @@ describe('countriesApi', () => {
       const { ctx, axiosInstance } = createInstance(false, false, true)
       const countriesApi = getCountriesApi(axiosInstance, ctx)
       await countriesApi.getCountries()
-      expect(ctx.$logger.error).toBeCalledWith(
+      expect(mockedErrorFunc).toBeCalledWith(
         'Error when fetching countries. Returning empty array.',
         ''
       )
@@ -85,7 +86,7 @@ describe('countriesApi', () => {
       await countriesApi.getRegions('US').then(function (result) {
         expect(result).toStrictEqual([])
       })
-      expect(ctx.$logger.error).toBeCalledWith(
+      expect(mockedErrorFunc).toBeCalledWith(
         'Error when fetching regions. Returning empty array.',
         mockError
       )
@@ -94,7 +95,7 @@ describe('countriesApi', () => {
       const { ctx, axiosInstance } = createInstance(false, false, true)
       const countriesApi = getCountriesApi(axiosInstance, ctx)
       await countriesApi.getRegions()
-      expect(ctx.$logger.error).toBeCalledWith(
+      expect(mockedErrorFunc).toBeCalledWith(
         'Error when fetching regions. Returning empty array.',
         ''
       )
