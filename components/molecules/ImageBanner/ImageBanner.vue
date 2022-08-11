@@ -1,5 +1,6 @@
 <template>
-  <div class="image-banner tw-grid-container tw-my-component-wide">
+  <!-- <div class="image-banner tw-grid-container tw-my-component-wide"> -->
+  <div class="image-banner">
     <div class="image-banner__content">
       <div class="image-banner__headline-wrapper">
         <div class="image-banner__headline-text">
@@ -86,14 +87,18 @@ export default defineComponent({
 
 <style lang="scss">
 .image-banner {
-  margin-top: 42px;
-  @apply tw-overflow-hidden;
   @apply tw-text-pv-white;
+  @apply tw-overflow-hidden;
   @apply tw-bg-pv-grey-32;
   @apply tw-rounded-lg;
+  @apply tw-flex;
+  @apply tw-flex-wrap-reverse;
+  @apply tw-px-0;
 
   @screen md {
-    @apply tw-items-center;
+    @apply tw-flex-nowrap;
+    @apply tw-flex-row;
+    max-height: 460px;
   }
 
   &__headline-wrapper {
@@ -120,57 +125,55 @@ export default defineComponent({
   }
 
   &__content {
-    @apply tw-p-8;
-    @apply tw-col-span-8;
-    grid-row: 2;
+    @apply tw-m-8;
+    @apply tw-w-full;
 
     @screen md {
-      @apply tw-col-span-4;
-      @apply tw-pl-16;
-      grid-row: initial;
+      @apply tw-w-1/2;
+      max-height: 320px;
+      overflow: scroll;
     }
 
     @screen lg {
-      @apply tw-col-span-8;
-
-      @apply tw-pl-16;
+      @apply tw-w-2/3;
+      max-height: 340px;
     }
   }
 
   &__media {
-    @apply tw-col-span-8;
-    grid-row: 1;
+    @apply tw-w-full;
+    @apply tw-object-cover;
 
     @screen md {
-      @apply tw-col-span-4;
-      grid-row: initial;
+      @apply tw-w-1/2;
+      @apply tw-object-contain;
     }
 
     @screen lg {
-      @apply tw-col-span-4;
-      @apply tw-rounded-t-lg;
-    }
-  }
-
-  &__image {
-    @apply tw-rounded-t-lg;
-  }
-
-  &__buttons {
-    @apply tw-mt-4;
-    @apply tw-flex tw-flex-wrap;
-    @apply tw-gap-x-6 tw-gap-y-4;
-  }
-
-  &__button {
-    @apply tw-basis-full;
-
-    &:nth-child(2) {
-      @apply tw-justify-start;
+      @apply tw-w-1/3;
+      @apply tw-object-contain;
     }
 
-    @screen md {
-      @apply tw-basis-0;
+    .responsive-image {
+      img {
+        @apply tw-w-full;
+        @apply tw-rounded-none;
+        @apply tw-object-cover;
+        height: 385px;
+
+        @screen md {
+          height: 385px;
+        }
+
+        @screen lg {
+          height: 530px;
+        }
+
+        @screen xl {
+          // growing proportionally to width of screen
+          height: 28vw;
+        }
+      }
     }
   }
 }
