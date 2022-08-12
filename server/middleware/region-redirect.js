@@ -1,6 +1,6 @@
 import config from '../../nuxt.config'
 import { urlJoin } from '@nuxt/utils'
-import consola from 'consola'
+import getLoggerFor from '../../utils/getLoggerFor'
 
 /**
  * This middleware redirects the page visitor from the base url
@@ -14,6 +14,7 @@ import consola from 'consola'
  * @returns
  */
 export default function (req, res, next) {
+  const logger = getLoggerFor('region-redirect')
   const routerBase = decodeURI(config.router.base)
   const isEmptyBase = (routerBase || '').length === 0
   const isRootBase = routerBase === '/'
@@ -43,7 +44,7 @@ export default function (req, res, next) {
 
   const to = urlJoin(routerBase, req.url)
 
-  consola.info(
+  logger.info(
     `Redirecting from \`${decodeURI(req.url)}\` to \`${decodeURI(
       to
     )}\` (router.base specified)`
