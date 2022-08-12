@@ -17,7 +17,7 @@ export default {
     richtext: {
       ...RichtextBasic.schema.richtext,
       required: true,
-      max_length: '200',
+      max_length: '220',
     },
     buttons: {
       type: 'bloks',
