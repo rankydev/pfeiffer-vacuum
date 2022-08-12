@@ -1,5 +1,6 @@
 import config from '../../nuxt.config'
 import { urlJoin } from '@nuxt/utils'
+import consola from 'consola'
 
 /**
  * This middleware redirects the page visitor from the base url

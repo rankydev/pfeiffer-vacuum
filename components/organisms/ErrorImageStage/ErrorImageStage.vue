@@ -1,10 +1,8 @@
 <template>
   <div
     v-editable="stageContent"
-    :class="[
-      'error-image-stage',
-      image.originalFilename ? '' : 'error-image-stage__placeholder',
-    ]"
+    class="error-image-stage"
+    :class="{ 'error-image-stage__placeholder': image.originalFilename }"
     :style="{
       backgroundImage: `url(${image.originalFilename})`,
     }"

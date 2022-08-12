@@ -81,7 +81,7 @@ describe('ErrorImageStage', () => {
     })
 
     // stars
-    test('should render stars on click 5 times', () => {
+    test('should render stars on the stage', () => {
       const propsData = {
         ...defaultProps(),
       }
