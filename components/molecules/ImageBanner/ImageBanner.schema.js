@@ -17,10 +17,11 @@ export default {
     richtext: {
       ...RichtextBasic.schema.richtext,
       required: true,
+      max_length: '200',
     },
     buttons: {
       type: 'bloks',
-      maximum: 2,
+      maximum: 1,
       restrict_components: true,
       component_whitelist: ['Button'],
     },

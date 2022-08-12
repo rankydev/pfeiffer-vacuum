@@ -98,7 +98,7 @@ export default defineComponent({
   @screen md {
     @apply tw-flex-nowrap;
     @apply tw-flex-row;
-    max-height: 460px;
+    max-height: 400px;
   }
 
   &__headline-wrapper {
@@ -124,14 +124,20 @@ export default defineComponent({
     }
   }
 
+  &__buttons {
+    @apply tw-mt-4;
+  }
+
   &__content {
     @apply tw-m-8;
     @apply tw-w-full;
 
     @screen md {
       @apply tw-w-1/2;
+      @apply tw-flex;
+      @apply tw-flex-col;
+      @apply tw-justify-center;
       max-height: 320px;
-      overflow: scroll;
     }
 
     @screen lg {
