@@ -43,13 +43,15 @@
     </slot>
 
     <slot name="footer">
-      <nuxt-dynamic
-        v-for="item in bottom"
-        :key="item._uid"
-        v-editable="item"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      />
+      <ContentWrapper>
+        <nuxt-dynamic
+          v-for="item in bottom"
+          :key="item._uid"
+          v-editable="item"
+          v-bind="item"
+          :name="item.uiComponent || item.component"
+        />
+      </ContentWrapper>
 
       <nuxt-dynamic
         v-for="item in footer"
@@ -62,12 +64,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  inject,
-  toRefs,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, inject, toRefs } from '@nuxtjs/composition-api'
 import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
@@ -119,5 +116,6 @@ export default defineComponent({
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-h-screen;
+  @apply tw-overflow-x-hidden;
 }
 </style>

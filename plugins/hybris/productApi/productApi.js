@@ -1,10 +1,11 @@
 import config from '../hybris.config'
 
 export function getProductApi(axiosInstance, ctx) {
+  const logger = ctx.$getLoggerFor('productApi')
   return {
     async getProducts(ids) {
       if (!Array.isArray(ids)) {
-        ctx.$logger.error(
+        logger.error(
           'Array expected when fetching multiple products. No valid ids given.'
         )
         return []
@@ -16,11 +17,11 @@ export function getProductApi(axiosInstance, ctx) {
           params: { codes: idsString, fields: 'FULL' },
         })
         .catch((error) => {
-          ctx.$logger.error(error.toJSON())
+          logger.error(error.toJSON())
         })
 
       if (!Array.isArray(result.products)) {
-        ctx.$logger.error(
+        logger.error(
           `Array expected when fetching multiple products '${idsString}', returning empty array.`
         )
         return []

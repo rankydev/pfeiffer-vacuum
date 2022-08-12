@@ -1,5 +1,4 @@
-import Vue from 'vue'
-const consola = require('consola')
+import consola from 'consola'
 
 let initialized = false
 
@@ -14,15 +13,15 @@ if (!initialized) {
 
 /**
  * Creates a logger as wrapper for console object to add additional log information
- * @param label - the log label
+ * @param file - the file the logger is used in
  * @return {object} with log functions (same as console)
  */
-export function getLogger(label) {
+export function getLoggerFor(file) {
   const Logger = {}
   Object.keys(console).forEach((key) => {
     if (typeof console[key] === 'function') {
       Logger[key] = function () {
-        const prefix = `[${label}]` // log prefix
+        const prefix = `[${file}]`
         const dateTimeFormatOptions = {
           year: 'numeric',
           month: '2-digit',
@@ -36,8 +35,8 @@ export function getLogger(label) {
         const timestamp = `[${new Date().toLocaleString(
           'de-de',
           dateTimeFormatOptions
-        )}]` // log timestamp
-        const logParameters = [timestamp, prefix, ...arguments] // log arguments
+        )}]`
+        const logParameters = [timestamp, prefix, ...arguments]
         console[key].apply(null, logParameters)
       }
     }
@@ -46,10 +45,5 @@ export function getLogger(label) {
 }
 
 export default (context, inject) => {
-  const logger = getLogger()
-
-  Vue.prototype.$logger = logger
-
-  // Inject $hello(msg) in Vue, context and store.
-  inject('logger', logger)
+  inject('getLoggerFor', getLoggerFor)
 }
