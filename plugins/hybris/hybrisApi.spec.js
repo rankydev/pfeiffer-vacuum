@@ -14,6 +14,9 @@ describe('HybrisApiPlugin', () => {
             }
           }),
         },
+        $getLoggerFor: () => ({
+          error: jest.fn(),
+        }),
       }
 
       hybrisApi(context)
@@ -34,6 +37,9 @@ describe('HybrisApiPlugin', () => {
             }
           }),
         },
+        $getLoggerFor: () => ({
+          error: jest.fn(),
+        }),
       }
 
       hybrisApi(context)
