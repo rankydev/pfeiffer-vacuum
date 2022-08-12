@@ -120,6 +120,7 @@ import {
 import Link from '~/components/atoms/Link/Link.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
+import Button from '~/components/atoms/Button/Button.vue'
 import { useMenuStore } from '~/stores/menu'
 
 export default defineComponent({
@@ -128,6 +129,7 @@ export default defineComponent({
     Icon,
     Link,
     AnimatedCollapse,
+    Button,
   },
   props: {
     currentEntry: {
@@ -161,7 +163,11 @@ export default defineComponent({
     const { navigationEntries } = toRefs(props)
     const selectedPrimaryLink = computed(() => {
       for (const [idx, entry] of navigationEntries.value.entries()) {
-        if (entry?.href === route.value.path) {
+        const splittedHref = entry?.href.split('/')
+        const path = route.value.path
+        // Check if the route contains the first and second part of an entry(like f.ex. 'en' and 'products')
+        // this logic is relevant for subentries
+        if (path.includes(splittedHref[1]) && path.includes(splittedHref[2])) {
           return idx
         }
       }
