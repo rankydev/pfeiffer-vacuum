@@ -57,6 +57,11 @@ export default defineComponent({
     @screen md {
       @apply tw-right-4 tw-bottom-4;
     }
+
+    &:hover,
+    &:focus {
+      @apply tw-bg-pv-yellow-lighter;
+    }
   }
 }
 </style>
