@@ -32,12 +32,6 @@
       </div>
     </Link>
 
-    <div v-if="hasSlot('description')" class="pv-card__description">
-      <!-- @slot short description which displays up to 4 lines of text -->
-      <slot name="description" />
-    </div>
-    <!-- </Link> -->
-
     <div v-if="hasSlot('additionalInfo')" class="pv-card__additional-info">
       <!-- @slot information which lives outside of the link container of the card -->
       <slot name="additionalInfo" />
