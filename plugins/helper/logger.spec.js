@@ -9,9 +9,7 @@ describe('Logger', () => {
       const context = {
         app: {},
       }
-
       const inject = jest.fn()
-
       logger(context, inject)
 
       expect(inject).toBeCalledWith('getLoggerFor', expect.any(Function))
