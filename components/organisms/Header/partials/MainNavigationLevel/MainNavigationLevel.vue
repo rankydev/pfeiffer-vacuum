@@ -85,7 +85,6 @@
           "
           :class="`${prefix}__buttons`"
         >
-          <!-- TODO: Check button functionality with PVWEB-328 -->
           <Button
             variant="secondary"
             shape="outlined"
