@@ -20,7 +20,8 @@
           :class="{
             [`${prefix}__link`]: true,
             [`${prefix}__link--passive`]: ![null, idx].includes(activeElement),
-            [`${prefix}__link--active`]: activeElement === idx,
+            [`${prefix}__link--active`]:
+              activeElement === idx || selectedPrimaryLink === idx,
           }"
           v-bind="entry"
           :before-navigation="
@@ -84,7 +85,6 @@
           "
           :class="`${prefix}__buttons`"
         >
-          <!-- TODO: Check button functionality with PVWEB-328 -->
           <Button
             variant="secondary"
             shape="outlined"
@@ -110,13 +110,16 @@ import {
   defineComponent,
   ref,
   useContext,
+  useRoute,
   computed,
   watch,
+  toRefs,
 } from '@nuxtjs/composition-api'
 
 import Link from '~/components/atoms/Link/Link.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
+import Button from '~/components/atoms/Button/Button.vue'
 import { useMenuStore } from '~/stores/menu'
 
 export default defineComponent({
@@ -125,6 +128,7 @@ export default defineComponent({
     Icon,
     Link,
     AnimatedCollapse,
+    Button,
   },
   props: {
     currentEntry: {
@@ -153,6 +157,21 @@ export default defineComponent({
     const isTablet = app.$breakpoints.isTablet
     const isDesktop = app.$breakpoints.isDesktop
     const isHovered = ref(false)
+
+    const route = useRoute()
+    const { navigationEntries } = toRefs(props)
+    const selectedPrimaryLink = computed(() => {
+      for (const [idx, entry] of navigationEntries.value.entries()) {
+        const splittedHref = entry?.href.split('/')
+        const path = route.value.path
+        // Check if the route contains the first and second part of an entry(like f.ex. 'en' and 'products')
+        // this logic is relevant for subentries
+        if (path.includes(splittedHref[1]) && path.includes(splittedHref[2])) {
+          return idx
+        }
+      }
+      return null
+    })
 
     watch(menu.isActive, (isActive) => {
       if (!isActive) activeElement.value = null
@@ -187,6 +206,7 @@ export default defineComponent({
       isDesktop,
       isHovered,
       hasSubmenu,
+      selectedPrimaryLink,
     }
   },
 })

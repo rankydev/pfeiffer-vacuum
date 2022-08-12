@@ -1,6 +1,5 @@
 import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import Header from './Header.vue'
-
 import Logo from '~/components/atoms/Logo/Logo.vue'
 import SearchHeader from './partials/SearchHeader/SearchHeader.vue'
 import TopNavigation from './partials/TopNavigation/TopNavigation.vue'
