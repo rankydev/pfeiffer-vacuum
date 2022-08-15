@@ -102,8 +102,8 @@ deploy-uat-automatically:
     url: "https://uat2.pvac.diva-e.com"
   only:
     - feature/PVWEB-684_uat-deployment
-#  tags:
-#    - pvac-frontend-uat-deployment
+  tags:
+    - pvweb-uat-deployment
 
 deploy-uat-manually:
   extends: .deploy_to_docker_swarm
@@ -116,7 +116,7 @@ deploy-uat-manually:
   only:
     - tags
   tags:
-    - pvac-frontend-uat-deployment
+    - pvweb-uat-deployment
 
 deploy-prd-manually:
   extends: .deploy_to_docker_swarm
