@@ -107,7 +107,6 @@ deploy-uat-automatically:
 
 deploy-uat-manually:
   extends: .deploy_to_docker_swarm
-  needs: [ "audit-frontend-uat" ]
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
