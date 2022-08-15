@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  pvweb:
+    image: '${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_REF_SLUG}'
+    deploy:
+      mode: replicated
+      replicas: ${CONTAINER_REPLICAS}
+      placement:
+        max_replicas_per_node: ${CONTAINER_REPLICAS_PER_NODE}
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
+      resources:
+        limits:
+          cpus: "${CONTAINER_LIMIT_CPU}"
+          memory: "${CONTAINER_LIMIT_MEMORY}"
+        reservations:
+          cpus: "${CONTAINER_RESERVE_CPU}"
+          memory: "${CONTAINER_RESERVE_MEMORY}"
+    ports:
+    - "3000:3000"
+    environment:
+    - NODE_ENV="${CI_ENVIRONMENT_NAME}"
+    - PORT=3000
+    - CONSOLA_LEVEL=3

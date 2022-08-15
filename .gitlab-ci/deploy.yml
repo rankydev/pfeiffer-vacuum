@@ -85,8 +85,11 @@ deploy-lsg-manually:
 
 .deploy_to_docker_swarm:
   extends: .deployment
+  before_script:
+    - cd docker
   script:
-    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_SERVICE_NAME}
+    - envsubst < docker-compose.template.yml >docker-compose.swarm.yml
+    - docker stack deploy --compose-file docker-compose.swarm.yml pvweb
   allow_failure: false
 
 deploy-uat-automatically:
@@ -98,9 +101,9 @@ deploy-uat-automatically:
     name: uat
     url: "https://uat2.pvac.diva-e.com"
   only:
-    - main
-  tags:
-    - pvac-frontend-uat-deployment
+    - feature/PVWEB-684_uat-deployment
+#  tags:
+#    - pvac-frontend-uat-deployment
 
 deploy-uat-manually:
   extends: .deploy_to_docker_swarm
