@@ -1,7 +1,7 @@
 <template>
   <GenericCard
     :has-link="false"
-    image-size="contain"
+    image-size="cover"
     :href="(product || {}).url || ''"
   >
     <template #image>
