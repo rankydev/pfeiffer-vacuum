@@ -8,6 +8,7 @@ export const subjectCTA = {
   description: [
     { ...richtext.content, richtext: 'Lorem ipsum dolor sit amet' },
   ],
+  isSelected: false,
   type: [contactctabox],
   component: 'ContactRequestSubject',
   _uid: nanoid(),
@@ -18,6 +19,7 @@ export const subjectForm = {
   description: [
     { ...richtext.content, richtext: 'Lorem ipsum dolor sit amet' },
   ],
+  isSelected: false,
   type: [contactForm],
   component: 'ContactRequestSubject',
   _uid: nanoid(),

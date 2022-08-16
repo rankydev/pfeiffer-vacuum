@@ -1,14 +1,11 @@
 import { shallowMount } from '@vue/test-utils'
-import {
-  subjectCTA,
-  subjectForm,
-} from './ContactRequestSubject.stories.content'
+import { subjectCTA } from './ContactRequestSubject.stories.content'
 import ContactRequestSubject from './ContactRequestSubject.vue'
 
 describe('ContactRequestSubject', () => {
   describe('initial state', () => {
     test('should render given only required prop type', () => {
-      const propsData = { type: subjectCTA.type }
+      const propsData = { type: subjectCTA.type, isSelected: false }
       const wrapper = shallowMount(ContactRequestSubject, {
         stubs: { AnimatedCollapse: true, NuxtDynamic: true },
         propsData,
