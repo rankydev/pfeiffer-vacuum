@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="image-banner tw-grid-container tw-my-component-wide"> -->
   <div class="image-banner">
     <div class="image-banner__content">
       <div class="image-banner__headline-wrapper">
@@ -28,7 +27,7 @@
         v-editable="item"
         class="image-banner__image"
         v-bind="item"
-        :aspect-ratio="'3:2'"
+        aspect-ratio="3:2"
       />
     </div>
   </div>
