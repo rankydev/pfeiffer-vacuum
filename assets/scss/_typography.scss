@@ -140,6 +140,10 @@ body {
   font-weight: bold;
   color: #292929;
 
+  &::selection {
+    background-color: transparent;
+  }
+
   @screen md {
     font-size: 3rem;
     line-height: 3.5rem;

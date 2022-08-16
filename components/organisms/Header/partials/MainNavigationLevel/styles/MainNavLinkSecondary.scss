@@ -61,6 +61,10 @@
       @apply tw-flex tw-justify-center;
       @apply tw-grow;
     }
+
+    a{
+      @apply tw-w-full tw-justify-center;
+    }
   }
 
   @screen md {

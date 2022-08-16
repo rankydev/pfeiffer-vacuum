@@ -102,6 +102,16 @@ export default {
     @apply tw-flex;
     @apply tw-flex-wrap;
     @apply tw-gap-4;
+
+    a {
+      @apply tw-w-full tw-justify-center;
+    }
+
+    @screen md {
+      a {
+        width: unset;
+      }
+    }
   }
 }
 </style>

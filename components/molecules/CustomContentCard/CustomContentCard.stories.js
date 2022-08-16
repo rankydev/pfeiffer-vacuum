@@ -21,7 +21,7 @@ export default {
     docs: {
       description: {
         component:
-          'The CustomContentCard component cn be used within a slider to present conetent which is defined within storyblok.',
+          'The CustomContentCard component can be used within a slider to present content which is defined within storyblok.',
       },
       source: {
         code: '<CustomContentCard v-bind="{ date, image, title, description, href }"  />',
