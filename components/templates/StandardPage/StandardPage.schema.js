@@ -33,6 +33,7 @@ export default {
         'TeaserCardCarousel',
         'VideoPlayer',
         'HelpContainer',
+        'ImageBanner',
       ],
     },
     bottom: {
