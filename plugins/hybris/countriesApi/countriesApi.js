@@ -1,7 +1,7 @@
 import config from '../hybris.config'
 
 export function getCountriesApi(axiosInstance, ctx) {
-  const logger = ctx.$getLoggerFor('productApi')
+  const logger = ctx.$getLoggerFor('countriesApi')
   return {
     async getCountries() {
       const result = await axiosInstance

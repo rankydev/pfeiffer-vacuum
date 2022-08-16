@@ -19,4 +19,8 @@
       min-width: 560px;
     }
   }
+
+  &__progress-bar {
+    @apply tw-rounded-lg;
+  }
 }

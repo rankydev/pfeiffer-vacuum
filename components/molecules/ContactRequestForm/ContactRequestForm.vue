@@ -66,9 +66,10 @@ export default defineComponent({
         ].includes(val),
     },
   },
-  setup() {
+  emits: ['close'],
+  setup(_, { emit }) {
     const loading = ref(false)
-    const { $hybrisApi } = useContext()
+    const { $hybrisApi, i18n } = useContext()
     const toast = useToast()
     // this will collect all nested component’s validation results
     const v = useVuelidate()
@@ -87,11 +88,10 @@ export default defineComponent({
           .submitContact(requestData.value)
           .then(() => {
             loading.value = false
-            // TODO: Localize values
+            emit('close')
             toast.success(
               {
-                headline: 'Successfully sent',
-                description: 'The contact request was successfully sent.',
+                description: i18n.t('form.message.success'),
               },
               {
                 timeout: 8000,
@@ -100,10 +100,8 @@ export default defineComponent({
           })
           .catch(() => {
             loading.value = false
-            // TODO: Localize values
             toast.error({
-              headline: 'An error occured',
-              description: 'The request could not be sent successfully.',
+              description: i18n.t('form.message.error'),
             })
           })
       }

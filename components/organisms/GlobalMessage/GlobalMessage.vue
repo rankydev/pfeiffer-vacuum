@@ -1,5 +1,5 @@
 <template>
-  <ContentWrapper>
+  <ContentWrapper no-padding>
     <div
       :class="[
         'global-message',
