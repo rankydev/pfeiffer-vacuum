@@ -9,6 +9,7 @@ const openMenu = () => {
   isActive.value = true
   setTimeout(() => {
     addEventListener('click', closeMenu)
+    addEventListener('touchstart', closeMenu)
     addEventListener('keydown', closeMenuEsc)
 
     if (hasResizeListener) return
@@ -17,17 +18,21 @@ const openMenu = () => {
   }, 0)
 }
 
-const closeMenu = () => {
+const closeMenu = (e) => {
   if (!isActive.value) return
+
+  //prevent closing of menu when user clicked on nav item
+  if (e && e.target.className.includes('primary-nav')) return
 
   isActive.value = false
   removeEventListener('click', closeMenu)
+  removeEventListener('touchstart', closeMenu)
   removeEventListener('keydown', closeMenuEsc)
 }
 
 const closeMenuEsc = ($event) => $event.key === 'Escape' && closeMenu()
 
-const toggleMenu = () => (!isActive.value ? openMenu() : closeMenu())
+const toggleMenu = (e) => (!isActive.value ? openMenu() : closeMenu(e))
 
 export const useMenuStore = () => ({
   isActive: readonly(isActive),

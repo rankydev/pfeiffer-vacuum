@@ -21,10 +21,11 @@ describe('Menu', () => {
         menu.open()
         jest.runAllTimers()
 
-        expect(addListenerSpy).toBeCalledTimes(3)
+        expect(addListenerSpy).toBeCalledTimes(4)
         expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'keydown', expect.any(Function))
-        expect(addListenerSpy).nthCalledWith(3, 'resize', menu.close, {
+        expect(addListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
+        expect(addListenerSpy).nthCalledWith(4, 'resize', menu.close, {
           passive: true,
         })
 
@@ -32,9 +33,10 @@ describe('Menu', () => {
         menu.open()
         jest.runAllTimers()
 
-        expect(addListenerSpy).toBeCalledTimes(2)
+        expect(addListenerSpy).toBeCalledTimes(3)
         expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'keydown', expect.any(Function))
+        expect(addListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
       })
 
       it('should set isActive=true when open was called', () => {
@@ -45,9 +47,10 @@ describe('Menu', () => {
       })
 
       it('should register all event listeners when open was called', () => {
-        expect(addListenerSpy).toBeCalledTimes(2)
+        expect(addListenerSpy).toBeCalledTimes(3)
         expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'keydown', expect.any(Function))
+        expect(addListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
       })
 
       it('should set isActive=true when toggle was called', () => {
@@ -58,9 +61,10 @@ describe('Menu', () => {
       })
 
       it('should register all event listeners when toggle was called', () => {
-        expect(addListenerSpy).toBeCalledTimes(2)
+        expect(addListenerSpy).toBeCalledTimes(3)
         expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'keydown', expect.any(Function))
+        expect(addListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
       })
 
       it('should remove no event listeners when close was called', () => {
@@ -80,9 +84,10 @@ describe('Menu', () => {
       })
 
       it('should remove all event listeners when close was called', () => {
-        expect(remListenerSpy).toBeCalledTimes(2)
+        expect(remListenerSpy).toBeCalledTimes(3)
         expect(remListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(remListenerSpy).nthCalledWith(2, 'keydown', expect.any(Function))
+        expect(remListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(remListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
       })
 
       it('should set isActive=false when toggle was called', () => {
@@ -92,9 +97,10 @@ describe('Menu', () => {
       })
 
       it('should remove all event listeners when toggle was called', () => {
-        expect(remListenerSpy).toBeCalledTimes(2)
+        expect(remListenerSpy).toBeCalledTimes(3)
         expect(remListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(remListenerSpy).nthCalledWith(2, 'keydown', expect.any(Function))
+        expect(remListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(remListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
       })
 
       it('should register no new event listeners when open was called', () => {

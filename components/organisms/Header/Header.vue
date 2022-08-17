@@ -1,8 +1,5 @@
 <template>
-  <header
-    class="header"
-    :class="{ 'header--blur-content': menu.isActive.value }"
-  >
+  <header class="header" :class="{ 'header--blur-content': menuIsActive }">
     <ContentWrapper class="header__outer">
       <div class="header__inner">
         <NuxtLink :to="localePath('/')" class="header__logo"><Logo /></NuxtLink>
@@ -64,7 +61,10 @@ export default defineComponent({
     const menu = useMenuStore()
     const active = ref(false)
 
-    return { active, menu }
+    return {
+      active,
+      menuIsActive: menu.isActive,
+    }
   },
 })
 </script>
