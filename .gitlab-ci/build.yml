@@ -46,9 +46,10 @@ lint:
     - npm ci --cache .npm --prefer-offline
     - npm run lint:ci
   artifacts:
-    when: always
-    paths:
-      - report/
+    reports:
+      junit:
+        - "eslint-test-results.xml"
+        - "stylelint-test-results.xml"
     expire_in: 3 week
 
 test:
