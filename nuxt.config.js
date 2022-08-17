@@ -94,6 +94,7 @@ export default {
     '@nuxt/image',
     '@nuxtjs/i18n',
     '@nuxtjs/axios',
+    'vue-toastification/nuxt',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -127,6 +128,18 @@ export default {
       fallbackLocale: defaultLanguageCode,
       dateTimeFormats: dateTimeFormats,
     },
+  },
+
+  // Vue Toastification config, see: https://github.com/Maronato/vue-toastification
+  toast: {
+    shareAppContext: true,
+    position: 'bottom-center',
+    transition: 'Vue-Toastification__fade',
+    timeout: false,
+    closeButton: false,
+    icon: false,
+    containerClassName: 'pv-toast',
+    toastClassName: 'pv-toast',
   },
 
   // SVG Sprite Configuration, see: https://github.com/nuxt-community/svg-sprite-module

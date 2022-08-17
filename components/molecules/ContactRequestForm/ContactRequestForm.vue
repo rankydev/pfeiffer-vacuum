@@ -40,6 +40,7 @@ import TopicRequest from '~/components/molecules/ContactRequestForm/partials/Top
 import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import useVuelidate from '@vuelidate/core'
+import { useToast } from '~/composables/useToast'
 import { useMiscStore } from '~/stores/misc'
 
 export default defineComponent({
@@ -65,9 +66,11 @@ export default defineComponent({
         ].includes(val),
     },
   },
-  setup() {
+  emits: ['close'],
+  setup(_, { emit }) {
     const loading = ref(false)
-    const { $hybrisApi } = useContext()
+    const { $hybrisApi, i18n } = useContext()
+    const toast = useToast()
     // this will collect all nested component’s validation results
     const v = useVuelidate()
     const requestData = ref({})
@@ -84,14 +87,22 @@ export default defineComponent({
         await $hybrisApi.contactApi
           .submitContact(requestData.value)
           .then(() => {
-            // TODO: Implement Toast
             loading.value = false
-            console.log('Contact request successfully sent!')
+            emit('close')
+            toast.success(
+              {
+                description: i18n.t('form.message.success'),
+              },
+              {
+                timeout: 8000,
+              }
+            )
           })
-          .catch((e) => {
+          .catch(() => {
             loading.value = false
-            // TODO: Implement Toast
-            console.log(e)
+            toast.error({
+              description: i18n.t('form.message.error'),
+            })
           })
       }
     }

@@ -35,5 +35,9 @@
   "validationErrorMessages": {
     "required": "Wert ist erforderlich",
     "email": "Der Wert ist keine gültige E-Mail-Adresse"
+  },
+  "message": {
+    "success": "Ihre Anfrage wurde erfolgreich gesendet",
+    "error": "Anfrage konnte nicht gesendet werden"
   }
 }

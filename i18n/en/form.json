@@ -36,5 +36,9 @@
   "validationErrorMessages": {
     "required": "Value is required",
     "email": "Value is not a valid email address"
+  },
+  "message": {
+    "success": "Your request was sent successfully!",
+    "error": "Could not send your request."
   }
 }

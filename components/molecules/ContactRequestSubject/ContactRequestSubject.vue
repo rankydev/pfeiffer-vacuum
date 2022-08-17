@@ -21,7 +21,7 @@
 </template>
 <script>
 import Icon from '~/components/atoms/Icon/Icon'
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'ContactRequestSubject',
@@ -42,23 +42,24 @@ export default defineComponent({
       default: () => [],
       required: true,
     },
+    isSelected: {
+      type: Boolean,
+      required: true,
+    },
   },
   emits: ['selected'],
   setup(props, { emit, attrs }) {
-    const isSelected = ref(false)
+    const { isSelected } = toRefs(props)
 
     const openSubject = () => {
       if (isSelected.value) {
-        isSelected.value = false
         emit('selected', {})
       } else {
-        isSelected.value = true
-
         emit('selected', { id: attrs._uid, type: props.type })
       }
     }
 
-    return { isSelected, openSubject }
+    return { openSubject }
   },
 })
 </script>
