@@ -25,16 +25,20 @@ const closeMenu = (event) => {
    * if className is string and includes defined class, navItem was clicked
    * burger-icon returns animatedSVGClassname as object
    */
-  if (event) {
-    const className = event.target?.className
 
-    if (typeof className === 'string' && className.includes('primary-nav'))
-      return
+  if (
+    event &&
+    typeof event.target?.className === 'string' &&
+    event.target?.className.includes('primary-nav')
+  )
+    return
 
-    if (className?.baseVal && className?.baseVal.includes('burger-icon')) {
-      event.preventDefault()
-    }
-  }
+  if (
+    event &&
+    event.target?.className?.baseVal &&
+    event.target?.className?.baseVal.includes('burger-icon')
+  )
+    return event.preventDefault()
 
   isActive.value = false
   removeEventListener('click', closeMenu)
