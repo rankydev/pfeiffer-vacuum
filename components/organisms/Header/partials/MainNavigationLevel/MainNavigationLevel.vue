@@ -21,7 +21,8 @@
             [`${prefix}__link`]: true,
             [`${prefix}__link--passive`]: ![null, idx].includes(activeElement),
             [`${prefix}__link--active`]:
-              activeElement === idx || selectedPrimaryLink === idx,
+              activeElement === idx ||
+              (prefix === 'primary-nav-0' && selectedPrimaryLink === idx),
           }"
           v-bind="entry"
           :before-navigation="
