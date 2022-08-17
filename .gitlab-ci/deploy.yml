@@ -130,4 +130,4 @@ deploy-prd-manually:
   only:
     - tags
   tags:
-    - pvac-frontend-prd-deployment
+    - pvweb-prd-deployment
