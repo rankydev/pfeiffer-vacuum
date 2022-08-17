@@ -50,6 +50,8 @@ lint-styles:
       junit:
         - "stylelint-test-results.xml"
     expire_in: 3 week
+  except:
+    - develop
 
 lint-javascript:
   extends: .node-image
@@ -74,6 +76,34 @@ lint-javascript:
       junit:
         - "eslint-test-results.xml"
     expire_in: 3 week
+  except:
+    - develop
+
+lint:
+  extends: .node-image
+  stage: test
+  needs: ["build"]
+  cache:
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: pull
+    - key: "${CI_PIPELINE_ID}-report"
+      paths:
+        - report/
+      policy: push
+  script:
+    - npm ci --cache .npm --prefer-offline
+    - npm run lint:ci
+  artifacts:
+    when: always
+    paths:
+      - report/
+    expire_in: 3 week
+  only:
+    - develop
 
 test:
   extends: .node-image
