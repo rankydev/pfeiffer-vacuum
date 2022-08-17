@@ -1,13 +1,13 @@
 import { getImage } from './hybrisProvider'
-import { hybrisResponsiveImageEntry } from '~/components/atoms/ResponsiveImage/ResponsiveImage.stories.content'
-import { PATH_SHOP_IMAGES } from '~/server/constants.js'
 
 describe('HybrisProvider', () => {
   describe('initial state', () => {
     test('should', () => {
-      const hybrisProvider = getImage(hybrisResponsiveImageEntry.image.url)
-      expect(hybrisProvider.url).toContain(PATH_SHOP_IMAGES)
-      expect(hybrisProvider.url).toContain(hybrisResponsiveImageEntry.image.url)
+      const hybrisProvider = getImage('image.png', {
+        baseURL: 'http://www.diva-e.com/',
+      })
+      const imageURL = 'http://www.diva-e.com/image.png'
+      expect(hybrisProvider.url).toBe(imageURL)
     })
   })
 })
