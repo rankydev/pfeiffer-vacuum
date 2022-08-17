@@ -38,7 +38,7 @@ const Template = (args, { argTypes }) => ({
   },
   template: `
     <div class="documentation-preview">
-      <ErrorImageTeaser v-bind="args" />
+      <ErrorImageStage v-bind="args" />
     </div>
   `,
 })
