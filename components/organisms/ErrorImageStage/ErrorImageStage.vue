@@ -16,6 +16,7 @@
         v-if="stageContent.length"
         class="error-image-stage__content-block"
         v-bind="stageContent[0]"
+        :blend-out-btn-mobile="true"
       />
     </div>
     <NuxtImg
@@ -92,7 +93,7 @@ $home-stage-interlay-spacing-xs: calc(
   @apply tw-relative;
   @apply tw-overflow-hidden;
   @apply tw-bg-no-repeat tw-bg-cover tw-bg-center;
-  @apply tw-flex tw-flex-col tw-justify-between;
+  @apply tw-flex tw-flex-col-reverse tw-justify-between;
   height: $home-stage-height-xs;
   width: $home-stage-width;
 
@@ -122,8 +123,8 @@ $home-stage-interlay-spacing-xs: calc(
     @apply tw-absolute;
     @apply tw-h-auto;
     @apply tw-pointer-events-none;
-    bottom: -$home-stage-interlay-spacing-xs;
-    right: -$home-stage-interlay-spacing-xs;
+    top: 0;
+    right: 0;
 
     @screen sm {
       width: $home-stage-interlay-width-sm;
