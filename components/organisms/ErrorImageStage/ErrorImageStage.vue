@@ -16,6 +16,7 @@
         v-if="stageContent.length"
         class="error-image-stage__content-block"
         v-bind="stageContent[0]"
+        :blend-out-btn-mobile="true"
       />
     </div>
     <NuxtImg
