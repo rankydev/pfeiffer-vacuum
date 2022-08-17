@@ -9,7 +9,7 @@ const openMenu = () => {
   isActive.value = true
   setTimeout(() => {
     addEventListener('click', closeMenu)
-    addEventListener('touchstart', closeMenu)
+    addEventListener('touchend', closeMenu)
     addEventListener('keydown', closeMenuEsc)
 
     if (hasResizeListener) return
@@ -21,12 +21,24 @@ const openMenu = () => {
 const closeMenu = (e) => {
   if (!isActive.value) return
 
-  //prevent closing of menu when user clicked on nav item
-  if (e && e.target.className.includes('primary-nav')) return
+  /*
+   * if className is string and includes defined class, navItem was clicked
+   * burger-icon returns animatedSVGClassname as object
+   */
+  if (e) {
+    const className = e.target?.className
+
+    if (typeof className === 'string' && className.includes('primary-nav'))
+      return
+
+    if (className?.baseVal && className?.baseVal.includes('burger-icon')) {
+      e.preventDefault()
+    }
+  }
 
   isActive.value = false
   removeEventListener('click', closeMenu)
-  removeEventListener('touchstart', closeMenu)
+  removeEventListener('touchend', closeMenu)
   removeEventListener('keydown', closeMenuEsc)
 }
 
