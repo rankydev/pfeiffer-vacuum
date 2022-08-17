@@ -126,6 +126,7 @@ export default defineComponent({
   }
 
   &__buttons {
+    @apply tw-w-full;
     @apply tw-mt-4;
     @apply tw-flex tw-flex-wrap;
     @apply tw-gap-x-6 tw-gap-y-4;
