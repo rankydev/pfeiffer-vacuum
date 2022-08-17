@@ -1,5 +1,4 @@
 import RichtextBasic from '~/components/atoms/Richtext/RichtextBasic.schema.js'
-
 export default {
   name: 'ImageBanner',
   display_name: 'Image Banner',
@@ -8,6 +7,7 @@ export default {
       type: 'text',
       max_length: '55',
       translatable: true,
+      required: true,
     },
     subline: {
       type: 'text',
@@ -31,11 +31,6 @@ export default {
       restrict_components: true,
       required: true,
       component_whitelist: ['ResponsiveImage'],
-    },
-    icon: {
-      type: 'text',
-      description:
-        'Use an icon from https://fonts.google.com/icons here (e.g. calculate)',
     },
   },
   image: null,
