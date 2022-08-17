@@ -82,7 +82,7 @@ export default {
           icon.value.name = 'info_outline'
           break
         case 'error':
-          icon.value.name = 'info'
+          icon.value.name = 'error'
           break
       }
     })
