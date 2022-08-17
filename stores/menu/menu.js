@@ -20,6 +20,7 @@ const openMenu = () => {
 
 const closeMenu = (e) => {
   if (!isActive.value) return
+
   //prevent closing of menu when user clicked on nav item
   if (e && e.target.className.includes('primary-nav')) return
 
