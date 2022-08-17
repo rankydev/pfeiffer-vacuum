@@ -9,15 +9,13 @@
       </div>
       <Richtext :richtext="richtext" class="image-banner__richtext" />
       <div class="image-banner__buttons">
-        <div>
-          <NuxtDynamic
-            v-for="item in buttons"
-            :key="item._uid"
-            class="image-banner__button"
-            v-bind="item"
-            :name="item.uiComponent || item.component"
-          />
-        </div>
+        <NuxtDynamic
+          v-for="item in buttons"
+          :key="item._uid"
+          class="image-banner__button"
+          v-bind="item"
+          :name="item.uiComponent || item.component"
+        />
       </div>
     </div>
     <div class="image-banner__media">
@@ -123,8 +121,34 @@ export default defineComponent({
     }
   }
 
+  &__richtext {
+    @apply tw-overflow-auto;
+  }
+
   &__buttons {
     @apply tw-mt-4;
+    @apply tw-flex tw-flex-wrap;
+    @apply tw-gap-x-6 tw-gap-y-4;
+  }
+
+  &__button {
+    @apply tw-basis-full;
+
+    &:nth-child(2) {
+      @apply tw-justify-start;
+    }
+
+    @screen md {
+      @apply tw-basis-0;
+    }
+  }
+
+  &__button--mobile {
+    @apply tw-flex;
+
+    @screen md {
+      @apply tw-hidden;
+    }
   }
 
   &__content {
