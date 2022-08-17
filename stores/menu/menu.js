@@ -9,6 +9,7 @@ const openMenu = () => {
   isActive.value = true
   setTimeout(() => {
     addEventListener('click', closeMenu)
+    addEventListener('touchstart', closeMenu)
     addEventListener('keydown', closeMenuEsc)
 
     if (hasResizeListener) return
@@ -22,6 +23,7 @@ const closeMenu = () => {
 
   isActive.value = false
   removeEventListener('click', closeMenu)
+  removeEventListener('touchstart', closeMenu)
   removeEventListener('keydown', closeMenuEsc)
 }
 
