@@ -30,6 +30,7 @@ cms-sync-dev:
     name: dev2
   except:
     - develop
+  when: manual
 
 cms-sync-uat-automatically:
   extends: .cms-sync
