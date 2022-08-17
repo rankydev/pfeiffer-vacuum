@@ -204,7 +204,7 @@ export default {
         provider: '~/providers/images/hybrisProvider',
         options: {
           baseURL: process.env.SHOP_IMAGE_URL,
-        }
+        },
       },
     },
     storyblok: {
