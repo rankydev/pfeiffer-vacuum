@@ -18,21 +18,21 @@ const openMenu = () => {
   }, 0)
 }
 
-const closeMenu = (e) => {
+const closeMenu = (event) => {
   if (!isActive.value) return
 
   /*
    * if className is string and includes defined class, navItem was clicked
    * burger-icon returns animatedSVGClassname as object
    */
-  if (e) {
-    const className = e.target?.className
+  if (event) {
+    const className = event.target?.className
 
     if (typeof className === 'string' && className.includes('primary-nav'))
       return
 
     if (className?.baseVal && className?.baseVal.includes('burger-icon')) {
-      e.preventDefault()
+      event.preventDefault()
     }
   }
 
@@ -44,7 +44,7 @@ const closeMenu = (e) => {
 
 const closeMenuEsc = ($event) => $event.key === 'Escape' && closeMenu()
 
-const toggleMenu = (e) => (!isActive.value ? openMenu() : closeMenu(e))
+const toggleMenu = (event) => (!isActive.value ? openMenu() : closeMenu(event))
 
 export const useMenuStore = () => ({
   isActive: readonly(isActive),
