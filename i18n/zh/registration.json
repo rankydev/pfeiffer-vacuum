@@ -1,0 +1,12 @@
+{
+  "registrationRequest": {
+    "title": "帐户详细资料",
+    "firstname": "名",
+    "surname": "姓",
+    "company": "公司/大学",
+    "mail": "电子邮件",
+    "country": "国家",
+    "region": "地区",
+    "password": "密码"
+  }
+}

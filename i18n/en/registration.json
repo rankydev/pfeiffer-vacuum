@@ -1,0 +1,12 @@
+{
+  "registrationRequest": {
+    "title": "Account details",
+    "firstname": "First name",
+    "surname": "Last name",
+    "company": "Company / University",
+    "mail": "Email",
+    "country": "Country / Location",
+    "region": "Region",
+    "password": "Password"
+  }
+}

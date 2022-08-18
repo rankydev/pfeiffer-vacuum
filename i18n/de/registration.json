@@ -1,0 +1,12 @@
+{
+  "registrationRequest": {
+    "title": "Kontodaten",
+  "firstname": "Vorname",
+    "surname": "Nachname",
+    "company": "Firma/Universität",
+    "mail": "E-Mail",
+    "country": "Land",
+    "region": "Bundesstaat",
+    "password": "Passwort"
+  }
+}

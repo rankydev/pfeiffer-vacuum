@@ -1,0 +1,12 @@
+{
+  "registrationRequest": {
+    "title": "계정 세부 정보",
+    "firstname": "이름",
+    "surname": "성",
+    "company": "회사/대학",
+    "mail": "이메일",
+    "country": "국가",
+    "region": "지역",
+    "password": "비밀번호"
+  }
+}
