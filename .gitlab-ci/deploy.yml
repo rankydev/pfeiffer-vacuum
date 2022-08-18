@@ -88,7 +88,9 @@ deploy-lsg-manually:
   before_script:
     - cd docker
   script:
-    - envsubst < docker-compose.template.yml >docker-compose.swarm.yml
+    - envsubst < docker-compose.template.yml > docker-compose.swarm.yml
+    - cat docker-compose.swarm.yml
+    - copy docker-compose.swarm.yml ~/
     - docker stack deploy --compose-file docker-compose.swarm.yml pvweb
   allow_failure: false
 
