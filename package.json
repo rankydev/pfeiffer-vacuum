@@ -21,7 +21,7 @@
     "lint:report": "npm run lint:js-report && npm run lint:style-report",
     "lsg": "cross-env STORYBOOK=true nuxt storybook -s .storybook/static",
     "lsg:build": "cross-env STORYBOOK=true nuxt storybook build -s .storybook/static --output-dir ./lsg-public",
-    "test": "jest",
+    "test": "jest --ci --coverage",
     "cms:sync": "env-cmd node -r esm ./bin/nuxt-storyblok.js sync",
     "cms:sync:ci": "node -r esm ./bin/nuxt-storyblok.js sync"
   },
