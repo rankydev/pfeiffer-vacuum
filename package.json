@@ -86,6 +86,7 @@
     "husky": "^7.0.4",
     "jest": "^27.5.1",
     "jest-fail-on-console": "^2.3.0",
+    "jest-junit": "^14.0.0",
     "jsdom-global": "^3.0.2",
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",
