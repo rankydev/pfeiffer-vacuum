@@ -9,7 +9,7 @@ const openMenu = () => {
   isActive.value = true
   setTimeout(() => {
     addEventListener('click', closeMenu)
-    addEventListener('touchstart', closeMenu)
+    addEventListener('touchend', closeMenu)
     addEventListener('keydown', closeMenuEsc)
 
     if (hasResizeListener) return
@@ -18,21 +18,37 @@ const openMenu = () => {
   }, 0)
 }
 
-const closeMenu = (e) => {
+const closeMenu = (event) => {
   if (!isActive.value) return
 
-  //prevent closing of menu when user clicked on nav item
-  if (e && e.target.className.includes('primary-nav')) return
+  /*
+   * if className is string and includes defined class, navItem was clicked
+   * burger-icon returns animatedSVGClassname as object
+   */
+
+  if (
+    event &&
+    typeof event.target?.className === 'string' &&
+    event.target?.className.includes('primary-nav')
+  )
+    return
+
+  if (
+    event &&
+    event.target?.className?.baseVal &&
+    event.target?.className?.baseVal.includes('burger-icon')
+  )
+    return event.preventDefault()
 
   isActive.value = false
   removeEventListener('click', closeMenu)
-  removeEventListener('touchstart', closeMenu)
+  removeEventListener('touchend', closeMenu)
   removeEventListener('keydown', closeMenuEsc)
 }
 
 const closeMenuEsc = ($event) => $event.key === 'Escape' && closeMenu()
 
-const toggleMenu = (e) => (!isActive.value ? openMenu() : closeMenu(e))
+const toggleMenu = (event) => (!isActive.value ? openMenu() : closeMenu(event))
 
 export const useMenuStore = () => ({
   isActive: readonly(isActive),

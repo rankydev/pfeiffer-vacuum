@@ -19,9 +19,10 @@ export default function (req, res, next) {
   const isEmptyBase = (routerBase || '').length === 0
   const isRootBase = routerBase === '/'
   const isCurrentBase = decodeURI(req.url).startsWith(routerBase)
+  const isApi = decodeURI(req.url).startsWith('/api')
   const regionCodes = config.publicRuntimeConfig.REGION_CODES
 
-  if (isEmptyBase || isRootBase || isCurrentBase) {
+  if (isEmptyBase || isRootBase || isCurrentBase || isApi) {
     return next()
   }
 
