@@ -124,7 +124,7 @@ test:
     - npm ci --cache .npm --prefer-offline
     - NODE_ENV=test
     - npm test
-  coverage: Tests:\s*\d+\s+passed,\s\d+\s+total
+  #coverage: Tests:\s*\d+\s+passed,\s\d+\s+total
   artifacts:
     when: always
     reports:
