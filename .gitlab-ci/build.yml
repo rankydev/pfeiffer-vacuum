@@ -131,6 +131,8 @@ test:
       coverage_report:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
+      junit:
+        - "junit.xml"        
     paths:
       - coverage/
     expire_in: 3 week
