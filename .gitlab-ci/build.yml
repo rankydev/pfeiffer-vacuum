@@ -129,6 +129,7 @@ test:
     when: always
     reports:
       coverage_report:
+        coverage_format: cobertura
         path: coverage/clover.xml
     paths:
       - coverage/
