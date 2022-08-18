@@ -38,7 +38,7 @@ const closeMenu = (event) => {
     event.target?.className?.baseVal &&
     event.target?.className?.baseVal.includes('burger-icon')
   )
-    return event.preventDefault()
+    event.preventDefault()
 
   isActive.value = false
   removeEventListener('click', closeMenu)
