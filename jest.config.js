@@ -12,7 +12,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   collectCoverage: true,
   setupFilesAfterEnv: ['./tests/jest.setup.js'],
-  coverageReporters: ['clover', 'json', 'lcov', 'text', 'html','cobertura'],
+  coverageReporters: ['clover', 'json', 'lcov', 'text', 'html', 'cobertura'],
   reporters: ['jest-junit'],
   collectCoverageFrom: [
     '<rootDir>/components/**/*.{vue,js}',
