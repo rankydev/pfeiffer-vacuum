@@ -2,8 +2,7 @@
   <div class="infobox tw-grid-container tw-my-component-wide">
     <div class="infobox__content">
       <p class="infobox__content__text">
-        Our product experts are always available to answer your questions about
-        our products and your applications.
+        {{ $t('registration.infotext') }}
       </p>
     </div>
     <div class="infobox__media">
