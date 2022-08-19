@@ -297,6 +297,7 @@ export default defineComponent({
 
     &--error {
       @apply tw-mr-9;
+      @apply tw-text-pv-red;
 
       &:focus {
         @apply tw-text-pv-red;
@@ -357,6 +358,10 @@ export default defineComponent({
       @apply tw-outline-0;
       @apply tw-text-pv-black;
       outline: 0;
+    }
+
+    &:focus + .pv-password__icon {
+      @apply tw-text-pv-black;
     }
 
     &:disabled {
