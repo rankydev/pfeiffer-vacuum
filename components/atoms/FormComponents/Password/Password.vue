@@ -296,8 +296,11 @@ export default defineComponent({
     transform: translateY(-50%);
 
     &--error {
-      @apply tw-text-pv-red;
       @apply tw-mr-9;
+
+      &:focus {
+        @apply tw-text-pv-red;
+      }
     }
 
     &--visibility {
@@ -334,6 +337,10 @@ export default defineComponent({
       @apply tw-rounded-t-md;
       @apply tw-border-pv-red;
 
+      &::-webkit-credentials-auto-fill-button {
+        margin-right: 38px;
+      }
+
       &:focus {
         @apply tw-border-t-pv-black;
         @apply tw-border-x-pv-black;
@@ -346,6 +353,7 @@ export default defineComponent({
     }
 
     &:focus {
+      @apply tw-ring-0;
       @apply tw-outline-0;
       @apply tw-text-pv-black;
       outline: 0;
