@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent, watch } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import { ref } from '@nuxtjs/composition-api'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
@@ -149,6 +149,13 @@ export default defineComponent({
       default: () => {},
     },
     /**
+     * determines whether a validation can be executed
+     */
+    validate: {
+      type: Boolean,
+      default: false,
+    },
+    /**
      * Defines if the password should be validated or not
      */
     showValidationCriterias: {
@@ -198,6 +205,15 @@ export default defineComponent({
     const inputType = ref(props.visibility ? 'text' : 'password')
 
     const validation = ref(useInputValidator(props.rules, internalValue))
+
+    watch(
+      () => props.validate,
+      (value) => {
+        if (value === true) {
+          validation.value.validateInput()
+        }
+      }
+    )
 
     const inputStylings = ref([
       props.showValidationCriterias || !!validation.value.getError()
@@ -331,7 +347,6 @@ export default defineComponent({
     }
 
     &:focus {
-      @apply tw-ring-0;
       @apply tw-outline-0;
       @apply tw-text-pv-black;
       outline: 0;

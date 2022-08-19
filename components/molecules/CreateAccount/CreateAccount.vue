@@ -123,6 +123,7 @@
           required
         ),
       }"
+      :validate="validate"
       :show-validation-criterias="true"
       @update="
         requestData.registration.password = $event
