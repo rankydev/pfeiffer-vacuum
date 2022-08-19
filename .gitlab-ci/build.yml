@@ -209,7 +209,7 @@ build-docker-image-frontend-uat-tags:
   environment:
     name: uat
   only:
-    - tags
+    - feature/PVWEB-684_uat-deployment
 
 build-docker-image-frontend-prd-tags:
   extends: .build-docker-image
