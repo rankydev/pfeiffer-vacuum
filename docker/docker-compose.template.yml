@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   pvweb:
-    image: "${DOCKER_IMAGE_NAME}:${DOCKER_TAG_NAME}"
+    image: "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
     deploy:
       mode: replicated
       replicas: ${CONTAINER_REPLICAS}
