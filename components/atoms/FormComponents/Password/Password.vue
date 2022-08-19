@@ -40,18 +40,21 @@
     </div>
     <ul v-if="validate" class="pv-password__rules">
       <li class="pv-password__rules--entry" :class="{ fulfilled: minLength }">
-        <Icon size="xsmall" icon="check_circle" />
+        <Icon size="xsmall" :icon="minLength ? 'check_circle' : 'error'" />
         {{ $t('form.password.minLength') }}
       </li>
       <li
         class="pv-password__rules--entry"
         :class="{ fulfilled: hasCapitalAndLowercase }"
       >
-        <Icon size="xsmall" icon="check_circle" />
+        <Icon
+          size="xsmall"
+          :icon="hasCapitalAndLowercase ? 'check_circle' : 'error'"
+        />
         {{ $t('form.password.capitalLetter') }}
       </li>
       <li class="pv-password__rules--entry" :class="{ fulfilled: hasDigit }">
-        <Icon size="xsmall" icon="check_circle" />
+        <Icon size="xsmall" :icon="hasDigit ? 'check_circle' : 'error'" />
         {{ $t('form.password.digit') }}
       </li>
       <li

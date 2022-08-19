@@ -13,7 +13,14 @@
     />
 
     <div v-if="buttons.length" class="home-stage-slide-content__buttons">
-      <Button v-for="button in buttons" :key="button._uid" v-bind="button" />
+      <Button
+        v-for="button in buttons"
+        :key="button._uid"
+        v-bind="button"
+        :class="{
+          'home-stage-slide-content__button--hidden': blendOutBtnMobile,
+        }"
+      />
     </div>
   </div>
 </template>
@@ -45,6 +52,13 @@ export default {
     buttons: {
       type: Array,
       default: () => [],
+    },
+    /**
+     * Can be used to blend out the second button on mobile
+     */
+    blendOutBtnMobile: {
+      type: Boolean,
+      default: false,
     },
   },
 }
@@ -108,6 +122,16 @@ export default {
     @screen md {
       @apply tw-mt-6;
       @apply tw-flex-row;
+    }
+  }
+
+  &__button--hidden {
+    &:nth-child(2) {
+      @apply tw-hidden;
+
+      @screen md {
+        @apply tw-flex;
+      }
     }
   }
 }

@@ -9,7 +9,7 @@ import {
 
 const argTypes = {}
 export default {
-  title: 'Organisms/0_112 ContactRequestSelection',
+  title: 'Organisms/o_112 ContactRequestSelection',
   component: ContactRequestSelection,
   parameters: {
     docs: {

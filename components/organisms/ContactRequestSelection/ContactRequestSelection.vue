@@ -23,6 +23,7 @@
           v-bind="item"
           class="contact-request-selection__subject"
           :name="item.uiComponent || item.component"
+          :is-selected="selectedSubjectId === item._uid"
           @selected="changeSelection"
         />
       </AnimatedCollapse>
@@ -34,6 +35,7 @@
           :key="item._uid"
           v-bind="item"
           :name="item.uiComponent || item.component"
+          @close="closeSubject"
         />
       </div>
     </AnimatedCollapse>
@@ -84,7 +86,11 @@ export default defineComponent({
       selectedSubjectId.value = data.id || undefined
       formType.value = data.type || []
     }
-    return { changeSelection, selectedSubjectId, formType }
+    const closeSubject = () => {
+      selectedSubjectId.value = undefined
+      formType.value = []
+    }
+    return { changeSelection, closeSubject, selectedSubjectId, formType }
   },
 })
 </script>

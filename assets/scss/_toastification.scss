@@ -1,0 +1,26 @@
+.Vue-Toastification {
+  &__container.bottom-center.pv-toast {
+    @apply tw-w-full;
+    @apply tw-flex tw-items-center;
+    @apply tw-left-0 tw-ml-0;
+  }
+
+  &__toast.pv-toast {
+    @apply tw-p-0;
+    @apply tw-bg-pv-transparent;
+    @apply tw-rounded-none;
+    @apply tw-min-h-0;
+    @apply tw-shadow-none;
+    @apply tw-overflow-visible;
+    @apply tw-min-w-0;
+    @apply tw-max-w-full;
+
+    @screen md {
+      min-width: 560px;
+    }
+  }
+
+  &__progress-bar {
+    @apply tw-rounded-lg;
+  }
+}

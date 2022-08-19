@@ -5,7 +5,7 @@ import {
 } from './ContactFormSection.stories.content'
 const argTypes = {}
 export default {
-  title: 'Organisms/ContactFormSection',
+  title: 'Organisms/o_116 ContactFormSection',
   component: ContactFormSection,
   parameters: {
     docs: {

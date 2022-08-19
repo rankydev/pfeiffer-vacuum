@@ -23,7 +23,6 @@ const Template = (args) => ({
   components: { FlyoutEntry },
   setup() {
     const flyoutEntries = [flyoutEntry1, flyoutEntry2, flyoutEntry3]
-    console.log(flyoutEntries)
     return { args, flyoutEntries }
   },
   template: `

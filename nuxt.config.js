@@ -60,11 +60,11 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/helper/logger' },
     { src: '~/plugins/storyblok/storyblok-api-client', mode: 'client' },
     { src: '~/plugins/helper/breakpoints' },
     { src: '~/plugins/service/service.plugin', mode: 'client' },
     { src: '~/plugins/hybris/hybrisApi' },
-    { src: '~/plugins/helper/logger' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -94,6 +94,7 @@ export default {
     '@nuxt/image',
     '@nuxtjs/i18n',
     '@nuxtjs/axios',
+    'vue-toastification/nuxt',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -127,6 +128,18 @@ export default {
       fallbackLocale: defaultLanguageCode,
       dateTimeFormats: dateTimeFormats,
     },
+  },
+
+  // Vue Toastification config, see: https://github.com/Maronato/vue-toastification
+  toast: {
+    shareAppContext: true,
+    position: 'bottom-center',
+    transition: 'Vue-Toastification__fade',
+    timeout: false,
+    closeButton: false,
+    icon: false,
+    containerClassName: 'pv-toast',
+    toastClassName: 'pv-toast',
   },
 
   // SVG Sprite Configuration, see: https://github.com/nuxt-community/svg-sprite-module
@@ -178,6 +191,8 @@ export default {
     NODE_ENV: process.env.NODE_ENV,
     STORYBLOK_ACCESS_TOKEN: process.env.STORYBLOK_ACCESS_TOKEN,
     SHOP_BASE_URL: process.env.SHOP_BASE_URL,
+    SHOP_IMAGE_URL: process.env.SHOP_IMAGE_URL,
+    CONSOLA_LEVEL: process.env.CONSOLA_LEVEL,
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
@@ -187,6 +202,9 @@ export default {
     providers: {
       hybris: {
         provider: '~/providers/images/hybrisProvider',
+        options: {
+          baseURL: process.env.SHOP_IMAGE_URL,
+        },
       },
     },
     storyblok: {

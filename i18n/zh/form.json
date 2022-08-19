@@ -36,5 +36,9 @@
   "validationErrorMessages": {
     "required": "值是必需的",
     "email": "值不是有效的电子邮件地址"
+  },
+  "message": {
+    "success": "您的请求已发送成功！",
+    "error": "无法发送您的请求。"
   }
 }

@@ -15,6 +15,16 @@ const eventMock = () => ({
   stopPropagation: jest.fn(),
 })
 
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  return {
+    ...originalModule,
+    useRoute: () => {
+      return { value: { path: '' } }
+    },
+  }
+})
+
 function createComponent(propsData = {}, { isMobile, shallow = true } = {}) {
   const $breakpoints = { isMobile: ref(isMobile || false) }
   const mocks = { $nuxt: { context: { app: { $breakpoints } } } }
@@ -202,7 +212,7 @@ describe('MainNavigationLevel', () => {
 
           const links = wrapper.findAllComponents(Link)
 
-          links.wrappers.forEach((link, idx) => {
+          links.wrappers.forEach((link) => {
             link.vm.beforeNavigation(eventMock())
             link.vm.beforeNavigation(eventMock())
             expect(wrapper.vm.activeElement).toBe(null)
@@ -216,7 +226,7 @@ describe('MainNavigationLevel', () => {
 
           const icons = wrapper.findAllComponents(Icon)
 
-          icons.wrappers.forEach((icon, idx) => {
+          icons.wrappers.forEach((icon) => {
             icon.trigger('click')
             icon.trigger('click')
             expect(wrapper.vm.activeElement).toBe(null)

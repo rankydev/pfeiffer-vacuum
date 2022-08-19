@@ -50,6 +50,9 @@ ARG CI_PROJECT_URL
 ARG SHOP_BASE_URL
 ARG SHOP_IMAGE_URL
 
+# logging
+ARG CONSOLA_LEVEL
+
 # usercentrics
 ARG USERCENTRICS_PRIVACY_PATH
 ARG USERCENTRICS_ID
@@ -124,6 +127,9 @@ ENV CI_PROJECT_URL="${CI_PROJECT_URL}"
 ENV SHOP_BASE_URL="${SHOP_BASE_URL}"
 ENV SHOP_IMAGE_URL="${SHOP_IMAGE_URL}"
 
+# logging
+ENV CONSOLA_LEVEL="${CONSOLA_LEVEL}"
+
 # usercentrics
 ENV USERCENTRICS_PRIVACY_PATH="${USERCENTRICS_PRIVACY_PATH}"
 ENV USERCENTRICS_ID="${USERCENTRICS_ID}"
@@ -148,6 +154,7 @@ COPY --from=frontend-build /src/static ./static/
 COPY --from=frontend-build /src/resolver ./resolver/
 COPY --from=frontend-build /src/server ./server/
 COPY --from=frontend-build /src/providers ./providers/
+COPY --from=frontend-build /src/utils ./utils/
 
 EXPOSE 3000
 

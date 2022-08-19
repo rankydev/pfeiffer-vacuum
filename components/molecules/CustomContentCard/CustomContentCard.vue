@@ -32,9 +32,10 @@
     <template #actionItems>
       <Button
         :label="$t('navigation.button.article.label')"
-        icon="arrow_forward"
         variant="secondary"
         shape="plain"
+        size="normal"
+        icon="arrow_forward"
         :href="href"
       />
     </template>
@@ -45,9 +46,11 @@
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
+import Button from '~/components/atoms/Button/Button.vue'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
-  components: { GenericCard, ResponsiveImage },
+  components: { GenericCard, ResponsiveImage, Button, Icon },
   props: {
     /**
      * The date when the content was released

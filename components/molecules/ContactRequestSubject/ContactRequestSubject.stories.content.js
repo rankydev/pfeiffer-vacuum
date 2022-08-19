@@ -1,5 +1,5 @@
 import richtext from '~/components/atoms/Richtext/Richtext.stories.content.js'
-import contactctabox from '~/components/molecules/ContactCTABox/ContactCTABox.stories.content'
+import contactCtaBox from '~/components/molecules/ContactCTABox/ContactCTABox.stories.content'
 import contactForm from '~/components/molecules/ContactRequestForm/ContactRequestForm.stories.content'
 import { nanoid } from 'nanoid'
 
@@ -8,7 +8,8 @@ export const subjectCTA = {
   description: [
     { ...richtext.content, richtext: 'Lorem ipsum dolor sit amet' },
   ],
-  type: [contactctabox],
+  isSelected: false,
+  type: [contactCtaBox],
   component: 'ContactRequestSubject',
   _uid: nanoid(),
 }
@@ -18,6 +19,7 @@ export const subjectForm = {
   description: [
     { ...richtext.content, richtext: 'Lorem ipsum dolor sit amet' },
   ],
+  isSelected: false,
   type: [contactForm],
   component: 'ContactRequestSubject',
   _uid: nanoid(),

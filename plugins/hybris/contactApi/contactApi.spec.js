@@ -1,18 +1,18 @@
 import { getContactApi } from './contactApi'
-import { jest } from '@jest/globals'
+import { expect, jest } from '@jest/globals'
 
 const formData = { lorem: 'ipsum', dolor: 'sit' }
+const mockedErrorFunction = jest.fn()
 
-describe('productApi', () => {
+const ctx = {
+  $getLoggerFor: () => ({
+    error: mockedErrorFunction,
+  }),
+}
+
+describe('contactApi', () => {
   describe('initial state', () => {
     test('should send valid form data', () => {
-      const alertMock = jest.fn()
-      window.alert = alertMock
-      const ctx = {
-        $logger: {
-          error: jest.fn(),
-        },
-      }
       const axiosInstance = {
         post: jest.fn(() => {
           return {
@@ -22,26 +22,13 @@ describe('productApi', () => {
       }
       const contactApi = getContactApi(axiosInstance, ctx)
 
-      contactApi
-        .submitContact(formData)
-        .then((data) => {
-          // TODO: Adapt when vue toast is implemented
-          expect(alertMock).toBeCalledWith('PASSED')
-        })
-        .catch((e) => {
-          console.log(e)
-        })
+      contactApi.submitContact(formData).then((data) => {
+        // TODO: Adapt when vue toast is implemented
+        expect(data).toBe(true)
+      })
     })
 
     test('should throw error when hybris provides status other than 200', () => {
-      const errorMock = jest.fn()
-      const alertMock = jest.fn()
-      window.alert = alertMock
-      const ctx = {
-        $logger: {
-          error: errorMock,
-        },
-      }
       const axiosInstance = {
         post: jest.fn(() => {
           return {
@@ -51,26 +38,16 @@ describe('productApi', () => {
       }
       const contactApi = getContactApi(axiosInstance, ctx)
 
-      contactApi
-        .submitContact(formData)
-        .then((data) => {
-          // TODO: Adapt when vue toast is implemented
-          expect(alertMock).toBeCalledWith('ERROR')
-        })
-        .catch((e) => {
-          console.log(e)
-        })
+      contactApi.submitContact(formData).then((data) => {
+        expect(data).toBe(false)
+        expect(mockedErrorFunction).toBeCalledWith(
+          'Error when sending contact form. Returning false.',
+          undefined
+        )
+      })
     })
 
     test('should give error to logger given error from hybris', () => {
-      const errorMock = jest.fn()
-      const alertMock = jest.fn()
-      window.alert = alertMock
-      const ctx = {
-        $logger: {
-          error: errorMock,
-        },
-      }
       const error = 'Lorem error ipsum'
       const axiosInstance = {
         post: jest.fn(() => {
@@ -82,15 +59,13 @@ describe('productApi', () => {
       }
       const contactApi = getContactApi(axiosInstance, ctx)
 
-      contactApi
-        .submitContact(formData)
-        .then((data) => {
-          // TODO: Adapt when vue toast is implemented
-          expect(alertMock).toBeCalledWith(error)
-        })
-        .catch((e) => {
-          console.log(e)
-        })
+      contactApi.submitContact(formData).then((data) => {
+        expect(data).toBe(false)
+        expect(mockedErrorFunction).toBeCalledWith(
+          'Error when sending contact form. Returning false.',
+          'Lorem error ipsum'
+        )
+      })
     })
   })
 })

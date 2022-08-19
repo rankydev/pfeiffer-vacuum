@@ -1,9 +1,10 @@
 import config from '../hybris.config'
 
 export function getContactApi(axiosInstance, ctx) {
+  const logger = ctx.$getLoggerFor('contactApi')
+
   // TODO: Adapt when login is implemented
   const loggedIn = false
-
   return {
     async submitContact(contact) {
       const result = await axiosInstance.post(
@@ -16,13 +17,11 @@ export function getContactApi(axiosInstance, ctx) {
         return true
       }
 
-      console.log(result.error)
-
-      ctx.$logger.error(
+      logger.error(
         'Error when sending contact form. Returning false.',
-        result.error ? result.error : ''
+        result.error
       )
-      alert('ERROR')
+
       return false
     },
   }

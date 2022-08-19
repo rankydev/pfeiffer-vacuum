@@ -36,5 +36,9 @@
   "validationErrorMessages": {
     "required": "값은 필수 항목입니다",
     "email": "값이 유효한 이메일 주소가 아닙니다"
+  },
+  "message": {
+    "success": "요청이 성공적으로 전송되었습니다!",
+    "error": "요청을 보낼 수 없습니다."
   }
 }
