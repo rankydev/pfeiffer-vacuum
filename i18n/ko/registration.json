@@ -1,0 +1,23 @@
+{
+  "formCompanyData": {
+    "title": "회사 데이터",
+    "infobox": "여기에서 회사의 주소 데이터를 저장할 수 있습니다. 이 단계는 선택 사항입니다. 참고: 전체 계정으로만 가격을 보고 요청을 보낼 수 있습니다!",
+    "addCompanyData": "회사 주소 추가",
+    "removeCompanyData": "제거하다",
+    "registeredCustomer": "이미 클라이언트이신가요?",
+    "registeredCustomerTrue": "예",
+    "registeredCustomerFalse": "아니요",
+    "customerNumber": "고객 번호",
+    "companyInformation": "더 많은 회사 정보",
+    "department": "학과",
+    "tax": "세금 아이디",
+    "telephoneNumber": "핸드폰",
+    "fax": "팩스",
+    "country": "국가",
+    "countryAutofill": "자동으로 채워집니다",
+    "street": "거리",
+    "houseNumber": "숫자",
+    "postalCode": "우편 번호",
+    "city": "도시"
+  }
+}

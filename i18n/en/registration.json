@@ -1,0 +1,23 @@
+{
+  "formCompanyData": {
+    "title": "Company Data",
+    "infobox": "Here you can store the address data of your company. This step is optional. Please note: you can only see prices and send requests with a full account!",
+    "addCompanyData": "Add company address",
+    "removeCompanyData": "Remove",
+    "registeredCustomer": "Already client?",
+    "registeredCustomerTrue": "Yes",
+    "registeredCustomerFalse": "No",
+    "customerNumber": "Customer number",
+    "companyInformation": "More company information",
+    "department": "Department",
+    "tax": "Tax ID",
+    "telephoneNumber": "Telephone",
+    "fax": "Fax",
+    "country": "Country",
+    "countryAutofill": "Will be filled automatically",
+    "street": "Street",
+    "houseNumber": "Number",
+    "postalCode": "Postal code",
+    "city": "City"
+  }
+}
