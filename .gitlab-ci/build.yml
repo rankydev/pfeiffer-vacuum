@@ -44,7 +44,7 @@ lint-styles:
       policy: push
   script:
     - npm ci --cache .npm --prefer-offline
-    - npm run lint:style-ci
+    - npm run lint:style-report
   artifacts:
     reports:
       junit:
@@ -70,7 +70,7 @@ lint-javascript:
       policy: push
   script:
     - npm ci --cache .npm --prefer-offline
-    - npm run lint:js-ci
+    - npm run lint:js-report
   artifacts:
     reports:
       junit:
