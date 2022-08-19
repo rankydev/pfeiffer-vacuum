@@ -1,7 +1,10 @@
 <template>
   <div class="infobox tw-grid-container tw-my-component-wide">
     <div class="infobox__content">
-      <p>Should be translateable text</p>
+      <p>
+        Our product experts are always available to answer your questions about
+        our products and your applications.
+      </p>
     </div>
     <div class="infobox__media">
       <Icon icon="info" size="large" />
@@ -15,19 +18,6 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
   components: { Icon },
-  props: {
-    buttons: {
-      type: Array,
-      default: () => [],
-    },
-    /**
-     * icon displayed in the red field on the right side
-     */
-    icon: {
-      type: String,
-      default: 'info',
-    },
-  },
 })
 </script>
 
