@@ -84,12 +84,11 @@
 </template>
 
 <script>
-import { computed, defineComponent, watch } from '@nuxtjs/composition-api'
+import { ref, computed, defineComponent, watch } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import { ref } from '@nuxtjs/composition-api'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
-import { useInputValidator } from '@/composables/useValidator'
+import { useInputValidator } from '~/composables/useValidator'
 
 export default defineComponent({
   components: {
