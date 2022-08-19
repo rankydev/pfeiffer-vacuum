@@ -121,31 +121,7 @@ sonar-qube:
   script:
     - docker build
       -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
-      --build-arg NODE_ENV=${NODE_ENV}
-      --build-arg BASE_URL="${CI_ENVIRONMENT_URL}"
-      --build-arg DOMAIN="${CI_ENVIRONMENT_URL}"
-      --build-arg DEFAULT_LANGUAGE_CODE="${DEFAULT_LANGUAGE_CODE}"
-      --build-arg LANGUAGE_CODES="${LANGUAGE_CODES}"
-      --build-arg STORYBLOK_OAUTH_TOKEN="${STORYBLOK_OAUTH_TOKEN}"
-      --build-arg STORYBLOK_ACCESS_TOKEN="${STORYBLOK_ACCESS_TOKEN}"
-      --build-arg STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
-      --build-arg STORYBLOK_VERSION="${STORYBLOK_VERSION}"
-      --build-arg STORYBLOK_RESOLVE_RELATIONS="${STORYBLOK_RESOLVE_RELATIONS}"
-      --build-arg STORYBLOK_RESOLVE_LINKS="${STORYBLOK_RESOLVE_LINKS}"
-      --build-arg STORYBLOK_RESOLVE_ASSETS="${STORYBLOK_RESOLVE_ASSETS}"
-      --build-arg STORYBLOK_CONTENT_TYPES="${STORYBLOK_CONTENT_TYPES}"
-      --build-arg STORYBLOK_EXCLUDE_ROUTES="${STORYBLOK_EXCLUDE_ROUTES}"
-      --build-arg CI_COMMIT_SHORT_SHA="${CI_COMMIT_SHORT_SHA}"
-      --build-arg CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}"
-      --build-arg CI_PROJECT_URL="${CI_PROJECT_URL}"
-      --build-arg REGION_CODES="${REGION_CODES}"
-      --build-arg DEFAULT_REGION_CODE="${DEFAULT_REGION_CODE}"
-      --build-arg SHOP_BASE_URL="${SHOP_BASE_URL}"
-      --build-arg SHOP_IMAGE_URL="${SHOP_IMAGE_URL}"
-      --build-arg CONSOLA_LEVEL="${CONSOLA_LEVEL}"
-      --build-arg CURRENT_REGION_CODE="${CURRENT_REGION_CODE}"
-      --build-arg USERCENTRICS_PRIVACY_PATH="${USERCENTRICS_PRIVACY_PATH}"
-      --build-arg USERCENTRICS_ID="${USERCENTRICS_ID}"
+      $(cat .docker-buildargs | while read line; do buildargs+="--build-arg $line"; done; echo $buildargs; buildargs="")
       -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
@@ -209,7 +185,7 @@ build-docker-image-frontend-uat-tags:
   environment:
     name: uat
   only:
-    - feature/PVWEB-684_uat-deployment
+    - tags
 
 build-docker-image-frontend-prd-tags:
   extends: .build-docker-image
