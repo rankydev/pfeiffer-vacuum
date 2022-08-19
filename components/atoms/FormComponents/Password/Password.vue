@@ -7,7 +7,14 @@
         v-bind="{ placeholder, required, disabled }"
         :type="inputType"
         class="pv-password__element pv-password__element--icon"
-        :class="inputStylings"
+        :class="[
+          !!validation.getError()
+            ? 'pv-password__element--vuelidated'
+            : 'pv-password__element--NotValidated',
+          showValidationCriterias
+            ? 'pv-password__element--validated'
+            : 'pv-password__element--NotValidated',
+        ]"
         :placeholder="placeholder"
         @keypress.enter="$emit('submit', $event)"
         @focus="$emit('focus', true)"
@@ -33,7 +40,7 @@
     </div>
     <ErrorMessage
       v-if="!!validation.getError()"
-      class="pv-password__error-message"
+      :class="{ 'pv-password__error-message': showValidationCriterias }"
       :error-message="validation.getError()"
     />
     <div v-if="showValidationCriterias" class="pv-password__strength-indicator">
@@ -193,10 +200,9 @@ export default defineComponent({
     const validation = ref(useInputValidator(props.rules, internalValue))
 
     const inputStylings = ref([
-      props.showValidationCriterias
+      props.showValidationCriterias || !!validation.value.getError()
         ? 'pv-password__element--validated'
         : 'pv-password__element--NotValidated',
-      !!validation.value.getError() ? 'pv-password__element--error' : '',
     ]).value
 
     const changeVisibility = () => {
@@ -308,15 +314,20 @@ export default defineComponent({
       }
     }
 
-    &--validated {
+    &--vuelidated {
       @apply tw-rounded-b-none;
       @apply tw-rounded-t-md;
-      border-bottom-style: none;
+      @apply tw-border-pv-red;
 
       &:focus {
         @apply tw-border-t-pv-black;
         @apply tw-border-x-pv-black;
       }
+    }
+
+    &--validated {
+      border-bottom-style: none;
+      @apply tw-rounded-b-none;
     }
 
     &:focus {
@@ -337,20 +348,6 @@ export default defineComponent({
 
     &--icon {
       @apply tw-pr-10;
-    }
-
-    &--error {
-      @apply tw-rounded-t-md;
-      @apply tw-border-pv-red;
-      @apply tw-rounded-b-none;
-
-      &:focus {
-        @apply tw-border-pv-red;
-      }
-
-      &::-webkit-credentials-auto-fill-button {
-        margin-right: 38px;
-      }
     }
   }
 
