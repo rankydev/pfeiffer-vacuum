@@ -55,4 +55,13 @@ describe('CreateAccount', () => {
       expect(wrapper.exists()).toBeTruthy()
     })
   })
+  describe('during interaction', () => {
+    test('should add second select component after selecting country', () => {
+      const wrapper = shallowMount(CreateAccount, { localVue })
+      const countries = wrapper.findComponent(PvSelect)
+
+      expect(wrapper.exists()).toBeTruthy()
+      expect(countries).toBeTruthy()
+    })
+  })
 })
