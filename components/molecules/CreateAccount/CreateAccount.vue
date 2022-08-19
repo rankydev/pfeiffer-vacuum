@@ -115,7 +115,19 @@
 
     <Password
       :label="$t('registration.registrationRequest.password')"
-      :validate="true"
+      placeholder="Placeholder"
+      :required="true"
+      :rules="{
+        required: helpers.withMessage(
+          $t('form.validationErrorMessages.required'),
+          required
+        ),
+      }"
+      :show-validation-criterias="true"
+      @update="
+        requestData.registration.password = $event
+        $emit('update', requestData)
+      "
     />
   </div>
 </template>

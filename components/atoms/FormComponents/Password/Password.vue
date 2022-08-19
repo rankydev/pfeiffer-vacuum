@@ -12,10 +12,13 @@
         @keypress.enter="$emit('submit', $event)"
         @focus="$emit('focus', true)"
         @blur="$emit('focus', false)"
-        @input="$emit('update', internalValue)"
+        @input="
+          $emit('update', internalValue)
+          validation.validateInput()
+        "
       />
       <Icon
-        v-if="hasError"
+        v-if="validation.getError()"
         class="pv-password__icon"
         :class="'pv-password__icon--error'"
         :icon="'error_outline'"
@@ -28,8 +31,12 @@
         @click.native="$emit('click:icon', changeVisibility())"
       />
     </div>
-    <ErrorMessage v-if="hasError" :error-message="errorMessage" />
-    <div v-if="validate" class="pv-password__strength-indicator">
+    <ErrorMessage
+      v-if="!!validation.getError()"
+      class="pv-password__error-message"
+      :error-message="validation.getError()"
+    />
+    <div v-if="showValidationCriterias" class="pv-password__strength-indicator">
       <div
         class="pv-password__strength-indicator--inner"
         :class="{
@@ -38,7 +45,7 @@
         :style="{ width: indicatorWidth }"
       />
     </div>
-    <ul v-if="validate" class="pv-password__rules">
+    <ul v-if="showValidationCriterias" class="pv-password__rules">
       <li class="pv-password__rules--entry" :class="{ fulfilled: minLength }">
         <Icon size="xsmall" :icon="minLength ? 'check_circle' : 'error'" />
         {{ $t('form.password.minLength') }}
@@ -75,6 +82,7 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import { ref } from '@nuxtjs/composition-api'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
+import { useInputValidator } from '@/composables/useValidator'
 
 export default defineComponent({
   components: {
@@ -120,20 +128,6 @@ export default defineComponent({
       default: false,
     },
     /**
-     * The hasError is set by validation in parent component and shows if the input has an error
-     */
-    hasError: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * A text describing which error occured, it is displayed if hasError is true
-     */
-    errorMessage: {
-      type: String,
-      default: '',
-    },
-    /**
      * Defines if the password is visible or not
      */
     visibility: {
@@ -141,9 +135,16 @@ export default defineComponent({
       default: false,
     },
     /**
+     * defines what should be validated
+     */
+    rules: {
+      type: Object,
+      default: () => {},
+    },
+    /**
      * Defines if the password should be validated or not
      */
-    validate: {
+    showValidationCriterias: {
       type: Boolean,
       default: false,
     },
@@ -188,11 +189,14 @@ export default defineComponent({
   setup(props) {
     const internalValue = ref(props.value)
     const inputType = ref(props.visibility ? 'text' : 'password')
+
+    const validation = ref(useInputValidator(props.rules, internalValue))
+
     const inputStylings = ref([
-      props.validate
+      props.showValidationCriterias
         ? 'pv-password__element--validated'
         : 'pv-password__element--NotValidated',
-      props.hasError ? 'pv-password__element--error' : '',
+      !!validation.value.getError() ? 'pv-password__element--error' : '',
     ]).value
 
     const changeVisibility = () => {
@@ -246,6 +250,7 @@ export default defineComponent({
       hasDigit,
       indicatorWidth,
       indicatorWidthFull,
+      validation,
     }
   },
 })
@@ -280,6 +285,10 @@ export default defineComponent({
         @apply tw-text-pv-grey-16;
       }
     }
+  }
+
+  &__error-message {
+    @apply tw-rounded-none;
   }
 
   &__element {
