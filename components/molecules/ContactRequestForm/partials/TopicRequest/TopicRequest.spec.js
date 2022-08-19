@@ -13,8 +13,10 @@ describe('TopicRequest', () => {
       const inputArr = wrapper.findAllComponents(PvInput)
       const select = wrapper.findComponent(PvSelect)
       const textarea = wrapper.findComponent(PvTextArea)
+      const addressWrapper = wrapper.findAll('.topic-request__address')
 
       expect(wrapper.exists()).toBeTruthy()
+      expect(addressWrapper).toHaveLength(2)
       expect(inputArr).toHaveLength(8)
       expect(select).toBeTruthy()
       expect(textarea).toBeTruthy()
@@ -33,6 +35,16 @@ describe('TopicRequest', () => {
       const wrapper = shallowMount(TopicRequest, { propsData })
 
       expect(wrapper.exists()).toBeTruthy()
+    })
+
+    test('should validate input fields given validate propsData', () => {
+      const propsData = { type: 'QUOTE', validate: true }
+      const wrapper = shallowMount(TopicRequest, { propsData })
+      wrapper.vm.regions = [1, 2]
+      const select = wrapper.findAllComponents(PvSelect)
+
+      expect(wrapper.exists()).toBeTruthy()
+      expect(select).toHaveLength(2)
     })
   })
 })

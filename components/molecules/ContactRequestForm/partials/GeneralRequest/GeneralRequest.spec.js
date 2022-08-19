@@ -37,5 +37,15 @@ describe('GeneralRequest', () => {
 
       expect(wrapper.exists()).toBeTruthy()
     })
+
+    test('should validate input fields given validate propsData', () => {
+      const propsData = { type: 'GENERAL_QUERY', validate: true }
+      const wrapper = shallowMount(GeneralRequest, { propsData })
+      wrapper.vm.regions = [1, 2]
+      const select = wrapper.findAllComponents(PvSelect)
+
+      expect(wrapper.exists()).toBeTruthy()
+      expect(select).toHaveLength(2)
+    })
   })
 })
