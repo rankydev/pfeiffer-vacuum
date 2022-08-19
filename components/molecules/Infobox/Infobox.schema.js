@@ -1,4 +1,4 @@
-import RichtextBasic from '~/components/atoms/Richtext/RichtextBasic.schema.js'
+// import RichtextBasic from '~/components/atoms/Richtext/RichtextBasic.schema.js'
 
 export default {
   name: 'Infobox',
@@ -18,17 +18,17 @@ export default {
     //   ...RichtextBasic.schema.richtext,
     //   required: true,
     // },
-    buttons: {
-      type: 'bloks',
-      maximum: 2,
-      restrict_components: true,
-      component_whitelist: ['Button'],
-    },
-    icon: {
-      type: 'text',
-      description:
-        'Use an icon from https://fonts.google.com/icons here (e.g. calculate)',
-    },
+    // buttons: {
+    //   type: 'bloks',
+    //   maximum: 2,
+    //   restrict_components: true,
+    //   component_whitelist: ['Button'],
+    // },
+    // icon: {
+    //   type: 'text',
+    //   description:
+    //     'Use an icon from https://fonts.google.com/icons here (e.g. calculate)',
+    // },
   },
   image: null,
   preview_field: null,
