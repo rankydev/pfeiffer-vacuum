@@ -1,0 +1,58 @@
+import { createLocalVue, shallowMount } from '@vue/test-utils'
+import CreateAccount from '~/components/molecules/CreateAccount/CreateAccount'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
+import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
+import Password from '~/components/atoms/FormComponents/Password/Password'
+import { setActivePinia, createPinia } from 'pinia'
+
+const localVue = createLocalVue()
+localVue.prototype.$nuxt = {
+  context: {
+    $hybrisApi: {
+      countriesApi: {
+        getCountries: jest.fn(() => {
+          return { then: (i) => i }
+        }),
+      },
+    },
+  },
+}
+
+const mockLoadCountries = jest.fn()
+jest.mock('~/stores/misc', () => {
+  return {
+    __esModule: true,
+    useMiscStore: () => {
+      return {
+        loadCountries: mockLoadCountries,
+        countries: ['Land1'],
+      }
+    },
+  }
+})
+
+describe('CreateAccount', () => {
+  describe('initial state', () => {
+    beforeEach(() => setActivePinia(createPinia()))
+    test('should render component correctly', () => {
+      const wrapper = shallowMount(CreateAccount, { localVue })
+      const title = wrapper.find('h2')
+      const inputArr = wrapper.findAllComponents(PvInput)
+      const select = wrapper.findComponent(PvSelect)
+      const password = wrapper.findComponent(Password)
+
+      expect(wrapper.exists()).toBeTruthy()
+      expect(title).toBeTruthy()
+      expect(inputArr).toHaveLength(4)
+      expect(select).toBeTruthy()
+      expect(password).toBeTruthy()
+    })
+
+    test('should validate input fields given validate propsData', () => {
+      const propsData = { validate: true }
+      const wrapper = shallowMount(CreateAccount, { propsData, localVue })
+
+      expect(wrapper.exists()).toBeTruthy()
+    })
+  })
+})

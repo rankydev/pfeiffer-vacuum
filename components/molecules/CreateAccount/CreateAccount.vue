@@ -134,10 +134,10 @@
 </template>
 
 <script>
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import Password from '~/components/atoms/FormComponents/Password/Password'
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import { required, email, helpers } from '@vuelidate/validators'
 import { useRegions } from '~/composables/useRegions'
 import { useMiscStore } from '~/stores/misc'
