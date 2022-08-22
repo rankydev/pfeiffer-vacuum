@@ -54,24 +54,44 @@ describe('CreateAccount', () => {
 
       expect(wrapper.exists()).toBeTruthy()
     })
-
-    test('should validate input fields given validate propsData', () => {
-      const propsData = { validate: true }
-      const wrapper = shallowMount(CreateAccount, { propsData })
-      wrapper.vm.regions = [1, 2]
-      const select = wrapper.findAllComponents(PvSelect)
-
-      expect(wrapper.exists()).toBeTruthy()
-      expect(select).toHaveLength(2)
-    })
   })
   describe('during interaction', () => {
-    test('should add second select component after selecting country', () => {
+    test('should add second select component after selecting country', async () => {
+      const localVue = createLocalVue()
+      localVue.prototype.$nuxt = {
+        context: {
+          $hybrisApi: {
+            countriesApi: {
+              getRegions: jest.fn(() => {
+                return { then: (i) => i }
+              }),
+            },
+          },
+        },
+      }
+
+      const mockLoadRegions = jest.fn(() => {
+        return ['Region1']
+      })
+      jest.mock('~/composables/useRegions', () => {
+        return {
+          __esModule: true,
+          useRegions: () => {
+            return {
+              loadRegions: mockLoadRegions,
+              regions: ['Region1'],
+            }
+          },
+        }
+      })
       const wrapper = shallowMount(CreateAccount, { localVue })
       const countries = wrapper.findComponent(PvSelect)
 
       expect(wrapper.exists()).toBeTruthy()
       expect(countries).toBeTruthy()
+
+      const allSelects = wrapper.findAllComponents(PvSelect)
+      // expect(allSelects).toHaveLength(2)
     })
   })
 })

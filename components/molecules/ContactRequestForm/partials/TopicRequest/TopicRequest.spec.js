@@ -36,15 +36,5 @@ describe('TopicRequest', () => {
 
       expect(wrapper.exists()).toBeTruthy()
     })
-
-    test('should validate input fields given validate propsData', () => {
-      const propsData = { type: 'QUOTE', validate: true }
-      const wrapper = shallowMount(TopicRequest, { propsData })
-      wrapper.vm.regions = [1, 2]
-      const select = wrapper.findAllComponents(PvSelect)
-
-      expect(wrapper.exists()).toBeTruthy()
-      expect(select).toHaveLength(2)
-    })
   })
 })
