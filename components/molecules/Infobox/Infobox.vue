@@ -1,5 +1,5 @@
 <template>
-  <div class="infobox tw-grid-container tw-my-component-wide">
+  <div class="infobox">
     <div class="infobox__content">
       <p class="infobox__content__text">
         {{ $t('registration.infotext') }}
@@ -23,37 +23,29 @@ export default defineComponent({
 <style lang="scss">
 .infobox {
   @apply tw-bg-pv-grey-96;
-  @apply tw-rounded-lg;
+  @apply tw-rounded-md;
   @apply tw-text-pv-white;
+  @apply tw-flex tw-flex-row tw-justify-between;
+  @apply tw-my-6;
 
   &__content {
-    @apply tw-col-span-3;
-    @apply tw-p-4;
     @apply tw-text-pv-black;
-
-    @screen md {
-      @apply tw-col-span-7;
-    }
+    @apply tw-p-4;
 
     @screen lg {
-      @apply tw-col-span-10;
       @apply tw-p-6;
     }
   }
 
   &__media {
     @apply tw-flex tw-flex-col tw-justify-center tw-items-center;
-    @apply tw-h-full;
-    @apply tw-rounded-r-lg;
+    @apply tw-rounded-r-md;
     @apply tw-bg-pv-grey-80;
-    @apply tw-col-span-1;
+    @apply tw-px-4;
+    height: initial;
 
     @screen md {
-      @apply tw-col-span-1;
-    }
-
-    @screen lg {
-      @apply tw-col-span-2;
+      @apply tw-px-8;
     }
   }
 }
