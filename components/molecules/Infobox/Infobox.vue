@@ -16,6 +16,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
+  name: 'Infobox',
   components: { Icon },
 })
 </script>
