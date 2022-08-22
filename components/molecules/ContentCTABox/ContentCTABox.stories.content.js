@@ -3,7 +3,7 @@ import { buttonFilledSecondary } from '~/components/atoms/Button/Button.stories.
 
 export default {
   _uid: 'a8cb68c9-bbc4-4e81-beca-f0a490b3848d',
-  component: 'ContactCTABox',
+  component: 'ContentCTABox',
   headline: 'Lorem title',
   description: [
     { ...richtext.content, richtext: 'Lorem ipsum dolor sit amet' },
