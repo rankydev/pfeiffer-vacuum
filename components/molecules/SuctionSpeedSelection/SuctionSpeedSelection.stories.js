@@ -1,12 +1,12 @@
 import SuctionSpeedSelection from '~/components/molecules/SuctionSpeedSelection/SuctionSpeedSelection.vue'
 
 export default {
-  title: 'Molecules/m_100 SuctionSpeedSelection',
+  title: 'Molecules/m_127 SuctionSpeedSelection',
   component: SuctionSpeedSelection,
   parameters: {
     docs: {
       description: {
-        component: '',
+        component: 'A component to to quickly select the speed of suction.',
       },
     },
   },
