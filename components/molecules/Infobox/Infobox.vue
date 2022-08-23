@@ -2,7 +2,8 @@
   <div class="infobox">
     <div class="infobox__content">
       <p class="infobox__content__text">
-        {{ $t('registration.infotext') }}
+        {{ text }}
+        <!-- {{ $t('registration.infotext') }} -->
       </p>
     </div>
     <div class="infobox__media">
@@ -18,6 +19,12 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 export default defineComponent({
   name: 'Infobox',
   components: { Icon },
+  props: {
+    text: {
+      type: String,
+      default: '',
+    },
+  },
 })
 </script>
 
