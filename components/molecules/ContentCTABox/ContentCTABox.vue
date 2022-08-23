@@ -19,7 +19,7 @@
 </template>
 <script>
 export default {
-  name: 'ContactCTABox',
+  name: 'ContentCTABox',
   props: {
     headline: {
       type: String,

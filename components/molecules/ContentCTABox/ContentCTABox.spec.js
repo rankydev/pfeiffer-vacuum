@@ -1,13 +1,13 @@
-import ContactCTABox from './ContactCTABox'
-import propsData from './ContactCTABox.stories.content'
+import ContentCTABox from './ContentCTABox'
+import propsData from './ContentCTABox.stories.content'
 import { shallowMount } from '@vue/test-utils'
 
 const stubs = { NuxtDynamic: true }
 
-describe('ContactCTABox', () => {
+describe('ContentCTABox', () => {
   describe('initial state', () => {
     test('should render given no props', () => {
-      const wrapper = shallowMount(ContactCTABox, { stubs })
+      const wrapper = shallowMount(ContentCTABox, { stubs })
 
       expect(wrapper.find('.contact-cta-box__headline').text()).toBe('')
       expect(wrapper.find('.contact-cta-box__description').exists()).toBeFalsy()
@@ -15,7 +15,7 @@ describe('ContactCTABox', () => {
     })
 
     test('should render given propsData', () => {
-      const wrapper = shallowMount(ContactCTABox, { stubs, propsData })
+      const wrapper = shallowMount(ContentCTABox, { stubs, propsData })
 
       const headline = wrapper.find('.contact-cta-box__headline')
       const description = wrapper.findAll('[name="Richtext"]')
