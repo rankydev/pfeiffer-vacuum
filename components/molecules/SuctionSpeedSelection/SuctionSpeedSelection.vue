@@ -19,22 +19,26 @@
     />
     <div class="suction-speed-selection__inputs">
       <PvInput
-        v-model="lowerBound"
         class="suction-speed-selection__minimum"
         placeholder="Min."
         :required="true"
-        @update="$emit('update')"
+        @update="
+          lowerBound = $event
+          $emit('update', lowerBound)
+        "
       />
 
       <hr class="suction-speed-selection__divider-line" />
 
       <div class="suction-speed-selection__maximum">
         <PvInput
-          v-model="upperBound"
           placeholder="Max."
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
-          @update="$emit('update')"
+          @update="
+            upperBound = $event
+            $emit('update', lowerBound)
+          "
         />
 
         <div class="suction-speed-selection__maximum--selected-unit">
@@ -63,12 +67,6 @@ export default defineComponent({
     ButtonGroup,
     PvInput,
     Button,
-  },
-  props: {
-    value: {
-      type: null,
-      required: true,
-    },
   },
   emits: [
     /**
@@ -113,7 +111,7 @@ export default defineComponent({
       let upper = Number(upperBound.value)
 
       // 10000 or 2776 are the upper limit (based on the selected unit)
-      this.upper = fixMaxBounds(upper)
+      upper = fixMaxBounds(upper)
 
       // The absolute lowest possible value is 0
       if (lower < 0) {
@@ -141,7 +139,10 @@ export default defineComponent({
       }
 
       const internalValue = [String(lower), String(upper)]
-      this.$emit('input', internalValue)
+      console.log(upperBound.value)
+      console.log(lowerBound.value)
+      console.log(internalValue)
+      // this.$emit('input', internalValue)
     }
 
     return { lowerBound, upperBound, unit, unitChanged, applyFilter }
