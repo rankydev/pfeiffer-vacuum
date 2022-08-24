@@ -5,17 +5,21 @@
       :values="[
         {
           label: 'm³/h',
-          value: 1,
+          value: 'meters',
         },
         {
           label: 'l/s',
-          value: 1,
+          value: 'liters',
         },
       ]"
+      @update="
+        $emit('update')
+        unitChanged($event)
+      "
     />
     <div class="suction-speed-selection__inputs">
       <PvInput
-        :value="0"
+        v-model="lowerBound"
         class="suction-speed-selection__minimum"
         placeholder="Min."
         :required="true"
@@ -26,23 +30,29 @@
 
       <div class="suction-speed-selection__maximum">
         <PvInput
-          :value="10000"
+          v-model="upperBound"
           placeholder="Max."
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
           @update="$emit('update')"
         />
 
-        <div class="suction-speed-selection__maximum--selected-unit">m³/h</div>
+        <div class="suction-speed-selection__maximum--selected-unit">
+          {{ unit }}
+        </div>
       </div>
 
-      <Button icon="arrow_forward" variant="secondary"></Button>
+      <Button
+        icon="arrow_forward"
+        variant="secondary"
+        @click.native="applyFilter()"
+      ></Button>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import ButtonGroup from '~/components/atoms/FormComponents/ButtonGroup/ButtonGroup'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import Button from '~/components/atoms/Button/Button'
@@ -60,8 +70,82 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: [
+    /**
+     * Fired on keystroke.
+     *
+     * @event change
+     * @property {string} value
+     */
+    'update',
+  ],
   setup() {
-    return {}
+    const lowerBound = ref(0)
+    const upperBound = ref(10000)
+    const meters = ref(true)
+    const liters = ref(false)
+    const unit = ref('m³/h')
+
+    const unitChanged = (e) => {
+      console.log(e)
+      if (e === 'meters') {
+        meters.value = true
+        liters.value = false
+        unit.value = 'm³/h'
+      } else {
+        meters.value = false
+        liters.value = true
+        unit.value = 'l/s'
+      }
+    }
+
+    const fixMaxBounds = (val) => {
+      if (meters.value && val > 10000) {
+        val = 10000
+      } else if (liters.value && val > 2776) {
+        val = 2776
+      }
+
+      return val
+    }
+
+    const applyFilter = () => {
+      let lower = Number(lowerBound.value)
+      let upper = Number(upperBound.value)
+
+      // 10000 or 2776 are the upper limit (based on the selected unit)
+      this.upper = fixMaxBounds(upper)
+
+      // The absolute lowest possible value is 0
+      if (lower < 0) {
+        lower = 0
+      }
+
+      // The lower value cannot possibly be higher than the upper limit, if they are we switch them out
+      if (lower > upper) {
+        const tmp = upper
+        upper = lower
+        lower = tmp
+      }
+
+      upperBound.value = upper
+      lowerBound.value = lower
+
+      // For the backend we need to calculate l/s back to m/s
+      if (liters.value) {
+        lower = Math.round(lower * 3.6)
+        upper = Math.round(upper * 3.6)
+
+        if (upper > 10000) {
+          upper = 10000
+        }
+      }
+
+      const internalValue = [String(lower), String(upper)]
+      this.$emit('input', internalValue)
+    }
+
+    return { lowerBound, upperBound, unit, unitChanged, applyFilter }
   },
 })
 </script>
