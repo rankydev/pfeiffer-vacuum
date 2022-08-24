@@ -14,21 +14,26 @@
       ]"
     />
     <div class="suction-speed-selection__inputs">
-      <PvInput placeholder="Min." :required="true" @update="$emit('update')" />
+      <PvInput
+        :value="0"
+        class="suction-speed-selection__minimum"
+        placeholder="Min."
+        :required="true"
+        @update="$emit('update')"
+      />
 
       <hr class="suction-speed-selection__divider-line" />
 
       <div class="suction-speed-selection__maximum">
         <PvInput
+          :value="10000"
           placeholder="Max."
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
           @update="$emit('update')"
         />
 
-        <div class="suction-speed-selection__maximum--selected-unit">
-          m<sup>3</sup>/h
-        </div>
+        <div class="suction-speed-selection__maximum--selected-unit">m³/h</div>
       </div>
 
       <Button icon="arrow_forward" variant="secondary"></Button>
@@ -75,26 +80,32 @@ export default defineComponent({
     @apply tw-flex tw-self-center;
     @apply tw-text-pv-grey-16;
     @apply tw-w-4;
+    @apply tw-relative;
     height: 2px;
+    @apply tw-bg-pv-black;
+  }
+
+  &__minimum {
+    width: 25%;
   }
 
   &__maximum {
     @apply tw-flex;
-    width: 10rem;
+    width: 50%;
 
     &--selected-value {
-      flex-grow: 1;
+      width: 100%;
     }
 
     &--selected-unit {
       @apply tw-flex tw-items-center tw-justify-center;
-      flex-grow: 1;
       @apply tw-bg-pv-grey-80;
       width: 100%;
       height: 100%;
       @apply tw-text-base;
       border-bottom-right-radius: 0.375rem;
       border-top-right-radius: 0.375rem;
+      margin-left: -8px;
     }
   }
 }
