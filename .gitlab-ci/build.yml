@@ -119,10 +119,7 @@ sonar-qube:
     - # disable gitlab warning for docker login
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
   script:
-    - docker build
-      -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
-      $(cat docker/.docker-buildargs | while read line; do buildargs+="--build-arg $line"; done; echo $buildargs; buildargs="")
-      -f docker/Dockerfile .
+    - docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} `cat docker/.docker-buildargs | while read line; do echo "--build-arg ${line}"; done;` -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
       docker push --all-tags ${DOCKER_IMAGE_NAME}
