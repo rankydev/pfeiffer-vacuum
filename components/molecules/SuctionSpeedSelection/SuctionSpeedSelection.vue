@@ -87,7 +87,6 @@ export default defineComponent({
     const unit = ref('m³/h')
 
     const unitChanged = (e) => {
-      console.log(e)
       if (e === 'meters') {
         meters.value = true
         liters.value = false
@@ -162,30 +161,29 @@ export default defineComponent({
 
   &__divider-line {
     @apply tw-flex tw-self-center;
-    @apply tw-text-pv-grey-16;
     @apply tw-w-4;
-    @apply tw-relative;
     height: 2px;
+    @apply tw-relative;
+    @apply tw-text-pv-grey-16;
     @apply tw-bg-pv-black;
   }
 
   &__minimum {
-    width: 25%;
+    @apply tw-w-1/4;
   }
 
   &__maximum {
     @apply tw-flex;
-    width: 50%;
+    @apply tw-w-2/4;
 
     &--selected-value {
-      width: 100%;
+      @apply tw-w-full;
     }
 
     &--selected-unit {
       @apply tw-flex tw-items-center tw-justify-center;
       @apply tw-bg-pv-grey-80;
-      width: 100%;
-      height: 100%;
+      @apply tw-w-full tw-h-full;
       @apply tw-text-base;
       border-bottom-right-radius: 0.375rem;
       border-top-right-radius: 0.375rem;
