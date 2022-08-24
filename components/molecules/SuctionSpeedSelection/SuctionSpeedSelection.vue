@@ -21,6 +21,7 @@
       <PvInput
         class="suction-speed-selection__minimum"
         placeholder="Min."
+        :value="0"
         :required="true"
         @update="
           lowerBound = $event
@@ -33,6 +34,7 @@
       <div class="suction-speed-selection__maximum">
         <PvInput
           placeholder="Max."
+          :value="10000"
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
           @update="
@@ -49,7 +51,10 @@
       <Button
         icon="arrow_forward"
         variant="secondary"
-        @click.native="applyFilter()"
+        @click.native="
+          applyFilter()
+          $emit('input', internalValue)
+        "
       ></Button>
     </div>
   </div>
@@ -76,6 +81,7 @@ export default defineComponent({
      * @property {string} value
      */
     'update',
+    'input',
   ],
   setup() {
     const lowerBound = ref(0)
@@ -83,6 +89,7 @@ export default defineComponent({
     const meters = ref(true)
     const liters = ref(false)
     const unit = ref('m³/h')
+    const internalValue = ref()
 
     const unitChanged = (e) => {
       if (e === 'meters') {
@@ -138,14 +145,17 @@ export default defineComponent({
         }
       }
 
-      const internalValue = [String(lower), String(upper)]
-      console.log(upperBound.value)
-      console.log(lowerBound.value)
-      console.log(internalValue)
-      // this.$emit('input', internalValue)
+      internalValue.value = [String(lower), String(upper)]
     }
 
-    return { lowerBound, upperBound, unit, unitChanged, applyFilter }
+    return {
+      lowerBound,
+      upperBound,
+      unit,
+      unitChanged,
+      applyFilter,
+      internalValue,
+    }
   },
 })
 </script>
