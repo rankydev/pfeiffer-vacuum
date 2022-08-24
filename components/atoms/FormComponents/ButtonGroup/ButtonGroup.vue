@@ -68,15 +68,10 @@ export default {
     @apply tw-items-center;
     @apply tw-justify-center;
     @apply tw-h-full tw-w-full;
-    @apply tw-text-sm;
-    @apply tw-leading-4;
+    @apply tw-text-base;
+    @apply tw-leading-6;
     @apply tw-font-bold;
     @apply tw-text-pv-grey-16;
-
-    @screen lg {
-      @apply tw-text-base;
-      @apply tw-leading-6;
-    }
 
     &--disabled {
       @apply tw-text-pv-grey-80;
