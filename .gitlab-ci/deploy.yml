@@ -100,7 +100,7 @@ deploy-uat-automatically:
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
-    name: uat
+    name: uat2
     url: "https://uat2.pvac.diva-e.com"
   only:
     - feature/PVWEB-684_uat-deployment
@@ -112,7 +112,7 @@ deploy-uat-manually:
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
-    name: uat
+    name: uat2
     url: "https://uat2.pvac.diva-e.com"
   when: manual
   # only:

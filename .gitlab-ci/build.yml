@@ -183,7 +183,7 @@ build-docker-image-frontend-uat-tags:
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
-    name: uat
+    name: uat2
   only:
     - tags
 
