@@ -121,7 +121,7 @@ sonar-qube:
   script:
     - docker build
       -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
-      $(cat .docker-buildargs | while read line; do buildargs+="--build-arg $line"; done; echo $buildargs; buildargs="")
+      $(cat docker/.docker-buildargs | while read line; do buildargs+="--build-arg $line"; done; echo $buildargs; buildargs="")
       -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
