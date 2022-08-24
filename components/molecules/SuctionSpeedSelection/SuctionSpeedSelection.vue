@@ -21,7 +21,7 @@
       <PvInput
         class="suction-speed-selection__minimum"
         placeholder="Min."
-        :value="0"
+        value="0"
         :required="true"
         @update="
           lowerBound = $event
@@ -34,7 +34,7 @@
       <div class="suction-speed-selection__maximum">
         <PvInput
           placeholder="Max."
-          :value="10000"
+          value="10000"
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
           @update="
