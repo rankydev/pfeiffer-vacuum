@@ -2,6 +2,7 @@
   <div class="suction-speed-selection">
     <ButtonGroup
       class="suction-speed-selection__button-group"
+      initial-value="meters"
       :values="[
         {
           label: 'm³/h',

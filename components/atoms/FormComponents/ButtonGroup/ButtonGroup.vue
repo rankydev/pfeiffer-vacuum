@@ -7,6 +7,7 @@
     >
       <input
         v-bind="{ ...item, disabled }"
+        :checked="item.value === initialValue"
         type="radio"
         name="radio"
         class="button-group__input"
@@ -35,6 +36,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    initialValue: {
+      type: String,
+      default: '',
     },
   },
   emits: ['update'],
