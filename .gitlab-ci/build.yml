@@ -123,6 +123,11 @@ sonar-qube:
   after_script:
     - # here we will push ALL created tags of an image
       docker push --all-tags ${DOCKER_IMAGE_NAME}
+  artifacts:
+    when: on_failure
+    paths:
+      - build_logs/
+    expire_in: 3 week
   tags:
     - dind_runner
 
