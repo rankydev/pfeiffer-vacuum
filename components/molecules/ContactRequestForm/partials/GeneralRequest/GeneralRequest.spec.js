@@ -3,6 +3,22 @@ import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/G
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
+import { ref } from '@nuxtjs/composition-api'
+
+const mockLoadRegions = jest.fn(() => {
+  mockedRegions.value = ['Region1']
+})
+const mockedRegions = ref([])
+jest.mock('~/composables/useRegions', () => {
+  return {
+    useRegions: () => {
+      return {
+        loadRegions: mockLoadRegions,
+        regions: mockedRegions,
+      }
+    },
+  }
+})
 
 describe('GeneralRequest', () => {
   describe('initial state', () => {
@@ -36,6 +52,23 @@ describe('GeneralRequest', () => {
       const wrapper = shallowMount(GeneralRequest, { propsData })
 
       expect(wrapper.exists()).toBeTruthy()
+    })
+
+    it('should return regions array when appropriate country was selected', async () => {
+      const propsData = { type: 'GENERAL_QUERY', validate: true }
+      const wrapper = shallowMount(GeneralRequest, { propsData })
+      const select = wrapper.findComponent(PvSelect)
+
+      const selectedOption = {
+        isocode: 'US',
+        name: 'United States of America',
+      }
+      select.vm.$emit('update', selectedOption)
+      await select.vm.$nextTick()
+      const allSelects = wrapper.findAllComponents(PvSelect)
+
+      expect(mockLoadRegions).toHaveBeenCalled()
+      expect(allSelects).toHaveLength(2)
     })
   })
 })
