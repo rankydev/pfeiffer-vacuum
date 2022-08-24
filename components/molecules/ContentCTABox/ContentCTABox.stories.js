@@ -1,11 +1,11 @@
-import ContactCTABox from './ContactCTABox'
-import content from './ContactCTABox.stories.content'
+import ContentCTABox from './ContentCTABox'
+import content from './ContentCTABox.stories.content'
 
 const { headline, description, button } = content
 
 export default {
   title: 'Molecules/m_120 Contact CTA Box',
-  component: ContactCTABox,
+  component: ContentCTABox,
   parameters: {
     docs: {
       description: {
@@ -13,20 +13,20 @@ export default {
           'The Contact CTA Box can provide a title and a description, as well as a button. This component is used e.g. on the contact page for the service subject as replacement for the form. The button can have a link.',
       },
       source: {
-        code: '<ContactCTABox v-bind="{ headline, description, button }"  />',
+        code: '<ContentCTABox v-bind="{ headline, description, button }"  />',
       },
     },
   },
 }
 
 const Template = (args) => ({
-  components: { ContactCTABox },
+  components: { ContentCTABox },
   setup() {
     return { args }
   },
   template: `
   <div class="documentation-preview">
-    <ContactCTABox v-bind="args" />
+    <ContentCTABox v-bind="args" />
   </div>
 `,
 })

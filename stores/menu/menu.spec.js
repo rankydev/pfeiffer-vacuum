@@ -23,7 +23,7 @@ describe('Menu', () => {
 
         expect(addListenerSpy).toBeCalledTimes(4)
         expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(addListenerSpy).nthCalledWith(2, 'touchend', menu.close)
         expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
         expect(addListenerSpy).nthCalledWith(4, 'resize', menu.close, {
           passive: true,
@@ -35,7 +35,7 @@ describe('Menu', () => {
 
         expect(addListenerSpy).toBeCalledTimes(3)
         expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(addListenerSpy).nthCalledWith(2, 'touchend', menu.close)
         expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
       })
 
@@ -49,7 +49,7 @@ describe('Menu', () => {
       it('should register all event listeners when open was called', () => {
         expect(addListenerSpy).toBeCalledTimes(3)
         expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(addListenerSpy).nthCalledWith(2, 'touchend', menu.close)
         expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
       })
 
@@ -63,7 +63,7 @@ describe('Menu', () => {
       it('should register all event listeners when toggle was called', () => {
         expect(addListenerSpy).toBeCalledTimes(3)
         expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(addListenerSpy).nthCalledWith(2, 'touchend', menu.close)
         expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
       })
 
@@ -86,7 +86,7 @@ describe('Menu', () => {
       it('should remove all event listeners when close was called', () => {
         expect(remListenerSpy).toBeCalledTimes(3)
         expect(remListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(remListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(remListenerSpy).nthCalledWith(2, 'touchend', menu.close)
         expect(remListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
       })
 
@@ -99,7 +99,7 @@ describe('Menu', () => {
       it('should remove all event listeners when toggle was called', () => {
         expect(remListenerSpy).toBeCalledTimes(3)
         expect(remListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(remListenerSpy).nthCalledWith(2, 'touchstart', menu.close)
+        expect(remListenerSpy).nthCalledWith(2, 'touchend', menu.close)
         expect(remListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
       })
 
