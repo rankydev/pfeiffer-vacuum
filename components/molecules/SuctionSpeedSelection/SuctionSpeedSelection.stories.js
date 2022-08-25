@@ -16,7 +16,7 @@ export default {
 const Template = () => ({
   components: { SuctionSpeedSelection },
   setup() {
-    let result = ref([])
+    let result = ref([0, 10000])
 
     const initializeResult = (e) => {
       result.value = e
