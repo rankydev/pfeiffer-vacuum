@@ -54,7 +54,7 @@ export default defineComponent({
      * @model
      */
     value: {
-      type: String || Number,
+      type: [String, Number],
       default: '',
     },
     /**

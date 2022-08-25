@@ -21,24 +21,23 @@ describe('SuctionSpeedSelection', () => {
     test('should calculate the correct upper and lower bound when unit is changed to liters', async () => {
       const wrapper = shallowMount(SuctionSpeedSelection)
 
-      wrapper.setData({ lowerBound: -23, upperBound: 6219 })
-
       await wrapper.vm.unitChanged('liters')
       await wrapper.vm.$nextTick()
+
+      wrapper.setData({ lowerBound: -23, upperBound: 6219 })
+
       await wrapper.vm.applyFilter()
       await wrapper.vm.$nextTick()
 
       expect(wrapper.vm.lowerBound).toBe(0)
-      expect(wrapper.vm.upperBound).toBe(2776)
+      expect(wrapper.vm.upperBound).toBe(2778)
     })
 
-    test('should calculate the correct upper and lower bound when unit is changed to meters', async () => {
+    test('should calculate the correct upper and lower bound when unit is meters', async () => {
       const wrapper = shallowMount(SuctionSpeedSelection)
 
       wrapper.setData({ lowerBound: -23, upperBound: 60219 })
 
-      await wrapper.vm.unitChanged('meters')
-      await wrapper.vm.$nextTick()
       await wrapper.vm.applyFilter()
       await wrapper.vm.$nextTick()
 
