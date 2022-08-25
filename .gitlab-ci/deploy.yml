@@ -45,6 +45,7 @@ deploy-dev-automatically:
 deploy-dev-manually-develop:
   extends: deploy-dev-automatically
   when: manual
+  allow_failure: true
 
 # scheduled deployment for nightly lsg
 deploy-lsg-automatically:
@@ -60,6 +61,7 @@ deploy-lsg-automatically:
 deploy-lsg-manually-develop:
   extends: deploy-lsg-automatically
   when: manual
+  allow_failure: true
 
 # manual deployment for dev2
 deploy-dev-manually:
@@ -68,6 +70,7 @@ deploy-dev-manually:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
     DOCKER_SERVICE_NAME: "dev2"
   when: manual
+  allow_failure: true
   except:
     - develop
 
@@ -80,6 +83,7 @@ deploy-lsg-manually:
     DOCKER_IMAGE_TAG: "lsg-${CI_COMMIT_REF_SLUG}"
     DOCKER_SERVICE_NAME: "lsg"
   when: manual
+  allow_failure: true
   except:
     - develop
 
@@ -103,7 +107,7 @@ deploy-uat-automatically:
     name: uat2
     url: "https://uat2.pvac.diva-e.com"
   only:
-    - feature/PVWEB-684_uat-deployment
+    - main
   tags:
     - pvweb-uat-deployment
 
@@ -118,7 +122,7 @@ deploy-uat-manually:
   # only:
   #   - tags
   only:
-    - feature/PVWEB-684_uat-deployment
+    - main
   tags:
     - pvweb-uat-deployment
 
