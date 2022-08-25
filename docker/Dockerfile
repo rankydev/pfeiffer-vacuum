@@ -68,9 +68,7 @@ RUN cat .env.template | envsubst >> .env
 
 RUN mkdir -p build_logs
 
-RUN \
-  npm ci  &> build_logs/npm_ci.log \
-  && npm run build &> build_logs/npm_build.log
+RUN npm ci && npm run build
 
 ########################################################################################################################
 # end frontend-build image
