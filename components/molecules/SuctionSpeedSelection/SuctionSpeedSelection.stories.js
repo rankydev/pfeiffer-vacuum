@@ -7,7 +7,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'A component to to quickly select the speed of suction.',
+        component: 'A component to quickly select the speed of suction.',
       },
     },
   },
