@@ -2,8 +2,9 @@ import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline
 import {
   headline,
   identifier,
-  count,
-  backLink,
+  subinformation,
+  subline,
+  link,
 } from './ResultHeadline.stories.content.js'
 
 export default {
@@ -35,4 +36,7 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
-Default.args = { headline, identifier, count, backLink }
+Default.args = { headline, identifier, subinformation, link }
+
+export const withSubline = Template.bind({})
+withSubline.args = { headline, identifier, subline }

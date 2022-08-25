@@ -1,11 +1,13 @@
 export const headline = 'Headline'
 export const identifier = 'identifier'
-export const count = 3
-export const backLink = '/'
+export const subinformation = 3
+export const subline = 'Subline'
+export const link = '/'
 
 export default {
   headline,
   identifier: 'CTABox',
-  count,
-  backLink,
+  subinformation,
+  subline,
+  link,
 }
