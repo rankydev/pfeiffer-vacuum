@@ -147,7 +147,7 @@ export default defineComponent({
     watch(
       () => props.validate,
       (value) => {
-        if (value === true) {
+        if (value) {
           validation.value.validateInput()
         }
       }

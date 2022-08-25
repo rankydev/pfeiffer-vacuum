@@ -55,43 +55,34 @@ describe('Input', () => {
       const propsData = {
         required: true,
         rules: { required, email },
-        validate: true,
+        value: 'test',
       }
       const wrapper = shallowMount(Input, { propsData })
-      const input = wrapper.find('input')
-
-      input.setValue('test')
-      await wrapper.vm.$nextTick()
+      await wrapper.setProps({ validate: true })
 
       expect(wrapper.find('.pv-input__element--error').exists()).toBeTruthy()
     })
 
-    it('should throw correct error message when required input is not set yet', () => {
+    it('should throw correct error message when required input is not set yet', async () => {
       const propsData = {
         required: true,
         rules: { required },
-        validate: true,
       }
 
       const wrapper = shallowMount(Input, { propsData })
-      const input = wrapper.find('input')
-
-      input.setValue('')
+      await wrapper.setProps({ validate: true })
 
       expect(wrapper.vm.validation.getError()).toBe('Value is required')
     })
 
-    it('should throw correct error message when email input is invalid', () => {
+    it('should throw correct error message when email input is invalid', async () => {
       const propsData = {
         required: true,
         rules: { email },
-        validate: true,
       }
 
       const wrapper = shallowMount(Input, { propsData })
-      const input = wrapper.find('input')
-
-      input.setValue('test')
+      await wrapper.setProps({ validate: true, value: 'test' })
 
       expect(wrapper.vm.validation.getError()).toBe(
         'Value is not a valid email address'
@@ -120,12 +111,12 @@ describe('Input', () => {
           icon: 'someIcon',
           required: true,
           rules: { required, email },
-          validate: true,
+          value: 'test',
         }
         const wrapper = shallowMount(Input, { propsData })
         const input = wrapper.find('input')
 
-        input.setValue('test')
+        input.trigger('input')
         await wrapper.vm.$nextTick()
 
         const errorIcon = wrapper.find('.pv-input__icon--error')
@@ -136,15 +127,17 @@ describe('Input', () => {
   })
 
   describe('during interaction', () => {
-    it('should emit update event when a key is pressed', () => {
-      const value = 'Some Value'
-      const wrapper = shallowMount(Input)
+    it('should emit update event when a key is pressed', async () => {
+      const propsData = {
+        value: 'Some Value',
+      }
+      const wrapper = shallowMount(Input, { propsData })
       const input = wrapper.find('input')
-
-      input.setValue(value)
+      input.trigger('input')
+      await wrapper.vm.$nextTick()
 
       expect(wrapper.emitted().update.length).toBe(1)
-      expect(wrapper.emitted().update[0]).toEqual([value])
+      expect(wrapper.emitted().update[0]).toEqual([propsData.value])
     })
 
     it('should emit an submit event when the enter key is pressed', () => {
