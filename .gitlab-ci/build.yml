@@ -181,8 +181,8 @@ build-docker-image-frontend-uat-tags:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
     name: uat2
-  only:
-    - tags
+#  only:
+#    - tags
 
 build-docker-image-frontend-prd-tags:
   extends: .build-docker-image
