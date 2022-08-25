@@ -100,6 +100,7 @@ $card-image-height: 200px;
   @apply tw-overflow-hidden;
   @apply tw-p-4;
   @apply tw-leading-4;
+  @apply tw-break-words;
 
   /**
    * needs to be important because the slick slider will
@@ -108,7 +109,7 @@ $card-image-height: 200px;
   display: flex !important;
 
   @screen lg {
-    @apply tw-py-6;
+    @apply tw-pb-6;
   }
 
   &__image {
