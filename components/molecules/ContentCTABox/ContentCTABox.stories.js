@@ -4,13 +4,13 @@ import content from './ContentCTABox.stories.content'
 const { headline, description, button } = content
 
 export default {
-  title: 'Molecules/m_120 Contact CTA Box',
+  title: 'Molecules/m_120 Content CTA Box',
   component: ContentCTABox,
   parameters: {
     docs: {
       description: {
         component:
-          'The Contact CTA Box can provide a title and a description, as well as a button. This component is used e.g. on the contact page for the service subject as replacement for the form. The button can have a link.',
+          'The Content CTA Box can provide a title and a description, as well as a button. This component is used e.g. on the contact page for the service subject as replacement for the form. The button can have a link.',
       },
       source: {
         code: '<ContentCTABox v-bind="{ headline, description, button }"  />',
