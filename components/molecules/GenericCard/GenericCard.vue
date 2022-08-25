@@ -16,10 +16,10 @@
         <slot name="subheading" />
       </div>
 
-      <h3 class="pv-card__heading">
+      <h5 class="pv-card__heading">
         <!-- @slot the main heading of the card component -->
         <slot name="heading" />
-      </h3>
+      </h5>
 
       <div v-if="hasSlot('tags')" class="pv-card__tags">
         <!-- @slot tags normally displayed between heading and description -->
@@ -94,11 +94,13 @@ $card-image-height: 200px;
 .pv-card {
   @include box-shadow;
   @apply tw-bg-pv-white;
-  @apply tw-flex-col;
+  @apply tw-flex tw-flex-col;
   @apply tw-h-full;
   @apply tw-rounded-lg;
   @apply tw-overflow-hidden;
   @apply tw-p-4;
+  @apply tw-leading-4;
+  @apply tw-break-words;
 
   /**
    * needs to be important because the slick slider will
@@ -107,7 +109,7 @@ $card-image-height: 200px;
   display: flex !important;
 
   @screen lg {
-    @apply tw-py-6;
+    @apply tw-pb-6;
   }
 
   &__image {
@@ -116,7 +118,7 @@ $card-image-height: 200px;
     @apply tw-items-center;
     @apply tw-justify-center;
     @apply tw-content-center;
-    @apply tw-mb-6;
+    @apply tw-mb-4;
     height: $card-image-height;
 
     img {

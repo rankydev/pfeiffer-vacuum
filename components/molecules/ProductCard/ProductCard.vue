@@ -1,7 +1,7 @@
 <template>
   <GenericCard
     :has-link="false"
-    image-size="cover"
+    image-size="contain"
     :href="(product || {}).url || ''"
   >
     <template #image>
@@ -31,7 +31,7 @@
 
       <template v-else-if="product.numberOfVariants">
         <span class="product-card__variants">
-          <Icon class="tw-mr-1 tw-font-bold" icon="menu" size="small" />
+          <Icon class="product-card__variant-icon" icon="menu" size="xsmall" />
           {{ $tc('product.variantsAvailable', product.numberOfVariants) }}
         </span>
       </template>
@@ -60,7 +60,7 @@ export default defineComponent({
   },
   setup(props) {
     const image = computed(() => props.product.images?.[0])
-    const description = computed(() => props.product.description)
+    const description = computed(() => (props.product.bullets || []).join(', '))
     const name = computed(() => props.product.name)
     const categoryName = computed(() => props.product.categories?.[0]?.name)
 
@@ -75,6 +75,11 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-items-center;
     @apply tw-text-pv-red;
+    @apply tw-font-bold;
+  }
+
+  &__variant-icon {
+    @apply tw-mr-1;
     @apply tw-font-bold;
   }
 }
