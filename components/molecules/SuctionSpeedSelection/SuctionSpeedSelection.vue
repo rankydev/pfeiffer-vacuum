@@ -21,9 +21,9 @@
     />
     <div class="suction-speed-selection__inputs">
       <PvInput
+        v-model="lowerBound"
         class="suction-speed-selection__minimum"
         placeholder="Min."
-        :value="String(lowerBound)"
         :required="true"
         @update="
           lowerBound = $event
@@ -35,8 +35,8 @@
 
       <div class="suction-speed-selection__maximum">
         <PvInput
+          v-model="upperBound"
           placeholder="Max."
-          :value="String(upperBound)"
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
           @update="
@@ -93,40 +93,61 @@ export default defineComponent({
     const unit = ref('m³/h')
     const internalValue = ref()
 
-    const convertFromLitersToMeters = (lower, upper) => {
-      lowerBound.value = Math.round(lower * 3.60230548)
-      upperBound.value = Math.round(upper * 3.60230548)
-    }
-
-    const switchLitersToMeters = () => {
-      convertFromLitersToMeters(lowerBound.value, upperBound.value)
-      meters.value = true
-      liters.value = false
-      unit.value = 'm³/h'
-    }
-
-    const switchMetersToLiters = () => {
-      meters.value = false
-      liters.value = true
-      unit.value = 'l/s'
-    }
-
-    const unitChanged = (e) => {
-      if (e === 'meters') {
-        switchLitersToMeters()
-      } else {
-        switchMetersToLiters()
-      }
-    }
-
     const fixMaxBounds = (val) => {
       if (meters.value && val > 10000) {
         val = 10000
-      } else if (liters.value && val > 2776) {
-        val = 2776
+      } else if (liters.value && val > 2778) {
+        val = 2778
       }
-
       return val
+    }
+
+    const convertFromLitersToMeters = (lower, upper) => {
+      lowerBound.value = fixMaxBounds(Math.round(lower * 3.6))
+      upperBound.value = fixMaxBounds(Math.round(upper * 3.6))
+    }
+
+    const convertFromMetersToLiters = (lower, upper) => {
+      lowerBound.value = Math.round(lower / 3.6)
+      upperBound.value = Math.round(upper / 3.6)
+    }
+
+    const switchLitersToMeters = (tempLower, tempUpper) => {
+      meters.value = true
+      liters.value = false
+      convertFromLitersToMeters(tempLower, tempUpper)
+      unit.value = 'm³/h'
+    }
+
+    const switchMetersToLiters = (tempLower, tempUpper) => {
+      meters.value = false
+      liters.value = true
+      convertFromMetersToLiters(tempLower, tempUpper)
+      unit.value = 'l/s'
+    }
+
+    const unitChanged = () => {
+      const tempLower =
+        Number(upperBound.value) >= Number(lowerBound.value)
+          ? Number(lowerBound.value)
+          : Number(upperBound.value)
+      const tempUpper =
+        Number(upperBound.value) >= Number(lowerBound.value)
+          ? Number(upperBound.value)
+          : Number(lowerBound.value)
+
+      if (meters.value) {
+        switchMetersToLiters(tempLower, tempUpper)
+      } else {
+        switchLitersToMeters(tempLower, tempUpper)
+      }
+    }
+
+    const fixMinBounds = (lower) => {
+      if (lower < 0) {
+        lower = 0
+      }
+      return lower
     }
 
     const applyFilter = () => {
@@ -137,9 +158,7 @@ export default defineComponent({
       upper = fixMaxBounds(upper)
 
       // The absolute lowest possible value is 0
-      if (lower < 0) {
-        lower = 0
-      }
+      lower = fixMinBounds(lower)
 
       // The lower value cannot possibly be higher than the upper limit, if they are we switch them out
       if (lower > upper) {
@@ -147,23 +166,18 @@ export default defineComponent({
         upper = lower
         lower = tmp
       }
-
       upperBound.value = upper
       lowerBound.value = lower
 
       // For the backend we need to calculate l/s back to m/s
       if (liters.value) {
-        lower = Math.round(lower * 3.6)
-        upper = Math.round(upper * 3.6)
+        lower = Math.round((lower * 36) / 10)
+        upper = Math.round((upper * 36) / 10)
 
         if (upper > 10000) {
           upper = 10000
         }
       }
-      console.log(liters.value)
-      console.log(meters.value)
-      console.log('lower', lowerBound.value)
-      console.log('upper', upperBound.value)
       internalValue.value = [String(lower), String(upper)]
     }
 
