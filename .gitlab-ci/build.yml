@@ -119,7 +119,35 @@ sonar-qube:
     - # disable gitlab warning for docker login
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
   script:
-    - docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} `cat docker/.docker-buildargs | while read line; do buildArgs+="--build-arg ${line} "; done; echo $buildArgs` -f docker/Dockerfile .
+    - docker build
+      -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+      --build-arg PORT=${PORT}
+      --build-arg NODE_ENV=${NODE_ENV}
+      --build-arg BASE_URL="${CI_ENVIRONMENT_URL}"
+      --build-arg CONSOLA_LEVEL=${CONSOLA_LEVEL}
+      --build-arg STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
+      --build-arg STORYBLOK_OAUTH_TOKEN="${STORYBLOK_OAUTH_TOKEN}"
+      --build-arg STORYBLOK_ACCESS_TOKEN="${STORYBLOK_ACCESS_TOKEN}"
+      --build-arg STORYBLOK_VERSION="${STORYBLOK_VERSION}"
+      --build-arg STORYBLOK_RESOLVE_RELATIONS="${STORYBLOK_RESOLVE_RELATIONS}"
+      --build-arg STORYBLOK_RESOLVE_LINKS="${STORYBLOK_RESOLVE_LINKS}"
+      --build-arg STORYBLOK_RESOLVE_ASSETS="${STORYBLOK_RESOLVE_ASSETS}"
+      --build-arg STORYBLOK_CONTENT_TYPES="${STORYBLOK_CONTENT_TYPES}"
+      --build-arg STORYBLOK_EXCLUDE_ROUTES="${STORYBLOK_EXCLUDE_ROUTES}"
+      --build-arg DEFAULT_LANGUAGE_CODE="${DEFAULT_LANGUAGE_CODE}"
+      --build-arg LANGUAGE_CODES="${LANGUAGE_CODES}"
+      --build-arg CI_COMMIT_SHORT_SHA="${CI_COMMIT_SHORT_SHA}"
+      --build-arg CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}"
+      --build-arg CI_PROJECT_URL="${CI_PROJECT_URL}"
+      --build-arg REGION_CODES="${REGION_CODES}"
+      --build-arg DEFAULT_REGION_CODE="${DEFAULT_REGION_CODE}"
+      --build-arg SHOP_BASE_URL="${SHOP_BASE_URL}"
+      --build-arg SHOP_IMAGE_URL="${SHOP_IMAGE_URL}"
+      --build-arg CONSOLA_LEVEL="${CONSOLA_LEVEL}"
+      --build-arg CURRENT_REGION_CODE="${CURRENT_REGION_CODE}"
+      --build-arg USERCENTRICS_PRIVACY_PATH="${USERCENTRICS_PRIVACY_PATH}"
+      --build-arg USERCENTRICS_ID="${USERCENTRICS_ID}"
+      -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
       docker push --all-tags ${DOCKER_IMAGE_NAME}
