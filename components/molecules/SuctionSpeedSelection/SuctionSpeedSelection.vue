@@ -103,13 +103,13 @@ export default defineComponent({
     }
 
     const convertFromLitersToMeters = (lower, upper) => {
-      lowerBound.value = fixMaxBounds(Math.round(lower * 3.6))
-      upperBound.value = fixMaxBounds(Math.round(upper * 3.6))
+      lowerBound.value = fixMaxBounds(Math.round((lower * 36) / 10))
+      upperBound.value = fixMaxBounds(Math.round((upper * 36) / 10))
     }
 
     const convertFromMetersToLiters = (lower, upper) => {
-      lowerBound.value = Math.round(lower / 3.6)
-      upperBound.value = Math.round(upper / 3.6)
+      lowerBound.value = Math.round((lower * 10) / 36)
+      upperBound.value = Math.round((upper * 10) / 36)
     }
 
     const switchLitersToMeters = (tempLower, tempUpper) => {

@@ -30,8 +30,8 @@ const Template = () => ({
     <SuctionSpeedSelection
       @input="initializeResult($event)" />
     <br />
-    <div>Minimum: {{ result[0] }}</div>
-    <div>Maximum: {{ result[1] }}</div>
+    <div>Minimum in m³/h: {{ result[0] }}</div>
+    <div>Maximum in m³/h: {{ result[1] }}</div>
   </div>
 `,
 })
