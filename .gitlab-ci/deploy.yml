@@ -119,10 +119,8 @@ deploy-uat-manually:
     name: uat2
     url: "https://uat2.pvac.diva-e.com"
   when: manual
-  # only:
-  #   - tags
   only:
-    - main
+    - tags
   tags:
     - pvweb-uat-deployment
 
