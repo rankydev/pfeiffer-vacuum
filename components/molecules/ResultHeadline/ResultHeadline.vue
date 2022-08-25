@@ -8,7 +8,7 @@
       {{ headline }}
     </h1>
     <span v-if="subinformation" class="result-headline__sub"
-      >({{ subContent }})
+      >{{ subContent }}
     </span>
   </div>
 </template>
