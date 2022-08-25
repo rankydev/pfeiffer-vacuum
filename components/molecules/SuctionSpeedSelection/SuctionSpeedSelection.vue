@@ -16,13 +16,14 @@
       @update="
         $emit('update')
         unitChanged($event)
+        applyFilter()
       "
     />
     <div class="suction-speed-selection__inputs">
       <PvInput
         class="suction-speed-selection__minimum"
         placeholder="Min."
-        value="0"
+        :value="String(lowerBound)"
         :required="true"
         @update="
           lowerBound = $event
@@ -35,7 +36,7 @@
       <div class="suction-speed-selection__maximum">
         <PvInput
           placeholder="Max."
-          value="10000"
+          :value="String(upperBound)"
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
           @update="
@@ -92,15 +93,29 @@ export default defineComponent({
     const unit = ref('m³/h')
     const internalValue = ref()
 
+    const convertFromLitersToMeters = (lower, upper) => {
+      lowerBound.value = Math.round(lower * 3.60230548)
+      upperBound.value = Math.round(upper * 3.60230548)
+    }
+
+    const switchLitersToMeters = () => {
+      convertFromLitersToMeters(lowerBound.value, upperBound.value)
+      meters.value = true
+      liters.value = false
+      unit.value = 'm³/h'
+    }
+
+    const switchMetersToLiters = () => {
+      meters.value = false
+      liters.value = true
+      unit.value = 'l/s'
+    }
+
     const unitChanged = (e) => {
       if (e === 'meters') {
-        meters.value = true
-        liters.value = false
-        unit.value = 'm³/h'
+        switchLitersToMeters()
       } else {
-        meters.value = false
-        liters.value = true
-        unit.value = 'l/s'
+        switchMetersToLiters()
       }
     }
 
@@ -145,7 +160,10 @@ export default defineComponent({
           upper = 10000
         }
       }
-
+      console.log(liters.value)
+      console.log(meters.value)
+      console.log('lower', lowerBound.value)
+      console.log('upper', upperBound.value)
       internalValue.value = [String(lower), String(upper)]
     }
 
