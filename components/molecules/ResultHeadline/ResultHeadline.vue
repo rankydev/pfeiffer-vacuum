@@ -3,12 +3,11 @@
     <nuxt-link v-if="link" class="result-headline__link" :to="link">
       <Icon v-if="link" class="result-headline__icon" icon="arrow_back_ios" />
     </nuxt-link>
-    <span v-if="subline" class="result-headline__badge">10</span>
     <h1 class="result-headline__headline">
       {{ headline }}
     </h1>
-    <span v-if="subinformation" class="result-headline__sub"
-      >{{ subContent }}
+    <span v-if="resultCount" class="result-headline__resultCount"
+      >{{ resultCount }}
     </span>
   </div>
 </template>
@@ -30,25 +29,14 @@ export default {
       type: String,
       default: null,
     },
-    subinformation: {
-      type: String,
-      default: '',
-    },
-    subline: {
-      type: String,
-      default: '',
+    resultCount: {
+      type: Number,
+      default: null,
     },
     link: {
       type: [String, Object],
       default: null,
     },
-  },
-  setup(props) {
-    const subContent = computed(() =>
-      props.subinformation ? `(${props.subinformation})` : props.subline
-    )
-
-    return { subContent }
   },
 }
 </script>
@@ -74,13 +62,6 @@ export default {
 
   &__headline {
     @apply tw-mr-2;
-  }
-
-  &__badge {
-    padding: 5px 10px;
-    border-radius: 50%;
-    background: red;
-    color: white;
   }
 }
 </style>
