@@ -4,7 +4,7 @@ import { product } from '~/components/molecules/ProductCard/ProductCard.stories.
 export const carouselEntry = {
   product: product,
   component: 'ProductCard',
-  provider: 'static',
+  provider: 'hybris',
 }
 
 export const carouselEntries = [

@@ -2,8 +2,8 @@ import { shallowMount } from '@vue/test-utils'
 import Password from './Password.vue'
 import Icon from '../../Icon/Icon.vue'
 import PvLabel from '../partials/PvLabel/PvLabel.vue'
-import errorMessage from '../../FormComponents/partials/ErrorMessage/ErrorMessage.vue'
 import { expect } from '@jest/globals'
+import { required } from '@vuelidate/validators'
 
 describe('Password', () => {
   describe('initial state', () => {
@@ -59,32 +59,40 @@ describe('Password', () => {
       expect(input.attributes('label')).toBe(propsData.label)
     })
 
-    it('should set error class on input element when hasError is true', () => {
-      const propsData = { hasError: true }
+    it('should set error class on input element when validation throws error', async () => {
+      const propsData = {
+        required: true,
+        rules: { required },
+        validate: true,
+      }
       const wrapper = shallowMount(Password, { propsData })
-      const input = wrapper.find('.pv-password__element--error')
+      const input = wrapper.find('input')
 
-      expect(input.exists()).toBeTruthy()
+      input.setValue('')
+      await wrapper.vm.$nextTick()
+
+      expect(
+        wrapper.find('.pv-password__element--vuelidated').exists()
+      ).toBeTruthy()
     })
 
-    it('should set an error message when hasError is true', () => {
-      const propsData = { errorMessage: 'Some error occured', hasError: true }
+    it('should throw correct error message when required input is not set yet', () => {
+      const propsData = {
+        required: true,
+        rules: { required },
+        validate: true,
+      }
+
       const wrapper = shallowMount(Password, { propsData })
-      const input = wrapper.findComponent(errorMessage)
+      const input = wrapper.find('input')
 
-      expect(input.attributes('errormessage')).toBe(propsData.errorMessage)
-    })
+      input.setValue('')
 
-    it('should render error icon when hasError is true', () => {
-      const propsData = { errorMessage: 'Some error occured', hasError: true }
-      const wrapper = shallowMount(Password, { propsData })
-      const errorIcon = wrapper.find('.pv-password__icon--error')
-
-      expect(errorIcon.exists()).toBeTruthy()
+      expect(wrapper.vm.validation.getError()).toBe('Value is required')
     })
 
     it('should render criterias given prop validate with value true', () => {
-      const propsData = { validate: true }
+      const propsData = { showValidationCriterias: true }
       const wrapper = shallowMount(Password, { propsData })
       const passwordCriterias = wrapper.find('.pv-password__rules')
 
@@ -92,7 +100,7 @@ describe('Password', () => {
     })
 
     it('should add class fulfilled to criterias given valid password', () => {
-      const propsData = { validate: true, value: 'Aas12esd' }
+      const propsData = { showValidationCriterias: true, value: 'Aas12esd' }
       const wrapper = shallowMount(Password, { propsData })
       const passwordCriterias = wrapper.findAll('.fulfilled')
 

@@ -146,6 +146,10 @@ export default defineComponent({
       outline: 0;
     }
 
+    &:focus + .pv-textarea__icon-error {
+      @apply tw-text-pv-black;
+    }
+
     &:disabled {
       @apply tw-bg-pv-grey-96;
       @apply tw-cursor-not-allowed;
@@ -165,6 +169,7 @@ export default defineComponent({
   &__icon-error {
     @apply tw-absolute;
     @apply tw-top-0 tw-right-2;
+    @apply tw-cursor-pointer;
     margin-top: 10px;
     @apply tw-text-pv-red;
   }

@@ -1,5 +1,5 @@
 export default {
-  name: 'ContactCTABox',
+  name: 'ContentCTABox',
   display_name: 'Contact CTA Box',
   schema: {
     headline: {
@@ -29,6 +29,6 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'ContactCTABox',
+  real_name: 'ContentCTABox',
   component_group_uuid: null,
 }

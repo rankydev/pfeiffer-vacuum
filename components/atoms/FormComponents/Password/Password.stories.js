@@ -1,4 +1,5 @@
 import Password from '~/components/atoms/FormComponents/Password/Password.vue'
+import { required } from '@vuelidate/validators'
 
 export default {
   title: 'Atoms/a_104 Password',
@@ -52,11 +53,11 @@ Default.args = {
   },
   Error: {
     placeholder: 'Some placeholder',
-    hasError: true,
-    errorMessage: 'Sorry, an error occured',
+    rules: { required },
   },
   Validate: {
     placeholder: 'Some placeholder',
-    validate: true,
+    rules: { required },
+    showValidationCriterias: 'true',
   },
 }

@@ -115,7 +115,7 @@ describe('Input', () => {
         expect(input.attributes('class')).toMatch('pv-input__element--icon')
       })
 
-      it('should set icon error class when hasError is true', async () => {
+      it('should set icon error class when input is invalid', async () => {
         const propsData = {
           icon: 'someIcon',
           required: true,
