@@ -102,27 +102,33 @@ export default defineComponent({
       return val
     }
 
-    const convertFromLitersToMeters = (lower, upper) => {
+    const convertFromLitersPerSecondToCubicMetersPerHour = (lower, upper) => {
       lowerBound.value = fixMaxBounds(Math.round((lower * 36) / 10))
       upperBound.value = fixMaxBounds(Math.round((upper * 36) / 10))
     }
 
-    const convertFromMetersToLiters = (lower, upper) => {
+    const convertFromCubicMetersPerHourToLitersPerSecond = (lower, upper) => {
       lowerBound.value = Math.round((lower * 10) / 36)
       upperBound.value = Math.round((upper * 10) / 36)
     }
 
-    const switchLitersToMeters = (tempLower, tempUpper) => {
+    const switchLitersPerSecondToCubicMetersPerHour = (
+      tempLower,
+      tempUpper
+    ) => {
       meters.value = true
       liters.value = false
-      convertFromLitersToMeters(tempLower, tempUpper)
+      convertFromLitersPerSecondToCubicMetersPerHour(tempLower, tempUpper)
       unit.value = 'm³/h'
     }
 
-    const switchMetersToLiters = (tempLower, tempUpper) => {
+    const switchCubicMetersPerHourToLitersPerSecond = (
+      tempLower,
+      tempUpper
+    ) => {
       meters.value = false
       liters.value = true
-      convertFromMetersToLiters(tempLower, tempUpper)
+      convertFromCubicMetersPerHourToLitersPerSecond(tempLower, tempUpper)
       unit.value = 'l/s'
     }
 
@@ -137,9 +143,9 @@ export default defineComponent({
           : Number(lowerBound.value)
 
       if (meters.value) {
-        switchMetersToLiters(tempLower, tempUpper)
+        switchCubicMetersPerHourToLitersPerSecond(tempLower, tempUpper)
       } else {
-        switchLitersToMeters(tempLower, tempUpper)
+        switchLitersPerSecondToCubicMetersPerHour(tempLower, tempUpper)
       }
     }
 

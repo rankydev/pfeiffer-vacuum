@@ -20,7 +20,6 @@ const Template = () => ({
 
     const initializeResult = (e) => {
       result.value = e
-      console.log(result.value)
     }
 
     return { result, initializeResult }
