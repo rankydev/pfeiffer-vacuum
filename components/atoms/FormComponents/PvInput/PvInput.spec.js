@@ -7,7 +7,7 @@ import { required, email } from '@vuelidate/validators'
 
 describe('Input', () => {
   describe('initial state', () => {
-    it('should render empty component when no data provided', () => {
+    test('should render empty component when no data provided', () => {
       const wrapper = shallowMount(Input)
       const icon = wrapper.findComponent(Icon)
       const input = wrapper.findComponent(Input)
@@ -18,7 +18,7 @@ describe('Input', () => {
       expect(label.exists()).toBeTruthy()
     })
 
-    it('should set the value to the input when provided', () => {
+    test('should set the value to the input when provided', () => {
       const propsData = { value: 'Some Value' }
       const wrapper = shallowMount(Input, { propsData })
       const input = wrapper.find('input')
@@ -26,7 +26,7 @@ describe('Input', () => {
       expect(input.element.value).toBe(propsData.value)
     })
 
-    it('should set a placeholder when provided', () => {
+    test('should set a placeholder when provided', () => {
       const propsData = { placeholder: 'Some Placeholder' }
       const wrapper = shallowMount(Input, { propsData })
       const input = wrapper.find('input')
@@ -34,7 +34,7 @@ describe('Input', () => {
       expect(input.attributes('placeholder')).toBe(propsData.placeholder)
     })
 
-    it('should disable input when disabled is set to true', () => {
+    test('should disable input when disabled is set to true', () => {
       const propsData = { disabled: true }
       const wrapper = shallowMount(Input, { propsData })
       const inputWrapper = wrapper.find('.pv-input__element')
@@ -90,7 +90,7 @@ describe('Input', () => {
     })
 
     describe('given an icon', () => {
-      it('should render an icon element', () => {
+      test('should render an icon element', () => {
         const propsData = { icon: 'someIcon' }
         const wrapper = shallowMount(Input, { propsData })
         const iconDom = wrapper.findComponent(Icon)
@@ -98,7 +98,7 @@ describe('Input', () => {
         expect(iconDom.vm.icon).toBe(propsData.icon)
       })
 
-      it('should set an icon class to the input element', () => {
+      test('should set an icon class to the input element', () => {
         const propsData = { icon: 'someIcon' }
         const wrapper = shallowMount(Input, { propsData })
         const input = wrapper.find('input')
@@ -127,7 +127,7 @@ describe('Input', () => {
   })
 
   describe('during interaction', () => {
-    it('should emit update event when a key is pressed', async () => {
+    test('should emit update event when a key is pressed', async () => {
       const propsData = {
         value: 'Some Value',
       }
@@ -140,7 +140,7 @@ describe('Input', () => {
       expect(wrapper.emitted().update[0]).toEqual([propsData.value])
     })
 
-    it('should emit an submit event when the enter key is pressed', () => {
+    test('should emit an submit event when the enter key is pressed', () => {
       const wrapper = shallowMount(Input)
       const input = wrapper.find('input')
 
@@ -149,7 +149,7 @@ describe('Input', () => {
       expect(wrapper.emitted().submit.length).toBe(1)
     })
 
-    it('should emit an focus event when input was focused', () => {
+    test('should emit an focus event when input was focused', () => {
       const div = document.createElement('div')
       div.id = 'root'
       document.body.appendChild(div)
@@ -163,7 +163,7 @@ describe('Input', () => {
       wrapper.destroy()
     })
 
-    it('should emit an blur event when input was blurred', () => {
+    test('should emit an blur event when input was blurred', () => {
       const wrapper = shallowMount(Input)
       const input = wrapper.find('input')
 
