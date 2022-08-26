@@ -37,7 +37,7 @@
       <div class="suction-speed-selection__maximum">
         <PvInput
           v-model="upperBound"
-          placeholder="10.000"
+          :placeholder="meters ? '10.000' : '2778'"
           input-type="number"
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
@@ -196,6 +196,7 @@ export default defineComponent({
       unitChanged,
       applyFilter,
       internalValue,
+      meters,
     }
   },
 })
