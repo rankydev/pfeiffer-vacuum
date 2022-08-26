@@ -13,7 +13,7 @@ export default {
     docs: {
       description: {
         component:
-          'The Result Headline is used to display the search results with their count and a backLink if available. ',
+          'The Result Headline is used to display the search results with their count and a link if available. ',
       },
       source: {
         code: '<ResultHeadline v-bind="{ headline, identifier, count, backLink }"  />',
@@ -36,3 +36,6 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = { headline, identifier, resultCount, link }
+
+export const WithoutLink = Template.bind({})
+WithoutLink.args = { headline, identifier, resultCount }

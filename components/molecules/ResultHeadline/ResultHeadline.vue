@@ -1,13 +1,20 @@
 <template>
-  <div :id="identifier" class="result-headline">
+  <div
+    :id="identifier"
+    class="result-headline"
+    :class="{
+      'result-headline--with-link': link,
+      'result-headline--without-link': !link,
+    }"
+  >
     <nuxt-link v-if="link" class="result-headline__link" :to="link">
       <Icon v-if="link" class="result-headline__icon" icon="arrow_back_ios" />
     </nuxt-link>
-    <h1 class="result-headline__headline">
+    <h1 v-if="headline" class="result-headline__headline">
       {{ headline }}
     </h1>
-    <span v-if="resultCount" class="result-headline__resultCount"
-      >{{ resultCount }}
+    <span v-if="resultCount" class="result-headline__resultCount tw-subline-1">
+      ({{ resultCount }})
     </span>
   </div>
 </template>
@@ -43,12 +50,21 @@ export default {
 
 <style lang="scss">
 .result-headline {
-  @apply tw-flex;
-  align-items: center;
+  &--without-link {
+    @screen md {
+      @apply tw-flex;
+      @apply tw-items-center;
+    }
+  }
+
+  &--with-link {
+    @apply tw-flex;
+    @apply tw-items-center;
+  }
 
   &__link {
-    display: flex;
-    align-items: center;
+    @apply tw-flex;
+    @apply tw-items-center;
   }
 
   &__icon {
