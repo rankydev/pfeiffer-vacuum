@@ -1,7 +1,7 @@
 import Infobox from './Infobox.vue'
 
 const text =
-  'Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. Dieser Schritt ist optional. Bitte beachten Sie: Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!'
+  'Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br /> <b>Dieser Schritt ist optional</b> <br /><br /> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!'
 
 const argTypes = {}
 
