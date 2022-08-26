@@ -159,6 +159,10 @@ export default defineComponent({
     }
 
     const applyFilter = () => {
+      if (!upperBound.value) {
+        upperBound.value = 10000
+      }
+
       let lower = Number(lowerBound.value)
       let upper = Number(upperBound.value)
 
@@ -169,6 +173,7 @@ export default defineComponent({
       lower = fixMinBounds(lower)
 
       // The lower value cannot possibly be higher than the upper limit, if they are we switch them out
+
       if (lower > upper) {
         const tmp = upper
         upper = lower
