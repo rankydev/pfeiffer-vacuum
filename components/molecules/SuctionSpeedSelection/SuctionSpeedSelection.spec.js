@@ -17,7 +17,9 @@ describe('SuctionSpeedSelection', () => {
       expect(buttonGroup).toBeTruthy()
       expect(button).toBeTruthy()
     })
+  })
 
+  describe('during interaction', () => {
     test('should calculate the correct upper and lower bound when unit is changed to liters', async () => {
       const wrapper = shallowMount(SuctionSpeedSelection)
 

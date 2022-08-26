@@ -43,7 +43,7 @@ describe('Input', () => {
       expect(inputWrapper.attributes('required')).toBeFalsy()
     })
 
-    it('should set a label when provided', () => {
+    test('should set a label when provided', () => {
       const propsData = { label: 'Some Label' }
       const wrapper = shallowMount(Input, { propsData })
       const input = wrapper.findComponent(PvLabel)
@@ -51,7 +51,7 @@ describe('Input', () => {
       expect(input.attributes('label')).toBe(propsData.label)
     })
 
-    it('should set error class on input element when validation throws error', async () => {
+    test('should set error class on input element when validation throws error', async () => {
       const propsData = {
         required: true,
         rules: { required, email },
@@ -63,7 +63,7 @@ describe('Input', () => {
       expect(wrapper.find('.pv-input__element--error').exists()).toBeTruthy()
     })
 
-    it('should throw correct error message when required input is not set yet', async () => {
+    test('should throw correct error message when required input is not set yet', async () => {
       const propsData = {
         required: true,
         rules: { required },
@@ -75,7 +75,7 @@ describe('Input', () => {
       expect(wrapper.vm.validation.getError()).toBe('Value is required')
     })
 
-    it('should throw correct error message when email input is invalid', async () => {
+    test('should throw correct error message when email input is invalid', async () => {
       const propsData = {
         required: true,
         rules: { email },
@@ -106,7 +106,7 @@ describe('Input', () => {
         expect(input.attributes('class')).toMatch('pv-input__element--icon')
       })
 
-      it('should set icon error class when input is invalid', async () => {
+      test('should set icon error class when input is invalid', async () => {
         const propsData = {
           icon: 'someIcon',
           required: true,
@@ -174,7 +174,7 @@ describe('Input', () => {
     })
 
     describe('given an icon', () => {
-      it('should emit an icon click event when icon was clicked', () => {
+      test('should emit an icon click event when icon was clicked', () => {
         const propsData = { icon: 'someIcon' }
         const wrapper = shallowMount(Input, { propsData })
         const iconDom = wrapper.findComponent(Icon)
