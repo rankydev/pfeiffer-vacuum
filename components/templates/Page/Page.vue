@@ -23,13 +23,6 @@
 
     <slot>
       <main>
-        <ResultHeadline
-          headline="Test"
-          identifier="Test"
-          :count="1"
-          back-link="Test"
-        />
-        <ResultHeadline headline="Headline" identifier="Test" :count="1" />
         <nuxt-dynamic
           v-for="item in stage"
           :key="item._uid"
@@ -76,14 +69,12 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
-import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
 
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
     OnPageNavigation,
-    ResultHeadline,
   },
   props: {
     content: {
