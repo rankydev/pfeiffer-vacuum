@@ -44,17 +44,17 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {
-  provider: 'static',
+  provider: 'hybris',
 }
 
 export const WithOrderNumber = Template.bind({})
 WithOrderNumber.args = {
-  provider: 'static',
+  provider: 'hybris',
   product: productWithOrderNumber,
 }
 
 export const WithVariants = Template.bind({})
 WithVariants.args = {
-  provider: 'static',
+  provider: 'hybris',
   product: productWithVariants,
 }

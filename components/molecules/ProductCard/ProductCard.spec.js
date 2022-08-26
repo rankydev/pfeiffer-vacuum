@@ -6,6 +6,9 @@ import {
   productWithOrderNumber,
 } from './ProductCard.stories.content.js'
 
+const productDescription =
+  'Compact yet powerful turbopump with a pumping speed of up to 685 l/s for N2, Ideal for analytical and industrial applications, For installation in any orientation, Comprehensive accessories extend the range of applications'
+
 let wrapper
 
 const GenericCard = {
@@ -59,7 +62,7 @@ describe('ProductCard', () => {
 
       expect(subheading).toBe(product.categories[0].name)
       expect(heading).toBe(product.name)
-      expect(description).toBe(product.description)
+      expect(description).toBe(productDescription)
       expect(additionalInfo).toBe('')
     })
 
@@ -73,7 +76,7 @@ describe('ProductCard', () => {
 
       expect(subheading).toBe(productWithVariants.categories[0].name)
       expect(heading).toBe(productWithVariants.name)
-      expect(description).toBe(productWithVariants.description)
+      expect(description).toBe(productDescription)
       expect(additionalInfo).toBe(
         `product.variantsAvailable ${productWithVariants.numberOfVariants}`
       )
@@ -89,7 +92,7 @@ describe('ProductCard', () => {
 
       expect(subheading).toBe(productWithOrderNumber.categories[0].name)
       expect(heading).toBe(productWithOrderNumber.name)
-      expect(description).toBe(productWithOrderNumber.description)
+      expect(description).toBe(productDescription)
       expect(additionalInfo).toBe(productWithOrderNumber.orderNumber)
     })
   })

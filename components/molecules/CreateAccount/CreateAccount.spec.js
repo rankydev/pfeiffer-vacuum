@@ -1,9 +1,23 @@
 import { shallowMount } from '@vue/test-utils'
-import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
+import CreateAccount from '~/components/molecules/CreateAccount/CreateAccount'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
-import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
+import Password from '~/components/atoms/FormComponents/Password/Password'
+import { setActivePinia, createPinia } from 'pinia'
 import { ref } from '@nuxtjs/composition-api'
+
+const mockLoadCountries = jest.fn()
+jest.mock('~/stores/misc', () => {
+  return {
+    __esModule: true,
+    useMiscStore: () => {
+      return {
+        loadCountries: mockLoadCountries,
+        countries: ['Land1'],
+      }
+    },
+  }
+})
 
 const mockLoadRegions = jest.fn(() => {
   mockedRegions.value = ['Region1']
@@ -20,42 +34,33 @@ jest.mock('~/composables/useRegions', () => {
   }
 })
 
-describe('TopicRequest', () => {
+describe('CreateAccount', () => {
   describe('initial state', () => {
-    test('should render component correctly given valid type prop', () => {
-      const wrapper = shallowMount(TopicRequest, {
-        propsData: { type: 'QUOTE' },
-      })
+    beforeEach(() => setActivePinia(createPinia()))
+    test('should render component correctly', () => {
+      const wrapper = shallowMount(CreateAccount)
+      const title = wrapper.find('h2')
       const inputArr = wrapper.findAllComponents(PvInput)
       const select = wrapper.findComponent(PvSelect)
-      const textarea = wrapper.findComponent(PvTextArea)
-      const addressWrapper = wrapper.findAll('.topic-request__address')
+      const password = wrapper.findComponent(Password)
 
       expect(wrapper.exists()).toBeTruthy()
-      expect(addressWrapper).toHaveLength(2)
-      expect(inputArr).toHaveLength(8)
+      expect(title).toBeTruthy()
+      expect(inputArr).toHaveLength(4)
       expect(select).toBeTruthy()
-      expect(textarea).toBeTruthy()
-    })
-
-    test('select should contain countries given countries propsData', () => {
-      const propsData = { type: 'QUOTE', countries: ['Country1', 'Country2'] }
-      const wrapper = shallowMount(TopicRequest, { propsData })
-      const select = wrapper.findComponent(PvSelect)
-
-      expect(select.vm.options).toBe(propsData.countries)
+      expect(password).toBeTruthy()
     })
 
     test('should validate input fields given validate propsData', () => {
-      const propsData = { type: 'QUOTE', validate: true }
-      const wrapper = shallowMount(TopicRequest, { propsData })
+      const propsData = { validate: true }
+      const wrapper = shallowMount(CreateAccount, { propsData })
 
       expect(wrapper.exists()).toBeTruthy()
     })
-
+  })
+  describe('during interaction', () => {
     it('should return regions array when appropriate country was selected', async () => {
-      const propsData = { type: 'QUOTE', validate: true }
-      const wrapper = shallowMount(TopicRequest, { propsData })
+      const wrapper = shallowMount(CreateAccount)
       const select = wrapper.findComponent(PvSelect)
 
       const selectedOption = {

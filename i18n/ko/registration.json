@@ -1,3 +1,13 @@
 {
+  "registrationRequest": {
+    "title": "계정 세부 정보",
+    "firstname": "이름",
+    "surname": "성",
+    "company": "회사/대학",
+    "mail": "이메일",
+    "country": "국가",
+    "region": "지역",
+    "password": "비밀번호"
+  },
   "infotext": "여기에 회사 주소 데이터를 입력할 수 있습니다. <br /> <b>이 단계는 선택 사항입니다.</b> <br /><br /> <b>참고:</b> A 전체 계정을 사용하면 가격을 보고 요청을 보낼 수 있습니다!"
 }
