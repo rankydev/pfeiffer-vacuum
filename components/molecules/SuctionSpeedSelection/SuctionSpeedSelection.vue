@@ -23,7 +23,8 @@
       <PvInput
         v-model="lowerBound"
         class="suction-speed-selection__minimum"
-        placeholder="Min."
+        placeholder="0"
+        input-type="number"
         :required="true"
         @update="
           lowerBound = $event
@@ -36,7 +37,8 @@
       <div class="suction-speed-selection__maximum">
         <PvInput
           v-model="upperBound"
-          placeholder="Max."
+          placeholder="10.000"
+          input-type="number"
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
           @update="

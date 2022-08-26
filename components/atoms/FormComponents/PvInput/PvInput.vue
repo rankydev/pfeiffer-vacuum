@@ -6,6 +6,7 @@
         v-model="internalValue"
         v-bind="{ placeholder, disabled }"
         :required="isRequired"
+        :type="inputType"
         class="pv-input__element"
         :class="{
           'pv-input__element--icon': icon,
@@ -56,6 +57,14 @@ export default defineComponent({
     value: {
       type: [String, Number],
       default: '',
+    },
+    /**
+     * The input type
+     * @model
+     */
+    inputType: {
+      type: String,
+      default: 'text',
     },
     /**
      * An optional icon that can be shown
