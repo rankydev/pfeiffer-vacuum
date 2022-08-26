@@ -1,6 +1,7 @@
 <template>
   <div class="infobox">
     <div class="infobox__content">
+      <!-- eslint-disable vue/no-v-html -->
       <p class="infobox__content__text" v-html="text" />
     </div>
     <div class="infobox__media">
