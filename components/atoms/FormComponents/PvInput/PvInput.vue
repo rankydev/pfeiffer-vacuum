@@ -56,7 +56,7 @@ export default defineComponent({
      */
     value: {
       type: [String, Number],
-      default: '',
+      default: undefined,
     },
     /**
      * The input type
