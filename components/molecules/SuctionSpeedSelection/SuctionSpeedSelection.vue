@@ -3,16 +3,7 @@
     <ButtonGroup
       class="suction-speed-selection__button-group"
       initial-value="meters"
-      :values="[
-        {
-          label: 'm³/h',
-          value: 'meters',
-        },
-        {
-          label: 'l/s',
-          value: 'liters',
-        },
-      ]"
+      :values="buttonGroupOptions"
       @update="
         $emit('update')
         unitChanged($event)
@@ -96,6 +87,16 @@ export default defineComponent({
     const internalValue = ref()
     const limitMeters = '10.000'
     const limitLiters = '2778'
+    const buttonGroupOptions = [
+      {
+        label: 'm³/h',
+        value: 'meters',
+      },
+      {
+        label: 'l/s',
+        value: 'liters',
+      },
+    ]
 
     // limit the given value dependent on its unit (liters or meters)
     const fixMaxBounds = (val) => {
@@ -209,6 +210,7 @@ export default defineComponent({
       meters,
       limitMeters,
       limitLiters,
+      buttonGroupOptions,
     }
   },
 })
@@ -250,9 +252,8 @@ export default defineComponent({
       @apply tw-bg-pv-grey-80;
       @apply tw-w-full tw-h-full;
       @apply tw-text-base;
-      border-bottom-right-radius: 0.375rem;
-      border-top-right-radius: 0.375rem;
-      margin-left: -8px;
+      @apply tw-rounded-r-md;
+      @apply tw--ml-2;
     }
   }
 }
