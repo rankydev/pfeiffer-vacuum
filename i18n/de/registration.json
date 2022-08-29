@@ -1,4 +1,15 @@
 {
+  "registrationRequest": {
+    "title": "Kontodaten",
+  "firstname": "Vorname",
+    "surname": "Nachname",
+    "company": "Firma/Universität",
+    "mail": "E-Mail",
+    "country": "Land",
+    "region": "Bundesstaat",
+    "password": "Passwort"
+  },
+  "infotext": "Unsere Produktexperten stehen Ihnen jederzeit für Fragen zu unseren Produkten und Ihren Anwendungen zur Verfügung.",
   "formCompanyData": {
     "title": "Firmendaten",
     "infobox": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. Dieser Schritt ist optional.Bitte beachten Sie: Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",

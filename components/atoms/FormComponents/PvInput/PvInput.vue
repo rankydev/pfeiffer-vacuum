@@ -173,7 +173,8 @@ export default defineComponent({
   &__icon {
     @apply tw-absolute;
     @apply tw-top-1/2 tw-right-2;
-    @apply tw-cursor-pointer tw-text-pv-grey-64;
+    @apply tw-cursor-pointer;
+    @apply tw-text-pv-grey-64;
     transform: translateY(-50%);
 
     &--error {

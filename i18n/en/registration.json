@@ -1,4 +1,15 @@
 {
+  "registrationRequest": {
+    "title": "Account details",
+    "firstname": "First name",
+    "surname": "Last name",
+    "company": "Company / University",
+    "mail": "Email",
+    "country": "Country / Location",
+    "region": "Region",
+    "password": "Password"
+  },
+  "infotext": "Our product experts are always available to answer your questions about our products and your applications.",
   "formCompanyData": {
     "title": "Company Data",
     "infobox": "Here you can store the address data of your company. This step is optional. Please note: you can only see prices and send requests with a full account!",

@@ -1,4 +1,15 @@
 {
+  "registrationRequest": {
+    "title": "帐户详细资料",
+    "firstname": "名",
+    "surname": "姓",
+    "company": "公司/大学",
+    "mail": "电子邮件",
+    "country": "国家",
+    "region": "地区",
+    "password": "密码"
+  },
+  "infotext": "我们的产品专家随时可以回答您关于我们的产品和您的应用的问题.",
   "formCompanyData": {
     "title": "公司資料",
     "infobox": "在這裡您可以存儲您公司的地址數據。 此步驟是可選的。請注意：您只能使用完整帳戶查看價格和發送請求！",
