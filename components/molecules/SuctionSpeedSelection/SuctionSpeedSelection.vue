@@ -37,7 +37,7 @@
       <div class="suction-speed-selection__maximum">
         <PvInput
           v-model="upperBound"
-          :placeholder="meters ? '10.000' : '2778'"
+          :placeholder="meters ? limitMeters : limitLiters"
           input-type="number"
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
@@ -94,7 +94,10 @@ export default defineComponent({
     const liters = ref(false)
     const unit = ref('m³/h')
     const internalValue = ref()
+    const limitMeters = '10.000'
+    const limitLiters = '2778'
 
+    // limit the given value dependent on its unit (liters or meters)
     const fixMaxBounds = (val) => {
       if (meters.value && val > 10000) {
         val = 10000
@@ -134,6 +137,7 @@ export default defineComponent({
       unit.value = 'l/s'
     }
 
+    // when the unit changes, f.ex from liters to meters, the displayed value and unit are supposed to change
     const unitChanged = () => {
       const tempLower =
         Number(upperBound.value) >= Number(lowerBound.value)
@@ -158,6 +162,7 @@ export default defineComponent({
       return lower
     }
 
+    // after submitting the entered minimum and maximum values, the internalValue gets initialized using internally the unit cubic meters per hour, which can be used for filtering products
     const applyFilter = () => {
       if (!upperBound.value) {
         upperBound.value = 10000
@@ -202,6 +207,8 @@ export default defineComponent({
       applyFilter,
       internalValue,
       meters,
+      limitMeters,
+      limitLiters,
     }
   },
 })
