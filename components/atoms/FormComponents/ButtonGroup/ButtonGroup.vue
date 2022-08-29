@@ -5,9 +5,10 @@
       :key="index"
       class="button-group__label"
     >
+      <!-- if checked, the value is initially selected -->
       <input
         v-bind="{ ...item, disabled }"
-        :checked="selected(item)"
+        :checked="item.value === initialValue"
         type="radio"
         name="radio"
         class="button-group__input"
@@ -43,10 +44,6 @@ export default {
     },
   },
   emits: ['update'],
-  setup(props) {
-    const selected = (item) => item.value === props.initialValue
-    return { selected }
-  },
 }
 </script>
 <style lang="scss">
