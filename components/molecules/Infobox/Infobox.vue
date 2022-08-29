@@ -1,9 +1,8 @@
 <template>
   <div class="infobox">
     <div class="infobox__content">
-      <p class="infobox__content__text">
-        {{ $t('registration.infotext') }}
-      </p>
+      <!-- eslint-disable vue/no-v-html -->
+      <p class="infobox__content__text" v-html="text" />
     </div>
     <div class="infobox__media">
       <Icon icon="info" size="large" />
@@ -18,6 +17,16 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 export default defineComponent({
   name: 'Infobox',
   components: { Icon },
+  props: {
+    /*
+     * text which will be shown in infobox
+     * e.g. $t('registration.infotext')
+     */
+    text: {
+      type: String,
+      default: '',
+    },
+  },
 })
 </script>
 
