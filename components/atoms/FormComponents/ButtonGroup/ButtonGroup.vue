@@ -5,8 +5,10 @@
       :key="index"
       class="button-group__label"
     >
+      <!-- if checked, the value is initially selected -->
       <input
         v-bind="{ ...item, disabled }"
+        :checked="item.value === initialValue"
         type="radio"
         name="radio"
         class="button-group__input"
@@ -35,6 +37,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false,
+    },
+    initialValue: {
+      type: String,
+      default: '',
     },
   },
   emits: ['update'],
@@ -68,15 +74,10 @@ export default {
     @apply tw-items-center;
     @apply tw-justify-center;
     @apply tw-h-full tw-w-full;
-    @apply tw-text-sm;
-    @apply tw-leading-4;
+    @apply tw-text-base;
+    @apply tw-leading-6;
     @apply tw-font-bold;
     @apply tw-text-pv-grey-16;
-
-    @screen lg {
-      @apply tw-text-base;
-      @apply tw-leading-6;
-    }
 
     &--disabled {
       @apply tw-text-pv-grey-80;
