@@ -6,7 +6,8 @@ import {
   dateTimeFormats,
 } from './i18n.config'
 
-const isStorybook = process.env.STORYBOOK
+// only set to true during LSG build. Otherwise should default to false
+const isStorybook = process.env.STORYBOOK || false
 
 export default {
   srcDir: '',
@@ -168,7 +169,6 @@ export default {
   },
 
   server: {
-    // for local change add 'environments/local.js'
     port: process.env.PORT || 3000,
     host: process.env.HOST || '0.0.0.0',
   },

@@ -1,13 +1,27 @@
-version: '3'
+version: '3.8'
 
 services:
-  dev2:
-    image: '${CI_REGISTRY}/${CI_PROJECT_PATH}:${CI_COMMIT_REF_SLUG}'
-    restart: always
+  pvweb:
+    image: "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+    deploy:
+      mode: replicated
+      replicas: ${CONTAINER_REPLICAS}
+      placement:
+        max_replicas_per_node: ${CONTAINER_REPLICAS_PER_NODE}
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
+      resources:
+        limits:
+          cpus: "${CONTAINER_LIMIT_CPU}"
+          memory: "${CONTAINER_LIMIT_MEMORY}"
+        reservations:
+          cpus: "${CONTAINER_RESERVE_CPU}"
+          memory: "${CONTAINER_RESERVE_MEMORY}"
     ports:
-      - '${PORT}:${PORT}'
+      - "${PORT}:${PORT}"
     environment:
-      # must match with the second entry in ports section
       - PORT=${PORT}
       - NODE_ENV=${NODE_ENV}
       # Language
@@ -33,6 +47,8 @@ services:
       - CI_PROJECT_URL=${CI_PROJECT_URL}
       - USERCENTRICS_PRIVACY_PATH=${USERCENTRICS_PRIVACY_PATH}
       - USERCENTRICS_ID=${USERCENTRICS_ID}
+      # node setup
+      - IGNORE_SSL_CERT=${IGNORE_SSL_CERT} #don't trust all certificates
       # hybris
       - SHOP_BASE_URL=${SHOP_BASE_URL}
       - SHOP_IMAGE_URL=${SHOP_IMAGE_URL}
