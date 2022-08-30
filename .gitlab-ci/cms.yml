@@ -31,7 +31,7 @@ cms-sync-uat-space-automatically-for-main:
   only:
     - main
 
-cms-sync-uat-space-for-main-and-tags-after-manual-deploymen:
+cms-sync-uat-space-for-main-and-tags-after-manual-deployment:
   extends: .cms-sync
   needs: [ "deploy-main-or-tag-to-uat-manually" ]
   environment:

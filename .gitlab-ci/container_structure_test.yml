@@ -35,7 +35,7 @@ audit-frontend-develop:
 
 audit-frontend-uat:
   extends: .audit_frontend
-  needs: [ "build-frontend-uat-docker-image-for-tags" ]
+  needs: [ "build-frontend-uat-docker-image-for-main-and-tags" ]
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   only:
