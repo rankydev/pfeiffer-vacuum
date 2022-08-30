@@ -11,47 +11,38 @@
   script:
     - npm run cms:sync:ci -- --space "${STORYBLOK_SPACE_ID}" --token "${STORYBLOK_OAUTH_TOKEN}"
 
-cms-sync-dev-automatically-develop:
+cms-sync-dev-space-automatically-for-develop:
   extends: .cms-sync
-  needs: [ "deploy-dev-automatically" ]
+  needs: [ "deploy-develop-to-dev-automatically" ]
   environment:
     name: dev2
   only:
     - develop
 
-cms-sync-dev-develop:
-  extends: cms-sync-dev-automatically-develop
-  needs: [ "deploy-dev-manually-develop" ]
+cms-sync-dev-space-for-develop-after-manual-deployment:
+  extends: cms-sync-dev-space-automatically-for-develop
+  needs: [ "deploy-develop-to-dev-manually" ]
 
-cms-sync-dev:
+cms-sync-uat-space-automatically-for-main:
   extends: .cms-sync
-  needs: [ "deploy-dev-manually" ]
-  environment:
-    name: dev2
-  except:
-    - develop
-  when: manual
-
-cms-sync-uat-automatically:
-  extends: .cms-sync
-  needs: [ "deploy-uat-automatically" ]
+  needs: [ "deploy-main-to-uat-automatically" ]
   environment:
     name: uat2
   only:
     - main
 
-cms-sync-uat:
+cms-sync-uat-space-for-main-and-tags-after-manual-deploymen:
   extends: .cms-sync
-  needs: [ "deploy-uat-manually" ]
+  needs: [ "deploy-main-or-tag-to-uat-manually" ]
   environment:
     name: uat2
   only:
     - tags
     - main
 
-cms-sync-production:
+cms-sync-production-space-after-manual-deploymen:
   extends: .cms-sync
-  needs: [ "deploy-prd-manually" ]
+  needs: [ "deploy-tag-to-prd-manually" ]
   environment:
     name: prd
   only:
