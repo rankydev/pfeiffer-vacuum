@@ -197,15 +197,6 @@ build-lsg-docker-image-for-develop:
   only:
     - develop
 
-tag-docker-image-latest-main:
-  extends: .build-docker-image
-  needs: ["build-frontend-docker-image-for-develop"]
-  script:
-    - docker pull ${DOCKER_IMAGE_NAME}:main
-    - docker tag ${DOCKER_IMAGE_NAME}:main ${DOCKER_IMAGE_NAME}:latest
-  only:
-    - main
-
 build-frontend-uat-docker-image-for-main-and-tags:
   extends: .build-docker-image
   needs: ["test", "lint"]
@@ -216,6 +207,15 @@ build-frontend-uat-docker-image-for-main-and-tags:
   only:
     - main
     - tags
+
+tag-docker-image-latest-main:
+  extends: .build-docker-image
+  needs: ["build-frontend-uat-docker-image-for-main-and-tags"]
+  script:
+    - docker pull ${DOCKER_IMAGE_NAME}:main
+    - docker tag ${DOCKER_IMAGE_NAME}:main ${DOCKER_IMAGE_NAME}:latest
+  only:
+    - main
 
 build-frontend-prd-docker-image-for-tags:
   extends: .build-docker-image
