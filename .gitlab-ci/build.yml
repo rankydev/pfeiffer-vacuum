@@ -161,6 +161,8 @@ build-frontend-docker-image-for-branch:
     name: dev2
   except:
     - develop
+    - main
+    - tags
 
 .build-docker-image-lsg:
   extends: .build-docker-image
@@ -178,6 +180,8 @@ build-lsg-docker-image-for-branch:
   needs: ["test", "lint"]
   except:
     - develop
+    - main
+    - tags
 
 build-frontend-docker-image-for-develop:
   extends: .build-docker-image

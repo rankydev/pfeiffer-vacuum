@@ -26,6 +26,8 @@ audit-frontend-branch:
   needs: [ "build-frontend-docker-image-for-branch" ]
   except:
     - develop
+    - tags
+    - main
 
 audit-frontend-develop:
   extends: .audit_frontend

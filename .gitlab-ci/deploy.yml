@@ -75,6 +75,8 @@ deploy-branch-to-dev-manually:
   allow_failure: true
   except:
     - develop
+    - main
+    - tags
 
 # manual deployment for lsg
 deploy-branch-to-lsg-manually:

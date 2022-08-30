@@ -24,7 +24,6 @@ cms-sync-dev-space-for-develop-after-manual-deployment:
   needs: [ "deploy-develop-to-dev-manually" ]
   only:
     - develop
-    - tags
 
 cms-sync-uat-space-automatically-for-main:
   extends: .cms-sync
