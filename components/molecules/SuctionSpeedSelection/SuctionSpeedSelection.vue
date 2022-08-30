@@ -216,7 +216,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .suction-speed-selection {
   &__button-group {
     margin-bottom: 18px;
@@ -245,6 +245,10 @@ export default defineComponent({
 
     &--selected-value {
       @apply tw-w-full;
+
+      .pv-input__element {
+        @apply tw-rounded-r-none;
+      }
     }
 
     &--selected-unit {
