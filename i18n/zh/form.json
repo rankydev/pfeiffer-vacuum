@@ -1,0 +1,44 @@
+{
+  "input": {
+    "search": {
+      "placeholder": "搜索 ..."
+    }
+  },
+  "button": {},
+  "label": {
+    "optional": "(可选)"
+  },
+  "select": {
+    "placeholder": "请选择...",
+    "noOptions": "对不起。没有匹配的选项。"
+  },
+  "password": {
+    "minLength": "至少包含8个字符",
+    "capitalLetter":
+    "至少包含1个大写字母和1个小写字母",
+    "digit": "至少包含1位数字",
+    "tooLong": "您的密码过长（不得超过128个字节）"
+  },
+  "contactRequest": {
+    "firstname": "名",
+    "surname": "姓",
+    "company": "公司/大学",
+    "mail": "电子邮件",
+    "country": "国家",
+    "region": "地区",
+    "message": "你的信息",
+    "street": "街道",
+    "houseNumber": "门牌号码",
+    "postCode": "邮政编码",
+    "city": "城市",
+    "submit": "提交"
+  },
+  "validationErrorMessages": {
+    "required": "值是必需的",
+    "email": "值不是有效的电子邮件地址"
+  },
+  "message": {
+    "success": "您的请求已发送成功！",
+    "error": "无法发送您的请求。"
+  }
+}

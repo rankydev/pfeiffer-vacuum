@@ -1,0 +1,143 @@
+# general deployment configuration
+# environment.name has to be set in extending configurations
+.deployment:
+  stage: deployment
+  cache: {}
+  variables:
+    DOCKER_IMAGE_NAME: ${CI_REGISTRY}/${CI_PROJECT_PATH}
+    DOCKER_IMAGE_TAG: ${CI_COMMIT_REF_SLUG}
+  before_script:
+    - # disable gitlab warning for docker login
+      echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
+
+.deploy-on-dev-machine:
+  extends: .deployment
+  variables:
+    DOCKER_COMPOSE_FILENAME: ""
+    DOCKER_SERVICE_NAME: ""
+  script:
+    - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+    - export container_running=`docker container list | grep ${DOCKER_SERVICE_NAME}`
+    - # check if container is running. stop and remove if so.
+      if [ -n container_running ]; then
+        docker-compose -f ${DOCKER_COMPOSE_FILENAME} stop ${DOCKER_SERVICE_NAME};
+        docker-compose -f ${DOCKER_COMPOSE_FILENAME} rm --force ${DOCKER_SERVICE_NAME};
+      fi;
+    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up --detach --no-deps --build ${DOCKER_SERVICE_NAME}
+  environment:
+    name: ${DOCKER_SERVICE_NAME}
+    url: "https://dev2.pvac.diva-e.com"
+  tags:
+    - pvac-frontend-dev2-deployment
+
+# scheduled deployment for nightly dev2
+deploy-develop-to-dev-automatically:
+  extends: .deploy-on-dev-machine
+  needs: [ "audit-frontend-develop" ]
+  variables:
+    DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
+    DOCKER_SERVICE_NAME: "dev2"
+  only:
+    - develop
+
+# manual deployment for dev2
+deploy-develop-to-dev-manually:
+  extends: deploy-develop-to-dev-automatically
+  needs: [ "audit-frontend-develop" ]
+  when: manual
+  allow_failure: true
+
+# scheduled deployment for nightly lsg
+deploy-develop-to-lsg-automatically:
+  extends: .deploy-on-dev-machine
+  needs: [ "build-lsg-docker-image-for-develop" ]
+  variables:
+    DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
+    DOCKER_IMAGE_TAG: "lsg-${CI_COMMIT_REF_SLUG}"
+    DOCKER_SERVICE_NAME: "lsg"
+  only:
+    - develop
+
+deploy-develop-to-lsg-manually:
+  extends: deploy-develop-to-lsg-automatically
+  needs: [ "build-lsg-docker-image-for-develop" ]
+  when: manual
+  allow_failure: true
+
+# manual deployment for dev2
+deploy-branch-to-dev-manually:
+  extends: .deploy-on-dev-machine
+  needs: [ "audit-frontend-branch" ]
+  variables:
+    DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
+    DOCKER_SERVICE_NAME: "dev2"
+  when: manual
+  allow_failure: true
+  except:
+    - develop
+
+# manual deployment for lsg
+deploy-branch-to-lsg-manually:
+  extends: .deploy-on-dev-machine
+  needs: [ "build-lsg-docker-image-for-branch" ]
+  variables:
+    DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
+    DOCKER_IMAGE_TAG: "lsg-${CI_COMMIT_REF_SLUG}"
+    DOCKER_SERVICE_NAME: "lsg"
+  when: manual
+  allow_failure: true
+  except:
+    - develop
+
+.deploy_to_docker_swarm:
+  extends: .deployment
+  before_script:
+    - cd docker
+  script:
+    - envsubst < docker-compose.template.yml > docker-compose.swarm.yml
+    - cat docker-compose.swarm.yml
+    - cp docker-compose.swarm.yml ~/
+    - docker stack deploy --with-registry-auth --compose-file docker-compose.swarm.yml pvweb
+  allow_failure: false
+
+deploy-main-to-uat-automatically:
+  extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-uat" ]
+  variables:
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
+  environment:
+    name: uat2
+    url: "https://uat2.pvac.diva-e.com"
+  only:
+    - main
+  tags:
+    - pvweb-uat-deployment
+
+deploy-main-or-tag-to-uat-manually:
+  extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-uat" ]
+  variables:
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
+  environment:
+    name: uat2
+    url: "https://uat2.pvac.diva-e.com"
+  when: manual
+  only:
+    - tags
+    - main
+  tags:
+    - pvweb-uat-deployment
+
+deploy-tag-to-prd-manually:
+  extends: .deploy_to_docker_swarm
+  needs: [ "audit-frontend-prd" ]
+  variables:
+    DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
+  environment:
+    name: prd
+    url: "https://prd.pvac.diva-e.com"
+  when: manual
+  only:
+    - tags
+  tags:
+    - pvweb-prd-deployment

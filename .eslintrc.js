@@ -8,13 +8,15 @@ module.exports = {
     parser: 'babel-eslint',
   },
   extends: [
-    '@nuxtjs',
-    'prettier',
-    'prettier/vue',
-    'plugin:prettier/recommended',
     'plugin:nuxt/recommended',
+    'plugin:vue/vue3-recommended',
+    'plugin:prettier/recommended',
+    'plugin:storybook/recommended',
   ],
-  plugins: ['prettier'],
   // add your custom rules here
-  rules: {},
+  rules: {
+    'import/order': 'off',
+    // vue 2 still requires native modifier
+    'vue/no-deprecated-v-on-native-modifier': 'off',
+  },
 }

@@ -1,0 +1,44 @@
+{
+  "input": {
+    "search": {
+      "placeholder": "Search ..."
+    }
+  },
+  "button": {},
+  "label": {
+    "optional": "(optional)"
+  },
+  "select": {
+    "placeholder": "Please select...",
+    "noOptions": "Sorry, no matching options."
+  },
+  "password": {
+    "minLength": "Consists of at least 8 letters",
+    "capitalLetter":
+    "Contains at least 1 capital letter and 1 lower case",
+    "digit": "Contains at least 1 digit",
+    "tooLong": "Your password may be too long (max. 128 characters)"
+  },
+  "contactRequest": {
+    "firstname": "First name",
+    "surname": "Last name",
+    "company": "Company / University",
+    "mail": "Email",
+    "country": "Country / Location",
+    "region": "Region",
+    "message": "Your message",
+    "street": "Street",
+    "houseNumber": "No.",
+    "postCode": "ZIP Code",
+    "city": "City",
+    "submit": "Submit"
+  },
+  "validationErrorMessages": {
+    "required": "Value is required",
+    "email": "Value is not a valid email address"
+  },
+  "message": {
+    "success": "Your request was sent successfully!",
+    "error": "Could not send your request."
+  }
+}

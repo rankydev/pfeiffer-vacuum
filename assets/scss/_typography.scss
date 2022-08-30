@@ -1,0 +1,178 @@
+@tailwind base;
+@tailwind utilities;
+
+@import 'variables';
+
+body {
+  @apply tw-font-sans;
+}
+
+@layer base {
+  h1,
+  .tw-h1,
+  .tw-subline-1 {
+    color: #292929;
+    font-size:  1.75rem;
+    line-height: 2.25rem;
+
+    @screen lg {
+      font-size: 2.25rem;
+      line-height: 2.75rem;
+    }
+  }
+
+  h2,
+  .tw-h2,
+  .tw-subline-2 {
+    color: #292929;
+    font-size: 1.5rem;
+    line-height: 2rem;
+
+    @screen lg {
+      font-size: 2rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  h3,
+  .tw-h3,
+  .tw-subline-3 {
+    color: #292929;
+    font-size: 1.25rem;
+    line-height:  1.75rem;
+
+    @screen lg {
+      font-size:  1.75rem;
+      line-height: 2.25rem;
+    }
+  }
+
+  h4,
+  .tw-h4,
+  .tw-subline-4 {
+    color: #292929;
+    font-size: 1rem;
+    line-height: 1.5rem;
+
+    @screen lg {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+  }
+
+  h5,
+  .tw-h5,
+  .tw-subline-5 {
+    color: #292929;
+    font-size: 1rem;
+    line-height: 1.5rem;
+
+    @screen lg {
+      font-size: 1.25rem;
+      line-height:  1.75rem;
+    }
+  }
+
+  h6,
+  .tw-h6,
+  .tw-subline-6 {
+    color: #292929;
+    font-size: 1rem;
+    line-height: 1.5rem;
+
+    @screen lg {
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .tw-h1,
+  .tw-h2,
+  .tw-h3,
+  .tw-h4,
+  .tw-h5,
+  .tw-h6 {
+    font-weight: bold;
+  }
+
+  p,
+  .tw-paragraph {
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+
+    @screen lg {
+      font-size: 1rem;
+    }
+  }
+
+  button {
+    font-size: 0.875rem;
+    line-height: 1rem;
+    font-weight: bold;
+    color: #292929;
+
+    @screen lg {
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+  }
+
+  input {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  label {
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+  }
+}
+
+.tw-hero {
+  font-size: 1.75rem;
+  line-height: 2.25rem;
+  font-weight: bold;
+  color: #292929;
+
+  &::selection {
+    background-color: transparent;
+  }
+
+  @screen md {
+    font-size: 3rem;
+    line-height: 3.5rem;
+  }
+
+  @screen lg {
+    font-size: 3.5rem;
+    line-height: 4rem;
+  }
+}
+
+.tw-sub-nav {
+  font-size: 0.75rem;
+  line-height: 1.5rem;
+  font-weight: bold;
+  color: #7a7a7a;
+}
+
+.tw-teaser {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #292929;
+
+  @screen lg {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+.tw-text-inverse {
+  color: white;
+}

@@ -1,0 +1,50 @@
+@font-face {
+  font-family: UniversLTStd;
+  font-weight: bold;
+  src: url('../fonts/univers-bold.eot?#iefix');
+  src: url('../fonts/univers-bold.eot?#iefix') format("eot"),
+  url('../fonts/univers-bold.woff2') format("woff2"),
+  url('../fonts/univers-bold.woff') format("woff"),
+  url('../fonts/univers-bold.ttf') format("truetype"),
+  url('../fonts/univers-bold.svg') format("svg")
+}
+
+@font-face {
+  font-family: UniversLTStd;
+  font-weight: normal;
+  src: url('../fonts/univers.eot?#iefix');
+  src: url('../fonts/univers.eot?#iefix') format("eot"),
+  url('../fonts/univers.woff2') format("woff2"),
+  url('../fonts/univers.woff') format("woff"),
+  url('../fonts/univers.ttf') format("truetype"),
+  url('../fonts/univers.svg') format("svg")
+}
+
+
+@font-face {
+  font-family: Roboto;
+  font-weight: normal;
+  font-style: normal;
+  src: url('../fonts/roboto-regular.woff2?#iefix') format('woff2'),
+       url('../fonts/roboto-regular.woff') format('woff'),
+       url('../fonts/roboto-regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Roboto;
+  font-weight: bold;
+  font-style: normal;
+  src: url('../fonts/roboto-bold.woff2?#iefix') format('woff2'),
+       url('../fonts/roboto-bold.woff') format('woff'),
+       url('../fonts/roboto-bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Roboto;
+  font-weight: normal;
+  font-style: italic;
+  src: url('../fonts/roboto-italic.woff2?#iefix') format('woff2'),
+       url('../fonts/roboto-italic.woff') format('woff'),
+       url('../fonts/roboto-italic.ttf') format('truetype');
+}
+

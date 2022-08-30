@@ -79,6 +79,7 @@ dist
 
 # IDE / Editor
 .idea
+.vscode
 
 # Service worker
 sw.*
@@ -88,3 +89,11 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# Storybook
+.nuxt-storybook
+storybook-static
+lsg-public
+
+# linting output
+report

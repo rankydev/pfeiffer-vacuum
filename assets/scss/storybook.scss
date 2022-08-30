@@ -1,0 +1,36 @@
+.storybook {
+  &--container-unpadded {
+    // remove default paddings from storybook canvas
+    margin: -1rem;
+  }
+}
+
+/* some rudimentary Styling for NavigationLevel StandAlone-Example */
+.navigation-level-example {
+  ul {
+    margin-left: 4rem;
+  }
+
+  li > div {
+    display: block;
+  }
+}
+
+.news-container {
+  max-width: 692px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.news-container-wide {
+  max-width: 1045px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.card-wrapper {
+  width: 300px;
+  padding: 20px;
+  background-color: #f5f5f5;
+}

@@ -1,0 +1,98 @@
+.carousel {
+  .slick-list {
+    @apply tw-relative;
+    @apply tw-overflow-hidden;
+
+    &:focus {
+      @apply tw-outline-none;
+    }
+
+    &.dragging {
+      @apply tw-cursor-pointer;
+    }
+  }
+
+  .slick-track {
+    @apply tw-relative;
+    @apply tw-top-0 tw-left-0;
+    @apply tw-flex;
+    font-size: 0;
+    line-height: 0;
+  }
+
+  .slick-slide {
+    @apply tw-hidden;
+    min-height: 1px;
+
+    & > div {
+      @apply tw-w-full;
+    }
+
+    &.dragging img {
+      @apply tw-pointer-events-none;
+    }
+  }
+
+  .slick-loading {
+    .slick-track,
+    .slick-slide {
+      @apply tw-invisible;
+    }
+  }
+
+  .slick-initialized {
+    .slick-slide {
+      @apply tw-flex;
+    }
+  }
+
+  .slick-dots {
+    @apply tw-w-full;
+    @apply tw-list-none;
+    @apply tw-text-center;
+    @apply tw-m-0 tw-p-0;
+    @apply tw-mt-3;
+
+    li {
+      @apply tw-relative;
+      @apply tw-inline-block;
+      @apply tw-w-4;
+      @apply tw-h-4;
+      @apply tw-m-0;
+      @apply tw-p-0;
+
+      button {
+        @apply tw-w-4;
+        @apply tw-h-4;
+        @apply tw-cursor-pointer;
+        @apply tw-text-pv-transparent;
+        @apply tw-outline-none;
+        font-size: 0;
+        line-height: 0;
+      }
+
+      &::before {
+        @apply tw-absolute;
+        @apply tw-top-0 tw-left-0;
+        @apply tw-text-base tw-text-center;
+        @apply tw-text-pv-grey-80;
+        @apply tw-leading-3;
+        @apply tw-pb-1;
+        @apply tw-w-4 tw-h-4;
+        content: '■';
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      &:hover,
+      &:focus {
+        @apply tw-outline-none;
+      }
+
+      &.slick-active::before {
+        @apply tw-text-pv-red;
+        @apply tw-opacity-100;
+      }
+    }
+  }
+}

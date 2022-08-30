@@ -1,0 +1,49 @@
+.cms-sync:
+  extends: .node-image
+  stage: cms-sync
+  cache:
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: pull
+  script:
+    - npm run cms:sync:ci -- --space "${STORYBLOK_SPACE_ID}" --token "${STORYBLOK_OAUTH_TOKEN}"
+
+cms-sync-dev-space-automatically-for-develop:
+  extends: .cms-sync
+  needs: [ "deploy-develop-to-dev-automatically" ]
+  environment:
+    name: dev2
+  only:
+    - develop
+
+cms-sync-dev-space-for-develop-after-manual-deployment:
+  extends: cms-sync-dev-space-automatically-for-develop
+  needs: [ "deploy-develop-to-dev-manually" ]
+
+cms-sync-uat-space-automatically-for-main:
+  extends: .cms-sync
+  needs: [ "deploy-main-to-uat-automatically" ]
+  environment:
+    name: uat2
+  only:
+    - main
+
+cms-sync-uat-space-for-main-and-tags-after-manual-deploymen:
+  extends: .cms-sync
+  needs: [ "deploy-main-or-tag-to-uat-manually" ]
+  environment:
+    name: uat2
+  only:
+    - tags
+    - main
+
+cms-sync-production-space-after-manual-deploymen:
+  extends: .cms-sync
+  needs: [ "deploy-tag-to-prd-manually" ]
+  environment:
+    name: prd
+  only:
+    - tags

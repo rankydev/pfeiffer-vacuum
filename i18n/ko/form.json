@@ -1,0 +1,44 @@
+{
+  "input": {
+    "search": {
+      "placeholder": "검색..."
+    }
+  },
+  "button": {},
+  "label": {
+    "optional": "(옵션)"
+  },
+  "select": {
+    "placeholder": "선택하십시오...",
+    "noOptions": "죄송합니다. 일치하는 옵션이 없습니다."
+  },
+  "password": {
+    "minLength": "최소 8개의 문자로 구성",
+    "capitalLetter":
+    "최소 1개의 대문자 또는 1개의 소문자가 포함",
+    "digit": "최소 1자리 숫자 포함",
+    "tooLong": "당신의 패스워드가 너무 길 수 있습니다.(최대 128 자)"
+  },
+  "contactRequest": {
+    "firstname": "이름",
+    "surname": "성",
+    "company": "회사/대학",
+    "mail": "이메일",
+    "country": "국가",
+    "region": "지역",
+    "message": "당신의 메시지",
+    "street": "거리",
+    "houseNumber": "숫자",
+    "postCode": "우편번호",
+    "city": "도시",
+    "submit": "제출하다"
+  },
+  "validationErrorMessages": {
+    "required": "값은 필수 항목입니다",
+    "email": "값이 유효한 이메일 주소가 아닙니다"
+  },
+  "message": {
+    "success": "요청이 성공적으로 전송되었습니다!",
+    "error": "요청을 보낼 수 없습니다."
+  }
+}

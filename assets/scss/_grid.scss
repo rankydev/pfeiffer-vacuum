@@ -1,0 +1,56 @@
+@tailwind utilities;
+
+@import 'variables';
+
+@layer utilities {
+  .tw-grid-container {
+    @apply tw-grid tw-grid-cols-mobile;
+    grid-gap: $grid-gutter-phone;
+
+    @screen md {
+      @apply tw-grid-cols-tablet;
+      grid-gap: $grid-gutter-tablet;
+    }
+
+    @screen lg {
+      @apply tw-grid-cols-desktop;
+      grid-gap: $grid-gutter-desktop;
+    }
+  }
+
+  .tw-container-fluid {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+  }
+
+  .tw-fluid-reset {
+    position: initial;
+    left: initial;
+    right: initial;
+    margin-left: initial;
+    margin-right: initial;
+    width: initial;
+  }
+
+  .tw-my-component-wide {
+    @apply tw-my-6;
+
+    @screen md {
+      @apply tw-my-8;
+    }
+
+    @screen lg {
+      @apply tw-my-12;
+    }
+  }
+
+  .tw-my-component-narrow {
+    @apply tw-my-4;
+
+
+  }
+}
