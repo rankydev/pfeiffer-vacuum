@@ -161,6 +161,8 @@ build-frontend-docker-image-for-branch:
     name: dev2
   except:
     - develop
+    - main
+    - tags
 
 .build-docker-image-lsg:
   extends: .build-docker-image
@@ -178,6 +180,8 @@ build-lsg-docker-image-for-branch:
   needs: ["test", "lint"]
   except:
     - develop
+    - main
+    - tags
 
 build-frontend-docker-image-for-develop:
   extends: .build-docker-image
@@ -202,7 +206,7 @@ tag-docker-image-latest-main:
   only:
     - main
 
-build-frontend-uat-docker-image-for-tags:
+build-frontend-uat-docker-image-for-main-and-tags:
   extends: .build-docker-image
   needs: ["test", "lint"]
   variables:
@@ -210,6 +214,7 @@ build-frontend-uat-docker-image-for-tags:
   environment:
     name: uat2
   only:
+    - main
     - tags
 
 build-frontend-prd-docker-image-for-tags:
