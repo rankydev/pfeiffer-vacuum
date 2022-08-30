@@ -90,6 +90,8 @@ deploy-branch-to-lsg-manually:
   allow_failure: true
   except:
     - develop
+    - main
+    - tags
 
 .deploy_to_docker_swarm:
   extends: .deployment
