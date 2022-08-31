@@ -13,7 +13,8 @@
       />
     </div>
 
-    <!-- TODO: Add infobox.vue-->
+    <Infobox :text="$t('registration.infotext')" />
+
     <div v-if="addCompany" class="registration-company-data-form__form">
       <div class="registration-company-data-form__form__rowContainer">
         <ButtonGroup
@@ -166,12 +167,13 @@
 import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import ButtonGroup from '~/components/atoms/FormComponents/ButtonGroup/ButtonGroup'
-import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
+import Infobox from '~/components/molecules/Infobox/Infobox'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 
 export default defineComponent({
   name: 'RegistrationCompanyDataForm',
-  components: { Button, ButtonGroup, PvInput, FormCountrySelection },
+  components: { Button, ButtonGroup, PvInput, FormCountrySelection, Infobox },
   props: {
     validate: {
       type: Boolean,

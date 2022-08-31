@@ -4,6 +4,7 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
 import Button from '~/components/atoms/Button/Button'
 import ButtonGroup from '~/components/atoms/FormComponents/ButtonGroup/ButtonGroup'
+import Infobox from '~/components/molecules/Infobox/Infobox'
 import { setActivePinia, createPinia } from 'pinia'
 import { ref } from '@nuxtjs/composition-api'
 
@@ -45,6 +46,7 @@ describe('RegistrationCompanyDataForm', () => {
       const inputFields = wrapper.findAllComponents(PvInput)
       const countrySelection = wrapper.findComponent(FormCountrySelection)
       const buttonGroup = wrapper.findComponent(ButtonGroup)
+      const infobox = wrapper.findComponent(Infobox)
       const removeBtn = wrapper.find(
         '.registration-company-data-form__remove-button'
       )
@@ -55,6 +57,7 @@ describe('RegistrationCompanyDataForm', () => {
       expect(inputFields).toHaveLength(4)
       expect(countrySelection).toBeTruthy()
       expect(buttonGroup).toBeTruthy()
+      expect(infobox).toBeTruthy()
       expect(removeBtn).toBeTruthy()
       expect(addBtn).toBeTruthy()
     })
