@@ -1,19 +1,18 @@
-import { useOldStore } from '~/stores/oldStore'
+import { useAuthStore } from '~/stores/auth'
 const qs = require('qs')
 import getLoggerFor from '../../utils/getLoggerFor'
 
 const logger = getLoggerFor('interceptorFactory')
 
 export function getInterceptors() {
-  // TODO needs to be refactored when we split stores
-  const store = useOldStore()
+  const authStore = useAuthStore()
 
   const addAuthHeader = function (config) {
     logger.debug('addAuthHeader')
 
     // eslint-disable-next-line camelcase
-    if (store.loggedIn) {
-      const authObject = store.auth
+    if (authStore.loggedIn) {
+      const authObject = authStore.auth
       logger.trace('AuthObject: ', authObject)
       // eslint-disable-next-line camelcase
       config.headers.Authorization = `${authObject.token_type} ${authObject.access_token}`
@@ -26,12 +25,13 @@ export function getInterceptors() {
 
   const addI18nParameters = function (config) {
     config.params = config.params || {}
-    if (!config.params.lang) {
-      config.params.lang = store.language
-    }
-    if (!config.params.curr) {
-      config.params.curr = store.currency
-    }
+    // TODO language and currency?
+    // if (!config.params.lang) {
+    //   config.params.lang = store.language
+    // }
+    // if (!config.params.curr) {
+    //   config.params.curr = store.currency
+    // }
   }
 
   /**

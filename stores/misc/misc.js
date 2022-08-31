@@ -1,22 +1,18 @@
-import { useContext } from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
+import { ref } from '@nuxtjs/composition-api'
 
-export const useMiscStore = () => {
-  const storeCreator = defineStore('misc', {
-    state: () => ({
-      countries: [],
-    }),
-    actions: {
-      async loadCountries() {
-        const { $hybrisApi } = useContext()
-        this.countries = await $hybrisApi.countriesApi.getCountries()
-      },
-    },
-  })
-  const innerStore = storeCreator()
-  // the initial store initialization
-  if (innerStore.countries.length === 0) {
-    innerStore.loadCountries()
+export const useMiscStore = defineStore('misc', () => {
+  const { $hybrisApi } = $nuxt
+  const countries = ref([])
+
+  const loadCountries = async () => {
+    countries.value = await $hybrisApi.countriesApi.getCountries()
   }
-  return innerStore
-}
+
+  // the initial store initialization
+  if (countries.value.length === 0) {
+    loadCountries()
+  }
+
+  return { countries, loadCountries }
+})

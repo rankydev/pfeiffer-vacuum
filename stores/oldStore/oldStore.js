@@ -32,9 +32,9 @@ export const useOldStore = defineStore('oldStore', {
     hookUrl: '',
     returnTarget: '_self',
     hiddenUIElements: {},
+    customerId: '',
 
     currentUser: null,
-    customerId: '',
 
     currentCart: null,
     cartOverlayVisible: false,
@@ -122,12 +122,15 @@ export const useOldStore = defineStore('oldStore', {
       this.dispatch('datasources/loadFiles')
     },
     async loadCurrentUser() {
+      console.log('### load user')
       if (!this.loggedIn) {
+        console.log('### not logged in')
         return
       }
       const { $hybrisApi } = this.$nuxt
       const user = await $hybrisApi.userApi.getUserData()
       if (user && !user.error) {
+        console.log('### we got a user', user)
         this.currentUser = user
       } else {
         logger.error('user not found', user || '')

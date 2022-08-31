@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import { useOldStore } from '~/stores/oldStore'
+import { useAuthStore } from '~/stores/auth'
+import { useOciStore } from '~/stores/oci'
 
 const keycloakJS = typeof window !== 'undefined' ? require('keycloak-js') : null
 const cookieHelper = require('../plugins/cookieHelper')
@@ -13,13 +14,14 @@ const MIN_TOKEN_VALIDITY_IN_SECONDS = 30
 export function getAuthApi(ctx) {
   logger.debug('getAuthApi')
   logger.trace(`getAuthApi ${process.client ? 'Client' : 'Server'}`)
-  // TODO needs to be refactored when we split stores
-  const store = useOldStore()
+
+  const authStore = useAuthStore()
+  const ociStore = useOciStore()
   let keycloakInstance = null
 
   // logger.debug(store)
 
-  if (!store.isOciPage && !store.isOciUser) {
+  if (!ociStore.isOciPage && !authStore.isOciUser) {
     createKeycloakInstance()
   }
 
@@ -95,7 +97,7 @@ export function getAuthApi(ctx) {
 
     const kcOnAuthSuccess = async function () {
       logger.debug('kcOnAuthSuccess')
-      store.isLoginProcess = true
+      authStore.isLoginProcess = true
       const canAccessApprovedCustomerFunctionality =
         keycloakInstance.hasRealmRole('customer_ecommerce')
 
@@ -111,7 +113,7 @@ export function getAuthApi(ctx) {
       // TODO need to fix this
       // logger.trace('get VSM token')
       // await ctx.$vsmApi.getVsmToken(false)
-      store.isLoginProcess = false
+      authStore.isLoginProcess = false
     }
 
     const kcOnAuthLogout = async function () {
@@ -141,7 +143,7 @@ export function getAuthApi(ctx) {
       responseMode: 'query',
     }
     //keycloakInitOptions, how to check the SSO and security method for PKCE
-    if (store.loggedIn) {
+    if (authStore.loggedIn) {
       logger.trace('keycloakInitOptions with userdata')
       keycloakInitOptions = {
         onLoad: 'check-sso',
@@ -151,9 +153,9 @@ export function getAuthApi(ctx) {
         checkLoginIframe: true,
         checkLoginIframeInterval: 5,
         responseMode: 'query',
-        idToken: store.auth.id_token,
-        refreshToken: store.auth.refresh_token,
-        token: store.auth.access_token,
+        idToken: authStore.auth.id_token,
+        refreshToken: authStore.auth.refresh_token,
+        token: authStore.auth.access_token,
       }
     }
 
@@ -187,8 +189,7 @@ export function getAuthApi(ctx) {
         .catch((reason) =>
           logger.info('token refresh failed due to session timeout or ', reason)
         )
-    // TODO do we really need this?
-    // store.$keycloakInstance = keycloakInstance
+
     ctx.$keycloakInstance = keycloakInstance
     app.$keycloakInstance = keycloakInstance
   }
@@ -200,7 +201,8 @@ export function getAuthApi(ctx) {
     logger.debug('login')
     const url = window.location.href
     console.log('### redirect', url)
-    const options = { locale: store.currentLanguage, redirectUri: url }
+    // TODO do we need the locale?
+    const options = { locale: 'store.currentLanguage', redirectUri: url }
     await keycloakInstance.login(options)
   }
 
@@ -241,7 +243,7 @@ export function getAuthApi(ctx) {
       new Date(token.validUntil)
     )
 
-    store.setAuth(token)
+    authStore.setAuth(token)
   }
 
   /*
@@ -276,7 +278,7 @@ export function getAuthApi(ctx) {
     cookieHelper.removeCookie(ctx, 'auth.validUntil')
     cookieHelper.removeCookie(ctx, 'auth.tokenType')
 
-    store.setAuth(null)
+    authStore.setAuth(null)
   }
 
   // const getToken = function getToken() {
@@ -291,7 +293,7 @@ export function getAuthApi(ctx) {
   //         return resolve({})
   //       }
 
-  //       if (!store.loggedIn) {
+  //       if (!authStore.loggedIn) {
   //         logger.debug('Not logged in. No token found.')
   //         unlock()
   //         return resolve({})
@@ -302,7 +304,7 @@ export function getAuthApi(ctx) {
   //       }
 
   //       // return existing token
-  //       const token = store.auth
+  //       const token = authStore.auth
   //       logger.debug('Existing token still valid')
   //       logger.trace(token)
   //       unlock()
@@ -348,9 +350,4 @@ export default (ctx) => {
 
   app.$authApi = authApi
   ctx.$authApi = authApi
-
-  // TODO do we really need this?
-  // if (store) {
-  //   store.$authApi = authApi
-  // }
 }

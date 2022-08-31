@@ -1,5 +1,8 @@
 import Vue from 'vue'
-import { useOldStore } from '~/stores/oldStore'
+import { useAuthStore } from '~/stores/auth'
+import { useVsmStore } from '~/stores/vsm'
+
+// TODO we need apollo client first
 // import profile from '../apollo/queries/profile.gql'
 
 import getLoggerFor from '../utils/getLoggerFor'
@@ -8,8 +11,8 @@ const logger = getLoggerFor('vsmApi')
 
 function getVsmApi(ctx) {
   const { $contextUtil, $axios, app } = ctx
-  // TODO needs to be refactored when we split stores
-  const store = useOldStore()
+  const authStore = useAuthStore()
+  const vsmStore = useVsmStore()
 
   const vsmUrl = $contextUtil.getCurrentHostUrl() + process.env.PROXY_PATH_VSM
 
@@ -28,13 +31,12 @@ function getVsmApi(ctx) {
     logger.debug('getVsmToken')
     const vsmIsActive = process.env.SERVICE_PORTAL_ACTIVE === 'true'
     const { $keycloakInstance } = ctx
-    if (!vsmIsActive || !$keycloakInstance || !store.loggedIn) {
+    if (!vsmIsActive || !$keycloakInstance || !authStore.loggedIn) {
       // if this message occurs in the logs, the prerequisites for VSM login are not met
       // and there is a flaw in the workflow for logging in to VSM.
       // A VSM token can only be obtained if the user is logged in via Keycloak first.
       logger.info(
-        `keycloakInstance not available (${!$keycloakInstance}) or user not logged in (${!store
-          .getters.loggedIn}). VSM token cannot be obtained.`
+        `keycloakInstance not available (${!$keycloakInstance}) or user not logged in (${!authStore.loggedIn}). VSM token cannot be obtained.`
       )
       return
     }
@@ -47,7 +49,7 @@ function getVsmApi(ctx) {
       params.append('createVsmUser', 'false')
     }
 
-    const authObject = store.auth
+    const authObject = authStore.auth
     const config = {
       headers: {
         // eslint-disable-next-line camelcase
@@ -73,7 +75,7 @@ function getVsmApi(ctx) {
             userId: data?.user?.id,
             userObject: data?.user,
           }
-          store.setVsmUser(props)
+          vsmStore.setVsmUser(props)
           logger.trace('Set VSM user-data', vsmAccessToken)
         }
 
@@ -81,7 +83,7 @@ function getVsmApi(ctx) {
       })
       .catch((err) => {
         logger.error('Error fetching VSM token', err && err.message ? err : '')
-        store.setVsmUser(null)
+        vsmStore.setVsmUser(null)
       })
   }
 
@@ -104,7 +106,7 @@ function getVsmApi(ctx) {
 }
 
 export default (ctx) => {
-  const { app, store } = ctx
+  const { app } = ctx
   const vsmApi = getVsmApi(ctx)
 
   // Inject VSM API into the Vue instance to use it client side
@@ -112,8 +114,4 @@ export default (ctx) => {
 
   app.$vsmApi = vsmApi
   ctx.$vsmApi = vsmApi
-  // TODO do we really need this?
-  // if (store) {
-  //   store.$vsmApi = vsmApi
-  // }
 }

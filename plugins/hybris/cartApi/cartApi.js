@@ -1,11 +1,15 @@
-import { useOldStore } from '~/stores/oldStore'
+import { useAuthStore } from '~/stores/auth'
+import { useCartStore } from '~/stores/cart'
+import { useOciStore } from '~/stores/oci'
 import config from '../hybris.config'
 const cookieHelper = require('../../../plugins/cookieHelper')
 
 export function getCartApi(axiosInstance, ctx) {
   const logger = ctx.$getLoggerFor('cartApi')
   // TODO needs to be refactored when we split stores
-  const store = useOldStore()
+  const authStore = useAuthStore()
+  const cartStore = useCartStore()
+  const ociStore = useOciStore()
 
   function isValidCart(result) {
     return (
@@ -98,9 +102,9 @@ export function getCartApi(axiosInstance, ctx) {
       let existingCart = null
 
       // check for oci user
-      if (store.currentUser && store.currentUser.ociBuyer) {
+      if (authStore.currentUser && authStore.currentUser.ociBuyer) {
         existingCart = await axiosInstance.$get(
-          config.CARTS_CURRENT_USER_API + '/' + store.customerId,
+          config.CARTS_CURRENT_USER_API + '/' + ociStore.customerId,
           { params: { fields: 'FULL' } }
         )
       } else {
@@ -135,7 +139,7 @@ export function getCartApi(axiosInstance, ctx) {
      */
     getGuidForAnonymousCart() {
       logger.debug('getGuidForAnonymousCart')
-      const currentCart = store.currentCart
+      const currentCart = cartStore.currentCart
       // from store
       if (currentCart && currentCart.guid) {
         logger.debug('cart ID from store')
@@ -165,7 +169,7 @@ export function getCartApi(axiosInstance, ctx) {
      */
     async getOrCreateCart(createIfNotExist) {
       logger.trace('GetOrCreateCart: If not exists: ', createIfNotExist)
-      if (store.loggedIn) {
+      if (authStore.loggedIn) {
         return this.getOrCreateUserCart()
       } else {
         return this.getOrCreateAnonymousCart(createIfNotExist)
@@ -214,14 +218,14 @@ export function getCartApi(axiosInstance, ctx) {
      * @return {string|null}
      */
     getCartUrl() {
-      if (store.loggedIn) {
-        if (store.currentUser && store.currentUser.ociBuyer) {
-          return config.CARTS_CURRENT_USER_API + '/' + store.customerId
+      if (authStore.loggedIn) {
+        if (authStore.currentUser && authStore.currentUser.ociBuyer) {
+          return config.CARTS_CURRENT_USER_API + '/' + ociStore.customerId
         } else {
           return config.CARTS_CURRENT_USER_API + '/current'
         }
-      } else if (store.currentCart) {
-        return config.CARTS_ANONYMOUS_API + '/' + store.currentCart.guid
+      } else if (cartStore.currentCart) {
+        return config.CARTS_ANONYMOUS_API + '/' + cartStore.currentCart.guid
       } else {
         logger.error(
           'Error when loading cart url, anonymous cart not loaded yet.'
@@ -238,7 +242,7 @@ export function getCartApi(axiosInstance, ctx) {
      * @return {Promise<boolean>}
      */
     async addToCart(code, quantity = 1) {
-      await store.loadCurrentCart(true) // ensure cart exists
+      await cartStore.loadCurrentCart(true) // ensure cart exists
       const cartEntry = {
         quantity,
         product: {
@@ -253,7 +257,7 @@ export function getCartApi(axiosInstance, ctx) {
       )
 
       if (result && typeof result === 'object' && !result.error) {
-        await store.loadCurrentCart(false) // refresh cart in store
+        await cartStore.loadCurrentCart(false) // refresh cart in store
         return true
       }
 
@@ -283,7 +287,7 @@ export function getCartApi(axiosInstance, ctx) {
       )
 
       if (result && typeof result === 'object' && !result.error) {
-        await store.loadCurrentCart(false) // refresh cart in store
+        await cartStore.loadCurrentCart(false) // refresh cart in store
         return true
       }
 
@@ -307,7 +311,7 @@ export function getCartApi(axiosInstance, ctx) {
       )
 
       if (result && result.status === 200 && !result.error) {
-        await store.loadCurrentCart(false) // refresh cart in store
+        await cartStore.loadCurrentCart(false) // refresh cart in store
         return true
       }
 
@@ -325,7 +329,7 @@ export function getCartApi(axiosInstance, ctx) {
      * @return {Promise<null|any>}
      */
     async setDeliveryAddress(address) {
-      await store.loadCurrentCart(true) // ensure cart exists
+      await cartStore.loadCurrentCart(true) // ensure cart exists
 
       const result = await axiosInstance.$post(
         this.getCartUrl() + '/addresses/delivery',
@@ -333,7 +337,7 @@ export function getCartApi(axiosInstance, ctx) {
       )
 
       if (result && typeof result === 'object' && !result.error) {
-        await store.loadCurrentCart(false) // refresh cart in store
+        await cartStore.loadCurrentCart(false) // refresh cart in store
         return result
       }
 
@@ -351,7 +355,7 @@ export function getCartApi(axiosInstance, ctx) {
      * @return {Promise<boolean>}
      */
     async setReferenceNumber(reference) {
-      await store.loadCurrentCart(true) // ensure cart exists
+      await cartStore.loadCurrentCart(true) // ensure cart exists
 
       // Because this endpoint needs a JSON String (and not a JSON String wrapped in an Object) we need to stringify the reference and set the appropriate header
       const result = await axiosInstance.post(
@@ -361,7 +365,7 @@ export function getCartApi(axiosInstance, ctx) {
       )
 
       if (result && result.status === 200 && !result.error) {
-        await store.loadCurrentCart(false) // refresh cart in store
+        await cartStore.loadCurrentCart(false) // refresh cart in store
 
         return true
       }
@@ -374,7 +378,7 @@ export function getCartApi(axiosInstance, ctx) {
     },
 
     async setRequestComment(comment) {
-      await store.loadCurrentCart(true)
+      await cartStore.loadCurrentCart(true)
       const result = await axiosInstance.post(
         this.getCartUrl() + '/comment',
         JSON.stringify(comment),
@@ -382,7 +386,7 @@ export function getCartApi(axiosInstance, ctx) {
       )
 
       if (result && result.status === 200 && !result.error) {
-        await store.loadCurrentCart(false)
+        await cartStore.loadCurrentCart(false)
         return true
       }
 

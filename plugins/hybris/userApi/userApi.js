@@ -1,11 +1,10 @@
 import config from '../hybris.config'
-import { useOldStore } from '~/stores/oldStore'
+import { useAuthStore } from '~/stores/auth'
 
 export function getUserApi(axios4Shop, ctx) {
   const logger = ctx.$getLoggerFor('userApi')
   const { $authApi } = ctx
-  // TODO needs to be refactored when we split stores
-  const store = useOldStore()
+  const authStore = useAuthStore()
 
   return {
     async getUserData() {
@@ -91,7 +90,7 @@ export function getUserApi(axios4Shop, ctx) {
       if (!changeData.error) {
         const user = await axios4Shop.$get(config.USER_API, {})
         if (typeof user === 'object' && !user.error) {
-          store.currentUser = user
+          authStore.currentUser = user
         }
       }
       return changeData
@@ -195,12 +194,12 @@ export function getUserApi(axios4Shop, ctx) {
     },
 
     async getAccountManager() {
-      if (!store.loggedIn || !store.isApprovedUser) {
+      if (!authStore.loggedIn || !authStore.isApprovedUser) {
         return {}
       }
 
       const result = await axios4Shop.$get(
-        `${config.USER_API}/orgUnits/${store.currentUser.orgUnit.uid}/salesengineer`
+        `${config.USER_API}/orgUnits/${authStore.currentUser.orgUnit.uid}/salesengineer`
       )
 
       if (typeof result === 'object' && !result.error) {
