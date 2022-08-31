@@ -1,8 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
-import CreateAccount from '~/components/molecules/CreateAccount/CreateAccount'
-import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import Password from '~/components/atoms/FormComponents/Password/Password'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
+import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import { setActivePinia, createPinia } from 'pinia'
 import { ref } from '@nuxtjs/composition-api'
 
@@ -34,28 +32,32 @@ jest.mock('~/composables/useRegions', () => {
   }
 })
 
-describe('CreateAccount', () => {
+describe('FormCountrySelection', () => {
   describe('initial state', () => {
     beforeEach(() => setActivePinia(createPinia()))
     test('should render component correctly', () => {
-      const wrapper = shallowMount(CreateAccount)
-      const title = wrapper.find('h2')
-      const inputArr = wrapper.findAllComponents(PvInput)
-      const countrySelection = wrapper.findComponent(FormCountrySelection)
-      const password = wrapper.findComponent(Password)
+      const wrapper = shallowMount(FormCountrySelection)
+      const select = wrapper.findComponent(PvSelect)
 
       expect(wrapper.exists()).toBeTruthy()
-      expect(title).toBeTruthy()
-      expect(inputArr).toHaveLength(4)
-      expect(countrySelection).toBeTruthy()
-      expect(password).toBeTruthy()
+      expect(select).toBeTruthy()
     })
+  })
+  describe('during interaction', () => {
+    it('should return regions array when appropriate country was selected', async () => {
+      const wrapper = shallowMount(FormCountrySelection)
+      const select = wrapper.findComponent(PvSelect)
 
-    test('should validate input fields given validate propsData', () => {
-      const propsData = { validate: true }
-      const wrapper = shallowMount(CreateAccount, { propsData })
+      const selectedOption = {
+        isocode: 'US',
+        name: 'United States of America',
+      }
+      select.vm.$emit('update', selectedOption)
+      await select.vm.$nextTick()
+      const allSelects = wrapper.findAllComponents(PvSelect)
 
-      expect(wrapper.exists()).toBeTruthy()
+      expect(mockLoadRegions).toHaveBeenCalled()
+      expect(allSelects).toHaveLength(2)
     })
   })
 })
