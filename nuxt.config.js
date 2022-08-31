@@ -56,16 +56,20 @@ export default {
           routes[key].caseSensitive = true
         }
       },
+      middleware: ['ociAuth', 'preload'],
     },
   }),
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/helper/logger' },
+    '~/plugins/helper/logger',
+    '~/plugins/contextUtil',
     { src: '~/plugins/storyblok/storyblok-api-client', mode: 'client' },
-    { src: '~/plugins/helper/breakpoints' },
+    '~/plugins/helper/breakpoints',
     { src: '~/plugins/service/service.plugin', mode: 'client' },
-    { src: '~/plugins/hybris/hybrisApi' },
+    '~/plugins/authApi',
+    '~/plugins/hybris/hybrisApi',
+    '~/plugins/vsmApi',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -192,7 +196,17 @@ export default {
     STORYBLOK_ACCESS_TOKEN: process.env.STORYBLOK_ACCESS_TOKEN,
     SHOP_BASE_URL: process.env.SHOP_BASE_URL,
     SHOP_IMAGE_URL: process.env.SHOP_IMAGE_URL,
+    SHOP_TIMEOUT: process.env.SHOP_TIMEOUT,
     CONSOLA_LEVEL: process.env.CONSOLA_LEVEL,
+    SERVICE_PORTAL_ACTIVE: process.env.SERVICE_PORTAL_ACTIVE,
+
+    // keycloak
+    KEYCLOAK_BASE_URL: process.env.KEYCLOAK_BASE_URL,
+    KEYCLOAK_REALM_NAME: process.env.KEYCLOAK_REALM_NAME,
+    KEYCLOAK_CLIENT_ID: process.env.KEYCLOAK_CLIENT_ID,
+
+    //Storefront
+    STOREFRONT_BASE_URL: process.env.STOREFRONT_BASE_URL,
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img

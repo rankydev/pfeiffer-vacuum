@@ -1,11 +1,19 @@
 <template>
   <div class="shop-navigation">
-    <Link href="#" class="shop-navigation__account">
-      <Icon class="shop-navigation__icon" icon="person" />
+    <Button
+      shape="plain"
+      variant="secondary"
+      class="shop-navigation__account"
+      :label="$t('navigation.button.signIn.label')"
+      icon="person"
+      :prepend-icon="true"
+      @click="login()"
+    >
+      <!-- <Icon class="shop-navigation__icon" icon="person" />
       <span class="shop-navigation__account-name">{{
-        $t('navigation.button.signIn.label')
-      }}</span>
-    </Link>
+        
+      }}</span> -->
+    </Button>
 
     <Link href="#" class="shop-navigation__comparhension">
       <Icon class="shop-navigation__icon" icon="compare_arrows" />
@@ -22,7 +30,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
@@ -31,6 +39,11 @@ export default defineComponent({
   components: {
     Icon,
     Link,
+  },
+  setup() {
+    const { $authApi } = useContext()
+
+    return { login: $authApi.login }
   },
 })
 </script>
