@@ -12,7 +12,6 @@
 
 .deploy-on-dev-machine:
   extends: .deployment
-  needs: [ "audit-frontend" ]
   variables:
     DOCKER_COMPOSE_FILENAME: ""
     DOCKER_SERVICE_NAME: ""
@@ -32,7 +31,7 @@
     - pvac-frontend-dev2-deployment
 
 # scheduled deployment for nightly dev2
-deploy-dev-automatically:
+deploy-develop-to-dev-automatically:
   extends: .deploy-on-dev-machine
   needs: [ "audit-frontend-develop" ]
   variables:
@@ -42,14 +41,16 @@ deploy-dev-automatically:
     - develop
 
 # manual deployment for dev2
-deploy-dev-manually-develop:
-  extends: deploy-dev-automatically
+deploy-develop-to-dev-manually:
+  extends: deploy-develop-to-dev-automatically
+  needs: [ "audit-frontend-develop" ]
   when: manual
+  allow_failure: true
 
 # scheduled deployment for nightly lsg
-deploy-lsg-automatically:
+deploy-develop-to-lsg-automatically:
   extends: .deploy-on-dev-machine
-  needs: [ "build-docker-image-lsg-develop" ]
+  needs: [ "build-lsg-docker-image-for-develop" ]
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
     DOCKER_IMAGE_TAG: "lsg-${CI_COMMIT_REF_SLUG}"
@@ -57,66 +58,81 @@ deploy-lsg-automatically:
   only:
     - develop
 
-deploy-lsg-manually-develop:
-  extends: deploy-lsg-automatically
+deploy-develop-to-lsg-manually:
+  extends: deploy-develop-to-lsg-automatically
+  needs: [ "build-lsg-docker-image-for-develop" ]
   when: manual
+  allow_failure: true
 
 # manual deployment for dev2
-deploy-dev-manually:
+deploy-branch-to-dev-manually:
   extends: .deploy-on-dev-machine
+  needs: [ "audit-frontend-branch" ]
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-frontend.yml"
     DOCKER_SERVICE_NAME: "dev2"
   when: manual
+  allow_failure: true
   except:
     - develop
+    - main
+    - tags
 
 # manual deployment for lsg
-deploy-lsg-manually:
+deploy-branch-to-lsg-manually:
   extends: .deploy-on-dev-machine
-  needs: [ "build-docker-image-lsg" ]
+  needs: [ "build-lsg-docker-image-for-branch" ]
   variables:
     DOCKER_COMPOSE_FILENAME: "docker/docker-compose-lsg.yml"
     DOCKER_IMAGE_TAG: "lsg-${CI_COMMIT_REF_SLUG}"
     DOCKER_SERVICE_NAME: "lsg"
   when: manual
+  allow_failure: true
   except:
     - develop
+    - main
+    - tags
 
 .deploy_to_docker_swarm:
   extends: .deployment
+  before_script:
+    - cd docker
   script:
-    - docker service update --with-registry-auth --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_SERVICE_NAME}
+    - envsubst < docker-compose.template.yml > docker-compose.swarm.yml
+    - cat docker-compose.swarm.yml
+    - cp docker-compose.swarm.yml ~/
+    - docker stack deploy --with-registry-auth --compose-file docker-compose.swarm.yml pvweb
   allow_failure: false
 
-deploy-uat-automatically:
+deploy-main-to-uat-automatically:
   extends: .deploy_to_docker_swarm
   needs: [ "audit-frontend-uat" ]
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
-    name: uat
+    name: uat2
     url: "https://uat2.pvac.diva-e.com"
   only:
     - main
   tags:
-    - pvac-frontend-uat-deployment
+    - pvweb-uat-deployment
 
-deploy-uat-manually:
+deploy-main-or-tag-to-uat-manually:
   extends: .deploy_to_docker_swarm
   needs: [ "audit-frontend-uat" ]
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
-    name: uat
+    name: uat2
     url: "https://uat2.pvac.diva-e.com"
   when: manual
   only:
     - tags
+    - main
   tags:
-    - pvac-frontend-uat-deployment
+    - pvweb-uat-deployment
 
-deploy-prd-manually:
+deploy-tag-to-prd-manually:
   extends: .deploy_to_docker_swarm
   needs: [ "audit-frontend-prd" ]
   variables:
@@ -128,4 +144,4 @@ deploy-prd-manually:
   only:
     - tags
   tags:
-    - pvac-frontend-prd-deployment
+    - pvweb-prd-deployment

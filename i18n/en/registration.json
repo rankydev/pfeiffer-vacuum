@@ -9,7 +9,6 @@
     "region": "Region",
     "password": "Password"
   },
-  "infotext": "Our product experts are always available to answer your questions about our products and your applications.",
   "formCompanyData": {
     "title": "Company Data",
     "infobox": "Here you can store the address data of your company. This step is optional. Please note: you can only see prices and send requests with a full account!",
@@ -30,5 +29,6 @@
     "houseNumber": "Number",
     "postalCode": "Postal code",
     "city": "City"
-  }
+  },
+  "infotext": "You can enter your company's address data here. <br /> <b>This step is optional</b> <br /><br /> <b>Please note:</b> Only with A full account allows you to see prices and send requests!"
 }

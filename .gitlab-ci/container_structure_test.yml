@@ -21,29 +21,32 @@ include:
     - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
     - echo "container structure test deactivated" # container-structure-test test --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} --config .gitlab-ci/container_structure_test.config.yml
 
-audit-frontend:
+audit-frontend-branch:
   extends: .audit_frontend
-  needs: [ "build-docker-image-frontend" ]
+  needs: [ "build-frontend-docker-image-for-branch" ]
   except:
     - develop
+    - tags
+    - main
 
 audit-frontend-develop:
   extends: .audit_frontend
-  needs: [ "build-docker-image-frontend-develop" ]
+  needs: [ "build-frontend-docker-image-for-develop" ]
   only:
     - develop
 
 audit-frontend-uat:
   extends: .audit_frontend
-  needs: [ "build-docker-image-frontend-uat-tags" ]
+  needs: [ "build-frontend-uat-docker-image-for-main-and-tags" ]
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   only:
     - tags
+    - main
 
 audit-frontend-prd:
   extends: .audit_frontend
-  needs: [ "build-docker-image-frontend-prd-tags" ]
+  needs: [ "build-frontend-prd-docker-image-for-tags" ]
   variables:
     DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
   only:

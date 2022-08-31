@@ -14,7 +14,6 @@ ARG PORT=3000
 ARG HOST='0.0.0.0'
 
 ARG BASE_URL='https://localhost:3000'
-ARG DOMAIN='https://localhost:3000'
 
 # please read the note above
 ARG NODE_ENV=development
@@ -69,9 +68,7 @@ RUN cat .env.template | envsubst >> .env
 
 RUN mkdir -p build_logs
 
-RUN \
-  npm ci  &> build_logs/npm_ci.log \
-  && npm run build &> build_logs/npm_build.log
+RUN npm ci && npm run build
 
 ########################################################################################################################
 # end frontend-build image
@@ -88,13 +85,13 @@ FROM node:16-alpine
 #   - orchestrating environment, i.e., kubernetes
 
 # port of frontend application
-ENV PORT=3000
-ENV HOST='0.0.0.0'
+ENV PORT=${PORT}
+ENV HOST=${HOST}
 
 ENV BASE_URL="${BASE_URL}"
 
 # please read the note above
-ENV NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
 
 # please read the note above
 ENV DEFAULT_LANGUAGE_CODE="${DEFAULT_LANGUAGE_CODE}"
@@ -106,11 +103,11 @@ ENV DEFAULT_REGION_CODE="${DEFAULT_REGION_CODE}"
 ENV CURRENT_REGION_CODE="${CURRENT_REGION_CODE}"
 
 # please read the note above
-ENV STORYBLOK_OAUTH_TOKEN=''
+ENV STORYBLOK_OAUTH_TOKEN=${STORYBLOK_OAUTH_TOKEN}
 
-ENV STORYBLOK_ACCESS_TOKEN=''
-ENV STORYBLOK_SPACE_ID=''
-ENV STORYBLOK_VERSION=''
+ENV STORYBLOK_ACCESS_TOKEN=${STORYBLOK_ACCESS_TOKEN}
+ENV STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
+ENV STORYBLOK_VERSION=${STORYBLOK_VERSION}
 
 # please read the note above
 ENV STORYBLOK_RESOLVE_RELATIONS="${STORYBLOK_RESOLVE_RELATIONS}"
