@@ -19,7 +19,17 @@
       <div class="registration-company-data-form__form__rowContainer">
         <ButtonGroup
           class="registration-company-data-form__form__rowContainer--half"
-          :values="registeredCustomerValues"
+          :values="[
+            {
+              label: $t('registration.formCompanyData.registeredCustomerTrue'),
+              value: true,
+            },
+            {
+              label: $t('registration.formCompanyData.registeredCustomerFalse'),
+              value: false,
+              checked: true,
+            },
+          ]"
           @update="
             requestData.companyData.registeredCustomer = $event
             $emit('update', requestData)
@@ -193,7 +203,7 @@ export default defineComponent({
      */
     'update',
   ],
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const { i18n } = useContext()
 
     const requestData = ref({
@@ -247,17 +257,7 @@ export default defineComponent({
       emit('update', requestData)
     }
 
-    const registeredCustomerValues = [
-      {
-        label: i18n.t('registration.formCompanyData.registeredCustomerTrue'),
-        value: true,
-      },
-      {
-        label: i18n.t('registration.formCompanyData.registeredCustomerFalse'),
-        value: false,
-        checked: true,
-      },
-    ]
+    const registeredCustomerValues = []
 
     return {
       requestData,
