@@ -19,7 +19,7 @@ include:
     - # disable gitlab warning for docker login
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
     - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
-    - echo "container structure test deactivated" # container-structure-test test --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} --config .gitlab-ci/container_structure_test.config.yml
+    - container-structure-test test --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} --config .gitlab-ci/container_structure_test.config.yml
 
 audit-frontend-branch:
   extends: .audit_frontend
