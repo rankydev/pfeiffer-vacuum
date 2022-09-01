@@ -74,6 +74,7 @@
           class="registration-company-data-form__form__rowContainer--half"
           :label="$t('registration.formCompanyData.telephoneNumber')"
           placeholder=""
+          :required="true"
           :validate="validate"
           @update="
             requestData.companyData.telephoneNumber = $event
@@ -105,6 +106,7 @@
           class="registration-company-data-form__form__rowContainer--three-quarters"
           :label="$t('registration.formCompanyData.street')"
           placeholder=""
+          :required="true"
           :validate="validate"
           @update="
             requestData.companyData.address.street = $event
@@ -116,6 +118,7 @@
           class="registration-company-data-form__form__rowContainer--one-quarter"
           :label="$t('registration.formCompanyData.houseNumber')"
           placeholder=""
+          :required="true"
           :validate="validate"
           @update="
             requestData.companyData.address.houseNumber = $event
@@ -129,6 +132,7 @@
           class="registration-company-data-form__form__rowContainer--one-quarter"
           :label="$t('registration.formCompanyData.postalCode')"
           placeholder=""
+          :required="true"
           :validate="validate"
           @update="
             requestData.companyData.address.postalCode = $event
@@ -140,6 +144,7 @@
           class="registration-company-data-form__form__rowContainer--three-quarters"
           :label="$t('registration.formCompanyData.city')"
           placeholder=""
+          :required="true"
           :validate="validate"
           @update="
             requestData.companyData.address.city = $event
