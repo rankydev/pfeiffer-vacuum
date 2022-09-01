@@ -8,6 +8,7 @@ import {
   disabledWithValue,
   error,
   label,
+  multiple,
 } from './PvSelect.stories.content'
 
 const argTypes = {
@@ -66,4 +67,22 @@ Default.args = {
   DisabledWithValue: { ...disabledWithValue },
   Error: { ...error },
   Label: { ...label },
+}
+
+const MultipleTemplate = (args, { argTypes }) => ({
+  components: { PvSelect },
+  props: Object.keys(argTypes),
+  setup() {
+    return { args }
+  },
+  template: `
+    <div class="documentation-preview" style="max-width:500px;">
+      <PvSelect v-bind="args['Multiple']" />
+    </div>
+  `,
+})
+
+export const Multiple = MultipleTemplate.bind({})
+Multiple.args = {
+  Multiple: { ...multiple },
 }

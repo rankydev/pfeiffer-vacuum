@@ -4,18 +4,18 @@
     <PvLabel v-if="label" :label="label" />
     <v-select
       v-model="internalValue"
+      v-bind="{ options, disabled, multiple, reduce }"
       :required="isRequired"
-      :options="options"
       :class="{
         'pv-select--error': !!validation.getError(),
         'pv-select--icon': prependIcon,
       }"
-      :disabled="disabled"
       :label="optionLabel"
       :placeholder="$t('form.select.placeholder')"
       :selectable="(option) => option.disabled !== true"
       :components="{ Deselect }"
-      :reduce="reduce"
+      deselect-from-dropdown
+      :close-on-select="!!!multiple"
       @input="
         $emit('update', internalValue)
         validation.validateInput()
@@ -42,7 +42,20 @@
         />
       </template>
 
-      <template #option="option">
+      <template v-if="multiple" #option="option">
+        <!--  TODO sanitizer -->
+        <Checkbox
+          label=""
+          :checked="
+            !!(internalValue || []).filter(
+              (e) => e[optionLabel] === option[optionLabel]
+            ).length
+          "
+        />
+        <span v-html="option[optionLabel]" />
+      </template>
+
+      <template v-else #option="option">
         <Icon
           v-if="option.icon"
           class="pv-select__icon-option"
@@ -55,7 +68,7 @@
       <template #selected-option="option">
         <!--  TODO sanitizer -->
         <Icon
-          v-if="option.icon"
+          v-if="option.icon && !!!multiple"
           class="pv-select__icon-option"
           :icon="option.icon"
         />
@@ -78,6 +91,7 @@
 import vSelect from 'vue-select'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
+import Checkbox from '../Checkbox/Checkbox'
 import Icon from '~/components/atoms/Icon/Icon'
 import { defineComponent, computed, ref, watch } from '@nuxtjs/composition-api'
 import { useInputValidator } from '~/composables/useValidator'
@@ -89,6 +103,7 @@ export default defineComponent({
     Icon,
     PvLabel,
     ErrorMessage,
+    Checkbox,
   },
   props: {
     /**
@@ -157,7 +172,17 @@ export default defineComponent({
       type: Object,
       default: () => {},
     },
+    /**
+     * defines wether the validation should be turned on or off for this select
+     */
     validate: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * enables multi selection
+     */
+    multiple: {
       type: Boolean,
       default: false,
     },
@@ -193,149 +218,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import 'vue-select/src/scss/vue-select';
-
-.vs {
-  &__actions {
-    @apply tw-p-0;
-  }
-
-  &__selected-options {
-    @apply tw-items-center;
-    @apply tw-p-0;
-  }
-
-  &__selected {
-    @apply tw-m-0 tw-p-0;
-    @apply tw-mr-2;
-    @apply tw-flex tw-items-center;
-    @apply tw-gap-2;
-    @apply tw-text-pv-grey-16;
-
-    &:last-of-type {
-      @apply tw-mr-0;
-    }
-  }
-
-  &__dropdown-toggle {
-    @apply tw-flex tw-items-center tw-justify-between tw-gap-2;
-    @apply tw-py-3 tw-pr-3 tw-pl-4;
-    @apply tw-shadow-border-grey-80;
-    @apply tw-border-0;
-    @apply tw-rounded-md;
-    @apply tw-bg-pv-white;
-  }
-
-  &__open-indicator {
-    @apply tw-text-pv-grey-48;
-  }
-
-  &__search {
-    &,
-    &:focus {
-      @apply tw-p-0;
-      @apply tw-m-0;
-    }
-
-    &::placeholder {
-      @apply tw-text-pv-grey-64;
-    }
-  }
-
-  &--searching {
-    .vs__selected {
-      @apply tw-hidden;
-    }
-  }
-
-  &__dropdown-menu {
-    @apply tw-p-0;
-    @apply tw-mt-1;
-    @apply tw-border-solid;
-    @apply tw-border-pv-grey-80;
-    @apply tw-border-2;
-    @apply tw-border-solid;
-    @apply tw-rounded-md;
-    @apply tw-static;
-    @apply tw-h-48;
-  }
-
-  &__dropdown-option,
-  &__no-options {
-    @apply tw-py-3 tw-px-4;
-    @apply tw-leading-6;
-    @apply tw-flex tw-gap-2;
-  }
-
-  &__dropdown-option {
-    &--highlight {
-      @apply tw-bg-pv-red-lighter;
-    }
-
-    &--disabled {
-      @apply tw-bg-pv-grey-96;
-      @apply tw-text-pv-grey-48;
-    }
-  }
-
-  &--open {
-    .vs__dropdown-toggle {
-      @apply tw-shadow-border-grey-16;
-      @apply tw-rounded-md;
-    }
-
-    .vs__open-indicator {
-      @apply tw-text-pv-grey-16;
-    }
-  }
-
-  &--disabled {
-    .vs__clear,
-    .vs__search,
-    .vs__selected,
-    .vs__open-indicator {
-      @apply tw-bg-pv-transparent;
-    }
-
-    .vs__selected {
-      @apply tw-text-pv-grey-48;
-    }
-
-    .vs__dropdown-toggle {
-      @apply tw-bg-pv-grey-96;
-      @apply tw-border-pv-grey-80;
-    }
-
-    .vs__open-indicator {
-      @apply tw-text-pv-grey-80;
-    }
-  }
-}
-
-.pv-select {
-  &--icon {
-    .vs__search,
-    .vs__selected {
-      @apply tw-ml-8;
-    }
-  }
-
-  &__icon {
-    &-prepend {
-      @apply tw-absolute;
-    }
-
-    &-error {
-      @apply tw-text-pv-red;
-      @apply tw-mr-2;
-    }
-  }
-
-  &--error {
-    .vs__dropdown-toggle {
-      @apply tw-shadow-border-red;
-      @apply tw-rounded-b-none;
-    }
-  }
-}
+@import 'PvSelect';
 </style>
