@@ -1,8 +1,7 @@
-import getLoggerFor from '../utils/getLoggerFor'
-const logger = getLoggerFor('contextUtil')
-
 function getCurrentHostUrl(ctx) {
-  const { req } = ctx
+  const { req, getLoggerFor } = ctx
+  const logger = getLoggerFor('contextUtil')
+
   if (req) {
     // server side
     return req.protocol + '://' + req.headers.host

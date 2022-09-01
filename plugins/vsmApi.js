@@ -5,16 +5,14 @@ import { useVsmStore } from '~/stores/vsm'
 // TODO we need apollo client first
 // import profile from '../apollo/queries/profile.gql'
 
-import getLoggerFor from '../utils/getLoggerFor'
-
-const logger = getLoggerFor('vsmApi')
-
 function getVsmApi(ctx) {
-  const { $contextUtil, $axios, app } = ctx
+  const { $contextUtil, $axios, app, getLoggerFor } = ctx
+  const logger = getLoggerFor('vsmApi')
   const authStore = useAuthStore()
   const vsmStore = useVsmStore()
 
-  const vsmUrl = $contextUtil.getCurrentHostUrl() + process.env.PROXY_PATH_VSM
+  // const vsmUrl = $contextUtil.getCurrentHostUrl() + process.env.PROXY_PATH_VSM
+  const vsmUrl = 'https://staging-vsm.pfeiffer-vacuum.com'
 
   const axios = $axios.create({
     timeout: parseInt(process.env.SHOP_TIMEOUT),

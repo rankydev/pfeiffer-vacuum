@@ -1,15 +1,15 @@
+import { useAuthStore } from '~/stores/auth'
 import config from '../hybris.config'
 
 export function getContactApi(axiosInstance, ctx) {
   const logger = ctx.$getLoggerFor('contactApi')
-
-  // TODO: Adapt when login is implemented
-  const loggedIn = false
+  const authStore = useAuthStore()
+  // TODO: Test if this works while logged in
+  const loggedIn = authStore.loggedIn
   return {
     async submitContact(contact) {
       const result = await axiosInstance.post(
-        // `${config.CONTACT_API}/${loggedIn ? 'current' : 'anonymous'}`,
-        `${config.CONTACT_API}/anonymous`,
+        `${config.CONTACT_API}/${loggedIn ? 'current' : 'anonymous'}`,
         contact
       )
 

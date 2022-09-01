@@ -1,24 +1,16 @@
-import getLoggerFor from '../utils/getLoggerFor'
 import { useAuthStore } from '~/stores/auth'
 import { useCartStore } from '~/stores/cart'
 import { getCookie, removeCookie } from '~/plugins/cookieHelper'
 
-const logger = getLoggerFor('preload')
-
 export default async function (ctx) {
-  // TODO needs to be refactored when we split stores
+  const logger = ctx.getLoggerFor('preload')
   const authStore = useAuthStore()
   const cartStore = useCartStore()
-
-  // TODO huh?
-  // await this.dispatch('breadcrumbs/init')
 
   const cartCookie = JSON.parse(getCookie(ctx, 'cart', null))
   if (cartCookie) {
     cartStore.currentCart = cartCookie
   }
-
-  removeCookie(ctx, 'auth')
 
   const authFromCookie = {
     access_token: getCookie(ctx, 'auth.accessToken'),
@@ -36,14 +28,6 @@ export default async function (ctx) {
     logger.debug('Error when loading cookies', authFromCookie)
     authStore.setAuth(null)
   }
-
-  /*
-   *  Check the user token to logout user automatically when refresh token is expired. (PVAC-580)
-   */
-  // if (process.server) {
-  //   logger.debug('Checking auth token.')
-  //   await $authApi.getToken()
-  // }
 
   // during SSR the first thing initialized is the store, reading the cookies for login and cart
   // then we need to distinguish between login process and normal refresh/reload

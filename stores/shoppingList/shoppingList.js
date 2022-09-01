@@ -1,10 +1,4 @@
 import { defineStore } from 'pinia'
-const cookieHelper = require('~/plugins/cookieHelper')
-import getLoggerFor from '~/utils/getLoggerFor'
-
-const logger = getLoggerFor('oldStore')
-
-const DEFAULT_PAGE_SIZE = 9
 
 // help-obj for default-values of all shoppingList-settings
 // Default objects should only hold values since otherwise clone/copying or changes on default objects may occur.
@@ -16,7 +10,6 @@ const defaultShoppingListSettings = () => ({
   lastProductQuantity: 1,
 })
 
-// TODO this is just to convert the old store to pinia, should be refactored to seperate stores later
 export const useShoppingListStore = defineStore('shoppingList', {
   state: () => ({
     shoppingListSettings: defaultShoppingListSettings(),

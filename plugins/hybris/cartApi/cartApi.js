@@ -6,7 +6,6 @@ const cookieHelper = require('../../../plugins/cookieHelper')
 
 export function getCartApi(axiosInstance, ctx) {
   const logger = ctx.$getLoggerFor('cartApi')
-  // TODO needs to be refactored when we split stores
   const authStore = useAuthStore()
   const cartStore = useCartStore()
   const ociStore = useOciStore()

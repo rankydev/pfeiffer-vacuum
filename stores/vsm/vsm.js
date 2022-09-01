@@ -10,9 +10,13 @@ const defaultVsmUser = () => ({
 export const useVsmStore = defineStore('vsm', () => {
   const vsmUser = ref(defaultVsmUser())
 
-  const setVsmUser = (vsmUser) => {
-    this.vsmUser = vsmUser || defaultVsmUser()
+  const setVsmUser = (newVsmUser) => {
+    vsmUser.value = newVsmUser || defaultVsmUser()
   }
 
-  return { vsmUser, setVsmUser }
+  const resetVsmUser = () => {
+    setVsmUser(defaultVsmUser())
+  }
+
+  return { vsmUser, setVsmUser, resetVsmUser }
 })

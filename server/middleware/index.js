@@ -3,6 +3,7 @@ const { createProxy } = require('./proxyFactory')
 const { responseInterceptor } = require('http-proxy-middleware')
 const { replaceStoryblokLinks } = require('../../../utils/storyblok')
 
+// TODO this is not implemented yet, so some things like requests to vsm don't work
 // TODO if possible, this should be replaced - not sure if we really need it anymore, look at the other server middleware if this is a better solution
 const router = express()
 // router.set('x-powered-by', false)

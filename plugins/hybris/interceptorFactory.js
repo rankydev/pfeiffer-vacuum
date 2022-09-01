@@ -1,6 +1,6 @@
 import { useAuthStore } from '~/stores/auth'
 const qs = require('qs')
-import getLoggerFor from '../../utils/getLoggerFor'
+import getLoggerFor from '~/utils/getLoggerFor'
 
 const logger = getLoggerFor('interceptorFactory')
 

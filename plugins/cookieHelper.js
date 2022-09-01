@@ -1,7 +1,7 @@
 // TODO do we really need this?
 const Cookie = require('cookie')
 const JsCookie = require('js-cookie')
-import getLoggerFor from '../utils/getLoggerFor'
+import getLoggerFor from '~/utils/getLoggerFor'
 
 const logger = getLoggerFor('cookieHelper')
 const COOKIE_EXPIRATION_DAYS = 365

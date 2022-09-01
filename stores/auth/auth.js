@@ -54,9 +54,8 @@ export const useAuthStore = defineStore('auth', {
       this.auth = auth
       if (!auth) {
         this.currentUser = null
-        // TODO check if this works as intended
-        cartStore.$reset()
-        vsmStore.$reset()
+        cartStore.currentCart = null
+        vsmStore.resetVsmUser()
       }
     },
   },

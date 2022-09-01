@@ -1,16 +1,14 @@
 import { useAuthStore } from '~/stores/auth'
 import { useOciStore } from '~/stores/oci'
-import getLoggerFor from '../utils/getLoggerFor'
-
-const logger = getLoggerFor('ociAuth')
 
 export default async function (ctx) {
-  logger.trace('start')
   const authStore = useAuthStore()
   const ociStore = useOciStore()
-  const { app, query, route, $hybrisApi } = ctx
+  const { app, query, route, $hybrisApi, getLoggerFor } = ctx
   const { username, password } = query
+  const logger = getLoggerFor('ociAuth')
 
+  logger.trace('start')
   logger.trace('Query: ', query)
 
   const isOciPage = app.localePath('shop-oci') === route.path

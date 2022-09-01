@@ -4,22 +4,17 @@ import { useOciStore } from '~/stores/oci'
 
 const keycloakJS = typeof window !== 'undefined' ? require('keycloak-js') : null
 const cookieHelper = require('../plugins/cookieHelper')
-// const lock = require('lock').Lock()
-import getLoggerFor from '../utils/getLoggerFor'
-
-const logger = getLoggerFor('authApi')
 
 const MIN_TOKEN_VALIDITY_IN_SECONDS = 30
 
 export function getAuthApi(ctx) {
+  const logger = ctx.getLoggerFor('authApi')
   logger.debug('getAuthApi')
   logger.trace(`getAuthApi ${process.client ? 'Client' : 'Server'}`)
 
   const authStore = useAuthStore()
   const ociStore = useOciStore()
   let keycloakInstance = null
-
-  // logger.debug(store)
 
   if (!ociStore.isOciPage && !authStore.isOciUser) {
     createKeycloakInstance()
@@ -44,10 +39,8 @@ export function getAuthApi(ctx) {
       refresh_token: keycloakInstance.refreshToken,
       id_token: keycloakInstance.idToken,
       token_type: 'Bearer',
-      // eslint-disable-next-line camelcase
       session_state: keycloakInstance.tokenParsed.session_state,
       validUntil: expTimestampAccessToken,
-      // eslint-disable-next-line camelcase
       refresh_expires_in: expTimestampRefreshToken,
       scope: 'openid profile email',
     }
@@ -110,9 +103,9 @@ export function getAuthApi(ctx) {
       const token = reconstructToken()
       await setCookiesAndSaveAuthData(token)
 
-      // TODO need to fix this
-      // logger.trace('get VSM token')
-      // await ctx.$vsmApi.getVsmToken(false)
+      // TODO we need the proxy for this to work
+      logger.trace('get VSM token')
+      await ctx.$vsmApi.getVsmToken(false)
       authStore.isLoginProcess = false
     }
 
@@ -209,21 +202,18 @@ export function getAuthApi(ctx) {
   const setCookiesAndSaveAuthData = function (token) {
     logger.debug('setCookiesAndSaveAuthData')
     logger.trace('setCookiesAndSaveAuthData::TOKEN ', token)
-    // eslint-disable-next-line camelcase
     cookieHelper.setCookie(
       ctx,
       'auth.accessToken',
       token.access_token,
       new Date(token.validUntil)
     )
-    // eslint-disable-next-line camelcase
     cookieHelper.setCookie(
       ctx,
       'auth.refreshToken',
       token.refresh_token,
       new Date(token.refresh_expires_in)
     )
-    // eslint-disable-next-line camelcase
     cookieHelper.setCookie(
       ctx,
       'auth.idToken',
@@ -269,49 +259,14 @@ export function getAuthApi(ctx) {
 
   const removeCookiesAndDeleteAuthData = function () {
     logger.debug('removeCookiesAndDeleteAuthData')
-    // eslint-disable-next-line camelcase
     cookieHelper.removeCookie(ctx, 'auth.accessToken')
-    // eslint-disable-next-line camelcase
     cookieHelper.removeCookie(ctx, 'auth.refreshToken')
-    // eslint-disable-next-line camelcase
     cookieHelper.removeCookie(ctx, 'auth.idToken')
     cookieHelper.removeCookie(ctx, 'auth.validUntil')
     cookieHelper.removeCookie(ctx, 'auth.tokenType')
 
     authStore.setAuth(null)
   }
-
-  // const getToken = function getToken() {
-  //   return new Promise((resolve, reject) => {
-  //     // lock function to prevent multiple refresh requests at the same time
-  //     lock('token', async (unlockFn) => {
-  //       const unlock = unlockFn()
-
-  //       if (!keycloakInstance) {
-  //         logger.debug('No Keycloak instance found.')
-  //         unlock()
-  //         return resolve({})
-  //       }
-
-  //       if (!authStore.loggedIn) {
-  //         logger.debug('Not logged in. No token found.')
-  //         unlock()
-  //         return resolve({})
-  //       }
-
-  //       if (keycloakInstance.isTokenExpired(MIN_TOKEN_VALIDITY_IN_SECONDS)) {
-  //         await keycloakInstance.updateToken(MIN_TOKEN_VALIDITY_IN_SECONDS)
-  //       }
-
-  //       // return existing token
-  //       const token = authStore.auth
-  //       logger.debug('Existing token still valid')
-  //       logger.trace(token)
-  //       unlock()
-  //       return resolve(token)
-  //     })
-  //   })
-  // }
 
   const addHoursToCurrentDate = (hours) => {
     return new Date().setHours(new Date().getHours() + hours)
@@ -334,7 +289,6 @@ export function getAuthApi(ctx) {
   }
 
   return {
-    // getToken,
     login,
     logout,
     loginWithBasicAuth,

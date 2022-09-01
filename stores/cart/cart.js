@@ -20,6 +20,7 @@ export const useCartStore = defineStore('cart', {
       }
     },
     async mergeAndLoadCarts(anonymousCartGuid) {
+      const { $hybrisApi } = this.$nuxt
       let currentCart = await $hybrisApi.cartApi.getOrCreateCart(false)
 
       logger.trace('currentCart: ', currentCart)
