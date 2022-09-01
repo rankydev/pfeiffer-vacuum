@@ -78,6 +78,53 @@ RUN npm ci && npm run build
 ########################################################################################################################
 FROM node:16-alpine
 
+# port of frontend application
+ARG PORT
+ARG HOST
+
+ARG BASE_URL
+
+# please read the note above
+ARG NODE_ENV
+
+# please read the note above
+ARG DEFAULT_LANGUAGE_CODE
+ARG LANGUAGE_CODES
+
+# please read the note above
+ARG REGION_CODES
+ARG DEFAULT_REGION_CODE
+ARG CURRENT_REGION_CODE
+
+# please read the note above
+ARG STORYBLOK_OAUTH_TOKEN
+
+ARG STORYBLOK_ACCESS_TOKEN
+ARG STORYBLOK_SPACE_ID
+ARG STORYBLOK_VERSION
+
+# please read the note above
+ARG STORYBLOK_RESOLVE_RELATIONS
+ARG STORYBLOK_RESOLVE_LINKS
+ARG STORYBLOK_RESOLVE_ASSETS
+ARG STORYBLOK_CONTENT_TYPES
+ARG STORYBLOK_EXCLUDE_ROUTES
+
+ARG CI_COMMIT_SHORT_SHA
+ARG CI_COMMIT_REF_NAME
+ARG CI_PROJECT_URL
+
+# hybris
+ARG SHOP_BASE_URL
+ARG SHOP_IMAGE_URL
+
+# logging
+ARG CONSOLA_LEVEL
+
+# usercentrics
+ARG USERCENTRICS_PRIVACY_PATH
+ARG USERCENTRICS_ID
+
 # !!! IMPORTANT NOTE !!!
 # ENV variables will be set by either
 #   - pipeline
