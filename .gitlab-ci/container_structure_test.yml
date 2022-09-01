@@ -15,8 +15,6 @@ include:
   tags:
     - dind_runner
   script:
-    - echo "Prepare container for structure test for image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
-    - apk add gettext
     - echo "Run container structure test for image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
     - cat .gitlab-ci/container_structure_test.config.yml | envsubst >> container_structure_test.config.${CI_COMMIT_SHORT_SHA}.yml
     - # disable gitlab warning for docker login
