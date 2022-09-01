@@ -93,7 +93,12 @@ export default defineComponent({
   }
 
   &__logout {
-    padding-right: 0 !important;
+    @apply tw-hidden;
+
+    @screen md {
+      @apply tw-flex;
+      padding-right: 0 !important;
+    }
   }
 
   &__account-name {
