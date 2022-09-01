@@ -208,7 +208,8 @@ export default {
       },
     },
     storyblok: {
-      baseURL: 'https://img2.storyblok.com',
+      baseURL:
+        process.env.STORYBLOK_IMAGE_BASE_URL || 'https://img2.storyblok.com',
     },
   },
   // Will register file from project server/middleware directory to handle API calls
