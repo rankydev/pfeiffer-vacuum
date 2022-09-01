@@ -20,7 +20,7 @@ include:
     - echo "Run container structure test for image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
     - cat .gitlab-ci/container_structure_test.config.yml | envsubst >> container_structure_test.config.${CI_COMMIT_SHORT_SHA}.yml
     - # disable gitlab warning for docker login
-    echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
+      echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
     - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
     - container-structure-test test --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} --config container_structure_test.config.${CI_COMMIT_SHORT_SHA}.yml
 
@@ -62,4 +62,3 @@ audit-frontend-prd:
     DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
   only:
     - tags
-
