@@ -14,12 +14,59 @@ commandTests:
 
 metadataTest:
   env:
-    - key: NODE_ENV
-      value: "development"
     - key: PORT
-      value: "3000"
+      value: ${PORT}
     - key: HOST
-      value: "0.0.0.0"
+      value: ${HOST}
+    - key: BASE_URL
+      value: "${BASE_URL}"
+    - key: NODE_ENV
+      value: ${NODE_ENV}
+    - key: DEFAULT_LANGUAGE_CODE
+      value: "${DEFAULT_LANGUAGE_CODE}"
+    - key: LANGUAGE_CODES
+      value: "${LANGUAGE_CODES}"
+    - key: REGION_CODES
+      value: "${REGION_CODES}"
+    - key: DEFAULT_REGION_CODE
+      value: "${DEFAULT_REGION_CODE}"
+    - key: CURRENT_REGION_CODE
+      value: "${CURRENT_REGION_CODE}"
+    - key: STORYBLOK_OAUTH_TOKEN
+      value: ${STORYBLOK_OAUTH_TOKEN}
+    - key: STORYBLOK_ACCESS_TOKEN
+      value: ${STORYBLOK_ACCESS_TOKEN}
+    - key: STORYBLOK_SPACE_ID
+      value: ${STORYBLOK_SPACE_ID}
+    - key: STORYBLOK_VERSION
+      value: ${STORYBLOK_VERSION}
+    - key: STORYBLOK_RESOLVE_RELATIONS
+      value: "${STORYBLOK_RESOLVE_RELATIONS}"
+    - key: STORYBLOK_RESOLVE_LINKS
+      value: "${STORYBLOK_RESOLVE_LINKS}"
+    - key: STORYBLOK_RESOLVE_ASSETS
+      value: "${STORYBLOK_RESOLVE_ASSETS}"
+    - key: STORYBLOK_CONTENT_TYPES
+      value: "${STORYBLOK_CONTENT_TYPES}"
+    - key: STORYBLOK_EXCLUDE_ROUTES
+      value: "${STORYBLOK_EXCLUDE_ROUTES}"
+    - key: CI_COMMIT_SHORT_SHA
+      value: "${CI_COMMIT_SHORT_SHA}"
+    - key: CI_COMMIT_REF_NAME
+      value: "${CI_COMMIT_REF_NAME}"
+    - key: CI_PROJECT_URL
+      value: "${CI_PROJECT_URL}"
+    - key: SHOP_BASE_URL
+      value: "${SHOP_BASE_URL}"
+    - key: SHOP_IMAGE_URL
+      value: "${SHOP_IMAGE_URL}"
+    - key: CONSOLA_LEVEL
+      value: "${CONSOLA_LEVEL}"
+    - key: USERCENTRICS_PRIVACY_PATH
+      value: "${USERCENTRICS_PRIVACY_PATH}"
+    - key: USERCENTRICS_ID
+      value: "${USERCENTRICS_ID}"
+
   exposedPorts: ["3000"]
   cmd: ["npm","start"]
   workdir: "/opt/pvac-frontend"
