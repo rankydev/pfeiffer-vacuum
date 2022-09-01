@@ -23,6 +23,11 @@ include:
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
     - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
     - container-structure-test test --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} --config container_structure_test.config.${CI_COMMIT_SHORT_SHA}.yml
+  artifacts:
+    when: on_failure
+    paths:
+      - container_structure_test.config.${CI_COMMIT_SHORT_SHA}.yml
+    expire_in: 3 week
 
 audit-frontend-branch:
   extends: .audit_frontend
