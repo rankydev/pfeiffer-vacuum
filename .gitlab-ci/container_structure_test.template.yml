@@ -5,7 +5,7 @@
   services:
     - name: docker:stable-dind
   before_script:
-    - apk add --no-cache curl
+    - apk add --no-cache curl gettext
     - curl -LO https://storage.googleapis.com/container-structure-test/latest/container-structure-test-linux-amd64
     - chmod +x container-structure-test-linux-amd64
     - mv container-structure-test-linux-amd64 /usr/bin/container-structure-test
