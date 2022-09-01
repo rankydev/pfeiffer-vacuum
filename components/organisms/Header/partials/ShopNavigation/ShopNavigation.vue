@@ -4,20 +4,20 @@
       shape="plain"
       variant="secondary"
       class="shop-navigation__account"
-      :label="$t('navigation.button.signIn.label')"
+      :label="myAccountLabel"
       icon="person"
       :prepend-icon="true"
-      @click="login()"
-    >
-      <!-- <Icon class="shop-navigation__icon" icon="person" />
-      <span class="shop-navigation__account-name">{{
-        
-      }}</span> -->
-    </Button>
+      @click="handleMyAccount()"
+    />
 
-    <Link href="#" class="shop-navigation__comparhension">
-      <Icon class="shop-navigation__icon" icon="compare_arrows" />
-    </Link>
+    <Button
+      v-if="loggedIn"
+      shape="plain"
+      variant="secondary"
+      class="shop-navigation__logout"
+      icon="logout"
+      @click="logout"
+    />
 
     <Link href="#" class="shop-navigation__shopping-list">
       <Icon class="shop-navigation__icon" icon="assignment" />
@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import { defineComponent, useContext } from '@nuxtjs/composition-api'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import { useAuthStore } from '~/stores/auth'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
@@ -41,9 +42,31 @@ export default defineComponent({
     Link,
   },
   setup() {
-    const { $authApi } = useContext()
+    const { $authApi, i18n } = useContext()
 
-    return { login: $authApi.login }
+    const authStore = useAuthStore()
+    const currentUser = computed(() => authStore.currentUser)
+    const loggedIn = computed(() => authStore.loggedIn)
+
+    const myAccountLabel = computed(() =>
+      loggedIn.value
+        ? currentUser.value?.name
+        : i18n.t('navigation.button.signIn.label')
+    )
+
+    const handleMyAccount = () => {
+      if (loggedIn.value) return
+
+      if (!loggedIn.value) return $authApi.login()
+    }
+
+    return {
+      logout: $authApi.logout,
+      currentUser,
+      handleMyAccount,
+      myAccountLabel,
+      loggedIn,
+    }
   },
 })
 </script>
@@ -63,6 +86,14 @@ export default defineComponent({
     @screen md {
       @apply tw-flex;
     }
+
+    .button__icon--prepend {
+      @apply tw-mr-2;
+    }
+  }
+
+  &__logout {
+    padding-right: 0 !important;
   }
 
   &__account-name {

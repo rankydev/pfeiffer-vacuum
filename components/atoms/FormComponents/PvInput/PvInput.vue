@@ -1,6 +1,6 @@
 <template>
   <div class="pv-input">
-    <PvLabel :label="label" />
+    <PvLabel :label="label" :optional="!isRequired" />
     <div class="pv-input__wrapper">
       <input
         v-model="internalValue"

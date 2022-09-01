@@ -52,6 +52,12 @@ export const useAuthStore = defineStore('auth', {
       const vsmStore = useVsmStore()
 
       this.auth = auth
+
+      //load currentUser data if currentUser obj is empty
+      if (auth && !this.currentUser) {
+        this.loadCurrentUser()
+      }
+
       if (!auth) {
         this.currentUser = null
         cartStore.currentCart = null
