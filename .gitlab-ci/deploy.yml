@@ -145,3 +145,30 @@ deploy-tag-to-prd-manually:
     - tags
   tags:
     - pvweb-prd-deployment
+
+# tag working image from main with latest tag
+tag-docker-image-latest-main:
+  image: docker:git
+  stage: deployment
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
+  services:
+    - docker:dind
+  cache: [ ]
+  before_script:
+    - # disable gitlab warning for docker login
+      echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
+  needs: ["build-frontend-uat-docker-image-for-main-and-tags", "audit-frontend-uat"]
+  script:
+    - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+    - docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKER_IMAGE_NAME}:latest
+  after_script:
+    - # here we will push ALL created tags of an image
+      docker push --all-tags ${DOCKER_IMAGE_NAME}
+  only:
+    - main
+  tags:
+    - dind_runner
+

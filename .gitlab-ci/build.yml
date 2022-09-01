@@ -208,15 +208,6 @@ build-frontend-uat-docker-image-for-main-and-tags:
     - main
     - tags
 
-tag-docker-image-latest-main:
-  extends: .build-docker-image
-  needs: ["build-frontend-uat-docker-image-for-main-and-tags"]
-  script:
-    - docker pull ${DOCKER_IMAGE_NAME}:uat-${CI_COMMIT_REF_SLUG}
-    - docker tag ${DOCKER_IMAGE_NAME}:uat-${CI_COMMIT_REF_SLUG} ${DOCKER_IMAGE_NAME}:latest
-  only:
-    - main
-
 build-frontend-prd-docker-image-for-tags:
   extends: .build-docker-image
   needs: ["test", "lint"]
