@@ -86,3 +86,15 @@ export const Multiple = MultipleTemplate.bind({})
 Multiple.args = {
   Multiple: { ...multiple },
 }
+Multiple.parameters = {
+  docs: {
+    description: {
+      story:
+        'The multiple option can be used to define a multiselect field. The dropdown options have a checkmark in front of them. <br/>' +
+        'When a option is selected it will be displayed as red box in the select.',
+    },
+    source: {
+      code: '<PvSelect v-bind="{ options }" multiple />',
+    },
+  },
+}
