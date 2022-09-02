@@ -8,6 +8,7 @@ import {
   disabledWithValue,
   error,
   label,
+  multiple,
 } from './PvSelect.stories.content'
 
 const argTypes = {
@@ -66,4 +67,34 @@ Default.args = {
   DisabledWithValue: { ...disabledWithValue },
   Error: { ...error },
   Label: { ...label },
+}
+
+const MultipleTemplate = (args, { argTypes }) => ({
+  components: { PvSelect },
+  props: Object.keys(argTypes),
+  setup() {
+    return { args }
+  },
+  template: `
+    <div class="documentation-preview" style="max-width:500px;">
+      <PvSelect v-bind="args['Multiple']" />
+    </div>
+  `,
+})
+
+export const Multiple = MultipleTemplate.bind({})
+Multiple.args = {
+  Multiple: { ...multiple },
+}
+Multiple.parameters = {
+  docs: {
+    description: {
+      story:
+        'The multiple option can be used to define a multiselect field. The dropdown options have a checkmark in front of them. <br/>' +
+        'When a option is selected it will be displayed as red box in the select.',
+    },
+    source: {
+      code: '<PvSelect v-bind="{ options }" multiple />',
+    },
+  },
 }
