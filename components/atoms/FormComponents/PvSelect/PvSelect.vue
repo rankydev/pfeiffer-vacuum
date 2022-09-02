@@ -22,12 +22,30 @@
       "
     >
       <template #search="{ attributes, events }">
-        <Icon
-          v-if="prependIcon"
-          class="pv-select__icon-prepend"
-          :icon="prependIcon"
-        />
-        <input class="vs__search" v-bind="attributes" v-on="events" />
+        <button
+          v-if="!!multiple"
+          :class="[
+            'pv-select__search-multiple',
+            { 'pv-select__search-multiple--active': internalValue.length },
+          ]"
+          v-bind="attributes"
+          v-on="events"
+        >
+          {{ label }}
+        </button>
+        <template v-else>
+          <Icon
+            v-if="prependIcon"
+            class="pv-select__icon-prepend"
+            :icon="prependIcon"
+          />
+          <input
+            class="vs__search"
+            v-bind="attributes"
+            disabled
+            v-on="events"
+          />
+        </template>
       </template>
 
       <template #open-indicator>
@@ -42,9 +60,9 @@
         />
       </template>
 
-      <template v-if="multiple" #option="option">
-        <!--  TODO sanitizer -->
+      <template #option="option">
         <Checkbox
+          v-if="!!multiple"
           label=""
           :checked="
             !!(internalValue || []).filter(
@@ -52,17 +70,17 @@
             ).length
           "
         />
-        <span v-html="option[optionLabel]" />
-      </template>
-
-      <template v-else #option="option">
         <Icon
-          v-if="option.icon"
+          v-if="option.icon && !!!multiple"
           class="pv-select__icon-option"
           :icon="option.icon"
         />
         <!--  TODO sanitizer -->
         <span v-html="option[optionLabel]" />
+      </template>
+
+      <template v-if="!!multiple" #selected-option-container>
+        <div class="pv-select__multiple-selected-container"></div>
       </template>
 
       <template #selected-option="option">

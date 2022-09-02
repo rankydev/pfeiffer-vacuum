@@ -87,6 +87,7 @@ export const multiple = {
   ],
   optionLabel: 'displayValue',
   multiple: true,
+  label: 'Multiselect Filter',
 }
 
 export default {}

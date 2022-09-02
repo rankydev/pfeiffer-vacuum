@@ -12,6 +12,10 @@
     @apply tw-p-0;
   }
 
+  &__multiple-selected-container {
+    @apply tw-hidden;
+  }
+
   &__selected {
     @apply tw-m-0 tw-p-0;
     @apply tw-mr-2;
@@ -155,6 +159,18 @@
     .vs__dropdown-toggle {
       @apply tw-shadow-border-red;
       @apply tw-rounded-b-none;
+    }
+  }
+
+  &__search-multiple {
+    @apply tw-text-pv-grey-64;
+
+    &:focus {
+      @apply tw-outline-none;
+    }
+
+    &--active {
+      @apply tw-text-pv-grey-16;
     }
   }
 }
