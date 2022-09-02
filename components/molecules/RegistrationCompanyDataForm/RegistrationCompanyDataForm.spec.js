@@ -70,6 +70,8 @@ describe('RegistrationCompanyDataForm', () => {
       const wrapper = shallowMount(RegistrationCompanyDataForm, {
         localVue,
       })
+      wrapper.vm.addCompany = true
+      await wrapper.vm.$nextTick()
 
       const headline = wrapper.find('h2')
       const inputFields = wrapper.findAllComponents(PvInput)
