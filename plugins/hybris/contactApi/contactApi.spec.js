@@ -1,3 +1,4 @@
+import { setActivePinia, createPinia } from 'pinia'
 import { getContactApi } from './contactApi'
 import { expect, jest } from '@jest/globals'
 
@@ -11,6 +12,7 @@ const ctx = {
 }
 
 describe('contactApi', () => {
+  beforeEach(() => setActivePinia(createPinia()))
   describe('initial state', () => {
     test('should send valid form data', () => {
       const axiosInstance = {

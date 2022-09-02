@@ -20,3 +20,7 @@ window.matchMedia =
       removeListener: function () {},
     }
   }
+
+global.$nuxt = {
+  $hybrisApi: {},
+}
