@@ -1,24 +1,35 @@
 import { expect, jest, test } from '@jest/globals'
 import hybrisApi from './hybrisApi.js'
+import { createPinia, setActivePinia } from 'pinia'
+
+const context = {
+  app: {},
+  store: {},
+  $axios: {
+    create: jest.fn(() => {
+      return {
+        setBaseURL: jest.fn(),
+        setHeader: jest.fn(),
+        interceptors: {
+          request: {
+            use: jest.fn(),
+          },
+          response: {
+            use: jest.fn(),
+          },
+        },
+      }
+    }),
+  },
+  $getLoggerFor: () => ({
+    error: jest.fn(),
+  }),
+}
 
 describe('HybrisApiPlugin', () => {
+  beforeEach(() => setActivePinia(createPinia()))
   describe('initial state', () => {
     test('should inject hybrisApi into nuxt', () => {
-      const context = {
-        app: {},
-        $axios: {
-          create: jest.fn(() => {
-            return {
-              setBaseURL: jest.fn(),
-              setHeader: jest.fn(),
-            }
-          }),
-        },
-        $getLoggerFor: () => ({
-          error: jest.fn(),
-        }),
-      }
-
       hybrisApi(context)
 
       expect(typeof context.app.$hybrisApi).toBe('object')
@@ -26,22 +37,6 @@ describe('HybrisApiPlugin', () => {
     })
 
     test('should inject hybrisApi into store if present', () => {
-      const context = {
-        app: {},
-        store: {},
-        $axios: {
-          create: jest.fn(() => {
-            return {
-              setBaseURL: jest.fn(),
-              setHeader: jest.fn(),
-            }
-          }),
-        },
-        $getLoggerFor: () => ({
-          error: jest.fn(),
-        }),
-      }
-
       hybrisApi(context)
 
       expect(typeof context.store.$hybrisApi).toBe('object')

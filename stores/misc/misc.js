@@ -10,7 +10,7 @@ export const useMiscStore = defineStore('misc', () => {
   }
 
   // the initial store initialization
-  if (countries.value.length === 0) {
+  if (countries.value?.length === 0) {
     loadCountries()
   }
 

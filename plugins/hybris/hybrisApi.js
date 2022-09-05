@@ -37,12 +37,13 @@ export function getHybrisApi(ctx) {
 }
 
 export default (ctx) => {
-  const { app } = ctx
+  const { app, store } = ctx
   const hybrisApi = getHybrisApi(ctx)
 
   // Inject Hybris API into the Vue instance to use it client side
   Vue.prototype.$hybrisApi = hybrisApi
 
   app.$hybrisApi = hybrisApi
+  store.$hybrisApi = hybrisApi
   ctx.$hybrisApi = hybrisApi
 }

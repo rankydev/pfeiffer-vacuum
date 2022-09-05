@@ -3,21 +3,13 @@ import { setActivePinia, createPinia } from 'pinia'
 
 let mockCountries = ['Land1']
 
-jest.mock('@nuxtjs/composition-api', () => {
-  return {
-    useContext: jest.fn(() => {
-      return {
-        $hybrisApi: {
-          countriesApi: {
-            getCountries: jest.fn(() => {
-              return mockCountries
-            }),
-          },
-        },
-      }
+window.$nuxt.$hybrisApi = {
+  countriesApi: {
+    getCountries: jest.fn(() => {
+      return mockCountries
     }),
-  }
-})
+  },
+}
 
 describe('useMiscStore', () => {
   beforeEach(() => setActivePinia(createPinia()))
