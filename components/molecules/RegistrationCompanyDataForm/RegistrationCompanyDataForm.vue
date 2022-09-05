@@ -15,10 +15,10 @@
 
     <Infobox :text="$t('registration.infotext')" />
 
-    <div v-if="addCompany" class="registration-company-data-form__form">
-      <div class="registration-company-data-form__form__rowContainer">
+    <div v-if="addCompany">
+      <div class="registration-company-data-form__rowContainer">
         <ButtonGroup
-          class="registration-company-data-form__form__rowContainer--half"
+          class="registration-company-data-form__rowContainer--half"
           :values="[
             {
               label: $t('registration.formCompanyData.registeredCustomerTrue'),
@@ -37,7 +37,7 @@
         />
 
         <PvInput
-          class="registration-company-data-form__form__rowContainer--half"
+          class="registration-company-data-form__rowContainer--half"
           :label="$t('registration.formCompanyData.customerNumber')"
           placeholder=""
           :validate="validate"
@@ -79,9 +79,9 @@
         "
       />
 
-      <div class="registration-company-data-form__form__rowContainer">
+      <div class="registration-company-data-form__rowContainer">
         <PvInput
-          class="registration-company-data-form__form__rowContainer--half"
+          class="registration-company-data-form__rowContainer--half"
           :label="$t('registration.formCompanyData.telephoneNumber')"
           placeholder=""
           :required="true"
@@ -93,7 +93,7 @@
         />
 
         <PvInput
-          class="registration-company-data-form__form__rowContainer--half"
+          class="registration-company-data-form__rowContainer--half"
           :label="$t('registration.formCompanyData.fax')"
           placeholder=""
           :validate="validate"
@@ -111,9 +111,9 @@
         "
       />
 
-      <div class="registration-company-data-form__form__rowContainer">
+      <div class="registration-company-data-form__rowContainer">
         <PvInput
-          class="registration-company-data-form__form__rowContainer--three-quarters"
+          class="registration-company-data-form__rowContainer--three-quarters"
           :label="$t('registration.formCompanyData.street')"
           placeholder=""
           :required="true"
@@ -125,7 +125,7 @@
         />
 
         <PvInput
-          class="registration-company-data-form__form__rowContainer--one-quarter"
+          class="registration-company-data-form__rowContainer--one-quarter"
           :label="$t('registration.formCompanyData.houseNumber')"
           placeholder=""
           :required="true"
@@ -137,9 +137,9 @@
         />
       </div>
 
-      <div class="registration-company-data-form__form__rowContainer">
+      <div class="registration-company-data-form__rowContainer">
         <PvInput
-          class="registration-company-data-form__form__rowContainer--one-quarter"
+          class="registration-company-data-form__rowContainer--one-quarter"
           :label="$t('registration.formCompanyData.postalCode')"
           placeholder=""
           :required="true"
@@ -151,7 +151,7 @@
         />
 
         <PvInput
-          class="registration-company-data-form__form__rowContainer--three-quarters"
+          class="registration-company-data-form__rowContainer--three-quarters"
           :label="$t('registration.formCompanyData.city')"
           placeholder=""
           :required="true"
@@ -279,24 +279,22 @@ export default defineComponent({
     @apply tw-justify-between;
   }
 
-  &__form {
-    &__rowContainer {
-      @screen md {
-        @apply tw-flex tw-flex-row;
-        @apply tw-items-end;
-        @apply tw-gap-4;
+  &__rowContainer {
+    @screen md {
+      @apply tw-flex tw-flex-row;
+      @apply tw-items-end;
+      @apply tw-gap-4;
 
-        &--three-quarters {
-          flex-grow: 3;
-        }
+      &--three-quarters {
+        flex-grow: 3;
+      }
 
-        &--one-quarter {
-          @apply tw-grow;
-        }
+      &--one-quarter {
+        @apply tw-grow;
+      }
 
-        &--half {
-          @apply tw-w-6/12;
-        }
+      &--half {
+        @apply tw-w-6/12;
       }
     }
   }
