@@ -164,6 +164,10 @@
 
   &__search-multiple {
     @apply tw-text-pv-grey-64;
+    @apply tw-w-full;
+    @apply tw-text-left;
+    @apply tw-font-normal;
+    @apply tw-text-base;
 
     &:focus {
       @apply tw-outline-none;

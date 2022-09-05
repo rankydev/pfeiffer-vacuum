@@ -11,7 +11,7 @@
         'pv-select--icon': prependIcon,
       }"
       :label="optionLabel"
-      :placeholder="$t('form.select.placeholder')"
+      :placeholder="placeholder || $t('form.select.placeholder')"
       :selectable="(option) => option.disabled !== true"
       :components="{ Deselect }"
       deselect-from-dropdown
@@ -24,14 +24,16 @@
       <template #search="{ attributes, events }">
         <button
           v-if="!!multiple"
+          v-bind="attributes"
+          ref="selectTrigger"
           :class="[
             'pv-select__search-multiple',
             { 'pv-select__search-multiple--active': internalValue.length },
           ]"
-          v-bind="attributes"
           v-on="events"
+          @click.prevent="focusTrigger"
         >
-          {{ label }}
+          {{ placeholder || $t('form.select.placeholder') }}
         </button>
         <template v-else>
           <Icon
@@ -39,12 +41,7 @@
             class="pv-select__icon-prepend"
             :icon="prependIcon"
           />
-          <input
-            class="vs__search"
-            v-bind="attributes"
-            disabled
-            v-on="events"
-          />
+          <input class="vs__search" v-bind="attributes" v-on="events" />
         </template>
       </template>
 
@@ -113,6 +110,7 @@ import Checkbox from '../Checkbox/Checkbox'
 import Icon from '~/components/atoms/Icon/Icon'
 import { defineComponent, computed, ref, watch } from '@nuxtjs/composition-api'
 import { useInputValidator } from '~/composables/useValidator'
+import props from './partials/props.js'
 
 export default defineComponent({
   name: 'PvSelect',
@@ -123,88 +121,7 @@ export default defineComponent({
     ErrorMessage,
     Checkbox,
   },
-  props: {
-    /**
-     * The input’s value
-     */
-    value: {
-      type: String,
-      default: '',
-    },
-    /**
-     * The isRequired prop, which defines if the select field is required or not
-     */
-    isRequired: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * Can be an array of objects or array of strings. When using objects, will look for a label, value, icon and disabled keys. T
-     */
-    options: {
-      type: Array,
-      required: true,
-    },
-    /**
-     * Tells what key to use when generating option labels when each option is an object.
-
-     */
-    optionLabel: {
-      type: String,
-      default: 'label',
-    },
-    /**
-     * Sets input label
-     */
-    label: {
-      type: String,
-      default: null,
-    },
-    /**
-     * An icon which will be prepended on the input field
-     * @see [Icon List] (https://fonts.google.com/icons?selected=Material+Icons)
-     */
-    prependIcon: {
-      type: String,
-      default: '',
-    },
-    /**
-     * Reduces the prop to receive only the data that's required
-     * https://vue-select.org/guide/values.html#transforming-selections
-     */
-    reduce: {
-      type: Function,
-      default: (option) => option,
-    },
-    /**
-     * disables complete selectbox
-     */
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * rules that will be passed into validator
-     */
-    rules: {
-      type: Object,
-      default: () => {},
-    },
-    /**
-     * defines wether the validation should be turned on or off for this select
-     */
-    validate: {
-      type: Boolean,
-      default: false,
-    },
-    /**
-     * enables multi selection
-     */
-    multiple: {
-      type: Boolean,
-      default: false,
-    },
-  },
+  props,
   emits: ['update'],
   setup(props) {
     const valueFromProps = ref(props.value)
@@ -221,6 +138,13 @@ export default defineComponent({
 
     const validation = ref(useInputValidator(props.rules, internalValue))
 
+    // TODO: Tut seinen Job, ist aber murks
+    const selectTrigger = ref(null)
+
+    const focusTrigger = () => {
+      selectTrigger.value.focus()
+    }
+
     watch(
       () => props.validate,
       (value) => {
@@ -230,7 +154,7 @@ export default defineComponent({
       }
     )
 
-    return { internalValue, Deselect, validation }
+    return { internalValue, Deselect, validation, selectTrigger, focusTrigger }
   },
 })
 </script>
