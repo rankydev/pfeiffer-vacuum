@@ -33,10 +33,14 @@ module.exports = {
     'stories.content.js',
     'schema.js',
     'schema.partial.js',
-    '/stores/cms/index.js',
-    '/stores/menu/index.js',
-    '/stores/page/index.js',
+    '/stores/cart/index.js',
+    '/stores/oci/index.js',
+    '/stores/shoppingList/index.js',
+    '/stores/vsm/index.js',
     '/pages/_site/_.vue',
+    '/plugins/hybris/cartApi/cartApi.js',
+    '/plugins/vsmApi.js',
+    'middleware/ociAuth.js'
   ],
   coverageThreshold: {
     global: {
