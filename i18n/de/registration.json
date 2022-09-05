@@ -9,5 +9,26 @@
     "region": "Bundesstaat",
     "password": "Passwort"
   },
+  "formCompanyData": {
+    "title": "Firmendaten",
+    "infobox": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. Dieser Schritt ist optional.Bitte beachten Sie: Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
+    "addCompanyData": "Firmenadresse hinzufügen",
+    "removeCompanyData": "Entfernen",
+    "registeredCustomer": "Bereits Kunde?",
+    "registeredCustomerTrue": "Ja",
+    "registeredCustomerFalse": "Nein",
+    "customerNumber": "Kundennummer",
+    "additionalCompanyInformation": "Weitere Unternehmensangaben",
+    "department": "Abteilung",
+    "tax": "Umsatzsteuer ID",
+    "telephoneNumber": "Telefon",
+    "fax": "Fax",
+    "country": "Land",
+    "countryAutofill": "Wird automatisch befüllt",
+    "street": "Straße",
+    "houseNumber": "Nummer",
+    "postalCode": "PLZ",
+    "city": "Stadt"
+  },
   "infotext": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br /> <b>Dieser Schritt ist optional</b> <br /><br /> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!"
 }
