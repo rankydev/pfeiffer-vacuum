@@ -40,7 +40,7 @@ module.exports = {
     '/pages/_site/_.vue',
     '/plugins/hybris/cartApi/cartApi.js',
     '/plugins/vsmApi.js',
-    'middleware/ociAuth.js'
+    'middleware/ociAuth.js',
   ],
   coverageThreshold: {
     global: {
