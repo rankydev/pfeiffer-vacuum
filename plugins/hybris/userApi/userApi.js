@@ -28,7 +28,7 @@ export function getUserApi(axios4Shop, ctx) {
         case 'TokenExpiredError':
           return { error: result.errors?.[0]?.type }
         default:
-          logger.error('Error when verifing token.', result.error || '')
+          logger.error('Error when verifing token.', result.error)
           return { error: 'UnknownError' }
       }
     },
@@ -40,10 +40,7 @@ export function getUserApi(axios4Shop, ctx) {
       )
 
       if (result.error) {
-        logger.error(
-          'Error when resending verification token.',
-          result.error || ''
-        )
+        logger.error('Error when resending verification token.', result.error)
       }
 
       return result
@@ -206,7 +203,7 @@ export function getUserApi(axios4Shop, ctx) {
         return result
       }
 
-      console.error(
+      logger.error(
         'Error when fetching account managers. Returning empty array.',
         result.error ? result.error : ''
       )
