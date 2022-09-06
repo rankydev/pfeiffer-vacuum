@@ -35,11 +35,13 @@ import { useAuthStore } from '~/stores/auth'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
+import Button from '~/components/atoms/Button/Button.vue'
 
 export default defineComponent({
   components: {
     Icon,
     Link,
+    Button,
   },
   setup() {
     const { $authApi, i18n } = useContext()
