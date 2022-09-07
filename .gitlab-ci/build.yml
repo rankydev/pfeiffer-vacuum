@@ -123,7 +123,7 @@ sonar-qube:
       -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
       --build-arg PORT=${PORT}
       --build-arg NODE_ENV=${NODE_ENV}
-      --build-arg BASE_URL="${CI_ENVIRONMENT_URL}"
+      --build-arg BASE_URL="${BASE_URL}"
       --build-arg CONSOLA_LEVEL=${CONSOLA_LEVEL}
       --build-arg STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
       --build-arg STORYBLOK_OAUTH_TOKEN="${STORYBLOK_OAUTH_TOKEN}"
@@ -134,6 +134,7 @@ sonar-qube:
       --build-arg STORYBLOK_RESOLVE_ASSETS="${STORYBLOK_RESOLVE_ASSETS}"
       --build-arg STORYBLOK_CONTENT_TYPES="${STORYBLOK_CONTENT_TYPES}"
       --build-arg STORYBLOK_EXCLUDE_ROUTES="${STORYBLOK_EXCLUDE_ROUTES}"
+      --build-arg STORYBLOK_IMAGE_BASE_URL="${STORYBLOK_IMAGE_BASE_URL}"
       --build-arg DEFAULT_LANGUAGE_CODE="${DEFAULT_LANGUAGE_CODE}"
       --build-arg LANGUAGE_CODES="${LANGUAGE_CODES}"
       --build-arg CI_COMMIT_SHORT_SHA="${CI_COMMIT_SHORT_SHA}"
@@ -207,15 +208,6 @@ build-frontend-uat-docker-image-for-main-and-tags:
   only:
     - main
     - tags
-
-tag-docker-image-latest-main:
-  extends: .build-docker-image
-  needs: ["build-frontend-uat-docker-image-for-main-and-tags"]
-  script:
-    - docker pull ${DOCKER_IMAGE_NAME}:uat-${CI_COMMIT_REF_SLUG}
-    - docker tag ${DOCKER_IMAGE_NAME}:uat-${CI_COMMIT_REF_SLUG} ${DOCKER_IMAGE_NAME}:latest
-  only:
-    - main
 
 build-frontend-prd-docker-image-for-tags:
   extends: .build-docker-image
