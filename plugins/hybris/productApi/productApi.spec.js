@@ -1,14 +1,15 @@
 import { getProductApi } from './productApi'
 import { jest } from '@jest/globals'
-import { fail } from 'yargs'
 
-const axiosInstance = (value) => ({
+const axiosInstance = (value, reject) => ({
   $get: jest.fn((url, params) => {
-    return {
-      catch: () => {
-        return { products: value ? value : [params.params.codes] }
-      },
-    }
+    return reject
+      ? Promise.reject('error')
+      : {
+          catch: () => {
+            return { products: value ? value : [params.params.codes] }
+          },
+        }
   }),
 })
 
@@ -59,6 +60,22 @@ describe('productApi', () => {
       }
 
       const productApi = getProductApi(axiosInstance('not an array'), ctx)
+      const idArray = ['test', 'test2', 'test3']
+
+      productApi.getProducts(idArray).then((data) => {
+        expect(data).toStrictEqual([])
+      })
+    })
+
+    test('should call logger given rejected promise', () => {
+      const loggerError = jest.fn()
+      const ctx = {
+        $getLoggerFor: () => ({
+          error: loggerError,
+        }),
+      }
+
+      const productApi = getProductApi(axiosInstance('', true), ctx)
       const idArray = ['test', 'test2', 'test3']
 
       productApi.getProducts(idArray).then((data) => {
