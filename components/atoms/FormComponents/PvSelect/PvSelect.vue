@@ -22,27 +22,12 @@
       "
     >
       <template #search="{ attributes, events }">
-        <button
-          v-if="!!multiple"
-          v-bind="attributes"
-          ref="selectTrigger"
-          :class="[
-            'pv-select__search-multiple',
-            { 'pv-select__search-multiple--active': internalValue.length },
-          ]"
-          v-on="events"
-          @click.prevent="focusTrigger"
-        >
-          {{ placeholder || $t('form.select.placeholder') }}
-        </button>
-        <template v-else>
-          <Icon
-            v-if="prependIcon"
-            class="pv-select__icon-prepend"
-            :icon="prependIcon"
-          />
-          <input class="vs__search" v-bind="attributes" v-on="events" />
-        </template>
+        <Icon
+          v-if="prependIcon"
+          class="pv-select__icon-prepend"
+          :icon="prependIcon"
+        />
+        <input class="vs__search" v-bind="attributes" v-on="events" />
       </template>
 
       <template #open-indicator>
@@ -77,13 +62,15 @@
       </template>
 
       <template v-if="!!multiple" #selected-option-container>
-        <div class="pv-select__multiple-selected-container"></div>
+        <div class="vs__selected">
+          {{ placeholder || $t('form.select.placeholder') }}
+        </div>
       </template>
 
-      <template #selected-option="option">
+      <template v-else #selected-option="option">
         <!--  TODO sanitizer -->
         <Icon
-          v-if="option.icon && !!!multiple"
+          v-if="option.icon"
           class="pv-select__icon-option"
           :icon="option.icon"
         />
@@ -138,13 +125,6 @@ export default defineComponent({
 
     const validation = ref(useInputValidator(props.rules, internalValue))
 
-    // TODO: Tut seinen Job, ist aber murks
-    const selectTrigger = ref(null)
-
-    const focusTrigger = () => {
-      selectTrigger.value.focus()
-    }
-
     watch(
       () => props.validate,
       (value) => {
@@ -154,7 +134,7 @@ export default defineComponent({
       }
     )
 
-    return { internalValue, Deselect, validation, selectTrigger, focusTrigger }
+    return { internalValue, Deselect, validation }
   },
 })
 </script>
