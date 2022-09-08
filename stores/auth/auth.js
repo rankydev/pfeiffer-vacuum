@@ -38,7 +38,7 @@ export const useAuthStore = defineStore('auth', {
       if (!this.loggedIn) {
         return
       }
-      const { $hybrisApi } = this.$nuxt
+      const { $hybrisApi } = $nuxt
       const user = await $hybrisApi.userApi.getUserData()
       if (user && !user.error) {
         this.currentUser = user

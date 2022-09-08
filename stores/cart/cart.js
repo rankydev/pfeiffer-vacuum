@@ -12,7 +12,7 @@ export const useCartStore = defineStore('cart', {
 
   actions: {
     async loadCurrentCart(forceCreate) {
-      const { $hybrisApi } = this.$nuxt
+      const { $hybrisApi } = $nuxt
       const result = await $hybrisApi.cartApi.getOrCreateCart(forceCreate)
 
       if (result) {
@@ -20,7 +20,7 @@ export const useCartStore = defineStore('cart', {
       }
     },
     async mergeAndLoadCarts(anonymousCartGuid) {
-      const { $hybrisApi } = this.$nuxt
+      const { $hybrisApi } = $nuxt
       let currentCart = await $hybrisApi.cartApi.getOrCreateCart(false)
 
       logger.trace('currentCart: ', currentCart)
@@ -42,7 +42,7 @@ export const useCartStore = defineStore('cart', {
     },
 
     async addToCart({ code, quantity }) {
-      const { $hybrisApi, $i18n, $globalMessages } = this.$nuxt
+      const { $hybrisApi, $i18n, $globalMessages } = $nuxt
 
       const result = await $hybrisApi.cartApi.addToCart(code, quantity)
 

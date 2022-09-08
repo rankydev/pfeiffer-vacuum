@@ -52,7 +52,7 @@ export const useShoppingListStore = defineStore('shoppingList', {
 
   actions: {
     async addToList() {
-      const { $hybrisApi, $i18n, $globalMessages } = this.$nuxt
+      const { $hybrisApi, $i18n, $globalMessages } = $nuxt
       const result = await $hybrisApi.shoppingListApi.getShoppingLists()
       if (result) {
         this.shoppingListSettings.lists = result

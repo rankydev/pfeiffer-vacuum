@@ -1,6 +1,6 @@
 import { useAuthStore } from '~/stores/auth'
 import { useCartStore } from '~/stores/cart'
-import { getCookie, removeCookie } from '~/plugins/cookieHelper'
+import { getCookie } from '~/plugins/cookieHelper'
 
 export default async function (ctx) {
   const logger = ctx.getLoggerFor('preload')
