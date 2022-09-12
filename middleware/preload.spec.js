@@ -3,6 +3,10 @@ import { createPinia, setActivePinia } from 'pinia'
 
 const mockDebug = jest.fn()
 const mockTrace = jest.fn()
+const mockSetAuth = jest.fn()
+const mockMergeAndLoadCarts = jest.fn()
+const mockLoadCurrentUser = jest.fn()
+const mockGuid = 'lorem-guid'
 
 const mockLogger = jest.fn(() => ({
   debug: mockDebug,
@@ -10,17 +14,23 @@ const mockLogger = jest.fn(() => ({
 }))
 
 let mockContext = { getLoggerFor: mockLogger }
+let mockIsLoginProcess = false
 
 jest.mock('~/stores/auth', () => ({
   useAuthStore: jest.fn(() => ({
-    setAuth: jest.fn(),
-    loadCurrentUser: jest.fn(),
+    setAuth: mockSetAuth,
+    loadCurrentUser: mockLoadCurrentUser,
+    isLoginProcess: mockIsLoginProcess,
   })),
 }))
 
 jest.mock('~/stores/cart', () => ({
   useCartStore: jest.fn(() => ({
     loadCurrentCart: jest.fn(),
+    mergeAndLoadCarts: () => mockMergeAndLoadCarts(),
+    currentCart: {
+      guid: mockGuid,
+    },
   })),
 }))
 
@@ -39,6 +49,7 @@ describe('Preload', () => {
     beforeEach(() => {
       setActivePinia(createPinia())
       jest.clearAllMocks()
+      mockIsLoginProcess = false
     })
 
     test('should preload given all required data', () => {
@@ -48,10 +59,39 @@ describe('Preload', () => {
       expect(mockTrace).toBeCalledTimes(1)
       expect(mockDebug).toBeCalledWith('Token from cookie')
       expect(mockDebug).toBeCalledWith('Preloading user and cart.')
+      expect(mockSetAuth).toBeCalledTimes(1)
+      expect(mockSetAuth).toBeCalledWith({
+        access_token: true,
+        id_token: true,
+        refresh_token: true,
+        token_type: true,
+        validUntil: true,
+      })
+      expect(mockLoadCurrentUser).toBeCalledTimes(1)
     })
 
-    test.skip('should preload given isLoginProcess = true', () => {
-      preload(mockContext)
+    test('should skip setting cart cookie given no cart cookie', () => {
+      preload({
+        ...mockContext,
+        mockVal: true,
+        cart: false,
+      })
+
+      expect(mockDebug).toBeCalledTimes(2)
+      expect(mockTrace).toBeCalledTimes(1)
+      expect(mockDebug).toBeCalledWith('Token from cookie')
+      expect(mockDebug).toBeCalledWith('Preloading user and cart.')
+    })
+
+    test('should preload given isLoginProcess = true', async () => {
+      mockIsLoginProcess = true
+      await preload(mockContext)
+
+      expect(mockDebug).toBeCalledTimes(2)
+      expect(mockTrace).toBeCalledTimes(4)
+      expect(mockDebug).toBeCalledWith('Token from cookie')
+      expect(mockDebug).toBeCalledWith('During login process')
+      expect(mockMergeAndLoadCarts).toBeCalledTimes(1)
     })
 
     test('should throw error given no access token', () => {
@@ -67,6 +107,8 @@ describe('Preload', () => {
         expect.anything()
       )
       expect(mockDebug).toBeCalledWith('Preloading user and cart.')
+      expect(mockSetAuth).toBeCalledTimes(1)
+      expect(mockSetAuth).toBeCalledWith(null)
     })
   })
 })

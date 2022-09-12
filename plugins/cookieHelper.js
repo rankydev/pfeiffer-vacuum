@@ -19,16 +19,10 @@ export function getCookie(context, cookieKey, defaultValue) {
   if (process.client) {
     return JsCookie.get(cookieKey) || defaultValue
   } else if (req && typeof req.headers.cookie !== 'undefined') {
-    const cookies =
-      req.headers && req.headers.cookie ? Cookie.parse(req.headers.cookie) : {}
+    const cookies = Cookie.parse(req.headers.cookie)
     const value = cookies[cookieKey]
-    if (value) {
-      if (value === 'undefined' || value === 'null') {
-        removeCookie(context, cookieKey)
-      } else {
-        return value
-      }
-    }
+    if (value) return value
+    removeCookie(context, cookieKey)
   }
 
   return defaultValue
@@ -101,7 +95,6 @@ export function removeCookie(context, cookieKey) {
       if (typeof headers === 'string') {
         headers = [headers]
       }
-
       const redirectCookie = Cookie.serialize(cookieKey, null, cookieOptions)
       headers.push(redirectCookie)
       res.setHeader('Set-Cookie', headers)
