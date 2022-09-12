@@ -38,10 +38,6 @@ lint-styles:
         - .nuxt/
         - node_modules/
       policy: pull
-    - key: "${CI_PIPELINE_ID}-report"
-      paths:
-        - report/
-      policy: push
   script:
     - npm ci --cache .npm --prefer-offline
     - npm run lint:style-report
@@ -64,10 +60,6 @@ lint-javascript:
         - .nuxt/
         - node_modules/
       policy: pull
-    - key: "${CI_PIPELINE_ID}-report"
-      paths:
-        - report/
-      policy: push
   script:
     - npm ci --cache .npm --prefer-offline
     - npm run lint:js-report
@@ -123,7 +115,7 @@ test:
   script:
     - npm ci --cache .npm --prefer-offline
     - NODE_ENV=test
-    - npm test:ci
+    - npm run test:ci
   #coverage: Tests:\s*\d+\s+passed,\s\d+\s+total
   artifacts:
     when: always
