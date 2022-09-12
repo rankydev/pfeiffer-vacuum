@@ -14,7 +14,6 @@ ARG PORT=3000
 ARG HOST='0.0.0.0'
 
 ARG BASE_URL='https://localhost:3000'
-ARG DOMAIN='https://localhost:3000'
 
 # please read the note above
 ARG NODE_ENV=development
@@ -41,6 +40,8 @@ ARG STORYBLOK_RESOLVE_LINKS
 ARG STORYBLOK_RESOLVE_ASSETS
 ARG STORYBLOK_CONTENT_TYPES
 ARG STORYBLOK_EXCLUDE_ROUTES
+
+ARG STORYBLOK_IMAGE_BASE_URL
 
 ARG CI_COMMIT_SHORT_SHA
 ARG CI_COMMIT_REF_NAME
@@ -69,9 +70,7 @@ RUN cat .env.template | envsubst >> .env
 
 RUN mkdir -p build_logs
 
-RUN \
-  npm ci  &> build_logs/npm_ci.log \
-  && npm run build &> build_logs/npm_build.log
+RUN npm ci && npm run build
 
 ########################################################################################################################
 # end frontend-build image
@@ -81,6 +80,55 @@ RUN \
 ########################################################################################################################
 FROM node:16-alpine
 
+# port of frontend application
+ARG PORT
+ARG HOST
+
+ARG BASE_URL
+
+# please read the note above
+ARG NODE_ENV
+
+# please read the note above
+ARG DEFAULT_LANGUAGE_CODE
+ARG LANGUAGE_CODES
+
+# please read the note above
+ARG REGION_CODES
+ARG DEFAULT_REGION_CODE
+ARG CURRENT_REGION_CODE
+
+# please read the note above
+ARG STORYBLOK_OAUTH_TOKEN
+
+ARG STORYBLOK_ACCESS_TOKEN
+ARG STORYBLOK_SPACE_ID
+ARG STORYBLOK_VERSION
+
+# please read the note above
+ARG STORYBLOK_RESOLVE_RELATIONS
+ARG STORYBLOK_RESOLVE_LINKS
+ARG STORYBLOK_RESOLVE_ASSETS
+ARG STORYBLOK_CONTENT_TYPES
+ARG STORYBLOK_EXCLUDE_ROUTES
+
+ARG STORYBLOK_IMAGE_BASE_URL
+
+ARG CI_COMMIT_SHORT_SHA
+ARG CI_COMMIT_REF_NAME
+ARG CI_PROJECT_URL
+
+# hybris
+ARG SHOP_BASE_URL
+ARG SHOP_IMAGE_URL
+
+# logging
+ARG CONSOLA_LEVEL
+
+# usercentrics
+ARG USERCENTRICS_PRIVACY_PATH
+ARG USERCENTRICS_ID
+
 # !!! IMPORTANT NOTE !!!
 # ENV variables will be set by either
 #   - pipeline
@@ -88,13 +136,13 @@ FROM node:16-alpine
 #   - orchestrating environment, i.e., kubernetes
 
 # port of frontend application
-ENV PORT=3000
-ENV HOST='0.0.0.0'
+ENV PORT=${PORT}
+ENV HOST=${HOST}
 
 ENV BASE_URL="${BASE_URL}"
 
 # please read the note above
-ENV NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
 
 # please read the note above
 ENV DEFAULT_LANGUAGE_CODE="${DEFAULT_LANGUAGE_CODE}"
@@ -106,11 +154,11 @@ ENV DEFAULT_REGION_CODE="${DEFAULT_REGION_CODE}"
 ENV CURRENT_REGION_CODE="${CURRENT_REGION_CODE}"
 
 # please read the note above
-ENV STORYBLOK_OAUTH_TOKEN=''
+ENV STORYBLOK_OAUTH_TOKEN=${STORYBLOK_OAUTH_TOKEN}
 
-ENV STORYBLOK_ACCESS_TOKEN=''
-ENV STORYBLOK_SPACE_ID=''
-ENV STORYBLOK_VERSION=''
+ENV STORYBLOK_ACCESS_TOKEN=${STORYBLOK_ACCESS_TOKEN}
+ENV STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
+ENV STORYBLOK_VERSION=${STORYBLOK_VERSION}
 
 # please read the note above
 ENV STORYBLOK_RESOLVE_RELATIONS="${STORYBLOK_RESOLVE_RELATIONS}"
@@ -118,6 +166,8 @@ ENV STORYBLOK_RESOLVE_LINKS="${STORYBLOK_RESOLVE_LINKS}"
 ENV STORYBLOK_RESOLVE_ASSETS="${STORYBLOK_RESOLVE_ASSETS}"
 ENV STORYBLOK_CONTENT_TYPES="${STORYBLOK_CONTENT_TYPES}"
 ENV STORYBLOK_EXCLUDE_ROUTES="${STORYBLOK_EXCLUDE_ROUTES}"
+
+ENV STORYBLOK_IMAGE_BASE_URL="${STORYBLOK_IMAGE_BASE_URL}"
 
 ENV CI_COMMIT_SHORT_SHA="${CI_COMMIT_SHORT_SHA}"
 ENV CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}"

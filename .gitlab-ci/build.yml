@@ -163,6 +163,7 @@ sonar-qube:
     - shared
   only:
     - develop
+    - feature/PVWEB-0_adapt_sonar_properties
 
 .build-docker-image:
   image: docker:git
@@ -180,20 +181,22 @@ sonar-qube:
   script:
     - docker build
       -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+      --build-arg PORT=${PORT}
       --build-arg NODE_ENV=${NODE_ENV}
-      --build-arg BASE_URL="${CI_ENVIRONMENT_URL}"
-      --build-arg DOMAIN="${CI_ENVIRONMENT_URL}"
-      --build-arg DEFAULT_LANGUAGE_CODE="${DEFAULT_LANGUAGE_CODE}"
-      --build-arg LANGUAGE_CODES="${LANGUAGE_CODES}"
+      --build-arg BASE_URL="${BASE_URL}"
+      --build-arg CONSOLA_LEVEL=${CONSOLA_LEVEL}
+      --build-arg STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
       --build-arg STORYBLOK_OAUTH_TOKEN="${STORYBLOK_OAUTH_TOKEN}"
       --build-arg STORYBLOK_ACCESS_TOKEN="${STORYBLOK_ACCESS_TOKEN}"
-      --build-arg STORYBLOK_SPACE_ID=${STORYBLOK_SPACE_ID}
       --build-arg STORYBLOK_VERSION="${STORYBLOK_VERSION}"
       --build-arg STORYBLOK_RESOLVE_RELATIONS="${STORYBLOK_RESOLVE_RELATIONS}"
       --build-arg STORYBLOK_RESOLVE_LINKS="${STORYBLOK_RESOLVE_LINKS}"
       --build-arg STORYBLOK_RESOLVE_ASSETS="${STORYBLOK_RESOLVE_ASSETS}"
       --build-arg STORYBLOK_CONTENT_TYPES="${STORYBLOK_CONTENT_TYPES}"
       --build-arg STORYBLOK_EXCLUDE_ROUTES="${STORYBLOK_EXCLUDE_ROUTES}"
+      --build-arg STORYBLOK_IMAGE_BASE_URL="${STORYBLOK_IMAGE_BASE_URL}"
+      --build-arg DEFAULT_LANGUAGE_CODE="${DEFAULT_LANGUAGE_CODE}"
+      --build-arg LANGUAGE_CODES="${LANGUAGE_CODES}"
       --build-arg CI_COMMIT_SHORT_SHA="${CI_COMMIT_SHORT_SHA}"
       --build-arg CI_COMMIT_REF_NAME="${CI_COMMIT_REF_NAME}"
       --build-arg CI_PROJECT_URL="${CI_PROJECT_URL}"
@@ -212,13 +215,15 @@ sonar-qube:
   tags:
     - dind_runner
 
-build-docker-image-frontend:
+build-frontend-docker-image-for-branch:
   extends: .build-docker-image
   needs: ["test", "lint-styles", "lint-javascript"]
   environment:
     name: dev2
   except:
     - develop
+    - main
+    - tags
 
 .build-docker-image-lsg:
   extends: .build-docker-image
@@ -231,13 +236,15 @@ build-docker-image-frontend:
   script:
     - docker build -t ${DOCKER_IMAGE_NAME}:lsg-${CI_COMMIT_REF_SLUG} -f docker/DockerfileLSG .
 
-build-docker-image-lsg:
+build-lsg-docker-image-for-branch:
   extends: .build-docker-image-lsg
   needs: ["test", "lint-styles", "lint-javascript"]
   except:
     - develop
+    - main
+    - tags
 
-build-docker-image-frontend-develop:
+build-frontend-docker-image-for-develop:
   extends: .build-docker-image
   needs: ["sonar-qube"]
   environment:
@@ -245,32 +252,24 @@ build-docker-image-frontend-develop:
   only:
     - develop
 
-build-docker-image-lsg-develop:
+build-lsg-docker-image-for-develop:
   extends: .build-docker-image-lsg
   needs: ["sonar-qube"]
   only:
     - develop
 
-tag-docker-image-latest-main:
-  extends: .build-docker-image
-  needs: ["build-docker-image-frontend"]
-  script:
-    - docker pull ${DOCKER_IMAGE_NAME}:main
-    - docker tag ${DOCKER_IMAGE_NAME}:main ${DOCKER_IMAGE_NAME}:latest
-  only:
-    - main
-
-build-docker-image-frontend-uat-tags:
+build-frontend-uat-docker-image-for-main-and-tags:
   extends: .build-docker-image
   needs: ["test", "lint-styles", "lint-javascript"]
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
-    name: uat
+    name: uat2
   only:
+    - main
     - tags
 
-build-docker-image-frontend-prd-tags:
+build-frontend-prd-docker-image-for-tags:
   extends: .build-docker-image
   needs: ["test", "lint-styles", "lint-javascript"]
   variables:
@@ -281,7 +280,7 @@ build-docker-image-frontend-prd-tags:
     - tags
 
 tag-gitlab-nightly:
-  needs: ["build-docker-image-frontend-develop"]
+  needs: ["build-frontend-docker-image-for-develop"]
   image: docker:git
   stage: build-docker-image
   before_script:

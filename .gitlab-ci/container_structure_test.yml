@@ -16,36 +16,52 @@ include:
     - dind_runner
   script:
     - echo "Run container structure test for image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
+    - cat .gitlab-ci/container_structure_test.config.yml | envsubst >> container_structure_test.config.${CI_COMMIT_SHORT_SHA}.yml
     - # disable gitlab warning for docker login
       echo "${CI_REGISTRY_PASSWORD}" | docker login --username "${CI_REGISTRY_USER}" --password-stdin ${CI_REGISTRY}
     - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
-    - echo "container structure test deactivated" # container-structure-test test --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} --config .gitlab-ci/container_structure_test.config.yml
+    - container-structure-test test --image ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} --config container_structure_test.config.${CI_COMMIT_SHORT_SHA}.yml
+  artifacts:
+    when: on_failure
+    paths:
+      - container_structure_test.config.${CI_COMMIT_SHORT_SHA}.yml
+    expire_in: 3 week
 
-audit-frontend:
+audit-frontend-branch:
   extends: .audit_frontend
-  needs: [ "build-docker-image-frontend" ]
+  needs: [ "build-frontend-docker-image-for-branch" ]
+  environment:
+    name: dev2
   except:
     - develop
+    - tags
+    - main
 
 audit-frontend-develop:
   extends: .audit_frontend
-  needs: [ "build-docker-image-frontend-develop" ]
+  needs: [ "build-frontend-docker-image-for-develop" ]
+  environment:
+    name: dev2
   only:
     - develop
 
 audit-frontend-uat:
   extends: .audit_frontend
-  needs: [ "build-docker-image-frontend-uat-tags" ]
+  needs: [ "build-frontend-uat-docker-image-for-main-and-tags" ]
+  environment:
+    name: uat2
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   only:
     - tags
+    - main
 
 audit-frontend-prd:
   extends: .audit_frontend
-  needs: [ "build-docker-image-frontend-prd-tags" ]
+  needs: [ "build-frontend-prd-docker-image-for-tags" ]
+  environment:
+    name: prd
   variables:
     DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
   only:
     - tags
-

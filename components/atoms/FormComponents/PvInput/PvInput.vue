@@ -1,11 +1,12 @@
 <template>
   <div class="pv-input">
-    <PvLabel :label="label" />
+    <PvLabel :optional="!required" :label="label" />
     <div class="pv-input__wrapper">
       <input
         v-model="internalValue"
         v-bind="{ placeholder, disabled }"
-        :required="isRequired"
+        :required="required"
+        :type="inputType"
         class="pv-input__element"
         :class="{
           'pv-input__element--icon': icon,
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch, toRefs } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
@@ -54,8 +55,16 @@ export default defineComponent({
      * @model
      */
     value: {
+      type: [String, Number],
+      default: undefined,
+    },
+    /**
+     * The input type
+     * @model
+     */
+    inputType: {
       type: String,
-      default: '',
+      default: 'text',
     },
     /**
      * An optional icon that can be shown
@@ -82,7 +91,7 @@ export default defineComponent({
     /**
      * The isRequired prop, which defines if the text field is required or not
      */
-    isRequired: {
+    required: {
       type: Boolean,
       default: false,
     },
@@ -139,7 +148,7 @@ export default defineComponent({
     'submit',
   ],
   setup(props) {
-    const internalValue = ref(props.value)
+    const { value: internalValue } = toRefs(props)
     let internalIcon = ref(props.icon)
 
     const validation = ref(useInputValidator(props.rules, internalValue))
@@ -147,7 +156,7 @@ export default defineComponent({
     watch(
       () => props.validate,
       (value) => {
-        if (value === true) {
+        if (value) {
           validation.value.validateInput()
         }
       }
@@ -173,7 +182,8 @@ export default defineComponent({
   &__icon {
     @apply tw-absolute;
     @apply tw-top-1/2 tw-right-2;
-    @apply tw-cursor-pointer tw-text-pv-grey-64;
+    @apply tw-cursor-pointer;
+    @apply tw-text-pv-grey-64;
     transform: translateY(-50%);
 
     &--error {
