@@ -22,7 +22,7 @@
     "lsg": "cross-env STORYBOOK=true nuxt storybook -s .storybook/static",
     "lsg:build": "cross-env STORYBOOK=true nuxt storybook build -s .storybook/static --output-dir ./lsg-public",
     "test": "jest",
-    "test:report": "jest --ci --coverage",
+    "test:report": "jest --ci --coverage --reporters=jest-junit",
     "cms:sync": "env-cmd node -r esm ./bin/nuxt-storyblok.js sync",
     "cms:sync:ci": "node -r esm ./bin/nuxt-storyblok.js sync"
   },
