@@ -3,6 +3,7 @@
     :has-link="false"
     image-size="contain"
     :href="(product || {}).url || ''"
+    :class="{ 'product-card--master': product.numberOfVariants }"
   >
     <template #image>
       <ResponsiveImage
@@ -71,6 +72,11 @@ export default defineComponent({
 
 <style lang="scss">
 .product-card {
+  &--master {
+    @apply tw-border-2;
+    @apply tw-border-pv-grey-80;
+  }
+
   &__variants {
     @apply tw-flex;
     @apply tw-items-center;
