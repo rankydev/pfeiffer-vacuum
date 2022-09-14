@@ -33,6 +33,7 @@ export default defineComponent({
       validator: (val) => possibleValues.includes(val),
     },
   },
+  emits: ['change'],
   setup() {
     return {
       values: possibleValues,

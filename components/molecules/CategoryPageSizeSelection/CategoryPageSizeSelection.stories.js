@@ -7,14 +7,10 @@ export default {
     docs: {
       description: {
         component:
-          'The ContentWrapper can be used to display given slot content. <br> ' +
-          'It has a max-width set to 1440px. You can break out of the parent container to use full screen size with the breakout attribute.',
+          'The CategoryPageSizeSelection can be used on the category page. It emits a change event, that outputs the value of the clicked button/ page size.',
       },
       source: {
-        code:
-          '<content-wrapper>\n' +
-          '  Lorem ipsum dolor sit amet \n' +
-          '</content-wrapper>',
+        code: '<category-page-size-selection v-bind="{ active }" />',
       },
     },
   },
