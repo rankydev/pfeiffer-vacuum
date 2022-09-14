@@ -34,7 +34,7 @@ export const product = {
       altText: 'HiPace® 80 for TCP 350, DN 63 ISO-K',
       format: 'product',
       imageType: 'PRIMARY',
-      url: '/medias/Product-image-HiPace-700-TC-400-OPS-400-657ccb1f-81b0-11e7-80cf-005056950a30.png?context=bWFzdGVyfGltYWdlc3wzMjI3MDN8aW1hZ2UvcG5nfGg5My9oM2QvODgzNTM5NDY5OTI5NC9Qcm9kdWN0IGltYWdlIEhpUGFjZSA3MDAgLSBUQyA0MDAgLSBPUFMgNDAwfjY1N2NjYjFmLTgxYjAtMTFlNy04MGNmLTAwNTA1Njk1MGEzMC5wbmd8YTEzZGViNjIyMzEyMTI0NDQ2YmJmYjM4YmU2MzE0YWI3NTE0NDEyYWRhNWFjNjNkOTE2ZmFjMzk0N2ViYTY2Ng',
+      url: '/medias/Product-image-HiPace-700-M-with-OPS-400-e000c17e-690b-11e6-80ca-005056950a30.png?context=bWFzdGVyfGltYWdlc3wzNDE1NTF8aW1hZ2UvcG5nfGg3Ny9oYmEvODgzNzE4MDE5NDg0Ni9Qcm9kdWN0IGltYWdlIEhpUGFjZSA3MDAgTSB3aXRoIE9QUyA0MDB-ZTAwMGMxN2UtNjkwYi0xMWU2LTgwY2EtMDA1MDU2OTUwYTMwLnBuZ3wwOTQ4NTIyYzkyYmQwZjIyMjkxMjQ3Nzk0ODhjOTk5ZjRhNzhmMjYyMmM0YmMyZTU3ODMxYTlkNTZiNWIzYjRm',
     },
   ],
   name: 'HiPace® 80',
