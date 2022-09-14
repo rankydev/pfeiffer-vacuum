@@ -56,27 +56,33 @@ export default defineComponent({
     @apply tw-mr-4;
     @apply tw-p-2;
     @apply tw-text-pv-grey-48;
-    @apply tw-border tw-border-pv-transparent;
+    @apply tw-border-2 tw-border-pv-transparent;
     @apply tw-rounded;
 
     &:hover {
-      @apply tw-border tw-border-pv-red-lighter;
+      @apply tw-border-2 tw-border-pv-red-lighter;
       @apply tw-bg-pv-red-lighter;
+
+      .button__label {
+        @apply tw-text-pv-white;
+      }
+    }
+
+    .button__label {
+      @apply tw-text-pv-grey-48;
     }
 
     &--active {
+      @apply tw-border-solid tw-border-b-2 tw-border-b-pv-red;
       @apply tw-rounded-none;
-      border-bottom: 2px solid #dd1541;
 
       &:hover {
         @apply tw-rounded;
       }
-    }
-  }
 
-  .button--plain.button--secondary {
-    &:hover {
-      color: white;
+      .button__label {
+        @apply tw-text-pv-red;
+      }
     }
   }
 }
