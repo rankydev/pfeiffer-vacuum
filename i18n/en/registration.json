@@ -30,5 +30,11 @@
     "postalCode": "Zip code",
     "city": "City"
   },
-  "infotext": "You can enter your company's address data here. <br /> <b>This step is optional</b> <br /><br /> <b>Please note:</b> Only with A full account allows you to see prices and send requests!"
+  "infotext": "You can enter your company's address data here. <br /> <b>This step is optional</b> <br /><br /> <b>Please note:</b> Only with A full account allows you to see prices and send requests!",
+  "registrationSuccessPage": {
+    "title": "Your registration was sent successfully",
+    "subline": "Thank you for your request",
+    "paragraph": "We have sent a copy of your request to your email address. Your request will be processed by our service team as soon as possible.",
+    "buttonLabel": "To the homepage"
+  }
 }

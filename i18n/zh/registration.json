@@ -30,5 +30,11 @@
     "houseNumber": "數字",
     "postalCode": "郵政編碼",
     "city": "城市"
+  },
+  "registrationSuccessPage": {
+    "title": "您的註冊發送成功",
+    "subline": "感謝您的請求",
+    "paragraph": "我們已將您的請求副本發送到您的電子郵件地址。您的請求將由我們的服務團隊盡快處理。",
+    "buttonLabel": "到首頁"
   }
 }

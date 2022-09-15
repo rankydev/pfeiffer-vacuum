@@ -30,5 +30,11 @@
     "postalCode": "PLZ",
     "city": "Stadt"
   },
-  "infotext": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br /> <b>Dieser Schritt ist optional</b> <br /><br /> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!"
+  "infotext": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br /> <b>Dieser Schritt ist optional</b> <br /><br /> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
+  "registrationSuccessPage": {
+    "title": "Ihre Registrierung wurde erfolgreich gesendet",
+    "subline": "Vielen Dank für Ihre Anfrage",
+    "paragraph": "Wir haben eine Kopie Ihrer Anfrage an Ihre E-Mail Adresse geschickt. Ihre Anfrage wird so schnell wie möglich von unserem Service Team bearbeitet.",
+    "buttonLabel": "Zur Homepage"
+  }
 }
