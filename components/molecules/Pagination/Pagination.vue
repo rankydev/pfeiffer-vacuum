@@ -3,30 +3,32 @@
     <span class="pagination__prefix pagination--desktop">Page:</span>
     <ul class="pagination__list">
       <li>
-        <a
-          class="pagination__entry pagination__icon"
+        <component
+          :is="isFirst ? 'a' : 'NuxtLink'"
+          class="pagination__icon"
           :class="{ 'pagination__icon--disabled': isFirst }"
-          v-bind="{ ...(!isFirst && getHref(currentPage - 1)) }"
+          v-bind="{ ...(!isFirst && createNavLink(currentPage - 1)) }"
         >
-          <Icon aria-hidden="true" size="xsmall" icon="arrow_back" />
+          <Icon aria-hidden="true" size="base" icon="arrow_back" />
           <span class="tw-sr-only">Previous</span>
-        </a>
+        </component>
       </li>
 
       <li v-for="page in pageArray" :key="page" class="pagination--desktop">
         <template v-if="!isDot(page)">
-          <a
+          <component
+            :is="page === currentPage ? 'a' : 'NuxtLink'"
             class="pagination__entry"
             :class="{ 'pagination__entry--current': page === currentPage }"
-            v-bind="{ ...(page !== currentPage && getHref(page)) }"
+            v-bind="{ ...(page !== currentPage && createNavLink(page)) }"
           >
             <span class="tw-sr-only">Page</span>
             {{ page }}
-          </a>
+          </component>
         </template>
 
         <template v-else>
-          <a class="pagination__entry pagination__ellipses">
+          <a class="pagination__ellipses">
             <span>&#8230;</span>
           </a>
         </template>
@@ -37,38 +39,27 @@
       </li>
 
       <li>
-        <a
-          class="pagination__entry pagination__icon"
+        <component
+          :is="isLast ? 'a' : 'NuxtLink'"
+          class="pagination__icon"
           :class="{ 'pagination__icon--disabled': isLast }"
-          v-bind="{ ...(!isLast && getHref(currentPage + 1)) }"
+          v-bind="{ ...(!isLast && createNavLink(currentPage + 1)) }"
         >
-          <Icon aria-hidden="true" size="xsmall" icon="arrow_forward" />
+          <Icon aria-hidden="true" size="base" icon="arrow_forward" />
           <span class="tw-sr-only">Next</span>
-        </a>
+        </component>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed, useRoute } from '@nuxtjs/composition-api'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
+  components: { Icon },
   props: {
-    /**
-     * The url to navigate through the paginated pages
-     */
-    baseUrl: {
-      type: String,
-      required: true,
-    },
-    /**
-     * current visible page
-     */
-    currentPage: {
-      type: Number,
-      default: 1,
-    },
     /**
      * total number of paginated pages
      */
@@ -77,12 +68,18 @@ export default defineComponent({
       default: 1,
     },
   },
-
   setup(props) {
     /**
      * number of visible columns without prev and next arrow
      */
-    const cols = 7
+    const cols = 6
+
+    const route = useRoute()
+
+    /**
+     * Retreives the current page from the url
+     */
+    const currentPage = computed(() => parseInt(route.value.query.page || 1))
 
     /**
      * Helper function to build an range array
@@ -95,7 +92,6 @@ export default defineComponent({
         .fill()
         .map((_, idx) => start + idx)
     }
-
     /**
      * build the page array based on the current page and the total numbers of pages
      */
@@ -103,12 +99,9 @@ export default defineComponent({
       if (cols >= props.totalPages) {
         return buildRange(1, props.totalPages)
       }
-
-      const first = parseInt(props.currentPage) - Math.floor(cols / 2)
-      const last = parseInt(props.currentPage) + Math.floor(cols / 2)
-
+      const first = parseInt(currentPage.value) - Math.floor((cols - 1) / 2)
+      const last = parseInt(currentPage.value) + Math.floor(cols / 2)
       let pageArray = []
-
       if (first <= 0) {
         pageArray = buildRange(1, cols)
       } else if (last >= props.totalPages) {
@@ -116,7 +109,6 @@ export default defineComponent({
       } else {
         pageArray = buildRange(first, last)
       }
-
       const hasFirst = pageArray[0] === 1
       const hasLast = pageArray[pageArray.length - 1] === props.totalPages
       return [
@@ -126,17 +118,28 @@ export default defineComponent({
       ]
     })
 
-    const isFirst = computed(() => props.currentPage === 1)
-    const isLast = computed(() => props.currentPage === props.totalPages)
+    const isFirst = computed(() => currentPage.value === 1)
+    const isLast = computed(() => currentPage.value === props.totalPages)
     const isDot = (page) => ['dots-left', 'dots-right'].includes(page)
-    const getHref = (id) => ({ href: `${props.baseUrl}/${id}` })
 
+    const createNavLink = (page) => {
+      const { hash, params, path, query } = route.value
+      return {
+        to: {
+          hash,
+          params,
+          path,
+          query: { ...query, page: page },
+        },
+      }
+    }
     return {
+      currentPage,
       pageArray,
       isDot,
       isFirst,
       isLast,
-      getHref,
+      createNavLink,
     }
   },
 })
@@ -151,7 +154,9 @@ export default defineComponent({
     @apply tw-flex;
   }
 
-  &__entry {
+  &__entry,
+  &__icon,
+  &__ellipses {
     @apply tw-flex;
     @apply tw-justify-center;
     @apply tw-items-center;
@@ -165,10 +170,10 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-justify-center;
     @apply tw-items-center;
-    @apply tw-mx-2;
     @apply tw-h-10 tw-w-44;
     @apply tw-text-pv-grey-48;
     @apply tw-leading-6;
+    @apply tw-mx-2;
     @apply tw-font-bold;
     @apply tw-bg-pv-red;
     @apply tw-text-pv-white;
@@ -206,16 +211,23 @@ export default defineComponent({
       @apply tw-text-xs;
       @apply tw-leading-4;
       @apply tw-text-pv-grey-48;
+      @apply tw-mr-2;
     }
 
-    &__entry {
+    &__entry,
+    &__ellipses {
       @apply tw-text-pv-grey-48;
+    }
 
+    &__entry,
+    &__icon {
       &:hover {
         @apply tw-bg-pv-red-lighter;
         @apply tw-text-pv-white;
       }
+    }
 
+    &__entry {
       &--current {
         @apply tw-relative;
         @apply tw-text-pv-red;
@@ -238,6 +250,7 @@ export default defineComponent({
 
     &__icon {
       @apply tw-shadow-none;
+      @apply tw-text-pv-red;
 
       &--disabled,
       &--disabled:hover {
