@@ -12,5 +12,8 @@
     "article": {
       "label": "Go to article"
     }
+  },
+  "pagination": {
+    "counter": "{totalPages}개중{currentPage}개"
   }
 }
