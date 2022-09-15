@@ -15,12 +15,12 @@
       />
     </div>
     <AnimatedCollapse speed="fast">
-      <div v-if="isOpen" class="category-collapse__children">
+      <div v-show="isOpen" class="category-collapse__children">
         <Button
-          v-for="(e, i) in children"
+          v-for="(category, i) in children"
           :key="i"
-          :href="e.href"
-          :label="`${e.label} (${e.count})`"
+          :href="category.href"
+          :label="`${category.category.name} (${category.count})`"
           class="category-collapse__child"
           variant="secondary"
           shape="plain"
@@ -33,6 +33,7 @@
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse'
 import Button from '~/components/atoms/Button/Button'
 import Icon from '~/components/atoms/Icon/Icon'
+import { ref } from '@vue/composition-api'
 
 export default {
   components: {
@@ -59,7 +60,7 @@ export default {
     },
   },
   setup() {
-    const isOpen = false
+    const isOpen = ref(false)
 
     return { isOpen }
   },

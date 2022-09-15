@@ -2,12 +2,12 @@
   <div class="category-tree">
     <div class="category-tree__list">
       <CategoryCollapse
-        v-for="(e, i) in categories"
-        :key="i"
-        :label="e.label"
-        :count="e.count"
-        :href="e.href"
-        :children="e.children"
+        v-for="(category, index) in categories"
+        :key="index"
+        :label="category.category.name"
+        :count="category.count"
+        :href="category.href"
+        :children="category.children"
       />
     </div>
     <div class="category-tree__mobile-overlay"></div>
@@ -54,13 +54,8 @@ export default {
     @apply tw-absolute;
     @apply tw-right-0 tw-top-0;
     @apply tw-h-full;
-    @apply tw-w-16;
-    background: linear-gradient(
-      to right,
-      rgb(245 245 245 / 0%) 0%,
-      #f5f5f5 70%,
-      #f5f5f5 100%
-    );
+    @apply tw-w-8;
+    @apply tw-bg-gradient-to-r tw-from-pv-transparent tw-via-pv-grey-96 tw-to-pv-grey-96;
 
     @screen lg {
       @apply tw-hidden;

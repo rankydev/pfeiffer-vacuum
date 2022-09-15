@@ -1,30 +1,48 @@
 export const category = {
-  label: 'Category Name',
   href: '/categoryName',
   count: 123,
+  category: {
+    id: 'CATEGORY_ID',
+    name: 'Category Name',
+  },
   children: [
     {
-      label: 'Subcategory Name',
+      category: {
+        id: 'CATEGORY_ID',
+        name: 'Subcategory Name',
+      },
       href: '/categoryName',
       count: 123,
     },
     {
-      label: 'Subcategory Name',
+      category: {
+        id: 'CATEGORY_ID',
+        name: 'Subcategory Name',
+      },
       href: '/categoryName',
       count: 123,
     },
     {
-      label: 'Subcategory Name',
+      category: {
+        id: 'CATEGORY_ID',
+        name: 'Subcategory Name',
+      },
       href: '/categoryName',
       count: 123,
     },
     {
-      label: 'Subcategory Name',
+      category: {
+        id: 'CATEGORY_ID',
+        name: 'Subcategory Name',
+      },
       href: '/categoryName',
       count: 123,
     },
     {
-      label: 'Subcategory Name',
+      category: {
+        id: 'CATEGORY_ID',
+        name: 'Subcategory Name',
+      },
       href: '/categoryName',
       count: 123,
     },
