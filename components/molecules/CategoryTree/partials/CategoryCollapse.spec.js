@@ -7,27 +7,29 @@ describe('CategoryCollapse', () => {
   describe('initial state', () => {
     test('should render given required label', () => {
       const wrapper = shallowMount(CategoryCollapse, {
-        propsData: { label: category.label },
+        propsData: { label: category.category.name },
       })
 
-      const children = wrapper.find('.category-collapse__children')
       const button = wrapper.find('button-stub')
       const arrowIcon = wrapper.findComponent(Icon)
 
-      expect(children.exists()).toBeFalsy()
       expect(arrowIcon.exists()).toBeTruthy()
-      expect(button.attributes('label')).toBe(`${category.label} (0)`)
+      expect(button.attributes('label')).toBe(`${category.category.name} (0)`)
     })
 
     test('should render given all props data', () => {
       const wrapper = shallowMount(CategoryCollapse, {
-        propsData: { ...category },
+        propsData: {
+          label: category.category.name,
+          href: category.href,
+          count: category.count,
+        },
       })
 
       const button = wrapper.find('button-stub')
 
       expect(button.attributes('label')).toBe(
-        `${category.label} (${category.count})`
+        `${category.category.name} (${category.count})`
       )
       expect(button.attributes('href')).toBe(category.href)
     })
@@ -36,7 +38,7 @@ describe('CategoryCollapse', () => {
   describe('during interaction', () => {
     test('should change open state when icon is clicked', async () => {
       const wrapper = shallowMount(CategoryCollapse, {
-        propsData: { label: category.label },
+        propsData: { label: category.category.name },
       })
       const arrowIcon = wrapper.findComponent(Icon)
 
