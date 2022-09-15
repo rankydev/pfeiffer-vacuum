@@ -12,5 +12,8 @@
     "article": {
       "label": "Zum Artikel"
     }
+  },
+  "pagination": {
+    "counter": "{currentPage} von {totalPages}"
   }
 }
