@@ -19,10 +19,10 @@ export default function (req, res, next) {
   const isEmptyBase = (routerBase || '').length === 0
   const isRootBase = routerBase === '/'
   const isCurrentBase = decodeURI(req.url).startsWith(routerBase)
-  const isApi = decodeURI(req.url).startsWith('/api')
   const regionCodes = config.publicRuntimeConfig.REGION_CODES
+  console.log(regionCodes)
 
-  if (isEmptyBase || isRootBase || isCurrentBase || isApi) {
+  if (isEmptyBase || isRootBase || isCurrentBase) {
     return next()
   }
 
@@ -36,7 +36,7 @@ export default function (req, res, next) {
    * the current one, an error will be thrown, informing the user
    * that the region is currently unavailable.
    */
-  if (!isCurrentBase && regionCodes.includes(firstLevel)) {
+  if (!isCurrentBase && regionCodes.split(',').includes(firstLevel)) {
     const err = `The server for the region ${firstLevel} is currently not implemented.`
     res.statusCode = 425
     res.write(err)
