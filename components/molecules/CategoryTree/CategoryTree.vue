@@ -2,8 +2,8 @@
   <div class="category-tree">
     <div class="category-tree__list">
       <CategoryCollapse
-        v-for="(category, index) in categories"
-        :key="index"
+        v-for="category in categories"
+        :key="getKey(category.category.name)"
         :label="category.category.name"
         :count="category.count"
         :href="category.href"
@@ -15,6 +15,7 @@
 </template>
 <script>
 import CategoryCollapse from './partials/CategoryCollapse'
+import getKey from '~/composables/useUniqueKey'
 
 export default {
   components: {
@@ -25,6 +26,9 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  setup() {
+    return { getKey }
   },
 }
 </script>
