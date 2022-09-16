@@ -104,6 +104,7 @@ sonar-qube:
     - shared
   only:
     - develop
+    - feature/PVWEB-0_adapt_sonar_properties
 
 .build-docker-image:
   image: docker:git

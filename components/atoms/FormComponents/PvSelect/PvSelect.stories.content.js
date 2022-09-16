@@ -70,4 +70,24 @@ export const label = {
   label: 'Label',
 }
 
+export const multiple = {
+  options: [
+    {
+      displayValue: 'OptionValue 1',
+      value: 'OptionValue1',
+    },
+    {
+      displayValue: 'OptionValue 2',
+      value: 'OptionValue2',
+    },
+    {
+      displayValue: 'OptionValue 3',
+      value: 'OptionValue2',
+    },
+  ],
+  optionLabel: 'displayValue',
+  multiple: true,
+  placeholder: 'Multiselect Filter',
+}
+
 export default {}

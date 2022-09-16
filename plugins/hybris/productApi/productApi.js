@@ -17,10 +17,10 @@ export function getProductApi(axiosInstance, ctx) {
           params: { codes: idsString, fields: 'FULL' },
         })
         .catch((error) => {
-          logger.error(error.toJSON())
+          logger.error(JSON.stringify(error))
         })
 
-      if (!Array.isArray(result.products)) {
+      if (!Array.isArray(result?.products)) {
         logger.error(
           `Array expected when fetching multiple products '${idsString}', returning empty array.`
         )
