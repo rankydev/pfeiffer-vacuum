@@ -59,13 +59,12 @@ export default defineComponent({
   &__text {
     @apply tw-text-xs;
     @apply tw-text-pv-grey-48;
-    @apply tw-mr-4;
+    @apply tw-mr-2;
   }
 
   &__value {
     @apply tw-flex tw-justify-center;
     @apply tw-w-10;
-    @apply tw-mr-2;
     @apply tw-py-2;
     @apply tw-border-2 tw-border-pv-transparent;
     @apply tw-rounded;
