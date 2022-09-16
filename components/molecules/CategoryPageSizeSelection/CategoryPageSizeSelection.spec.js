@@ -22,7 +22,7 @@ describe('CategoryPageSizeSelection', () => {
   describe('during interaction', () => {
     test('should emit change event when value is clicked', async () => {
       const wrapper = shallowMount(CategoryPageSizeSelection, {
-        propsData: { active: 9 },
+        propsData: { active: 30 },
       })
 
       const button = wrapper.findComponent(Button)
