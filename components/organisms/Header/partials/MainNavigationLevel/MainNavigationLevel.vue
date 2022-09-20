@@ -58,13 +58,6 @@
       </li>
 
       <template v-if="level > 0 && isMobile && !hasActiveElement">
-        <li>
-          <Link :href="currentEntry.href" :class="[`${prefix}__link`]">
-            <span :class="`${prefix}__label`">All Products</span>
-            <Icon :class="`${prefix}__icon`" icon="arrow_forward" />
-          </Link>
-        </li>
-
         <li
           v-if="currentEntry.shopLink"
           :class="`${prefix}__shop-button--mobile`"
