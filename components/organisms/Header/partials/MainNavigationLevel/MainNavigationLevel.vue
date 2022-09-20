@@ -70,6 +70,14 @@
           :class="`${prefix}__shop-button--mobile`"
         >
           <Button
+            variant="secondary"
+            shape="outlined"
+            size="small"
+            :label="$t('navigation.button.overview.label')"
+            :href="currentEntry.href"
+          />
+
+          <Button
             size="small"
             :label="$t('navigation.button.shop.label')"
             :href="currentEntry.shopLink"
