@@ -58,18 +58,19 @@
       </li>
 
       <template v-if="level > 0 && isMobile && !hasActiveElement">
+        <li>
+          <Link :href="currentEntry.href" :class="[`${prefix}__link`]">
+            <span :class="`${prefix}__label`">{{
+              $t('navigation.button.articleOverview.label') + currentEntry.label
+            }}</span>
+            <Icon :class="`${prefix}__icon`" icon="arrow_forward" />
+          </Link>
+        </li>
+
         <li
           v-if="currentEntry.shopLink"
           :class="`${prefix}__shop-button--mobile`"
         >
-          <Button
-            variant="secondary"
-            shape="outlined"
-            size="small"
-            :label="$t('navigation.button.overview.label')"
-            :href="currentEntry.href"
-          />
-
           <Button
             size="small"
             :label="$t('navigation.button.shop.label')"
