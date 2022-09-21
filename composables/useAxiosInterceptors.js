@@ -2,9 +2,9 @@ import { useUserStore } from '~/stores/user'
 const qs = require('qs')
 import getLoggerFor from '~/utils/getLoggerFor'
 
-const logger = getLoggerFor('interceptorFactory')
+const logger = getLoggerFor('useAxiosInterceptors')
 
-export function getInterceptors() {
+export const useAxiosInterceptors = () => {
   const userStore = useUserStore()
 
   const addAuthHeader = function (config) {
@@ -78,12 +78,10 @@ export function getInterceptors() {
   }
 
   return {
-    shop: {
-      fulfilledRequest: onFulfilledRequestHandler,
-      rejectedRequest: onRejectedRequestHandler,
-      fulfilledResponse: onFulfilledResponseHandler,
-      rejectedResponse: onRejectedResponseHandler,
-    },
+    fulfilledRequest: onFulfilledRequestHandler,
+    rejectedRequest: onRejectedRequestHandler,
+    fulfilledResponse: onFulfilledResponseHandler,
+    rejectedResponse: onRejectedResponseHandler,
   }
 }
 

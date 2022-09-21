@@ -15,7 +15,7 @@
 <script>
 import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
 import { ref, defineComponent, useAsync } from '@nuxtjs/composition-api'
-import { useHybrisApiStore } from '~/stores/hybrisApi'
+import { useProductStore } from '~/stores/product'
 
 export default defineComponent({
   name: 'ProductCardCarousel',
@@ -66,7 +66,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const hybrisApi = useHybrisApiStore()
+    const productStore = useProductStore()
 
     const slides = ref(props.slides.slice(0, 16))
 
@@ -78,7 +78,7 @@ export default defineComponent({
 
     useAsync(async () => {
       // Fetched hybris products
-      let fetchedProducts = await hybrisApi.productApi.getProducts(productCodes)
+      let fetchedProducts = await productStore.getProducts(productCodes)
 
       slides.value.forEach((e) => {
         enrichedSlides.value.push({

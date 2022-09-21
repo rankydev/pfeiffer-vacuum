@@ -1,13 +1,14 @@
 import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
 import getLoggerFor from '~/utils/getLoggerFor'
-import { useHybrisApiStore } from '~/stores/hybrisApi'
 import { useKeycloak } from './partials/useKeycloak'
+import { useUserApi } from './partials/useUserApi'
 import { watch } from '@nuxtjs/composition-api'
 
 export const useUserStore = defineStore('user', () => {
   const logger = getLoggerFor('userStore')
   const ctx = useContext()
+  const userApi = useUserApi()
 
   const {
     keycloakInstance,
@@ -50,8 +51,8 @@ export const useUserStore = defineStore('user', () => {
     if (!loggedIn.value) {
       return
     }
-    const hybrisApiStore = useHybrisApiStore(ctx)
-    const user = await hybrisApiStore.userApi.getUserData()
+
+    const user = await userApi.getUserData()
     if (user && !user.error) {
       currentUser.value = user
     } else {
