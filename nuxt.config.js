@@ -56,7 +56,6 @@ export default {
           routes[key].caseSensitive = true
         }
       },
-      middleware: ['preload'],
     },
   }),
 

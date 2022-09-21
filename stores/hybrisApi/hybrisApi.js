@@ -12,7 +12,7 @@ export const useHybrisApiStore = createNuxtStore((ctx) =>
     api.setBaseURL(process.env.SHOP_BASE_URL)
     api.setHeader('Content-Type', 'application/json')
 
-    const interceptors = getInterceptors(ctx)
+    const interceptors = getInterceptors()
 
     // assign interceptors
     api.interceptors.request.use(

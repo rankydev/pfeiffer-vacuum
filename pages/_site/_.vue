@@ -15,14 +15,10 @@
 import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
-import { useAuthStore } from '~/stores/auth'
 
 export default defineComponent({
   layout: 'default',
   setup(_, context) {
-    const authStore = useAuthStore()
-    authStore.createKeycloakInstance()
-
     const pageStore = usePageStore()
     const route = useRoute()
     const { buildSlugs } = useStoryblokSlugBuilder(context)

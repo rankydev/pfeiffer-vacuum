@@ -1,14 +1,16 @@
 <template>
   <div class="shop-navigation">
-    <Button
-      shape="plain"
-      variant="secondary"
-      class="shop-navigation__account"
-      :label="myAccountLabel"
-      icon="person"
-      :prepend-icon="true"
-      @click="handleMyAccount()"
-    />
+    <LoadingSpinner :show="!myAccountLabel">
+      <Button
+        shape="plain"
+        variant="secondary"
+        class="shop-navigation__account"
+        :label="myAccountLabel"
+        icon="person"
+        :prepend-icon="true"
+        @click="handleMyAccount()"
+      />
+    </LoadingSpinner>
 
     <Button
       v-if="loggedIn"
@@ -18,7 +20,6 @@
       icon="logout"
       @click="logout"
     />
-
     <Link href="#" class="shop-navigation__shopping-list">
       <Icon class="shop-navigation__icon" icon="assignment" />
     </Link>
@@ -36,12 +37,14 @@ import { useAuthStore } from '~/stores/auth'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
 import Button from '~/components/atoms/Button/Button.vue'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   components: {
     Icon,
     Link,
     Button,
+    LoadingSpinner,
   },
   setup() {
     const { i18n } = useContext()
@@ -64,7 +67,6 @@ export default defineComponent({
 
     return {
       logout: authStore.logout,
-      currentUser,
       handleMyAccount,
       myAccountLabel,
       loggedIn,

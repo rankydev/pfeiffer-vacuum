@@ -4,11 +4,11 @@ import getLoggerFor from '~/utils/getLoggerFor'
 
 const logger = getLoggerFor('interceptorFactory')
 
-export function getInterceptors(ctx) {
-  const authStore = useAuthStore(ctx)
+export function getInterceptors() {
+  const authStore = useAuthStore()
 
   const addAuthHeader = function (config) {
-    logger.debug('addAuthHeader')
+    logger.debug('addAuthHeader', authStore.loggedIn)
 
     if (authStore.loggedIn) {
       const authObject = authStore.auth
