@@ -28,10 +28,10 @@ jest.mock('@nuxtjs/composition-api', () => {
 
 const mockedLoggedIn = jest.fn()
 const mockedCurrentUser = jest.fn()
-jest.mock('~/stores/auth', () => {
+jest.mock('~/stores/user', () => {
   return {
     __esModule: true,
-    useAuthStore: () => {
+    useUserStore: () => {
       return {
         currentUser: mockedCurrentUser(),
         loggedIn: mockedLoggedIn(),

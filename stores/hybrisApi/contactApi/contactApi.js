@@ -1,11 +1,11 @@
 import { computed } from '@nuxtjs/composition-api'
-import { useAuthStore } from '~/stores/auth'
+import { useUserStore } from '~/stores/user'
 import config from '../hybris.config'
 
 export function getContactApi(axiosInstance, ctx) {
   const logger = ctx.$getLoggerFor('contactApi')
-  const authStore = useAuthStore()
-  const loggedIn = computed(() => authStore.loggedIn)
+  const userStore = useUserStore()
+  const loggedIn = computed(() => userStore.loggedIn)
 
   return {
     async submitContact(contact) {

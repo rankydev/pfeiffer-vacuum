@@ -5,8 +5,8 @@ import { useHybrisApiStore } from '~/stores/hybrisApi'
 import { useKeycloak } from './partials/useKeycloak'
 import { watch } from '@nuxtjs/composition-api'
 
-export const useAuthStore = defineStore('auth', () => {
-  const logger = getLoggerFor('authStore')
+export const useUserStore = defineStore('user', () => {
+  const logger = getLoggerFor('userStore')
   const ctx = useContext()
 
   const {

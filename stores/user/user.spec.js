@@ -1,5 +1,5 @@
 import { setActivePinia, createPinia } from 'pinia'
-import { useAuthStore } from './auth'
+import { useUserStore } from './user'
 
 const mockLogger = jest.fn()
 const mockVsmReset = jest.fn()
@@ -40,60 +40,60 @@ describe('Auth store', () => {
   describe('initial state', () => {
     test('should return false initial value', () => {
       setHybrisApi(mockUser)
-      const authStore = useAuthStore()
+      const userStore = useUserStore()
 
-      expect(authStore.isOciUser).toBeFalsy()
-      expect(authStore.isOpenUser).toBeFalsy()
-      expect(authStore.isLeadUser).toBeFalsy()
-      expect(authStore.isRejectedUser).toBeFalsy()
-      expect(authStore.isApprovedUser).toBeFalsy()
-      expect(authStore.loggedIn).toBeFalsy()
+      expect(userStore.isOciUser).toBeFalsy()
+      expect(userStore.isOpenUser).toBeFalsy()
+      expect(userStore.isLeadUser).toBeFalsy()
+      expect(userStore.isRejectedUser).toBeFalsy()
+      expect(userStore.isApprovedUser).toBeFalsy()
+      expect(userStore.loggedIn).toBeFalsy()
     })
   })
 
   describe('during interaction', () => {
     test('should not load current user given loggedIn = false', async () => {
       setHybrisApi(mockUser)
-      const authStore = useAuthStore()
+      const userStore = useUserStore()
 
-      await authStore.loadCurrentUser()
+      await userStore.loadCurrentUser()
 
-      expect(authStore.isApprovedUser).toBeFalsy()
-      expect(authStore.currentUser).toBe(null)
+      expect(userStore.isApprovedUser).toBeFalsy()
+      expect(userStore.currentUser).toBe(null)
     })
 
     test('should load current user given loggedIn = true', async () => {
       setHybrisApi(mockUser)
-      const authStore = useAuthStore()
+      const userStore = useUserStore()
 
-      await authStore.$patch(mockAuth)
-      await authStore.loadCurrentUser()
+      await userStore.$patch(mockAuth)
+      await userStore.loadCurrentUser()
 
-      expect(authStore.isApprovedUser).toBeTruthy()
-      expect(authStore.currentUser).toBe(mockUser)
+      expect(userStore.isApprovedUser).toBeTruthy()
+      expect(userStore.currentUser).toBe(mockUser)
     })
 
     test('should throw logger error given user error', async () => {
       setHybrisApi(null)
-      const authStore = useAuthStore()
+      const userStore = useUserStore()
 
-      await authStore.$patch(mockAuth)
-      await authStore.loadCurrentUser()
+      await userStore.$patch(mockAuth)
+      await userStore.loadCurrentUser()
 
       expect(mockLogger).toBeCalledTimes(1)
     })
 
     test('should set auth data', async () => {
-      const authStore = useAuthStore()
+      const userStore = useUserStore()
 
-      await authStore.setAuth(mockAuth)
-      expect(authStore.auth).toBe(mockAuth)
+      await userStore.setAuth(mockAuth)
+      expect(userStore.auth).toBe(mockAuth)
     })
 
     test('should reset data given no auth', async () => {
-      const authStore = useAuthStore()
+      const userStore = useUserStore()
 
-      await authStore.setAuth(null)
+      await userStore.setAuth(null)
       expect(mockVsmReset).toBeCalledTimes(1)
     })
   })

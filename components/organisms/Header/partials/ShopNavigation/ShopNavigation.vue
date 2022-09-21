@@ -32,7 +32,7 @@
 
 <script>
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
-import { useAuthStore } from '~/stores/auth'
+import { useUserStore } from '~/stores/user'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
@@ -49,9 +49,9 @@ export default defineComponent({
   setup() {
     const { i18n } = useContext()
 
-    const authStore = useAuthStore()
-    const currentUser = computed(() => authStore.currentUser)
-    const loggedIn = computed(() => authStore.loggedIn)
+    const userStore = useUserStore()
+    const currentUser = computed(() => userStore.currentUser)
+    const loggedIn = computed(() => userStore.loggedIn)
 
     const myAccountLabel = computed(() =>
       loggedIn.value
@@ -62,11 +62,11 @@ export default defineComponent({
     const handleMyAccount = () => {
       if (loggedIn.value) return
 
-      if (!loggedIn.value) return authStore.login()
+      if (!loggedIn.value) return userStore.login()
     }
 
     return {
-      logout: authStore.logout,
+      logout: userStore.logout,
       handleMyAccount,
       myAccountLabel,
       loggedIn,

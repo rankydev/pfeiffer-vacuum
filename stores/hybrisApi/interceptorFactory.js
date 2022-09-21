@@ -1,17 +1,17 @@
-import { useAuthStore } from '~/stores/auth'
+import { useUserStore } from '~/stores/user'
 const qs = require('qs')
 import getLoggerFor from '~/utils/getLoggerFor'
 
 const logger = getLoggerFor('interceptorFactory')
 
 export function getInterceptors() {
-  const authStore = useAuthStore()
+  const userStore = useUserStore()
 
   const addAuthHeader = function (config) {
-    logger.debug('addAuthHeader', authStore.loggedIn)
+    logger.debug('addAuthHeader', userStore.loggedIn)
 
-    if (authStore.loggedIn) {
-      const authObject = authStore.auth
+    if (userStore.loggedIn) {
+      const authObject = userStore.auth
       logger.trace('AuthObject: ', authObject)
       config.headers.Authorization = `${authObject.token_type} ${authObject.access_token}`
       logger.trace('Authorization Header Set')
