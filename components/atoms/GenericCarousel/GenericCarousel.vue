@@ -191,6 +191,15 @@ export default defineComponent({
     const homeStageSettings = computed(() => ({
       fade: true,
       slidesToShow: 1,
+      responsive: [
+        {
+          breakpoint: splitBreakpointString(tailwindConfigScreens.md),
+          settings: {
+            dots: true,
+            arrows: false,
+          },
+        },
+      ],
     }))
 
     const documentCardCarouselSettings = computed(() => ({
@@ -199,7 +208,7 @@ export default defineComponent({
         {
           breakpoint: splitBreakpointString(tailwindConfigScreens.lg),
           settings: {
-            slidesToShow: 3,
+            slidesToShow: 4,
           },
         },
         {
