@@ -23,14 +23,25 @@
 import { defineComponent, unref, computed } from '@nuxtjs/composition-api'
 import Link from '~/components/atoms/Link/Link.vue'
 import { useCmsStore } from '~/stores/cms'
+import { useCategoryStore } from '~/stores/category'
+import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
 
 export default defineComponent({
   components: {
     Link,
   },
   setup() {
+    const pageStore = usePageStore()
     const cmsStore = useCmsStore()
-    const entries = computed(() => cmsStore.breadcrumb)
+    const categoryStore = useCategoryStore()
+
+    const entries = computed(() => {
+      if (pageStore.pageType === CATEGORY_PAGE) {
+        return categoryStore.breadcrumb
+      } else {
+        return cmsStore.breadcrumb
+      }
+    })
 
     const isLastEntry = (idx) => unref(entries).length - 1 === idx
     const getComponent = (idx) => (isLastEntry(idx) ? 'span' : 'Link')
