@@ -4,17 +4,15 @@ import getLoggerFor from '~/utils/getLoggerFor'
 
 const logger = getLoggerFor('interceptorFactory')
 
-export function getInterceptors() {
-  const authStore = useAuthStore()
+export function getInterceptors(ctx) {
+  const authStore = useAuthStore(ctx)
 
   const addAuthHeader = function (config) {
     logger.debug('addAuthHeader')
 
-    // eslint-disable-next-line camelcase
     if (authStore.loggedIn) {
       const authObject = authStore.auth
       logger.trace('AuthObject: ', authObject)
-      // eslint-disable-next-line camelcase
       config.headers.Authorization = `${authObject.token_type} ${authObject.access_token}`
       logger.trace('Authorization Header Set')
     }

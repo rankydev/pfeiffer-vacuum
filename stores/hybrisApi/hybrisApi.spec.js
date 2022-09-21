@@ -1,5 +1,5 @@
 import { expect, jest, test } from '@jest/globals'
-import hybrisApi from './hybrisApi.js'
+import hybrisApi from './useHybrisApi.js'
 import { createPinia, setActivePinia } from 'pinia'
 
 const context = {

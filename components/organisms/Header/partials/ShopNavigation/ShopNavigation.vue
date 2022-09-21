@@ -44,7 +44,7 @@ export default defineComponent({
     Button,
   },
   setup() {
-    const { $authApi, i18n } = useContext()
+    const { i18n } = useContext()
 
     const authStore = useAuthStore()
     const currentUser = computed(() => authStore.currentUser)
@@ -59,11 +59,11 @@ export default defineComponent({
     const handleMyAccount = () => {
       if (loggedIn.value) return
 
-      if (!loggedIn.value) return $authApi.login()
+      if (!loggedIn.value) return authStore.login()
     }
 
     return {
-      logout: $authApi.logout,
+      logout: authStore.logout,
       currentUser,
       handleMyAccount,
       myAccountLabel,

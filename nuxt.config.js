@@ -56,7 +56,7 @@ export default {
           routes[key].caseSensitive = true
         }
       },
-      middleware: ['ociAuth', 'preload'],
+      middleware: ['preload'],
     },
   }),
 
@@ -67,9 +67,6 @@ export default {
     { src: '~/plugins/storyblok/storyblok-api-client', mode: 'client' },
     '~/plugins/helper/breakpoints',
     { src: '~/plugins/service/service.plugin', mode: 'client' },
-    '~/plugins/authApi',
-    '~/plugins/hybris/hybrisApi',
-    '~/plugins/vsmApi',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

@@ -41,6 +41,7 @@ import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import useVuelidate from '@vuelidate/core'
 import { useToast } from '~/composables/useToast'
+import { useHybrisApiStore } from '~/stores/hybrisApi'
 import { useMiscStore } from '~/stores/misc'
 
 export default defineComponent({
@@ -69,7 +70,9 @@ export default defineComponent({
   emits: ['close'],
   setup(_, { emit }) {
     const loading = ref(false)
-    const { $hybrisApi, i18n } = useContext()
+    const ctx = useContext()
+    const { i18n } = ctx
+    const hybrisApi = useHybrisApiStore(ctx)
     const toast = useToast()
     // this will collect all nested component’s validation results
     const v = useVuelidate()
@@ -84,7 +87,7 @@ export default defineComponent({
       validate.value = true
       if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
         loading.value = true
-        await $hybrisApi.contactApi
+        await hybrisApi.contactApi
           .submitContact(requestData.value)
           .then(() => {
             loading.value = false

@@ -3,7 +3,7 @@ import config from '../hybris.config'
 
 export function getContactApi(axiosInstance, ctx) {
   const logger = ctx.$getLoggerFor('contactApi')
-  const authStore = useAuthStore()
+  const authStore = useAuthStore(ctx)
   // TODO: Test if this works while logged in
   const loggedIn = authStore.loggedIn
   return {
