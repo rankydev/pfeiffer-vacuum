@@ -108,7 +108,12 @@ export default defineComponent({
       type: String,
       default: 'default',
       validator: (val) =>
-        ['default', 'homeStage', 'documentCardCarousel'].includes(val),
+        [
+          'default',
+          'homeStage',
+          'documentCardCarousel',
+          'customContentCardCarousel',
+        ].includes(val),
     },
   },
   setup(props) {

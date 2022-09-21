@@ -86,7 +86,12 @@ export default defineComponent({
       type: String,
       default: 'default',
       validator: (val) =>
-        ['default', 'homeStage', 'documentCardCarousel'].includes(val),
+        [
+          'default',
+          'homeStage',
+          'documentCardCarousel',
+          'customContentCardCarousel',
+        ].includes(val),
     },
     /**
      * enables/ disables infinite wrap around items on slider
@@ -195,6 +200,26 @@ export default defineComponent({
         {
           breakpoint: splitBreakpointString(tailwindConfigScreens.md),
           settings: {
+            dots: false,
+            arrows: false,
+          },
+        },
+      ],
+    }))
+
+    const customContentCardCarouselSettings = computed(() => ({
+      slidesToShow: 4,
+      responsive: [
+        {
+          breakpoint: splitBreakpointString(tailwindConfigScreens.lg),
+          settings: {
+            slidesToShow: 3,
+          },
+        },
+        {
+          breakpoint: splitBreakpointString(tailwindConfigScreens.md),
+          settings: {
+            slidesToShow: 1,
             dots: true,
             arrows: false,
           },
@@ -235,6 +260,8 @@ export default defineComponent({
       initialSlide: 0,
       ...(props.variant === 'documentCardCarousel' &&
         documentCardCarouselSettings.value),
+      ...(props.variant === 'customContentCardCarousel' &&
+        customContentCardCarouselSettings.value),
       ...(props.variant === 'homeStage' && homeStageSettings.value),
       ...(props.variant === 'default' && defaultSettings.value),
     }))
