@@ -50,7 +50,6 @@ export const useAuthStore = createNuxtStore((ctx) =>
         if (!this.loggedIn) {
           return
         }
-        console.log('### before we call hybris store', ctx)
         const hybrisApiStore = useHybrisApiStore(ctx)
         const user = await hybrisApiStore.userApi.getUserData()
         if (user && !user.error) {
@@ -64,7 +63,7 @@ export const useAuthStore = createNuxtStore((ctx) =>
         this.auth = auth
         //load currentUser data if currentUser obj is empty
         if (auth && !this.currentUser) {
-          // this.loadCurrentUser()
+          this.loadCurrentUser()
         }
 
         if (!auth) {
@@ -158,7 +157,6 @@ export const useAuthStore = createNuxtStore((ctx) =>
         }
         //keycloakInitOptions, how to check the SSO and security method for PKCE
         if (this.loggedIn) {
-          logger.trace('keycloakInitOptions with userdata')
           keycloakInitOptions = {
             onLoad: 'check-sso',
             silentCheckSsoRedirectUri: `${$contextUtil.getCurrentHostUrl()}/silentSsoCheck.html`,
@@ -171,13 +169,11 @@ export const useAuthStore = createNuxtStore((ctx) =>
             refreshToken: this.auth.refresh_token,
             token: this.auth.access_token,
           }
+          logger.trace('keycloakInitOptions with userdata', keycloakInitOptions)
         }
 
         this.keycloak = keycloakJS(keycloakConfig)
-        this.keycloak
-          .init(keycloakInitOptions)
-          .catch((reason) => logger.warn('init failed. reason: ', reason))
-        logger.debug('Keycloak initialized')
+
         //event listener for successful Keycloak authentication, start rest of login process
         this.keycloak.onAuthSuccess = this.kcOnAuthSuccess
         this.keycloak.onAuthError = this.removeCookiesAndDeleteAuthData
@@ -213,6 +209,11 @@ export const useAuthStore = createNuxtStore((ctx) =>
               )
             )
         }
+
+        this.keycloak
+          .init(keycloakInitOptions)
+          .catch((reason) => logger.warn('init failed. reason: ', reason))
+        logger.debug('Keycloak initialized')
 
         app.$keycloakInstance = this.keycloak
       },
