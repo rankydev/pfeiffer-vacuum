@@ -14,6 +14,11 @@
     }
   },
   "pagination": {
-    "counter": "{currentPage} von {totalPages}"
+    "counter": "{currentPage} von {totalPages}",
+    "screenreader": {
+      "page": "Seite",
+      "prev": "Vorherige",
+      "next": "Nächste"
+    }
   }
 }
