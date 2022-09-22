@@ -33,6 +33,9 @@ module.exports = {
     'stories.content.js',
     'schema.js',
     'schema.partial.js',
+    '/stores/cms/index.js',
+    '/stores/menu/index.js',
+    '/stores/page/index.js',
     '/pages/_site/_.vue',
   ],
   coverageThreshold: {
