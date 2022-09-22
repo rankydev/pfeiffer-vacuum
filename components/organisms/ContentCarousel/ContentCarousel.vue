@@ -133,7 +133,16 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .content-carousel {
-  @apply tw-py-12;
+  @apply tw-py-6;
+
+  @screen md {
+    @apply tw-py-10;
+  }
+
+  @screen lg {
+    padding-top: 52px;
+    padding-bottom: 52px;
+  }
 
   &--with-background {
     @apply tw-bg-pv-grey-96;
