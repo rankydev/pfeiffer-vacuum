@@ -11,6 +11,9 @@
     },
     "article": {
       "label": "Go to article"
+    },
+    "articleOverview": {
+      "label": "All"
     }
   }
 }
