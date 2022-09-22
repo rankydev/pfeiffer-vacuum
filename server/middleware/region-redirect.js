@@ -20,7 +20,6 @@ export default function (req, res, next) {
   const isRootBase = routerBase === '/'
   const isCurrentBase = decodeURI(req.url).startsWith(routerBase)
   const regionCodes = config.publicRuntimeConfig.REGION_CODES
-  console.log(regionCodes)
 
   if (isEmptyBase || isRootBase || isCurrentBase) {
     return next()
