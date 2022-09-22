@@ -1,6 +1,6 @@
 <template>
-  <div class="contact-form-section tw-grid-container">
-    <div class="contact-form-section__left-side">
+  <div class="contact-form-section tw-column-view">
+    <div class="tw-column-view--left-side">
       <NuxtDynamic
         v-for="entry in requestForms"
         :key="entry._uid"
@@ -9,7 +9,7 @@
         :name="entry.uiComponent || entry.component"
       />
     </div>
-    <div class="contact-form-section__right-side">
+    <div class="tw-column-view--right-side">
       <NuxtDynamic
         v-for="entry in contactPersons"
         :key="entry._uid"
@@ -57,26 +57,6 @@ export default defineComponent({
 
   @screen lg {
     @apply tw-pt-12;
-  }
-
-  &__left-side {
-    @apply tw-w-full;
-    @apply tw-col-span-12;
-
-    @screen lg {
-      @apply tw-col-span-6;
-    }
-  }
-
-  &__right-side {
-    @apply tw-w-full;
-    @apply tw-col-start-1;
-    @apply tw-col-span-12;
-
-    @screen lg {
-      @apply tw-col-span-5;
-      @apply tw-col-start-8;
-    }
   }
 }
 </style>

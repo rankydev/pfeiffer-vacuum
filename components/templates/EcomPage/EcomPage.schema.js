@@ -20,9 +20,7 @@ export default {
       type: 'bloks',
       display_name: 'Content',
       restrict_components: true,
-      component_whitelist: [
-        'RegistrationSuccessPage',
-      ],
+      component_whitelist: ['RegistrationSuccessPage', 'RegistrationPage'],
     },
     bottom: {
       type: 'bloks',

@@ -36,5 +36,26 @@
     "subline": "Vielen Dank für Ihre Anfrage",
     "paragraph": "Wir haben eine Kopie Ihrer Anfrage an Ihre E-Mail Adresse geschickt. Ihre Anfrage wird so schnell wie möglich von unserem Service Team bearbeitet.",
     "buttonLabel": "Zur Homepage"
+  },
+  "registrationPage": {
+    "title": "Konto erstellen",
+    "description": "Registrieren Sie sich auf unserer Plattform, um weitere Funktionen zu nutzen. Mit einer Basisregistrierung können Sie Webinare und Whitepapers ansehen und Einkaufslisten erstellen. Wenn Sie Ihre Unternehmensdaten hinzufügen, können Sie alle anderen E-Commerce-Funktionen nutzen.",
+    "conditionsTitle": "Bedingungen und Konditionen",
+    "conditionsDescription": "Ihre Registrierungsdaten werden von unserem Pfeiffer Vacuum Team innerhalb der normalen Arbeitszeiten überprüft. Sie erhalten anschließend eine E-Mail zur Annahme oder Ablehnung Ihrer Registrierung. Dies kann bis zu zwei Arbeitstage dauern.<br /><br />Die Registrierung ist nur für Geschäftskunden, eine Registrierung von Privatpersonen ist nicht möglich.",
+    "linkDataProtection": "Hier finden Sie die Datenschutzerklärung.",
+    "submitRegistrationButton": "Registrierung senden",
+    "contentCTABoxHelpTitle": "Brauchen Sie Hilfe?",
+    "contentCTABoxHelpDescription": "Unsere Produktexperten stehen Ihnen jederzeit zur Verfügung, um Ihre Fragen zu unseren Produkten und Ihren Anwendungen zu beantworten.",
+    "contentCTABoxHelpLink": "Kontakt",
+    "contentCTABoxLoginTitle": "Haben Sie bereits einen Account?",
+    "contentCTABoxLoginDescription": "Wenn Sie bereits ein Konto haben, melden Sie sich hier an. Wenn Sie Ihr Passwort vergessen haben, können Sie es auch hier ändern.",
+    "contentCTABoxLoginLink": "Anmelden"
+  },
+  "registrationHintModal": {
+    "title": "Registrierung ohne Firmendaten?",
+    "subline": "Sind Sie sicher, dass sie keine Firmendaten angeben möchten?",
+    "richtext": "Nur mit Firmendaten können Sie:<br/><ul><li>Onlinepreise einsehen</li><li>Angebotsanfragen an ihren Vertriebsingenieur senden</li><li>Das Installed Base Management (VSM) nutzen</li></ul>",
+    "buttonLeft": "Ohne Firmendaten registrieren",
+    "buttonRight": "Firmendaten hinzufügen"
   }
 }
