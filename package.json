@@ -51,6 +51,7 @@
     "ufo": "^0.7.11",
     "vue-select": "^3.18.3",
     "vue-slick-carousel": "^1.0.6",
+    "vue-slider-component": "^3.2.20",
     "vue-toastification": "^1.7.14"
   },
   "devDependencies": {

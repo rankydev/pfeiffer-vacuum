@@ -1,0 +1,8 @@
+{
+  "unit": "mbar",
+  "ultraHighVacuum": "초고진공",
+  "highVacuum": "고진공",
+  "mediumVacuum": "중간 진공",
+  "lowVacuum": "저진공",
+  "overPressure": "과압"
+}
