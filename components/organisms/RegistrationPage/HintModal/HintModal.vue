@@ -52,6 +52,7 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['closeModal'],
 })
 </script>
 

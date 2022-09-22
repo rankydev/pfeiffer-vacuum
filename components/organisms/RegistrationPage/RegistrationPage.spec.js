@@ -11,5 +11,7 @@ describe('RegistrationPage', () => {
 
       expect(component.exists()).toBeTruthy()
     })
+
+    // TODO: provide tests
   })
 })
