@@ -1,6 +1,26 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { usePageStore, CMS_PAGE, CATEGORY_PAGE, PRODUCT_PAGE } from './page'
 
+jest.mock('~/stores/cms', () => {
+  const {
+    entries,
+  } = require('~/components/molecules/Breadcrumb/Breadcrumb.stories.content')
+
+  return {
+    __esModule: true,
+    useCmsStore: () => ({ breadcrumb: entries }),
+  }
+})
+
+jest.mock('~/stores/category', () => {
+  const { entries } = require('~/stores/category/category.content')
+
+  return {
+    __esModule: true,
+    useCategoryStore: () => ({ breadcrumb: entries }),
+  }
+})
+
 describe('Page store', () => {
   beforeEach(() => setActivePinia(createPinia()))
 

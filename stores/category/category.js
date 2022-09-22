@@ -55,7 +55,7 @@ export const useCategoryStore = defineStore('category', () => {
     const params = {
       currentPage: 0,
       pageSize: 9,
-      //TODO: we need to merge the query
+      //TODO: Facet filter need to merge with the query
       query: `:name-asc${id ? ':category:' + id : ''}`,
       ..._pick(route.value.query, ['currentPage', 'pageSize']),
       lang: i18n.locale,

@@ -30,9 +30,7 @@
             :result-count="count"
           />
 
-          <!-- TODO: add search result -->
           Placeholder for SearchResults
-          <!-- TODO: should we add a body bottom? -->
         </ContentWrapper>
       </main>
     </slot>

@@ -7,6 +7,15 @@ import { expect } from '@jest/globals'
 
 let wrapper
 
+jest.mock('~/stores/page', () => {
+  const { entries } = require('../Breadcrumb/Breadcrumb.stories.content.js')
+
+  return {
+    __esModule: true,
+    usePageStore: () => ({ breadcrumb: entries }),
+  }
+})
+
 function createComponent(propsData = {}) {
   wrapper = shallowMount(OnPageNavigation, { propsData })
 }
