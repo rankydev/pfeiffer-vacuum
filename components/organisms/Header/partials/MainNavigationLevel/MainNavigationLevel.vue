@@ -61,7 +61,9 @@
         <li>
           <Link :href="currentEntry.href" :class="[`${prefix}__link`]">
             <span :class="`${prefix}__label`">{{
-              $t('navigation.button.articleOverview.label') + currentEntry.label
+              $t('navigation.button.articleOverview.label') +
+              ' ' +
+              currentEntry.label
             }}</span>
             <Icon :class="`${prefix}__icon`" icon="arrow_forward" />
           </Link>
