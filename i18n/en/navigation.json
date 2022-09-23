@@ -15,5 +15,13 @@
     "articleOverview": {
       "label": "All"
     }
+  },
+  "pagination": {
+    "counter": "{currentPage} of {totalPages}",
+    "screenreader": {
+      "page": "Page",
+      "prev": "Previous",
+      "next": "Next"
+    }
   }
 }
