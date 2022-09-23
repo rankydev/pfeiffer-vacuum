@@ -1,45 +1,67 @@
 import { setActivePinia, createPinia } from 'pinia'
+import { ref } from '@nuxtjs/composition-api'
 import { useUserStore } from './user'
 
 const mockLogger = jest.fn()
-const mockVsmReset = jest.fn()
+const mockGetUserData = jest.fn()
 const mockUser = {
   registrationStatus: {
     code: 'APPROVED',
   },
 }
-const mockAuth = { auth: { access_token: 'lorem ipsum' } }
+const mockAuth = ref({ auth: { access_token: 'lorem ipsum' } })
+const mockLoggedIn = ref(false)
+
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  return {
+    ...originalModule,
+    useContext: jest.fn(() => {
+      return {
+        app: {},
+        i18n: {
+          t: (key) => key,
+        },
+      }
+    }),
+    useRoute: jest.fn(() => ({ value: {} })),
+    useRouter: jest.fn(),
+    onBeforeMount: jest.fn(),
+    onServerPrefetch: jest.fn(),
+  }
+})
 
 jest.mock('~/utils/getLoggerFor', () => {
   return () => ({
     error: (e) => mockLogger(e),
+    debug: (e) => mockLogger(e),
   })
 })
 
-jest.mock('~/stores/vsm', () => {
+jest.mock('~/stores/user/partials/useUserApi', () => {
   return {
-    useVsmStore: () => ({
-      resetVsmUser: () => mockVsmReset(),
+    useUserApi: () => ({
+      getUserData: mockGetUserData,
     }),
   }
 })
 
-const setHybrisApi = (user) => {
-  window.$nuxt.$hybrisApi = {
-    userApi: {
-      getUserData: jest.fn(() => {
-        return user
-      }),
-    },
+jest.mock('~/stores/user/partials/useKeycloak', () => {
+  return {
+    useKeycloak: () => ({
+      createKeycloakInstance: jest.fn(),
+      auth: mockAuth,
+      loggedIn: mockLoggedIn,
+    }),
   }
-}
+})
 
 describe('Auth store', () => {
   beforeEach(() => setActivePinia(createPinia()))
 
   describe('initial state', () => {
     test('should return false initial value', () => {
-      setHybrisApi(mockUser)
+      mockGetUserData.mockReturnValue(mockUser)
       const userStore = useUserStore()
 
       expect(userStore.isOciUser).toBeFalsy()
@@ -53,7 +75,6 @@ describe('Auth store', () => {
 
   describe('during interaction', () => {
     test('should not load current user given loggedIn = false', async () => {
-      setHybrisApi(mockUser)
       const userStore = useUserStore()
 
       await userStore.loadCurrentUser()
@@ -63,10 +84,10 @@ describe('Auth store', () => {
     })
 
     test('should load current user given loggedIn = true', async () => {
-      setHybrisApi(mockUser)
+      mockLoggedIn.value = true
+      mockGetUserData.mockReturnValue(mockUser)
       const userStore = useUserStore()
 
-      await userStore.$patch(mockAuth)
       await userStore.loadCurrentUser()
 
       expect(userStore.isApprovedUser).toBeTruthy()
@@ -74,27 +95,12 @@ describe('Auth store', () => {
     })
 
     test('should throw logger error given user error', async () => {
-      setHybrisApi(null)
+      mockGetUserData.mockReturnValue(null)
       const userStore = useUserStore()
 
-      await userStore.$patch(mockAuth)
       await userStore.loadCurrentUser()
 
       expect(mockLogger).toBeCalledTimes(1)
-    })
-
-    test('should set auth data', async () => {
-      const userStore = useUserStore()
-
-      await userStore.setAuth(mockAuth)
-      expect(userStore.auth).toBe(mockAuth)
-    })
-
-    test('should reset data given no auth', async () => {
-      const userStore = useUserStore()
-
-      await userStore.setAuth(null)
-      expect(mockVsmReset).toBeCalledTimes(1)
     })
   })
 })

@@ -1,33 +1,39 @@
-import { useMiscStore } from '~/stores/misc'
+import { useCountriesStore } from '~/stores/countries'
 import { setActivePinia, createPinia } from 'pinia'
 
-let mockCountries = ['Land1']
+const mockCountries = ['Land1']
+const mockGet = jest.fn()
 
-window.$nuxt.$hybrisApi = {
-  countriesApi: {
-    getCountries: jest.fn(() => {
-      return mockCountries
-    }),
+jest.mock('~/composables/useAxiosForHybris', () => ({
+  useAxiosForHybris: () => {
+    return { axios: { $get: mockGet } }
   },
-}
+}))
 
-describe('useMiscStore', () => {
-  beforeEach(() => setActivePinia(createPinia()))
+describe('useCountriesStore', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    jest.resetAllMocks()
+    mockGet
+      .mockReturnValueOnce(Promise.resolve({ countries: mockCountries }))
+      .mockReturnValueOnce(Promise.resolve({ countries: ['Land2'] }))
+  })
 
   test('should return initally all countries', async () => {
-    const countriesStore = await useMiscStore()
-    const storeCountries = countriesStore.countries
+    const countriesStore = await useCountriesStore()
 
-    expect(storeCountries).toStrictEqual(mockCountries)
+    await new Promise(process.nextTick)
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(countriesStore.countries).toStrictEqual(mockCountries)
   })
   test('should return inital country list after second initialization of store', async () => {
-    const initialCountries = mockCountries
-    await useMiscStore()
-    mockCountries = ['Land2']
-    const countriesStore = await useMiscStore()
-    const storeCountries = countriesStore.countries
-    mockCountries = initialCountries
+    await useCountriesStore()
+    const countriesStore = await useCountriesStore()
 
-    expect(storeCountries).toStrictEqual(initialCountries)
+    await new Promise(process.nextTick)
+
+    expect(mockGet).toHaveBeenCalledTimes(1)
+    expect(countriesStore.countries).toStrictEqual(mockCountries)
   })
 })

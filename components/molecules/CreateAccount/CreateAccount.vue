@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, toRef } from '@nuxtjs/composition-api'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import Password from '~/components/atoms/FormComponents/Password/Password'
@@ -180,7 +180,7 @@ export default defineComponent({
     const countriesStore = useCountriesStore()
     const countries = toRef(countriesStore, 'countries')
     const isoCode = computed(
-      () => requestData.value.contact?.address?.country?.isocode
+      () => requestData.value.registration?.address?.country?.isocode
     )
     const regions = computed(() => countriesStore.regions[isoCode.value] || [])
 

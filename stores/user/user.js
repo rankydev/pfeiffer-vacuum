@@ -29,16 +29,16 @@ export const useUserStore = defineStore('user', () => {
   const currentUser = ref(null)
 
   const isOpenUser = computed(() => {
-    return currentUser?.registrationStatus?.code === 'OPEN'
+    return currentUser.value?.registrationStatus?.code === 'OPEN'
   })
   const isLeadUser = computed(() => {
-    return currentUser?.registrationStatus?.code === 'LEAD'
+    return currentUser.value?.registrationStatus?.code === 'LEAD'
   })
   const isRejectedUser = computed(() => {
-    return currentUser?.registrationStatus?.code === 'REJECTED'
+    return currentUser.value?.registrationStatus?.code === 'REJECTED'
   })
   const isApprovedUser = computed(() => {
-    return currentUser?.registrationStatus?.code === 'APPROVED'
+    return currentUser.value?.registrationStatus?.code === 'APPROVED'
   })
 
   watch(auth, async (newAuth) => {
@@ -66,8 +66,8 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const login = async () => {
+    logger.debug('login')
     const { i18n } = ctx
-    logger.debug('login', i18n.locale)
     const url = `${window.location.href}?isLoginProcess=true`
     const options = { locale: i18n.locale, redirectUri: url }
     await keycloakInstance.value.login(options)

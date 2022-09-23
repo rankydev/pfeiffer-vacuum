@@ -6,18 +6,12 @@ import Button from '~/components/atoms/Button/Button.vue'
 import { createPinia, setActivePinia } from 'pinia'
 import { expect } from '@jest/globals'
 
-const mockedLogin = jest.fn()
-const mockedLogout = jest.fn()
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   return {
     ...originalModule,
     useContext: jest.fn(() => {
       return {
-        $authApi: {
-          login: mockedLogin,
-          logout: mockedLogout,
-        },
         i18n: {
           t: (key) => key,
         },
@@ -28,6 +22,8 @@ jest.mock('@nuxtjs/composition-api', () => {
 
 const mockedLoggedIn = jest.fn()
 const mockedCurrentUser = jest.fn()
+const mockedLogin = jest.fn()
+const mockedLogout = jest.fn()
 jest.mock('~/stores/user', () => {
   return {
     __esModule: true,
@@ -35,6 +31,8 @@ jest.mock('~/stores/user', () => {
       return {
         currentUser: mockedCurrentUser(),
         loggedIn: mockedLoggedIn(),
+        login: mockedLogin,
+        logout: mockedLogout,
       }
     },
   }

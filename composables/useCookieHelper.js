@@ -19,7 +19,7 @@ export const useCookieHelper = () => {
     const { req } = context
     if (process.client) {
       return JsCookie.get(cookieKey) || defaultValue
-    } else if (req && typeof req.headers.cookie !== 'undefined') {
+    } else if (req && req.headers?.cookie) {
       const cookies = Cookie.parse(req.headers.cookie)
       const value = cookies[cookieKey]
       if (value) return value

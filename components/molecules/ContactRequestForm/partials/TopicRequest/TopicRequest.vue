@@ -260,12 +260,11 @@ export default defineComponent({
     const isoCode = computed(
       () => requestData.value.contact?.address?.country?.isocode
     )
-    const regions = ref([])
+    const regions = computed(() => countriesStore.regions[isoCode.value] || [])
     const countries = toRef(countriesStore, 'countries')
 
-    const loadRegions = async () => {
-      await countriesStore.loadRegions(isoCode.value)
-      regions.value = countriesStore.regions[isoCode.value] || []
+    const loadRegions = () => {
+      countriesStore.loadRegions(isoCode.value)
     }
 
     return {
