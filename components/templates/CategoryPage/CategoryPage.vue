@@ -29,6 +29,10 @@
             :link="link"
             :result-count="count"
           />
+        </ContentWrapper>
+
+        <ContentWrapper>
+          <SearchResults />
 
           Placeholder for SearchResults
         </ContentWrapper>

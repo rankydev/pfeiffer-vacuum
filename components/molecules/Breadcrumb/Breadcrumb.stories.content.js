@@ -4,6 +4,16 @@ export const entries = [
   { href: '/global/products/hipace', name: 'Hipace' },
 ]
 
+export const categoryPageBreadcrumb = [
+  {
+    path: 'iframe.html',
+    name: 'Home',
+    isFolder: false,
+    isStartpage: false,
+    translatedSlugs: [],
+  },
+]
+
 export default [
   {
     path: 'iframe.html',
