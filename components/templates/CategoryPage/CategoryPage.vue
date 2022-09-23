@@ -31,11 +31,7 @@
           />
         </ContentWrapper>
 
-        <ContentWrapper>
-          <SearchResults />
-
-          Placeholder for SearchResults
-        </ContentWrapper>
+        <ContentWrapper> Placeholder for SearchResults </ContentWrapper>
       </main>
     </slot>
 
