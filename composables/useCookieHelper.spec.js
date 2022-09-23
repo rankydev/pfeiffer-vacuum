@@ -12,7 +12,7 @@ const mockRemoveCookie = jest.fn()
 const mockRes = jest.fn()
 const mockReq = jest.fn()
 
-jest.mock('Cookie', () => ({
+jest.mock('cookie', () => ({
   parse: jest.fn((val) => {
     const cookieObj = {}
     cookieObj[val] = val
