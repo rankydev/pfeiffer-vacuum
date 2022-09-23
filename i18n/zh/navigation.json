@@ -11,6 +11,9 @@
     },
     "article": {
       "label": "转到文章"
+    },
+    "articleOverview": {
+      "label": "全部在"
     }
   },
   "pagination": {

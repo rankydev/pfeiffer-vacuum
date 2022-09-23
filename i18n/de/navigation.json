@@ -11,6 +11,9 @@
     },
     "article": {
       "label": "Zum Artikel"
+    },
+    "articleOverview": {
+      "label": "Alles in"
     }
   },
   "pagination": {

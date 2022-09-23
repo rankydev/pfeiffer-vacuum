@@ -10,7 +10,10 @@
       "label": "상점"
     },
     "article": {
-      "label": "기사로 이동"
+      "label": "Go to article"
+    },
+    "articleOverview": {
+      "label": "모두"
     }
   },
   "pagination": {

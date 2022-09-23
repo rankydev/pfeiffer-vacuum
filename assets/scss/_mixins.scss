@@ -23,3 +23,21 @@
   overflow: hidden;
   text-overflow: $text-overflow;
 }
+
+/**
+  Border bottom with rounded corner top-left and top-right
+  can be used as after element
+ */
+@mixin rounded-border-bottom {
+  &::after {
+    content: '';
+    height: 0.25rem;
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0;
+    background-color: #dd1541;
+    border-top-left-radius: 0.125rem;
+    border-top-right-radius: 0.125rem;
+  }
+}
