@@ -21,10 +21,9 @@ export const useKeycloak = () => {
 
   const route = useRoute()
   const router = useRouter()
-  console.log('### route', route)
+
   const queryIsLoginProcess = !!route.value.query?.isLoginProcess
   const isLoginProcess = ref(queryIsLoginProcess || false)
-  console.log('### isLoginProcess', isLoginProcess.value)
 
   if (queryIsLoginProcess) {
     let query = Object.assign({}, route.query)

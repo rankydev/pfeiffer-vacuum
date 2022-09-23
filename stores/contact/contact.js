@@ -18,8 +18,6 @@ export const useContactStore = defineStore('contact', () => {
       contact
     )
 
-    console.log('### result', result)
-
     if (result.status === 200) {
       return true
     }

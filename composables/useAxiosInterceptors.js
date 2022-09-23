@@ -25,7 +25,6 @@ export const useAxiosInterceptors = () => {
   const addI18nParameters = function (config) {
     config.params = config.params || {}
 
-    console.log('### i18n', i18n)
     if (!config.params.lang) {
       config.params.lang = i18n.locale
     }

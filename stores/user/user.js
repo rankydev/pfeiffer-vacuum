@@ -85,8 +85,8 @@ export const useUserStore = defineStore('user', () => {
     } else {
       // redirect here, if no keycloak instance is available.
       const { app } = ctx
-      const { localePath, router } = app
-      return router.push(localePath({ name: 'shop' }))
+      const { router, i18n } = app
+      return router.push(`/${i18n.locale}`)
     }
   }
 
