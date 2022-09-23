@@ -192,6 +192,7 @@ export default defineComponent({
       requestData,
       validate,
       loading,
+      proceedWithoutCompany,
       modalIsOpen,
       toggleModal,
       triggerSendRegistrationProcess,
