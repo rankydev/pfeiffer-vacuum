@@ -31,7 +31,6 @@
           :name="item.uiComponent || item.component"
         />
         <ContentWrapper>
-          <RegistrationPage />
           <nuxt-dynamic
             v-for="item in body"
             :key="item._uid"
@@ -70,13 +69,12 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
-import RegistrationPage from '@/components/organisms/RegistrationPage/RegistrationPage'
+
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
     OnPageNavigation,
-    RegistrationPage,
   },
   props: {
     content: {
