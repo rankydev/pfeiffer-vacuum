@@ -1,6 +1,6 @@
 <template>
   <div class="shop-navigation">
-    <LoadingSpinner :show="!myAccountLabel">
+    <LoadingSpinner :show="userStore.isLoginProcess || !myAccountLabel">
       <Button
         shape="plain"
         variant="secondary"
@@ -8,12 +8,13 @@
         :label="myAccountLabel"
         icon="person"
         :prepend-icon="true"
+        gap="narrow"
         @click="handleMyAccount()"
       />
     </LoadingSpinner>
 
     <Button
-      v-if="loggedIn"
+      v-if="userStore.loggedIn || userStore.isLoginProcess"
       shape="plain"
       variant="secondary"
       class="shop-navigation__logout"
@@ -50,26 +51,26 @@ export default defineComponent({
     const { i18n } = useContext()
 
     const userStore = useUserStore()
-    const currentUser = computed(() => userStore.currentUser)
-    const loggedIn = computed(() => userStore.loggedIn)
 
-    const myAccountLabel = computed(() =>
-      loggedIn.value
-        ? currentUser.value?.name
+    const myAccountLabel = computed(() => {
+      if (userStore.isLoginProcess) return ''
+
+      return userStore.loggedIn
+        ? userStore.currentUser?.name
         : i18n.t('navigation.button.signIn.label')
-    )
+    })
 
     const handleMyAccount = () => {
-      if (loggedIn.value) return
+      if (userStore.loggedIn) return
 
-      if (!loggedIn.value) return userStore.login()
+      userStore.login()
     }
 
     return {
       logout: userStore.logout,
       handleMyAccount,
       myAccountLabel,
-      loggedIn,
+      userStore,
     }
   },
 })
@@ -89,10 +90,6 @@ export default defineComponent({
 
     @screen md {
       @apply tw-flex;
-    }
-
-    .button__icon--prepend {
-      @apply tw-mr-2;
     }
   }
 

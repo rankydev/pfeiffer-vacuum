@@ -7,5 +7,20 @@ export const useOciStore = defineStore('oci', () => {
   const returnTarget = ref('_self')
   const hiddenUIElements = ref({})
   const customerId = ref('')
-  return { isOciPage, hookUrl, returnTarget, hiddenUIElements, customerId }
+
+  const isOciUser = (auth) => {
+    return auth.type === 'oci'
+  }
+
+  return {
+    // state
+    isOciPage,
+    hookUrl,
+    returnTarget,
+    hiddenUIElements,
+    customerId,
+
+    // getters
+    isOciUser,
+  }
 })

@@ -1,37 +1,52 @@
-import { ref, computed, useContext } from '@nuxtjs/composition-api'
-import { setCookie, removeCookie, getCookie } from '~/plugins/cookieHelper'
-import { useOciStore } from '~/stores/oci'
-import getLoggerFor from '~/utils/getLoggerFor'
+import {
+  ref,
+  computed,
+  useContext,
+  useRoute,
+  useRouter,
+} from '@nuxtjs/composition-api'
+import { useCookieHelper } from '~/composables/useCookieHelper'
+import { useContextUtil } from '~/composables/useContextUtil'
+import { useLogger } from '~/composables/useLogger'
 
 const keycloakJS = typeof window !== 'undefined' ? require('keycloak-js') : null
 
 export const useKeycloak = () => {
   const ctx = useContext()
-  const logger = getLoggerFor('useKeycloak')
+  const { logger } = useLogger('useKeycloak')
+  const { getCurrentHostUrl } = useContextUtil()
+  const { setCookie, removeCookie, getCookie } = useCookieHelper()
   const auth = ref(null)
   const keycloakInstance = ref(null)
-  const isLoginProcess = ref(false)
 
-  const isOciUser = computed(() => {
-    return auth.value?.type === 'oci'
-  })
+  const route = useRoute()
+  const router = useRouter()
+  console.log('### route', route)
+  const queryIsLoginProcess = !!route.value.query?.isLoginProcess
+  const isLoginProcess = ref(queryIsLoginProcess || false)
+  console.log('### isLoginProcess', isLoginProcess.value)
+
+  if (queryIsLoginProcess) {
+    let query = Object.assign({}, route.query)
+    delete query.isLoginProcess
+    router.replace({ query })
+  }
 
   const loggedIn = computed(() => {
     return !!auth.value?.access_token
   })
 
   const setAuth = (newAuth) => {
-    console.log('### setAuth')
     auth.value = newAuth
   }
 
   const removeCookiesAndDeleteAuthData = () => {
     logger.debug('removeCookiesAndDeleteAuthData')
-    removeCookie(ctx, 'auth.accessToken')
-    removeCookie(ctx, 'auth.refreshToken')
-    removeCookie(ctx, 'auth.idToken')
-    removeCookie(ctx, 'auth.validUntil')
-    removeCookie(ctx, 'auth.tokenType')
+    removeCookie('auth.accessToken')
+    removeCookie('auth.refreshToken')
+    removeCookie('auth.idToken')
+    removeCookie('auth.validUntil')
+    removeCookie('auth.tokenType')
 
     setAuth(null)
   }
@@ -40,12 +55,8 @@ export const useKeycloak = () => {
   /** all functions only used with keycloakInstance.value have a prefix 'kc' */
   const createKeycloakInstance = () => {
     logger.debug('createKeycloakInstance')
-    const ociStore = useOciStore()
-    if (ociStore.isOciPage || isOciUser.value) {
-      return
-    }
 
-    const { app, $contextUtil, $keycloakInstance } = ctx
+    const { app, $keycloakInstance } = ctx
     if (!keycloakJS || keycloakInstance.value) {
       logger.debug('No keycloakJS or existing keycloakInstance')
       return
@@ -77,7 +88,7 @@ export const useKeycloak = () => {
     }
     let keycloakInitOptions = {
       onLoad: 'check-sso',
-      silentCheckSsoRedirectUri: `${$contextUtil.getCurrentHostUrl()}/silentSsoCheck.html`,
+      silentCheckSsoRedirectUri: `${getCurrentHostUrl()}/silentSsoCheck.html`,
       pkceMethod: 'S256',
       enableLogging: true,
       checkLoginIframe: true,
@@ -88,7 +99,7 @@ export const useKeycloak = () => {
     if (loggedIn.value) {
       keycloakInitOptions = {
         onLoad: 'check-sso',
-        silentCheckSsoRedirectUri: `${$contextUtil.getCurrentHostUrl()}/silentSsoCheck.html`,
+        silentCheckSsoRedirectUri: `${getCurrentHostUrl()}/silentSsoCheck.html`,
         pkceMethod: 'S256',
         enableLogging: true,
         checkLoginIframe: true,
@@ -189,35 +200,22 @@ export const useKeycloak = () => {
     logger.debug('setCookiesAndSaveAuthData')
     logger.trace('setCookiesAndSaveAuthData::TOKEN ', token)
     setCookie(
-      ctx,
       'auth.accessToken',
       token.access_token,
       new Date(token.validUntil)
     )
     setCookie(
-      ctx,
       'auth.refreshToken',
       token.refresh_token,
       new Date(token.refresh_expires_in)
     )
     setCookie(
-      ctx,
       'auth.idToken',
       token.id_token,
       new Date(token.refresh_expires_in)
     )
-    setCookie(
-      ctx,
-      'auth.validUntil',
-      token.validUntil,
-      new Date(token.validUntil)
-    )
-    setCookie(
-      ctx,
-      'auth.tokenType',
-      token.token_type,
-      new Date(token.validUntil)
-    )
+    setCookie('auth.validUntil', token.validUntil, new Date(token.validUntil))
+    setCookie('auth.tokenType', token.token_type, new Date(token.validUntil))
 
     setAuth(token)
   }
@@ -245,11 +243,11 @@ export const useKeycloak = () => {
   }
 
   const authFromCookie = {
-    access_token: getCookie(ctx, 'auth.accessToken'),
-    refresh_token: getCookie(ctx, 'auth.refreshToken'),
-    id_token: getCookie(ctx, 'auth.idToken'),
-    validUntil: getCookie(ctx, 'auth.validUntil'),
-    token_type: getCookie(ctx, 'auth.tokenType'),
+    access_token: getCookie('auth.accessToken'),
+    refresh_token: getCookie('auth.refreshToken'),
+    id_token: getCookie('auth.idToken'),
+    validUntil: getCookie('auth.validUntil'),
+    token_type: getCookie('auth.tokenType'),
   }
 
   if (authFromCookie.access_token && authFromCookie.access_token !== 'null') {

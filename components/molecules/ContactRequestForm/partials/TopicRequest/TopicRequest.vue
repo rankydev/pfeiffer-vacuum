@@ -198,7 +198,7 @@
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, toRef } from '@nuxtjs/composition-api'
 import { required, email, helpers } from '@vuelidate/validators'
 import { useCountriesStore } from '~/stores/countries'
 
@@ -223,13 +223,6 @@ export default defineComponent({
           'PRODUCT_INFORMATION',
           'GENERAL_QUERY',
         ].includes(val),
-    },
-    /**
-     * all countries that are contained in the select component
-     */
-    countries: {
-      type: Array,
-      default: () => [],
     },
   },
   emits: [
@@ -267,13 +260,23 @@ export default defineComponent({
     const isoCode = computed(
       () => requestData.value.contact?.address?.country?.isocode
     )
-    const regions = computed(() => countriesStore.regions[isoCode.value] || [])
+    const regions = ref([])
+    const countries = toRef(countriesStore, 'countries')
 
-    const loadRegions = () => {
-      countriesStore.loadRegions(isoCode.value)
+    const loadRegions = async () => {
+      await countriesStore.loadRegions(isoCode.value)
+      regions.value = countriesStore.regions[isoCode.value] || []
     }
 
-    return { required, email, helpers, requestData, loadRegions, regions }
+    return {
+      required,
+      email,
+      helpers,
+      requestData,
+      loadRegions,
+      regions,
+      countries,
+    }
   },
 })
 </script>

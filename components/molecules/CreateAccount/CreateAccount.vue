@@ -178,7 +178,7 @@ export default defineComponent({
     })
 
     const countriesStore = useCountriesStore()
-    const countries = computed(() => countriesStore.countries)
+    const countries = toRef(countriesStore, 'countries')
     const isoCode = computed(
       () => requestData.value.contact?.address?.country?.isocode
     )

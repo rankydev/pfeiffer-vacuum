@@ -1,21 +1,24 @@
-import { computed } from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
 import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useUserStore } from '~/stores/user'
-import config from '../hybris.config'
+import config from '~/config/hybris.config'
+import { joinURL } from 'ufo'
 
 export const useContactStore = defineStore('contact', () => {
-  const logger = useLogger('contactStore')
+  const { logger } = useLogger('contactStore')
   const { axios } = useAxiosForHybris()
   const userStore = useUserStore()
-  const loggedIn = computed(() => userStore.loggedIn)
 
   const submitContact = async (contact) => {
     const result = await axios.post(
-      `${config.CONTACT_API}/${loggedIn ? 'current' : 'anonymous'}`,
+      joinURL(
+        `${config.CONTACT_API}/${userStore.loggedIn ? 'current' : 'anonymous'}`
+      ),
       contact
     )
+
+    console.log('### result', result)
 
     if (result.status === 200) {
       return true

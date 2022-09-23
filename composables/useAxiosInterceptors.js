@@ -1,10 +1,11 @@
+import { useContext } from '@nuxtjs/composition-api'
+import qs from 'qs'
 import { useUserStore } from '~/stores/user'
-const qs = require('qs')
-import getLoggerFor from '~/utils/getLoggerFor'
-
-const logger = getLoggerFor('useAxiosInterceptors')
+import { useLogger } from './useLogger'
 
 export const useAxiosInterceptors = () => {
+  const { logger } = useLogger('useAxiosInterceptors')
+  const { i18n } = useContext()
   const userStore = useUserStore()
 
   const addAuthHeader = function (config) {
@@ -23,12 +24,14 @@ export const useAxiosInterceptors = () => {
 
   const addI18nParameters = function (config) {
     config.params = config.params || {}
-    // TODO language and currency?
-    // if (!config.params.lang) {
-    //   config.params.lang = store.language
-    // }
+
+    console.log('### i18n', i18n)
+    if (!config.params.lang) {
+      config.params.lang = i18n.locale
+    }
+    // TODO We don't have the currency configured yet
     // if (!config.params.curr) {
-    //   config.params.curr = store.currency
+    //   config.params.curr = i18n.currency
     // }
   }
 
@@ -39,7 +42,6 @@ export const useAxiosInterceptors = () => {
    */
   function onFulfilledRequestHandler(config) {
     config.paramsSerializer = (params) =>
-      // TODO we can probably write this ourselves and replace this dependency
       qs.stringify(params, { arrayFormat: 'brackets' })
 
     addI18nParameters(config)
@@ -77,92 +79,56 @@ export const useAxiosInterceptors = () => {
     return Promise.resolve(error.response)
   }
 
+  /**
+   * Log errors of error response
+   * @param error response errors
+   */
+  function logResponseError(error) {
+    const config4log = getConfig4log(error.config || {})
+    if (error.response?.data && typeof error.response?.data !== 'string') {
+      const requestId = `[${error.response.data.errors[0]?.requestId}]`
+
+      logger.error(
+        'Error during shop request',
+        requestId,
+        `HTTP Status ${error.response.status}`,
+        config4log
+      )
+      logger.error(
+        error.response.data.errors
+          .filter((e) => e.stackTrace)
+          .map((e) => e.stackTrace)
+          .join('\n\n')
+      )
+
+      return
+    }
+    logger.error('Shop connection error:', error, config4log)
+  }
+
+  /**
+   * Returns reduced config object for erro logging
+   * @param config object of error response
+   */
+  function getConfig4log(config) {
+    const configLog = { ...config } // copy
+
+    // remove irrelevant objects for error logging
+    delete configLog.adapter
+    delete configLog.httpsAgent
+    delete configLog.validateStatus
+    delete configLog.transformRequest
+    delete configLog.transformResponse
+    delete configLog.xsrfCookieName
+    delete configLog.xsrfHeaderName
+
+    return configLog
+  }
+
   return {
     fulfilledRequest: onFulfilledRequestHandler,
     rejectedRequest: onRejectedRequestHandler,
     fulfilledResponse: onFulfilledResponseHandler,
     rejectedResponse: onRejectedResponseHandler,
   }
-}
-
-/**
- * Log errors of error response
- * @param error response errors
- */
-function logResponseError(error) {
-  enhanceResponseError(error)
-
-  const config4log = getConfig4log(error.config || {})
-
-  if (
-    error.response.data &&
-    typeof error.response.data !== 'string' &&
-    error.shop
-  ) {
-    error.response.data.error = error.toJSON()
-    error.response.data.status = error.response.status
-    error.response.data.statusText = error.response.statusText
-
-    const requestId = error.shop.requestId ? `[${error.shop.requestId}]` : ''
-
-    logger.error(
-      'Error during shop request',
-      requestId,
-      `HTTP Status ${error.shop.status}`,
-      config4log
-    )
-    logger.error(error.shop.stackTrace)
-    return
-  }
-
-  error.response = { data: { error: error.toJSON ? error.toJSON() : null } }
-
-  logger.error('Shop connection error:', error, config4log)
-}
-
-/**
- * Enhance error response with specific information for logging
- * @param error response with error
- */
-function enhanceResponseError(error) {
-  error.response = error.response || {}
-
-  error.response.error = error.response.error || error.code
-
-  error.shop = {
-    status: error.response.status,
-    statusText: error.response.statusText,
-    errors: error.response.data ? error.response.data.errors : undefined,
-  }
-
-  // get request id from response
-  if (error.shop.errors && error.shop.errors.length) {
-    error.shop.requestId = error.shop.errors[0].requestId
-  }
-
-  if (error.shop.errors) {
-    error.shop.stackTrace = error.shop.errors
-      .filter((e) => e.stackTrace)
-      .map((e) => e.stackTrace)
-      .join('\n\n')
-  }
-}
-
-/**
- * Returns reduced config object for erro logging
- * @param config object of error response
- */
-function getConfig4log(config) {
-  const configLog = { ...config } // copy
-
-  // remove irrelevant objects for error logging
-  delete configLog.adapter
-  delete configLog.httpsAgent
-  delete configLog.validateStatus
-  delete configLog.transformRequest
-  delete configLog.transformResponse
-  delete configLog.xsrfCookieName
-  delete configLog.xsrfHeaderName
-
-  return configLog
 }

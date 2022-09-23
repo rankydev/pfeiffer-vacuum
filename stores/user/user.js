@@ -1,15 +1,22 @@
-import { computed, ref, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  ref,
+  useContext,
+  onBeforeMount,
+  onServerPrefetch,
+} from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
-import getLoggerFor from '~/utils/getLoggerFor'
 import { useKeycloak } from './partials/useKeycloak'
 import { useUserApi } from './partials/useUserApi'
 import { watch } from '@nuxtjs/composition-api'
+import { useLogger } from '~/composables/useLogger'
+import { useOciStore } from '~/stores/oci'
 
 export const useUserStore = defineStore('user', () => {
-  const logger = getLoggerFor('userStore')
+  const { logger } = useLogger('userStore')
   const ctx = useContext()
   const userApi = useUserApi()
-
+  const ociStore = useOciStore()
   const {
     keycloakInstance,
     auth,
@@ -34,11 +41,10 @@ export const useUserStore = defineStore('user', () => {
     return currentUser?.registrationStatus?.code === 'APPROVED'
   })
 
-  watch(auth, (newAuth) => {
+  watch(auth, async (newAuth) => {
     //load currentUser data if currentUser obj is empty
-    console.log('### watch auth', newAuth)
     if (newAuth && !currentUser.value) {
-      loadCurrentUser()
+      await loadCurrentUser()
     }
 
     if (!newAuth) {
@@ -47,7 +53,6 @@ export const useUserStore = defineStore('user', () => {
   })
 
   const loadCurrentUser = async () => {
-    console.log('### loadCurrentUser')
     if (!loggedIn.value) {
       return
     }
@@ -61,10 +66,10 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const login = async () => {
-    logger.debug('login')
-    const url = window.location.href
-    // TODO do we need the locale?
-    const options = { locale: 'store.currentLanguage', redirectUri: url }
+    const { i18n } = ctx
+    logger.debug('login', i18n.locale)
+    const url = `${window.location.href}?isLoginProcess=true`
+    const options = { locale: i18n.locale, redirectUri: url }
     await keycloakInstance.value.login(options)
   }
 
@@ -85,20 +90,12 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  createKeycloakInstance()
-
-  // during SSR the first thing initialized is the store, reading the cookies for login and cart
-  // then we need to distinguish between login process and normal refresh/reload
-  if (isLoginProcess.value) {
-    // TODO this can't come from the store, so we need the parameter in the url to know we're in login process
-    logger.debug('During login process')
-    logger.trace('loadCurrentUser')
-    loadCurrentUser()
-  } else {
-    // otherwise, we just preload everything what is there
-    logger.debug('Preloading user and cart.')
-    loadCurrentUser()
+  if (!ociStore.isOciPage && !ociStore.isOciUser(auth)) {
+    createKeycloakInstance()
   }
+
+  onBeforeMount(loadCurrentUser)
+  onServerPrefetch(loadCurrentUser)
 
   return {
     // state
@@ -109,7 +106,6 @@ export const useUserStore = defineStore('user', () => {
     // getters
     isApprovedUser,
     isLeadUser,
-
     isOpenUser,
     isRejectedUser,
     loggedIn,

@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
-import config from '../hybris.config'
+import config from '~/config/hybris.config'
 
 export const useProductStore = defineStore('product', () => {
-  const logger = useLogger('productStore')
+  const { logger } = useLogger('productStore')
   const { axios } = useAxiosForHybris()
 
   const getProducts = async (ids) => {

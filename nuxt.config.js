@@ -61,8 +61,6 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/helper/logger',
-    '~/plugins/contextUtil',
     { src: '~/plugins/storyblok/storyblok-api-client', mode: 'client' },
     '~/plugins/helper/breakpoints',
     { src: '~/plugins/service/service.plugin', mode: 'client' },

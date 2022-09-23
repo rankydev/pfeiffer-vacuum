@@ -1,10 +1,13 @@
 import { defineStore } from 'pinia'
 import { ref } from '@nuxtjs/composition-api'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
-import config from '../hybris.config'
+import config from '~/config/hybris.config'
+import { joinURL } from 'ufo'
+import { useLogger } from '~/composables/useLogger'
 
 export const useCountriesStore = defineStore('countries', () => {
   const { axios } = useAxiosForHybris()
+  const { logger } = useLogger()
 
   const countries = ref([])
   const regions = ref({})
@@ -21,11 +24,10 @@ export const useCountriesStore = defineStore('countries', () => {
   }
 
   const loadRegions = async (isocode) => {
-    console.log('### loadRegions', isocode)
     if (!isocode) return []
 
     const result = await axios
-      .$get(`${config.COUNTRIES_API}/${isocode}/regions`)
+      .$get(joinURL(`${config.COUNTRIES_API}/${isocode}/regions`))
       .catch((error) => {
         logger.error(
           'Error when fetching regions. Returning empty array.',
