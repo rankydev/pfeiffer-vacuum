@@ -1,4 +1,5 @@
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection'
+import { ref } from '@nuxtjs/composition-api'
 
 export default {
   title: 'Molecules/m_114 Category Page Size Selection',
@@ -19,11 +20,17 @@ export default {
 const Template = (args) => ({
   components: { CategoryPageSizeSelection },
   setup() {
-    return { args }
+    let active = ref(args.active || 9)
+
+    const handleChange = (e) => {
+      active.value = e
+    }
+
+    return { args, handleChange, active }
   },
   template: `
   <div class="documentation-preview">
-    <CategoryPageSizeSelection v-bind="args"/>
+    <CategoryPageSizeSelection :active="active" @change="handleChange"/>
   </div>
 `,
 })
