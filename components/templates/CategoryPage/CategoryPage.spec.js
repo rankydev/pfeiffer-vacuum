@@ -1,7 +1,9 @@
 import CategoryPage from './CategoryPage.vue'
+import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
+import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import header from '~/components/organisms/Header/Header.stories.content'
-import { OnPageNavigation } from '~/components/molecules/OnPageNavigation/OnPageNavigation.stories.content'
+import { OnPageNavigationContent } from '~/components/molecules/OnPageNavigation/OnPageNavigation.stories.content'
 import { footerContent } from '~/components/organisms/Footer/Footer.stories.content'
 import VueMeta from 'vue-meta'
 
@@ -58,17 +60,36 @@ describe('CategoryPage', () => {
   }
 
   describe('initial state', () => {
-    test('should render page correctly', () => {
-      const propsData = {
-        content: {
-          header: [header],
-          quicklinks: [OnPageNavigation],
-          body: [],
-          footer: [footerContent],
-          component: 'CategoryPage',
-        },
-      }
-      createComponent(propsData)
+    const propsData = {
+      content: {
+        header: [header],
+        quicklinks: [OnPageNavigationContent],
+        body: [],
+        footer: [footerContent],
+        component: 'CategoryPage',
+      },
+    }
+    createComponent(propsData)
+
+    test('should render page correctly given props', () => {
+      const sections = wrapper.findAll('nuxtdynamic-stub')
+
+      expect(wrapper.exists()).toBeTruthy()
+      expect(sections).toHaveLength(2)
+    })
+
+    test('should render OnPageNavigation correctly given props', () => {
+      const onPageNavigation = wrapper.findComponent(OnPageNavigation)
+
+      expect(onPageNavigation.vm.quicklinks).toBe(
+        OnPageNavigationContent.quicklinks
+      )
+    })
+
+    test('should render ResultHeadline correctly given props', () => {
+      const resultHeadline = wrapper.findComponent(ResultHeadline)
+
+      expect(resultHeadline.exists()).toBeTruthy()
     })
   })
 })
