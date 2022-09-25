@@ -9,5 +9,26 @@
     "region": "地区",
     "password": "密码"
   },
-  "infotext": "您可以在此處輸入您公司的地址數據。<br /> <b>此步驟是可選的</b> <br /><br /> <b>請注意：</b> 僅適用於 A完整帳戶可讓您查看價格並發送請求!"
+  "infotext": "您可以在此處輸入您公司的地址數據。<br /> <b>此步驟是可選的</b> <br /><br /> <b>請注意：</b> 僅適用於 A完整帳戶可讓您查看價格並發送請求!",
+  "formCompanyData": {
+    "title": "公司資料",
+    "infobox": "在這裡您可以存儲您公司的地址數據。 此步驟是可選的。請注意：您只能使用完整帳戶查看價格和發送請求！",
+    "addCompanyData": "添加公司地址",
+    "removeCompanyData": "消除",
+    "registeredCustomer": "已經是客戶了",
+    "registeredCustomerTrue": "是的",
+    "registeredCustomerFalse": "不",
+    "customerNumber": "顧客號碼",
+    "additionalCompanyInformation": "更多公司信息",
+    "department": "部",
+    "tax": "稅號",
+    "telephoneNumber": "電話",
+    "fax": "傳真",
+    "country": "國家",
+    "countryAutofill": "會自動填寫",
+    "street": "街道",
+    "houseNumber": "數字",
+    "postalCode": "郵政編碼",
+    "city": "城市"
+  }
 }

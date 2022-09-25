@@ -21,39 +21,9 @@
       "
     />
 
-    <PvSelect
-      :label="$t('registration.registrationRequest.country')"
-      :options="countries"
-      :option-label="'name'"
-      :required="true"
-      :rules="{
-        required: helpers.withMessage(
-          $t('form.validationErrorMessages.required'),
-          required
-        ),
-      }"
-      :validate="validate"
+    <FormCountrySelection
       @update="
-        requestData.registration.address.country = $event
-        loadRegions()
-        $emit('update', requestData)
-      "
-    />
-    <PvSelect
-      v-if="regions.length"
-      :label="$t('registration.registrationRequest.region')"
-      :options="regions"
-      :option-label="'name'"
-      :required="true"
-      :rules="{
-        required: helpers.withMessage(
-          $t('form.validationErrorMessages.required'),
-          required
-        ),
-      }"
-      :validate="validate"
-      @update="
-        requestData.registration.address.region = $event
+        requestData.registration.address = $event
         $emit('update', requestData)
       "
     />
@@ -136,14 +106,14 @@
 <script>
 import { computed, defineComponent, ref, toRef } from '@nuxtjs/composition-api'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import Password from '~/components/atoms/FormComponents/Password/Password'
+import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
 import { required, email, helpers } from '@vuelidate/validators'
 import { useCountriesStore } from '~/stores/countries'
 
 export default defineComponent({
   name: 'CreateAccount',
-  components: { PvInput, PvSelect, Password },
+  components: { PvInput, Password, FormCountrySelection },
   props: {
     /**
      * determines whether a validation can be executed and will be passed into child component

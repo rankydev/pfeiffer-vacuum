@@ -1,11 +1,11 @@
 <template>
   <div class="pv-input">
-    <PvLabel :label="label" :optional="!isRequired" />
+    <PvLabel :optional="!required" :label="label" />
     <div class="pv-input__wrapper">
       <input
         v-model="internalValue"
         v-bind="{ placeholder, disabled }"
-        :required="isRequired"
+        :required="required"
         :type="inputType"
         class="pv-input__element"
         :class="{
@@ -91,7 +91,7 @@ export default defineComponent({
     /**
      * The isRequired prop, which defines if the text field is required or not
      */
-    isRequired: {
+    required: {
       type: Boolean,
       default: false,
     },

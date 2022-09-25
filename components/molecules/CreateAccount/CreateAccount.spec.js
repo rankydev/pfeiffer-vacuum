@@ -1,8 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 import CreateAccount from '~/components/molecules/CreateAccount/CreateAccount'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import Password from '~/components/atoms/FormComponents/Password/Password'
+import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
 import { setActivePinia, createPinia } from 'pinia'
 import { reactive } from '@nuxtjs/composition-api'
 
@@ -32,13 +32,13 @@ describe('CreateAccount', () => {
       const wrapper = shallowMount(CreateAccount)
       const title = wrapper.find('h2')
       const inputArr = wrapper.findAllComponents(PvInput)
-      const select = wrapper.findComponent(PvSelect)
+      const countrySelection = wrapper.findComponent(FormCountrySelection)
       const password = wrapper.findComponent(Password)
 
       expect(wrapper.exists()).toBeTruthy()
       expect(title).toBeTruthy()
       expect(inputArr).toHaveLength(4)
-      expect(select).toBeTruthy()
+      expect(countrySelection).toBeTruthy()
       expect(password).toBeTruthy()
     })
 
@@ -47,23 +47,6 @@ describe('CreateAccount', () => {
       const wrapper = shallowMount(CreateAccount, { propsData })
 
       expect(wrapper.exists()).toBeTruthy()
-    })
-  })
-  describe('during interaction', () => {
-    it('should return regions array when appropriate country was selected', async () => {
-      const wrapper = shallowMount(CreateAccount)
-      const select = wrapper.findComponent(PvSelect)
-
-      const selectedOption = {
-        isocode: 'US',
-        name: 'United States of America',
-      }
-      select.vm.$emit('update', selectedOption)
-      await select.vm.$nextTick()
-      const allSelects = wrapper.findAllComponents(PvSelect)
-
-      expect(mockLoadRegions).toHaveBeenCalled()
-      expect(allSelects).toHaveLength(2)
     })
   })
 })

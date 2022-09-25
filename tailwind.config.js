@@ -85,11 +85,6 @@ module.exports = {
       '-2': '-2px',
       '-1': '-1px',
     },
-    gridTemplateColumns: {
-      desktop: 'repeat(12, minmax(0, 1fr))',
-      tablet: 'repeat(8, minmax(0, 1fr))',
-      mobile: 'repeat(4, minmax(0, 1fr))',
-    },
     screens: {
       sm: '0px',
       md: '768px',
@@ -110,6 +105,13 @@ module.exports = {
       disc: 'disc',
       decimal: 'decimal',
       square: 'square',
+    },
+    extend: {
+      gridTemplateColumns: {
+        desktop: 'repeat(12, minmax(0, 1fr))',
+        tablet: 'repeat(8, minmax(0, 1fr))',
+        mobile: 'repeat(4, minmax(0, 1fr))',
+      },
     },
   },
   prefix: 'tw-',
