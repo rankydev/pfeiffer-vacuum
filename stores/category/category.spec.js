@@ -8,7 +8,11 @@ jest.mock('@nuxtjs/composition-api', () => {
   return {
     useContext: jest.fn(() => {
       return {
-        $axios: {},
+        $axios: {
+          get: jest.fn(() => {
+            return { then: jest.fn() }
+          }),
+        },
         i18n: {},
         app: {},
       }
@@ -17,7 +21,12 @@ jest.mock('@nuxtjs/composition-api', () => {
       return { options: { base: '' } }
     }),
     useRoute: jest.fn(() => {
-      return {}
+      return {
+        value: {
+          fullPath: '',
+          params: { category: '' },
+        },
+      }
     }),
     ssrRef: ref,
     useAsync: jest.fn(() => {
@@ -35,10 +44,34 @@ jest.mock('@nuxtjs/composition-api', () => {
   }
 })
 
+jest.mock('~/stores/cms', () => {
+  const {
+    entries,
+  } = require('~/components/molecules/Breadcrumb/Breadcrumb.stories.content')
+
+  return {
+    __esModule: true,
+    useCmsStore: () => ({ breadcrumb: entries }),
+  }
+})
+
 describe('useCategoryStore', () => {
   beforeEach(() => setActivePinia(createPinia()))
+  describe('initial state', () => {
+    test('should return all expected properties', async () => {
+      const categoryStore = await useCategoryStore()
 
-  test('should return category', async () => {
-    const categoryStore = await useCategoryStore()
+      expect(categoryStore.category).toStrictEqual({})
+      expect(categoryStore.result).toStrictEqual({})
+      expect(categoryStore.loadByPath).toBeInstanceOf(Function)
+    })
+  })
+
+  describe('during interaction', () => {
+    test('should execute loadByPath method correctly', async () => {
+      const categoryStore = await useCategoryStore()
+
+      await categoryStore.loadByPath()
+    })
   })
 })

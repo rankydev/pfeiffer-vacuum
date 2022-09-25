@@ -78,7 +78,7 @@ export const useCategoryStore = defineStore('category', () => {
   }
 
   const loadByPath = async () => {
-    // if we alreay loaded the path we just return
+    // if we already loaded the path we just return
     if (route.value.fullPath === reqId.value) return
     reqId.value = route.value.fullPath
     await Promise.all([loadProducts(), loadCategory()])
