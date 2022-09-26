@@ -1,5 +1,4 @@
 import VacuumRangeSlider from '~/components/molecules/VacuumRangeSlider/VacuumRangeSlider.vue'
-import { showRanges } from '~/components/molecules/VacuumRangeSlider/VacuumRangeSlider.stories.content.js'
 import { ref } from '@nuxtjs/composition-api'
 
 const argTypes = {}
@@ -43,4 +42,4 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
-Default.args = { showRanges }
+Default.args = { showRanges: true }
