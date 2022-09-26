@@ -156,6 +156,11 @@ export default defineComponent({
       @apply tw-grow;
       @apply tw-w-full;
       @apply tw-block;
+      @apply tw-pb-4;
+
+      @screen md {
+        @apply tw-pb-0;
+      }
     }
 
     .button {
