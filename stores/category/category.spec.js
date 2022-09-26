@@ -1,6 +1,17 @@
 import { useCategoryStore } from '~/stores/category'
 import { setActivePinia, createPinia } from 'pinia'
 import { entries } from '~/components/molecules/Breadcrumb/Breadcrumb.stories.content'
+import { createTestingPinia } from '@pinia/testing'
+
+const mockSingleCategory = { categoryPath: ['Category'] }
+const mockCategories = { categoryPath: ['Category', 'Category2'] }
+const mockSearchResult = {
+  type: 'productCategorySearchPageWsDTO',
+  categorySubtree: [],
+  facets: [],
+  products: [],
+}
+const mockLocalePath = 'localePath'
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
@@ -11,18 +22,28 @@ jest.mock('@nuxtjs/composition-api', () => {
     useContext: jest.fn(() => {
       return {
         $axios: {
-          get: jest.fn(() => {
-            return {
-              then: jest.fn(() => {
-                return 'Test'
-              }),
+          get: jest.fn((url) => {
+            switch (url) {
+              case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online':
+                return {
+                  then: jest.fn(() => {
+                    return mockSingleCategory
+                  }),
+                }
+              case '/api/shop/pfeifferwebservices/v2/pfeiffer/products/search':
+                return {
+                  then: jest.fn(() => {
+                    return mockSearchResult
+                  }),
+                }
+                break
             }
           }),
         },
         i18n: { locale: 'en' },
         app: {
-          localePath: jest.fn((input) => {
-            return ''
+          localePath: jest.fn(() => {
+            return mockLocalePath
           }),
         },
       }
@@ -74,16 +95,54 @@ describe('useCategoryStore', () => {
       const categoryStore = await useCategoryStore()
 
       await categoryStore.loadByPath()
-      expect(categoryStore.category).toBe('Test')
-      expect(categoryStore.result).toBe('Test')
+      expect(categoryStore.category).toStrictEqual(mockSingleCategory)
+      expect(categoryStore.result).toStrictEqual(mockSearchResult)
     })
 
-    test('should return ... given categoryPath', async () => {
+    test('should initialize parentCategoryPath given categoryPath array with one single category', async () => {
       const categoryStore = await useCategoryStore()
-
       await categoryStore.loadByPath()
 
-      expect(categoryStore.parentCategoryPath).toBe(null)
+      expect(categoryStore.parentCategoryPath).toBe(mockLocalePath)
+    })
+
+    test('should initialize parentCategoryPath given categoryPath array with several categories', async () => {
+      const pinia = createTestingPinia({
+        initialState: {
+          category: {
+            category: { ...mockCategories },
+          },
+        },
+      })
+      const categoryStore = await useCategoryStore(pinia)
+
+      expect(categoryStore.parentCategoryPath).toBe(mockLocalePath)
+    })
+
+    test('should return if path has been loaded before', async () => {
+      const categoryStore = await useCategoryStore()
+      await categoryStore.loadByPath()
+      await categoryStore.loadByPath()
+
+      // expect loadCategory and loadProducts to be called only one time
+    })
+
+    test('should load single category given category id', async () => {
+      const pinia = createTestingPinia({
+        initialState: {
+          route: {
+            value: {
+              fullPath: '',
+              params: { category: 'Category' },
+              query: {},
+            },
+          },
+        },
+        stubActions: false,
+      })
+
+      const categoryStore = await useCategoryStore(pinia)
+      await categoryStore.loadByPath()
     })
   })
 })
