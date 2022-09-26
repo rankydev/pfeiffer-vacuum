@@ -134,5 +134,83 @@ describe('CategoryPage', () => {
         )
       })
     })
+    describe('given header information are set', () => {
+      it('should use composable and set head tags', () => {
+        const propsData = {
+          content: {
+            title: 'title',
+            seoDescription: 'seoDescription',
+            ogTitle: 'ogTitle',
+            ogDescription: 'ogDescription',
+            ogImage: {
+              filename: '',
+            },
+            twitterTitle: 'twitterTitle',
+            twitterDescription: 'twitterDescription',
+            twitterImage: {
+              filename: '',
+            },
+            noindex: true,
+            nofollow: true,
+            canonical: 'canonical',
+          },
+        }
+        const provide = {
+          getTranslatedSlugs() {
+            return ''
+          },
+          getDefaultFullSlug() {
+            return ''
+          },
+        }
+        createComponent(propsData, provide)
+        const metaInfo = wrapper.vm.$meta().refresh().metaInfo
+        expect(metaInfo.title).toBe('title')
+        expect(metaInfo.meta).toContainEqual({
+          hid: 'description',
+          name: 'description',
+          content: 'seoDescription',
+        })
+        expect(metaInfo.meta).toContainEqual({
+          hid: 'twitter:title',
+          name: 'twitter:title',
+          content: 'twitterTitle',
+        })
+        expect(metaInfo.meta).toContainEqual({
+          hid: 'twitter:description',
+          name: 'twitter:description',
+          content: 'twitterDescription',
+        })
+        expect(metaInfo.meta).toContainEqual({
+          hid: 'twitter:image',
+          name: 'twitter:image',
+          content: '/twitter_image.png',
+        })
+        expect(metaInfo.meta).toContainEqual({
+          hid: 'og:title',
+          name: 'og:title',
+          content: 'ogTitle',
+        })
+        expect(metaInfo.meta).toContainEqual({
+          hid: 'og:description',
+          name: 'og:description',
+          content: 'ogDescription',
+        })
+        expect(metaInfo.meta).toContainEqual({
+          hid: 'og:image',
+          name: 'og:image',
+          content: '/og_image.png',
+        })
+        expect(metaInfo.meta).toContainEqual({
+          hid: 'robots',
+          name: 'robots',
+          content: 'noindex,nofollow',
+        })
+        expect(metaInfo.link).toContainEqual({
+          rel: 'canonical',
+          href: 'canonical',
+        })
+      })
+    })
   })
 })
