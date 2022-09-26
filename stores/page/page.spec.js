@@ -1,5 +1,7 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { usePageStore, CMS_PAGE, CATEGORY_PAGE, PRODUCT_PAGE } from './page'
+import { entries } from '~/components/molecules/Breadcrumb/Breadcrumb.stories.content'
+import { breadcrumb } from '~/stores/category/category.content'
 
 jest.mock('~/stores/cms', () => {
   const {
@@ -13,11 +15,11 @@ jest.mock('~/stores/cms', () => {
 })
 
 jest.mock('~/stores/category', () => {
-  const { entries } = require('~/stores/category/category.content')
+  const { breadcrumb } = require('~/stores/category/category.content')
 
   return {
     __esModule: true,
-    useCategoryStore: () => ({ breadcrumb: entries }),
+    useCategoryStore: () => ({ breadcrumb: breadcrumb }),
   }
 })
 
@@ -30,6 +32,7 @@ describe('Page store', () => {
 
       expect(pageStore.pageType).toBe(CMS_PAGE)
       expect(pageStore.setPageType).toBeInstanceOf(Function)
+      expect(pageStore.breadcrumb).toBe(entries)
     })
   })
 
@@ -45,6 +48,13 @@ describe('Page store', () => {
 
       await pageStore.setPageType(CMS_PAGE)
       expect(pageStore.pageType).toBe(CMS_PAGE)
+    })
+
+    test('should initialize category page breadcrumb if page type is set to category page', async () => {
+      const pageStore = usePageStore()
+
+      await pageStore.setPageType(CATEGORY_PAGE)
+      expect(pageStore.breadcrumb).toBe(breadcrumb)
     })
   })
 
