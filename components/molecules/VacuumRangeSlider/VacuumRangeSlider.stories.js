@@ -35,8 +35,8 @@ const Template = (args) => ({
   <div class="documentation-preview" style="padding:0 64px;">
     <VacuumRangeSlider v-bind="args" @update="initializeResult($event)" />
     <br />
-    <div>Minimum in m³/h: {{ result[0] }}</div>
-    <div>Maximum in m³/h: {{ result[1] }}</div>
+    <div>Minimum in mbar: {{ result[0] }}</div>
+    <div>Maximum in mbar: {{ result[1] }}</div>
   </div>
 `,
 })
