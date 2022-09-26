@@ -192,15 +192,10 @@ export default {
     SHOP_IMAGE_URL: process.env.SHOP_IMAGE_URL,
     SHOP_TIMEOUT: process.env.SHOP_TIMEOUT,
     CONSOLA_LEVEL: process.env.CONSOLA_LEVEL,
-    SERVICE_PORTAL_ACTIVE: process.env.SERVICE_PORTAL_ACTIVE,
-
     // keycloak
     KEYCLOAK_BASE_URL: process.env.KEYCLOAK_BASE_URL,
     KEYCLOAK_REALM_NAME: process.env.KEYCLOAK_REALM_NAME,
     KEYCLOAK_CLIENT_ID: process.env.KEYCLOAK_CLIENT_ID,
-
-    //Storefront
-    STOREFRONT_BASE_URL: process.env.STOREFRONT_BASE_URL,
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
