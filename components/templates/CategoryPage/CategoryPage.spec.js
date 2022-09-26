@@ -105,16 +105,6 @@ describe('CategoryPage', () => {
                 component: 'Header',
               },
             ],
-            // stage: [
-            //   {
-            //     component: 'Stage',
-            //   },
-            // ],
-            // body: [
-            //   {
-            //     component: 'Body',
-            //   },
-            // ],
             bottom: [
               {
                 component: 'Bottom',
@@ -136,12 +126,6 @@ describe('CategoryPage', () => {
         expect(sections.at(1).attributes('component')).toBe(
           propsData.content.header[0].component
         )
-        // expect(sections.at(2).attributes('component')).toBe(
-        //   propsData.content.stage[0].component
-        // )
-        // expect(sections.at(3).attributes('component')).toBe(
-        //   propsData.content.body[0].component
-        // )
         expect(sections.at(2).attributes('component')).toBe(
           propsData.content.bottom[0].component
         )
