@@ -1,5 +1,6 @@
 import VacuumRangeSlider from '~/components/molecules/VacuumRangeSlider/VacuumRangeSlider.vue'
 import { showRanges } from '~/components/molecules/VacuumRangeSlider/VacuumRangeSlider.stories.content.js'
+import { ref } from '@nuxtjs/composition-api'
 
 const argTypes = {}
 
@@ -10,7 +11,7 @@ export default {
     docs: {
       description: {
         component:
-          'A range slider to select a range between two values on a scale of different values f.e. vacuum values in this case',
+          'A vacuum range slider to filter for a certain vacuum ranges. This component is used in the facet filters on the PLP.',
       },
       source: {
         code: '<VacuumRangeSlider v-bind="{ showRanges }" />',
@@ -23,11 +24,20 @@ export default {
 const Template = (args) => ({
   components: { VacuumRangeSlider },
   setup() {
-    return { args }
+    let result = ref([0, 10000])
+
+    const initializeResult = (e) => {
+      result.value = e
+    }
+
+    return { args, result, initializeResult }
   },
   template: `
-  <div class="documentation-preview">
-    <VacuumRangeSlider v-bind="args" />
+  <div class="documentation-preview" style="padding:0 64px;">
+    <VacuumRangeSlider v-bind="args" @update="initializeResult($event)" />
+    <br />
+    <div>Minimum in m³/h: {{ result[0] }}</div>
+    <div>Maximum in m³/h: {{ result[1] }}</div>
   </div>
 `,
 })

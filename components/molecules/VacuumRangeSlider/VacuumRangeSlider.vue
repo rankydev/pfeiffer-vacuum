@@ -1,34 +1,37 @@
 <template>
   <div class="vacuum-range-slider">
-    <vue-slider
+    <VueSlider
       v-model="modelValue"
       v-bind="{ data, marks }"
       :enable-cross="true"
-      :lazy="true"
+      :clickable="false"
       data-value="id"
       data-label="name"
       tooltip="always"
+      @drag-end="selectionUpdated"
     >
       <template #label="{ value }">
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="vue-slider-mark-label" v-html="getTooltipLabel(value)" />
       </template>
       <template #tooltip="{ value }">
-        <div
-          class="vue-slider-dot-tooltip-inner vue-slider-dot-tooltip-inner-top"
-        >
+        <div class="vue-slider-dot-tooltip-inner">
+          <!-- eslint-disable vue/no-v-html -->
           <span
             class="vue-slider-dot-tooltip-text"
             v-html="getTooltipLabel(value)"
           />
+          <!-- eslint-enable vue/no-v-html -->
         </div>
       </template>
-    </vue-slider>
+    </VueSlider>
     <div v-if="showRanges" class="ranges">
       <div
         v-for="(range, index) in ranges"
         :key="index"
         class="range"
         :style="{ width: getRangeWidth(range) }"
+        @click="rangeClicked(data[range.start].id, data[range.end].id)"
       >
         {{ $t(range.name) }}
       </div>
@@ -36,10 +39,8 @@
   </div>
 </template>
 <script>
-import { ref, onBeforeMount, useContext } from '@nuxtjs/composition-api'
 import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min.js'
-import 'vue-slider-component/dist-css/vue-slider-component.css'
-import 'vue-slider-component/theme/default.css'
+import { ref, onBeforeMount, useContext } from '@nuxtjs/composition-api'
 import { sections, ranges } from './VacuumRangeSlider.json'
 
 export default {
@@ -53,9 +54,10 @@ export default {
       default: true,
     },
   },
-  setup() {
+  emits: ['update'],
+  setup(_, { emit }) {
     const { i18n } = useContext()
-    const modelValue = ref(['0', '16'])
+    let modelValue = ref(['0', '16'])
     const marks = ref({})
     let data = ref([])
 
@@ -82,6 +84,18 @@ export default {
       return `${percentage}%`
     }
 
+    function selectionUpdated() {
+      emit('update', [
+        data.value[modelValue.value[0]].value,
+        data.value[modelValue.value[1]].value,
+      ])
+    }
+
+    function rangeClicked(start, end) {
+      modelValue.value = [start, end]
+      selectionUpdated()
+    }
+
     return {
       modelValue,
       marks,
@@ -90,47 +104,14 @@ export default {
       ranges,
       getRangeWidth,
       getTooltipLabel,
+      selectionUpdated,
+      rangeClicked,
     }
   },
 }
 </script>
+<style src="vue-slider-component/dist-css/vue-slider-component.css"></style>
+<style src="vue-slider-component/theme/default.css"></style>
 <style lang="scss">
 @import 'VacuumRangeSlider';
-
-.vacuum-range-slider {
-  @apply tw-mt-10;
-  @apply tw-w-4/5;
-  margin-left: calc(100% - 92%);
-
-  @screen md {
-    width: 92%;
-    margin-left: calc(100% - 97%);
-  }
-
-  .ranges {
-    display: none;
-
-    @screen md {
-      display: block;
-      margin-top: 40px;
-    }
-
-    .range {
-      @apply tw-bg-pv-grey-96;
-      @apply tw-text-pv-grey-48;
-      display: inline-block;
-      text-align: center;
-      cursor: pointer;
-      padding: 6px;
-      border-right: 1px solid white;
-      border-left: 1px solid white;
-      font-size: 12px;
-
-      &:hover {
-        @apply tw-bg-pv-red;
-        @apply tw-text-pv-white;
-      }
-    }
-  }
-}
 </style>

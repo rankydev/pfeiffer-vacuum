@@ -49,7 +49,7 @@ export default {
         routes.push({
           name: 'Home',
           path: '/',
-          component: '~/pages/_site/_.vue',
+          component: './pages/_site/_.vue',
         })
 
         for (const key in routes) {
