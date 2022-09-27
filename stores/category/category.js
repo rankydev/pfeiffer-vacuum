@@ -7,7 +7,7 @@ import {
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
-import config from '~/plugins/hybris/hybris.config'
+import config from '~/config/hybris.config'
 import { PATH_SHOP } from '~/server/constants'
 import { useCmsStore } from '~/stores/cms'
 
