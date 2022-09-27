@@ -78,22 +78,18 @@ export default defineComponent({
     const productCodes = slides.value.map((e) => e.product?.code)
 
     // Enriched slides with hybris data
-    let enrichedSlides = ref([])
-
-    useAsync(async () => {
+    const enrichedSlides = useAsync(async () => {
       // Fetched hybris products
       let fetchedProducts = await $hybrisApi.productApi.getProducts(
         productCodes
       )
 
-      slides.value.forEach((e) => {
-        enrichedSlides.value.push({
-          ...e,
-          product: {
-            ...fetchedProducts?.find((i) => i.code === e.product.code),
-          },
-        })
-      })
+      return slides.value.map((e) => ({
+        ...e,
+        product: {
+          ...fetchedProducts?.find((i) => i.code === e.product.code),
+        },
+      }))
     }, String(productCodes) || 'empty')
 
     return { enrichedSlides }
