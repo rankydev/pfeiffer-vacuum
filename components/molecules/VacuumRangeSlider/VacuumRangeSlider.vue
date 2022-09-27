@@ -28,7 +28,7 @@
     <div v-if="showRanges" class="ranges">
       <div
         v-for="range in ranges"
-        :key="range"
+        :key="range.name"
         class="range"
         :style="{ width: getRangeWidth(range) }"
         @click="rangeClicked(data[range.start].id, data[range.end].id)"

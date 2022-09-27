@@ -5,4 +5,12 @@ import product from './product.json'
 import registration from './registration.json'
 import category from './category.json'
 import slider from './slider.json'
-export default { language, navigation, form, product, registration, category, slider }
+export default {
+  language,
+  navigation,
+  form,
+  product,
+  registration,
+  category,
+  slider,
+}
