@@ -31,12 +31,16 @@ jest.mock('@nuxtjs/composition-api', () => {
   }
 })
 
-jest.mock('~/utils/getLoggerFor', () => {
-  return () => ({
-    error: (e) => mockLogger(e),
-    debug: (e) => mockLogger(e),
-  })
-})
+jest.mock('~/composables/useLogger', () => ({
+  useLogger: () => {
+    return {
+      logger: {
+        error: (e) => mockLogger(e),
+        debug: (e) => mockLogger(e),
+      },
+    }
+  },
+}))
 
 jest.mock('~/stores/user/partials/useUserApi', () => {
   return {

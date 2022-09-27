@@ -7,41 +7,67 @@ jest.mock('@nuxtjs/composition-api', () => {
   return {
     ...originalModule,
     getCurrentInstance: () => {
-      return { proxy: { $options: { name: 'Test' } } }
+      return { proxy: { $options: { name: 'FromContext' } } }
     },
   }
 })
 
-jest.mock('~/utils/getLoggerFor', () => {
-  return jest.fn((name) => ({
-    info: (msg) => {
-      mockedLog(`[info] [${name}] ${msg}`)
-    },
-    warn: (msg) => {
-      mockedLog(`[warn] [${name}] ${msg}`)
-    },
-    error: (msg) => {
-      mockedLog(`[error] [${name}] ${msg}`)
-    },
-  }))
-})
+jest.useFakeTimers().setSystemTime(new Date('2023-01-01T02:00:00'))
 
 describe('useLogger ', () => {
-  it('should log info', () => {
-    const { logger } = useLogger()
+  test('should create logger instance', () => {
+    const { logger } = useLogger('Test')
+
+    expect(typeof logger).toBe('object')
+  })
+
+  test('should log info', () => {
+    const info = jest.fn()
+    global.console = { info }
+    const { logger } = useLogger('Test')
+
     logger.info('This is an info')
-    expect(mockedLog).toBeCalledWith('[info] [Test] This is an info')
+    expect(info).toBeCalledWith(
+      '[01.01.2023, 02:00:00,000]',
+      '[Test]',
+      'This is an info'
+    )
+  })
+  test('should log warning', () => {
+    const warn = jest.fn()
+    global.console = { warn }
+    const { logger } = useLogger('Test')
+
+    logger.warn('This looks weird')
+    expect(warn).toBeCalledWith(
+      '[01.01.2023, 02:00:00,000]',
+      '[Test]',
+      'This looks weird'
+    )
+  })
+  test('should log error', () => {
+    const error = jest.fn()
+    global.console = { error }
+    const { logger } = useLogger('Test')
+
+    logger.error('Something went wrong')
+    expect(error).toBeCalledWith(
+      '[01.01.2023, 02:00:00,000]',
+      '[Test]',
+      'Something went wrong'
+    )
   })
 
-  it('should log warn', () => {
+  test('should use logger name from context if no name was passed to the composable', () => {
+    const error = jest.fn()
+    global.console = { error }
     const { logger } = useLogger()
-    logger.warn('Something looks weird')
-    expect(mockedLog).toBeCalledWith('[warn] [Test] Something looks weird')
-  })
 
-  it('should log error', () => {
-    const { logger } = useLogger()
-    logger.error('Something went wrong!')
-    expect(mockedLog).toBeCalledWith('[error] [Test] Something went wrong!')
+    logger.error('Something went wrong')
+    expect(error).toBeCalledWith(
+      '[01.01.2023, 02:00:00,000]',
+      '[FromContext]',
+      'Something went wrong'
+    )
   })
 })
