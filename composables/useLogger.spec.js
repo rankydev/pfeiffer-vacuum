@@ -6,27 +6,24 @@ jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   return {
     ...originalModule,
-    useContext: () => ({
-      app: {
-        $getLoggerFor: (name) => {
-          return {
-            info: (msg) => {
-              mockedLog(`[info] [${name}] ${msg}`)
-            },
-            warn: (msg) => {
-              mockedLog(`[warn] [${name}] ${msg}`)
-            },
-            error: (msg) => {
-              mockedLog(`[error] [${name}] ${msg}`)
-            },
-          }
-        },
-      },
-    }),
     getCurrentInstance: () => {
       return { proxy: { $options: { name: 'Test' } } }
     },
   }
+})
+
+jest.mock('~/utils/getLoggerFor', () => {
+  return jest.fn((name) => ({
+    info: (msg) => {
+      mockedLog(`[info] [${name}] ${msg}`)
+    },
+    warn: (msg) => {
+      mockedLog(`[warn] [${name}] ${msg}`)
+    },
+    error: (msg) => {
+      mockedLog(`[error] [${name}] ${msg}`)
+    },
+  }))
 })
 
 describe('useLogger ', () => {

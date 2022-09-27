@@ -40,10 +40,9 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, toRef } from '@nuxtjs/composition-api'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
-import { useMiscStore } from '~/stores/misc'
-import { useRegions } from '~/composables/useRegions'
+import { useCountriesStore } from '~/stores/countries'
 import { helpers, required } from '@vuelidate/validators'
 
 export default defineComponent({
@@ -73,12 +72,14 @@ export default defineComponent({
       region: {},
     })
 
-    const countriesStore = useMiscStore()
-    const countries = computed(() => countriesStore.countries)
+    const countriesStore = useCountriesStore()
+    const isoCode = computed(() => countrySelection.value.country?.isocode)
+    const regions = computed(() => countriesStore.regions[isoCode.value] || [])
+    const countries = toRef(countriesStore, 'countries')
 
-    const { loadRegions, regions } = useRegions(
-      computed(() => countrySelection.value.country?.isocode)
-    )
+    const loadRegions = () => {
+      countriesStore.loadRegions(isoCode.value)
+    }
 
     return {
       helpers,
