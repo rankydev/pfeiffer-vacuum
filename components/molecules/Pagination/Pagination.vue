@@ -10,7 +10,9 @@
           v-bind="{ ...(!isFirst && createNavLink(currentPage - 1)) }"
         >
           <Icon aria-hidden="true" size="base" icon="arrow_back" />
-          <span class="tw-sr-only">Previous</span>
+          <span class="tw-sr-only">
+            {{ $t('navigation.pagination.screenreader.prev') }}
+          </span>
         </component>
       </li>
 
@@ -22,7 +24,9 @@
             :class="{ 'pagination__entry--current': page === currentPage }"
             v-bind="{ ...(page !== currentPage && createNavLink(page)) }"
           >
-            <span class="tw-sr-only">Page</span>
+            <span class="tw-sr-only">
+              {{ $t('navigation.pagination.screenreader.page') }}:
+            </span>
             {{ page }}
           </component>
         </template>
@@ -46,7 +50,9 @@
           v-bind="{ ...(!isLast && createNavLink(currentPage + 1)) }"
         >
           <Icon aria-hidden="true" size="base" icon="arrow_forward" />
-          <span class="tw-sr-only">Next</span>
+          <span class="tw-sr-only">
+            {{ $t('navigation.pagination.screenreader.next') }}
+          </span>
         </component>
       </li>
     </ul>
@@ -92,6 +98,7 @@ export default defineComponent({
         .fill()
         .map((_, idx) => start + idx)
     }
+
     /**
      * build the page array based on the current page and the total numbers of pages
      */
@@ -99,9 +106,13 @@ export default defineComponent({
       if (cols >= props.totalPages) {
         return buildRange(1, props.totalPages)
       }
+
+      // calculate first and last value of the page array for a given page
       const first = parseInt(currentPage.value) - Math.floor((cols - 1) / 2)
       const last = parseInt(currentPage.value) + Math.floor(cols / 2)
       let pageArray = []
+
+      // build page array which does not exceed the given range
       if (first <= 0) {
         pageArray = buildRange(1, cols)
       } else if (last >= props.totalPages) {
@@ -109,11 +120,17 @@ export default defineComponent({
       } else {
         pageArray = buildRange(first, last)
       }
+
+      // check if the first/last page is included in the page array
       const hasFirst = pageArray[0] === 1
       const hasLast = pageArray[pageArray.length - 1] === props.totalPages
+
       return [
+        // add first page and dot values if the first page is not present
         ...(!hasFirst ? [1, 'dots-left'] : []),
+        // remove the first/last two elements if the first/last page is not included in the page array
         ...pageArray.slice(!hasFirst && 2).slice(...(!hasLast ? [0, -2] : [])),
+        // add dot values and last page if the first page is not present
         ...(!hasLast ? ['dots-right', props.totalPages] : []),
       ]
     })
@@ -122,6 +139,9 @@ export default defineComponent({
     const isLast = computed(() => currentPage.value === props.totalPages)
     const isDot = (page) => ['dots-left', 'dots-right'].includes(page)
 
+    /**
+     * build a nuxt link to object for the given page id.
+     */
     const createNavLink = (page) => {
       const { hash, params, path, query } = route.value
       return {

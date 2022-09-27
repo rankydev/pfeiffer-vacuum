@@ -36,6 +36,10 @@ module.exports = {
     '/stores/cms/index.js',
     '/stores/menu/index.js',
     '/stores/page/index.js',
+    '/stores/',
+    '/composables/useAxiosForHybris.js',
+    '/composables/useAxiosInterceptors.js',
+    '/composables/useContextUtil.js',
   ],
   coverageThreshold: {
     global: {

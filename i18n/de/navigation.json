@@ -11,9 +11,17 @@
     },
     "article": {
       "label": "Zum Artikel"
+    },
+    "articleOverview": {
+      "label": "Alles in"
     }
   },
   "pagination": {
-    "counter": "{currentPage} von {totalPages}"
+    "counter": "{currentPage} von {totalPages}",
+    "screenreader": {
+      "page": "Seite",
+      "prev": "Vorherige",
+      "next": "Nächste"
+    }
   }
 }

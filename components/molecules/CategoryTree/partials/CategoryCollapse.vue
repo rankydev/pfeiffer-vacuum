@@ -17,8 +17,8 @@
     <AnimatedCollapse speed="fast">
       <div v-show="isOpen" class="category-collapse__children">
         <Button
-          v-for="(category, i) in children"
-          :key="i"
+          v-for="category in children"
+          :key="getKey(category.category.name)"
           :href="category.href"
           :label="`${category.category.name} (${category.count})`"
           class="category-collapse__child"
@@ -34,6 +34,7 @@ import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollap
 import Button from '~/components/atoms/Button/Button'
 import Icon from '~/components/atoms/Icon/Icon'
 import { ref } from '@vue/composition-api'
+import getKey from '~/composables/useUniqueKey'
 
 export default {
   components: {
@@ -62,12 +63,14 @@ export default {
   setup() {
     const isOpen = ref(false)
 
-    return { isOpen }
+    return { isOpen, getKey }
   },
 }
 </script>
 <style lang="scss">
 .category-collapse {
+  @apply tw-min-w-max;
+
   &__trigger {
     @apply tw-flex tw-items-center tw-justify-between;
   }

@@ -2,8 +2,8 @@
   <div class="category-tree">
     <div class="category-tree__list">
       <CategoryCollapse
-        v-for="(category, index) in categories"
-        :key="index"
+        v-for="category in categories"
+        :key="getKey(category.category.name)"
         :label="category.category.name"
         :count="category.count"
         :href="category.href"
@@ -15,6 +15,7 @@
 </template>
 <script>
 import CategoryCollapse from './partials/CategoryCollapse'
+import getKey from '~/composables/useUniqueKey'
 
 export default {
   components: {
@@ -25,6 +26,9 @@ export default {
       type: Array,
       required: true,
     },
+  },
+  setup() {
+    return { getKey }
   },
 }
 </script>
@@ -41,11 +45,21 @@ export default {
     @apply tw-flex tw-flex-row;
     @apply tw-gap-4;
     @apply tw-pl-6 tw-pr-12 tw-py-4;
-    @apply tw-overflow-y-auto;
+    @apply tw-overflow-y-scroll;
 
     @screen lg {
       @apply tw-flex-col;
       @apply tw-p-0;
+    }
+
+    &::-webkit-scrollbar {
+      @apply tw-bg-pv-grey-96;
+      @apply tw-h-0.5;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply tw-bg-pv-red;
+      @apply tw-rounded-t-sm;
     }
   }
 

@@ -149,6 +149,9 @@ sonar-qube:
       --build-arg CURRENT_REGION_CODE="${CURRENT_REGION_CODE}"
       --build-arg USERCENTRICS_PRIVACY_PATH="${USERCENTRICS_PRIVACY_PATH}"
       --build-arg USERCENTRICS_ID="${USERCENTRICS_ID}"
+      --build-arg KEYCLOAK_BASE_URL="${KEYCLOAK_BASE_URL}"
+      --build-arg KEYCLOAK_REALM_NAME="${KEYCLOAK_REALM_NAME}"
+      --build-arg KEYCLOAK_CLIENT_ID="${KEYCLOAK_CLIENT_ID}"
       -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
