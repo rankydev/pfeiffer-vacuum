@@ -19,7 +19,7 @@ module.exports = {
     '<rootDir>/layouts/**/*.{vue,js}',
     '<rootDir>/middleware/**/*.{vue,js}',
     '<rootDir>/mixins/**/*.{vue,js}',
-    '<rootDir>/pages/**/*.{vue,js}',
+    // '<rootDir>/pages/**/*.{vue,js}',
     '<rootDir>/plugins/**/*.{vue,js}',
     '<rootDir>/resolver/**/*.{vue,js}',
     '<rootDir>/stores/**/*.{vue,js}',
@@ -36,7 +36,6 @@ module.exports = {
     '/stores/cms/index.js',
     '/stores/menu/index.js',
     '/stores/page/index.js',
-    '/pages/_site/_.vue',
   ],
   coverageThreshold: {
     global: {
