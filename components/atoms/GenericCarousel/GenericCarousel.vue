@@ -10,6 +10,7 @@
       v-bind="settings"
       :infinite="infinite"
       :autoplay="autoplay"
+      :wait-for-animate="false"
       :autoplay-speed="autoplaySpeedMilliseconds"
       :class="[
         'carousel__slider',
