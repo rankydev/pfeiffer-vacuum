@@ -27,8 +27,8 @@
     </VueSlider>
     <div v-if="showRanges" class="ranges">
       <div
-        v-for="(range, index) in ranges"
-        :key="index"
+        v-for="range in ranges"
+        :key="range"
         class="range"
         :style="{ width: getRangeWidth(range) }"
         @click="rangeClicked(data[range.start].id, data[range.end].id)"
@@ -57,9 +57,9 @@ export default {
   emits: ['update'],
   setup(_, { emit }) {
     const { i18n } = useContext()
-    let modelValue = ref(['0', '16'])
     const marks = ref({})
     let data = ref([])
+    let modelValue = ref(['0', '16'])
 
     onBeforeMount(() => {
       for (const section of sections.data) {
@@ -68,15 +68,14 @@ export default {
       }
     })
 
-    function getTooltipLabel(value) {
-      return `${data.value[value]?.name} ${
-        data.value[value]?.sup
-          ? '<sup>' + data.value[value]?.sup + '</sup>'
-          : ''
+    const getTooltipLabel = (value) => {
+      const element = data.value[value]
+      return `${element?.name} ${
+        element?.sup ? '<sup>' + element?.sup + '</sup>' : ''
       } ${i18n.t(sections.unit)}`
     }
 
-    function getRangeWidth(range) {
+    const getRangeWidth = (range) => {
       const end = ranges[ranges.length - 1].end
       const perPoint = 100 / end
       const percentage = (range.end - range.start) * perPoint
@@ -84,14 +83,14 @@ export default {
       return `${percentage}%`
     }
 
-    function selectionUpdated() {
+    const selectionUpdated = () => {
       emit('update', [
         data.value[modelValue.value[0]].value,
         data.value[modelValue.value[1]].value,
       ])
     }
 
-    function rangeClicked(start, end) {
+    const rangeClicked = (start, end) => {
       modelValue.value = [start, end]
       selectionUpdated()
     }
