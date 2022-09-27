@@ -2,8 +2,15 @@ import { useCategoryStore } from '~/stores/category'
 import { setActivePinia, createPinia } from 'pinia'
 import { entries } from '~/components/molecules/Breadcrumb/Breadcrumb.stories.content'
 import { createTestingPinia } from '@pinia/testing'
+import {
+  setCategory,
+  useRoute,
+  useContext,
+  getAxiosRequest,
+} from '@nuxtjs/composition-api'
 
-const mockSingleCategory = { categoryPath: ['Category'] }
+const mockRootCategory = { categoryPath: ['Category'] }
+const mockExampleCategory = { categoryPath: ['ExampleCategory'] }
 const mockCategories = { categoryPath: ['Category', 'Category2'] }
 const mockSearchResult = {
   type: 'productCategorySearchPageWsDTO',
@@ -16,50 +23,45 @@ const mockLocalePath = 'localePath'
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   const { ref } = originalModule
+  let returnCategory = ''
+  const axiosRequest = jest.fn((url) => {
+    switch (url) {
+      case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online':
+        return Promise.resolve({ data: mockRootCategory })
+      case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online/categories/Category':
+        return Promise.resolve({ data: mockExampleCategory })
+      case '/api/shop/pfeifferwebservices/v2/pfeiffer/products/search':
+      default:
+        return Promise.resolve({ data: mockSearchResult })
+        break
+    }
+  })
 
   return {
     ...originalModule,
     useContext: jest.fn(() => {
       return {
         $axios: {
-          get: jest.fn((url) => {
-            switch (url) {
-              case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online':
-                return {
-                  then: jest.fn(() => {
-                    return mockSingleCategory
-                  }),
-                }
-              case '/api/shop/pfeifferwebservices/v2/pfeiffer/products/search':
-                return {
-                  then: jest.fn(() => {
-                    return mockSearchResult
-                  }),
-                }
-                break
-            }
-          }),
+          get: axiosRequest,
         },
         i18n: { locale: 'en' },
         app: {
-          localePath: jest.fn(() => {
-            return mockLocalePath
-          }),
+          localePath: jest.fn(() => mockLocalePath),
         },
       }
     }),
-    useRouter: jest.fn(() => {
-      return { options: { base: '' } }
-    }),
-    useRoute: jest.fn(() => {
-      return {
-        value: {
-          fullPath: '',
-          params: { category: '' },
-          query: {},
-        },
-      }
-    }),
+    useRouter: jest.fn(() => ({ options: { base: '' } })),
+    useRoute: jest.fn(() =>
+      ref({
+        fullPath: '/someExample/',
+        params: { category: returnCategory },
+        query: {},
+      })
+    ),
+    setCategory: (category) => {
+      returnCategory = category
+    },
+    getAxiosRequest: () => axiosRequest,
     ssrRef: ref,
   }
 })
@@ -95,7 +97,7 @@ describe('useCategoryStore', () => {
       const categoryStore = await useCategoryStore()
 
       await categoryStore.loadByPath()
-      expect(categoryStore.category).toStrictEqual(mockSingleCategory)
+      expect(categoryStore.category).toStrictEqual(mockRootCategory)
       expect(categoryStore.result).toStrictEqual(mockSearchResult)
     })
 
@@ -121,28 +123,25 @@ describe('useCategoryStore', () => {
 
     test('should return if path has been loaded before', async () => {
       const categoryStore = await useCategoryStore()
+      const context = useContext()
+      const axios = getAxiosRequest()
+      axios.mockClear()
+
+      await categoryStore.loadByPath()
+      await categoryStore.loadByPath()
       await categoryStore.loadByPath()
       await categoryStore.loadByPath()
 
-      // expect loadCategory and loadProducts to be called only one time
+      expect(axios).toBeCalledTimes(2)
     })
 
     test('should load single category given category id', async () => {
-      const pinia = createTestingPinia({
-        initialState: {
-          route: {
-            value: {
-              fullPath: '',
-              params: { category: 'Category' },
-              query: {},
-            },
-          },
-        },
-        stubActions: false,
-      })
+      setCategory('Category')
 
-      const categoryStore = await useCategoryStore(pinia)
+      const categoryStore = await useCategoryStore()
       await categoryStore.loadByPath()
+
+      expect(categoryStore.category).toStrictEqual(mockExampleCategory)
     })
   })
 })
