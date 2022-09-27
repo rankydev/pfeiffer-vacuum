@@ -21,7 +21,7 @@ jest.mock('@nuxtjs/composition-api', () => {
 })
 
 const mockedLoggedIn = jest.fn()
-const mockedCurrentUser = jest.fn()
+const mockedCurrentUser = jest.fn().mockReturnValue(null)
 const mockedLogin = jest.fn()
 const mockedLogout = jest.fn()
 jest.mock('~/stores/user', () => {
@@ -43,7 +43,6 @@ describe('ShopNavigation', () => {
   afterEach(() => jest.clearAllMocks())
   describe('initial state', () => {
     it('should render if logged out', () => {
-      mockedCurrentUser.mockReturnValue(null)
       mockedLoggedIn.mockReturnValue(false)
       const wrapper = shallowMount(ShopNavigation)
       const navLinks = wrapper.findAllComponents(Link)
@@ -88,7 +87,6 @@ describe('ShopNavigation', () => {
 
   describe('during interaction', () => {
     it('should login on click', () => {
-      mockedCurrentUser.mockReturnValue(null)
       mockedLoggedIn.mockReturnValue(false)
       const wrapper = shallowMount(ShopNavigation)
       const loginButton = wrapper.findComponent(Button)
@@ -99,7 +97,6 @@ describe('ShopNavigation', () => {
     })
 
     it('should not login on click if already logged in', () => {
-      mockedCurrentUser.mockReturnValue(null)
       mockedLoggedIn.mockReturnValue(true)
       const wrapper = shallowMount(ShopNavigation)
       const loginButton = wrapper.findComponent(Button)
@@ -110,7 +107,6 @@ describe('ShopNavigation', () => {
     })
 
     it('should log out on click if logged in', () => {
-      mockedCurrentUser.mockReturnValue(null)
       mockedLoggedIn.mockReturnValue(true)
       const wrapper = shallowMount(ShopNavigation)
       const logoutButton = wrapper.findAllComponents(Button).at(1)
