@@ -145,6 +145,7 @@ export default defineComponent({
   img {
     @apply tw-relative;
     @apply tw-overflow-hidden;
+    @apply tw-w-full;
   }
 
   &__1-1 {

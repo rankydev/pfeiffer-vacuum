@@ -4,13 +4,24 @@
       "label": "로그인"
     },
     "overview": {
-      "label": "Overview"
+      "label": "개요"
     },
     "shop": {
-      "label": "Shop"
+      "label": "상점"
     },
     "article": {
       "label": "Go to article"
+    },
+    "articleOverview": {
+      "label": "모두"
+    }
+  },
+  "pagination": {
+    "counter": "{totalPages}개중{currentPage}개",
+    "screenreader": {
+      "page": "페이지",
+      "prev": "이전의",
+      "next": "다음"
     }
   }
 }
