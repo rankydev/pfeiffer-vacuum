@@ -177,7 +177,7 @@ export default {
     baseURL: process.env.BASE_URL || 'https://localhost:3000',
     LANGUAGE_CODES: languageCodes,
     DEFAULT_LANGUAGE_CODE: defaultLanguageCode,
-    REGION_CODES: (process.env.REGION_CODES || 'global').split(','),
+    REGION_CODES: process.env.REGION_CODES || 'global',
     DEFAULT_REGION_CODE: process.env.DEFAULT_REGION_CODE || 'global',
     CURRENT_REGION_CODE: process.env.CURRENT_REGION_CODE || 'global',
     USERCENTRICS_PRIVACY_PATH: process.env.USERCENTRICS_PRIVACY_PATH,
@@ -202,9 +202,6 @@ export default {
     providers: {
       hybris: {
         provider: '~/providers/images/hybrisProvider',
-        options: {
-          baseURL: process.env.SHOP_IMAGE_URL,
-        },
       },
     },
     storyblok: {

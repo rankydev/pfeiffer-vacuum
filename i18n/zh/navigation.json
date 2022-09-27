@@ -4,13 +4,24 @@
       "label": "登入"
     },
     "overview": {
-      "label": "Overview"
+      "label": "概述"
     },
     "shop": {
-      "label": "Shop"
+      "label": "网店"
     },
     "article": {
-      "label": "Go to article"
+      "label": "转到文章"
+    },
+    "articleOverview": {
+      "label": "全部在"
+    }
+  },
+  "pagination": {
+    "counter": "{totalPages}分之{currentPage}",
+    "screenreader": {
+      "page": "页面",
+      "prev": "上面",
+      "next": "下面"
     }
   }
 }
