@@ -9,7 +9,10 @@ import { useCookieHelper } from '~/composables/useCookieHelper'
 import { useContextUtil } from '~/composables/useContextUtil'
 import { useLogger } from '~/composables/useLogger'
 
-const keycloakJS = typeof window !== 'undefined' ? require('keycloak-js') : null
+const keycloakJS =
+  typeof window !== 'undefined' && !process.env.STORYBOOK
+    ? require('keycloak-js')
+    : null
 
 export const useKeycloak = () => {
   const ctx = useContext()
