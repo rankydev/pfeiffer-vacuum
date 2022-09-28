@@ -40,13 +40,12 @@
 
     &:first-child .vue-slider-mark-label {
       @apply tw-left-0;
-      @apply tw-translate-x-0;
     }
 
     &:last-child .vue-slider-mark-label {
       @apply tw-right-0;
       @apply tw-left-auto;
-      @apply tw-translate-x-0;
+      @apply tw-translate-x-2/4;
     }
 
     &-step {
