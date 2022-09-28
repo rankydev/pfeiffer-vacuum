@@ -259,6 +259,7 @@ export default defineComponent({
       speed: 300,
       slidesToScroll: 1,
       initialSlide: 0,
+      swipeToSlide: true,
       ...(props.variant === 'documentCardCarousel' &&
         documentCardCarouselSettings.value),
       ...(props.variant === 'customContentCardCarousel' &&
