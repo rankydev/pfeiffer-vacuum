@@ -22,7 +22,7 @@ describe('Oci store', () => {
   })
 
   describe('during interaction', () => {
-    test('should', async () => {
+    test('should invoke isOciUser correctly', async () => {
       const ociStore = useOciStore()
 
       const result = ociStore.isOciUser(mockAuth)
