@@ -2,7 +2,9 @@
   <div class="category-tree">
     <div
       class="category-tree__list"
-      :class="scrollbarClass"
+      :class="{
+        'category-tree__list--show-scrollbar': showScrollbar,
+      }"
       @touchstart="toggleScrollbarClass"
       @touchend="toggleScrollbarClass"
     >
@@ -34,23 +36,16 @@ export default defineComponent({
     },
   },
   setup() {
-    const appendScrollbarVisibleClass = ref(false)
+    const showScrollbar = ref(false)
 
     const toggleScrollbarClass = () => {
-      appendScrollbarVisibleClass.value = !appendScrollbarVisibleClass.value
+      showScrollbar.value = !showScrollbar.value
     }
-
-    const scrollbarClass = computed(() =>
-      appendScrollbarVisibleClass.value
-        ? 'category-tree__list--show-scrollbar'
-        : ''
-    )
 
     return {
       getKey,
       toggleScrollbarClass,
-      scrollbarClass,
-      appendScrollbarVisibleClass,
+      showScrollbar,
     }
   },
 })
