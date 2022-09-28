@@ -127,6 +127,7 @@ describe('useCategoryStore', () => {
 
       await categoryStore.loadByPath()
       const path = `${mockLocalePath}/${mockChildCategory.categoryPath[0].id}`
+
       expect(categoryStore.parentCategoryPath).toBe(path)
     })
 
@@ -136,6 +137,7 @@ describe('useCategoryStore', () => {
       const categoryStore = await useCategoryStore()
 
       await categoryStore.loadByPath()
+
       expect(categoryStore.breadcrumb).toStrictEqual([
         entries[0],
         entries[1],

@@ -52,7 +52,6 @@ export default defineComponent({
       try {
         await catgeoryStore.loadByPath()
       } catch (error) {
-        console.log(error)
         if (process.server) {
           context.res.statusCode = 404
           hasError.value = error

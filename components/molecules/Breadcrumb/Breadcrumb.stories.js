@@ -1,6 +1,6 @@
 import Breadcrumb from './Breadcrumb'
 import { entries } from './Breadcrumb.stories.content'
-console.log(entries)
+
 export default {
   title: 'Molecules/m_105 Breadcrumbs',
   component: Breadcrumb,
