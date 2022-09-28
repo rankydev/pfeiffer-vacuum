@@ -119,30 +119,30 @@
 .vacuum-range-slider {
   @apply tw-mt-10;
 
-  .ranges {
+  &__ranges {
     @apply tw-hidden;
 
     @screen md {
       @apply tw-flex;
       @apply tw-mt-10;
     }
+  }
 
-    .range {
-      @apply tw-inline-flex;
-      @apply tw-flex-auto;
-      @apply tw-items-center tw-justify-center;
-      @apply tw-bg-pv-grey-96;
-      @apply tw-text-pv-grey-48;
-      @apply tw-text-center;
-      @apply tw-cursor-pointer;
-      @apply tw-p-1.5;
-      @apply tw-border-x-pv-white tw-border-x;
-      @apply tw-text-xs;
+  &__range {
+    @apply tw-inline-flex;
+    @apply tw-flex-auto;
+    @apply tw-items-center tw-justify-center;
+    @apply tw-bg-pv-grey-96;
+    @apply tw-text-pv-grey-48;
+    @apply tw-text-center;
+    @apply tw-cursor-pointer;
+    @apply tw-p-1.5;
+    @apply tw-border-x-pv-white tw-border-x;
+    @apply tw-text-xs;
 
-      &:hover {
-        @apply tw-bg-pv-red;
-        @apply tw-text-pv-white;
-      }
+    &:hover {
+      @apply tw-bg-pv-red;
+      @apply tw-text-pv-white;
     }
   }
 }

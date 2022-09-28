@@ -25,11 +25,11 @@
         </div>
       </template>
     </VueSlider>
-    <div v-if="showRanges" class="ranges">
+    <div v-if="showRanges" class="vacuum-range-slider__ranges">
       <div
         v-for="range in ranges"
         :key="range.name"
-        class="range"
+        class="vacuum-range-slider__range"
         :style="{ width: getRangeWidth(range) }"
         @click="rangeClicked(data[range.start].id, data[range.end].id)"
       >
@@ -109,8 +109,8 @@ export default {
   },
 }
 </script>
-<style src="vue-slider-component/dist-css/vue-slider-component.css"></style>
-<style src="vue-slider-component/theme/default.css"></style>
 <style lang="scss">
+@import 'node_modules/vue-slider-component/dist-css/vue-slider-component.css';
+@import 'node_modules/vue-slider-component/theme/default.css';
 @import 'VacuumRangeSlider';
 </style>
