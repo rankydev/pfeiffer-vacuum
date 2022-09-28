@@ -6,7 +6,7 @@ describe('VacuumRangeSlider', () => {
   describe('initial state', () => {
     test('should render properly given no props', () => {
       const wrapper = shallowMount(VacuumRangeSlider)
-      const ranges = wrapper.findAll('.range')
+      const ranges = wrapper.findAll('.vacuum-range-slider__range')
       const slider = wrapper.find('vueslider-stub')
 
       expect(ranges.length).toBe(sliderData.ranges.length)
@@ -16,7 +16,7 @@ describe('VacuumRangeSlider', () => {
       const wrapper = shallowMount(VacuumRangeSlider, {
         propsData: { showRanges: false },
       })
-      const rangeWrapper = wrapper.find('.ranges')
+      const rangeWrapper = wrapper.find('.vacuum-range-slider__ranges')
 
       expect(rangeWrapper.exists()).toBeFalsy()
     })
@@ -24,7 +24,7 @@ describe('VacuumRangeSlider', () => {
   describe('during interaction', () => {
     test('should emit correct value on range click', async () => {
       const wrapper = shallowMount(VacuumRangeSlider)
-      const ranges = wrapper.findAll('.range')
+      const ranges = wrapper.findAll('.vacuum-range-slider__range')
       const mockEmit = jest.fn()
 
       wrapper.vm.$emit = mockEmit
