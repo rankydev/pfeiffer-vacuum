@@ -58,7 +58,7 @@ export const useKeycloak = () => {
   const createKeycloakInstance = () => {
     logger.debug('createKeycloakInstance')
 
-    const { app, $keycloakInstance } = ctx
+    const { app, $keycloakInstance, $config } = ctx
     if (!keycloakJS || keycloakInstance.value) {
       logger.debug('No keycloakJS or existing keycloakInstance')
       return
@@ -78,9 +78,9 @@ export const useKeycloak = () => {
 
     logger.debug('creating new keycloakInstance')
 
-    const keyCloakBase = process.env.KEYCLOAK_BASE_URL
-    const keyCloakRealm = process.env.KEYCLOAK_REALM_NAME
-    const keyCloakClientId = process.env.KEYCLOAK_CLIENT_ID
+    const keyCloakBase = $config.KEYCLOAK_BASE_URL
+    const keyCloakRealm = $config.KEYCLOAK_REALM_NAME
+    const keyCloakClientId = $config.KEYCLOAK_CLIENT_ID
 
     //keycloakConfig, set the URL, realm, client
     const keycloakConfig = {

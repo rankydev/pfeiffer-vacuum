@@ -179,6 +179,10 @@ export default {
     DEFAULT_REGION_CODE: process.env.DEFAULT_REGION_CODE || 'global',
     CURRENT_REGION_CODE: process.env.CURRENT_REGION_CODE || 'global',
     USERCENTRICS_PRIVACY_PATH: process.env.USERCENTRICS_PRIVACY_PATH,
+    // keycloak
+    KEYCLOAK_BASE_URL: process.env.KEYCLOAK_BASE_URL,
+    KEYCLOAK_REALM_NAME: process.env.KEYCLOAK_REALM_NAME,
+    KEYCLOAK_CLIENT_ID: process.env.KEYCLOAK_CLIENT_ID,
   },
 
   env: {
@@ -190,12 +194,7 @@ export default {
     STORYBLOK_ACCESS_TOKEN: process.env.STORYBLOK_ACCESS_TOKEN,
     SHOP_BASE_URL: process.env.SHOP_BASE_URL,
     SHOP_IMAGE_URL: process.env.SHOP_IMAGE_URL,
-    SHOP_TIMEOUT: process.env.SHOP_TIMEOUT,
     CONSOLA_LEVEL: process.env.CONSOLA_LEVEL,
-    // keycloak
-    KEYCLOAK_BASE_URL: process.env.KEYCLOAK_BASE_URL,
-    KEYCLOAK_REALM_NAME: process.env.KEYCLOAK_REALM_NAME,
-    KEYCLOAK_CLIENT_ID: process.env.KEYCLOAK_CLIENT_ID,
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
