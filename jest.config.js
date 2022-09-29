@@ -47,7 +47,6 @@ module.exports = {
     '/stores/product/product.js',
     '/stores/user/user.js',
     '/stores/user/partials/useKeycloak.js',
-    '/stores/user/partials/useUserApi.js',
     '/pages/_site/_.vue',
     '/composables/useAxiosForHybris.js',
     '/composables/useAxiosInterceptors.js',
