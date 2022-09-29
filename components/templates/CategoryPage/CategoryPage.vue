@@ -31,7 +31,13 @@
           />
         </ContentWrapper>
 
-        <ContentWrapper> Placeholder for SearchResults </ContentWrapper>
+        <ContentWrapper>
+          <SearchResult
+            :headline="headline"
+            :products="products"
+            :pagination="pagination"
+          />
+        </ContentWrapper>
       </main>
     </slot>
 
@@ -69,6 +75,7 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
 import { useCategoryStore } from '~/stores/category'
+import SearchResult from '~/components/molecules/SearchResult/SearchResult.vue'
 
 export default defineComponent({
   name: 'CategoryPage',
@@ -76,6 +83,7 @@ export default defineComponent({
     ContentWrapper,
     OnPageNavigation,
     ResultHeadline,
+    SearchResult,
   },
   props: {
     content: {
@@ -102,6 +110,11 @@ export default defineComponent({
     const headline = computed(() => categoryStore.categoryName)
     const link = computed(() => categoryStore.parentCategoryPath)
     const count = computed(() => categoryStore.result?.pagination?.totalResults)
+    const products = computed(() => categoryStore.result?.products)
+    const pagination = computed(
+      () => categoryStore.result?.pagination?.totalPages
+    )
+    console.log('CATEGORIES', categoryStore.result)
 
     return {
       top,
@@ -113,6 +126,8 @@ export default defineComponent({
       headline,
       link,
       count,
+      products,
+      pagination,
     }
   },
   head() {
