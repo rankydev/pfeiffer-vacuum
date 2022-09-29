@@ -16,7 +16,7 @@ export const useCountriesStore = defineStore('countries', () => {
     const result = await axios.$get(config.COUNTRIES_API, {}).catch((error) => {
       logger.error(
         'Error when fetching countries. Returning empty array.',
-        error || ''
+        error
       )
     })
 
@@ -42,7 +42,7 @@ export const useCountriesStore = defineStore('countries', () => {
       .catch((error) => {
         logger.error(
           'Error when fetching regions. Returning empty array.',
-          error || ''
+          error
         )
       })
 
@@ -50,10 +50,8 @@ export const useCountriesStore = defineStore('countries', () => {
   }
 
   // the initial store initialization
-  if (countries.value?.length === 0) {
-    onBeforeMount(loadCountries)
-    onServerPrefetch(loadCountries)
-  }
+  onBeforeMount(loadCountries)
+  onServerPrefetch(loadCountries)
 
   return { countries, regions, loadRegions }
 })
