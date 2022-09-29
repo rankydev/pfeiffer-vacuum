@@ -1,6 +1,6 @@
 <template>
   <ContentWrapper
-    v-if="!hideBreadcrumb || quicklinks.length > 0"
+    v-if="!hideBreadcrumb || quicklinks.length > 0 || $slots.default"
     class="on-page-navigation"
   >
     <Breadcrumb v-if="!hideBreadcrumb" />
@@ -16,6 +16,8 @@
         {{ item.label }}
       </Link>
     </div>
+
+    <slot />
   </ContentWrapper>
 </template>
 
