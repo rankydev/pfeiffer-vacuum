@@ -22,6 +22,7 @@
     />
 
     <FormCountrySelection
+      :validate="validate"
       @update="
         requestData.registration.address = $event
         $emit('update', requestData)
@@ -104,12 +105,11 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref, toRef } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import Password from '~/components/atoms/FormComponents/Password/Password'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
 import { required, email, helpers } from '@vuelidate/validators'
-import { useCountriesStore } from '~/stores/countries'
 
 export default defineComponent({
   name: 'CreateAccount',
@@ -147,25 +147,11 @@ export default defineComponent({
       },
     })
 
-    const countriesStore = useCountriesStore()
-    const countries = toRef(countriesStore, 'countries')
-    const isoCode = computed(
-      () => requestData.value.registration?.address?.country?.isocode
-    )
-    const regions = computed(() => countriesStore.regions[isoCode.value] || [])
-
-    const loadRegions = () => {
-      countriesStore.loadRegions(isoCode.value)
-    }
-
     return {
       required,
       email,
       helpers,
       requestData,
-      loadRegions,
-      regions,
-      countries,
     }
   },
 })

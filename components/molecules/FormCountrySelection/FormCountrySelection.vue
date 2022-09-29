@@ -14,7 +14,6 @@
       :validate="validate"
       @update="
         countrySelection.country = $event
-        loadRegions()
         $emit('update', countrySelection)
       "
     />
@@ -40,7 +39,13 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref, toRef } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  toRef,
+  watch,
+} from '@nuxtjs/composition-api'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import { useCountriesStore } from '~/stores/countries'
 import { helpers, required } from '@vuelidate/validators'
@@ -74,18 +79,18 @@ export default defineComponent({
 
     const countriesStore = useCountriesStore()
     const isoCode = computed(() => countrySelection.value.country?.isocode)
-    const regions = computed(() => countriesStore.regions[isoCode.value] || [])
+    const regions = ref([])
     const countries = toRef(countriesStore, 'countries')
 
-    const loadRegions = () => {
-      countriesStore.loadRegions(isoCode.value)
-    }
+    watch(isoCode, async (newIsoCode) => {
+      await countriesStore.loadRegions(newIsoCode)
+      regions.value = countriesStore.regions[newIsoCode] || []
+    })
 
     return {
       helpers,
       required,
       countrySelection,
-      loadRegions,
       regions,
       countries,
     }

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from '@nuxtjs/composition-api'
+import { ref, onServerPrefetch, onBeforeMount } from '@nuxtjs/composition-api'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
 import { joinURL } from 'ufo'
@@ -40,7 +40,8 @@ export const useCountriesStore = defineStore('countries', () => {
 
   // the initial store initialization
   if (countries.value?.length === 0) {
-    loadCountries()
+    onBeforeMount(loadCountries)
+    onServerPrefetch(loadCountries)
   }
 
   return { countries, regions, loadRegions }

@@ -10,6 +10,15 @@ jest.mock('~/composables/useAxiosForHybris', () => ({
   },
 }))
 
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  return {
+    ...originalModule,
+    onBeforeMount: (callback) => callback(),
+    onServerPrefetch: jest.fn(),
+  }
+})
+
 describe('useCountriesStore', () => {
   beforeEach(() => {
     setActivePinia(createPinia())

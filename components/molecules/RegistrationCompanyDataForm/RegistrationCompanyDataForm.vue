@@ -119,6 +119,7 @@
       </div>
 
       <FormCountrySelection
+        :validate="validate"
         @update="
           requestData.companyData.address.countrySelection = $event
           $emit('update', requestData)
