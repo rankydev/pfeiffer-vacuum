@@ -15,7 +15,10 @@
 
     <Infobox :text="$t('registration.infotext')" />
 
-    <div v-if="addCompany" class="registration-company-data-form__form-section">
+    <div
+      v-if="addCompany && !proceedWithoutCompany"
+      class="registration-company-data-form__form-section"
+    >
       <div class="registration-company-data-form__row-container">
         <div class="registration-company-data-form__row-container--half">
           <PvLabel
@@ -38,7 +41,7 @@
               },
             ]"
             @update="
-              requestData.companyData.registeredCustomer = $event
+              requestData.companyData.companyAlreadyCustomer = $event
               $emit('update', requestData)
             "
           />
@@ -49,9 +52,9 @@
           :label="$t('registration.formCompanyData.customerNumber')"
           placeholder=""
           :validate="validate"
-          :disabled="!requestData.companyData.registeredCustomer"
+          :disabled="!requestData.companyData.companyAlreadyCustomer"
           @update="
-            requestData.companyData.customerNumber = $event
+            requestData.companyData.companyUid = $event
             $emit('update', requestData)
           "
         />
@@ -62,7 +65,7 @@
         placeholder=""
         :validate="validate"
         @update="
-          requestData.companyData.additionalCompanyInformation = $event
+          requestData.companyData.companyFurtherDetails = $event
           $emit('update', requestData)
         "
       />
@@ -82,7 +85,7 @@
         placeholder=""
         :validate="validate"
         @update="
-          requestData.companyData.tax = $event
+          requestData.companyData.companyVatId = $event
           $emit('update', requestData)
         "
       />
@@ -101,7 +104,7 @@
             ),
           }"
           @update="
-            requestData.companyData.telephoneNumber = $event
+            requestData.companyData.phone = $event
             $emit('update', requestData)
           "
         />
@@ -123,10 +126,6 @@
         disabled
         :selected-country="selectedCountry"
         :selected-region="selectedRegion"
-        @update="
-          requestData.companyData.address.countrySelection = $event
-          $emit('update', requestData)
-        "
       />
 
       <div class="registration-company-data-form__row-container">
@@ -143,7 +142,7 @@
           }"
           :validate="validate"
           @update="
-            requestData.companyData.address.street = $event
+            requestData.companyData.companyAddressStreet = $event
             $emit('update', requestData)
           "
         />
@@ -161,7 +160,7 @@
           }"
           :validate="validate"
           @update="
-            requestData.companyData.address.houseNumber = $event
+            requestData.companyData.companyAddressStreetLine2 = $event
             $emit('update', requestData)
           "
         />
@@ -181,7 +180,7 @@
           }"
           :validate="validate"
           @update="
-            requestData.companyData.address.postalCode = $event
+            requestData.companyData.companyAddressPostalCode = $event
             $emit('update', requestData)
           "
         />
@@ -199,7 +198,7 @@
           }"
           :validate="validate"
           @update="
-            requestData.companyData.address.city = $event
+            requestData.companyData.companyAddressTown = $event
             $emit('update', requestData)
           "
         />
@@ -245,6 +244,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    proceedWithoutCompany: {
+      type: Boolean,
+      default: false,
+    },
     selectedCountry: {
       type: Object,
       default: () => ({}),
@@ -263,58 +266,31 @@ export default defineComponent({
     'update',
   ],
   setup(_, { emit }) {
-    const requestData = ref({
+    const companyDataObject = {
       companyData: {
-        registeredCustomer: false,
-        customerNumber: '',
-        additionalCompanyInformation: '',
+        companyAlreadyCustomer: false,
+        companyUid: '',
+        companyFurtherDetails: '',
         department: '',
-        tax: '',
-        telephoneNumber: '',
+        companyVatId: '',
+        phone: '',
         fax: '',
-        address: {
-          countrySelection: {
-            country: {},
-            region: {},
-          },
-          street: '',
-          houseNumber: '',
-          postalCode: '',
-          city: '',
-        },
+        companyAddressStreet: '',
+        companyAddressStreetLine2: '',
+        companyAddressPostalCode: '',
+        companyAddressTown: '',
       },
-    })
+    }
 
+    const requestData = ref(companyDataObject)
     const addCompany = ref(false)
 
     const resetForm = () => {
-      requestData.value = {
-        companyData: {
-          registeredCustomer: false,
-          customerNumber: '',
-          additionalCompanyInformation: '',
-          department: '',
-          tax: '',
-          telephoneNumber: '',
-          fax: '',
-          address: {
-            countrySelection: {
-              country: {},
-              region: {},
-            },
-            street: '',
-            houseNumber: '',
-            postalCode: '',
-            city: '',
-          },
-        },
-      }
+      requestData.value = companyDataObject
 
       addCompany.value = false
       emit('update', requestData)
     }
-
-    const registeredCustomerValues = []
 
     return {
       helpers,
@@ -322,7 +298,6 @@ export default defineComponent({
       requiredIf,
       requestData,
       addCompany,
-      registeredCustomerValues,
       resetForm,
     }
   },

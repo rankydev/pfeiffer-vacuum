@@ -26,6 +26,7 @@
                 ? requestData.personalData.address.region
                 : {}
             "
+            :proceed-without-company="proceedWithoutCompany"
             @update="requestData.companyData = $event.companyData"
           />
           <RegistrationPageDataProtection />
@@ -57,7 +58,6 @@ import {
   useContext,
   useRouter,
   computed,
-  watch,
 } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import Richtext from '~/components/atoms/Richtext/Richtext'
@@ -70,6 +70,7 @@ import HintModal from '~/components/organisms/RegistrationPage/HintModal/HintMod
 import getKey from '~/composables/useUniqueKey'
 import { useToast } from '~/composables/useToast'
 import useVuelidate from '@vuelidate/core'
+import { useUserApi } from '~/stores/user/partials/useUserApi'
 
 export default defineComponent({
   name: 'RegistrationPage',
@@ -85,6 +86,7 @@ export default defineComponent({
   },
   setup() {
     const { i18n } = useContext()
+    const userApi = useUserApi()
     const router = useRouter()
     const toast = useToast()
     const v = useVuelidate()
@@ -185,26 +187,37 @@ export default defineComponent({
 
     const submit = async () => {
       loading.value = true
+      const customerData = {
+        ...requestData.value.personalData,
+        ...requestData.value.companyData,
+        companyAddressCountryIso:
+          requestData.value.personalData.address.country.isocode,
+        companyAddressRegion:
+          requestData.value.personalData.address.region.name,
+        companyAlreadyCustomer:
+          requestData.value.companyData.companyAlreadyCustomer || false,
+      }
 
-      /* await userStore.sendRegistration
-          .then(() => {
-            loading.value = false
-            router.push('/registration/success')
-            toast.success(
-              {
-                description: i18n.t('form.message.success'),
-              },
-              {
-                timeout: 8000,
-              }
-            )
+      await userApi
+        .register(customerData)
+        .then(() => {
+          loading.value = false
+          router.push('/registration/success')
+          toast.success(
+            {
+              description: i18n.t('form.message.success'),
+            },
+            {
+              timeout: 8000,
+            }
+          )
+        })
+        .catch(() => {
+          loading.value = false
+          toast.error({
+            description: i18n.t('form.message.error'),
           })
-          .catch(() => {
-            loading.value = false
-            toast.error({
-              description: i18n.t('form.message.error'),
-            })
-          })*/
+        })
     }
 
     return {

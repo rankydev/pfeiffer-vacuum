@@ -16,12 +16,13 @@
       }"
       :validate="validate"
       @update="
-        requestData.registration.company = $event
+        requestData.registration.companyName = $event
         $emit('update', requestData)
       "
     />
 
     <FormCountrySelection
+      :validate="validate"
       @update="
         requestData.registration.address = $event
         $emit('update', requestData)
@@ -135,7 +136,7 @@ export default defineComponent({
   setup() {
     const requestData = ref({
       registration: {
-        company: '',
+        companyName: '',
         address: {
           country: {},
           region: {},
