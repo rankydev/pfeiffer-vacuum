@@ -11,23 +11,20 @@ export const useContactStore = defineStore('contact', () => {
   const userStore = useUserStore()
 
   const submitContact = async (contact) => {
-    const result = await axios.post(
-      joinURL(
-        `${config.CONTACT_API}/${userStore.loggedIn ? 'current' : 'anonymous'}`
-      ),
-      contact
-    )
+    const result = await axios
+      .post(
+        joinURL(
+          `${config.CONTACT_API}/${
+            userStore.loggedIn ? 'current' : 'anonymous'
+          }`
+        ),
+        contact
+      )
+      .catch((error) => {
+        logger.error('Error when sending contact form. Returning false.', error)
+      })
 
-    if (result.status === 200) {
-      return true
-    }
-
-    logger.error(
-      'Error when sending contact form. Returning false.',
-      result.error
-    )
-
-    return false
+    return result?.status === 200
   }
 
   return {
