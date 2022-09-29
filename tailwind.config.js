@@ -19,6 +19,7 @@ module.exports = {
       'border-grey-16': 'inset 0 0 0 2px #292929',
       'border-white': 'inset 0 0 0 2px #ffffff',
       select: '0 48px 48px -48px #CCCCCC',
+      'slider-handle': '0 0 0 4px rgba(0, 0, 0, 0.05)',
     },
     colors: {
       'pv-red': '#dd1541',
@@ -111,6 +112,9 @@ module.exports = {
         desktop: 'repeat(12, minmax(0, 1fr))',
         tablet: 'repeat(8, minmax(0, 1fr))',
         mobile: 'repeat(4, minmax(0, 1fr))',
+      },
+      content: {
+        empty: '',
       },
     },
   },

@@ -112,7 +112,7 @@ export default defineComponent({
     @apply tw-mr-auto;
   }
 
-  &__top-navigation {
+  & .header__top-navigation {
     @apply tw-hidden;
   }
 
@@ -173,7 +173,7 @@ export default defineComponent({
       @apply tw-shrink tw-grow;
     }
 
-    &__top-navigation {
+    & .header__top-navigation {
       @apply tw-flex;
     }
 

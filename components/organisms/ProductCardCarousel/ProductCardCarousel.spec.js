@@ -1,28 +1,25 @@
-import ProductCardCarousel from './ProductCardCarousel'
+import ProductCardCarousel from './ProductCardCarousel.vue'
 import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
-import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import { carouselEntries } from './ProductCardCarousel.stories.content'
 
 let wrapper
-const getProducts = jest.fn((e) => {
+const mockGetProducts = jest.fn((e) => {
   return e
 })
 
-function createComponent(propsData = {}) {
-  const localVue = createLocalVue()
-
-  localVue.prototype.$nuxt = {
-    context: {
-      $hybrisApi: {
-        productApi: {
-          getProducts: getProducts,
-        },
-      },
+jest.mock('~/stores/product', () => {
+  return {
+    useProductStore: () => {
+      return {
+        getProducts: mockGetProducts,
+      }
     },
   }
+})
 
+function createComponent(propsData = {}) {
   wrapper = shallowMount(ProductCardCarousel, {
-    localVue,
     propsData,
   })
 }
@@ -34,7 +31,7 @@ describe('ProductCardCarousel', () => {
 
       const carousel = wrapper.findComponent(ContentCarousel)
       expect(carousel.exists()).toBeFalsy()
-      expect(getProducts).toBeCalledTimes(1)
+      expect(mockGetProducts).toBeCalledTimes(1)
     })
 
     test('should render component given slides', async () => {

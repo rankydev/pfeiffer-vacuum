@@ -2,29 +2,22 @@ import { shallowMount } from '@vue/test-utils'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import { setActivePinia, createPinia } from 'pinia'
-import { ref } from '@nuxtjs/composition-api'
+import { reactive } from '@nuxtjs/composition-api'
 
-const mockLoadCountries = jest.fn()
-jest.mock('~/stores/misc', () => {
-  return {
-    __esModule: true,
-    useMiscStore: () => {
-      return {
-        loadCountries: mockLoadCountries,
-        countries: ['Land1'],
-      }
-    },
-  }
+const mockedRegions = reactive({})
+const mockLoadRegions = jest.fn((isoCode) => {
+  mockedRegions[isoCode] = ['Region1']
 })
-
-const mockLoadRegions = jest.fn(() => {
-  mockedRegions.value = ['Region1']
-})
-const mockedRegions = ref([])
-jest.mock('~/composables/useRegions', () => {
+jest.mock('~/stores/countries', () => {
   return {
-    useRegions: () => {
+    useCountriesStore: () => {
       return {
+        countries: [
+          {
+            isocode: 'US',
+            name: 'United States of America',
+          },
+        ],
         loadRegions: mockLoadRegions,
         regions: mockedRegions,
       }

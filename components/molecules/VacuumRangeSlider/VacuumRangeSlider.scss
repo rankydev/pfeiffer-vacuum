@@ -1,0 +1,147 @@
+/* component style */
+.vue-slider-disabled {
+  @apply tw-opacity-50;
+  @apply tw-cursor-not-allowed;
+}
+
+/* rail style */
+.vue-slider-rail {
+  @apply tw-bg-pv-grey-80;
+  @apply tw-rounded-none;
+  @apply tw-h-1.5;
+}
+
+/* process style */
+.vue-slider-process {
+  @apply tw-bg-pv-red;
+  @apply tw-rounded-2xl;
+  @apply tw-z-10;
+}
+
+/* mark style */
+.vue-slider-marks {
+  @apply tw-hidden;
+
+  @screen md {
+    @apply tw-flex tw-items-center;
+  }
+
+  .vue-slider-mark {
+    @apply tw-top-2/4;
+    @apply tw-translate-x-0 tw--translate-y-2/4;
+    height: 16px !important;
+
+    &:first-child,
+    &:last-child {
+      .vue-slider-mark-step {
+        @apply tw-hidden;
+      }
+    }
+
+    &:first-child .vue-slider-mark-label {
+      @apply tw-left-0;
+    }
+
+    &:last-child .vue-slider-mark-label {
+      @apply tw-right-0;
+      @apply tw-left-auto;
+      @apply tw-translate-x-2/4;
+    }
+
+    &-step {
+      @apply tw-w-0.5 tw-h-4;
+      @apply tw-bg-pv-grey-80;
+      @apply tw-rounded-none;
+    }
+
+    &-label {
+      @apply tw-absolute;
+      @apply tw-text-xs;
+      @apply tw-whitespace-nowrap;
+    }
+  }
+}
+
+/* dot style */
+.vue-slider-dot {
+  @apply tw-z-20;
+
+  &-handle {
+    @apply tw-cursor-pointer;
+    @apply tw-bg-pv-red;
+    @apply tw-box-border;
+    @apply tw-h-4 tw-w-4;
+    @apply tw-rounded-full;
+    @apply tw-shadow-slider-handle;
+
+    &-disabled {
+      @apply tw-cursor-not-allowed;
+      @apply tw-bg-pv-red;
+    }
+  }
+
+  &-tooltip {
+    &-inner {
+      @apply tw-text-xs;
+      @apply tw-whitespace-nowrap;
+      @apply tw-py-2 tw-px-3;
+      @apply tw-text-center;
+      @apply tw-text-pv-white;
+      @apply tw-rounded-md;
+      @apply tw-bg-pv-red;
+      @apply tw-border-pv-red;
+      @apply tw-box-content;
+
+      &::after {
+        @apply tw-content-empty;
+        @apply tw-absolute;
+      }
+    }
+
+    &-text {
+      @apply tw-text-xs;
+      @apply tw-font-bold;
+    }
+  }
+
+  &-tooltip-wrapper {
+    @apply tw-opacity-0;
+    @apply tw-ease-in-out tw-duration-300;
+
+    &-show {
+      @apply tw-opacity-100;
+    }
+  }
+}
+
+/* wrapper and range style */
+.vacuum-range-slider {
+  @apply tw-mt-10;
+
+  &__ranges {
+    @apply tw-hidden;
+
+    @screen md {
+      @apply tw-flex;
+      @apply tw-mt-10;
+    }
+  }
+
+  &__range {
+    @apply tw-inline-flex;
+    @apply tw-flex-auto;
+    @apply tw-items-center tw-justify-center;
+    @apply tw-bg-pv-grey-96;
+    @apply tw-text-pv-grey-48;
+    @apply tw-text-center;
+    @apply tw-cursor-pointer;
+    @apply tw-p-1.5;
+    @apply tw-border-x-pv-white tw-border-x;
+    @apply tw-text-xs;
+
+    &:hover {
+      @apply tw-bg-pv-red;
+      @apply tw-text-pv-white;
+    }
+  }
+}

@@ -3,7 +3,7 @@
     v-if="!hideBreadcrumb || quicklinks.length > 0"
     class="on-page-navigation"
   >
-    <Breadcrumb v-if="!hideBreadcrumb" />
+    <Breadcrumb v-if="!hideBreadcrumb" :entries="pageStore.breadcrumb" />
 
     <div v-if="quicklinks.length > 0" class="on-page-navigation__quicklinks">
       <Link
@@ -25,6 +25,8 @@ import Link from '~/components/atoms/Link/Link'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper.vue'
 import Breadcrumb from '~/components/molecules/Breadcrumb/Breadcrumb.vue'
 
+import { usePageStore } from '~/stores/page'
+
 export default defineComponent({
   components: {
     Link,
@@ -40,6 +42,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+  },
+  setup() {
+    const pageStore = usePageStore()
+    return { pageStore }
   },
 })
 </script>
