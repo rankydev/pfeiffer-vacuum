@@ -38,4 +38,5 @@ export default {
   headline: 'Document Card Carousel',
   ...GeneralTeaserCarouselContent,
   slides,
+  variant: 'documentCardCarousel',
 }
