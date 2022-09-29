@@ -173,6 +173,9 @@ export default {
 
   publicRuntimeConfig: {
     baseURL: process.env.BASE_URL || 'https://localhost:3000',
+    axios: {
+      baseURL: process.env.BASE_URL || 'https://localhost:3000',
+    },
     LANGUAGE_CODES: languageCodes,
     DEFAULT_LANGUAGE_CODE: defaultLanguageCode,
     REGION_CODES: process.env.REGION_CODES || 'global',
@@ -231,9 +234,4 @@ export default {
       handler: '~/server/middleware/shop-images.js',
     },
   ],
-
-  axios: {
-    // See: https://axios.nuxtjs.org/options
-    baseURL: process.env.SHOP_BASE_URL,
-  },
 }

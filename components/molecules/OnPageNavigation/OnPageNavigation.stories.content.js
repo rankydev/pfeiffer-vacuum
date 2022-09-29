@@ -21,7 +21,7 @@ export const quicklinks = [
   },
 ]
 
-export const OnPageNavigation = {
+export const OnPageNavigationContent = {
   _uid: '83765e37-cc94-4ecb-84fa-f25b57dbb4de',
   component: 'OnPageNavigation',
   quicklinks,
