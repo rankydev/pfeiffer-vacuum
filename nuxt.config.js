@@ -49,7 +49,7 @@ export default {
         routes.push({
           name: 'Home',
           path: '/',
-          component: '~/pages/_site/_.vue',
+          component: './pages/_site/_.vue',
         })
 
         for (const key in routes) {
@@ -61,11 +61,9 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/helper/logger' },
     { src: '~/plugins/storyblok/storyblok-api-client', mode: 'client' },
-    { src: '~/plugins/helper/breakpoints' },
+    '~/plugins/helper/breakpoints',
     { src: '~/plugins/service/service.plugin', mode: 'client' },
-    { src: '~/plugins/hybris/hybrisApi' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -192,7 +190,12 @@ export default {
     STORYBLOK_ACCESS_TOKEN: process.env.STORYBLOK_ACCESS_TOKEN,
     SHOP_BASE_URL: process.env.SHOP_BASE_URL,
     SHOP_IMAGE_URL: process.env.SHOP_IMAGE_URL,
+    SHOP_TIMEOUT: process.env.SHOP_TIMEOUT,
     CONSOLA_LEVEL: process.env.CONSOLA_LEVEL,
+    // keycloak
+    KEYCLOAK_BASE_URL: process.env.KEYCLOAK_BASE_URL,
+    KEYCLOAK_REALM_NAME: process.env.KEYCLOAK_REALM_NAME,
+    KEYCLOAK_CLIENT_ID: process.env.KEYCLOAK_CLIENT_ID,
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img

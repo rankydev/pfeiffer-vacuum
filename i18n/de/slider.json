@@ -1,0 +1,8 @@
+{
+  "unit": "mbar",
+  "ultraHighVacuum": "Ultrahochvakuum",
+  "highVacuum": "Hochvakuum ",
+  "mediumVacuum": "Feinvakuum",
+  "lowVacuum": "Grobvakuum",
+  "overPressure": "Überdruck"
+}

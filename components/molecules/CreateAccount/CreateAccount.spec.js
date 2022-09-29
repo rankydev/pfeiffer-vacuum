@@ -4,29 +4,20 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import Password from '~/components/atoms/FormComponents/Password/Password'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
 import { setActivePinia, createPinia } from 'pinia'
-import { ref } from '@nuxtjs/composition-api'
+import { reactive } from '@nuxtjs/composition-api'
 
 const mockLoadCountries = jest.fn()
-jest.mock('~/stores/misc', () => {
+const mockLoadRegions = jest.fn((isoCode) => {
+  mockedRegions[isoCode] = ['Region1']
+})
+const mockedRegions = reactive({})
+jest.mock('~/stores/countries', () => {
   return {
     __esModule: true,
-    useMiscStore: () => {
+    useCountriesStore: () => {
       return {
         loadCountries: mockLoadCountries,
         countries: ['Land1'],
-      }
-    },
-  }
-})
-
-const mockLoadRegions = jest.fn(() => {
-  mockedRegions.value = ['Region1']
-})
-const mockedRegions = ref([])
-jest.mock('~/composables/useRegions', () => {
-  return {
-    useRegions: () => {
-      return {
         loadRegions: mockLoadRegions,
         regions: mockedRegions,
       }

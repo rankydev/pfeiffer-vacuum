@@ -5,14 +5,12 @@
         v-if="contactRequestType === 'GENERAL_QUERY'"
         :validate="validate"
         :type="contactRequestType"
-        :countries="countries"
         @update="requestData = $event"
       />
       <TopicRequest
         v-else
         :validate="validate"
         :type="contactRequestType"
-        :countries="countries"
         @update="requestData = $event"
       />
       <Button
@@ -41,7 +39,7 @@ import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import useVuelidate from '@vuelidate/core'
 import { useToast } from '~/composables/useToast'
-import { useMiscStore } from '~/stores/misc'
+import { useContactStore } from '~/stores/contact'
 
 export default defineComponent({
   components: {
@@ -69,7 +67,8 @@ export default defineComponent({
   emits: ['close'],
   setup(_, { emit }) {
     const loading = ref(false)
-    const { $hybrisApi, i18n } = useContext()
+    const { i18n } = useContext()
+    const contactStore = useContactStore()
     const toast = useToast()
     // this will collect all nested component’s validation results
     const v = useVuelidate()
@@ -77,14 +76,11 @@ export default defineComponent({
 
     let validate = ref(false)
 
-    const countriesStore = useMiscStore()
-    const countries = computed(() => countriesStore.countries)
-
     const submit = async () => {
       validate.value = true
       if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
         loading.value = true
-        await $hybrisApi.contactApi
+        await contactStore
           .submitContact(requestData.value)
           .then(() => {
             loading.value = false
@@ -107,7 +103,7 @@ export default defineComponent({
       }
     }
 
-    return { v, validate, submit, requestData, countries, loading }
+    return { v, validate, submit, requestData, loading }
   },
 })
 </script>

@@ -1,8 +1,8 @@
-import { useContext, getCurrentInstance } from '@nuxtjs/composition-api'
+import { getCurrentInstance } from '@nuxtjs/composition-api'
+import getLoggerFor from '~/utils/getLoggerFor'
 
-export const useLogger = () => {
-  const { app } = useContext()
-  const logger = app.$getLoggerFor(getCurrentInstance()?.proxy?.$options?.name)
-
+export const useLogger = (name) => {
+  const loggerName = name ? name : getCurrentInstance()?.proxy?.$options?.name
+  const logger = getLoggerFor(loggerName)
   return { logger }
 }

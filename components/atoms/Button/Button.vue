@@ -12,6 +12,7 @@
         'button--disabled': disabled,
         'button--icon-only': !label,
       },
+      `button--gap-${gap}`,
     ]"
     :disabled="disabled"
     @click="$emit('click')"
@@ -63,6 +64,14 @@ export default defineComponent({
     prependIcon: {
       type: Boolean,
       default: false,
+    },
+    /**
+     * Gap between icon and text
+     */
+    gap: {
+      type: String,
+      default: 'normal',
+      validator: (val) => ['normal', 'narrow'].includes(val),
     },
     /**
      * The button variant
@@ -325,35 +334,29 @@ export default defineComponent({
     @apply tw-rounded-r-md;
   }
 
-  &__icon {
-    &--prepend {
-      @apply tw-order-first;
-
-      .button--normal > & {
-        @apply tw-mr-5;
+  &--gap {
+    &-normal {
+      &.button--normal {
+        @apply tw-gap-4;
       }
 
-      .button--small > & {
-        @apply tw-mr-4;
+      &.button--small {
+        @apply tw-gap-3;
       }
 
-      .button--xsmall > & {
-        @apply tw-mr-3;
+      &.button--xsmall {
+        @apply tw-gap-3;
       }
     }
 
-    &--append {
-      .button--normal > & {
-        @apply tw-ml-4;
-      }
+    &-narrow {
+      @apply tw-gap-2;
+    }
+  }
 
-      .button--small > & {
-        @apply tw-ml-3;
-      }
-
-      .button--xsmall > & {
-        @apply tw-ml-3;
-      }
+  &__icon {
+    &--prepend {
+      @apply tw-order-first;
     }
   }
 }

@@ -69,6 +69,8 @@ export default {
 </script>
 <style lang="scss">
 .category-collapse {
+  @apply tw-min-w-max;
+
   &__trigger {
     @apply tw-flex tw-items-center tw-justify-between;
   }
