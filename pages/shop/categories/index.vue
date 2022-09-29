@@ -24,12 +24,14 @@ import {
 import { useCategoryStore } from '~/stores/category/category'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
+import { useLogger } from '~/composables/useLogger.js'
 
 export default defineComponent({
   layout: 'default',
   setup() {
     const route = useRoute()
     const context = useContext()
+    const { logger } = useLogger()
 
     /**
      * Set the type of the pages, enabling components
@@ -52,6 +54,8 @@ export default defineComponent({
       try {
         await catgeoryStore.loadByPath()
       } catch (error) {
+        logger.error(error)
+
         if (process.server) {
           context.res.statusCode = 404
           hasError.value = error
@@ -70,10 +74,8 @@ export default defineComponent({
      * build the cms slug
      */
     const { buildSlugs } = useStoryblokSlugBuilder({ root: context })
-    const lang = context.i18n.locale
-    const { slug, fallbackSlug, language } = buildSlugs(
-      `${lang}/shop/categories/`
-    )
+    const path = context.app.localePath('shop-categories')
+    const { slug, fallbackSlug, language } = buildSlugs(path)
 
     return {
       slug,
