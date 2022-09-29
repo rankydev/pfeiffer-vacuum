@@ -7,7 +7,7 @@ import { useLogger } from '~/composables/useLogger'
 
 export const useCountriesStore = defineStore('countries', () => {
   const { axios } = useAxiosForHybris()
-  const { logger } = useLogger()
+  const { logger } = useLogger('countriesStore')
 
   const countries = ref([])
   const regions = ref({})
@@ -24,7 +24,18 @@ export const useCountriesStore = defineStore('countries', () => {
   }
 
   const loadRegions = async (isocode) => {
-    if (!isocode) return []
+    if (!isocode) {
+      logger.info("Can't load regions without isocode")
+      return
+    }
+
+    if (regions.value[isocode]?.length > 0) {
+      logger.debug(
+        `Regions for isocode ${isocode} are already loaded, no need to load again`,
+        regions.value[isocode]
+      )
+      return
+    }
 
     const result = await axios
       .$get(joinURL(`${config.COUNTRIES_API}/${isocode}/regions`))
