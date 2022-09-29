@@ -11,6 +11,7 @@ const mockUser = {
 }
 const mockAuth = ref({ auth: { access_token: 'lorem ipsum' } })
 const mockLoggedIn = ref(false)
+const mockkeycloakInstance = { value: { login: jest.fn(), logout: jest.fn() } }
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
@@ -18,9 +19,15 @@ jest.mock('@nuxtjs/composition-api', () => {
     ...originalModule,
     useContext: jest.fn(() => {
       return {
-        app: {},
+        app: {
+          router: { push: jest.fn() },
+          i18n: {
+            locale: '',
+          },
+        },
         i18n: {
           t: (key) => key,
+          locale: '',
         },
       }
     }),
@@ -56,6 +63,8 @@ jest.mock('~/stores/user/partials/useKeycloak', () => {
       createKeycloakInstance: jest.fn(),
       auth: mockAuth,
       loggedIn: mockLoggedIn,
+      keycloakInstance: mockkeycloakInstance,
+      removeCookiesAndDeleteAuthData: jest.fn(),
     }),
   }
 })
@@ -74,6 +83,7 @@ describe('Auth store', () => {
       expect(userStore.isRejectedUser).toBeFalsy()
       expect(userStore.isApprovedUser).toBeFalsy()
       expect(userStore.loggedIn).toBeFalsy()
+      expect(userStore.login).toBeInstanceOf(Function)
     })
   })
 
@@ -83,7 +93,12 @@ describe('Auth store', () => {
 
       await userStore.loadCurrentUser()
 
+      expect(userStore.isOciUser).toBeFalsy()
+      expect(userStore.isOpenUser).toBeFalsy()
+      expect(userStore.isLeadUser).toBeFalsy()
+      expect(userStore.isRejectedUser).toBeFalsy()
       expect(userStore.isApprovedUser).toBeFalsy()
+      expect(userStore.loggedIn).toBeFalsy()
       expect(userStore.currentUser).toBe(null)
     })
 
@@ -105,6 +120,30 @@ describe('Auth store', () => {
       await userStore.loadCurrentUser()
 
       expect(mockLogger).toBeCalledTimes(1)
+    })
+
+    test('should invoke login correctly', async () => {
+      const userStore = useUserStore()
+
+      await userStore.login()
+
+      expect(mockLogger).toBeCalledTimes(2)
+    })
+
+    test('should invoke logout correctly', async () => {
+      const userStore = useUserStore()
+
+      await userStore.logout()
+
+      expect(mockLogger).toBeCalledTimes(3)
+    })
+
+    test('should redirect if no keycloak instance is available', async () => {
+      mockkeycloakInstance.value = null
+      const userStore = useUserStore()
+      await userStore.logout()
+
+      expect(mockLogger).toBeCalledTimes(4)
     })
   })
 })
