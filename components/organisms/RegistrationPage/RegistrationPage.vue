@@ -16,6 +16,16 @@
           <RegistrationCompanyDataForm
             id="registrationCompanyDataForm"
             :validate="validate"
+            :selected-country="
+              hasCountrySelectionData
+                ? requestData.personalData.address.country
+                : {}
+            "
+            :selected-region="
+              hasCountrySelectionData
+                ? requestData.personalData.address.region
+                : {}
+            "
             @update="requestData.companyData = $event.companyData"
           />
           <RegistrationPageDataProtection />
@@ -46,6 +56,7 @@ import {
   ref,
   useContext,
   useRouter,
+  computed,
   watch,
 } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
@@ -82,6 +93,16 @@ export default defineComponent({
     let validate = ref(false)
     const requestData = ref({ personalData: {}, companyData: {} })
     const modalIsOpen = ref(false)
+
+    const hasCountrySelectionData = computed(() => {
+      if (!requestData.value.personalData?.address) return false
+
+      if (
+        requestData.value.personalData.address.country &&
+        Object.keys(requestData.value.personalData.address.country).length
+      )
+        return true
+    })
 
     /**
      * data of content cta boxes
@@ -189,11 +210,12 @@ export default defineComponent({
     return {
       contentCTABoxHelpData,
       contentCTABoxLoginData,
+      hasCountrySelectionData,
+      loading,
+      modalIsOpen,
+      proceedWithoutCompany,
       requestData,
       validate,
-      loading,
-      proceedWithoutCompany,
-      modalIsOpen,
       toggleModal,
       triggerSendRegistrationProcess,
     }

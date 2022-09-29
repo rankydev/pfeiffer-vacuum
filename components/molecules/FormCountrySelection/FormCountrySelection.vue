@@ -5,12 +5,14 @@
       :options="countries"
       :option-label="'name'"
       :required="true"
+      :disabled="disabled"
       :rules="{
         required: helpers.withMessage(
           $t('form.validationErrorMessages.required'),
           required
         ),
       }"
+      :value="Object.keys(selectedCountry).length ? selectedCountry : undefined"
       :validate="validate"
       @update="
         countrySelection.country = $event
@@ -24,12 +26,14 @@
       :options="regions"
       :option-label="'name'"
       :required="true"
+      :disabled="disabled"
       :rules="{
         required: helpers.withMessage(
           $t('form.validationErrorMessages.required'),
           required
         ),
       }"
+      :value="Object.keys(selectedRegion).length ? selectedRegion : undefined"
       :validate="validate"
       @update="
         countrySelection.region = $event
@@ -55,6 +59,18 @@ export default defineComponent({
     validate: {
       type: Boolean,
       default: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    selectedCountry: {
+      type: Object,
+      default: () => ({}),
+    },
+    selectedRegion: {
+      type: Object,
+      default: () => ({}),
     },
   },
   emits: [

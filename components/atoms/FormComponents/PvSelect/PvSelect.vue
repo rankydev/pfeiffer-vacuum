@@ -96,7 +96,13 @@ import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Checkbox from '../Checkbox/Checkbox'
 import Icon from '~/components/atoms/Icon/Icon'
-import { defineComponent, computed, ref, watch } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  ref,
+  watch,
+  toRefs,
+} from '@nuxtjs/composition-api'
 import { useInputValidator } from '~/composables/useValidator'
 import props from './partials/props.js'
 
@@ -112,7 +118,7 @@ export default defineComponent({
   props,
   emits: ['update'],
   setup(props) {
-    const valueFromProps = ref(props.value)
+    const { value: valueFromProps } = toRefs(props)
     const internalValue = computed({
       get: () => valueFromProps.value,
       set: (val) => {

@@ -15,7 +15,7 @@
 
     <Infobox :text="$t('registration.infotext')" />
 
-    <div v-if="addCompany">
+    <div v-if="addCompany" class="registration-company-data-form__form-section">
       <div class="registration-company-data-form__row-container">
         <div class="registration-company-data-form__row-container--half">
           <PvLabel
@@ -119,6 +119,10 @@
       </div>
 
       <FormCountrySelection
+        :validate="validate"
+        disabled
+        :selected-country="selectedCountry"
+        :selected-region="selectedRegion"
         @update="
           requestData.companyData.address.countrySelection = $event
           $emit('update', requestData)
@@ -241,6 +245,14 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    selectedCountry: {
+      type: Object,
+      default: () => ({}),
+    },
+    selectedRegion: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   emits: [
     /**
@@ -324,6 +336,11 @@ export default defineComponent({
   &__header {
     @apply tw-flex;
     @apply tw-justify-between;
+  }
+
+  &__form-section {
+    @apply tw-flex tw-flex-col;
+    @apply tw-gap-4;
   }
 
   &__row-container {
