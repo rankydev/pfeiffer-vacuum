@@ -1,7 +1,7 @@
 <template>
   <div class="form-country-selection">
     <PvSelect
-      :label="$t('registration.registrationRequest.country')"
+      :label="$t('form.contactRequest.country')"
       :options="countries"
       :option-label="'name'"
       :required="true"
@@ -19,7 +19,7 @@
     />
     <PvSelect
       v-if="regions.length"
-      :label="$t('registration.registrationRequest.region')"
+      :label="$t('form.contactRequest.region')"
       :options="regions"
       :option-label="'name'"
       :required="true"

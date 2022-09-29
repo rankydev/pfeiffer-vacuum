@@ -1,12 +1,6 @@
 {
   "registrationRequest": {
     "title": "Kontodaten",
-    "firstname": "Vorname",
-    "surname": "Nachname",
-    "company": "Firma/Universität",
-    "mail": "E-Mail",
-    "country": "Land",
-    "region": "Bundesstaat",
     "password": "Passwort"
   },
   "formCompanyData": {
@@ -24,11 +18,7 @@
     "telephoneNumber": "Telefon",
     "fax": "Fax",
     "country": "Land",
-    "countryAutofill": "Wird automatisch befüllt",
-    "street": "Straße",
-    "houseNumber": "Nummer",
-    "postalCode": "PLZ",
-    "city": "Stadt"
+    "countryAutofill": "Wird automatisch befüllt"
   },
   "infotext": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br /> <b>Dieser Schritt ist optional</b> <br /><br /> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!"
 }

@@ -5,7 +5,7 @@
     </h2>
 
     <PvInput
-      :label="$t('registration.registrationRequest.company')"
+      :label="$t('form.contactRequest.company')"
       placeholder="Placeholder"
       :required="true"
       :rules="{
@@ -30,7 +30,7 @@
     />
 
     <PvInput
-      :label="$t('registration.registrationRequest.firstname')"
+      :label="$t('form.contactRequest.firstname')"
       placeholder="Placeholder"
       :required="true"
       :rules="{
@@ -47,7 +47,7 @@
     />
 
     <PvInput
-      :label="$t('registration.registrationRequest.surname')"
+      :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
       :required="true"
       :rules="{
@@ -64,7 +64,7 @@
     />
 
     <PvInput
-      :label="$t('registration.registrationRequest.mail')"
+      :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
       :required="true"
       :rules="{

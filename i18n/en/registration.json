@@ -1,12 +1,6 @@
 {
   "registrationRequest": {
     "title": "Account details",
-    "firstname": "First name",
-    "surname": "Last name",
-    "company": "Company / University",
-    "mail": "Email",
-    "country": "Country / Location",
-    "region": "Region",
     "password": "Password"
   },
   "formCompanyData": {
@@ -24,11 +18,7 @@
     "telephoneNumber": "Telephone",
     "fax": "Fax",
     "country": "Country",
-    "countryAutofill": "Will be filled automatically",
-    "street": "Street",
-    "houseNumber": "No.",
-    "postalCode": "Zip code",
-    "city": "City"
+    "countryAutofill": "Will be filled automatically"
   },
   "infotext": "You can enter your company's address data here. <br /> <b>This step is optional</b> <br /><br /> <b>Please note:</b> Only with A full account allows you to see prices and send requests!"
 }
