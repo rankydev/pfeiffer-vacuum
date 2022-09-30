@@ -12,7 +12,7 @@
           required
         ),
       }"
-      :value="Object.keys(selectedCountry).length ? selectedCountry : undefined"
+      :value="selectedCountry"
       :validate="validate"
       @update="
         countrySelection.country = $event
@@ -33,7 +33,7 @@
           required
         ),
       }"
-      :value="Object.keys(selectedRegion).length ? selectedRegion : undefined"
+      :value="selectedRegion"
       :validate="validate"
       @update="
         countrySelection.region = $event
@@ -66,11 +66,11 @@ export default defineComponent({
     },
     selectedCountry: {
       type: Object,
-      default: () => ({}),
+      default: undefined,
     },
     selectedRegion: {
       type: Object,
-      default: () => ({}),
+      default: undefined,
     },
   },
   emits: [

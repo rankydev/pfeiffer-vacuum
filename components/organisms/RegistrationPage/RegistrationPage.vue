@@ -19,12 +19,12 @@
             :selected-country="
               hasCountrySelectionData
                 ? requestData.personalData.address.country
-                : {}
+                : undefined
             "
             :selected-region="
               hasCountrySelectionData
                 ? requestData.personalData.address.region
-                : {}
+                : undefined
             "
             :proceed-without-company="proceedWithoutCompany"
             @update="requestData.companyData = $event.companyData"

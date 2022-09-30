@@ -118,7 +118,7 @@ export default defineComponent({
   props,
   emits: ['update'],
   setup(props) {
-    const { value: valueFromProps } = toRefs(props)
+    const valueFromProps = toRefs(props).value
     const internalValue = computed({
       get: () => valueFromProps.value,
       set: (val) => {

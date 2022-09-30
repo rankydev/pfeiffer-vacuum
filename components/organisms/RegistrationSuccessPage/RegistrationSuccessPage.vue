@@ -47,19 +47,19 @@ export default defineComponent({
     max-width: 745px;
   }
 
-  &__icon.icon__material {
+  &__icon {
     @apply tw-text-pv-green;
     @apply tw-mb-4;
-    font-size: 33.33px;
+    font-size: 33.33px !important;
 
     @screen md {
       @apply tw-mb-9;
-      font-size: 53.33px;
+      font-size: 53.33px !important;
     }
 
     @screen lg {
       @apply tw-mb-14;
-      font-size: 66.67px;
+      font-size: 66.67px !important;
     }
   }
 

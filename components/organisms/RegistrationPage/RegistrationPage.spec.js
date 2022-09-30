@@ -7,31 +7,13 @@ import HintModal from '~/components/organisms/RegistrationPage/HintModal/HintMod
 const localVue = createLocalVue()
 localVue.prototype.$nuxt = {
   context: {
-    $hybrisApi: {
-      countriesApi: {
-        getCountries: jest.fn(() => {
-          return { then: (i) => i }
-        }),
-      },
-    },
-    i18n: {
-      t: () => 'some specific text',
+    $axios: {
+      create: jest.fn(() => {
+        setBaseURL: jest.fn()
+      }),
     },
   },
 }
-
-const mockLoadCountries = jest.fn()
-jest.mock('~/stores/misc', () => {
-  return {
-    __esModule: true,
-    useMiscStore: () => {
-      return {
-        loadCountries: mockLoadCountries,
-        countries: ['Land1'],
-      }
-    },
-  }
-})
 
 describe('RegistrationPage', () => {
   describe('initial state', () => {
