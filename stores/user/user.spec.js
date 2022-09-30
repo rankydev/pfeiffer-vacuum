@@ -10,14 +10,16 @@ const mockUser = {
   },
 }
 const mockAuth = ref({ auth: { access_token: 'lorem ipsum' } })
-const mockLoggedIn = ref(false)
+let mockLoggedIn = ref(false)
 const mockkeycloakInstance = { value: { login: jest.fn(), logout: jest.fn() } }
+const mockWatch = jest.fn()
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
+
   return {
     ...originalModule,
-    useContext: jest.fn(() => {
+    useContext: () => {
       return {
         app: {
           router: { push: jest.fn() },
@@ -30,11 +32,12 @@ jest.mock('@nuxtjs/composition-api', () => {
           locale: '',
         },
       }
-    }),
-    useRoute: jest.fn(() => ({ value: {} })),
+    },
+    useRoute: () => ({ value: {} }),
     useRouter: jest.fn(),
     onBeforeMount: jest.fn(),
     onServerPrefetch: jest.fn(),
+    watch: (variable, callback) => mockWatch(variable, callback),
   }
 })
 
@@ -42,8 +45,8 @@ jest.mock('~/composables/useLogger', () => ({
   useLogger: () => {
     return {
       logger: {
-        error: (e) => mockLogger(e),
-        debug: (e) => mockLogger(e),
+        error: mockLogger,
+        debug: mockLogger,
       },
     }
   },
@@ -69,8 +72,11 @@ jest.mock('~/stores/user/partials/useKeycloak', () => {
   }
 })
 
-describe('Auth store', () => {
-  beforeEach(() => setActivePinia(createPinia()))
+describe('User store', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    jest.resetAllMocks()
+  })
 
   describe('initial state', () => {
     test('should return false initial value', () => {
@@ -115,11 +121,12 @@ describe('Auth store', () => {
 
     test('should throw logger error given user error', async () => {
       mockGetUserData.mockReturnValue(null)
+      mockLoggedIn.value = true
       const userStore = useUserStore()
 
       await userStore.loadCurrentUser()
 
-      expect(mockLogger).toBeCalledTimes(1)
+      expect(mockLogger).toBeCalledWith('user not found', null)
     })
 
     test('should invoke login correctly', async () => {
@@ -127,7 +134,7 @@ describe('Auth store', () => {
 
       await userStore.login()
 
-      expect(mockLogger).toBeCalledTimes(2)
+      expect(mockLogger).toBeCalledWith('login')
     })
 
     test('should invoke logout correctly', async () => {
@@ -135,7 +142,7 @@ describe('Auth store', () => {
 
       await userStore.logout()
 
-      expect(mockLogger).toBeCalledTimes(3)
+      expect(mockLogger).toBeCalledWith('logout')
     })
 
     test('should redirect if no keycloak instance is available', async () => {
@@ -143,7 +150,31 @@ describe('Auth store', () => {
       const userStore = useUserStore()
       await userStore.logout()
 
-      expect(mockLogger).toBeCalledTimes(4)
+      expect(mockLogger).toBeCalledWith('logout')
+    })
+
+    test('should load current user when auth has changed', async () => {
+      mockLoggedIn.value = true
+      mockGetUserData.mockReturnValue(mockUser)
+      let watchCallback = null
+      mockWatch.mockImplementation((auth, callback) => {
+        watchCallback = callback
+      })
+      const userStore = useUserStore()
+      await watchCallback({ access_token: 'validToken' })
+
+      expect(userStore.currentUser).toBe(mockUser)
+    })
+
+    test('should reset user when auth has changed but new auth object is undefined', async () => {
+      let watchCallback = null
+      mockWatch.mockImplementation((auth, callback) => {
+        watchCallback = callback
+      })
+      const userStore = useUserStore()
+      await watchCallback(undefined)
+
+      expect(userStore.currentUser).toBe(null)
     })
   })
 })

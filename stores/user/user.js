@@ -61,7 +61,7 @@ export const useUserStore = defineStore('user', () => {
     if (user && !user.error) {
       currentUser.value = user
     } else {
-      logger.error('user not found', user || '')
+      logger.error('user not found', user)
     }
   }
 
