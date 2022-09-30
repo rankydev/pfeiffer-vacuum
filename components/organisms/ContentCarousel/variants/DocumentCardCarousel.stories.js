@@ -35,6 +35,10 @@ const argTypes = {
     control: { type: 'array' },
     defaultValue: generalTeaserCarouselContent.slides,
   },
+  variant: {
+    control: { type: 'text' },
+    defaultValue: documentCardCarouselContent.variant,
+  },
 }
 
 export default {

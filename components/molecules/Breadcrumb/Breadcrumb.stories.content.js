@@ -1,7 +1,17 @@
-export const breadcrumb = [
-  { href: '/default', name: 'Home' },
-  { href: '/default/products', name: 'Produkte' },
-  { href: '/default/products/hipace', name: 'Hipace' },
+export const entries = [
+  { href: '/global', name: 'Home' },
+  { href: '/global/products', name: 'Produkte' },
+  { href: '/global/products/hipace', name: 'Hipace' },
+]
+
+export const categoryPageBreadcrumb = [
+  {
+    path: 'iframe.html',
+    name: 'Home',
+    isFolder: false,
+    isStartpage: false,
+    translatedSlugs: [],
+  },
 ]
 
 export default [
