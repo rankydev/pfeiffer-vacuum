@@ -58,21 +58,9 @@ export const useKeycloak = () => {
   const createKeycloakInstance = () => {
     logger.debug('createKeycloakInstance')
 
-    const { app, $keycloakInstance, $config } = ctx
+    const { $config } = ctx
     if (!keycloakJS || keycloakInstance.value) {
       logger.debug('No keycloakJS or existing keycloakInstance')
-      return
-    }
-
-    if ($keycloakInstance) {
-      logger.debug('keycloakInstance from context')
-      keycloakInstance.value = $keycloakInstance
-      return
-    }
-
-    if (app.$keycloakInstance) {
-      logger.debug('keycloakInstance from app')
-      keycloakInstance.value = app.$keycloakInstance
       return
     }
 
@@ -149,8 +137,6 @@ export const useKeycloak = () => {
       .init(keycloakInitOptions)
       .catch((reason) => logger.warn('init failed. reason: ', reason))
     logger.debug('Keycloak initialized')
-
-    app.$keycloakInstance = keycloakInstance.value
   }
 
   const kcRedirect = (query) => {
@@ -194,8 +180,8 @@ export const useKeycloak = () => {
     logger.debug('kcOnAuthLogout')
     removeCookiesAndDeleteAuthData()
     const { app } = ctx
-    const { localePath, router } = app
-    return router.push(localePath({ name: 'shop' }))
+    const { router, i18n } = app
+    return router.push(`/${i18n.locale}`)
   }
 
   const setCookiesAndSaveAuthData = (token) => {
@@ -252,7 +238,7 @@ export const useKeycloak = () => {
     token_type: getCookie('auth.tokenType'),
   }
 
-  if (authFromCookie.access_token && authFromCookie.access_token !== 'null') {
+  if (authFromCookie.access_token) {
     logger.debug('Token from cookie')
     logger.trace(authFromCookie)
     setAuth(authFromCookie)
