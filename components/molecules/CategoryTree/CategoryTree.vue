@@ -1,6 +1,13 @@
 <template>
   <div class="category-tree">
-    <div class="category-tree__list">
+    <div
+      class="category-tree__list"
+      :class="{
+        'category-tree__list--show-scrollbar': showScrollbar,
+      }"
+      @touchstart="toggleScrollbarClass"
+      @touchend="toggleScrollbarClass"
+    >
       <CategoryCollapse
         v-for="category in categories"
         :key="getKey(category.category.name)"
@@ -14,10 +21,11 @@
   </div>
 </template>
 <script>
+import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import CategoryCollapse from './partials/CategoryCollapse'
 import getKey from '~/composables/useUniqueKey'
 
-export default {
+export default defineComponent({
   components: {
     CategoryCollapse,
   },
@@ -28,9 +36,19 @@ export default {
     },
   },
   setup() {
-    return { getKey }
+    const showScrollbar = ref(false)
+
+    const toggleScrollbarClass = () => {
+      showScrollbar.value = !showScrollbar.value
+    }
+
+    return {
+      getKey,
+      toggleScrollbarClass,
+      showScrollbar,
+    }
   },
-}
+})
 </script>
 <style lang="scss">
 .category-tree {
@@ -58,8 +76,14 @@ export default {
     }
 
     &::-webkit-scrollbar-thumb {
-      @apply tw-bg-pv-red;
+      @apply tw-bg-pv-grey-96;
       @apply tw-rounded-t-sm;
+    }
+
+    &--show-scrollbar {
+      &::-webkit-scrollbar-thumb {
+        @apply tw-bg-pv-red;
+      }
     }
   }
 

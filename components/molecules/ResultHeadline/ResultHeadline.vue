@@ -26,7 +26,6 @@
 
 <script>
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import { computed } from '@nuxtjs/composition-api'
 
 export default {
   name: 'ResultHeadline',
@@ -57,6 +56,11 @@ export default {
 .result-headline {
   @apply tw-flex;
   @apply tw-items-center;
+  @apply tw-mt-6 tw-mb-4;
+
+  @screen md {
+    @apply tw-mt-8 tw-mb-6;
+  }
 
   &--with-link {
     @apply tw-items-baseline;

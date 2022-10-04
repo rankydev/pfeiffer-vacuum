@@ -1,10 +1,10 @@
-import Carousel from '../ContentCarousel.schema.partial.js'
+import ContentCarousel from '../ContentCarousel.schema.partial.js'
 
 export default {
   name: 'CustomContentCardCarousel',
   display_name: 'Custom Content-Card-Carousel',
   schema: {
-    ...Carousel,
+    ...ContentCarousel,
     slides: {
       type: 'bloks',
       display_name: 'Slides',
@@ -13,6 +13,14 @@ export default {
       maximum: 16,
       required: true,
       pos: 3,
+    },
+    'tab-advanced': {
+      ...ContentCarousel['tab-advanced'],
+      keys: [...ContentCarousel['tab-advanced'].keys, 'variant'],
+    },
+    variant: {
+      type: 'text',
+      default_value: 'customContentCardCarousel',
     },
   },
   image: null,
