@@ -42,7 +42,6 @@ module.exports = {
     '/stores/product/index.js',
     '/stores/user/index.js',
     '/stores/user/partials/useKeycloak.js',
-    '/stores/menu/menu.js',
     '/pages/_site/_.vue',
   ],
   coverageThreshold: {

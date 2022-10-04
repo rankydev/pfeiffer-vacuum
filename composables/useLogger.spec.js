@@ -1,7 +1,5 @@
 import { useLogger } from './useLogger'
 
-const mockedLog = jest.fn()
-
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   return {
@@ -14,7 +12,7 @@ jest.mock('@nuxtjs/composition-api', () => {
 
 jest.useFakeTimers().setSystemTime(new Date('2023-01-01T02:00:00'))
 
-describe('useLogger ', () => {
+describe('useLogger', () => {
   test('should create logger instance', () => {
     const { logger } = useLogger('Test')
 

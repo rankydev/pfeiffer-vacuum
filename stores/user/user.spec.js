@@ -83,7 +83,6 @@ describe('User store', () => {
       mockGetUserData.mockReturnValue(mockUser)
       const userStore = useUserStore()
 
-      expect(userStore.isOciUser).toBeFalsy()
       expect(userStore.isOpenUser).toBeFalsy()
       expect(userStore.isLeadUser).toBeFalsy()
       expect(userStore.isRejectedUser).toBeFalsy()
@@ -99,7 +98,6 @@ describe('User store', () => {
 
       await userStore.loadCurrentUser()
 
-      expect(userStore.isOciUser).toBeFalsy()
       expect(userStore.isOpenUser).toBeFalsy()
       expect(userStore.isLeadUser).toBeFalsy()
       expect(userStore.isRejectedUser).toBeFalsy()
