@@ -31,11 +31,12 @@
           />
         </ContentWrapper>
 
-        <ContentWrapper>
+        <ContentWrapper class="search-result-bg">
           <SearchResult
             :headline="headline"
             :products="products"
             :pagination="pagination"
+            :categories="categories"
           />
         </ContentWrapper>
       </main>
@@ -75,7 +76,7 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
 import { useCategoryStore } from '~/stores/category'
-import SearchResult from '~/components/molecules/SearchResult/SearchResult.vue'
+import SearchResult from '~/components/organisms/SearchResult/SearchResult.vue'
 
 export default defineComponent({
   name: 'CategoryPage',
@@ -114,6 +115,7 @@ export default defineComponent({
     const pagination = computed(
       () => categoryStore.result?.pagination?.totalPages
     )
+    const categories = computed(() => categoryStore.result?.categorySubtree)
     console.log('CATEGORIES', categoryStore.result)
 
     return {
@@ -128,6 +130,7 @@ export default defineComponent({
       count,
       products,
       pagination,
+      categories,
     }
   },
   head() {
@@ -142,5 +145,9 @@ export default defineComponent({
   @apply tw-flex-col;
   @apply tw-h-screen;
   @apply tw-overflow-x-hidden;
+}
+
+.search-result-bg {
+  @apply tw-bg-pv-grey-96;
 }
 </style>

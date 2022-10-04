@@ -23,7 +23,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/m_xxx SearchResult',
+  title: 'Molecules/o_116 SearchResult',
   component: SearchResult,
   parameters: {
     docs: {
