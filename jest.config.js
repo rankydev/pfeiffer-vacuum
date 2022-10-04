@@ -34,10 +34,16 @@ module.exports = {
     'schema.js',
     'schema.partial.js',
     '/stores/cms/index.js',
+    '/stores/contact/index.js',
+    '/stores/countries/index.js',
     '/stores/menu/index.js',
+    '/stores/oci/index.js',
+    '/stores/page/index.js',
+    '/stores/product/index.js',
+    '/stores/user/index.js',
+    '/stores/user/partials/useKeycloak.js',
     '/stores/menu/menu.js',
     '/pages/_site/_.vue',
-    '/stores/user/partials/useKeycloak.js',
   ],
   coverageThreshold: {
     global: {
