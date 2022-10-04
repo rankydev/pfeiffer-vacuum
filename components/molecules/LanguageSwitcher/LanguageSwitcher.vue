@@ -1,34 +1,33 @@
 <template>
-  <div class="language-switcher">
-    <Icon class="language-switcher__icon" icon="language" />
-    <span class="language-switcher__label">{{ $t('language.code') }}</span>
-  </div>
+  <Button
+    :label="$t('language.code')"
+    variant="inverted"
+    shape="outlined"
+    gap="narrow"
+    icon="language"
+    :prepend-icon="true"
+    class="language-switcher__button"
+  />
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
-import Icon from '~/components/atoms/Icon/Icon.vue'
+import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
+  name: 'LanguageSwitcher',
   components: {
-    Icon,
+    Button,
   },
 })
 </script>
 
 <style lang="scss">
 .language-switcher {
-  @apply tw-flex;
-  @apply tw-items-center;
-  @apply tw-text-pv-grey-48;
-
-  &__label {
-    @apply tw-ml-2;
-    @apply tw-text-xs;
-    @apply tw-font-bold;
-    @apply tw-leading-6;
-    @apply tw-whitespace-nowrap;
+  &__button {
+    color: #7a7a7a !important;
+    padding: 0;
   }
 }
 </style>
