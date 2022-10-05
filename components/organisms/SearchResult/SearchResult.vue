@@ -48,7 +48,7 @@ export default defineComponent({
   @apply tw-pb-6;
 
   @screen lg {
-    @apply tw-pt-8;
+    @apply tw-pt-10;
     @apply tw-pb-12;
   }
 

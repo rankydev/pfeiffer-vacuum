@@ -21,7 +21,9 @@ describe('Link', () => {
   describe('initial state', () => {
     describe('given total pages of 1', () => {
       it('should not show any dot placeholder', () => {
-        useRoute.mockImplementation(() => ref({ path, query: { page: 1 } }))
+        useRoute.mockImplementation(() =>
+          ref({ path, query: { currentPage: 1 } })
+        )
 
         createComponent({ totalPages: 1 })
         const dots = wrapper.find('.pagination__ellipses')
@@ -29,7 +31,9 @@ describe('Link', () => {
       })
 
       it('should disable prev button', () => {
-        useRoute.mockImplementation(() => ref({ path, query: { page: 1 } }))
+        useRoute.mockImplementation(() =>
+          ref({ path, query: { currentPage: 1 } })
+        )
 
         createComponent({ totalPages: 1 })
         const prev = wrapper.findAll('.pagination__icon').at(0)
@@ -37,7 +41,9 @@ describe('Link', () => {
       })
 
       it('should disable next button', () => {
-        useRoute.mockImplementation(() => ref({ path, query: { page: 1 } }))
+        useRoute.mockImplementation(() =>
+          ref({ path, query: { currentPage: 1 } })
+        )
 
         createComponent({ totalPages: 1 })
         const next = wrapper.findAll('.pagination__icon').at(1)
@@ -59,7 +65,9 @@ describe('Link', () => {
       })
 
       it('should disable prev button when given a page query of 1', () => {
-        useRoute.mockImplementation(() => ref({ path, query: { page: 1 } }))
+        useRoute.mockImplementation(() =>
+          ref({ path, query: { currentPage: 1 } })
+        )
 
         createComponent({ totalPages: 6 })
         const btns = wrapper.findAll('.pagination__icon')
@@ -73,7 +81,9 @@ describe('Link', () => {
       })
 
       it('should disable next button when given a page query of 6', () => {
-        useRoute.mockImplementation(() => ref({ path, query: { page: 6 } }))
+        useRoute.mockImplementation(() =>
+          ref({ path, query: { currentPage: 6 } })
+        )
 
         createComponent({ totalPages: 6 })
         const btns = wrapper.findAll('.pagination__icon')
@@ -87,7 +97,9 @@ describe('Link', () => {
       })
 
       it('should disable no button when given a page query of 5', () => {
-        useRoute.mockImplementation(() => ref({ path, query: { page: 5 } }))
+        useRoute.mockImplementation(() =>
+          ref({ path, query: { currentPage: 5 } })
+        )
 
         createComponent({ totalPages: 6 })
         const btns = wrapper.findAll('.pagination__icon')
@@ -104,7 +116,9 @@ describe('Link', () => {
     describe('given total pages of 12', () => {
       describe('given a page query of 1', () => {
         it('should disable prev button', () => {
-          useRoute.mockImplementation(() => ref({ path, query: { page: 1 } }))
+          useRoute.mockImplementation(() =>
+            ref({ path, query: { currentPage: 1 } })
+          )
 
           createComponent({ totalPages: 12 })
           const btns = wrapper.findAll('.pagination__icon')
@@ -118,7 +132,9 @@ describe('Link', () => {
         })
 
         it('should render an empty anchor tag with current page number', () => {
-          useRoute.mockImplementation(() => ref({ path, query: { page: 1 } }))
+          useRoute.mockImplementation(() =>
+            ref({ path, query: { currentPage: 1 } })
+          )
 
           createComponent({ totalPages: 12 })
           const cur = wrapper.findAll('.pagination__entry--current')
@@ -130,7 +146,9 @@ describe('Link', () => {
         })
 
         it('should show dot placeholder at pos 5', () => {
-          useRoute.mockImplementation(() => ref({ path, query: { page: 1 } }))
+          useRoute.mockImplementation(() =>
+            ref({ path, query: { currentPage: 1 } })
+          )
 
           createComponent({ totalPages: 12 })
           const li = wrapper.findAll('li')
@@ -143,7 +161,9 @@ describe('Link', () => {
 
       describe('given a page query of 5', () => {
         it('should disable no button ', () => {
-          useRoute.mockImplementation(() => ref({ path, query: { page: 5 } }))
+          useRoute.mockImplementation(() =>
+            ref({ path, query: { currentPage: 5 } })
+          )
 
           createComponent({ totalPages: 12 })
           const btns = wrapper.findAll('.pagination__icon')
@@ -157,7 +177,9 @@ describe('Link', () => {
         })
 
         it('should render an empty anchor tag with current page number', () => {
-          useRoute.mockImplementation(() => ref({ path, query: { page: 5 } }))
+          useRoute.mockImplementation(() =>
+            ref({ path, query: { currentPage: 5 } })
+          )
 
           createComponent({ totalPages: 12 })
           const cur = wrapper.findAll('.pagination__entry--current')
@@ -169,7 +191,9 @@ describe('Link', () => {
         })
 
         it('should show dot placeholder at pos 2 and 5', () => {
-          useRoute.mockImplementation(() => ref({ path, query: { page: 5 } }))
+          useRoute.mockImplementation(() =>
+            ref({ path, query: { currentPage: 5 } })
+          )
 
           createComponent({ totalPages: 12 })
           const li = wrapper.findAll('li')
@@ -183,7 +207,9 @@ describe('Link', () => {
 
       describe('given a page query of 12', () => {
         it('should disable next button', () => {
-          useRoute.mockImplementation(() => ref({ path, query: { page: 12 } }))
+          useRoute.mockImplementation(() =>
+            ref({ path, query: { currentPage: 12 } })
+          )
 
           createComponent({ totalPages: 12 })
           const btns = wrapper.findAll('.pagination__icon')
@@ -197,7 +223,9 @@ describe('Link', () => {
         })
 
         it('should render an empty anchor tag with current page number', () => {
-          useRoute.mockImplementation(() => ref({ path, query: { page: 12 } }))
+          useRoute.mockImplementation(() =>
+            ref({ path, query: { currentPage: 12 } })
+          )
 
           createComponent({ totalPages: 12 })
           const cur = wrapper.findAll('.pagination__entry--current')
@@ -209,7 +237,9 @@ describe('Link', () => {
         })
 
         it('should show dot placeholder at pos 2', () => {
-          useRoute.mockImplementation(() => ref({ path, query: { page: 12 } }))
+          useRoute.mockImplementation(() =>
+            ref({ path, query: { currentPage: 12 } })
+          )
 
           createComponent({ totalPages: 12 })
           const li = wrapper.findAll('li')
