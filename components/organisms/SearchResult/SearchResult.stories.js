@@ -1,27 +1,11 @@
 import SearchResult from '~/components/organisms/SearchResult/SearchResult.vue'
-import { products, pagination } from './SearchResult.stories.content.js'
 import {
-  productWithOrderNumber,
-  productWithVariants,
-} from '../../molecules/ProductCard/ProductCard.stories.content'
-import categories from '~/components/molecules/CategoryTree/CategoryTree.stories.content'
+  products,
+  pagination,
+  categoriyTree,
+} from './SearchResult.stories.content.js'
 
-const argTypes = {
-  products: {
-    control: { type: 'array' },
-    defaultValue: [
-      productWithOrderNumber,
-      productWithVariants,
-      productWithOrderNumber,
-      productWithVariants,
-      productWithOrderNumber,
-      productWithVariants,
-      productWithOrderNumber,
-      productWithVariants,
-      productWithOrderNumber,
-    ],
-  },
-}
+const argTypes = {}
 
 export default {
   title: 'Organisms/o_116 SearchResult',
@@ -52,5 +36,5 @@ export const Default = Template.bind({})
 Default.args = {
   products,
   pagination,
-  categories,
+  categories: categoriyTree,
 }
