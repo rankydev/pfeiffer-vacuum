@@ -1,9 +1,10 @@
-import SearchResult from '~/components/molecules/SearchResult/SearchResult.vue'
+import SearchResult from '~/components/organisms/SearchResult/SearchResult.vue'
 import { products, pagination } from './SearchResult.stories.content.js'
 import {
   productWithOrderNumber,
   productWithVariants,
 } from '../../molecules/ProductCard/ProductCard.stories.content'
+import categories from '~/components/molecules/CategoryTree/CategoryTree.stories.content'
 
 const argTypes = {
   products: {
@@ -23,7 +24,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/o_116 SearchResult',
+  title: 'Organisms/o_116 SearchResult',
   component: SearchResult,
   parameters: {
     docs: {
@@ -51,4 +52,5 @@ export const Default = Template.bind({})
 Default.args = {
   products,
   pagination,
+  categories,
 }
