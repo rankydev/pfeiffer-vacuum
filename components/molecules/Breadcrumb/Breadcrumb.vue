@@ -2,7 +2,7 @@
   <ul class="breadcrumb">
     <li
       v-for="(entry, idx) in entries"
-      :key="idx"
+      :key="entry.href"
       class="breadcrumb__entry"
       :class="{ 'breadcrumb__entry--last': isLastEntry(idx) }"
     >
@@ -20,22 +20,24 @@
 </template>
 
 <script>
-import { defineComponent, unref, computed } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import Link from '~/components/atoms/Link/Link.vue'
-import { useCmsStore } from '~/stores/cms'
 
 export default defineComponent({
   components: {
     Link,
   },
-  setup() {
-    const cmsStore = useCmsStore()
-    const entries = computed(() => cmsStore.breadcrumb)
-
-    const isLastEntry = (idx) => unref(entries).length - 1 === idx
+  props: {
+    entries: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  setup(props) {
+    const isLastEntry = (idx) => props.entries.length - 1 === idx
     const getComponent = (idx) => (isLastEntry(idx) ? 'span' : 'Link')
 
-    return { entries, getComponent, isLastEntry }
+    return { getComponent, isLastEntry }
   },
 })
 </script>

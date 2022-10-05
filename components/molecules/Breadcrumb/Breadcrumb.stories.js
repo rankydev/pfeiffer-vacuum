@@ -1,7 +1,5 @@
 import Breadcrumb from './Breadcrumb'
-import { useCmsStore } from '~/stores/cms'
-import { watch } from '@nuxtjs/composition-api'
-import cmsLinks from './Breadcrumb.stories.content'
+import { entries } from './Breadcrumb.stories.content'
 
 export default {
   title: 'Molecules/m_105 Breadcrumbs',
@@ -17,26 +15,25 @@ export default {
       },
     },
   },
+  argTypes: {
+    entries: {
+      options: entries,
+      control: { type: 'array' },
+    },
+  },
 }
 
-const Template = () => ({
+const Template = (args) => ({
   components: { Breadcrumb },
   setup() {
-    const cmsStore = useCmsStore()
-    watch(
-      () => cmsStore.cmsLinks,
-      () => {
-        if (cmsStore.cmsLinks?.length === cmsLinks.length) return
-        cmsStore.cmsLinks = cmsLinks
-      },
-      { immediate: true }
-    )
+    return { args }
   },
   template: `
   <div class="documentation-preview">
-    <Breadcrumb />
+    <Breadcrumb v-bind="args"/>
   </div>
 `,
 })
 
 export const Default = Template.bind({})
+Default.args = { entries }
