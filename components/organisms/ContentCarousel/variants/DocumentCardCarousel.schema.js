@@ -19,6 +19,14 @@ export default {
       display_name: 'Transparent',
       default_value: 'true',
     },
+    'tab-advanced': {
+      ...ContentCarousel['tab-advanced'],
+      keys: [...ContentCarousel['tab-advanced'].keys, 'variant'],
+    },
+    variant: {
+      type: 'text',
+      default_value: 'documentCardCarousel',
+    },
   },
   image: null,
   preview_field: null,
