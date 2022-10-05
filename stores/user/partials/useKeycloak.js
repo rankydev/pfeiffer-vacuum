@@ -34,7 +34,7 @@ export const useKeycloak = () => {
     router.replace({ query })
   }
 
-  const loggedIn = computed(() => {
+  const isLoggedIn = computed(() => {
     return !!auth.value?.access_token
   })
 
@@ -86,7 +86,7 @@ export const useKeycloak = () => {
       responseMode: 'query',
     }
     //keycloakInitOptions, how to check the SSO and security method for PKCE
-    if (loggedIn.value) {
+    if (isLoggedIn.value) {
       keycloakInitOptions = {
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri: `${getCurrentHostUrl()}/silentSsoCheck.html`,
@@ -252,7 +252,7 @@ export const useKeycloak = () => {
     auth,
     createKeycloakInstance,
     removeCookiesAndDeleteAuthData,
-    loggedIn,
+    isLoggedIn,
     isLoginProcess,
   }
 }

@@ -14,13 +14,13 @@ jest.mock('~/composables/useLogger', () => ({
   },
 }))
 
-const mockLoggedIn = jest.fn()
+const mockIsLoggedIn = jest.fn()
 const mockAuth = jest.fn()
 
 jest.mock('~/stores/user', () => ({
   useUserStore: () => {
     return {
-      loggedIn: mockLoggedIn(),
+      isLoggedIn: mockIsLoggedIn(),
       auth: mockAuth(),
     }
   },
@@ -51,7 +51,7 @@ describe('contact store', () => {
     describe('submitContact', () => {
       test('should submit given contact and logged in', async () => {
         mockPost.mockReturnValue(Promise.resolve({ status: 200 }))
-        mockLoggedIn.mockReturnValue(true)
+        mockIsLoggedIn.mockReturnValue(true)
 
         const contactStore = useContactStore()
         const result = await contactStore.submitContact({
@@ -66,7 +66,7 @@ describe('contact store', () => {
       })
       test('should submit given contact and not logged in', async () => {
         mockPost.mockReturnValue(Promise.resolve({ status: 200 }))
-        mockLoggedIn.mockReturnValue(false)
+        mockIsLoggedIn.mockReturnValue(false)
 
         const contactStore = useContactStore()
         const result = await contactStore.submitContact({
@@ -82,7 +82,7 @@ describe('contact store', () => {
 
       test('should log error if post failed', async () => {
         mockPost.mockReturnValue(Promise.reject('something went wrong'))
-        mockLoggedIn.mockReturnValue(false)
+        mockIsLoggedIn.mockReturnValue(false)
 
         const contactStore = useContactStore()
         const result = await contactStore.submitContact({

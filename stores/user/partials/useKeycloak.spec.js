@@ -66,7 +66,7 @@ describe('useKeycloak', () => {
         auth,
         createKeycloakInstance,
         removeCookiesAndDeleteAuthData,
-        loggedIn,
+        isLoggedIn,
         isLoginProcess,
       } = useKeycloak()
 
@@ -74,7 +74,7 @@ describe('useKeycloak', () => {
       expect(auth.value).toBeNull()
       expect(createKeycloakInstance).toBeInstanceOf(Function)
       expect(removeCookiesAndDeleteAuthData).toBeInstanceOf(Function)
-      expect(loggedIn.value).toBe(false)
+      expect(isLoggedIn.value).toBe(false)
       expect(isLoginProcess.value).toBe(false)
     })
   })

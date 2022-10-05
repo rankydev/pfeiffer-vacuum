@@ -10,7 +10,7 @@ const mockUser = {
   },
 }
 const mockAuth = ref({ auth: { access_token: 'lorem ipsum' } })
-let mockLoggedIn = ref(false)
+let mockIsLoggedIn = ref(false)
 const mockkeycloakInstance = { value: { login: jest.fn(), logout: jest.fn() } }
 const mockWatch = jest.fn()
 
@@ -65,7 +65,7 @@ jest.mock('~/stores/user/partials/useKeycloak', () => {
     useKeycloak: () => ({
       createKeycloakInstance: jest.fn(),
       auth: mockAuth,
-      loggedIn: mockLoggedIn,
+      isLoggedIn: mockIsLoggedIn,
       keycloakInstance: mockkeycloakInstance,
       removeCookiesAndDeleteAuthData: jest.fn(),
     }),
@@ -87,13 +87,13 @@ describe('User store', () => {
       expect(userStore.isLeadUser).toBeFalsy()
       expect(userStore.isRejectedUser).toBeFalsy()
       expect(userStore.isApprovedUser).toBeFalsy()
-      expect(userStore.loggedIn).toBeFalsy()
+      expect(userStore.isLoggedIn).toBeFalsy()
       expect(userStore.login).toBeInstanceOf(Function)
     })
   })
 
   describe('during interaction', () => {
-    test('should not load current user given loggedIn = false', async () => {
+    test('should not load current user given isLoggedIn = false', async () => {
       const userStore = useUserStore()
 
       await userStore.loadCurrentUser()
@@ -102,12 +102,12 @@ describe('User store', () => {
       expect(userStore.isLeadUser).toBeFalsy()
       expect(userStore.isRejectedUser).toBeFalsy()
       expect(userStore.isApprovedUser).toBeFalsy()
-      expect(userStore.loggedIn).toBeFalsy()
+      expect(userStore.isLoggedIn).toBeFalsy()
       expect(userStore.currentUser).toBe(null)
     })
 
-    test('should load current user given loggedIn = true', async () => {
-      mockLoggedIn.value = true
+    test('should load current user given isLoggedIn = true', async () => {
+      mockIsLoggedIn.value = true
       mockGetUserData.mockReturnValue(mockUser)
       const userStore = useUserStore()
 
@@ -119,7 +119,7 @@ describe('User store', () => {
 
     test('should throw logger error given user error', async () => {
       mockGetUserData.mockReturnValue(null)
-      mockLoggedIn.value = true
+      mockIsLoggedIn.value = true
       const userStore = useUserStore()
 
       await userStore.loadCurrentUser()
@@ -152,7 +152,7 @@ describe('User store', () => {
     })
 
     test('should load current user when auth has changed', async () => {
-      mockLoggedIn.value = true
+      mockIsLoggedIn.value = true
       mockGetUserData.mockReturnValue(mockUser)
       let watchCallback = null
       mockWatch.mockImplementation((auth, callback) => {

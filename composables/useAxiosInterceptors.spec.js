@@ -22,13 +22,13 @@ jest.mock('qs', () => ({
   stringify: (params, config) => mockStringify(params, config),
 }))
 
-const mockLoggedIn = jest.fn()
+const mockIsLoggedIn = jest.fn()
 const mockAuth = jest.fn()
 
 jest.mock('~/stores/user', () => ({
   useUserStore: () => {
     return {
-      loggedIn: mockLoggedIn(),
+      isLoggedIn: mockIsLoggedIn(),
       auth: mockAuth(),
     }
   },
@@ -54,7 +54,7 @@ describe('axiosInterceptors', () => {
   describe('onFulfilledRequestHandler', () => {
     describe('authHeader', () => {
       test('should return full config given empty config while user is not logged in', () => {
-        mockLoggedIn.mockReturnValue(false)
+        mockIsLoggedIn.mockReturnValue(false)
         const { fulfilledRequest } = useAxiosInterceptors()
 
         fulfilledRequest({})
@@ -63,7 +63,7 @@ describe('axiosInterceptors', () => {
       })
 
       test('should return full config given empty config while user is logged in', () => {
-        mockLoggedIn.mockReturnValue(true)
+        mockIsLoggedIn.mockReturnValue(true)
         mockAuth.mockReturnValue({
           token_type: 'Bearer',
           access_token: 'test_token',

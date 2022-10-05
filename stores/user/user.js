@@ -21,7 +21,7 @@ export const useUserStore = defineStore('user', () => {
     keycloakInstance,
     auth,
     isLoginProcess,
-    loggedIn,
+    isLoggedIn,
     createKeycloakInstance,
     removeCookiesAndDeleteAuthData,
   } = useKeycloak()
@@ -53,7 +53,7 @@ export const useUserStore = defineStore('user', () => {
   })
 
   const loadCurrentUser = async () => {
-    if (!loggedIn.value) {
+    if (!isLoggedIn.value) {
       return
     }
 
@@ -108,7 +108,7 @@ export const useUserStore = defineStore('user', () => {
     isLeadUser,
     isOpenUser,
     isRejectedUser,
-    loggedIn,
+    isLoggedIn,
 
     // actions
     loadCurrentUser,

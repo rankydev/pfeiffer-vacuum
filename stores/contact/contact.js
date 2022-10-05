@@ -15,7 +15,7 @@ export const useContactStore = defineStore('contact', () => {
       .post(
         joinURL(
           `${config.CONTACT_API}/${
-            userStore.loggedIn ? 'current' : 'anonymous'
+            userStore.isLoggedIn ? 'current' : 'anonymous'
           }`
         ),
         contact
