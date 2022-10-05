@@ -108,7 +108,12 @@ export default defineComponent({
       type: String,
       default: 'default',
       validator: (val) =>
-        ['default', 'homeStage', 'documentCardCarousel'].includes(val),
+        [
+          'default',
+          'homeStage',
+          'documentCardCarousel',
+          'customContentCardCarousel',
+        ].includes(val),
     },
   },
   setup(props) {
@@ -128,7 +133,16 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .content-carousel {
-  @apply tw-py-12;
+  @apply tw-py-6;
+
+  @screen md {
+    @apply tw-py-10;
+  }
+
+  @screen lg {
+    padding-top: 52px;
+    padding-bottom: 52px;
+  }
 
   &--with-background {
     @apply tw-bg-pv-grey-96;
@@ -142,6 +156,11 @@ export default defineComponent({
       @apply tw-grow;
       @apply tw-w-full;
       @apply tw-block;
+      @apply tw-pb-4;
+
+      @screen md {
+        @apply tw-pb-0;
+      }
     }
 
     .button {
