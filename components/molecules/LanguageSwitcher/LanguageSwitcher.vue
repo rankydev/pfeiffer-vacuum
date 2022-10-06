@@ -3,11 +3,11 @@
     <div class="language-switcher__wrapper">
       <div class="language-switcher__content">
         <ul>
-          <a href="#"><li>Deutsch</li></a>
-          <a href="#"><li>English</li></a>
-          <a href="#"><li>Español</li></a>
-          <a href="#"><li>中国人</li></a>
-          <a href="#"><li>한국인</li></a>
+          <a :href="newUrl('de')"><li>Deutsch</li></a>
+          <a :href="newUrl('en')"><li>English</li></a>
+          <a :href="newUrl('en')"><li>Español</li></a>
+          <a :href="newUrl('ko')"><li>中国人</li></a>
+          <a :href="newUrl('en')"><li>한국인</li></a>
         </ul>
       </div>
       <Button
@@ -24,14 +24,34 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-
+import {
+  defineComponent,
+  ref,
+  useContext,
+  useRoute,
+} from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
   components: {
     Button,
+  },
+  setup() {
+    const route = useRoute()
+
+    const newUrl = (newLanguage) => {
+      const oldUrl = route.value.fullPath
+      const pathArray = oldUrl.split('/')
+      pathArray.splice(0, 1)
+      pathArray[0] = newLanguage
+      const newPath = '/' + pathArray.join('/')
+      return newPath
+    }
+
+    return {
+      newUrl,
+    }
   },
 })
 </script>
@@ -41,6 +61,7 @@ export default defineComponent({
   &__button {
     color: #7a7a7a !important;
     padding: 0;
+    vertical-align: middle;
   }
 
   &__wrapper {
@@ -86,12 +107,14 @@ export default defineComponent({
     @apply tw-bg-pv-white;
   }
 
-  &__content li:hover {
+  &__content li:hover,
+  &__content--link:hover {
     @apply tw-bg-pv-red-lighter;
     @apply tw-text-pv-white;
   }
 
-  &__content li {
+  &__content li,
+  &__content--link {
     font-size: 14px;
     padding-left: 10px;
     @apply tw-text-base;

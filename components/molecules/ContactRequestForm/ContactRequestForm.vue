@@ -20,19 +20,13 @@
         size="normal"
         icon="send"
         class="contact-request-form__button"
-        @click.native="submit()"
       />
     </LoadingSpinner>
   </div>
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  useContext,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 import Button from '~/components/atoms/Button/Button.vue'
