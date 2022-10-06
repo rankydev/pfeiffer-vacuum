@@ -6,6 +6,7 @@
           v-if="hasLinkedCat"
           :label="$t('navigation.button.shop.label')"
           :href="href"
+          size="small"
         />
       </OnPageNavigation>
     </template>
