@@ -13,10 +13,12 @@ jest.mock('~/composables/useAxiosForHybris', () => ({
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  const { ref } = originalModule
   return {
     ...originalModule,
     onBeforeMount: (callback) => callback(),
     onServerPrefetch: jest.fn(),
+    ssrRef: ref,
   }
 })
 

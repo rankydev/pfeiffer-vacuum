@@ -1,5 +1,9 @@
 import { defineStore } from 'pinia'
-import { ref, onServerPrefetch, onBeforeMount } from '@nuxtjs/composition-api'
+import {
+  onServerPrefetch,
+  onBeforeMount,
+  ssrRef,
+} from '@nuxtjs/composition-api'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
 import { joinURL } from 'ufo'
@@ -9,8 +13,8 @@ export const useCountriesStore = defineStore('countries', () => {
   const { axios } = useAxiosForHybris()
   const { logger } = useLogger('countriesStore')
 
-  const countries = ref([])
-  const regions = ref({})
+  const countries = ssrRef([])
+  const regions = ssrRef({})
 
   const loadCountries = async () => {
     const result = await axios.$get(config.COUNTRIES_API, {}).catch((error) => {
@@ -50,8 +54,10 @@ export const useCountriesStore = defineStore('countries', () => {
   }
 
   // the initial store initialization
-  onBeforeMount(loadCountries)
-  onServerPrefetch(loadCountries)
+  if (countries.value.length === 0) {
+    onBeforeMount(loadCountries)
+    onServerPrefetch(loadCountries)
+  }
 
   return { countries, regions, loadRegions }
 })
