@@ -1,9 +1,9 @@
 import {
   computed,
-  ref,
   useContext,
   onBeforeMount,
   onServerPrefetch,
+  ssrRef,
 } from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
 import { useKeycloak } from './partials/useKeycloak'
@@ -26,7 +26,7 @@ export const useUserStore = defineStore('user', () => {
     removeCookiesAndDeleteAuthData,
   } = useKeycloak()
 
-  const currentUser = ref(null)
+  const currentUser = ssrRef(null)
 
   const isOpenUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'OPEN'
@@ -94,8 +94,10 @@ export const useUserStore = defineStore('user', () => {
     createKeycloakInstance()
   }
 
-  onBeforeMount(loadCurrentUser)
-  onServerPrefetch(loadCurrentUser)
+  if (!currentUser.value) {
+    onBeforeMount(loadCurrentUser)
+    onServerPrefetch(loadCurrentUser)
+  }
 
   return {
     // state
