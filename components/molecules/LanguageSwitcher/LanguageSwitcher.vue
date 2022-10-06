@@ -69,7 +69,6 @@ export default defineComponent({
 
   &__content {
     @apply tw-absolute;
-    top: 0;
     height: 0;
     width: 204px;
     padding-top: 30px;
@@ -95,9 +94,7 @@ export default defineComponent({
     @apply tw-overflow-hidden;
     @apply tw-h-full;
     @apply tw-p-0;
-    @apply tw-mt-1;
     @apply tw-rounded-md;
-    @apply tw-static;
     @apply tw-delay-200;
     @apply tw-bg-pv-white;
     @apply tw-relative;
@@ -113,7 +110,6 @@ export default defineComponent({
 
   &__content li,
   &__content--link {
-    font-size: 14px;
     padding-left: 10px;
     @apply tw-text-base;
     @apply tw-leading-6;
