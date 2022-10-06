@@ -14,7 +14,7 @@
     </LoadingSpinner>
 
     <Button
-      v-if="userStore.loggedIn || userStore.isLoginProcess"
+      v-if="userStore.isLoggedIn || userStore.isLoginProcess"
       shape="plain"
       variant="secondary"
       class="shop-navigation__logout"
@@ -55,13 +55,13 @@ export default defineComponent({
     const myAccountLabel = computed(() => {
       if (userStore.isLoginProcess) return ''
 
-      return userStore.loggedIn
+      return userStore.isLoggedIn
         ? userStore.currentUser?.name
         : i18n.t('navigation.button.signIn.label')
     })
 
     const handleMyAccount = () => {
-      if (userStore.loggedIn) return
+      if (userStore.isLoggedIn) return
 
       userStore.login()
     }

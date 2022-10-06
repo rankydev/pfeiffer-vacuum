@@ -47,9 +47,10 @@ describe('FormCountrySelection', () => {
       }
       select.vm.$emit('update', selectedOption)
       await select.vm.$nextTick()
+      await wrapper.vm.$nextTick()
       const allSelects = wrapper.findAllComponents(PvSelect)
 
-      expect(mockLoadRegions).toHaveBeenCalled()
+      expect(mockLoadRegions).toHaveBeenCalledWith(selectedOption.isocode)
       expect(allSelects).toHaveLength(2)
     })
   })
