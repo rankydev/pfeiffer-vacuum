@@ -26,6 +26,7 @@ jest.mock('@nuxtjs/composition-api', () => {
           i18n: {
             locale: '',
           },
+          localePath: jest.fn(),
         },
         i18n: {
           t: (key) => key,

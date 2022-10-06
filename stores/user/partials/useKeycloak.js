@@ -155,7 +155,7 @@ export const useKeycloak = () => {
     }
 
     logger.trace('kcRedirect::shop: ', query)
-    return router.push(localePath({ name: 'shop', query }))
+    return router.push(localePath({ path: '/', query }))
   }
 
   const kcOnAuthSuccess = async () => {
@@ -180,8 +180,8 @@ export const useKeycloak = () => {
     logger.debug('kcOnAuthLogout')
     removeCookiesAndDeleteAuthData()
     const { app } = ctx
-    const { router, i18n } = app
-    return router.push(`/${i18n.locale}`)
+    const { router, localePath } = app
+    return router.push(localePath('/'))
   }
 
   const setCookiesAndSaveAuthData = (token) => {
