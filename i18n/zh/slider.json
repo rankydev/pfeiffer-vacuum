@@ -1,0 +1,8 @@
+{
+  "unit": "毫巴",
+  "ultraHighVacuum": "超高真空",
+  "highVacuum": "高真空",
+  "mediumVacuum": "中真空",
+  "lowVacuum": "低真空",
+  "overPressure": "过压，超压 "
+}

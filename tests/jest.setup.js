@@ -9,6 +9,16 @@ config.mocks.localePath = (val) => val
 config.mocks.$t = (val) => val
 config.mocks.$d = (val) => val
 
+// set global variables
+global.$nuxt = {
+  $hybrisApi: {},
+}
+
+global.process = {
+  ...global.process,
+  client: true,
+}
+
 failOnConsole()
 
 window.matchMedia =

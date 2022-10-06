@@ -1,16 +1,26 @@
 <template>
   <div class="shop-navigation">
-    <Link href="#" class="shop-navigation__account">
-      <Icon class="shop-navigation__icon" icon="person" />
-      <span class="shop-navigation__account-name">{{
-        $t('navigation.button.signIn.label')
-      }}</span>
-    </Link>
+    <LoadingSpinner :show="userStore.isLoginProcess || !myAccountLabel">
+      <Button
+        shape="plain"
+        variant="secondary"
+        class="shop-navigation__account"
+        :label="myAccountLabel"
+        icon="person"
+        :prepend-icon="true"
+        gap="narrow"
+        @click="handleMyAccount()"
+      />
+    </LoadingSpinner>
 
-    <Link href="#" class="shop-navigation__comparhension">
-      <Icon class="shop-navigation__icon" icon="compare_arrows" />
-    </Link>
-
+    <Button
+      v-if="userStore.loggedIn || userStore.isLoginProcess"
+      shape="plain"
+      variant="secondary"
+      class="shop-navigation__logout"
+      icon="logout"
+      @click="logout"
+    />
     <Link href="#" class="shop-navigation__shopping-list">
       <Icon class="shop-navigation__icon" icon="assignment" />
     </Link>
@@ -22,15 +32,46 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import { useUserStore } from '~/stores/user'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
+import Button from '~/components/atoms/Button/Button.vue'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   components: {
     Icon,
     Link,
+    Button,
+    LoadingSpinner,
+  },
+  setup() {
+    const { i18n } = useContext()
+
+    const userStore = useUserStore()
+
+    const myAccountLabel = computed(() => {
+      if (userStore.isLoginProcess) return ''
+
+      return userStore.loggedIn
+        ? userStore.currentUser?.name
+        : i18n.t('navigation.button.signIn.label')
+    })
+
+    const handleMyAccount = () => {
+      if (userStore.loggedIn) return
+
+      userStore.login()
+    }
+
+    return {
+      logout: userStore.logout,
+      handleMyAccount,
+      myAccountLabel,
+      userStore,
+    }
   },
 })
 </script>
@@ -49,6 +90,15 @@ export default defineComponent({
 
     @screen md {
       @apply tw-flex;
+    }
+  }
+
+  &__logout {
+    @apply tw-hidden;
+
+    @screen md {
+      @apply tw-flex;
+      padding-right: 0 !important;
     }
   }
 

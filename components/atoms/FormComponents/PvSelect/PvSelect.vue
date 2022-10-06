@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <div>
     <PvLabel v-if="label" :label="label" />
@@ -58,6 +57,7 @@
           :icon="option.icon"
         />
         <!--  TODO sanitizer -->
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <span v-html="option[optionLabel]" />
       </template>
 
@@ -74,6 +74,7 @@
           class="pv-select__icon-option"
           :icon="option.icon"
         />
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <span v-html="option[optionLabel]" />
       </template>
 
