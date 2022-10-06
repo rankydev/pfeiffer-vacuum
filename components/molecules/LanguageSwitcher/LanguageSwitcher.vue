@@ -1,6 +1,6 @@
 <template>
   <div class="language-switcher">
-    <div v-if="isDesktop" class="language-switcher__wrapper">
+    <div v-if="true" class="language-switcher__wrapper">
       <div class="language-switcher__content">
         <ul>
           <NuxtLink :to="switchLocalePath('de')"><li>Deutsch</li></NuxtLink>
@@ -20,7 +20,25 @@
         class="language-switcher__button"
       />
     </div>
-    <div v-else></div>
+    <div v-else>
+      <select id="language-select" name="language">
+        <option value="DE">
+          <NuxtLink :to="switchLocalePath('de')">Deutsch</NuxtLink>
+        </option>
+        <option value="EN">
+          <NuxtLink :to="switchLocalePath('en')">English</NuxtLink>
+        </option>
+        <option value="ES">
+          <NuxtLink :to="switchLocalePath('es')">Español</NuxtLink>
+        </option>
+        <option value="KO">
+          <NuxtLink :to="switchLocalePath('ko')">中国人</NuxtLink>
+        </option>
+        <option value="ZH">
+          <NuxtLink :to="switchLocalePath('zh')">한국인</NuxtLink>
+        </option>
+      </select>
+    </div>
   </div>
 </template>
 
@@ -92,10 +110,10 @@ export default defineComponent({
     @apply tw-bg-pv-white;
     @apply tw-relative;
     @apply tw-z-10;
-    top: 100px;
+    bottom: 275px;
 
     @screen lg {
-      top: 0;
+      bottom: 0;
       right: 152px;
     }
   }
