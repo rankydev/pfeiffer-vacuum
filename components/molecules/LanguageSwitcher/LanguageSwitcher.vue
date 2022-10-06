@@ -1,13 +1,13 @@
 <template>
   <div class="language-switcher">
-    <div class="language-switcher__wrapper">
+    <div v-if="isDesktop" class="language-switcher__wrapper">
       <div class="language-switcher__content">
         <ul>
-          <a :href="newUrl('de')"><li>Deutsch</li></a>
-          <a :href="newUrl('en')"><li>English</li></a>
-          <a :href="newUrl('en')"><li>Español</li></a>
-          <a :href="newUrl('ko')"><li>中国人</li></a>
-          <a :href="newUrl('en')"><li>한국인</li></a>
+          <NuxtLink :to="switchLocalePath('de')"><li>Deutsch</li></NuxtLink>
+          <NuxtLink :to="switchLocalePath('en')"><li>English</li></NuxtLink>
+          <NuxtLink :to="switchLocalePath('es')"><li>Español</li></NuxtLink>
+          <NuxtLink :to="switchLocalePath('ko')"><li>中国人</li></NuxtLink>
+          <NuxtLink :to="switchLocalePath('zh')"><li>한국인</li></NuxtLink>
         </ul>
       </div>
       <Button
@@ -20,11 +20,12 @@
         class="language-switcher__button"
       />
     </div>
+    <div v-else></div>
   </div>
 </template>
 
 <script>
-import { defineComponent, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
@@ -33,19 +34,11 @@ export default defineComponent({
     Button,
   },
   setup() {
-    const route = useRoute()
-
-    const newUrl = (newLanguage) => {
-      const oldUrl = route.value.fullPath
-      const pathArray = oldUrl.split('/')
-      pathArray.splice(0, 1)
-      pathArray[0] = newLanguage
-      const newPath = '/global/' + pathArray.join('/')
-      return newPath
-    }
+    const { app } = useContext()
+    const isDesktop = app.$breakpoints.isDesktop
 
     return {
-      newUrl,
+      isDesktop,
     }
   },
 })
@@ -99,7 +92,12 @@ export default defineComponent({
     @apply tw-bg-pv-white;
     @apply tw-relative;
     @apply tw-z-10;
-    right: 152px;
+    top: 100px;
+
+    @screen lg {
+      top: 0;
+      right: 152px;
+    }
   }
 
   &__content li:hover,
