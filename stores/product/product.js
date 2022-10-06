@@ -24,7 +24,7 @@ export const useProductStore = defineStore('product', () => {
         logger.error(error.toJSON())
       })
 
-    if (!Array.isArray(result.products)) {
+    if (!Array.isArray(result?.products)) {
       logger.error(
         `Array expected when fetching multiple products '${idsString}', returning empty array.`
       )

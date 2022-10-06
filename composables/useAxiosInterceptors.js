@@ -9,9 +9,9 @@ export const useAxiosInterceptors = () => {
   const userStore = useUserStore()
 
   const addAuthHeader = function (config) {
-    logger.debug('addAuthHeader', userStore.loggedIn)
+    logger.debug('addAuthHeader', userStore.isLoggedIn)
 
-    if (userStore.loggedIn) {
+    if (userStore.isLoggedIn) {
       const authObject = userStore.auth
       logger.trace('AuthObject: ', authObject)
       config.headers.Authorization = `${authObject.token_type} ${authObject.access_token}`

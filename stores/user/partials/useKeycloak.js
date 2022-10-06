@@ -34,7 +34,7 @@ export const useKeycloak = () => {
     router.replace({ query })
   }
 
-  const loggedIn = computed(() => {
+  const isLoggedIn = computed(() => {
     return !!auth.value?.access_token
   })
 
@@ -58,29 +58,17 @@ export const useKeycloak = () => {
   const createKeycloakInstance = () => {
     logger.debug('createKeycloakInstance')
 
-    const { app, $keycloakInstance } = ctx
+    const { $config } = ctx
     if (!keycloakJS || keycloakInstance.value) {
       logger.debug('No keycloakJS or existing keycloakInstance')
       return
     }
 
-    if ($keycloakInstance) {
-      logger.debug('keycloakInstance from context')
-      keycloakInstance.value = $keycloakInstance
-      return
-    }
-
-    if (app.$keycloakInstance) {
-      logger.debug('keycloakInstance from app')
-      keycloakInstance.value = app.$keycloakInstance
-      return
-    }
-
     logger.debug('creating new keycloakInstance')
 
-    const keyCloakBase = process.env.KEYCLOAK_BASE_URL
-    const keyCloakRealm = process.env.KEYCLOAK_REALM_NAME
-    const keyCloakClientId = process.env.KEYCLOAK_CLIENT_ID
+    const keyCloakBase = $config.KEYCLOAK_BASE_URL
+    const keyCloakRealm = $config.KEYCLOAK_REALM_NAME
+    const keyCloakClientId = $config.KEYCLOAK_CLIENT_ID
 
     //keycloakConfig, set the URL, realm, client
     const keycloakConfig = {
@@ -98,7 +86,7 @@ export const useKeycloak = () => {
       responseMode: 'query',
     }
     //keycloakInitOptions, how to check the SSO and security method for PKCE
-    if (loggedIn.value) {
+    if (isLoggedIn.value) {
       keycloakInitOptions = {
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri: `${getCurrentHostUrl()}/silentSsoCheck.html`,
@@ -149,8 +137,6 @@ export const useKeycloak = () => {
       .init(keycloakInitOptions)
       .catch((reason) => logger.warn('init failed. reason: ', reason))
     logger.debug('Keycloak initialized')
-
-    app.$keycloakInstance = keycloakInstance.value
   }
 
   const kcRedirect = (query) => {
@@ -169,7 +155,7 @@ export const useKeycloak = () => {
     }
 
     logger.trace('kcRedirect::shop: ', query)
-    return router.push(localePath({ name: 'shop', query }))
+    return router.push(localePath({ path: '/', query }))
   }
 
   const kcOnAuthSuccess = async () => {
@@ -194,8 +180,8 @@ export const useKeycloak = () => {
     logger.debug('kcOnAuthLogout')
     removeCookiesAndDeleteAuthData()
     const { app } = ctx
-    const { localePath, router } = app
-    return router.push(localePath({ name: 'shop' }))
+    const { router, localePath } = app
+    return router.push(localePath('/'))
   }
 
   const setCookiesAndSaveAuthData = (token) => {
@@ -252,7 +238,7 @@ export const useKeycloak = () => {
     token_type: getCookie('auth.tokenType'),
   }
 
-  if (authFromCookie.access_token && authFromCookie.access_token !== 'null') {
+  if (authFromCookie.access_token) {
     logger.debug('Token from cookie')
     logger.trace(authFromCookie)
     setAuth(authFromCookie)
@@ -266,7 +252,7 @@ export const useKeycloak = () => {
     auth,
     createKeycloakInstance,
     removeCookiesAndDeleteAuthData,
-    loggedIn,
+    isLoggedIn,
     isLoginProcess,
   }
 }
