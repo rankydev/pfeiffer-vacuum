@@ -4,7 +4,7 @@ import { cmsLinks } from './cms.stories.content.js'
 import { useRoute, ref } from '@nuxtjs/composition-api'
 
 jest.mock('@nuxtjs/composition-api', () => {
-  const { cmsLinks, path } = require('./cms.stories.content.js')
+  const { cmsLinks } = require('./cms.stories.content.js')
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   const { ref } = originalModule
 

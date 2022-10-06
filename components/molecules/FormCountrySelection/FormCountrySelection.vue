@@ -1,7 +1,7 @@
 <template>
   <div class="form-country-selection">
     <PvSelect
-      :label="$t('registration.registrationRequest.country')"
+      :label="$t('form.contactRequest.country')"
       :options="countries"
       :option-label="'name'"
       :required="true"
@@ -16,13 +16,12 @@
       :validate="validate"
       @update="
         countrySelection.country = $event
-        loadRegions()
         $emit('update', countrySelection)
       "
     />
     <PvSelect
       v-if="regions.length"
-      :label="$t('registration.registrationRequest.region')"
+      :label="$t('form.contactRequest.region')"
       :options="regions"
       :option-label="'name'"
       :required="true"
@@ -44,7 +43,13 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref, toRef } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  toRef,
+  watch,
+} from '@nuxtjs/composition-api'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import { useCountriesStore } from '~/stores/countries'
 import { helpers, required } from '@vuelidate/validators'
@@ -90,18 +95,18 @@ export default defineComponent({
 
     const countriesStore = useCountriesStore()
     const isoCode = computed(() => countrySelection.value.country?.isocode)
-    const regions = computed(() => countriesStore.regions[isoCode.value] || [])
+    const regions = ref([])
     const countries = toRef(countriesStore, 'countries')
 
-    const loadRegions = () => {
-      countriesStore.loadRegions(isoCode.value)
-    }
+    watch(isoCode, async (newIsoCode) => {
+      await countriesStore.loadRegions(newIsoCode)
+      regions.value = countriesStore.regions[newIsoCode] || []
+    })
 
     return {
       helpers,
       required,
       countrySelection,
-      loadRegions,
       regions,
       countries,
     }

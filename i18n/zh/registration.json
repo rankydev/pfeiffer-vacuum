@@ -1,12 +1,6 @@
 {
   "registrationRequest": {
     "title": "帐户详细资料",
-    "firstname": "名",
-    "surname": "姓",
-    "company": "公司/大学",
-    "mail": "电子邮件",
-    "country": "国家",
-    "region": "地区",
     "password": "密码"
   },
   "infotext": "您可以在此處輸入您公司的地址數據。<br /> <b>此步驟是可選的</b> <br /><br /> <b>請注意：</b> 僅適用於 A完整帳戶可讓您查看價格並發送請求!",

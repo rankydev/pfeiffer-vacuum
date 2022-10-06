@@ -27,6 +27,7 @@
         :title="title"
         :provider="provider"
         :loading="lazy ? 'lazy' : undefined"
+        :class="`responsive-image__${aspectRatioString}`"
       />
       <div v-if="withGradient" class="responsive-image__gradient-overlay"></div>
     </picture>

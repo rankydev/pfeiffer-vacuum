@@ -131,7 +131,7 @@
       <div class="registration-company-data-form__row-container">
         <PvInput
           class="registration-company-data-form__row-container--three-quarters"
-          :label="$t('registration.formCompanyData.street')"
+          :label="$t('form.contactRequest.street')"
           placeholder=""
           :required="true"
           :rules="{
@@ -149,7 +149,7 @@
 
         <PvInput
           class="registration-company-data-form__row-container--one-quarter"
-          :label="$t('registration.formCompanyData.houseNumber')"
+          :label="$t('form.contactRequest.houseNumber')"
           placeholder=""
           :required="true"
           :rules="{
@@ -169,7 +169,7 @@
       <div class="registration-company-data-form__row-container">
         <PvInput
           class="registration-company-data-form__row-container--one-quarter"
-          :label="$t('registration.formCompanyData.postalCode')"
+          :label="$t('form.contactRequest.postCode')"
           placeholder=""
           :required="true"
           :rules="{
@@ -187,7 +187,7 @@
 
         <PvInput
           class="registration-company-data-form__row-container--three-quarters"
-          :label="$t('registration.formCompanyData.city')"
+          :label="$t('form.contactRequest.city')"
           placeholder=""
           :required="true"
           :rules="{
