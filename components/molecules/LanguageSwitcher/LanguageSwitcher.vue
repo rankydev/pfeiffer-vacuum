@@ -40,7 +40,7 @@ export default defineComponent({
       const pathArray = oldUrl.split('/')
       pathArray.splice(0, 1)
       pathArray[0] = newLanguage
-      const newPath = '/' + pathArray.join('/')
+      const newPath = '/global/' + pathArray.join('/')
       return newPath
     }
 
