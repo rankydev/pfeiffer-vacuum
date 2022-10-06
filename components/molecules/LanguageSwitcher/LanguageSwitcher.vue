@@ -100,9 +100,9 @@ export default defineComponent({
     @apply tw-static;
     @apply tw-delay-200;
     @apply tw-bg-pv-white;
+    @apply tw-relative;
+    @apply tw-z-10;
     right: 152px;
-    z-index: 100;
-    position: relative;
   }
 
   &__content li:hover,
