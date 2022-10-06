@@ -1,19 +1,24 @@
 import { shallowMount } from '@vue/test-utils'
 import LanguageSwitcher from './LanguageSwitcher.vue'
-import Icon from '~/components/atoms/Icon/Icon.vue'
+import Button from '~/components/atoms/Button/Button.vue'
+
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  return {
+    ...originalModule,
+    useRoute: () => {
+      return { value: { fullPath: '/de' } }
+    },
+  }
+})
 
 describe('LanguageSwitcher', () => {
   describe('initial state', () => {
-    describe('given an icon', () => {
-      it('should render', () => {
-        const wrapper = shallowMount(LanguageSwitcher)
+    it('should render', () => {
+      const wrapper = shallowMount(LanguageSwitcher)
 
-        const icon = wrapper.findComponent(Icon)
-        const language = wrapper.find('.language-switcher__label')
-
-        expect(icon.vm.icon).toBe('language')
-        expect(language.text()).toBe('language.code')
-      })
+      const languageSwitcher = wrapper.find('.language-switcher')
+      const button = wrapper.findComponent(Button)
     })
   })
 
