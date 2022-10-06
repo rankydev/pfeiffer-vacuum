@@ -54,6 +54,7 @@ export const useCountriesStore = defineStore('countries', () => {
   }
 
   // the initial store initialization
+  /* istanbul ignore else  */
   if (countries.value.length === 0) {
     onBeforeMount(loadCountries)
     onServerPrefetch(loadCountries)

@@ -90,10 +90,13 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  /* istanbul ignore else  */
   if (!ociStore.isOciPage && !ociStore.isOciUser(auth)) {
     createKeycloakInstance()
   }
 
+  // the initial store initialization
+  /* istanbul ignore else  */
   if (!currentUser.value) {
     onBeforeMount(loadCurrentUser)
     onServerPrefetch(loadCurrentUser)
