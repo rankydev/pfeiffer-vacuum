@@ -1,6 +1,6 @@
 <template>
   <div class="language-switcher">
-    <div v-if="true" class="language-switcher__wrapper">
+    <div v-if="isDesktop" class="language-switcher__wrapper">
       <div class="language-switcher__content">
         <ul>
           <NuxtLink :to="switchLocalePath('de')"><li>Deutsch</li></NuxtLink>
@@ -21,22 +21,18 @@
       />
     </div>
     <div v-else>
-      <select id="language-select" name="language">
-        <option value="DE">
-          <NuxtLink :to="switchLocalePath('de')">Deutsch</NuxtLink>
-        </option>
-        <option value="EN">
-          <NuxtLink :to="switchLocalePath('en')">English</NuxtLink>
-        </option>
-        <option value="ES">
-          <NuxtLink :to="switchLocalePath('es')">Español</NuxtLink>
-        </option>
-        <option value="KO">
-          <NuxtLink :to="switchLocalePath('ko')">中国人</NuxtLink>
-        </option>
-        <option value="ZH">
-          <NuxtLink :to="switchLocalePath('zh')">한국인</NuxtLink>
-        </option>
+      <select
+        id="language-select"
+        name="language"
+        class="language-select"
+        :onchange="switchPath(value)"
+      >
+        <option data-icon="language">{{ $t('language.code') }}</option>
+        <option v-if="$t('language.code') !== 'DE'" value="de">Deutsch</option>
+        <option v-if="$t('language.code') !== 'EN'" value="en">English</option>
+        <option v-if="$t('language.code') !== 'ES'" value="es">Español</option>
+        <option v-if="$t('language.code') !== 'KO'" value="ko">>中国人</option>
+        <option v-if="$t('language.code') !== 'ZH'" value="zh">한국인</option>
       </select>
     </div>
   </div>
@@ -54,9 +50,11 @@ export default defineComponent({
   setup() {
     const { app } = useContext()
     const isDesktop = app.$breakpoints.isDesktop
+    const switchPath = app.switchLocalePath
 
     return {
       isDesktop,
+      switchPath,
     }
   },
 })
@@ -133,6 +131,22 @@ export default defineComponent({
     @apply tw-py-3;
     @apply tw-px-4;
     @apply tw-text-pv-black;
+  }
+}
+
+.language-select {
+  color: #7a7a7a !important;
+  background-color: rgb(82 82 82 / var(--tw-bg-opacity));
+
+  #language-select * {
+    @apply tw-text-base;
+    @apply tw-leading-6;
+    width: 204px;
+    height: 48px;
+    @apply tw-py-3;
+    @apply tw-px-4;
+    @apply tw-text-pv-black;
+    @apply tw-text-pv-white;
   }
 }
 </style>
