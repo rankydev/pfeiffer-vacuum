@@ -4,6 +4,7 @@
       <CategoryTree :categories="categories" />
     </div>
     <div class="search-result__products">
+      <Facets v-bind="{ facets, currentQuery, sorts }" />
       <ProductCardGrid :products="products" />
       <div class="search-result__pages">
         <CategoryPageSizeSelection
@@ -25,6 +26,7 @@ import ProductCardGrid from '~/components/organisms/ProductCardGrid/ProductCardG
 import Pagination from '~/components/molecules/Pagination/Pagination.vue'
 import CategoryTree from '~/components/molecules/CategoryTree/CategoryTree.vue'
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
+import Facets from '~/components/molecules/Facets/Facets.vue'
 
 export default defineComponent({
   name: 'SearchResult',
@@ -33,6 +35,7 @@ export default defineComponent({
     Pagination,
     CategoryTree,
     CategoryPageSizeSelection,
+    Facets,
   },
   props: {
     products: {
@@ -44,6 +47,18 @@ export default defineComponent({
       default: 1,
     },
     categories: {
+      type: Array,
+      default: () => [],
+    },
+    facets: {
+      type: Array,
+      required: true,
+    },
+    currentQuery: {
+      type: Object,
+      default: () => {},
+    },
+    sorts: {
       type: Array,
       default: () => [],
     },

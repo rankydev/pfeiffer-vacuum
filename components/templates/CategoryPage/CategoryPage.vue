@@ -34,9 +34,14 @@
         <div class="category-page__search-result">
           <ContentWrapper>
             <SearchResult
-              :products="products"
-              :pagination="pagination"
-              :categories="categories"
+              v-bind="{
+                products,
+                pagination,
+                categories,
+                facets,
+                currentQuery,
+                sorts,
+              }"
             />
           </ContentWrapper>
         </div>
@@ -117,6 +122,9 @@ export default defineComponent({
       () => categoryStore.result?.pagination?.totalPages
     )
     const categories = computed(() => categoryStore.result?.categorySubtree)
+    const facets = computed(() => categoryStore.result?.facets)
+    const currentQuery = computed(() => categoryStore.result?.currentQuery)
+    const sorts = computed(() => categoryStore.result?.sorts)
     console.log(categoryStore.result, 'SALAMI')
 
     return {
@@ -132,6 +140,9 @@ export default defineComponent({
       products,
       pagination,
       categories,
+      facets,
+      currentQuery,
+      sorts,
     }
   },
   head() {

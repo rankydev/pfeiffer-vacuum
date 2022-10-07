@@ -56,7 +56,7 @@ export default {
     },
     sorts: {
       type: Array,
-      required: true,
+      default: () => [],
     },
     currentQuery: {
       type: Object,
