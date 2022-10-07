@@ -66,8 +66,9 @@ export default defineComponent({
 .language-switcher {
   &__button {
     color: #7a7a7a !important;
-    padding: 0;
-    vertical-align: middle;
+    @apply tw-p-0;
+    @apply tw-align-middle;
+    box-shadow: none !important;
   }
 
   &__wrapper {
@@ -80,7 +81,7 @@ export default defineComponent({
 
   &__content {
     @apply tw-absolute;
-    height: 0;
+    @apply tw-h-0;
     width: 204px;
     padding-top: 30px;
     transition: all 0.5s ease;
