@@ -10,12 +10,10 @@
             :richtext="$t('registration.registrationPage.description')"
           />
           <CreateAccount
-            :validate="validate"
             @update="requestData.personalData = $event.registration"
           />
           <RegistrationCompanyDataForm
             id="registrationCompanyDataForm"
-            :validate="validate"
             :selected-country="
               hasCountrySelectionData
                 ? requestData.personalData.address.country
@@ -70,7 +68,7 @@ import HintModal from '~/components/organisms/RegistrationPage/HintModal/HintMod
 import getKey from '~/composables/useUniqueKey'
 import { useToast } from '~/composables/useToast'
 import useVuelidate from '@vuelidate/core'
-import { useUserApi } from '~/stores/user/partials/useUserApi'
+import { useUserStore } from '~/stores/user'
 
 export default defineComponent({
   name: 'RegistrationPage',
@@ -85,14 +83,13 @@ export default defineComponent({
     HintModal,
   },
   setup() {
-    const { i18n } = useContext()
-    const userApi = useUserApi()
+    const { i18n, app } = useContext()
+    const userStore = useUserStore()
     const router = useRouter()
     const toast = useToast()
     const v = useVuelidate()
     const loading = ref(false)
     let proceedWithoutCompany = ref(false)
-    let validate = ref(false)
     const requestData = ref({ personalData: {}, companyData: {} })
     const modalIsOpen = ref(false)
 
@@ -180,7 +177,7 @@ export default defineComponent({
 
       if (!hasCompanyData && !proceedWithoutCompany.value) return toggleModal()
 
-      validate.value = true
+      v.value.$validate()
       if (v.value.$errors.length + v.value.$silentErrors.length === 0)
         return submit()
     }
@@ -195,22 +192,14 @@ export default defineComponent({
         companyAddressRegion:
           requestData.value.personalData.address.region.name,
         companyAlreadyCustomer:
-          requestData.value.companyData.companyAlreadyCustomer || false,
+          requestData.value.companyData?.companyAlreadyCustomer || false,
       }
 
-      await userApi
+      await userStore
         .register(customerData)
         .then(() => {
           loading.value = false
-          router.push('/registration/success')
-          toast.success(
-            {
-              description: i18n.t('form.message.success'),
-            },
-            {
-              timeout: 8000,
-            }
-          )
+          router.push(app.localePath('/registration/success'))
         })
         .catch(() => {
           loading.value = false
@@ -228,7 +217,6 @@ export default defineComponent({
       modalIsOpen,
       proceedWithoutCompany,
       requestData,
-      validate,
       toggleModal,
       triggerSendRegistrationProcess,
     }

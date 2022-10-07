@@ -51,7 +51,6 @@
           class="registration-company-data-form__row-container--half"
           :label="$t('registration.formCompanyData.customerNumber')"
           placeholder=""
-          :validate="validate"
           :disabled="!requestData.companyData.companyAlreadyCustomer"
           @update="
             requestData.companyData.companyUid = $event
@@ -63,7 +62,6 @@
       <PvInput
         :label="$t('registration.formCompanyData.additionalCompanyInformation')"
         placeholder=""
-        :validate="validate"
         @update="
           requestData.companyData.companyFurtherDetails = $event
           $emit('update', requestData)
@@ -73,7 +71,6 @@
       <PvInput
         :label="$t('registration.formCompanyData.department')"
         placeholder=""
-        :validate="validate"
         @update="
           requestData.companyData.department = $event
           $emit('update', requestData)
@@ -83,7 +80,6 @@
       <PvInput
         :label="$t('registration.formCompanyData.tax')"
         placeholder=""
-        :validate="validate"
         @update="
           requestData.companyData.companyVatId = $event
           $emit('update', requestData)
@@ -96,7 +92,6 @@
           :label="$t('registration.formCompanyData.telephoneNumber')"
           placeholder=""
           :required="true"
-          :validate="validate"
           :rules="{
             required: helpers.withMessage(
               $t('form.validationErrorMessages.required'),
@@ -113,7 +108,6 @@
           class="registration-company-data-form__row-container--half"
           :label="$t('registration.formCompanyData.fax')"
           placeholder=""
-          :validate="validate"
           @update="
             requestData.companyData.fax = $event
             $emit('update', requestData)
@@ -122,7 +116,6 @@
       </div>
 
       <FormCountrySelection
-        :validate="validate"
         disabled
         :selected-country="selectedCountry"
         :selected-region="selectedRegion"
@@ -140,7 +133,6 @@
               required
             ),
           }"
-          :validate="validate"
           @update="
             requestData.companyData.companyAddressStreet = $event
             $emit('update', requestData)
@@ -158,7 +150,6 @@
               required
             ),
           }"
-          :validate="validate"
           @update="
             requestData.companyData.companyAddressStreetLine2 = $event
             $emit('update', requestData)
@@ -178,7 +169,6 @@
               required
             ),
           }"
-          :validate="validate"
           @update="
             requestData.companyData.companyAddressPostalCode = $event
             $emit('update', requestData)
@@ -196,7 +186,6 @@
               required
             ),
           }"
-          :validate="validate"
           @update="
             requestData.companyData.companyAddressTown = $event
             $emit('update', requestData)
@@ -213,14 +202,14 @@
         shape="outlined"
         icon="domain"
         class="registration-company-data-form__add-button"
-        @click="addCompany = true"
+        @click="handleOpener"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import ButtonGroup from '~/components/atoms/FormComponents/ButtonGroup/ButtonGroup'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
@@ -240,10 +229,6 @@ export default defineComponent({
     PvLabel,
   },
   props: {
-    validate: {
-      type: Boolean,
-      default: false,
-    },
     proceedWithoutCompany: {
       type: Boolean,
       default: false,
@@ -265,7 +250,8 @@ export default defineComponent({
      */
     'update',
   ],
-  setup(_, { emit }) {
+  setup(props, { emit }) {
+    let { proceedWithoutCompany } = toRefs(props)
     const companyDataObject = {
       companyData: {
         companyAlreadyCustomer: false,
@@ -285,6 +271,11 @@ export default defineComponent({
     const requestData = ref(companyDataObject)
     const addCompany = ref(false)
 
+    const handleOpener = () => {
+      addCompany.value = true
+      proceedWithoutCompany.value = false
+    }
+
     const resetForm = () => {
       requestData.value = companyDataObject
 
@@ -299,6 +290,7 @@ export default defineComponent({
       requestData,
       addCompany,
       resetForm,
+      handleOpener,
     }
   },
 })

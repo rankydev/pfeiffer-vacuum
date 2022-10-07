@@ -14,7 +14,6 @@
           required
         ),
       }"
-      :validate="validate"
       @update="
         requestData.registration.companyName = $event
         $emit('update', requestData)
@@ -22,7 +21,6 @@
     />
 
     <FormCountrySelection
-      :validate="validate"
       @update="
         requestData.registration.address = $event
         $emit('update', requestData)
@@ -39,7 +37,6 @@
           required
         ),
       }"
-      :validate="validate"
       @update="
         requestData.registration.firstName = $event
         $emit('update', requestData)
@@ -56,7 +53,6 @@
           required
         ),
       }"
-      :validate="validate"
       @update="
         requestData.registration.lastName = $event
         $emit('update', requestData)
@@ -77,7 +73,6 @@
           email
         ),
       }"
-      :validate="validate"
       @update="
         requestData.registration.email = $event
         $emit('update', requestData)
@@ -94,7 +89,6 @@
           required
         ),
       }"
-      :validate="validate"
       :show-validation-criterias="true"
       @update="
         requestData.registration.password = $event
@@ -114,15 +108,6 @@ import { required, email, helpers } from '@vuelidate/validators'
 export default defineComponent({
   name: 'CreateAccount',
   components: { PvInput, Password, FormCountrySelection },
-  props: {
-    /**
-     * determines whether a validation can be executed and will be passed into child component
-     */
-    validate: {
-      type: Boolean,
-      default: false,
-    },
-  },
   emits: [
     /**
      * Fired on keystroke.
