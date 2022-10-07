@@ -1,3 +1,6 @@
 {
-  "itemsPerPage": "Items per Page:"
+  "itemsPerPage": "Items per Page:",
+  "sort": "Sort by:",
+  "lessFilters": "More filters",
+  "moreFilters": "Less filters"
 }
