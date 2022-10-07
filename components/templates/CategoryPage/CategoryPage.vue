@@ -31,14 +31,15 @@
           />
         </ContentWrapper>
 
-        <ContentWrapper class="search-result-bg">
-          <SearchResult
-            :headline="headline"
-            :products="products"
-            :pagination="pagination"
-            :categories="categories"
-          />
-        </ContentWrapper>
+        <div class="category-page__search-result">
+          <ContentWrapper>
+            <SearchResult
+              :products="products"
+              :pagination="pagination"
+              :categories="categories"
+            />
+          </ContentWrapper>
+        </div>
       </main>
     </slot>
 
@@ -116,7 +117,7 @@ export default defineComponent({
       () => categoryStore.result?.pagination?.totalPages
     )
     const categories = computed(() => categoryStore.result?.categorySubtree)
-    console.log('CATEGORIES', categoryStore.result)
+    console.log(categoryStore.result, 'SALAMI')
 
     return {
       top,
@@ -140,14 +141,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.page-template {
-  @apply tw-flex;
-  @apply tw-flex-col;
-  @apply tw-h-screen;
-  @apply tw-overflow-x-hidden;
-}
-
-.search-result-bg {
-  @apply tw-bg-pv-grey-96;
+.category-page {
+  &__search-result {
+    @apply tw-bg-pv-grey-96;
+  }
 }
 </style>

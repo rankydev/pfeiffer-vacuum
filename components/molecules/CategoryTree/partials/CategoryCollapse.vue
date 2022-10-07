@@ -20,7 +20,7 @@
           v-for="category in children"
           :key="getKey(category.category.name)"
           :href="category.href"
-          :label="`${category.category.name} (${category.count})`"
+          :label="`${category.category.name} (${category.productCount})`"
           class="category-collapse__child"
           variant="secondary"
           shape="plain"

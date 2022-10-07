@@ -5,25 +5,36 @@
     </div>
     <div class="search-result__products">
       <ProductCardGrid :products="products" />
-      <Pagination class="search-result__pagination" :total-pages="pagination" />
+      <div class="search-result__pages">
+        <CategoryPageSizeSelection
+          :active="pageSize"
+          @change="updatePageSize"
+        />
+        <Pagination
+          class="search-result__pagination"
+          :total-pages="pagination"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import ProductCardGrid from '~/components/organisms/ProductCardGrid/ProductCardGrid.vue'
 import Pagination from '~/components/molecules/Pagination/Pagination.vue'
 import CategoryTree from '~/components/molecules/CategoryTree/CategoryTree.vue'
+import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
 
 export default defineComponent({
   name: 'SearchResult',
-  components: { ProductCardGrid, Pagination, CategoryTree },
+  components: {
+    ProductCardGrid,
+    Pagination,
+    CategoryTree,
+    CategoryPageSizeSelection,
+  },
   props: {
-    headline: {
-      type: String,
-      default: '',
-    },
     products: {
       type: Array,
       default: () => [],
@@ -37,7 +48,16 @@ export default defineComponent({
       default: () => [],
     },
   },
-  setup() {},
+  setup(props) {
+    let pageSize = ref(props.pagination.pageSize)
+
+    const updatePageSize = (e) => {
+      pageSize.value = e
+      console.log(pageSize.value)
+    }
+
+    return { updatePageSize, pageSize }
+  },
 })
 </script>
 
@@ -82,13 +102,23 @@ export default defineComponent({
     }
   }
 
-  &__pagination {
-    @apply tw-mt-4;
+  &__pages {
     @apply tw-flex;
-    @apply tw-justify-center;
+    @apply tw-flex-col-reverse;
+    @apply tw-items-center;
+    @apply tw-mt-4;
 
-    @screen lg {
-      @apply tw-justify-start;
+    @screen md {
+      @apply tw-flex-row;
+      @apply tw-justify-between;
+    }
+  }
+
+  &__pagination {
+    @apply tw-mt-2;
+
+    @screen md {
+      @apply tw-mt-0;
     }
   }
 }

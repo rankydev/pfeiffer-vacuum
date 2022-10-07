@@ -12,7 +12,7 @@
         v-for="category in categories"
         :key="getKey(category.category.name)"
         :label="category.category.name"
-        :count="category.count"
+        :count="category.productCount"
         :href="category.href"
         :children="category.children"
       />
