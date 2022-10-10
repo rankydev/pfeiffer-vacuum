@@ -1,6 +1,6 @@
 <template>
   <div class="language-switcher">
-    <div v-if="isDesktop" class="language-switcher__wrapper">
+    <div class="language-switcher__wrapper">
       <div class="language-switcher__content">
         <ul>
           <NuxtLink :to="switchLocalePath('de')"><li>Deutsch</li></NuxtLink>
@@ -20,21 +20,6 @@
         class="language-switcher__button"
       />
     </div>
-    <div v-else>
-      <select
-        id="language-select"
-        name="language"
-        class="language-select"
-        :onchange="switchPath(value)"
-      >
-        <option data-icon="language">{{ $t('language.code') }}</option>
-        <option v-if="$t('language.code') !== 'DE'" value="de">Deutsch</option>
-        <option v-if="$t('language.code') !== 'EN'" value="en">English</option>
-        <option v-if="$t('language.code') !== 'ES'" value="es">Español</option>
-        <option v-if="$t('language.code') !== 'KO'" value="ko">>中国人</option>
-        <option v-if="$t('language.code') !== 'ZH'" value="zh">한국인</option>
-      </select>
-    </div>
   </div>
 </template>
 
@@ -46,16 +31,6 @@ export default defineComponent({
   name: 'LanguageSwitcher',
   components: {
     Button,
-  },
-  setup() {
-    const { app } = useContext()
-    const isDesktop = app.$breakpoints.isDesktop
-    const switchPath = app.switchLocalePath
-
-    return {
-      isDesktop,
-      switchPath,
-    }
   },
 })
 </script>
