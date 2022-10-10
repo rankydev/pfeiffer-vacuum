@@ -91,7 +91,7 @@ export default defineComponent({
     bottom: 275px;
 
     @screen lg {
-      bottom: 0;
+      @apply tw-bottom-0;
       right: 152px;
     }
   }
@@ -104,28 +104,12 @@ export default defineComponent({
 
   &__content li,
   &__content--link {
-    padding-left: 10px;
+    @apply tw-pl-2.5;
     @apply tw-text-base;
     @apply tw-leading-6;
     @apply tw-py-3;
     @apply tw-px-4;
     @apply tw-text-pv-black;
-  }
-}
-
-.language-select {
-  color: #7a7a7a !important;
-  background-color: rgb(82 82 82 / var(--tw-bg-opacity));
-
-  #language-select * {
-    @apply tw-text-base;
-    @apply tw-leading-6;
-    width: 204px;
-    height: 48px;
-    @apply tw-py-3;
-    @apply tw-px-4;
-    @apply tw-text-pv-black;
-    @apply tw-text-pv-white;
   }
 }
 </style>
