@@ -13,7 +13,7 @@
       :href="link"
       @click="
         ($event) => {
-          isActive && beforeNavigation($event) && navigate($event)
+          beforeNavigation($event) && navigate($event)
         }
       "
     >
