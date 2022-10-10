@@ -159,6 +159,7 @@ export default defineComponent({
   @apply tw-cursor-pointer;
   @apply tw-font-bold;
   @apply tw-justify-between;
+  @apply tw-text-left;
 
   @screen md {
     @apply tw-whitespace-nowrap;
