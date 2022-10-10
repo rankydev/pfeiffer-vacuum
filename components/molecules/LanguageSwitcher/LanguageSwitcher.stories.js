@@ -18,8 +18,8 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-  <div class="documentation-preview">
-    <LanguageSwitcher style="padding-left: 152px"/>
+  <div class="documentation-preview" style="background-color:orange">
+    <LanguageSwitcher style="padding-left: 152px; padding-top: 300px;"/>
   </div>
 `,
 })

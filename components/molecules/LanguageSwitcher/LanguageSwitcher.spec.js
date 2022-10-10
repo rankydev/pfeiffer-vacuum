@@ -1,35 +1,32 @@
-import { shallowMount } from '@vue/test-utils'
+import { RouterLinkStub, shallowMount } from '@vue/test-utils'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 
-const mockIsDesktop = jest.fn()
-
-jest.mock('@nuxtjs/composition-api', () => {
-  const originalModule = jest.requireActual('@nuxtjs/composition-api')
-  return {
-    ...originalModule,
-    useContext: () => {
-      return { app: { $breakpoints: { isDesktop: mockIsDesktop() } } }
-    },
-  }
-})
-
 describe('LanguageSwitcher', () => {
-  beforeEach(() => {
-    jest.resetAllMocks()
-  })
   describe('initial state', () => {
     it('should render properly', () => {
-      const wrapper = shallowMount(LanguageSwitcher)
+      const stubs = { NuxtLink: RouterLinkStub }
+      const wrapper = shallowMount(LanguageSwitcher, { stubs })
 
       const languageSwitcher = wrapper.find('.language-switcher')
+      const languageSwitcherWrapper = wrapper.find(
+        '.language-switcher__wrapper'
+      )
+      const languageSwitcherContent = wrapper.find(
+        '.language-switcher__content'
+      )
       const button = wrapper.findComponent(Button)
 
-      expect(true).toBeTruthy()
+      expect(languageSwitcher.exists()).toBeTruthy()
+      expect(languageSwitcherWrapper.exists()).toBeTruthy()
+      expect(languageSwitcherContent.exists()).toBeTruthy()
+      expect(button.exists()).toBeTruthy()
     })
   })
 
-  // describe('during interaction', () => {})
+  describe('during interaction', () => {
+    it('should switch language properly', () => {})
+  })
 
   // describe('business requirements', () => {})
 })

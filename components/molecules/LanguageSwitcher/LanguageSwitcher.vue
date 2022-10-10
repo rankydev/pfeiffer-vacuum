@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { defineComponent, useContext } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
@@ -38,10 +38,14 @@ export default defineComponent({
 <style lang="scss">
 .language-switcher {
   &__button {
-    color: #7a7a7a !important;
+    color: #fff !important;
     @apply tw-p-0;
     @apply tw-align-middle;
     box-shadow: none !important;
+
+    @screen lg {
+      color: #7a7a7a !important;
+    }
   }
 
   &__wrapper {
