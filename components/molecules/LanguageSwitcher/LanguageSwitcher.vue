@@ -3,11 +3,13 @@
     <div class="language-switcher__wrapper">
       <div class="language-switcher__content">
         <ul>
-          <NuxtLink :to="switchLocalePath('de')"><li>Deutsch</li></NuxtLink>
-          <NuxtLink :to="switchLocalePath('en')"><li>English</li></NuxtLink>
-          <NuxtLink :to="switchLocalePath('es')"><li>Español</li></NuxtLink>
-          <NuxtLink :to="switchLocalePath('ko')"><li>中国人</li></NuxtLink>
-          <NuxtLink :to="switchLocalePath('zh')"><li>한국인</li></NuxtLink>
+          <NuxtLink
+            v-for="lang in $i18n.locales"
+            :key="lang.code"
+            :to="switchLocalePath(lang.code)"
+          >
+            <li>{{ lang.name }}</li>
+          </NuxtLink>
         </ul>
       </div>
       <Button
@@ -67,7 +69,7 @@ export default defineComponent({
 
   &__wrapper:active .content,
   &__content:hover {
-    height: 270px;
+    height: 226px;
     transition-delay: 0s;
   }
 
@@ -88,7 +90,7 @@ export default defineComponent({
     @apply tw-bg-pv-white;
     @apply tw-relative;
     @apply tw-z-10;
-    bottom: 275px;
+    bottom: 236px;
 
     @screen lg {
       @apply tw-bottom-0;

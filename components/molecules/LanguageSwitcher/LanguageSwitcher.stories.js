@@ -23,11 +23,11 @@ const Template = (args) => ({
   },
   template: `
   <div class="documentation-preview">
-  <div v-if="!isDesktop" style="background-color:black; width:260px; border-radius: 6px;">
-    <LanguageSwitcher style="padding-left: 10px; padding-top: 280px;"/>
+  <div v-if="!isDesktop" style="background-color:black; width:228px; border-radius: 6px">
+    <LanguageSwitcher style="padding-left: 10px; padding-top: 236px; padding-bottom: 10px;"/>
   </div>
-  <div v-else style="background-color:orange; width:260px; border-radius: 6px; height: 280px">
-    <LanguageSwitcher style="padding-left: 162px"/>
+  <div v-else style="background-color:hotpink; width:228px; border-radius: 6px; height: 246px">
+    <LanguageSwitcher style="padding-left: 162px; padding-top: 10px;"/>
   </div>
   </div>
 `,

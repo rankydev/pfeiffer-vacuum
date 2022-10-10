@@ -1,11 +1,11 @@
-import { RouterLinkStub, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 
 describe('LanguageSwitcher', () => {
   describe('initial state', () => {
     it('should render properly', () => {
-      const stubs = { NuxtLink: RouterLinkStub }
+      const stubs = { NuxtLink: true }
       const wrapper = shallowMount(LanguageSwitcher, { stubs })
 
       const languageSwitcher = wrapper.find('.language-switcher')
@@ -25,6 +25,7 @@ describe('LanguageSwitcher', () => {
   })
 
   describe('during interaction', () => {
+    // TODO: this test is supposed to be implemented later
     it('should switch language properly', () => {})
   })
 
