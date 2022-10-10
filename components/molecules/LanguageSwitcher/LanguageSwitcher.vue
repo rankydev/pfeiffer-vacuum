@@ -98,14 +98,12 @@ export default defineComponent({
     }
   }
 
-  &__content li:hover,
-  &__content--link:hover {
+  &__content li:hover {
     @apply tw-bg-pv-red-lighter;
     @apply tw-text-pv-white;
   }
 
-  &__content li,
-  &__content--link {
+  &__content li {
     @apply tw-pl-2.5;
     @apply tw-text-base;
     @apply tw-leading-6;
