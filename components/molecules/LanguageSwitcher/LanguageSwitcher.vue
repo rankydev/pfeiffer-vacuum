@@ -17,6 +17,7 @@
         variant="inverted"
         shape="outlined"
         gap="narrow"
+        size="small"
         icon="language"
         :prepend-icon="true"
         class="language-switcher__button"
@@ -44,6 +45,7 @@ export default defineComponent({
     @apply tw-p-0;
     @apply tw-align-middle;
     box-shadow: none !important;
+    font-size: 12px !important;
 
     @screen lg {
       color: #7a7a7a !important;
