@@ -4,7 +4,10 @@
       <CategoryTree :categories="categories" />
     </div>
     <div class="search-result__products">
-      <Facets v-bind="{ facets, currentQuery, sorts }" />
+      <Facets
+        v-bind="{ facets, currentQuery, sorts }"
+        @updateSort="pushSortToQuery"
+      />
       <ProductCardGrid :products="products" />
       <div class="search-result__pages">
         <CategoryPageSizeSelection
@@ -21,7 +24,12 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useRouter,
+  useRoute,
+} from '@nuxtjs/composition-api'
 import ProductCardGrid from '~/components/organisms/ProductCardGrid/ProductCardGrid.vue'
 import Pagination from '~/components/molecules/Pagination/Pagination.vue'
 import CategoryTree from '~/components/molecules/CategoryTree/CategoryTree.vue'
@@ -64,6 +72,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const router = useRouter()
+    const route = useRoute()
     let pageSize = ref(props.pagination.pageSize)
 
     const updatePageSize = (e) => {
@@ -71,7 +81,14 @@ export default defineComponent({
       console.log(pageSize.value)
     }
 
-    return { updatePageSize, pageSize }
+    const pushSortToQuery = (e) => {
+      console.log(router)
+      console.log(route)
+      console.log(e)
+      router.push({ query: { ...route.value.query, sort: e.code } })
+    }
+
+    return { updatePageSize, pushSortToQuery, pageSize }
   },
 })
 </script>
