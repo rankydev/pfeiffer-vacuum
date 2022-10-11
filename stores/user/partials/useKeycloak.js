@@ -4,6 +4,8 @@ import {
   useContext,
   useRoute,
   useRouter,
+  onBeforeMount,
+  onServerPrefetch,
 } from '@nuxtjs/composition-api'
 import { useCookieHelper } from '~/composables/useCookieHelper'
 import { useContextUtil } from '~/composables/useContextUtil'
@@ -35,14 +37,10 @@ export const useKeycloak = () => {
   }
 
   const isLoggedIn = computed(() => {
-    logger.trace('isLoggedIn')
-    logger.trace('auth', auth.value)
-    logger.trace('auth.access_token', auth.value?.access_token)
     return !!auth.value?.access_token
   })
 
   const setAuth = (newAuth) => {
-    logger.trace('setAuth')
     auth.value = newAuth
   }
 
@@ -234,21 +232,26 @@ export const useKeycloak = () => {
     }
   }
 
-  const authFromCookie = {
-    access_token: getCookie('auth.accessToken'),
-    refresh_token: getCookie('auth.refreshToken'),
-    id_token: getCookie('auth.idToken'),
-    validUntil: getCookie('auth.validUntil'),
-    token_type: getCookie('auth.tokenType'),
+  const readAuthFromCookie = () => {
+    const authFromCookie = {
+      access_token: getCookie('auth.accessToken'),
+      refresh_token: getCookie('auth.refreshToken'),
+      id_token: getCookie('auth.idToken'),
+      validUntil: getCookie('auth.validUntil'),
+      token_type: getCookie('auth.tokenType'),
+    }
+
+    if (authFromCookie.access_token) {
+      logger.debug('Token from cookie', authFromCookie)
+      setAuth(authFromCookie)
+    } else {
+      logger.debug('Error when loading cookies', authFromCookie)
+      setAuth(null)
+    }
   }
 
-  if (authFromCookie.access_token) {
-    logger.debug('Token from cookie', authFromCookie)
-    setAuth(authFromCookie)
-  } else {
-    logger.debug('Error when loading cookies', authFromCookie)
-    setAuth(null)
-  }
+  onBeforeMount(readAuthFromCookie)
+  onServerPrefetch(readAuthFromCookie)
 
   return {
     keycloakInstance,
