@@ -49,6 +49,7 @@ jest.mock('~/composables/useLogger', () => ({
       logger: {
         error: mockLogger,
         debug: mockLogger,
+        trace: jest.fn(),
       },
     }
   },
