@@ -1,5 +1,6 @@
 import {
   ref,
+  ssrRef,
   computed,
   useContext,
   useRoute,
@@ -21,14 +22,14 @@ export const useKeycloak = () => {
   const { logger } = useLogger('useKeycloak')
   const { getCurrentHostUrl } = useContextUtil()
   const { setCookie, removeCookie, getCookie } = useCookieHelper()
-  const auth = ref(null)
+  const auth = ssrRef(null)
   const keycloakInstance = ref(null)
 
   const route = useRoute()
   const router = useRouter()
 
   const queryIsLoginProcess = !!route.value.query?.isLoginProcess
-  const isLoginProcess = ref(queryIsLoginProcess || false)
+  const isLoginProcess = ssrRef(queryIsLoginProcess || false)
 
   if (queryIsLoginProcess) {
     let query = Object.assign({}, route.query)

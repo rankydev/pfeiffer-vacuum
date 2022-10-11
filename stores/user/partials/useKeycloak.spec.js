@@ -4,6 +4,8 @@ import { useKeycloak } from './useKeycloak'
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  const { ref } = originalModule
+
   return {
     ...originalModule,
     useContext: jest.fn(() => {
@@ -18,6 +20,7 @@ jest.mock('@nuxtjs/composition-api', () => {
     useRouter: jest.fn(),
     onBeforeMount: jest.fn(),
     onServerPrefetch: jest.fn(),
+    ssrRef: ref,
   }
 })
 
