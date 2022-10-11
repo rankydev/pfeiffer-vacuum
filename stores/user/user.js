@@ -53,6 +53,7 @@ export const useUserStore = defineStore('user', () => {
   })
 
   const loadCurrentUser = async () => {
+    logger.trace('loadCurrentUser')
     if (!isLoggedIn.value) {
       return
     }

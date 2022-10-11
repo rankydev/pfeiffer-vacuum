@@ -35,10 +35,14 @@ export const useKeycloak = () => {
   }
 
   const isLoggedIn = computed(() => {
+    logger.trace('isLoggedIn')
+    logger.trace('auth', auth.value)
+    logger.trace('auth.access_token', auth.value?.access_token)
     return !!auth.value?.access_token
   })
 
   const setAuth = (newAuth) => {
+    logger.trace('setAuth')
     auth.value = newAuth
   }
 
@@ -239,8 +243,7 @@ export const useKeycloak = () => {
   }
 
   if (authFromCookie.access_token) {
-    logger.debug('Token from cookie')
-    logger.trace(authFromCookie)
+    logger.debug('Token from cookie', authFromCookie)
     setAuth(authFromCookie)
   } else {
     logger.debug('Error when loading cookies', authFromCookie)
