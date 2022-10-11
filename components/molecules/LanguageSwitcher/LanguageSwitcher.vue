@@ -45,7 +45,7 @@ export default defineComponent({
     @apply tw-p-0;
     @apply tw-align-middle;
     box-shadow: none !important;
-    font-size: 12px !important;
+    font-size: 0.75rem !important;
 
     @screen lg {
       color: #7a7a7a !important;
@@ -63,15 +63,15 @@ export default defineComponent({
   &__content {
     @apply tw-absolute;
     @apply tw-h-0;
-    width: 204px;
-    padding-top: 30px;
+    width: 12.75rem;
+    padding-top: 1.875rem;
     transition: all 0.5s ease;
     @apply tw-delay-200;
   }
 
   &__wrapper:active .content,
   &__content:hover {
-    height: 226px;
+    height: fit-content;
     transition-delay: 0s;
   }
 
@@ -92,11 +92,11 @@ export default defineComponent({
     @apply tw-bg-pv-white;
     @apply tw-relative;
     @apply tw-z-10;
-    bottom: 236px;
+    bottom: 14.75rem;
 
     @screen lg {
       @apply tw-bottom-0;
-      right: 152px;
+      right: 9.5rem;
     }
   }
 
