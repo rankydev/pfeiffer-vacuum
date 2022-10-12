@@ -5,7 +5,6 @@
       initial-value="meters"
       :values="buttonGroupOptions"
       @update="
-        $emit('update')
         unitChanged($event)
         applyFilter()
       "
@@ -17,10 +16,7 @@
         placeholder="0"
         input-type="number"
         :required="true"
-        @update="
-          lowerBound = $event
-          $emit('update', lowerBound)
-        "
+        @update="lowerBound = $event"
       />
 
       <hr class="suction-speed-selection__divider-line" />
@@ -32,10 +28,7 @@
           input-type="number"
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
-          @update="
-            upperBound = $event
-            $emit('update', lowerBound)
-          "
+          @update="upperBound = $event"
         />
 
         <div class="suction-speed-selection__maximum--selected-unit">
@@ -48,7 +41,7 @@
         variant="secondary"
         @click.native="
           applyFilter()
-          $emit('input', internalValue)
+          sendUpdate()
         "
       ></Button>
     </div>
@@ -68,23 +61,20 @@ export default defineComponent({
     PvInput,
     Button,
   },
-  emits: [
-    /**
-     * Fired on keystroke.
-     *
-     * @event change
-     * @property {string} value
-     */
-    'update',
-    'input',
-  ],
-  setup() {
-    const lowerBound = ref(0)
-    const upperBound = ref(10000)
+  props: {
+    value: {
+      type: Array,
+      default: () => [0, 10000],
+    },
+  },
+  emits: ['update'],
+  setup(props, { emit }) {
+    const lowerBound = ref(props.value?.[0] || 0)
+    const upperBound = ref(props.value?.[1] || 10000)
+    const internalValue = ref(props.values)
     const meters = ref(true)
     const liters = ref(false)
     const unit = ref('m³/h')
-    const internalValue = ref()
     const limitMeters = '10.000'
     const limitLiters = '2778'
     const buttonGroupOptions = [
@@ -200,6 +190,12 @@ export default defineComponent({
       internalValue.value = [String(lower), String(upper)]
     }
 
+    const sendUpdate = () => {
+      const lower = internalValue.value[0]
+      const upper = internalValue.value[1]
+      emit('update', [lower > 0 ? lower : null, upper < 10000 ? upper : null])
+    }
+
     return {
       lowerBound,
       upperBound,
@@ -211,6 +207,7 @@ export default defineComponent({
       limitMeters,
       limitLiters,
       buttonGroupOptions,
+      sendUpdate,
     }
   },
 })

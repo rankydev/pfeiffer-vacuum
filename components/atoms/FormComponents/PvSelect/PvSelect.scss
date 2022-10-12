@@ -1,5 +1,6 @@
 @import 'vue-select/src/scss/vue-select';
 
+/* Default overritings */
 .vs {
   $root: &;
 
@@ -78,6 +79,26 @@
     }
   }
 
+  &--single {
+    &.vs--open .vs__selected {
+      @apply tw-relative;
+    }
+
+    &.vs--searching {
+      .vs__selected {
+        @apply tw-block;
+        @apply tw-opacity-0;
+        @apply tw-invisible;
+      }
+
+      .pv-select__search-wrapper {
+        @apply tw-absolute;
+        @apply tw-w-full;
+        @apply tw-top-0 tw-left-0;
+      }
+    }
+  }
+
   &--multiple {
     #{$root}__selected {
       @apply tw-bg-pv-transparent;
@@ -90,10 +111,10 @@
       @apply tw-caret-pv-transparent;
       @apply tw-cursor-pointer;
     }
+  }
 
-    #{$root}__dropdown-toggle {
-      @apply tw-cursor-pointer;
-    }
+  &--searchable .vs__dropdown-toggle {
+    @apply tw-cursor-pointer;
   }
 
   &__dropdown-menu {
@@ -115,6 +136,8 @@
   }
 
   &__dropdown-option {
+    @apply tw-whitespace-normal;
+
     &--highlight {
       @apply tw-bg-pv-red-lighter;
     }
@@ -159,6 +182,8 @@
   }
 }
 
+
+/* Custom component class stylings */
 .pv-select {
   &--icon {
     .vs__search,

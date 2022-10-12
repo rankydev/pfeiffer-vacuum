@@ -80,7 +80,7 @@
           :icon="option.icon"
         />
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-html="prependLabel + option[optionLabel]" />
+        <span v-html="`${prependLabel} ${option[optionLabel]}`" />
       </template>
 
       <template #no-options>
