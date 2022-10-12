@@ -1,6 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
+import { ref } from '@nuxtjs/composition-api'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 import Button from '~/components/atoms/Button/Button.vue'
+
+const mockIsStoryblok = ref(false)
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
@@ -10,7 +13,7 @@ jest.mock('@nuxtjs/composition-api', () => {
       return {
         value: {
           query: {
-            _storyblok: false,
+            _storyblok: mockIsStoryblok.value,
           },
         },
       }
@@ -20,10 +23,9 @@ jest.mock('@nuxtjs/composition-api', () => {
 
 describe('LanguageSwitcher', () => {
   describe('initial state', () => {
+    const stubs = { NuxtLink: true }
     it('should render properly', () => {
-      const stubs = { NuxtLink: true }
       const wrapper = shallowMount(LanguageSwitcher, { stubs })
-
       const languageSwitcher = wrapper.find('.language-switcher')
       const languageSwitcherWrapper = wrapper.find(
         '.language-switcher__wrapper'
@@ -40,7 +42,15 @@ describe('LanguageSwitcher', () => {
     })
 
     it('should render properly in storyblok preview', () => {
-      // set route.value.query._storyblok to true and render again
+      mockIsStoryblok.value = true
+      const wrapper = shallowMount(LanguageSwitcher, { stubs })
+      const languageSwitcher = wrapper.find('.language-switcher')
+      const languageSwitcherWrapper = wrapper.find(
+        '.language-switcher__wrapper'
+      )
+
+      expect(languageSwitcher.exists()).toBeTruthy()
+      expect(languageSwitcherWrapper.exists()).toBeFalsy()
     })
   })
 
