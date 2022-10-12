@@ -16,6 +16,7 @@ const mockAxios = jest.fn().mockReturnValue({
     },
   },
 })
+const mockReq = jest.fn()
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
@@ -25,6 +26,7 @@ jest.mock('@nuxtjs/composition-api', () => {
       $axios: {
         create: () => mockAxios(),
       },
+      req: mockReq(),
     }),
   }
 })
@@ -66,7 +68,20 @@ describe('axiosForHybris', () => {
       )
     })
 
-    test('should return axios instance that was already created', () => {
+    test('should return axios instance that was already created on client side', () => {
+      const { useAxiosForHybris } = require('./useAxiosForHybris')
+      const { axios } = useAxiosForHybris()
+      expect(axios).toBeDefined()
+      expect(mockAxios).toBeCalledTimes(1)
+
+      const { axios: anotherAxios } = useAxiosForHybris()
+      expect(anotherAxios).toBeDefined()
+      expect(mockAxios).toBeCalledTimes(1)
+      expect(axios).toStrictEqual(anotherAxios)
+    })
+
+    test('should return axios instance from req that was already created on server side', () => {
+      mockReq.mockReturnValue({})
       const { useAxiosForHybris } = require('./useAxiosForHybris')
       const { axios } = useAxiosForHybris()
       expect(axios).toBeDefined()
