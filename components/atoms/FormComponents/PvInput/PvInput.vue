@@ -13,7 +13,7 @@
           'pv-input__element--error': !!validation.getError(),
         }"
         :placeholder="placeholder"
-        @keypress.enter="$emit('submit', $event)"
+        @keypress.enter="$emit('submit', internalValue)"
         @focus="$emit('focus', true)"
         @blur="$emit('focus', false)"
         @input="
@@ -26,7 +26,7 @@
         class="pv-input__icon"
         :class="{ 'pv-input__icon--error': !!validation.getError() }"
         :icon="!!validation.getError() ? 'error_outline' : internalIcon"
-        @click.native="$emit('click:icon', $event)"
+        @click.native="$emit('click:icon', internalValue)"
       />
     </div>
     <ErrorMessage

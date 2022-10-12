@@ -53,8 +53,8 @@ export default defineComponent({
       default: () => [],
     },
     pagination: {
-      type: Number,
-      default: 1,
+      type: Object,
+      default: () => {},
     },
     categories: {
       type: Array,
