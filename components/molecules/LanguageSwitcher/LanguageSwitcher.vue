@@ -1,6 +1,6 @@
 <template>
   <div class="language-switcher">
-    <div class="language-switcher__wrapper">
+    <div v-if="!isStoryblokPreview" class="language-switcher__wrapper">
       <div class="language-switcher__content">
         <ul>
           <NuxtLink
@@ -27,13 +27,26 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useRoute, computed } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
   components: {
     Button,
+  },
+  setup() {
+    const route = useRoute()
+
+    console.log('route', route.value.query._storyblok)
+
+    const isStoryblokPreview = computed(() => {
+      return route.value.query._storyblok
+    })
+
+    return {
+      isStoryblokPreview,
+    }
   },
 })
 </script>
