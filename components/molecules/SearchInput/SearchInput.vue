@@ -8,7 +8,12 @@
 </template>
 
 <script>
-import { defineComponent, useRouter, useRoute } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useRouter,
+  useRoute,
+  useContext,
+} from '@nuxtjs/composition-api'
 
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 
@@ -19,10 +24,11 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const route = useRoute()
+    const { app } = useContext()
 
     const pushSearchTerm = (e) => {
-      console.log(e, 'VALUE')
       router.push({
+        path: app.localePath('shop-categories'),
         query: { ...route.value.query, searchTerm: e.length ? e : undefined },
       })
     }
