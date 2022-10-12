@@ -88,9 +88,12 @@ export default {
     }
 
     const selectionUpdated = () => {
+      const lower = modelValue.value[0]
+      const upper = modelValue.value[1]
+
       emit('update', [
-        modelValue.value[0] > 0 ? data.value[modelValue.value[0]].value : null,
-        modelValue.value[1] < 16 ? data.value[modelValue.value[1]].value : null,
+        lower > 0 ? `>=${data.value[lower].value}` : null,
+        upper < 16 ? `<=${data.value[upper].value}` : null,
       ])
     }
 

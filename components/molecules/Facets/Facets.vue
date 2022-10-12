@@ -3,12 +3,10 @@
     <div>
       <VacuumRangeSlider
         style="margin-bottom: 32px"
-        :value="['2', '6']"
         @update="updateFacets(null, $event, true)"
       />
       <SuctionSpeedSelection
         style="margin-bottom: 32px"
-        :value="['137', '3412']"
         @update="updateFacets(null, $event, false, true)"
       />
     </div>
@@ -84,7 +82,7 @@ export default {
   emits: ['updateSort', 'updateFacets'],
   setup(props, { emit }) {
     // Facet id's for vacuum range and suction speed
-    const vacuumRangeIds = ['3912', '3913']
+    const vacuumRangeIds = ['3913', '3912']
     const suctionSpeedIds = ['3983', '3982']
 
     // Switch for showing less or more filters
@@ -161,7 +159,7 @@ export default {
 
     .vs__dropdown-toggle {
       @apply tw-p-2;
-      font-size: 12px;
+      @apply tw-text-xs;
     }
   }
 
