@@ -38,8 +38,6 @@ export default defineComponent({
   setup() {
     const route = useRoute()
 
-    console.log('route', route.value.query._storyblok)
-
     const isStoryblokPreview = computed(() => {
       return route.value.query._storyblok
     })
