@@ -82,11 +82,12 @@ export default defineComponent({
   @apply tw-items-center;
 
   @screen lg {
-    @apply tw-pb-8;
+    @apply tw-pb-6;
   }
 
   &__account {
     @apply tw-hidden;
+    @apply tw--my-2;
 
     @screen md {
       @apply tw-flex;
