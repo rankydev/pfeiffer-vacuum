@@ -71,7 +71,7 @@ export default defineComponent({
 
   &__wrapper:active .content,
   &__content:hover {
-    height: fit-content;
+    height: 14.125rem;
     transition-delay: 0s;
   }
 
