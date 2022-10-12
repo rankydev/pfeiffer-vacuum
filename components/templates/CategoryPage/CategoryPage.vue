@@ -125,7 +125,6 @@ export default defineComponent({
     const facets = computed(() => categoryStore.result?.facets)
     const currentQuery = computed(() => categoryStore.result?.currentQuery)
     const sorts = computed(() => categoryStore.result?.sorts)
-    console.log(categoryStore.result, 'SALAMI')
 
     return {
       top,

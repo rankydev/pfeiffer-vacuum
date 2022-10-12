@@ -19,7 +19,6 @@
         :prepend-label="$t('category.sort')"
         icon-size="small"
         class="facets__multiselect"
-        no-input
         @update="$emit('updateSort', $event)"
       />
       <PvSelect
@@ -32,7 +31,6 @@
         icon-size="small"
         class="facets__multiselect"
         multiple
-        no-input
         @update="updateFacets(facet.code, $event)"
       />
       <Button

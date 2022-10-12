@@ -7,6 +7,7 @@
       <Facets
         v-bind="{ facets, currentQuery, sorts }"
         @updateSort="pushSortToQuery"
+        @updateFacets="pushFacetsToQuery"
       />
       <ProductCardGrid :products="products" />
       <div class="search-result__pages">
@@ -78,17 +79,26 @@ export default defineComponent({
 
     const updatePageSize = (e) => {
       pageSize.value = e
-      console.log(pageSize.value)
     }
 
     const pushSortToQuery = (e) => {
-      console.log(router)
-      console.log(route)
-      console.log(e)
       router.push({ query: { ...route.value.query, sort: e.code } })
     }
 
-    return { updatePageSize, pushSortToQuery, pageSize }
+    const pushFacetsToQuery = (e) => {
+      let joinedFacets = ''
+      e.forEach((item, i) => {
+        joinedFacets += `${i > 0 ? ':' : ''}${item.key}:${item.value}`
+      })
+      router.push({
+        query: {
+          ...route.value.query,
+          facets: joinedFacets.length ? joinedFacets : undefined,
+        },
+      })
+    }
+
+    return { updatePageSize, pushSortToQuery, pushFacetsToQuery, pageSize }
   },
 })
 </script>

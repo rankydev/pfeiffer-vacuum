@@ -2,7 +2,7 @@
   <div>
     <PvLabel v-if="label" :label="label" />
     <v-select
-      v-model="internalValue"
+      v-model="modelValue"
       v-bind="{ options, disabled, multiple, reduce, clearable }"
       :required="isRequired"
       :class="{
@@ -15,6 +15,7 @@
       :components="{ Deselect }"
       deselect-from-dropdown
       :close-on-select="!!!multiple"
+      :value="valueFromProps"
       @input="
         $emit('update', internalValue)
         validation.validateInput()
@@ -51,7 +52,7 @@
           v-if="!!multiple"
           label=""
           :checked="
-            !!(internalValue || []).filter(
+            !!(valueFromProps || []).filter(
               (e) => e[optionLabel] === option[optionLabel]
             ).length
           "
@@ -101,7 +102,13 @@ import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Checkbox from '../Checkbox/Checkbox'
 import Icon from '~/components/atoms/Icon/Icon'
-import { defineComponent, computed, ref, watch } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  watch,
+  toRefs,
+  computed,
+} from '@nuxtjs/composition-api'
 import { useInputValidator } from '~/composables/useValidator'
 import props from './partials/props.js'
 
@@ -117,11 +124,13 @@ export default defineComponent({
   props,
   emits: ['update'],
   setup(props) {
-    const valueFromProps = ref(props.value)
-    const internalValue = computed({
+    const { value: valueFromProps } = toRefs(props)
+    const internalValue = ref(undefined)
+
+    const modelValue = computed({
       get: () => valueFromProps.value,
       set: (val) => {
-        valueFromProps.value = val
+        internalValue.value = val
       },
     })
 
@@ -129,7 +138,7 @@ export default defineComponent({
       render: (h) => h('span', { class: ['deselect-option'] }),
     }
 
-    const validation = ref(useInputValidator(props.rules, internalValue))
+    const validation = ref(useInputValidator(props.rules, valueFromProps.value))
 
     watch(
       () => props.validate,
@@ -140,7 +149,7 @@ export default defineComponent({
       }
     )
 
-    return { internalValue, Deselect, validation }
+    return { modelValue, internalValue, valueFromProps, Deselect, validation }
   },
 })
 </script>
