@@ -1,23 +1,33 @@
 import { shallowMount } from '@vue/test-utils'
 import LanguageSwitcher from './LanguageSwitcher.vue'
-import Icon from '~/components/atoms/Icon/Icon.vue'
+import Button from '~/components/atoms/Button/Button.vue'
 
 describe('LanguageSwitcher', () => {
   describe('initial state', () => {
-    describe('given an icon', () => {
-      it('should render', () => {
-        const wrapper = shallowMount(LanguageSwitcher)
+    it('should render properly', () => {
+      const stubs = { NuxtLink: true }
+      const wrapper = shallowMount(LanguageSwitcher, { stubs })
 
-        const icon = wrapper.findComponent(Icon)
-        const language = wrapper.find('.language-switcher__label')
+      const languageSwitcher = wrapper.find('.language-switcher')
+      const languageSwitcherWrapper = wrapper.find(
+        '.language-switcher__wrapper'
+      )
+      const languageSwitcherContent = wrapper.find(
+        '.language-switcher__content'
+      )
+      const button = wrapper.findComponent(Button)
 
-        expect(icon.vm.icon).toBe('language')
-        expect(language.text()).toBe('language.code')
-      })
+      expect(languageSwitcher.exists()).toBeTruthy()
+      expect(languageSwitcherWrapper.exists()).toBeTruthy()
+      expect(languageSwitcherContent.exists()).toBeTruthy()
+      expect(button.exists()).toBeTruthy()
     })
   })
 
-  // describe('during interaction', () => {})
+  describe('during interaction', () => {
+    // TODO: this test is supposed to be implemented later
+    it('should switch language properly', () => {})
+  })
 
   // describe('business requirements', () => {})
 })

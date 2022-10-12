@@ -19,6 +19,9 @@ jest.mock('@nuxtjs/composition-api', () => {
     onBeforeMount: (callback) => callback(),
     onServerPrefetch: jest.fn(),
     ssrRef: ref,
+    useContext: () => {
+      return { i18n: {} }
+    },
   }
 })
 

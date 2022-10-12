@@ -51,7 +51,7 @@ export default defineComponent({
       validator: (val) => ['_self', '_blank'].includes(val),
     },
     /**
-     * a function which will be executed before click. It receives the click event as first paramter
+     * a function which will be executed before click. It receives the click event as first parameter
      */
     beforeNavigation: {
       type: Function,
