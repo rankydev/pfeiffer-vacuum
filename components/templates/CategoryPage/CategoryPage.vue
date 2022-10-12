@@ -118,9 +118,7 @@ export default defineComponent({
     const link = computed(() => categoryStore.parentCategoryPath)
     const count = computed(() => categoryStore.result?.pagination?.totalResults)
     const products = computed(() => categoryStore.result?.products)
-    const pagination = computed(
-      () => categoryStore.result?.pagination?.totalPages
-    )
+    const pagination = computed(() => categoryStore.result?.pagination)
     const categories = computed(() => categoryStore.result?.categorySubtree)
     const facets = computed(() => categoryStore.result?.facets)
     const currentQuery = computed(() => categoryStore.result?.currentQuery)

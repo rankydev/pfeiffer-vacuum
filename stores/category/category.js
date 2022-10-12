@@ -55,13 +55,13 @@ export const useCategoryStore = defineStore('category', () => {
     const facets = route.value.query.facets || ''
     const url = joinURL(basePath, config.PRODUCTS_API, 'search')
     const params = {
-      currentPage: 0,
+      currentPage: route.value.query.currentPage - 1 || 0,
       pageSize: 9,
       //TODO: Facet filter need to merge with the query
       query: `:${sort}${id ? ':category:' + id : ''}${
         facets ? ':' + facets : ''
       }`,
-      ..._pick(route.value.query, ['currentPage', 'pageSize']),
+      ..._pick(route.value.query, 'pageSize'),
       lang: i18n.locale,
       curr: 'EUR',
       fields: 'FULL',

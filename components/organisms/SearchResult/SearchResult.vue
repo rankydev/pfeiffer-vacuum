@@ -17,7 +17,7 @@
         />
         <Pagination
           class="search-result__pagination"
-          :total-pages="pagination"
+          :total-pages="pagination.totalPages"
         />
       </div>
     </div>
@@ -27,7 +27,8 @@
 <script>
 import {
   defineComponent,
-  ref,
+  toRefs,
+  computed,
   useRouter,
   useRoute,
 } from '@nuxtjs/composition-api'
@@ -75,14 +76,22 @@ export default defineComponent({
   setup(props) {
     const router = useRouter()
     const route = useRoute()
-    let pageSize = ref(props.pagination.pageSize)
+    const { pagination } = toRefs(props)
+    const pageSize = computed(() => pagination.value?.pageSize)
 
     const updatePageSize = (e) => {
-      pageSize.value = e
+      router.push({
+        query: {
+          ...route.value.query,
+          pageSize: e,
+        },
+      })
     }
 
     const pushSortToQuery = (e) => {
-      router.push({ query: { ...route.value.query, sort: e.code } })
+      router.push({
+        query: { ...route.value.query, sort: e.code, currentPage: 1 },
+      })
     }
 
     const pushFacetsToQuery = (e) => {
@@ -94,6 +103,7 @@ export default defineComponent({
         query: {
           ...route.value.query,
           facets: joinedFacets.length ? joinedFacets : undefined,
+          currentPage: 1,
         },
       })
     }
