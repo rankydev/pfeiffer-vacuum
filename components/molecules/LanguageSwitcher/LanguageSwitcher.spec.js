@@ -2,6 +2,22 @@ import { shallowMount } from '@vue/test-utils'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  return {
+    ...originalModule,
+    useRoute: () => {
+      return {
+        value: {
+          query: {
+            _storyblok: false,
+          },
+        },
+      }
+    },
+  }
+})
+
 describe('LanguageSwitcher', () => {
   describe('initial state', () => {
     it('should render properly', () => {
@@ -21,6 +37,10 @@ describe('LanguageSwitcher', () => {
       expect(languageSwitcherWrapper.exists()).toBeTruthy()
       expect(languageSwitcherContent.exists()).toBeTruthy()
       expect(button.exists()).toBeTruthy()
+    })
+
+    it('should render properly in storyblok preview', () => {
+      // set route.value.query._storyblok to true and render again
     })
   })
 
