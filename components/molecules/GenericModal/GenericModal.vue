@@ -2,12 +2,8 @@
   <transition name="fade">
     <div v-if="isOpen" class="modal">
       <div class="modal__background closeModal">
-        <ContentWrapper
-          class="modal__box tw-grid-container tw-grid-cols-12 closeModal"
-        >
-          <div
-            class="modal__grid-box tw-col-span-4 tw-col-start-1 md:tw-col-span-6 md:tw-col-start-2 lg:tw-col-span-10 lg:tw-col-start-2"
-          >
+        <ContentWrapper class="modal__box closeModal">
+          <div class="modal__grid-box">
             <div class="modal__box-wrapper">
               <slot @closeModal="$emit('closeModal')" />
               <Icon
@@ -87,14 +83,18 @@ export default defineComponent({
     @apply tw-justify-center;
   }
 
+  &__box {
+    @apply tw-py-4;
+  }
+
   &__box-wrapper {
     @apply tw-flex;
     @apply tw-justify-end;
     @apply tw-rounded-lg;
     @apply tw-bg-pv-white;
     @apply tw-p-4;
-    @apply tw-max-h-screen;
     @apply tw-overflow-y-auto;
+    height: calc(100vh - 2rem);
 
     @screen md {
       @apply tw-p-6;
@@ -106,7 +106,7 @@ export default defineComponent({
   }
 
   &__icon {
-    @apply tw-ml-4;
+    @apply tw-absolute;
     @apply tw-cursor-pointer;
 
     &:hover,
