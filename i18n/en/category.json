@@ -2,5 +2,6 @@
   "itemsPerPage": "Items per Page:",
   "sort": "Sort by:",
   "lessFilters": "Less filters",
-  "moreFilters": "More filters"
+  "moreFilters": "More filters",
+  "activeFilters": "Active filters:"
 }
