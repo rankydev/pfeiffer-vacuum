@@ -11,7 +11,9 @@
       />
     </div>
     <div v-if="activeFilters.length" class="facets__filter-tags">
-      <span class="facets__filter-tags-label">Aktive Filter:</span>
+      <span class="facets__filter-tags-label">
+        {{ $t('category.activeFilters') }}
+      </span>
       <FilterTag
         v-for="filter in activeFilters"
         :key="filter.key + filter.value"
@@ -161,8 +163,6 @@ export default {
         'updateFacets',
         unref(selectedFacets).filter((e) => e !== facet)
       )
-
-      console.log(unref(selectedFacets).filter((e) => e !== facet))
     }
 
     return {
