@@ -1,3 +1,5 @@
 {
-  "itemsPerPage": "페이지당 제품:"
+  "itemsPerPage": "페이지당 제품:",
+  "sortAndFilter": "정렬 및 필터링",
+  "applyFilter": "필터 적용"
 }

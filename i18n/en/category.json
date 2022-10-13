@@ -1,3 +1,5 @@
 {
-  "itemsPerPage": "Items per Page:"
+  "itemsPerPage": "Items per Page:",
+  "sortAndFilter": "Sort & Filter",
+  "applyFilter": "Apply filter"
 }
