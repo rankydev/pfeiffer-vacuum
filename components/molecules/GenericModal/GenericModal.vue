@@ -85,16 +85,22 @@ export default defineComponent({
 
   &__box {
     @apply tw-py-4;
+    @apply tw-h-full;
+  }
+
+  &__grid-box {
+    @apply tw-h-full;
   }
 
   &__box-wrapper {
     @apply tw-flex;
     @apply tw-justify-end;
+    @apply tw-relative;
     @apply tw-rounded-lg;
     @apply tw-bg-pv-white;
     @apply tw-p-4;
     @apply tw-overflow-y-auto;
-    height: calc(100vh - 2rem);
+    @apply tw-h-full;
 
     @screen md {
       @apply tw-p-6;
