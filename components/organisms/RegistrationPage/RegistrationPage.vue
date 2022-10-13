@@ -100,12 +100,21 @@ export default defineComponent({
         return true
     })
 
-    const selectedCountry = computed(
-      () => requestData.value.personalData.address?.country
-    )
-    const selectedRegion = computed(
-      () => requestData.value.personalData.address?.region
-    )
+    const selectedCountry = computed(() => {
+      const country = requestData.value.personalData.address?.country
+
+      if (country && Object.keys(country).length) return country
+
+      return undefined
+    })
+
+    const selectedRegion = computed(() => {
+      const region = requestData.value.personalData.address?.region
+
+      if (region && Object.keys(region).length) return region
+
+      return undefined
+    })
 
     const contentCTABoxHelpData = getContentCTABoxHelpData(i18n)
     const contentCTABoxLoginData = getContentCTABoxLoginData(i18n)
