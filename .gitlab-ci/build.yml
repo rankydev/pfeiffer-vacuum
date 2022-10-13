@@ -47,7 +47,7 @@ lint:
     - npm run lint:ci
   artifacts:
     when: always
-    report:
+    reports:
       junit:
         - report/*.xml
     paths:
