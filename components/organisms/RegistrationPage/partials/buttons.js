@@ -1,4 +1,4 @@
-import getKey from '@/composables/useUniqueKey'
+import getKey from '~/composables/useUniqueKey'
 
 /**
  * data of content cta boxes
