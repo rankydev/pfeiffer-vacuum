@@ -2,12 +2,34 @@ import { shallowMount } from '@vue/test-utils'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 
+const mockIsStoryblok = jest.fn()
+
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  return {
+    ...originalModule,
+    useRoute: () => {
+      return {
+        value: {
+          query: {
+            _storyblok: mockIsStoryblok(),
+          },
+        },
+      }
+    },
+  }
+})
+
 describe('LanguageSwitcher', () => {
   describe('initial state', () => {
-    it('should render properly', () => {
-      const stubs = { NuxtLink: true }
-      const wrapper = shallowMount(LanguageSwitcher, { stubs })
+    const stubs = { NuxtLink: true }
+    beforeEach(() => {
+      jest.resetAllMocks()
+    })
 
+    it('should render properly', () => {
+      mockIsStoryblok.mockReturnValue(false)
+      const wrapper = shallowMount(LanguageSwitcher, { stubs })
       const languageSwitcher = wrapper.find('.language-switcher')
       const languageSwitcherWrapper = wrapper.find(
         '.language-switcher__wrapper'
@@ -21,6 +43,24 @@ describe('LanguageSwitcher', () => {
       expect(languageSwitcherWrapper.exists()).toBeTruthy()
       expect(languageSwitcherContent.exists()).toBeTruthy()
       expect(button.exists()).toBeTruthy()
+    })
+
+    it('should render properly in storyblok preview', () => {
+      mockIsStoryblok.mockReturnValue(true)
+      const wrapper = shallowMount(LanguageSwitcher, { stubs })
+      const languageSwitcher = wrapper.find('.language-switcher')
+      const languageSwitcherWrapper = wrapper.find(
+        '.language-switcher__wrapper'
+      )
+      const languageSwitcherContent = wrapper.find(
+        '.language-switcher__content'
+      )
+      const button = wrapper.findComponent(Button)
+
+      expect(languageSwitcher.exists()).toBeTruthy()
+      expect(languageSwitcherWrapper.exists()).toBeFalsy()
+      expect(languageSwitcherContent.exists()).toBeFalsy()
+      expect(button.exists()).toBeFalsy()
     })
   })
 
