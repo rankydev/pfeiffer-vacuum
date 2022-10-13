@@ -319,6 +319,21 @@ export const currentQuery = {
         key: '3795',
         value: 'ISO-KF',
       },
+      {
+        displayName: 'Lorem ipsum',
+        key: '3796',
+        value: 'ISO-LOREM',
+      },
+      {
+        displayName: 'Lorem ipsum',
+        key: '3797',
+        value: 'ISO-KF',
+      },
+      {
+        displayName: 'Lorem ipsum dolor',
+        key: '3798',
+        value: 'ISO-DN',
+      },
     ],
     value: ':name-asc:3795:ISO-KF',
   },

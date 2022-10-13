@@ -117,13 +117,7 @@ export default defineComponent({
   props,
   emits: ['update'],
   setup(props) {
-    const valueFromProps = ref(props.value)
-    const internalValue = computed({
-      get: () => valueFromProps.value,
-      set: (val) => {
-        valueFromProps.value = val
-      },
-    })
+    const internalValue = ref(props.value)
 
     const Deselect = {
       render: (h) => h('span', { class: ['deselect-option'] }),

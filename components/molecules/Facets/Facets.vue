@@ -1,5 +1,5 @@
 <template>
-  <div class="dev-helper">
+  <div class="facets">
     <div>
       <VacuumRangeSlider
         style="margin-bottom: 32px"
@@ -10,7 +10,17 @@
         @update="updateFacets(null, $event, false, true)"
       />
     </div>
-    <div class="facets">
+    <div v-if="activeFilters.length" class="facets__filter-tags">
+      <span class="facets__filter-tags-label">Aktive Filter:</span>
+      <FilterTag
+        v-for="filter in activeFilters"
+        :key="filter.key + filter.value"
+        :filter="filter.displayName"
+        :value="filter.value"
+        @click="removeFacet(filter)"
+      />
+    </div>
+    <div class="facets__selects">
       <PvSelect
         :options="sorts"
         :value="sorts.find((e) => e.selected)"
@@ -56,6 +66,7 @@ import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import Button from '~/components/atoms/Button/Button'
 import VacuumRangeSlider from '~/components/molecules/VacuumRangeSlider/VacuumRangeSlider.vue'
 import SuctionSpeedSelection from '~/components/molecules/SuctionSpeedSelection/SuctionSpeedSelection'
+import FilterTag from '~/components/atoms/FilterTag/FilterTag'
 
 export default {
   name: 'Facets',
@@ -64,6 +75,7 @@ export default {
     Button,
     VacuumRangeSlider,
     SuctionSpeedSelection,
+    FilterTag,
   },
   props: {
     facets: {
@@ -108,6 +120,10 @@ export default {
       )
     })
 
+    const activeFilters = computed(
+      () => props.currentQuery?.query?.filterTerms || []
+    )
+
     // Add recent selected facet and values to current selection and emit
     const updateFacets = (
       code,
@@ -140,19 +156,32 @@ export default {
       emit('updateFacets', newFacets)
     }
 
+    const removeFacet = (facet) => {
+      emit(
+        'updateFacets',
+        unref(selectedFacets).filter((e) => e !== facet)
+      )
+
+      console.log(unref(selectedFacets).filter((e) => e !== facet))
+    }
+
     return {
       isExtended,
       multiSelectFacets,
+      activeFilters,
       updateFacets,
+      removeFacet,
     }
   },
 }
 </script>
 <style lang="scss">
 .facets {
-  @apply tw-flex;
-  @apply tw-gap-2;
-  @apply tw-flex-wrap;
+  &__selects {
+    @apply tw-flex;
+    @apply tw-gap-2;
+    @apply tw-flex-wrap;
+  }
 
   &__multiselect {
     @apply tw-inline-block;
@@ -165,6 +194,17 @@ export default {
 
   &__expand-toggle {
     @apply tw-p-2;
+  }
+
+  &__filter-tags {
+    @apply tw-flex;
+    @apply tw-items-center;
+    @apply tw-gap-2;
+    @apply tw-mb-4;
+
+    &-label {
+      @apply tw-font-bold;
+    }
   }
 }
 </style>
