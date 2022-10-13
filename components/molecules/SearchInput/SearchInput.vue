@@ -32,7 +32,7 @@ export default defineComponent({
     const pushSearchTerm = (e) => {
       router.push({
         path: app.localePath('shop-categories'),
-        query: { ...route.value.query, searchTerm: e.length ? e : undefined },
+        query: { searchTerm: e.length ? e : undefined },
       })
     }
     return { pushSearchTerm, searchTerm }

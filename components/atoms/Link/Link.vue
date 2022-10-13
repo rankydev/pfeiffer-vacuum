@@ -38,7 +38,7 @@ export default defineComponent({
      * The relative or absolute link
      */
     href: {
-      type: String,
+      type: [String, Object],
       default: '#',
     },
     /**

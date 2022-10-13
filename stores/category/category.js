@@ -40,7 +40,7 @@ export const useCategoryStore = defineStore('category', () => {
     ]
   })
 
-  console.log(breadcrumb, 'BREADCRUMB')
+  // console.log(breadcrumb, 'BREADCRUMB')
 
   const categoryName = computed(() => breadcrumb.value.at(-1)?.name)
 

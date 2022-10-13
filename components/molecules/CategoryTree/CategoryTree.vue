@@ -13,7 +13,10 @@
         :key="getKey(category.category.name)"
         :label="category.category.name"
         :count="category.productCount"
-        :href="joinURL(localePath('shop-categories'), category.category.id)"
+        :href="{
+          path: joinURL(localePath('shop-categories'), category.category.id),
+          query: route.query,
+        }"
         :children="category.children"
       />
     </div>
@@ -21,7 +24,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
 import CategoryCollapse from './partials/CategoryCollapse'
 import getKey from '~/composables/useUniqueKey'
 import { joinURL } from 'ufo'
@@ -37,6 +40,7 @@ export default defineComponent({
     },
   },
   setup() {
+    const route = useRoute()
     const showScrollbar = ref(false)
 
     const toggleScrollbarClass = () => {
@@ -44,6 +48,7 @@ export default defineComponent({
     }
 
     return {
+      route,
       getKey,
       toggleScrollbarClass,
       showScrollbar,

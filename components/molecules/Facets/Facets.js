@@ -40,11 +40,15 @@ export default {
     // Filter given facets to only have type multiselect
     const multiSelectFacets = computed(() => {
       return (
-        props.facets
-          ?.filter(
-            (e) => e.visible && !e.category && e.facetType === 'MULTISELECTOR'
-          )
-          .slice(0, isExtended.value ? undefined : 3) || []
+        props.facets?.filter(
+          (e) => e.visible && !e.category && e.facetType === 'MULTISELECTOR'
+        ) || []
+      )
+    })
+
+    const shrinkedFacets = computed(() => {
+      return (
+        multiSelectFacets.value.slice(0, isExtended.value ? undefined : 2) || []
       )
     })
 
@@ -99,6 +103,7 @@ export default {
     return {
       isExtended,
       multiSelectFacets,
+      shrinkedFacets,
       selectedFacets,
       updateFacets,
       removeFacet,

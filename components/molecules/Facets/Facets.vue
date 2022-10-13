@@ -1,6 +1,6 @@
 <template>
   <div class="facets">
-    <div>
+    <div style="display: none">
       <VacuumRangeSlider
         style="margin-bottom: 32px"
         @update="updateFacets(null, $event, true)"
@@ -34,7 +34,7 @@
         @update="$emit('updateSort', $event)"
       />
       <PvSelect
-        v-for="facet in multiSelectFacets"
+        v-for="facet in shrinkedFacets"
         :key="facet.code"
         :value="facet.values.filter((e) => e.selected)"
         :placeholder="facet.name"
@@ -46,6 +46,7 @@
         @update="updateFacets(facet.code, $event)"
       />
       <Button
+        v-if="multiSelectFacets.length > 2"
         :label="
           isExtended ? $t('category.lessFilters') : $t('category.moreFilters')
         "
@@ -84,6 +85,7 @@
 
   &__filter-tags {
     @apply tw-flex;
+    @apply tw-flex-wrap;
     @apply tw-items-center;
     @apply tw-gap-2;
     @apply tw-mb-4;

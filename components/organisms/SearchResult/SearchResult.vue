@@ -5,6 +5,7 @@
     </div>
     <div class="search-result__products">
       <Facets
+        class="search-result__facets"
         v-bind="{ facets, currentQuery, sorts }"
         @updateSort="pushSortToQuery"
         @updateFacets="pushFacetsToQuery"
@@ -152,6 +153,10 @@ export default defineComponent({
       @apply tw-col-start-4;
       @apply tw-col-span-9;
     }
+  }
+
+  &__facets {
+    @apply tw-mb-4;
   }
 
   &__pages {
