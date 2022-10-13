@@ -19,6 +19,8 @@ export const useCategoryStore = defineStore('category', () => {
   const cmsStore = useCmsStore()
   const { $axios, i18n, app } = useContext()
 
+  let searchTerm = ref('')
+
   const basePath = joinURL(router.options.base, PATH_SHOP)
 
   const category = ref(null)
@@ -54,12 +56,12 @@ export const useCategoryStore = defineStore('category', () => {
     const sort = route.value.query.sort || 'name-asc'
     const facets = route.value.query.facets || ''
     const url = joinURL(basePath, config.PRODUCTS_API, 'search')
-    const searchTerm = route.value.query.searchTerm || ''
+    const term = route.value.query.searchTerm || ''
     const params = {
       currentPage: route.value.query.currentPage - 1 || 0,
       pageSize: 9,
       //TODO: Facet filter need to merge with the query
-      query: `${searchTerm}:${sort}${id ? ':category:' + id : ''}${
+      query: `${term}:${sort}${id ? ':category:' + id : ''}${
         facets ? ':' + facets : ''
       }`,
       ..._pick(route.value.query, 'pageSize'),
@@ -68,6 +70,7 @@ export const useCategoryStore = defineStore('category', () => {
       fields: 'FULL',
       categoryTreeDepth: 2,
     }
+    searchTerm.value = term
     result.value = await $axios.get(url, { params }).then(({ data }) => data)
   }
 
@@ -93,6 +96,7 @@ export const useCategoryStore = defineStore('category', () => {
     // state
     category,
     result,
+    searchTerm,
 
     // getters
     breadcrumb,

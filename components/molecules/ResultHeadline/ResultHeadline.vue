@@ -11,9 +11,12 @@
       <Icon v-if="link" class="result-headline__icon" icon="arrow_back_ios" />
     </nuxt-link>
     <div class="result-headline__content">
-      <h1 v-if="headline" class="result-headline__headline">
-        {{ headline }}
+      <h1 v-if="searchTerm || headline" class="result-headline__headline">
+        {{ searchTerm ? `Ergebnisse für "${searchTerm}"` : headline }}
       </h1>
+      <!-- <h1 v-if="headline" class="result-headline__headline">
+        {{ headline }}
+      </h1> -->
       <span
         v-if="resultCount"
         class="result-headline__resultCount tw-subline-1"
@@ -34,6 +37,10 @@ export default {
     headline: {
       type: String,
       required: true,
+      default: '',
+    },
+    searchTerm: {
+      type: String,
       default: '',
     },
     identifier: {

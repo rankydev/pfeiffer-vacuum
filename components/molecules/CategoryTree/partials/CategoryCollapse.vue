@@ -19,7 +19,7 @@
         <Button
           v-for="category in children"
           :key="getKey(category.category.name)"
-          :href="category.href"
+          :href="localePath(category.category.id)"
           :label="`${category.category.name} (${category.productCount})`"
           class="category-collapse__child"
           variant="secondary"

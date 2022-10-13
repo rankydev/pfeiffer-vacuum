@@ -25,8 +25,7 @@
       <main>
         <ContentWrapper>
           <ResultHeadline
-            :headline="headline"
-            :link="link"
+            v-bind="{ headline, link, searchTerm }"
             :result-count="count"
           />
         </ContentWrapper>
@@ -115,10 +114,11 @@ export default defineComponent({
      */
     const categoryStore = useCategoryStore()
     const headline = computed(() => categoryStore.categoryName)
+    const searchTerm = computed(() => categoryStore.searchTerm || '')
     const link = computed(() => categoryStore.parentCategoryPath)
     const count = computed(() => categoryStore.result?.pagination?.totalResults)
     const products = computed(() => categoryStore.result?.products)
-    const pagination = computed(() => categoryStore.result?.pagination)
+    const pagination = computed(() => categoryStore.result?.pagination || {})
     const categories = computed(() => categoryStore.result?.categorySubtree)
     const facets = computed(() => categoryStore.result?.facets)
     const currentQuery = computed(() => categoryStore.result?.currentQuery)
@@ -132,6 +132,7 @@ export default defineComponent({
       quicklinks: content.value.quicklinks,
       metaData: getMetaData(),
       headline,
+      searchTerm,
       link,
       count,
       products,

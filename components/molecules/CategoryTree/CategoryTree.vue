@@ -13,7 +13,10 @@
         :key="getKey(category.category.name)"
         :label="category.category.name"
         :count="category.productCount"
-        :href="category.href"
+        :href="{
+          path: localePath('shop-categories'),
+          params: { category: category.category.id },
+        }"
         :children="category.children"
       />
     </div>
