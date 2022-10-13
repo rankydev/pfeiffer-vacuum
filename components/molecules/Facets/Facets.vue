@@ -1,6 +1,6 @@
 <template>
   <div class="dev-helper">
-    <div>
+    <div style="display: none">
       <VacuumRangeSlider
         style="margin-bottom: 32px"
         @update="updateFacets(null, $event, true)"

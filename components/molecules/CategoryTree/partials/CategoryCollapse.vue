@@ -19,7 +19,7 @@
         <Button
           v-for="category in children"
           :key="getKey(category.category.name)"
-          :href="localePath(category.category.id)"
+          :href="joinURL(localePath('shop-categories'), category.category.id)"
           :label="`${category.category.name} (${category.productCount})`"
           class="category-collapse__child"
           variant="secondary"
@@ -35,6 +35,7 @@ import Button from '~/components/atoms/Button/Button'
 import Icon from '~/components/atoms/Icon/Icon'
 import { ref } from '@vue/composition-api'
 import getKey from '~/composables/useUniqueKey'
+import { joinURL } from 'ufo'
 
 export default {
   components: {
@@ -63,7 +64,7 @@ export default {
   setup() {
     const isOpen = ref(false)
 
-    return { isOpen, getKey }
+    return { isOpen, getKey, joinURL }
   },
 }
 </script>
