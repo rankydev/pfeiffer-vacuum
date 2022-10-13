@@ -13,14 +13,15 @@
         ),
       }"
       :value="selectedCountry"
-      :validate="validate"
       @update="
         countrySelection.country = $event
         $emit('update', countrySelection)
       "
     />
     <PvSelect
-      v-if="regions.length"
+      v-if="
+        regions.length || (selectedRegion && Object.keys(selectedRegion).length)
+      "
       :label="$t('form.contactRequest.region')"
       :options="regions"
       :option-label="'name'"
@@ -33,7 +34,6 @@
         ),
       }"
       :value="selectedRegion"
-      :validate="validate"
       @update="
         countrySelection.region = $event
         $emit('update', countrySelection)

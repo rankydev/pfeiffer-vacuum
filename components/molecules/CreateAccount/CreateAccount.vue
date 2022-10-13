@@ -21,6 +21,8 @@
     />
 
     <FormCountrySelection
+      :selected-country="selectedCountry"
+      :selected-region="selectedRegion"
       @update="
         requestData.registration.address = $event
         $emit('update', requestData)
@@ -108,6 +110,16 @@ import { required, email, helpers } from '@vuelidate/validators'
 export default defineComponent({
   name: 'CreateAccount',
   components: { PvInput, Password, FormCountrySelection },
+  props: {
+    selectedCountry: {
+      type: Object,
+      default: undefined,
+    },
+    selectedRegion: {
+      type: Object,
+      default: undefined,
+    },
+  },
   emits: [
     /**
      * Fired on keystroke.

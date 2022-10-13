@@ -10,20 +10,14 @@
             :richtext="$t('registration.registrationPage.description')"
           />
           <CreateAccount
+            :selected-country="selectedCountry"
+            :selected-region="selectedRegion"
             @update="requestData.personalData = $event.registration"
           />
           <RegistrationCompanyDataForm
             id="registrationCompanyDataForm"
-            :selected-country="
-              hasCountrySelectionData
-                ? requestData.personalData.address.country
-                : undefined
-            "
-            :selected-region="
-              hasCountrySelectionData
-                ? requestData.personalData.address.region
-                : undefined
-            "
+            :selected-country="selectedCountry"
+            :selected-region="selectedRegion"
             :proceed-without-company="proceedWithoutCompany"
             @update="requestData.companyData = $event.companyData"
           />
@@ -65,10 +59,13 @@ import RegistrationCompanyDataForm from '~/components/molecules/RegistrationComp
 import RegistrationPageDataProtection from '~/components/organisms/RegistrationPage/RegistrationPageDataProtection/RegistrationPageDataProtection'
 import Button from '~/components/atoms/Button/Button'
 import HintModal from '~/components/organisms/RegistrationPage/HintModal/HintModal'
-import getKey from '~/composables/useUniqueKey'
 import { useToast } from '~/composables/useToast'
 import useVuelidate from '@vuelidate/core'
 import { useUserStore } from '~/stores/user'
+import {
+  getContentCTABoxLoginData,
+  getContentCTABoxHelpData,
+} from './partials/buttons'
 
 export default defineComponent({
   name: 'RegistrationPage',
@@ -103,53 +100,15 @@ export default defineComponent({
         return true
     })
 
-    /**
-     * data of content cta boxes
-     */
-    const contentCTABoxHelpData = {
-      headline: i18n.t('registration.registrationPage.contentCTABoxHelpTitle'),
-      description: [
-        {
-          _uid: getKey('registration__content-cta-box-help'),
-          component: 'Richtext',
-          richtext: i18n.t(
-            'registration.registrationPage.contentCTABoxHelpDescription'
-          ),
-        },
-      ],
-      button: [
-        {
-          _uid: '3dd3700b-9e95-46d5-87ab-fd917b80848f',
-          icon: 'mail_outline',
-          label: i18n.t('registration.registrationPage.contentCTABoxHelpLink'),
-          shape: 'outlined',
-          variant: 'secondary',
-          component: 'Button',
-        },
-      ],
-    }
-    const contentCTABoxLoginData = {
-      headline: i18n.t('registration.registrationPage.contentCTABoxLoginTitle'),
-      description: [
-        {
-          _uid: getKey('registration__content-cta-box-login'),
-          component: 'Richtext',
-          richtext: i18n.t(
-            'registration.registrationPage.contentCTABoxLoginDescription'
-          ),
-        },
-      ],
-      button: [
-        {
-          _uid: '3dd3700b-9e95-46d5-87ab-fd917b80848f',
-          icon: 'person',
-          label: i18n.t('registration.registrationPage.contentCTABoxLoginLink'),
-          shape: 'outlined',
-          variant: 'secondary',
-          component: 'Button',
-        },
-      ],
-    }
+    const selectedCountry = computed(
+      () => requestData.value.personalData.address?.country
+    )
+    const selectedRegion = computed(
+      () => requestData.value.personalData.address?.region
+    )
+
+    const contentCTABoxHelpData = getContentCTABoxHelpData(i18n)
+    const contentCTABoxLoginData = getContentCTABoxLoginData(i18n)
 
     /**
      * Function triggered by triggerSendRegistrationProcess() or emitted event "closeModal"
@@ -178,6 +137,7 @@ export default defineComponent({
       if (!hasCompanyData && !proceedWithoutCompany.value) return toggleModal()
 
       v.value.$validate()
+
       if (v.value.$errors.length + v.value.$silentErrors.length === 0)
         return submit()
     }
@@ -217,6 +177,8 @@ export default defineComponent({
       modalIsOpen,
       proceedWithoutCompany,
       requestData,
+      selectedCountry,
+      selectedRegion,
       toggleModal,
       triggerSendRegistrationProcess,
     }
