@@ -10,12 +10,12 @@
         @update="updateFacets(null, $event, false, true)"
       />
     </div>
-    <div v-if="activeFilters.length" class="facets__filter-tags">
+    <div v-if="selectedFacets.length" class="facets__filter-tags">
       <span class="facets__filter-tags-label">
         {{ $t('category.activeFilters') }}
       </span>
       <FilterTag
-        v-for="filter in activeFilters"
+        v-for="filter in selectedFacets"
         :key="filter.key + filter.value"
         :filter="filter.displayName"
         :value="filter.value"

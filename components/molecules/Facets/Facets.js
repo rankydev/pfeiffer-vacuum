@@ -57,10 +57,6 @@ export default {
       )
     })
 
-    const activeFilters = computed(
-      () => props.currentQuery?.query?.filterTerms || []
-    )
-
     // Add recent selected facet and values to current selection and emit
     const updateFacets = (
       code,
@@ -103,7 +99,7 @@ export default {
     return {
       isExtended,
       multiSelectFacets,
-      activeFilters,
+      selectedFacets,
       updateFacets,
       removeFacet,
     }
