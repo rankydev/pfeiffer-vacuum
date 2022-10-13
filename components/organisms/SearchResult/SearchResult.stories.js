@@ -2,7 +2,10 @@ import SearchResult from '~/components/organisms/SearchResult/SearchResult.vue'
 import {
   products,
   pagination,
-  categoriyTree,
+  categoryTree,
+  facetFilters,
+  query,
+  sortFilters,
 } from './SearchResult.stories.content.js'
 
 const argTypes = {}
@@ -36,5 +39,8 @@ export const Default = Template.bind({})
 Default.args = {
   products,
   pagination,
-  categories: categoriyTree,
+  categories: categoryTree,
+  facets: facetFilters,
+  currentQuery: query,
+  sorts: sortFilters,
 }
