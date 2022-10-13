@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch, toRefs } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch, computed } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
@@ -146,10 +146,17 @@ export default defineComponent({
      * @property {string} value
      */
     'submit',
+    'input',
   ],
-  setup(props) {
-    const { value: internalValue } = toRefs(props)
+  setup(props, { emit }) {
     let internalIcon = ref(props.icon)
+
+    const internalValue = computed({
+      get: () => props.value,
+      set: (newVal) => {
+        emit('input', newVal)
+      },
+    })
 
     const validation = ref(useInputValidator(props.rules, internalValue))
 

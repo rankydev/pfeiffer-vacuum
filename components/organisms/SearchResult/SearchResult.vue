@@ -54,7 +54,7 @@ export default defineComponent({
     },
     pagination: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
     categories: {
       type: Array,
@@ -66,7 +66,7 @@ export default defineComponent({
     },
     currentQuery: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
     sorts: {
       type: Array,

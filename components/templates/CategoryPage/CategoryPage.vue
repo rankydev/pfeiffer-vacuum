@@ -120,7 +120,7 @@ export default defineComponent({
     const products = computed(() => categoryStore.result?.products)
     const pagination = computed(() => categoryStore.result?.pagination || {})
     const categories = computed(() => categoryStore.result?.categorySubtree)
-    const facets = computed(() => categoryStore.result?.facets)
+    const facets = computed(() => categoryStore.result?.facets || [])
     const currentQuery = computed(() => categoryStore.result?.currentQuery)
     const sorts = computed(() => categoryStore.result?.sorts)
 

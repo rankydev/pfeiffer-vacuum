@@ -1,5 +1,6 @@
 <template>
   <PvInput
+    v-model="searchTerm"
     icon="search"
     :placeholder="$t('form.input.search.placeholder')"
     @submit="pushSearchTerm"
@@ -13,6 +14,7 @@ import {
   useRouter,
   useRoute,
   useContext,
+  ref,
 } from '@nuxtjs/composition-api'
 
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
@@ -25,6 +27,7 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const { app } = useContext()
+    const searchTerm = ref(route.value.query.searchTerm || '')
 
     const pushSearchTerm = (e) => {
       router.push({
@@ -32,7 +35,7 @@ export default defineComponent({
         query: { ...route.value.query, searchTerm: e.length ? e : undefined },
       })
     }
-    return { pushSearchTerm }
+    return { pushSearchTerm, searchTerm }
   },
 })
 </script>

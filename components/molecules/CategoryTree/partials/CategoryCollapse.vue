@@ -70,7 +70,7 @@ export default {
 </script>
 <style lang="scss">
 .category-collapse {
-  @apply tw-min-w-max;
+  @apply tw-w-full;
 
   &__trigger {
     @apply tw-flex tw-items-center tw-justify-between;
@@ -79,10 +79,13 @@ export default {
   &__parent,
   &__child {
     @apply tw-p-0;
+    overflow: hidden;
 
     .button__label {
       @apply tw-text-pv-grey-16;
       @apply tw-font-normal;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     &:hover {
