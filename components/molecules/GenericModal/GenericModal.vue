@@ -3,16 +3,14 @@
     <div v-if="isOpen" class="modal">
       <div class="modal__background closeModal">
         <ContentWrapper class="modal__box closeModal">
-          <div class="modal__grid-box">
-            <div class="modal__box-wrapper">
-              <slot @closeModal="$emit('closeModal')" />
-              <Icon
-                class="modal__icon"
-                icon="close"
-                size="small"
-                @click="$emit('closeModal')"
-              />
-            </div>
+          <div class="modal__box-wrapper">
+            <slot @closeModal="$emit('closeModal')" />
+            <Icon
+              class="modal__icon"
+              icon="close"
+              size="small"
+              @click="$emit('closeModal')"
+            />
           </div>
         </ContentWrapper>
       </div>
@@ -85,10 +83,6 @@ export default defineComponent({
 
   &__box {
     @apply tw-py-4;
-    @apply tw-h-full;
-  }
-
-  &__grid-box {
     @apply tw-h-full;
   }
 
