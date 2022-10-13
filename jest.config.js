@@ -33,15 +33,7 @@ module.exports = {
     'stories.content.js',
     'schema.js',
     'schema.partial.js',
-    'index.js',
-    'stores/user/',
-    'stores/contact/',
-    'stores/countries/',
-    'stores/product',
-    'stores/menu/',
-    '/composables/useAxiosForHybris.js',
-    '/composables/useAxiosInterceptors.js',
-    '/composables/useContextUtil.js',
+    '/stores/user/partials/useKeycloak.js',
   ],
   coverageThreshold: {
     global: {

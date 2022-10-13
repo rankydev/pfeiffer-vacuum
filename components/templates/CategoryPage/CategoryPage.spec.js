@@ -1,17 +1,37 @@
 import CategoryPage from './CategoryPage.vue'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
-import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
-import { createLocalVue, shallowMount } from '@vue/test-utils'
-import header from '~/components/organisms/Header/Header.stories.content'
+import Button from '~/components/atoms/Button/Button'
+import { shallowMount } from '@vue/test-utils'
 import { OnPageNavigationContent } from '~/components/molecules/OnPageNavigation/OnPageNavigation.stories.content'
-import { footerContent } from '~/components/organisms/Footer/Footer.stories.content'
-import VueMeta from 'vue-meta'
+import { setResult, setRouteParams, setLang } from '@nuxtjs/composition-api'
 
-const localVue = createLocalVue()
-localVue.directive('editable', (el, key) => {
-  el.innerText = key.value
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  const { ref } = originalModule
+
+  let data = []
+  const query = jest.fn().mockReturnValue(Promise.resolve({ data: [] }))
+  const route = ref({ params: { category: '' } })
+  const i18n = { locale: 'en' }
+
+  const $config = {
+    CURRENT_REGION_CODE: 'global',
+    DEFAULT_REGION_CODE: 'global',
+    DEFAULT_LANGUAGE_CODE: 'en',
+    baseURL: 'example.com',
+  }
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    useContext: jest.fn(() => ({ $cms: { query }, route, i18n, $config })),
+    ssrRef: ref,
+    setResult: (res) => query.mockReturnValue(Promise.resolve({ data: res })),
+    setRouteParams: (params) => (route.value.params = params),
+    setLang: (lang) => (i18n.locale = lang),
+    getMockQuery: () => query,
+  }
 })
-localVue.use(VueMeta, { keyName: 'head' })
 
 jest.mock('~/stores/category', () => {
   return {
@@ -28,57 +48,21 @@ jest.mock('~/stores/category', () => {
 
 describe('CategoryPage', () => {
   let wrapper
-  function createComponent(propsData = {}, { provide } = {}) {
+
+  function createComponent(propsData = {}) {
     wrapper = shallowMount(CategoryPage, {
-      localVue,
       propsData: {
         content: {
-          template: {},
+          quicklinks: [OnPageNavigationContent],
         },
         ...propsData,
-      },
-      mocks: {
-        $config: {
-          baseURL: '',
-        },
-        $route: {
-          fullPath: '',
-        },
-        $imageService: {
-          getResponsiveImageUrl: function () {
-            return ''
-          },
-        },
-      },
-      stubs: {
-        NuxtDynamic: true,
-      },
-      provide: {
-        ...provide,
       },
     })
   }
 
   describe('initial state', () => {
-    const propsData = {
-      content: {
-        header: [header],
-        quicklinks: [OnPageNavigationContent],
-        body: [],
-        footer: [footerContent],
-        component: 'CategoryPage',
-      },
-    }
-    createComponent(propsData)
-
-    test('should render page correctly given props', () => {
-      const sections = wrapper.findAll('nuxtdynamic-stub')
-
-      expect(wrapper.exists()).toBeTruthy()
-      expect(sections).toHaveLength(2)
-    })
-
     test('should render OnPageNavigation correctly given props', () => {
+      createComponent()
       const onPageNavigation = wrapper.findComponent(OnPageNavigation)
 
       expect(onPageNavigation.vm.quicklinks).toBe(
@@ -86,131 +70,60 @@ describe('CategoryPage', () => {
       )
     })
 
-    test('should render ResultHeadline correctly given props', () => {
-      const resultHeadline = wrapper.findComponent(ResultHeadline)
+    test('should render a button to category content page given a valid result', async () => {
+      const region = 'global'
+      const slug = 'some-slug'
+      const params = { category: 'some-id' }
+      const result = [{ full_slug: `${region}/${slug}` }]
+      setRouteParams(params)
+      setResult(result)
 
-      expect(resultHeadline.exists()).toBeTruthy()
-    })
-    describe('given content is set', () => {
-      it('should render components', () => {
-        const propsData = {
-          content: {
-            top: [
-              {
-                component: 'Top',
-              },
-            ],
-            header: [
-              {
-                component: 'Header',
-              },
-            ],
-            bottom: [
-              {
-                component: 'Bottom',
-              },
-            ],
-            footer: [
-              {
-                component: 'Footer',
-              },
-            ],
-          },
-        }
-        createComponent(propsData)
-        const sections = wrapper.findAll('nuxtdynamic-stub')
+      createComponent()
+      // server response tick
+      await wrapper.vm.$nextTick()
+      // rerender tick
+      await wrapper.vm.$nextTick()
 
-        expect(sections.at(0).attributes('component')).toBe(
-          propsData.content.top[0].component
-        )
-        expect(sections.at(1).attributes('component')).toBe(
-          propsData.content.header[0].component
-        )
-        expect(sections.at(2).attributes('component')).toBe(
-          propsData.content.bottom[0].component
-        )
-        expect(sections.at(3).attributes('component')).toBe(
-          propsData.content.footer[0].component
-        )
-      })
+      const domButton = wrapper.findComponent(Button)
+
+      expect(domButton.exists()).toBeTruthy()
+      expect(domButton.vm.href).toBe(`/en/${slug}`)
     })
-    describe('given header information are set', () => {
-      it('should use composable and set head tags', () => {
-        const propsData = {
-          content: {
-            title: 'title',
-            seoDescription: 'seoDescription',
-            ogTitle: 'ogTitle',
-            ogDescription: 'ogDescription',
-            ogImage: {
-              filename: '',
-            },
-            twitterTitle: 'twitterTitle',
-            twitterDescription: 'twitterDescription',
-            twitterImage: {
-              filename: '',
-            },
-            noindex: true,
-            nofollow: true,
-            canonical: 'canonical',
-          },
-        }
-        const provide = {
-          getTranslatedSlugs() {
-            return ''
-          },
-          getDefaultFullSlug() {
-            return ''
-          },
-        }
-        createComponent(propsData, provide)
-        const metaInfo = wrapper.vm.$meta().refresh().metaInfo
-        expect(metaInfo.title).toBe('title')
-        expect(metaInfo.meta).toContainEqual({
-          hid: 'description',
-          name: 'description',
-          content: 'seoDescription',
-        })
-        expect(metaInfo.meta).toContainEqual({
-          hid: 'twitter:title',
-          name: 'twitter:title',
-          content: 'twitterTitle',
-        })
-        expect(metaInfo.meta).toContainEqual({
-          hid: 'twitter:description',
-          name: 'twitter:description',
-          content: 'twitterDescription',
-        })
-        expect(metaInfo.meta).toContainEqual({
-          hid: 'twitter:image',
-          name: 'twitter:image',
-          content: '/twitter_image.png',
-        })
-        expect(metaInfo.meta).toContainEqual({
-          hid: 'og:title',
-          name: 'og:title',
-          content: 'ogTitle',
-        })
-        expect(metaInfo.meta).toContainEqual({
-          hid: 'og:description',
-          name: 'og:description',
-          content: 'ogDescription',
-        })
-        expect(metaInfo.meta).toContainEqual({
-          hid: 'og:image',
-          name: 'og:image',
-          content: '/og_image.png',
-        })
-        expect(metaInfo.meta).toContainEqual({
-          hid: 'robots',
-          name: 'robots',
-          content: 'noindex,nofollow',
-        })
-        expect(metaInfo.link).toContainEqual({
-          rel: 'canonical',
-          href: 'canonical',
-        })
-      })
+
+    test('should render no button to category content page given no category route param', async () => {
+      const region = 'global'
+      const slug = 'some-slug'
+      const params = {}
+      const result = [{ full_slug: `${region}/${slug}` }]
+      setRouteParams(params)
+      setResult(result)
+
+      createComponent()
+      // server response tick
+      await wrapper.vm.$nextTick()
+      // rerender tick
+      await wrapper.vm.$nextTick()
+
+      const domButton = wrapper.findComponent(Button)
+
+      expect(domButton.exists()).toBeFalsy()
+    })
+
+    test('should render no button to category content page given no result', async () => {
+      const params = { category: 'some-id' }
+      const result = []
+      setRouteParams(params)
+      setResult(result)
+
+      createComponent()
+      // server response tick
+      await wrapper.vm.$nextTick()
+      // rerender tick
+      await wrapper.vm.$nextTick()
+
+      const domButton = wrapper.findComponent(Button)
+
+      expect(domButton.exists()).toBeFalsy()
     })
   })
 })

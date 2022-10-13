@@ -1,6 +1,6 @@
 import config from '../../nuxt.config'
 import { urlJoin } from '@nuxt/utils'
-import getLoggerFor from '../../utils/getLoggerFor'
+import { useLogger } from '../../composables/useLogger'
 
 /**
  * This middleware redirects the page visitor from the base url
@@ -14,7 +14,7 @@ import getLoggerFor from '../../utils/getLoggerFor'
  * @returns
  */
 export default function (req, res, next) {
-  const logger = getLoggerFor('region-redirect')
+  const { logger } = useLogger('region-redirect')
   const routerBase = decodeURI(config.router.base)
   const isEmptyBase = (routerBase || '').length === 0
   const isRootBase = routerBase === '/'

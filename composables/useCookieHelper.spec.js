@@ -27,13 +27,17 @@ jest.mock('js-cookie', () => ({
   remove: (key, options) => mockRemoveCookie(key, options),
 }))
 
-jest.mock('~/utils/getLoggerFor', () => {
-  return jest.fn(() => ({
-    debug: () => mockDebug(),
-    trace: () => mockTrace(),
-    warn: () => mockWarn(),
-  }))
-})
+jest.mock('~/composables/useLogger', () => ({
+  useLogger: () => {
+    return {
+      logger: {
+        debug: () => mockDebug(),
+        trace: () => mockTrace(),
+        warn: () => mockWarn(),
+      },
+    }
+  },
+}))
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')

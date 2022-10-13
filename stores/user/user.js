@@ -1,9 +1,9 @@
 import {
   computed,
-  ref,
   useContext,
   onBeforeMount,
   onServerPrefetch,
+  ssrRef,
 } from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
 import { useKeycloak } from './partials/useKeycloak'
@@ -21,12 +21,12 @@ export const useUserStore = defineStore('user', () => {
     keycloakInstance,
     auth,
     isLoginProcess,
-    loggedIn,
+    isLoggedIn,
     createKeycloakInstance,
     removeCookiesAndDeleteAuthData,
   } = useKeycloak()
 
-  const currentUser = ref(null)
+  const currentUser = ssrRef(null)
 
   const isOpenUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'OPEN'
@@ -53,7 +53,8 @@ export const useUserStore = defineStore('user', () => {
   })
 
   const loadCurrentUser = async () => {
-    if (!loggedIn.value) {
+    logger.trace('loadCurrentUser')
+    if (!isLoggedIn.value) {
       return
     }
 
@@ -61,7 +62,7 @@ export const useUserStore = defineStore('user', () => {
     if (user && !user.error) {
       currentUser.value = user
     } else {
-      logger.error('user not found', user || '')
+      logger.error('user not found', user)
     }
   }
 
@@ -85,17 +86,22 @@ export const useUserStore = defineStore('user', () => {
     } else {
       // redirect here, if no keycloak instance is available.
       const { app } = ctx
-      const { router, i18n } = app
-      return router.push(`/${i18n.locale}`)
+      const { router, localePath } = app
+      return router.push(localePath('/'))
     }
   }
 
+  /* istanbul ignore else  */
   if (!ociStore.isOciPage && !ociStore.isOciUser(auth)) {
     createKeycloakInstance()
   }
 
-  onBeforeMount(loadCurrentUser)
-  onServerPrefetch(loadCurrentUser)
+  // the initial store initialization
+  /* istanbul ignore else  */
+  if (!currentUser.value) {
+    onBeforeMount(loadCurrentUser)
+    onServerPrefetch(loadCurrentUser)
+  }
 
   return {
     // state
@@ -108,7 +114,7 @@ export const useUserStore = defineStore('user', () => {
     isLeadUser,
     isOpenUser,
     isRejectedUser,
-    loggedIn,
+    isLoggedIn,
 
     // actions
     loadCurrentUser,

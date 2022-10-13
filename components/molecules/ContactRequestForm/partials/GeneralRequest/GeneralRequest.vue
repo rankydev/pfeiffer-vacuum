@@ -52,39 +52,10 @@
         $emit('update', requestData)
       "
     />
-    <PvSelect
-      :label="$t('form.contactRequest.country')"
-      :options="countries"
-      :option-label="'name'"
-      :required="true"
-      :rules="{
-        required: helpers.withMessage(
-          $t('form.validationErrorMessages.required'),
-          required
-        ),
-      }"
+    <FormCountrySelection
       :validate="validate"
       @update="
-        requestData.contact.address.country = $event
-        loadRegions()
-        $emit('update', requestData)
-      "
-    />
-    <PvSelect
-      v-if="regions.length"
-      :label="$t('form.contactRequest.region')"
-      :options="regions"
-      :option-label="'name'"
-      :required="true"
-      :rules="{
-        required: helpers.withMessage(
-          $t('form.validationErrorMessages.required'),
-          required
-        ),
-      }"
-      :validate="validate"
-      @update="
-        requestData.contact.address.region = $event
+        requestData.contact.address = $event
         $emit('update', requestData)
       "
     />
@@ -108,15 +79,14 @@
 </template>
 <script>
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
+import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
-import { computed, defineComponent, ref, toRef } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { required, email, helpers } from '@vuelidate/validators'
-import { useCountriesStore } from '~/stores/countries'
 
 export default defineComponent({
   name: 'GeneralRequest',
-  components: { PvTextArea, PvInput, PvSelect },
+  components: { PvTextArea, PvInput, FormCountrySelection },
   props: {
     /**
      * determines whether a validation can be executed and will be passed into child component
@@ -166,25 +136,11 @@ export default defineComponent({
       },
     })
 
-    const countriesStore = useCountriesStore()
-    const isoCode = computed(
-      () => requestData.value.contact?.address?.country?.isocode
-    )
-    const regions = computed(() => countriesStore.regions[isoCode.value] || [])
-    const countries = toRef(countriesStore, 'countries')
-
-    const loadRegions = () => {
-      countriesStore.loadRegions(isoCode.value)
-    }
-
     return {
       required,
       email,
       helpers,
       requestData,
-      loadRegions,
-      regions,
-      countries,
     }
   },
 })

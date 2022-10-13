@@ -26,7 +26,7 @@ describe('Button', () => {
       })
 
       it.each([['normal'], ['small']])(
-        'should add base size when size="%i"',
+        'should add base size when size=%p',
         (size) => {
           const propsData = { icon, size }
           const wrapper = shallowMount(Button, { propsData })
@@ -114,7 +114,7 @@ describe('Button', () => {
     })
 
     describe.each([['secondary'], ['inverted']])(
-      'given variant %i',
+      'given variant %p',
       (variant) => {
         it('should add the secondary modifier', () => {
           const propsData = { variant }
@@ -150,14 +150,25 @@ describe('Button', () => {
       }
     )
 
-    describe.each([['xsmall'], ['small'], ['normal']])(
-      'should add the size modifier when size="%i"',
+    it.each([['xsmall'], ['small'], ['normal']])(
+      'should add the size modifier when size=%p',
       (size) => {
         const propsData = { size }
         const wrapper = shallowMount(Button, { propsData })
 
         const button = wrapper.find('button')
         expect(button.attributes('class')).toMatch(`button--${size}`)
+      }
+    )
+
+    it.each([['normal'], ['narrow']])(
+      'should add the gap modifier when gap=%p',
+      (gap) => {
+        const propsData = { gap }
+        const wrapper = shallowMount(Button, { propsData })
+
+        const button = wrapper.find('button')
+        expect(button.attributes('class')).toMatch(`button--gap-${gap}`)
       }
     )
 
