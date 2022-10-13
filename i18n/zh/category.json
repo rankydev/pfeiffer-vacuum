@@ -1,3 +1,5 @@
 {
-  "itemsPerPage": "每頁產品："
+  "itemsPerPage": "每頁產品：",
+  "sortAndFilter": "排序和過濾",
+  "applyFilter": "应用筛选器"
 }

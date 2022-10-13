@@ -4,7 +4,7 @@
       <Button
         class="filter-modal__open-button"
         variant="secondary"
-        label="Sortieren & Filtern"
+        :label="$t('category.sortAndFilter')"
         shape="outlined"
         icon="filter_list"
         @click="isOpen = true"
@@ -15,7 +15,9 @@
         @closeModal="isOpen = false"
       >
         <div class="filter-modal__content">
-          <h2 class="filter-modal__headline">{{ $t('any.headline') }}</h2>
+          <h2 class="filter-modal__headline">
+            {{ $t('category.sortAndFilter') }}
+          </h2>
           <div class="filter-modal__slot">
             <slot />
           </div>
@@ -23,7 +25,7 @@
             <Button
               class="filter-modal__apply-button"
               variant="secondary"
-              label="Filter anwenden"
+              :label="$t('category.applyFilter')"
               shape="filled"
               icon="filter_list"
               @click="isOpen = false"
