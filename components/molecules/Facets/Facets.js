@@ -91,16 +91,10 @@ export default {
       }
 
       emit('updateFacets', newFacets)
-      console.log('updateFacets', newFacets)
     }
 
     const removeFacet = (facet) => {
       emit(
-        'updateFacets',
-        unref(selectedFacets).filter((e) => e !== facet)
-      )
-
-      console.log(
         'updateFacets',
         unref(selectedFacets).filter((e) => e !== facet)
       )
