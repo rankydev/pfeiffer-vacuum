@@ -165,7 +165,7 @@ sonar-qube:
 
 build-frontend-docker-image-for-branch:
   extends: .build-docker-image
-  needs: ["test", "lint-styles", "lint-javascript"]
+  needs: ["test", "lint"]
   environment:
     name: dev2
   except:
@@ -186,7 +186,7 @@ build-frontend-docker-image-for-branch:
 
 build-lsg-docker-image-for-branch:
   extends: .build-docker-image-lsg
-  needs: ["test", "lint-styles", "lint-javascript"]
+  needs: ["test", "lint"]
   except:
     - develop
     - main
@@ -208,7 +208,7 @@ build-lsg-docker-image-for-develop:
 
 build-frontend-uat-docker-image-for-main-and-tags:
   extends: .build-docker-image
-  needs: ["test", "lint-styles", "lint-javascript"]
+  needs: ["test", "lint"]
   variables:
     DOCKER_IMAGE_TAG: uat-${CI_COMMIT_REF_SLUG}
   environment:
@@ -219,7 +219,7 @@ build-frontend-uat-docker-image-for-main-and-tags:
 
 build-frontend-prd-docker-image-for-tags:
   extends: .build-docker-image
-  needs: ["test", "lint-styles", "lint-javascript"]
+  needs: ["test", "lint"]
   variables:
     DOCKER_IMAGE_TAG: prd-${CI_COMMIT_REF_SLUG}
   environment:
