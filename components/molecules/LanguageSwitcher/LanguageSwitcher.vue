@@ -90,6 +90,10 @@ export default defineComponent({
     }
   }
 
+  &__button:hover {
+    background-color: unset !important;
+  }
+
   &__wrapper {
     @apply tw-relative;
   }
