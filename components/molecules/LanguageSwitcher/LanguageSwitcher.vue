@@ -1,7 +1,7 @@
 <template>
-  <div class="language-switcher">
+  <div ref="activator" class="language-switcher">
     <div v-if="!isStoryblokPreview" class="language-switcher__wrapper">
-      <div class="language-switcher__content">
+      <div v-if="isActive" class="language-switcher__content">
         <ul>
           <NuxtLink
             v-for="lang in $i18n.locales"
@@ -21,29 +21,56 @@
         icon="language"
         :prepend-icon="true"
         class="language-switcher__button"
+        @click="toggleLanguageSwitcher"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, useRoute, computed } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useRoute,
+  computed,
+  ref,
+} from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
+import { onClickOutside } from '@vueuse/core'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
   components: {
     Button,
   },
-  setup() {
+  setup(_, { refs }) {
     const route = useRoute()
 
     const isStoryblokPreview = computed(() => {
       return route.value.query._storyblok
     })
 
+    let stopFunction = null
+    const isActive = ref(false)
+
+    const closeLanguageSwitcher = () => {
+      isActive.value = false
+      stopFunction?.()
+      stopFunction = null
+    }
+
+    const openLanguageSwitcher = () => {
+      isActive.value = true
+      stopFunction = onClickOutside(refs.activator, closeLanguageSwitcher)
+    }
+
+    const toggleLanguageSwitcher = () => {
+      isActive.value ? closeLanguageSwitcher() : openLanguageSwitcher()
+    }
+
     return {
       isStoryblokPreview,
+      toggleLanguageSwitcher,
+      isActive,
     }
   },
 })
@@ -63,35 +90,19 @@ export default defineComponent({
     }
   }
 
+  &__button:hover {
+    background-color: unset !important;
+  }
+
   &__wrapper {
     @apply tw-relative;
   }
 
-  &__parent {
-    @apply tw-w-full;
-  }
-
   &__content {
     @apply tw-absolute;
-    @apply tw-h-0;
+    height: 14.125rem;
     width: 12.75rem;
     padding-top: 1.875rem;
-    transition: all 0.5s ease;
-    @apply tw-delay-200;
-  }
-
-  &__wrapper:active .content,
-  &__content:hover {
-    height: 14.125rem;
-    transition-delay: 0s;
-  }
-
-  &__content:hover ul,
-  &__wrapper:active .content ul {
-    @apply tw-border-2;
-    @apply tw-border-pv-grey-80;
-    @apply tw-shadow-black-15;
-    transition-delay: 0s;
   }
 
   &__content ul {
@@ -99,11 +110,13 @@ export default defineComponent({
     @apply tw-h-full;
     @apply tw-p-0;
     @apply tw-rounded-md;
-    @apply tw-delay-200;
     @apply tw-bg-pv-white;
     @apply tw-relative;
     @apply tw-z-10;
     bottom: 14.75rem;
+    @apply tw-border-2;
+    @apply tw-border-pv-grey-80;
+    @apply tw-shadow-black-15;
 
     @screen lg {
       @apply tw-bottom-0;
