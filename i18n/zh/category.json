@@ -3,5 +3,6 @@
   "sort": "排序依据：",
   "lessFilters": "更少的筛选器",
   "moreFilters": "更多筛选器",
-  "activeFilters": "有源滤波器"
+  "activeFilters": "有源滤波器",
+  "searchResult": "为。。。。寻找结果"
 }

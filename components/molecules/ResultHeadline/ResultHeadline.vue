@@ -12,11 +12,12 @@
     </nuxt-link>
     <div class="result-headline__content">
       <h1 v-if="searchTerm || headline" class="result-headline__headline">
-        {{ searchTerm ? `Ergebnisse für "${searchTerm}"` : headline }}
+        {{
+          searchTerm
+            ? `${$t('category.searchResult')} "${searchTerm}"`
+            : headline
+        }}
       </h1>
-      <!-- <h1 v-if="headline" class="result-headline__headline">
-        {{ headline }}
-      </h1> -->
       <span
         v-if="resultCount"
         class="result-headline__resultCount tw-subline-1"

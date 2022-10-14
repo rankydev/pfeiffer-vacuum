@@ -3,5 +3,6 @@
   "sort": "Sort by:",
   "lessFilters": "Less filters",
   "moreFilters": "More filters",
-  "activeFilters": "Active filters:"
+  "activeFilters": "Active filters:",
+  "searchResult": "search result for"
 }

@@ -3,5 +3,6 @@
   "sort": "정렬 기준:",
   "lessFilters": "간단히'",
   "moreFilters": "자세히",
-  "activeFilters": "활성 필터"
+  "activeFilters": "활성 필터",
+  "searchResult": "에 대한 검색 결과"
 }
