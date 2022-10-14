@@ -67,11 +67,12 @@ lint:
       policy: pull
   before_script:
     - npm ci --cache .npm --prefer-offline
+    - mkdir report
   artifacts:
     when: always
     reports:
       junit:
-        - report/*.xml
+        - report/lint-junit.xml
     paths:
       - report/
     expire_in: 3 week
