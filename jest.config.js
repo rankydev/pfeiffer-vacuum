@@ -35,6 +35,7 @@ module.exports = {
     'schema.js',
     'schema.partial.js',
     '/stores/user/partials/useKeycloak.js',
+    '/components/molecules/Facets/Facets.js',
   ],
   coverageThreshold: {
     global: {
