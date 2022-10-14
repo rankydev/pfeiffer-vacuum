@@ -31,16 +31,22 @@ export const useCategoryStore = defineStore('category', () => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 2)
     const categoryPath = category.value?.categoryPath || []
 
-    return [
+    console.log(cmsPrefix, 'PREFIX')
+
+    const breadcrumbArr = [
       ...cmsPrefix,
       ...categoryPath.map(({ name, id }) => ({
         name,
         href: joinURL(app.localePath('shop-categories'), id),
       })),
     ]
-  })
 
-  // console.log(breadcrumb, 'BREADCRUMB')
+    if (searchTerm.value) {
+      breadcrumbArr.push({ href: '', name: searchTerm.value })
+    }
+
+    return breadcrumbArr
+  })
 
   const categoryName = computed(() => breadcrumb.value.at(-1)?.name)
 

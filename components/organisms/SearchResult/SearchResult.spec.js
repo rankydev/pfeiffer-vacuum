@@ -23,14 +23,14 @@ function createComponent(propsData = {}) {
 
 describe('SearchResult', () => {
   describe('initial state', () => {
-    it('should render without props', () => {
+    it('should render with given only required props', () => {
       const propsData = {
         facets: facetFilters,
+        pagination,
       }
-      // createComponent(propsData)
-      console.log(propsData)
-      // const searchResultComponent = wrapper.find('.search-result')
-      // expect(searchResultComponent.exists()).toBeTruthy()
+      createComponent(propsData)
+      const searchResultComponent = wrapper.find('.search-result')
+      expect(searchResultComponent.exists()).toBeTruthy()
     })
 
     it('should provide all given props to the correct components', () => {
@@ -42,17 +42,19 @@ describe('SearchResult', () => {
         currentQuery: query,
         sorts: sortFilters,
       }
-      // createComponent(propsData)
+      createComponent(propsData)
 
-      // const productGrid = wrapper.findComponent(ProductCardGrid)
-      // const pages = wrapper.findComponent(Pagination)
-      // const catTree = wrapper.findComponent(CategoryTree)
-      // const facets = wrapper.findComponent(Facets)
-      // const sizeSelection = wrapper.findComponent(CategoryPageSizeSelection)
+      const productGrid = wrapper.findComponent(ProductCardGrid)
+      const pages = wrapper.findComponent(Pagination)
+      const catTree = wrapper.findComponent(CategoryTree)
+      const facets = wrapper.findComponent(Facets)
+      const sizeSelection = wrapper.findComponent(CategoryPageSizeSelection)
 
-      // expect(productGrid.vm.products).toBe(products)
-      // // expect(pages.vm.totalPages).toBe(pagination)
-      // expect(catTree.vm.categories).toBe(categoryTree)
+      expect(productGrid.vm.products).toBe(products)
+      expect(pages.vm.totalPages).toBe(pagination.totalPages)
+      expect(facets.vm.facets).toBe(facetFilters)
+      expect(catTree.vm.categories).toBe(categoryTree)
+      expect(sizeSelection.vm.active).toBe(pagination.pageSize)
     })
   })
 })

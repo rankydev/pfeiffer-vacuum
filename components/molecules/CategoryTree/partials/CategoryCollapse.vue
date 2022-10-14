@@ -1,9 +1,9 @@
 <template>
   <div class="category-collapse">
     <div class="category-collapse__trigger">
-      <NuxtLink class="category-collapse__parent" :to="href">{{
-        `${label} (${count})`
-      }}</NuxtLink>
+      <NuxtLink class="category-collapse__parent" :to="href"
+        >{{ `${label} (${count})` }}
+      </NuxtLink>
       <Icon
         class="category-collapse__icon"
         :icon="isOpen ? 'expand_less' : 'expand_more'"
@@ -17,10 +17,8 @@
           :key="getKey(category.category.name)"
           class="category-collapse__child"
           :to="href"
-          >{{
-            `${category.category.name} (${category.productCount})`
-          }}</NuxtLink
-        >
+          >{{ `${category.category.name} (${category.productCount})` }}
+        </NuxtLink>
       </div>
     </AnimatedCollapse>
   </div>

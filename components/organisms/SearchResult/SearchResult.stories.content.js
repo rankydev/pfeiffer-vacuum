@@ -8,7 +8,7 @@ import {
 
 export const headline = 'Headline'
 export const products = [product, product, product]
-export const pagination = 3
+export const pagination = { pageSize: 9, totalPages: 3 }
 export const categoryTree = categories
 export const facetFilters = facets
 export const sortFilters = sorts

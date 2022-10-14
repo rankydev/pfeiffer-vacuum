@@ -55,7 +55,7 @@ export default defineComponent({
     },
     pagination: {
       type: Object,
-      default: () => ({}),
+      required: true,
     },
     categories: {
       type: Array,

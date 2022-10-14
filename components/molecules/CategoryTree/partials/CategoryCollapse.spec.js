@@ -2,49 +2,67 @@ import CategoryCollapse from './CategoryCollapse'
 import Icon from '~/components/atoms/Icon/Icon'
 import { category } from '../CategoryTree.stories.content'
 import { shallowMount } from '@vue/test-utils'
+import { expect } from '@jest/globals'
+
+let wrapper
+
+function createComponent(propsData = {}) {
+  const stubs = {
+    NuxtLink: true,
+  }
+  wrapper = shallowMount(CategoryCollapse, { propsData, stubs })
+}
 
 describe('CategoryCollapse', () => {
   describe('initial state', () => {
-    test('should render given required label', () => {
-      const wrapper = shallowMount(CategoryCollapse, {
-        propsData: { label: category.category.name },
+    test('should render given required label & count', () => {
+      createComponent({
+        label: category.category.name,
+        count: category.productCount,
       })
 
-      const button = wrapper.find('button-stub')
+      const link = wrapper.find('.category-collapse__parent')
       const arrowIcon = wrapper.findComponent(Icon)
 
       expect(arrowIcon.exists()).toBeTruthy()
-      expect(button.attributes('label')).toBe(`${category.category.name} (0)`)
+      expect(link.text()).toBe(
+        `${category.category.name} (${category.productCount})`
+      )
     })
 
     test('should render given all props data', () => {
-      const wrapper = shallowMount(CategoryCollapse, {
-        propsData: {
-          label: category.category.name,
-          href: category.href,
-          count: category.count,
-        },
+      createComponent({
+        label: category.category.name,
+        count: category.productCount,
+        href: category.href,
+        children: category.children,
       })
 
-      const button = wrapper.find('button-stub')
-
-      expect(button.attributes('label')).toBe(
-        `${category.category.name} (${category.count})`
-      )
-      expect(button.attributes('href')).toBe(category.href)
+      const children = wrapper.findAll('.category-collapse__child')
+      expect(children.length).toBe(category.children.length)
+      category.children.forEach((item, i) => {
+        expect(children.at(i).text()).toBe(
+          `${item.category.name} (${item.productCount})`
+        )
+      })
     })
   })
 
   describe('during interaction', () => {
     test('should change open state when icon is clicked', async () => {
-      const wrapper = shallowMount(CategoryCollapse, {
-        propsData: { label: category.category.name },
+      createComponent({
+        label: category.category.name,
+        count: category.productCount,
+        href: category.href,
+        children: category.children,
       })
       const arrowIcon = wrapper.findComponent(Icon)
 
       await arrowIcon.vm.$emit('click')
 
       const children = wrapper.find('.category-collapse__children')
+
+      console.log(wrapper.html())
       expect(children.exists()).toBeTruthy()
     })
   })

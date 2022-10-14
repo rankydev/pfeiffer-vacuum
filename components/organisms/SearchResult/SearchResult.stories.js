@@ -1,4 +1,5 @@
 import SearchResult from '~/components/organisms/SearchResult/SearchResult.vue'
+import { ref } from '@nuxtjs/composition-api'
 import {
   products,
   pagination,
@@ -26,7 +27,13 @@ export default {
 const Template = (args, { argTypes }) => ({
   components: { SearchResult },
   setup() {
-    return { args }
+    let active = ref(args.active || 9)
+
+    const updatePageSize = (e) => {
+      active.value = e
+    }
+
+    return { args, updatePageSize, active }
   },
   template: `
   <div class="documentation-preview">
