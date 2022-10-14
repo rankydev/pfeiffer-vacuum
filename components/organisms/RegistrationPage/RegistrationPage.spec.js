@@ -103,9 +103,6 @@ describe('RegistrationPage', () => {
         localVue,
       })
 
-      //mockRegister.mockImplementation()
-      //mockRegister.mockReturnValueOnce() nur einmal wert zurückgeben
-
       const spyTriggerSendRegistrationProcess = jest.spyOn(
         wrapper.vm,
         'triggerSendRegistrationProcess'
@@ -116,13 +113,12 @@ describe('RegistrationPage', () => {
 
       submitButton.trigger('click')
       await wrapper.vm.$nextTick()
+      const modal = wrapper.findComponent(HintModal)
 
       expect(spyTriggerSendRegistrationProcess).toHaveBeenCalled()
       expect(wrapper.vm.proceedWithoutCompany).toBeFalsy()
       expect(wrapper.vm.validate).toBeFalsy()
       expect(wrapper.vm.modalIsOpen).toBeTruthy()
-
-      const modal = wrapper.findComponent(HintModal)
       expect(modal.vm.isOpen).toBeTruthy()
     })
 
