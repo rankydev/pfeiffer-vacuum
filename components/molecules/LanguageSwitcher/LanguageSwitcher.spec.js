@@ -21,8 +21,8 @@ jest.mock('@nuxtjs/composition-api', () => {
 })
 
 describe('LanguageSwitcher', () => {
+  const stubs = { NuxtLink: true }
   describe('initial state', () => {
-    const stubs = { NuxtLink: true }
     beforeEach(() => {
       jest.resetAllMocks()
     })
@@ -68,9 +68,9 @@ describe('LanguageSwitcher', () => {
     // TODO: this test is supposed to be implemented later
     it('should switch language properly', () => {})
 
-    it('should open menu properly', () => {})
+    it('should open menu properly', async () => {})
 
-    it('should close menu properly', () => {})
+    it('should close menu properly', async () => {})
   })
 
   // describe('business requirements', () => {})
