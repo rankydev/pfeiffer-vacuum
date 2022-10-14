@@ -54,6 +54,38 @@ lint:
       - report/
     expire_in: 3 week
 
+.lint-junit-report:
+  extends: .node-image
+  stage: test
+  needs: ["build"]
+  cache:
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: pull
+  before_script:
+    - npm ci --cache .npm --prefer-offline
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - report/*.xml
+    paths:
+      - report/
+    expire_in: 3 week
+
+lint-js-report:
+  extends: .lint-junit-report
+  script:
+      - npm run lint:js-ci-junit
+
+lint-style-report:
+  extends: .lint-junit-report
+  script:
+    - npm run lint:style-ci-junit
+
 test:
   extends: .node-image
   stage: test
