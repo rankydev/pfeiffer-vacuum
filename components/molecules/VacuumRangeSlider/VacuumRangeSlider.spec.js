@@ -31,7 +31,7 @@ describe('VacuumRangeSlider', () => {
 
       await ranges.at(0).trigger('click')
 
-      expect(mockEmit).toBeCalledWith('update', ['1E-10', '1E-8'])
+      expect(mockEmit).toBeCalledWith('update', [null, '<=1E-8'])
     })
   })
 })

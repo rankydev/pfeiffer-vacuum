@@ -316,6 +316,11 @@ export const currentQuery = {
     filterTerms: [
       {
         displayName: 'Lorem ipsum dolor sit amet',
+        key: '3912',
+        value: 'ISO-KF',
+      },
+      {
+        displayName: 'Lorem ipsum dolor sit amet',
         key: '3795',
         value: 'ISO-KF',
       },
