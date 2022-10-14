@@ -62,7 +62,6 @@ describe('CategoryCollapse', () => {
 
       const children = wrapper.find('.category-collapse__children')
 
-      console.log(wrapper.html())
       expect(children.exists()).toBeTruthy()
     })
   })

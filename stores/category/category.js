@@ -31,8 +31,6 @@ export const useCategoryStore = defineStore('category', () => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 2)
     const categoryPath = category.value?.categoryPath || []
 
-    console.log(cmsPrefix, 'PREFIX')
-
     const breadcrumbArr = [
       ...cmsPrefix,
       ...categoryPath.map(({ name, id }) => ({
