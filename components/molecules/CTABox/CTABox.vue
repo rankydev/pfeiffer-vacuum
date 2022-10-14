@@ -91,6 +91,10 @@ export default defineComponent({
     @screen md {
       @apply tw-inline;
     }
+
+    a {
+      @apply tw-whitespace-normal;
+    }
   }
 
   &__button {

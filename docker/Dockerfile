@@ -219,7 +219,7 @@ COPY --from=frontend-build /src/static ./static/
 COPY --from=frontend-build /src/resolver ./resolver/
 COPY --from=frontend-build /src/server ./server/
 COPY --from=frontend-build /src/providers ./providers/
-COPY --from=frontend-build /src/utils ./utils/
+COPY --from=frontend-build /src/composables ./composables/
 
 EXPOSE 3000
 

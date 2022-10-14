@@ -3,5 +3,7 @@
   "sort": "Sortieren nach:",
   "lessFilters": "Weniger Filter",
   "moreFilters": "Mehr Filter",
-  "activeFilters": "Aktive Filter:"
+  "activeFilters": "Aktive Filter:",
+  "sortAndFilter": "Sortieren & Filtern",
+  "applyFilter": "Filter anwenden"
 }

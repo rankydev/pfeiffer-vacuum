@@ -20,6 +20,7 @@ module.exports = {
       'border-white': 'inset 0 0 0 2px #ffffff',
       select: '0 48px 48px -48px #CCCCCC',
       'slider-handle': '0 0 0 4px rgba(0, 0, 0, 0.05)',
+      'black-15': '0px 8px 32px rgba(0, 0, 0, 0.15)',
     },
     colors: {
       'pv-red': '#dd1541',

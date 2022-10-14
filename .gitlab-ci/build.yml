@@ -47,9 +47,45 @@ lint:
     - npm run lint:ci
   artifacts:
     when: always
+    reports:
+      junit:
+        - report/*.xml
     paths:
       - report/
     expire_in: 3 week
+
+.lint-junit-report:
+  extends: .node-image
+  stage: test
+  needs: ["build"]
+  cache:
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: pull
+  before_script:
+    - npm ci --cache .npm --prefer-offline
+    - mkdir report
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - report/lint-junit.xml
+    paths:
+      - report/
+    expire_in: 3 week
+
+lint-js-report:
+  extends: .lint-junit-report
+  script:
+      - npm run lint:js-ci-junit
+
+lint-style-report:
+  extends: .lint-junit-report
+  script:
+    - npm run lint:style-ci-junit
 
 test:
   extends: .node-image
@@ -69,11 +105,16 @@ test:
   script:
     - npm ci --cache .npm --prefer-offline
     - NODE_ENV=test
-    - npm test
+    - npm run test:ci
+  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
   artifacts:
     when: always
     reports:
-      junit: coverage/clover.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+      junit:
+        - report/junit.xml
     paths:
       - coverage/
     expire_in: 3 week
@@ -104,7 +145,6 @@ sonar-qube:
     - shared
   only:
     - develop
-    - feature/PVWEB-0_adapt_sonar_properties
 
 .build-docker-image:
   image: docker:git

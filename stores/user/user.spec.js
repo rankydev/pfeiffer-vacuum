@@ -10,33 +10,50 @@ const mockUser = {
   },
 }
 const mockAuth = ref({ auth: { access_token: 'lorem ipsum' } })
-const mockLoggedIn = ref(false)
+let mockIsLoggedIn = ref(false)
+const mockkeycloakInstance = { value: { login: jest.fn(), logout: jest.fn() } }
+const mockWatch = jest.fn()
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  const { ref } = originalModule
   return {
     ...originalModule,
-    useContext: jest.fn(() => {
+    useContext: () => {
       return {
-        app: {},
+        app: {
+          router: { push: jest.fn() },
+          i18n: {
+            locale: '',
+          },
+          localePath: jest.fn(),
+        },
         i18n: {
           t: (key) => key,
+          locale: '',
         },
       }
-    }),
-    useRoute: jest.fn(() => ({ value: {} })),
+    },
+    useRoute: () => ({ value: {} }),
     useRouter: jest.fn(),
     onBeforeMount: jest.fn(),
     onServerPrefetch: jest.fn(),
+    watch: (variable, callback) => mockWatch(variable, callback),
+    ssrRef: ref,
   }
 })
 
-jest.mock('~/utils/getLoggerFor', () => {
-  return () => ({
-    error: (e) => mockLogger(e),
-    debug: (e) => mockLogger(e),
-  })
-})
+jest.mock('~/composables/useLogger', () => ({
+  useLogger: () => {
+    return {
+      logger: {
+        error: mockLogger,
+        debug: mockLogger,
+        trace: jest.fn(),
+      },
+    }
+  },
+}))
 
 jest.mock('~/stores/user/partials/useUserApi', () => {
   return {
@@ -51,40 +68,49 @@ jest.mock('~/stores/user/partials/useKeycloak', () => {
     useKeycloak: () => ({
       createKeycloakInstance: jest.fn(),
       auth: mockAuth,
-      loggedIn: mockLoggedIn,
+      isLoggedIn: mockIsLoggedIn,
+      keycloakInstance: mockkeycloakInstance,
+      removeCookiesAndDeleteAuthData: jest.fn(),
     }),
   }
 })
 
-describe('Auth store', () => {
-  beforeEach(() => setActivePinia(createPinia()))
+describe('User store', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    jest.resetAllMocks()
+  })
 
   describe('initial state', () => {
     test('should return false initial value', () => {
       mockGetUserData.mockReturnValue(mockUser)
       const userStore = useUserStore()
 
-      expect(userStore.isOciUser).toBeFalsy()
       expect(userStore.isOpenUser).toBeFalsy()
       expect(userStore.isLeadUser).toBeFalsy()
       expect(userStore.isRejectedUser).toBeFalsy()
       expect(userStore.isApprovedUser).toBeFalsy()
-      expect(userStore.loggedIn).toBeFalsy()
+      expect(userStore.isLoggedIn).toBeFalsy()
+      expect(userStore.login).toBeInstanceOf(Function)
     })
   })
 
   describe('during interaction', () => {
-    test('should not load current user given loggedIn = false', async () => {
+    test('should not load current user given isLoggedIn = false', async () => {
       const userStore = useUserStore()
 
       await userStore.loadCurrentUser()
 
+      expect(userStore.isOpenUser).toBeFalsy()
+      expect(userStore.isLeadUser).toBeFalsy()
+      expect(userStore.isRejectedUser).toBeFalsy()
       expect(userStore.isApprovedUser).toBeFalsy()
+      expect(userStore.isLoggedIn).toBeFalsy()
       expect(userStore.currentUser).toBe(null)
     })
 
-    test('should load current user given loggedIn = true', async () => {
-      mockLoggedIn.value = true
+    test('should load current user given isLoggedIn = true', async () => {
+      mockIsLoggedIn.value = true
       mockGetUserData.mockReturnValue(mockUser)
       const userStore = useUserStore()
 
@@ -96,11 +122,60 @@ describe('Auth store', () => {
 
     test('should throw logger error given user error', async () => {
       mockGetUserData.mockReturnValue(null)
+      mockIsLoggedIn.value = true
       const userStore = useUserStore()
 
       await userStore.loadCurrentUser()
 
-      expect(mockLogger).toBeCalledTimes(1)
+      expect(mockLogger).toBeCalledWith('user not found', null)
+    })
+
+    test('should invoke login correctly', async () => {
+      const userStore = useUserStore()
+
+      await userStore.login()
+
+      expect(mockLogger).toBeCalledWith('login')
+    })
+
+    test('should invoke logout correctly', async () => {
+      const userStore = useUserStore()
+
+      await userStore.logout()
+
+      expect(mockLogger).toBeCalledWith('logout')
+    })
+
+    test('should redirect if no keycloak instance is available', async () => {
+      mockkeycloakInstance.value = null
+      const userStore = useUserStore()
+      await userStore.logout()
+
+      expect(mockLogger).toBeCalledWith('logout')
+    })
+
+    test('should load current user when auth has changed', async () => {
+      mockIsLoggedIn.value = true
+      mockGetUserData.mockReturnValue(mockUser)
+      let watchCallback = null
+      mockWatch.mockImplementation((auth, callback) => {
+        watchCallback = callback
+      })
+      const userStore = useUserStore()
+      await watchCallback({ access_token: 'validToken' })
+
+      expect(userStore.currentUser).toBe(mockUser)
+    })
+
+    test('should reset user when auth has changed but new auth object is undefined', async () => {
+      let watchCallback = null
+      mockWatch.mockImplementation((auth, callback) => {
+        watchCallback = callback
+      })
+      const userStore = useUserStore()
+      await watchCallback(undefined)
+
+      expect(userStore.currentUser).toBe(null)
     })
   })
 })

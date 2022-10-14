@@ -39,7 +39,6 @@ const Template = (args, { argTypes }) => ({
   components: { ProductCardGrid },
   props: Object.keys(argTypes),
   setup() {
-    console.log(argTypes)
     return { args }
   },
   template: `

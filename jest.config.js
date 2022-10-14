@@ -12,7 +12,8 @@ module.exports = {
   testEnvironment: 'jsdom',
   collectCoverage: true,
   setupFilesAfterEnv: ['./tests/jest.setup.js'],
-  coverageReporters: ['clover', 'json', 'lcov', 'text', 'html'],
+  coverageReporters: ['clover', 'json', 'lcov', 'text', 'html', 'cobertura'],
+  reporters: ['default', ['jest-junit', { outputDirectory: './report' }]],
   collectCoverageFrom: [
     '<rootDir>/components/**/*.{vue,js}',
     '<rootDir>/composables/**/*.{vue,js}',
@@ -33,15 +34,7 @@ module.exports = {
     'stories.content.js',
     'schema.js',
     'schema.partial.js',
-    'index.js',
-    'stores/user/',
-    'stores/contact/',
-    'stores/countries/',
-    'stores/product',
-    'stores/menu/',
-    '/composables/useAxiosForHybris.js',
-    '/composables/useAxiosInterceptors.js',
-    '/composables/useContextUtil.js',
+    '/stores/user/partials/useKeycloak.js',
   ],
   coverageThreshold: {
     global: {
