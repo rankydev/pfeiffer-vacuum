@@ -50,7 +50,29 @@
 
   .tw-my-component-narrow {
     @apply tw-my-4;
+  }
 
+  .tw-column-view {
+    @apply tw-grid-container;
 
+    &--left-side {
+      @apply tw-w-full;
+      @apply tw-col-span-12;
+
+      @screen lg {
+        @apply tw-col-span-6;
+      }
+    }
+
+    &--right-side {
+      @apply tw-w-full;
+      @apply tw-col-start-1;
+      @apply tw-col-span-12;
+
+      @screen lg {
+        @apply tw-col-span-5;
+        @apply tw-col-start-8;
+      }
+    }
   }
 }

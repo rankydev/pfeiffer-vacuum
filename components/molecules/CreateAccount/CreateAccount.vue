@@ -14,15 +14,15 @@
           required
         ),
       }"
-      :validate="validate"
       @update="
-        requestData.registration.company = $event
+        requestData.registration.companyName = $event
         $emit('update', requestData)
       "
     />
 
     <FormCountrySelection
-      :validate="validate"
+      :selected-country="selectedCountry"
+      :selected-region="selectedRegion"
       @update="
         requestData.registration.address = $event
         $emit('update', requestData)
@@ -39,7 +39,6 @@
           required
         ),
       }"
-      :validate="validate"
       @update="
         requestData.registration.firstName = $event
         $emit('update', requestData)
@@ -56,7 +55,6 @@
           required
         ),
       }"
-      :validate="validate"
       @update="
         requestData.registration.lastName = $event
         $emit('update', requestData)
@@ -77,7 +75,6 @@
           email
         ),
       }"
-      :validate="validate"
       @update="
         requestData.registration.email = $event
         $emit('update', requestData)
@@ -94,7 +91,6 @@
           required
         ),
       }"
-      :validate="validate"
       :show-validation-criterias="true"
       @update="
         requestData.registration.password = $event
@@ -115,12 +111,13 @@ export default defineComponent({
   name: 'CreateAccount',
   components: { PvInput, Password, FormCountrySelection },
   props: {
-    /**
-     * determines whether a validation can be executed and will be passed into child component
-     */
-    validate: {
-      type: Boolean,
-      default: false,
+    selectedCountry: {
+      type: Object,
+      default: undefined,
+    },
+    selectedRegion: {
+      type: Object,
+      default: undefined,
     },
   },
   emits: [
@@ -135,7 +132,7 @@ export default defineComponent({
   setup() {
     const requestData = ref({
       registration: {
-        company: '',
+        companyName: '',
         address: {
           country: {},
           region: {},

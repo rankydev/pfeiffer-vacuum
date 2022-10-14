@@ -3,7 +3,7 @@ export default {
    * The input’s value
    */
   value: {
-    type: String,
+    type: [String, Object],
     default: '',
   },
   /**
