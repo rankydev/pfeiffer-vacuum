@@ -1,27 +1,19 @@
 <template>
-  <div class="page-template">
-    <slot name="header">
-      <nuxt-dynamic
-        v-for="item in top"
-        :key="item._uid"
-        v-editable="item"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      />
+  <Page :content="content">
+    <template #onPageNavigation>
+      <OnPageNavigation v-bind="(quicklinks || [])[0]">
+        <Button
+          v-if="hasLinkedCat"
+          :label="$t('navigation.button.overview.label')"
+          :href="categoryHref"
+          size="small"
+          variant="secondary"
+          shape="outlined"
+        />
+      </OnPageNavigation>
+    </template>
 
-      <nuxt-dynamic
-        v-for="item in header"
-        :key="item._uid"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      />
-    </slot>
-
-    <slot name="onPageNavigation">
-      <OnPageNavigation v-bind="(quicklinks || [])[0]" />
-    </slot>
-
-    <slot>
+    <template #default>
       <main>
         <ContentWrapper>
           <ResultHeadline
@@ -45,47 +37,36 @@
           </ContentWrapper>
         </div>
       </main>
-    </slot>
-
-    <slot name="footer">
-      <ContentWrapper>
-        <nuxt-dynamic
-          v-for="item in bottom"
-          :key="item._uid"
-          v-editable="item"
-          v-bind="item"
-          :name="item.uiComponent || item.component"
-        />
-      </ContentWrapper>
-
-      <nuxt-dynamic
-        v-for="item in footer"
-        :key="item._uid"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      />
-    </slot>
-  </div>
+    </template>
+  </Page>
 </template>
 
 <script>
 import {
+  ssrRef,
+  onBeforeMount,
+  onServerPrefetch,
   defineComponent,
   computed,
-  inject,
-  toRefs,
+  useContext,
 } from '@nuxtjs/composition-api'
-import useMeta from '~/composables/useMeta'
-import useTemplating from '~/composables/useTemplating'
+import Page from '~/components/templates/Page/Page'
+import Button from '~/components/atoms/Button/Button'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
-import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
+import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation'
+import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
+
+import schema from '~/components/templates/CategoryContentPage/CategoryContentPage.schema.js'
 import { useCategoryStore } from '~/stores/category'
 import SearchResult from '~/components/organisms/SearchResult/SearchResult.vue'
+import { transformUrl } from '~/resolver/linksTransformer.js'
+import { joinURL } from 'ufo'
 
 export default defineComponent({
   name: 'CategoryPage',
   components: {
+    Page,
+    Button,
     ContentWrapper,
     OnPageNavigation,
     ResultHeadline,
@@ -97,17 +78,42 @@ export default defineComponent({
       default: /* istanbul ignore next */ () => {},
     },
   },
-  setup(props, context) {
-    const { content } = toRefs(props)
-    const translatedSlugs = inject('getTranslatedSlugs', () => [])()
-    const defaultFullSlug = inject('getDefaultFullSlug', () => '')()
-    const { top, header, bottom, footer } = useTemplating(content)
-    const { getMetaData } = useMeta(
-      content,
-      defaultFullSlug,
-      translatedSlugs,
-      context
-    )
+  setup(props) {
+    /**
+     * data to link to category content page
+     */
+    const context = useContext()
+    const { route, $cms, i18n } = context
+
+    const fetched = ssrRef(false)
+    const categoryHref = ssrRef(null)
+    const hasLinkedCat = computed(() => !!categoryHref.value)
+    const categoryKey = computed(() => route.value.params.category)
+
+    const fetchAssociatedCategory = async () => {
+      if (fetched.value || !categoryKey.value) return
+
+      const options = {
+        excluding_fields: Object.keys(schema.schema).join(','),
+        per_page: 1,
+        filter_query: {
+          categoryShopId: {
+            like: categoryKey.value,
+          },
+        },
+      }
+      const { data } = await $cms.query({ options })
+
+      fetched.value = true
+
+      if (!data?.[0]?.full_slug) return
+
+      const fullSlug = joinURL(i18n.locale, data[0].full_slug)
+      categoryHref.value = transformUrl(fullSlug, context)
+    }
+
+    onServerPrefetch(fetchAssociatedCategory)
+    onBeforeMount(fetchAssociatedCategory)
 
     /**
      * category data to show headline
@@ -125,12 +131,10 @@ export default defineComponent({
     const sorts = computed(() => categoryStore.result?.sorts)
 
     return {
-      top,
-      header,
-      bottom,
-      footer,
-      quicklinks: content.value.quicklinks,
-      metaData: getMetaData(),
+      hasLinkedCat,
+      categoryHref,
+
+      quicklinks: props.content.quicklinks,
       headline,
       searchTerm,
       link,
@@ -142,9 +146,6 @@ export default defineComponent({
       currentQuery,
       sorts,
     }
-  },
-  head() {
-    return this.metaData
   },
 })
 </script>

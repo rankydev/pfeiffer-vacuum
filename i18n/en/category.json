@@ -4,5 +4,7 @@
   "lessFilters": "Less filters",
   "moreFilters": "More filters",
   "activeFilters": "Active filters:",
-  "searchResult": "search result for"
+  "searchResult": "search result for",
+  "sortAndFilter": "Sort & Filter",
+  "applyFilter": "Apply filter"
 }

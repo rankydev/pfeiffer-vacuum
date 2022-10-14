@@ -33,6 +33,7 @@ function createComponent(propsData = {}, { attachTo, shallow = true } = {}) {
   const localVue = createLocalVue()
   const editable = (el, key) => (el.innerText = key.value)
   localVue.directive('editable', editable)
+  const stubs = { LanguageSwitcher: true }
 
   const options = {
     localVue,
@@ -41,6 +42,7 @@ function createComponent(propsData = {}, { attachTo, shallow = true } = {}) {
       ...propsData,
     },
     attachTo,
+    stubs,
   }
 
   wrapper = shallow

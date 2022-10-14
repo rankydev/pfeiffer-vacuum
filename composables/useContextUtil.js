@@ -2,10 +2,10 @@ import { useContext } from '@nuxtjs/composition-api'
 import { useLogger } from './useLogger'
 
 export const useContextUtil = () => {
-  const logger = useLogger('contextUtil')
+  const { logger } = useLogger('contextUtil')
 
   const getCurrentHostUrl = () => {
-    const { req } = useContext
+    const { req } = useContext()
 
     if (req) {
       // server side
@@ -16,6 +16,7 @@ export const useContextUtil = () => {
       return window.location.protocol + '//' + window.location.host
     }
     logger.error('Error getting current host url.')
+    return null
   }
 
   return { getCurrentHostUrl }

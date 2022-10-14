@@ -12,7 +12,8 @@ module.exports = {
   testEnvironment: 'jsdom',
   collectCoverage: true,
   setupFilesAfterEnv: ['./tests/jest.setup.js'],
-  coverageReporters: ['clover', 'json', 'lcov', 'text', 'html'],
+  coverageReporters: ['clover', 'json', 'lcov', 'text', 'html', 'cobertura'],
+  reporters: ['default', ['jest-junit', { outputDirectory: './report' }]],
   collectCoverageFrom: [
     '<rootDir>/components/**/*.{vue,js}',
     '<rootDir>/composables/**/*.{vue,js}',
@@ -43,6 +44,7 @@ module.exports = {
     '/composables/useAxiosInterceptors.js',
     '/composables/useContextUtil.js',
     '/components/organisms/SearchResult/SearchResult.spec.js',
+    '/stores/user/partials/useKeycloak.js',
   ],
   coverageThreshold: {
     global: {

@@ -3,28 +3,6 @@ import TopicRequest from '~/components/molecules/ContactRequestForm/partials/Top
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
-import { reactive } from '@nuxtjs/composition-api'
-
-const mockedRegions = reactive({})
-const mockLoadRegions = jest.fn((isoCode) => {
-  mockedRegions[isoCode] = ['Region1']
-})
-jest.mock('~/stores/countries', () => {
-  return {
-    useCountriesStore: () => {
-      return {
-        countries: [
-          {
-            isocode: 'US',
-            name: 'United States of America',
-          },
-        ],
-        loadRegions: mockLoadRegions,
-        regions: mockedRegions,
-      }
-    },
-  }
-})
 
 describe('TopicRequest', () => {
   describe('initial state', () => {
@@ -49,23 +27,6 @@ describe('TopicRequest', () => {
       const wrapper = shallowMount(TopicRequest, { propsData })
 
       expect(wrapper.exists()).toBeTruthy()
-    })
-
-    it('should return regions array when appropriate country was selected', async () => {
-      const propsData = { type: 'QUOTE', validate: true }
-      const wrapper = shallowMount(TopicRequest, { propsData })
-      const select = wrapper.findComponent(PvSelect)
-
-      const selectedOption = {
-        isocode: 'US',
-        name: 'United States of America',
-      }
-      select.vm.$emit('update', selectedOption)
-      await select.vm.$nextTick()
-      const allSelects = wrapper.findAllComponents(PvSelect)
-
-      expect(mockLoadRegions).toHaveBeenCalled()
-      expect(allSelects).toHaveLength(2)
     })
   })
 })

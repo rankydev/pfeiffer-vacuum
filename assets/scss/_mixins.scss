@@ -13,7 +13,7 @@
 /**
   Multiline text-overflow
  */
- @mixin text-overflow($lines: 4, $text-overflow: ellipsis) {
+@mixin text-overflow($lines: 4, $text-overflow: ellipsis) {
   display: block;
   /* stylelint-disable */
   display: -webkit-box;
@@ -40,4 +40,13 @@
     border-top-left-radius: 0.125rem;
     border-top-right-radius: 0.125rem;
   }
+}
+
+@mixin fill-available {
+  width: 100%;
+  /* stylelint-disable value-no-vendor-prefix */
+  width: -moz-available;
+  width: -webkit-fill-available;
+  /* stylelint-enable value-no-vendor-prefix */
+  width: stretch;
 }

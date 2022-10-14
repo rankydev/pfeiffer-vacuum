@@ -4,5 +4,7 @@
   "lessFilters": "更少的筛选器",
   "moreFilters": "更多筛选器",
   "activeFilters": "有源滤波器",
-  "searchResult": "为。。。。寻找结果"
+  "searchResult": "为。。。。寻找结果",
+  "sortAndFilter": "排序和過濾",
+  "applyFilter": "应用筛选器"
 }
