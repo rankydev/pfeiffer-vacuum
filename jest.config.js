@@ -45,6 +45,7 @@ module.exports = {
     '/composables/useContextUtil.js',
     '/components/organisms/SearchResult/SearchResult.spec.js',
     '/stores/user/partials/useKeycloak.js',
+    '/components/molecules/Facets/Facets.js',
   ],
   coverageThreshold: {
     global: {

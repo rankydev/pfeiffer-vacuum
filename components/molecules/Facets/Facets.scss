@@ -1,0 +1,106 @@
+.facets {
+  @apply tw-flex;
+  @apply tw-flex-col-reverse;
+
+  @screen md {
+    @apply tw-flex-col;
+  }
+
+  &__selects {
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-gap-2;
+    @apply tw-flex-wrap;
+
+    @screen md {
+      @apply tw-flex-row;
+    }
+  }
+
+  &__multiselect {
+    @apply tw-inline-block;
+
+    .vs__dropdown-toggle {
+      @apply tw-p-2;
+      @apply tw-text-xs;
+    }
+  }
+
+  &__expand-toggle {
+    @apply tw-hidden;
+    @apply tw-p-2;
+
+    @screen md {
+      @apply tw-inline-flex;
+    }
+  }
+
+  &__filter-tags {
+    @apply tw-flex;
+    @apply tw-flex-wrap;
+    @apply tw-items-center;
+    @apply tw-gap-2;
+    @apply tw-mt-4;
+
+    @screen md {
+      @apply tw-mt-0 tw-mb-4;
+    }
+
+    &-label {
+      @apply tw-hidden;
+      @apply tw-font-bold;
+
+      @screen md {
+        @apply tw-inline-block;
+      }
+    }
+  }
+
+  &__filter-tag-item {
+    @apply tw-w-full;
+
+    @screen md {
+      @apply tw-w-auto;
+    }
+  }
+
+  /* TODO: Button overwritings must happen here due to missing button variant */
+  &__slider-buttons {
+    @apply tw-w-full;
+    @apply tw-bg-pv-white;
+
+    @screen md {
+      @apply tw-w-auto;
+    }
+
+    &.button--outlined.button--secondary {
+      @apply tw-p-2;
+      @apply tw-text-xs;
+      @apply tw-font-normal;
+      @apply tw-text-pv-grey-64;
+      @apply tw-shadow-border-grey-80;
+
+      &:hover,
+      &:focus {
+        @apply tw-bg-pv-transparent;
+        @apply tw-outline-pv-transparent;
+      }
+
+      &:focus {
+        @apply tw-shadow-border-grey-16;
+      }
+    }
+
+    &--active.button--outlined.button--secondary {
+      @apply tw-text-pv-grey-16;
+    }
+  }
+
+  &__vacuum-range-popup {
+    @apply tw-px-12 tw-py-4;
+  }
+
+  &__suction-speed-popup {
+    @apply tw-p-4;
+  }
+}
