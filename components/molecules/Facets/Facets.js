@@ -1,4 +1,10 @@
-import { unref, ref, computed, useContext } from '@nuxtjs/composition-api'
+import {
+  unref,
+  ref,
+  toRefs,
+  computed,
+  useContext,
+} from '@nuxtjs/composition-api'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import Button from '~/components/atoms/Button/Button'
 import VacuumRangeSlider from '~/components/molecules/VacuumRangeSlider/VacuumRangeSlider.vue'
@@ -19,22 +25,32 @@ export default {
     Popup,
   },
   props: {
+    /**
+     * All facets given by hybris
+     */
     facets: {
       type: Array,
       required: true,
     },
+    /**
+     * All available sorts
+     */
     sorts: {
       type: Array,
       required: true,
     },
+    /**
+     * Current hybris query with e.g. active filter terms
+     */
     currentQuery: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
   },
   emits: ['updateSort', 'updateFacets'],
   setup(props, { emit }) {
     const { app } = useContext()
+    const { currentQuery, facets } = toRefs(props)
 
     // Facet id's for vacuum range and suction speed
     const vacuumRangeIds = ['3913', '3912']
@@ -44,13 +60,15 @@ export default {
     const isExtended = ref(false)
 
     // Filter given facets to only have type multiselect
-    const multiSelectFacets = computed(() => {
-      return props.facets?.filter(
-        (e) =>
-          (e.visible && !e.category && e.facetType === 'MULTISELECTOR') || []
-      )
-    })
+    const multiSelectFacets = computed(
+      () =>
+        facets.value?.filter(
+          (e) => e.visible && !e.category && e.facetType === 'MULTISELECTOR'
+        ) || []
+    )
 
+    // On desktop these are initially 2 facets when not opened, otherwise it returns all
+    // On mobile all facets will be returned
     const shrinkedFacets = computed(() =>
       app.$breakpoints.isMobile.value
         ? multiSelectFacets.value
@@ -59,33 +77,32 @@ export default {
     )
 
     // Generate array with current selected facets from given currentQuery
-    const selectedFacets = computed(() => {
-      return (
-        props.currentQuery?.query?.filterTerms?.filter(
+    const selectedFacets = computed(
+      () =>
+        currentQuery.value?.query?.filterTerms?.filter(
           (e) => e.key !== 'category'
         ) || []
-      )
-    })
+    )
 
-    const vacuumRangePresent = computed(() => {
-      return !!props.facets?.filter((e) => vacuumRangeIds.includes(e.code))
-    })
+    const vacuumRangePresent = computed(
+      () => !!facets.value?.filter((e) => vacuumRangeIds.includes(e.code))
+    )
 
-    const suctionSpeedPresent = computed(() => {
-      return !!props.facets?.filter((e) => suctionSpeedIds.includes(e.code))
-    })
+    const suctionSpeedPresent = computed(
+      () => !!facets.value?.filter((e) => suctionSpeedIds.includes(e.code))
+    )
 
-    const vacuumRangeActive = computed(() => {
-      return !!selectedFacets.value.filter((e) =>
-        vacuumRangeIds.includes(e.key)
-      ).length
-    })
+    const vacuumRangeActive = computed(
+      () =>
+        !!selectedFacets.value.filter((e) => vacuumRangeIds.includes(e.key))
+          .length
+    )
 
-    const suctionSpeedActive = computed(() => {
-      return !!selectedFacets.value.filter((e) =>
-        suctionSpeedIds.includes(e.key)
-      ).length
-    })
+    const suctionSpeedActive = computed(
+      () =>
+        !!selectedFacets.value.filter((e) => suctionSpeedIds.includes(e.key))
+          .length
+    )
 
     // Add recent selected facet and values to current selection and emit
     const updateFacets = (

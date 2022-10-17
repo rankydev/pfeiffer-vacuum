@@ -6,6 +6,15 @@ import { expect } from '@jest/globals'
 
 let wrapper
 
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  return {
+    __esModule: true,
+    ...originalModule,
+    useRoute: jest.fn(() => ({ value: {} })),
+  }
+})
+
 function createComponent(propsData = {}) {
   const stubs = {
     NuxtLink: true,

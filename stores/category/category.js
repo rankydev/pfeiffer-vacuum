@@ -40,7 +40,8 @@ export const useCategoryStore = defineStore('category', () => {
     ]
 
     if (searchTerm.value) {
-      breadcrumbArr.push({ href: '', name: searchTerm.value })
+      const term = `${i18n.t('category.searchResult')} "${searchTerm.value}"`
+      breadcrumbArr.push({ href: '', name: term })
     }
 
     return breadcrumbArr

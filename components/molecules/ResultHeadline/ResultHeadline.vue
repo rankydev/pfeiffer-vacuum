@@ -12,11 +12,7 @@
     </nuxt-link>
     <div class="result-headline__content">
       <h1 v-if="searchTerm || headline" class="result-headline__headline">
-        {{
-          searchTerm
-            ? `${$t('category.searchResult')} "${searchTerm}"`
-            : headline
-        }}
+        {{ headlineText }}
       </h1>
       <span
         v-if="resultCount"
@@ -30,6 +26,7 @@
 
 <script>
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 
 export default {
   name: 'ResultHeadline',
@@ -56,6 +53,16 @@ export default {
       type: [String, Object],
       default: null,
     },
+  },
+  setup(props) {
+    const { i18n } = useContext()
+    const headlineText = computed(() =>
+      props.searchTerm
+        ? `${i18n.t('category.searchResult')} "${props.searchTerm}"`
+        : props.headline
+    )
+
+    return { headlineText }
   },
 }
 </script>

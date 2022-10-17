@@ -14,7 +14,7 @@ export default {
     default: false,
   },
   /**
-   * Can be an array of objects or array of strings. When using objects, will look for a label, value, icon and disabled keys.
+   * Can be an array of objects or array of strings. When using objects, will look for a label, value, icon and disabled keys. T
    */
   options: {
     type: Array,
@@ -100,7 +100,7 @@ export default {
     default: true,
   },
   /**
-   * Selected option can be deselected
+   * Size of the used icon
    */
   iconSize: {
     type: String,

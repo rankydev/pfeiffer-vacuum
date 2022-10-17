@@ -64,7 +64,7 @@
     }
   }
 
-  /* TODO: Button overwritings must happen here due to missing button variant */
+  /* TODO: Button overwritings must happen here due to missing button variant -> PVWEB-809 */
   &__slider-buttons {
     @apply tw-w-full;
     @apply tw-bg-pv-white;
@@ -82,7 +82,7 @@
 
       &:hover,
       &:focus {
-        @apply tw-bg-pv-transparent;
+        @apply tw-bg-pv-white;
         @apply tw-outline-pv-transparent;
       }
 
