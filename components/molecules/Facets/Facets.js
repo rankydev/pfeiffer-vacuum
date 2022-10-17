@@ -60,11 +60,11 @@ export default {
     const isExtended = ref(false)
 
     // Filter given facets to only have type multiselect
-    const multiSelectFacets = computed(() =>
-      facets.value?.filter(
-        (e) =>
-          (e.visible && !e.category && e.facetType === 'MULTISELECTOR') || []
-      )
+    const multiSelectFacets = computed(
+      () =>
+        facets.value?.filter(
+          (e) => e.visible && !e.category && e.facetType === 'MULTISELECTOR'
+        ) || []
     )
 
     // On desktop these are initially 2 facets when not opened, otherwise it returns all
