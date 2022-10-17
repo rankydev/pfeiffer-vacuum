@@ -15,7 +15,7 @@
         :count="category.productCount"
         :href="{
           path: joinURL(localePath('shop-categories'), category.category.id),
-          query: route.query,
+          query: { ...route.query, currentPage: 1 },
         }"
         :children="category.children"
       />

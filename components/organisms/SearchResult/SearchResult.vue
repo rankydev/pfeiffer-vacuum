@@ -10,10 +10,14 @@
         @updateSort="pushSortToQuery"
         @updateFacets="pushFacetsToQuery"
       />
-      <ProductCardGrid :products="products" />
+      <ProductCardGrid v-if="products.length > 0" :products="products" />
+      <div v-else>
+        <h2>{{ $t('category.noMatchingProducts') }}</h2>
+        <span>{{ $t('category.checkSearchCriteria') }}</span>
+      </div>
       <div class="search-result__pages">
         <CategoryPageSizeSelection
-          :active="pageSize"
+          :active="parseInt(pageSize)"
           @change="updatePageSize"
         />
         <Pagination
@@ -77,14 +81,14 @@ export default defineComponent({
   setup(props) {
     const router = useRouter()
     const route = useRoute()
-    const { pagination } = toRefs(props)
-    const pageSize = computed(() => pagination.value?.pageSize)
+    const pageSize = computed(() => route.value.query?.pageSize || 9)
 
     const updatePageSize = (e) => {
       router.push({
         query: {
           ...route.value.query,
           pageSize: e,
+          currentPage: 1,
         },
       })
     }
