@@ -15,7 +15,10 @@
 
     <Infobox :text="$t('registration.infotext')" />
 
-    <div v-if="addCompany">
+    <div
+      v-if="addCompany && !proceedWithoutCompany"
+      class="registration-company-data-form__form-section"
+    >
       <div class="registration-company-data-form__row-container">
         <div class="registration-company-data-form__row-container--half">
           <PvLabel
@@ -38,7 +41,7 @@
               },
             ]"
             @update="
-              requestData.companyData.registeredCustomer = $event
+              requestData.companyData.companyAlreadyCustomer = $event
               $emit('update', requestData)
             "
           />
@@ -48,10 +51,9 @@
           class="registration-company-data-form__row-container--half"
           :label="$t('registration.formCompanyData.customerNumber')"
           placeholder=""
-          :validate="validate"
-          :disabled="!requestData.companyData.registeredCustomer"
+          :disabled="!requestData.companyData.companyAlreadyCustomer"
           @update="
-            requestData.companyData.customerNumber = $event
+            requestData.companyData.companyUid = $event
             $emit('update', requestData)
           "
         />
@@ -60,9 +62,8 @@
       <PvInput
         :label="$t('registration.formCompanyData.additionalCompanyInformation')"
         placeholder=""
-        :validate="validate"
         @update="
-          requestData.companyData.additionalCompanyInformation = $event
+          requestData.companyData.companyFurtherDetails = $event
           $emit('update', requestData)
         "
       />
@@ -70,7 +71,6 @@
       <PvInput
         :label="$t('registration.formCompanyData.department')"
         placeholder=""
-        :validate="validate"
         @update="
           requestData.companyData.department = $event
           $emit('update', requestData)
@@ -80,9 +80,8 @@
       <PvInput
         :label="$t('registration.formCompanyData.tax')"
         placeholder=""
-        :validate="validate"
         @update="
-          requestData.companyData.tax = $event
+          requestData.companyData.companyVatId = $event
           $emit('update', requestData)
         "
       />
@@ -93,7 +92,6 @@
           :label="$t('registration.formCompanyData.telephoneNumber')"
           placeholder=""
           :required="true"
-          :validate="validate"
           :rules="{
             required: helpers.withMessage(
               $t('form.validationErrorMessages.required'),
@@ -101,7 +99,7 @@
             ),
           }"
           @update="
-            requestData.companyData.telephoneNumber = $event
+            requestData.companyData.phone = $event
             $emit('update', requestData)
           "
         />
@@ -110,7 +108,6 @@
           class="registration-company-data-form__row-container--half"
           :label="$t('registration.formCompanyData.fax')"
           placeholder=""
-          :validate="validate"
           @update="
             requestData.companyData.fax = $event
             $emit('update', requestData)
@@ -119,11 +116,9 @@
       </div>
 
       <FormCountrySelection
-        :validate="validate"
-        @update="
-          requestData.companyData.address.countrySelection = $event
-          $emit('update', requestData)
-        "
+        disabled
+        :selected-country="selectedCountry"
+        :selected-region="selectedRegion"
       />
 
       <div class="registration-company-data-form__row-container">
@@ -138,9 +133,8 @@
               required
             ),
           }"
-          :validate="validate"
           @update="
-            requestData.companyData.address.street = $event
+            requestData.companyData.companyAddressStreet = $event
             $emit('update', requestData)
           "
         />
@@ -156,9 +150,8 @@
               required
             ),
           }"
-          :validate="validate"
           @update="
-            requestData.companyData.address.houseNumber = $event
+            requestData.companyData.companyAddressStreetLine2 = $event
             $emit('update', requestData)
           "
         />
@@ -176,9 +169,8 @@
               required
             ),
           }"
-          :validate="validate"
           @update="
-            requestData.companyData.address.postalCode = $event
+            requestData.companyData.companyAddressPostalCode = $event
             $emit('update', requestData)
           "
         />
@@ -194,9 +186,8 @@
               required
             ),
           }"
-          :validate="validate"
           @update="
-            requestData.companyData.address.city = $event
+            requestData.companyData.companyAddressTown = $event
             $emit('update', requestData)
           "
         />
@@ -211,14 +202,14 @@
         shape="outlined"
         icon="domain"
         class="registration-company-data-form__add-button"
-        @click="addCompany = true"
+        @click="handleOpener"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import ButtonGroup from '~/components/atoms/FormComponents/ButtonGroup/ButtonGroup'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
@@ -238,9 +229,17 @@ export default defineComponent({
     PvLabel,
   },
   props: {
-    validate: {
+    proceedWithoutCompany: {
       type: Boolean,
       default: false,
+    },
+    selectedCountry: {
+      type: Object,
+      default: () => ({}),
+    },
+    selectedRegion: {
+      type: Object,
+      default: () => ({}),
     },
   },
   emits: [
@@ -251,59 +250,38 @@ export default defineComponent({
      */
     'update',
   ],
-  setup(_, { emit }) {
-    const requestData = ref({
+  setup(props, { emit }) {
+    let { proceedWithoutCompany } = toRefs(props)
+    const companyDataObject = {
       companyData: {
-        registeredCustomer: false,
-        customerNumber: '',
-        additionalCompanyInformation: '',
+        companyAlreadyCustomer: false,
+        companyUid: '',
+        companyFurtherDetails: '',
         department: '',
-        tax: '',
-        telephoneNumber: '',
+        companyVatId: '',
+        phone: '',
         fax: '',
-        address: {
-          countrySelection: {
-            country: {},
-            region: {},
-          },
-          street: '',
-          houseNumber: '',
-          postalCode: '',
-          city: '',
-        },
+        companyAddressStreet: '',
+        companyAddressStreetLine2: '',
+        companyAddressPostalCode: '',
+        companyAddressTown: '',
       },
-    })
+    }
 
+    const requestData = ref(companyDataObject)
     const addCompany = ref(false)
 
+    const handleOpener = () => {
+      addCompany.value = true
+      proceedWithoutCompany.value = false
+    }
+
     const resetForm = () => {
-      requestData.value = {
-        companyData: {
-          registeredCustomer: false,
-          customerNumber: '',
-          additionalCompanyInformation: '',
-          department: '',
-          tax: '',
-          telephoneNumber: '',
-          fax: '',
-          address: {
-            countrySelection: {
-              country: {},
-              region: {},
-            },
-            street: '',
-            houseNumber: '',
-            postalCode: '',
-            city: '',
-          },
-        },
-      }
+      requestData.value = companyDataObject
 
       addCompany.value = false
       emit('update', requestData)
     }
-
-    const registeredCustomerValues = []
 
     return {
       helpers,
@@ -311,8 +289,8 @@ export default defineComponent({
       requiredIf,
       requestData,
       addCompany,
-      registeredCustomerValues,
       resetForm,
+      handleOpener,
     }
   },
 })
@@ -325,6 +303,11 @@ export default defineComponent({
   &__header {
     @apply tw-flex;
     @apply tw-justify-between;
+  }
+
+  &__form-section {
+    @apply tw-flex tw-flex-col;
+    @apply tw-gap-4;
   }
 
   &__row-container {

@@ -2,7 +2,6 @@
   <div>
     <PvLabel v-if="label" :label="label" />
     <v-select
-      v-model="modelValue"
       v-bind="{ options, disabled, multiple, reduce, clearable }"
       :required="isRequired"
       :class="{
@@ -15,9 +14,9 @@
       :components="{ Deselect }"
       deselect-from-dropdown
       :close-on-select="!!!multiple"
-      :value="valueFromProps"
+      :value="internalValue"
       @input="
-        $emit('update', internalValue)
+        $emit('update', $event)
         validation.validateInput()
       "
     >
@@ -102,13 +101,7 @@ import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Checkbox from '../Checkbox/Checkbox'
 import Icon from '~/components/atoms/Icon/Icon'
-import {
-  defineComponent,
-  ref,
-  watch,
-  toRefs,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
 import { useInputValidator } from '~/composables/useValidator'
 import props from './partials/props.js'
 
@@ -124,32 +117,18 @@ export default defineComponent({
   props,
   emits: ['update'],
   setup(props) {
-    const { value: valueFromProps } = toRefs(props)
-    const internalValue = ref(undefined)
-
-    const modelValue = computed({
-      get: () => valueFromProps.value,
-      set: (val) => {
-        internalValue.value = val
-      },
-    })
+    const { value: internalValue } = toRefs(props)
+    const validation = ref(useInputValidator(props.rules, internalValue))
 
     const Deselect = {
       render: (h) => h('span', { class: ['deselect-option'] }),
     }
 
-    const validation = ref(useInputValidator(props.rules, valueFromProps.value))
-
-    watch(
-      () => props.validate,
-      (value) => {
-        if (value === true) {
-          validation.value.validateInput()
-        }
-      }
-    )
-
-    return { modelValue, internalValue, valueFromProps, Deselect, validation }
+    return {
+      internalValue,
+      Deselect,
+      validation,
+    }
   },
 })
 </script>

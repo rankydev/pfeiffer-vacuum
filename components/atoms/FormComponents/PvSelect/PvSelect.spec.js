@@ -1,6 +1,6 @@
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect.vue'
 import { icon, label, normal, error } from './PvSelect.stories.content'
-import { shallowMount, mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import Icon from '~/components/atoms/Icon/Icon'
 import { describe, expect, it } from '@jest/globals'
@@ -81,8 +81,6 @@ describe('Select', () => {
           ...error,
         }
         createComponent(propsData)
-        const selectedOption = undefined
-        await wrapper.setData({ internalValue: selectedOption })
         wrapper.vm.validation.validateInput()
 
         expect(wrapper.vm.validation.getError()).toBe('Value is required')
