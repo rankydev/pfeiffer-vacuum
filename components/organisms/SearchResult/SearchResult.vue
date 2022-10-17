@@ -17,7 +17,7 @@
       </div>
       <div class="search-result__pages">
         <CategoryPageSizeSelection
-          :active="pageSize"
+          :active="parseInt(pageSize)"
           @change="updatePageSize"
         />
         <Pagination
@@ -81,8 +81,7 @@ export default defineComponent({
   setup(props) {
     const router = useRouter()
     const route = useRoute()
-    const { pagination } = toRefs(props)
-    const pageSize = computed(() => pagination.value?.pageSize)
+    const pageSize = computed(() => route.value.query?.pageSize || 9)
 
     const updatePageSize = (e) => {
       router.push({
