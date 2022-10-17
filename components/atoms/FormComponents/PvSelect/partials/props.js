@@ -100,7 +100,7 @@ export default {
     default: true,
   },
   /**
-   * Selected option can be deselected
+   * Size of the used icon
    */
   iconSize: {
     type: String,

@@ -16,7 +16,7 @@
       :close-on-select="!!!multiple"
       :value="internalValue"
       @input="
-        $emit('update', internalValue)
+        $emit('update', $event)
         validation.validateInput()
       "
     >
@@ -80,7 +80,11 @@
           :icon="option.icon"
         />
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-html="`${prependLabel} ${option[optionLabel]}`" />
+        <span
+          v-html="
+            `${prependLabel ? prependLabel + ' ' : ''}${option[optionLabel]}`
+          "
+        />
       </template>
 
       <template #no-options>
