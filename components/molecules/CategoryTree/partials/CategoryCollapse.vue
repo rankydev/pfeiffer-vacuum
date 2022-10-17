@@ -16,7 +16,10 @@
           v-for="category in children"
           :key="getKey(category.category.name)"
           class="category-collapse__child"
-          :to="href"
+          :to="{
+            path: joinURL(localePath('shop-categories'), category.category.id),
+            query: { ...route.query, currentPage: 1 },
+          }"
           >{{ `${category.category.name} (${category.productCount})` }}
         </NuxtLink>
       </div>
@@ -26,7 +29,7 @@
 <script>
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse'
 import Icon from '~/components/atoms/Icon/Icon'
-import { ref } from '@vue/composition-api'
+import { ref, useRoute } from '@vue/composition-api'
 import getKey from '~/composables/useUniqueKey'
 import { joinURL } from 'ufo'
 
@@ -55,8 +58,9 @@ export default {
   },
   setup() {
     const isOpen = ref(false)
+    const route = useRoute()
 
-    return { isOpen, getKey, joinURL }
+    return { isOpen, getKey, joinURL, route }
   },
 }
 </script>
