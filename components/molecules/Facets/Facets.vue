@@ -41,11 +41,9 @@
               @click="togglePopup"
             />
           </template>
-          <template>
-            <div class="facets__vacuum-range-popup">
-              <VacuumRangeSlider @update="updateFacets(null, $event, true)" />
-            </div>
-          </template>
+          <div class="facets__vacuum-range-popup">
+            <VacuumRangeSlider @update="updateFacets(null, $event, true)" />
+          </div>
         </Popup>
         <Popup v-if="suctionSpeedPresent">
           <template #activator="{ togglePopup }">
@@ -62,13 +60,11 @@
               @click="togglePopup"
             />
           </template>
-          <template>
-            <div class="facets__suction-speed-popup">
-              <SuctionSpeedSelection
-                @update="updateFacets(null, $event, false, true)"
-              />
-            </div>
-          </template>
+          <div class="facets__suction-speed-popup">
+            <SuctionSpeedSelection
+              @update="updateFacets(null, $event, false, true)"
+            />
+          </div>
         </Popup>
         <PvSelect
           v-for="facet in shrinkedFacets"
