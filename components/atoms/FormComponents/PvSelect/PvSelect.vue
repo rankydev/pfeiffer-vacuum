@@ -79,12 +79,13 @@
           class="pv-select__icon-option"
           :icon="option.icon"
         />
-        <!-- eslint-disable-next-line vue/no-v-html -->
+        <!-- eslint-disable vue/no-v-html -->
         <span
           v-html="
             `${prependLabel ? prependLabel + ' ' : ''}${option[optionLabel]}`
           "
         />
+        <!-- eslint-enable vue/no-v-html -->
       </template>
 
       <template #no-options>
