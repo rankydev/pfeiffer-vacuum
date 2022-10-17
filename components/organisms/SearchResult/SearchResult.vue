@@ -89,6 +89,7 @@ export default defineComponent({
         query: {
           ...route.value.query,
           pageSize: e,
+          currentPage: 1,
         },
       })
     }
