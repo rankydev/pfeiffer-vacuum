@@ -55,7 +55,8 @@ export default {
   &__tick {
     @apply tw-block;
     @apply tw-absolute;
-    @apply tw-left-0 tw-top-0;
+    @apply tw-left-0 tw-top-1/2;
+    @apply tw--translate-y-1/2;
     @apply tw-text-pv-white;
     @apply tw-opacity-0;
     @apply tw-transition-opacity tw-duration-150 tw-ease-in;

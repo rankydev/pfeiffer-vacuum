@@ -1,13 +1,9 @@
 <template>
   <div class="category-collapse">
     <div class="category-collapse__trigger">
-      <Button
-        class="category-collapse__parent"
-        v-bind="{ href }"
-        :label="`${label} (${count})`"
-        variant="secondary"
-        shape="plain"
-      />
+      <NuxtLink class="category-collapse__parent" :to="href"
+        >{{ `${label} (${count})` }}
+      </NuxtLink>
       <Icon
         class="category-collapse__icon"
         :icon="isOpen ? 'expand_less' : 'expand_more'"
@@ -16,30 +12,27 @@
     </div>
     <AnimatedCollapse speed="fast">
       <div v-show="isOpen" class="category-collapse__children">
-        <Button
+        <NuxtLink
           v-for="category in children"
           :key="getKey(category.category.name)"
-          :href="category.href"
-          :label="`${category.category.name} (${category.count})`"
           class="category-collapse__child"
-          variant="secondary"
-          shape="plain"
-        />
+          :to="href"
+          >{{ `${category.category.name} (${category.productCount})` }}
+        </NuxtLink>
       </div>
     </AnimatedCollapse>
   </div>
 </template>
 <script>
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse'
-import Button from '~/components/atoms/Button/Button'
 import Icon from '~/components/atoms/Icon/Icon'
 import { ref } from '@vue/composition-api'
 import getKey from '~/composables/useUniqueKey'
+import { joinURL } from 'ufo'
 
 export default {
   components: {
     AnimatedCollapse,
-    Button,
     Icon,
   },
   props: {
@@ -48,7 +41,7 @@ export default {
       required: true,
     },
     href: {
-      type: String,
+      type: [String, Object],
       default: '',
     },
     count: {
@@ -63,13 +56,13 @@ export default {
   setup() {
     const isOpen = ref(false)
 
-    return { isOpen, getKey }
+    return { isOpen, getKey, joinURL }
   },
 }
 </script>
 <style lang="scss">
 .category-collapse {
-  @apply tw-min-w-max;
+  @apply tw-w-full;
 
   &__trigger {
     @apply tw-flex tw-items-center tw-justify-between;
@@ -79,15 +72,21 @@ export default {
   &__child {
     @apply tw-p-0;
 
-    .button__label {
-      @apply tw-text-pv-grey-16;
-      @apply tw-font-normal;
-    }
+    @apply tw-text-pv-grey-16;
+    @apply tw-font-normal;
+    @apply tw-overflow-hidden;
+    @apply tw-text-ellipsis;
 
     &:hover {
-      .button__label {
-        @apply tw-text-pv-red-lighter;
-      }
+      @apply tw-text-pv-red-lighter;
+    }
+  }
+
+  &__parent {
+    @apply tw-whitespace-nowrap;
+
+    @screen lg {
+      @apply tw-whitespace-normal;
     }
   }
 
@@ -100,9 +99,7 @@ export default {
       @apply tw-pb-2;
     }
 
-    .button__label {
-      @apply tw-text-pv-grey-32;
-    }
+    @apply tw-text-pv-grey-32;
   }
 
   &__icon {

@@ -1,5 +1,10 @@
 {
   "itemsPerPage": "Items per Page:",
+  "sort": "Sort by:",
+  "lessFilters": "Less filters",
+  "moreFilters": "More filters",
+  "activeFilters": "Active filters:",
+  "searchResult": "search result for",
   "sortAndFilter": "Sort & Filter",
   "applyFilter": "Apply filter"
 }

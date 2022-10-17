@@ -1,6 +1,6 @@
 export const category = {
   href: '/categoryName',
-  count: 123,
+  productCount: 1000,
   category: {
     id: 'CATEGORY_ID',
     name: 'Category Name',
@@ -9,42 +9,42 @@ export const category = {
     {
       category: {
         id: 'CATEGORY_ID',
-        name: 'Subcategory Name',
+        name: 'Subcategory Name 1',
       },
       href: '/categoryName',
-      count: 123,
+      productCount: 23,
     },
     {
       category: {
         id: 'CATEGORY_ID',
-        name: 'Subcategory Name',
+        name: 'Subcategory Name 2',
       },
       href: '/categoryName',
-      count: 123,
+      productCount: 76,
     },
     {
       category: {
         id: 'CATEGORY_ID',
-        name: 'Subcategory Name',
+        name: 'Subcategory Name 3',
       },
       href: '/categoryName',
-      count: 123,
+      productCount: 104,
     },
     {
       category: {
         id: 'CATEGORY_ID',
-        name: 'Subcategory Name',
+        name: 'Subcategory Name 4',
       },
       href: '/categoryName',
-      count: 123,
+      productCount: 123,
     },
     {
       category: {
         id: 'CATEGORY_ID',
-        name: 'Subcategory Name',
+        name: 'Subcategory Name 5',
       },
       href: '/categoryName',
-      count: 123,
+      productCount: 22,
     },
   ],
 }

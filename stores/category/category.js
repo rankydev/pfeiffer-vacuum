@@ -19,6 +19,8 @@ export const useCategoryStore = defineStore('category', () => {
   const cmsStore = useCmsStore()
   const { $axios, i18n, app } = useContext()
 
+  let searchTerm = ref('')
+
   const basePath = joinURL(router.options.base, PATH_SHOP)
 
   const category = ref(null)
@@ -29,13 +31,19 @@ export const useCategoryStore = defineStore('category', () => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 2)
     const categoryPath = category.value?.categoryPath || []
 
-    return [
+    const breadcrumbArr = [
       ...cmsPrefix,
       ...categoryPath.map(({ name, id }) => ({
         name,
         href: joinURL(app.localePath('shop-categories'), id),
       })),
     ]
+
+    if (searchTerm.value) {
+      breadcrumbArr.push({ href: '', name: searchTerm.value })
+    }
+
+    return breadcrumbArr
   })
 
   const categoryName = computed(() => breadcrumb.value.at(-1)?.name)
@@ -51,18 +59,24 @@ export const useCategoryStore = defineStore('category', () => {
 
   const loadProducts = async () => {
     const id = route.value.params.category || ''
+    const sort = route.value.query.sort || 'name-asc'
+    const facets = route.value.query.facets || ''
     const url = joinURL(basePath, config.PRODUCTS_API, 'search')
+    const term = route.value.query.searchTerm || ''
     const params = {
-      currentPage: 0,
+      currentPage: route.value.query.currentPage - 1 || 0,
       pageSize: 9,
       //TODO: Facet filter need to merge with the query
-      query: `:name-asc${id ? ':category:' + id : ''}`,
-      ..._pick(route.value.query, ['currentPage', 'pageSize']),
+      query: `${term}:${sort}${id ? ':category:' + id : ''}${
+        facets ? ':' + facets : ''
+      }`,
+      ..._pick(route.value.query, 'pageSize'),
       lang: i18n.locale,
       curr: 'EUR',
       fields: 'FULL',
       categoryTreeDepth: 2,
     }
+    searchTerm.value = term
     result.value = await $axios.get(url, { params }).then(({ data }) => data)
   }
 
@@ -88,6 +102,7 @@ export const useCategoryStore = defineStore('category', () => {
     // state
     category,
     result,
+    searchTerm,
 
     // getters
     breadcrumb,
