@@ -3,7 +3,7 @@ export default {
    * The input’s value
    */
   value: {
-    type: [String, Object],
+    type: [String, Object, Array],
     default: '',
   },
   /**
@@ -22,11 +22,17 @@ export default {
   },
   /**
    * Tells what key to use when generating option labels when each option is an object.
-
    */
   optionLabel: {
     type: String,
     default: 'label',
+  },
+  /**
+   * Prepend string to label
+   */
+  prependLabel: {
+    type: String,
+    default: '',
   },
   /**
    * Sets input label
@@ -85,5 +91,19 @@ export default {
   placeholder: {
     type: String,
     default: '',
+  },
+  /**
+   * Selected option can be deselected
+   */
+  clearable: {
+    type: Boolean,
+    default: true,
+  },
+  /**
+   * Size of the used icon
+   */
+  iconSize: {
+    type: String,
+    default: 'base',
   },
 }

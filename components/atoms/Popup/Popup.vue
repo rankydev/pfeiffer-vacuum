@@ -134,7 +134,7 @@ export default defineComponent({
 <style lang="scss">
 .popup {
   &__activator {
-    @apply tw-inline-block;
+    @apply tw-inline-flex;
   }
 
   &__content {

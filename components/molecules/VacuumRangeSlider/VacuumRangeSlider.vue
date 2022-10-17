@@ -10,10 +10,12 @@
       tooltip="always"
       @drag-end="selectionUpdated"
     >
+      <!-- eslint-disable-next-line vue/no-template-shadow -->
       <template #label="{ value }">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="vue-slider-mark-label" v-html="getTooltipLabel(value)" />
       </template>
+      <!-- eslint-disable-next-line vue/no-template-shadow -->
       <template #tooltip="{ value }">
         <div class="vue-slider-dot-tooltip-inner">
           <!-- eslint-disable vue/no-v-html -->
@@ -49,17 +51,21 @@ export default {
     VueSlider,
   },
   props: {
+    value: {
+      type: Array,
+      default: () => ['0', '16'],
+    },
     showRanges: {
       type: Boolean,
       default: true,
     },
   },
   emits: ['update'],
-  setup(_, { emit }) {
+  setup(props, { emit }) {
     const { i18n } = useContext()
     const marks = ref({})
     let data = ref([])
-    let modelValue = ref(['0', '16'])
+    let modelValue = ref(props.value)
 
     onBeforeMount(() => {
       for (const section of sections.data) {
@@ -84,9 +90,12 @@ export default {
     }
 
     const selectionUpdated = () => {
+      const lower = modelValue.value[0]
+      const upper = modelValue.value[1]
+
       emit('update', [
-        data.value[modelValue.value[0]].value,
-        data.value[modelValue.value[1]].value,
+        lower > 0 ? `>=${data.value[lower].value}` : null,
+        upper < 16 ? `<=${data.value[upper].value}` : null,
       ])
     }
 

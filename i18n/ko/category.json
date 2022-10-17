@@ -1,5 +1,9 @@
 {
   "itemsPerPage": "페이지당 제품:",
+  "sort": "정렬 기준:",
+  "lessFilters": "간단히'",
+  "moreFilters": "자세히",
+  "activeFilters": "활성 필터",
   "sortAndFilter": "정렬 및 필터링",
   "applyFilter": "필터 적용"
 }

@@ -2,7 +2,7 @@
   <div>
     <PvLabel v-if="label" :label="label" />
     <v-select
-      v-bind="{ options, disabled, multiple, reduce }"
+      v-bind="{ options, disabled, multiple, reduce, clearable }"
       :required="isRequired"
       :class="{
         'pv-select--error': !!validation.getError(),
@@ -21,12 +21,15 @@
       "
     >
       <template #search="{ attributes, events }">
-        <Icon
-          v-if="prependIcon"
-          class="pv-select__icon-prepend"
-          :icon="prependIcon"
-        />
-        <input class="vs__search" v-bind="attributes" v-on="events" />
+        <div class="pv-select__search-wrapper">
+          <Icon
+            v-if="prependIcon"
+            class="pv-select__icon-prepend"
+            :icon="prependIcon"
+          />
+          <input class="vs__search" v-bind="attributes" v-on="events" />
+          <div class="pv-select__search-helper">{{ placeholder }}</div>
+        </div>
       </template>
 
       <template #open-indicator>
@@ -34,10 +37,12 @@
           v-if="!!validation.getError()"
           class="pv-select__icon-error"
           icon="error_outline"
+          :size="iconSize"
         />
         <Icon
           class="vs__open-indicator pv-select__icon-indicator"
           icon="arrow_drop_down"
+          :size="iconSize"
         />
       </template>
 
@@ -74,8 +79,13 @@
           class="pv-select__icon-option"
           :icon="option.icon"
         />
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-html="option[optionLabel]" />
+        <!-- eslint-disable vue/no-v-html -->
+        <span
+          v-html="
+            `${prependLabel ? prependLabel + ' ' : ''}${option[optionLabel]}`
+          "
+        />
+        <!-- eslint-enable vue/no-v-html -->
       </template>
 
       <template #no-options>
