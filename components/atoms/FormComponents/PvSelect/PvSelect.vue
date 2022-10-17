@@ -2,7 +2,6 @@
   <div>
     <PvLabel v-if="label" :label="label" />
     <v-select
-      v-model="internalValue"
       v-bind="{ options, disabled, multiple, reduce, clearable }"
       :required="isRequired"
       :class="{
@@ -15,6 +14,7 @@
       :components="{ Deselect }"
       deselect-from-dropdown
       :close-on-select="!!!multiple"
+      :value="internalValue"
       @input="
         $emit('update', internalValue)
         validation.validateInput()
@@ -101,7 +101,7 @@ import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Checkbox from '../Checkbox/Checkbox'
 import Icon from '~/components/atoms/Icon/Icon'
-import { defineComponent, computed, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
 import { useInputValidator } from '~/composables/useValidator'
 import props from './partials/props.js'
 
@@ -117,24 +117,18 @@ export default defineComponent({
   props,
   emits: ['update'],
   setup(props) {
-    const internalValue = ref(props.value)
+    const { value: internalValue } = toRefs(props)
+    const validation = ref(useInputValidator(props.rules, internalValue))
 
     const Deselect = {
       render: (h) => h('span', { class: ['deselect-option'] }),
     }
 
-    const validation = ref(useInputValidator(props.rules, internalValue))
-
-    watch(
-      () => props.validate,
-      (value) => {
-        if (value === true) {
-          validation.value.validateInput()
-        }
-      }
-    )
-
-    return { internalValue, Deselect, validation }
+    return {
+      internalValue,
+      Deselect,
+      validation,
+    }
   },
 })
 </script>

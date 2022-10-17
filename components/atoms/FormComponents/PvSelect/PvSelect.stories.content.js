@@ -62,7 +62,7 @@ export const error = {
   ...normal,
   required: true,
   rules: { required },
-  validate: true,
+  value: '',
 }
 
 export const label = {

@@ -19,6 +19,36 @@
     "telephoneNumber": "電話",
     "fax": "傳真",
     "country": "國家",
-    "countryAutofill": "會自動填寫"
+    "countryAutofill": "會自動填寫",
+    "street": "街道",
+    "houseNumber": "數字",
+    "postalCode": "郵政編碼",
+    "city": "城市"
+  },
+  "registrationSuccessPage": {
+    "title": "您的註冊發送成功",
+    "subline": "感謝您的請求",
+    "paragraph": "我們已將您的請求副本發送到您的電子郵件地址。您的請求將由我們的服務團隊盡快處理。",
+    "buttonLabel": "到首頁"
+  },
+  "registrationPage": {
+    "title": "創建賬戶",
+    "description": "在我們的平台上註冊以獲得更多功能。通過基本訂閱，您可以觀看網絡研討會和白皮書並創建購物清單。如果您添加您的公司詳細信息，您可以使用所有其他電子商務功能。",
+    "conditionsTitle": "條款和條件",
+    "conditionsDescription": "我們的普發真空團隊將在正常工作時間內檢查您的註冊數據。然後您將收到一封電子郵件以接受或拒絕您的註冊。這可能需要最多兩個工作日。<br />< br />註冊只針對企業客戶，不能由個人註冊。",    "linkDataProtection": "您可以在這裡找到數據保護聲明。",
+    "submitRegistrationButton": "提交註冊",
+    "contentCTABoxHelpTitle": "需要幫助嗎？",
+    "contentCTABoxHelpDescription": "我們的產品專家隨時為您解答有關我們產品和您的應用的問題。",
+    "contentCTABoxHelpLink": "聯繫方式",
+    "contentCTABoxLoginTitle": "你已經有賬號了嗎？",
+    "contentCTABoxLoginDescription": "如果您已經有賬號，請在此處登錄。如果您忘記了密碼，也可以在此處更改。",
+    "contentCTABoxLoginLink": "登錄"
+  },
+  "registrationHintModal": {
+    "title": "沒有公司數據的註冊？",
+    "subline": "您確定不想輸入公司信息嗎？",
+    "richtext": "只有使用公司詳細信息，您才能：<br/><ul><li>查看在線價格</li><li>向您的銷售工程師發送報價請求</li><li>使用安裝基礎管理 (VSM)。</li></ul>",
+    "buttonLeft": "註冊沒有公司數據",
+    "buttonRight": "添加公司信息"
   }
 }
