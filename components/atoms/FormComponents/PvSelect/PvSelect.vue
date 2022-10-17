@@ -51,7 +51,7 @@
           v-if="!!multiple"
           label=""
           :checked="
-            !!(valueFromProps || []).filter(
+            !!(internalValue || []).filter(
               (e) => e[optionLabel] === option[optionLabel]
             ).length
           "
