@@ -29,9 +29,9 @@
 <script>
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse'
 import Icon from '~/components/atoms/Icon/Icon'
-import { ref, useRoute } from '@vue/composition-api'
 import getKey from '~/composables/useUniqueKey'
 import { joinURL } from 'ufo'
+import { ref, useRoute } from '@nuxtjs/composition-api'
 
 export default {
   components: {
