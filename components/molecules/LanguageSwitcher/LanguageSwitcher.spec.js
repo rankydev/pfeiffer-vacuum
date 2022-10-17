@@ -21,8 +21,8 @@ jest.mock('@nuxtjs/composition-api', () => {
 })
 
 describe('LanguageSwitcher', () => {
+  const stubs = { NuxtLink: true }
   describe('initial state', () => {
-    const stubs = { NuxtLink: true }
     beforeEach(() => {
       jest.resetAllMocks()
     })
@@ -41,7 +41,7 @@ describe('LanguageSwitcher', () => {
 
       expect(languageSwitcher.exists()).toBeTruthy()
       expect(languageSwitcherWrapper.exists()).toBeTruthy()
-      expect(languageSwitcherContent.exists()).toBeTruthy()
+      expect(languageSwitcherContent.exists()).toBeFalsy()
       expect(button.exists()).toBeTruthy()
     })
 
@@ -67,6 +67,10 @@ describe('LanguageSwitcher', () => {
   describe('during interaction', () => {
     // TODO: this test is supposed to be implemented later
     it('should switch language properly', () => {})
+
+    it('should open menu properly', async () => {})
+
+    it('should close menu properly', async () => {})
   })
 
   // describe('business requirements', () => {})

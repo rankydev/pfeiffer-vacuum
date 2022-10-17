@@ -120,5 +120,6 @@ export const useUserStore = defineStore('user', () => {
     loadCurrentUser,
     login,
     logout,
+    register: userApi.register,
   }
 })

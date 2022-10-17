@@ -1,3 +1,5 @@
 {
-  "itemsPerPage": "Produkte pro Seite:"
+  "itemsPerPage": "Produkte pro Seite:",
+  "sortAndFilter": "Sortieren & Filtern",
+  "applyFilter": "Filter anwenden"
 }

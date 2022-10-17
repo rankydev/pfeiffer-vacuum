@@ -5,31 +5,35 @@
       :options="countries"
       :option-label="'name'"
       :required="true"
+      :disabled="disabled"
       :rules="{
         required: helpers.withMessage(
           $t('form.validationErrorMessages.required'),
           required
         ),
       }"
-      :validate="validate"
+      :value="selectedCountry"
       @update="
         countrySelection.country = $event
         $emit('update', countrySelection)
       "
     />
     <PvSelect
-      v-if="regions.length"
+      v-if="
+        regions.length || (selectedRegion && Object.keys(selectedRegion).length)
+      "
       :label="$t('form.contactRequest.region')"
       :options="regions"
       :option-label="'name'"
       :required="true"
+      :disabled="disabled"
       :rules="{
         required: helpers.withMessage(
           $t('form.validationErrorMessages.required'),
           required
         ),
       }"
-      :validate="validate"
+      :value="selectedRegion"
       @update="
         countrySelection.region = $event
         $emit('update', countrySelection)
@@ -60,6 +64,18 @@ export default defineComponent({
     validate: {
       type: Boolean,
       default: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    selectedCountry: {
+      type: Object,
+      default: undefined,
+    },
+    selectedRegion: {
+      type: Object,
+      default: undefined,
     },
   },
   emits: [
