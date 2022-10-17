@@ -13,7 +13,7 @@
           'pv-input__element--error': !!validation.getError(),
         }"
         :placeholder="placeholder"
-        @keypress.enter="$emit('submit', $event)"
+        @keypress.enter="$emit('submit', internalValue)"
         @focus="$emit('focus', true)"
         @blur="$emit('focus', false)"
         @input="
@@ -26,7 +26,7 @@
         class="pv-input__icon"
         :class="{ 'pv-input__icon--error': !!validation.getError() }"
         :icon="!!validation.getError() ? 'error_outline' : internalIcon"
-        @click.native="$emit('click:icon', $event)"
+        @click.native="$emit('click:icon', internalValue)"
       />
     </div>
     <ErrorMessage
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch, toRefs } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch, computed } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
@@ -146,10 +146,17 @@ export default defineComponent({
      * @property {string} value
      */
     'submit',
+    'input',
   ],
-  setup(props) {
-    const { value: internalValue } = toRefs(props)
+  setup(props, { emit }) {
     let internalIcon = ref(props.icon)
+
+    const internalValue = computed({
+      get: () => props.value,
+      set: (newVal) => {
+        emit('input', newVal)
+      },
+    })
 
     const validation = ref(useInputValidator(props.rules, internalValue))
 

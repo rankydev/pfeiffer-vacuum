@@ -85,7 +85,9 @@ export default defineComponent({
     /**
      * Retreives the current page from the url
      */
-    const currentPage = computed(() => parseInt(route.value.query.page || 1))
+    const currentPage = computed(() =>
+      parseInt(route.value.query.currentPage || 1)
+    )
 
     /**
      * Helper function to build an range array
@@ -142,14 +144,14 @@ export default defineComponent({
     /**
      * build a nuxt link to object for the given page id.
      */
-    const createNavLink = (page) => {
+    const createNavLink = (currentPage) => {
       const { hash, params, path, query } = route.value
       return {
         to: {
           hash,
           params,
           path,
-          query: { ...query, page: page },
+          query: { ...query, currentPage },
         },
       }
     }

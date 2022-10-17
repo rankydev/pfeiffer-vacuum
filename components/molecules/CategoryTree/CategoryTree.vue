@@ -12,8 +12,11 @@
         v-for="category in categories"
         :key="getKey(category.category.name)"
         :label="category.category.name"
-        :count="category.count"
-        :href="category.href"
+        :count="category.productCount"
+        :href="{
+          path: joinURL(localePath('shop-categories'), category.category.id),
+          query: route.query,
+        }"
         :children="category.children"
       />
     </div>
@@ -21,9 +24,10 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
 import CategoryCollapse from './partials/CategoryCollapse'
 import getKey from '~/composables/useUniqueKey'
+import { joinURL } from 'ufo'
 
 export default defineComponent({
   components: {
@@ -36,6 +40,7 @@ export default defineComponent({
     },
   },
   setup() {
+    const route = useRoute()
     const showScrollbar = ref(false)
 
     const toggleScrollbarClass = () => {
@@ -43,9 +48,11 @@ export default defineComponent({
     }
 
     return {
+      route,
       getKey,
       toggleScrollbarClass,
       showScrollbar,
+      joinURL,
     }
   },
 })

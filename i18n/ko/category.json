@@ -4,6 +4,7 @@
   "lessFilters": "간단히'",
   "moreFilters": "자세히",
   "activeFilters": "활성 필터",
+  "searchResult": "에 대한 검색 결과",
   "sortAndFilter": "정렬 및 필터링",
   "applyFilter": "필터 적용"
 }
