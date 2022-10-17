@@ -6,5 +6,7 @@
   "activeFilters": "Active filters:",
   "searchResult": "search result for",
   "sortAndFilter": "Sort & Filter",
-  "applyFilter": "Apply filter"
+  "applyFilter": "Apply filter",
+  "noMatchingProducts": "No matching products found",
+  "checkSearchCriteria": "Please check the selected search criteria."
 }

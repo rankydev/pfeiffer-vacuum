@@ -10,7 +10,11 @@
         @updateSort="pushSortToQuery"
         @updateFacets="pushFacetsToQuery"
       />
-      <ProductCardGrid :products="products" />
+      <ProductCardGrid v-if="products.length > 0" :products="products" />
+      <div v-else>
+        <h2>{{ $t('category.noMatchingProducts') }}</h2>
+        <span>{{ $t('category.checkSearchCriteria') }}</span>
+      </div>
       <div class="search-result__pages">
         <CategoryPageSizeSelection
           :active="pageSize"
