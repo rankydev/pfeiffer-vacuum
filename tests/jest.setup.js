@@ -2,7 +2,6 @@ import { config } from '@vue/test-utils'
 import clientOnly from './mocks/ClientOnly.mock.vue'
 import failOnConsole from 'jest-fail-on-console'
 import { locales } from '~/i18n.config.js'
-import { jest } from '@jest/globals'
 
 config.stubs['client-only'] = clientOnly
 
