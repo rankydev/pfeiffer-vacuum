@@ -29,7 +29,7 @@
             ($event) =>
               !hasSubmenu(entry)
                 ? (activeElement = null) && true
-                : toggleActive($event, idx) ?? false
+                : toggleActive($event, idx)
           "
         >
           <span :class="`${prefix}__label`">{{ entry.label }}</span>
@@ -186,7 +186,7 @@ export default defineComponent({
       $event.preventDefault()
       $event.stopPropagation()
 
-      if (props.level >= 2) return
+      if (props.level >= 2) return false
 
       if (activeElement.value === idx) {
         if (!isMobile.value && props.level === 0) menu.close()
@@ -195,6 +195,8 @@ export default defineComponent({
         if (!isMobile.value && props.level === 0) menu.open()
         activeElement.value = idx
       }
+
+      return false
     }
 
     const hasSubmenu = (entry) => entry?.navigationEntries?.length > 0
