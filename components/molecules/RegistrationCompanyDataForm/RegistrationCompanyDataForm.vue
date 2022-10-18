@@ -52,7 +52,7 @@
           :label="$t('registration.formCompanyData.customerNumber')"
           placeholder=""
           :disabled="!requestData.companyData.companyAlreadyCustomer"
-          @update="
+          @input="
             requestData.companyData.companyUid = $event
             $emit('update', requestData)
           "
@@ -62,7 +62,7 @@
       <PvInput
         :label="$t('registration.formCompanyData.additionalCompanyInformation')"
         placeholder=""
-        @update="
+        @input="
           requestData.companyData.companyFurtherDetails = $event
           $emit('update', requestData)
         "
@@ -71,7 +71,7 @@
       <PvInput
         :label="$t('registration.formCompanyData.department')"
         placeholder=""
-        @update="
+        @input="
           requestData.companyData.department = $event
           $emit('update', requestData)
         "
@@ -80,7 +80,7 @@
       <PvInput
         :label="$t('registration.formCompanyData.tax')"
         placeholder=""
-        @update="
+        @input="
           requestData.companyData.companyVatId = $event
           $emit('update', requestData)
         "
@@ -98,7 +98,7 @@
               required
             ),
           }"
-          @update="
+          @input="
             requestData.companyData.phone = $event
             $emit('update', requestData)
           "
@@ -108,7 +108,7 @@
           class="registration-company-data-form__row-container--half"
           :label="$t('registration.formCompanyData.fax')"
           placeholder=""
-          @update="
+          @input="
             requestData.companyData.fax = $event
             $emit('update', requestData)
           "
@@ -133,7 +133,7 @@
               required
             ),
           }"
-          @update="
+          @input="
             requestData.companyData.companyAddressStreet = $event
             $emit('update', requestData)
           "
@@ -150,7 +150,7 @@
               required
             ),
           }"
-          @update="
+          @input="
             requestData.companyData.companyAddressStreetLine2 = $event
             $emit('update', requestData)
           "
@@ -169,7 +169,7 @@
               required
             ),
           }"
-          @update="
+          @input="
             requestData.companyData.companyAddressPostalCode = $event
             $emit('update', requestData)
           "
@@ -186,7 +186,7 @@
               required
             ),
           }"
-          @update="
+          @input="
             requestData.companyData.companyAddressTown = $event
             $emit('update', requestData)
           "

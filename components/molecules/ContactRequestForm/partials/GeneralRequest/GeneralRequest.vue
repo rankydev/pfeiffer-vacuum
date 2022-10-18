@@ -11,7 +11,7 @@
         ),
       }"
       :validate="validate"
-      @update="
+      @input="
         requestData.contact.firstName = $event
         $emit('update', requestData)
       "
@@ -27,7 +27,7 @@
         ),
       }"
       :validate="validate"
-      @update="
+      @input="
         requestData.contact.lastName = $event
         $emit('update', requestData)
       "
@@ -47,7 +47,7 @@
         ),
       }"
       :validate="validate"
-      @update="
+      @input="
         requestData.contact.email = $event
         $emit('update', requestData)
       "

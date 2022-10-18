@@ -11,7 +11,7 @@
         ),
       }"
       :validate="validate"
-      @update="
+      @input="
         requestData.contact.firstName = $event
         $emit('update', requestData)
       "
@@ -27,7 +27,7 @@
         ),
       }"
       :validate="validate"
-      @update="
+      @input="
         requestData.contact.lastName = $event
         $emit('update', requestData)
       "
@@ -43,7 +43,7 @@
         ),
       }"
       :validate="validate"
-      @update="
+      @input="
         requestData.contact.address.companyName = $event
         $emit('update', requestData)
       "
@@ -68,7 +68,7 @@
           ),
         }"
         :validate="validate"
-        @update="
+        @input="
           requestData.contact.address.line1 = $event
           $emit('update', requestData)
         "
@@ -85,7 +85,7 @@
           ),
         }"
         :validate="validate"
-        @update="
+        @input="
           requestData.contact.address.line2 = $event
           $emit('update', requestData)
         "
@@ -104,7 +104,7 @@
           ),
         }"
         :validate="validate"
-        @update="
+        @input="
           requestData.contact.address.postalCode = $event
           $emit('update', requestData)
         "
@@ -121,7 +121,7 @@
           ),
         }"
         :validate="validate"
-        @update="
+        @input="
           requestData.contact.address.town = $event
           $emit('update', requestData)
         "
@@ -142,7 +142,7 @@
         ),
       }"
       :validate="validate"
-      @update="
+      @input="
         requestData.contact.email = $event
         $emit('update', requestData)
       "

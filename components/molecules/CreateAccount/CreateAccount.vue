@@ -14,7 +14,7 @@
           required
         ),
       }"
-      @update="
+      @input="
         requestData.registration.companyName = $event
         $emit('update', requestData)
       "
@@ -39,7 +39,7 @@
           required
         ),
       }"
-      @update="
+      @input="
         requestData.registration.firstName = $event
         $emit('update', requestData)
       "
@@ -55,7 +55,7 @@
           required
         ),
       }"
-      @update="
+      @input="
         requestData.registration.lastName = $event
         $emit('update', requestData)
       "
@@ -75,7 +75,7 @@
           email
         ),
       }"
-      @update="
+      @input="
         requestData.registration.email = $event
         $emit('update', requestData)
       "
