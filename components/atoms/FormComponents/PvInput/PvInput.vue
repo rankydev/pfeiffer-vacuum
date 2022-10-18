@@ -109,13 +109,6 @@ export default defineComponent({
       type: Object,
       default: () => {},
     },
-    /**
-     * determines whether a validation can be executed
-     */
-    validate: {
-      type: Boolean,
-      default: false,
-    },
   },
   emits: [
     /**
@@ -153,15 +146,6 @@ export default defineComponent({
     const internalValue = ref(props.value)
 
     const validation = ref(useInputValidator(props.rules, internalValue))
-
-    watch(
-      () => props.validate,
-      (newValue) => {
-        if (newValue) {
-          validation.value.validateInput()
-        }
-      }
-    )
 
     watch(
       () => props.value,

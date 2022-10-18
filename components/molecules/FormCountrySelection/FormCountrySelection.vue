@@ -58,13 +58,6 @@ export default defineComponent({
   name: 'FormCountrySelection',
   components: { PvSelect },
   props: {
-    /**
-     * determines whether a validation can be executed and will be passed into child component
-     */
-    validate: {
-      type: Boolean,
-      default: false,
-    },
     disabled: {
       type: Boolean,
       default: false,

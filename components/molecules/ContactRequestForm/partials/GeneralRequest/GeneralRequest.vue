@@ -10,7 +10,6 @@
           required
         ),
       }"
-      :validate="validate"
       @input="
         requestData.contact.firstName = $event
         $emit('update', requestData)
@@ -26,7 +25,6 @@
           required
         ),
       }"
-      :validate="validate"
       @input="
         requestData.contact.lastName = $event
         $emit('update', requestData)
@@ -46,14 +44,12 @@
           email
         ),
       }"
-      :validate="validate"
       @input="
         requestData.contact.email = $event
         $emit('update', requestData)
       "
     />
     <FormCountrySelection
-      :validate="validate"
       @update="
         requestData.contact.address = $event
         $emit('update', requestData)
@@ -69,7 +65,6 @@
           required
         ),
       }"
-      :validate="validate"
       @update="
         requestData.message = $event
         $emit('update', requestData)
@@ -88,13 +83,6 @@ export default defineComponent({
   name: 'GeneralRequest',
   components: { PvTextArea, PvInput, FormCountrySelection },
   props: {
-    /**
-     * determines whether a validation can be executed and will be passed into child component
-     */
-    validate: {
-      type: Boolean,
-      default: false,
-    },
     /**
      * defines what kind of request type is selected
      */

@@ -10,7 +10,6 @@
           required
         ),
       }"
-      :validate="validate"
       @input="
         requestData.contact.firstName = $event
         $emit('update', requestData)
@@ -26,7 +25,6 @@
           required
         ),
       }"
-      :validate="validate"
       @input="
         requestData.contact.lastName = $event
         $emit('update', requestData)
@@ -42,14 +40,12 @@
           required
         ),
       }"
-      :validate="validate"
       @input="
         requestData.contact.address.companyName = $event
         $emit('update', requestData)
       "
     />
     <FormCountrySelection
-      :validate="validate"
       @update="
         requestData.contact.address = $event
         $emit('update', requestData)
@@ -67,7 +63,6 @@
             required
           ),
         }"
-        :validate="validate"
         @input="
           requestData.contact.address.line1 = $event
           $emit('update', requestData)
@@ -84,7 +79,6 @@
             required
           ),
         }"
-        :validate="validate"
         @input="
           requestData.contact.address.line2 = $event
           $emit('update', requestData)
@@ -103,7 +97,6 @@
             required
           ),
         }"
-        :validate="validate"
         @input="
           requestData.contact.address.postalCode = $event
           $emit('update', requestData)
@@ -120,7 +113,6 @@
             required
           ),
         }"
-        :validate="validate"
         @input="
           requestData.contact.address.town = $event
           $emit('update', requestData)
@@ -141,7 +133,6 @@
           email
         ),
       }"
-      :validate="validate"
       @input="
         requestData.contact.email = $event
         $emit('update', requestData)
@@ -157,7 +148,6 @@
           required
         ),
       }"
-      :validate="validate"
       @update="
         requestData.message = $event
         $emit('update', requestData)
@@ -176,10 +166,6 @@ export default defineComponent({
   name: 'TopicRequest',
   components: { PvTextArea, PvInput, FormCountrySelection },
   props: {
-    validate: {
-      type: Boolean,
-      default: false,
-    },
     /**
      * defines what kind of request type is selected
      */
