@@ -69,7 +69,7 @@ export default {
    */
   rules: {
     type: Object,
-    default: () => {},
+    default: () => ({}),
   },
   /**
    * defines wether the validation should be turned on or off for this select

@@ -79,7 +79,7 @@ export default defineComponent({
      */
     rules: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
     /**
      * determines whether a validation can be executed
