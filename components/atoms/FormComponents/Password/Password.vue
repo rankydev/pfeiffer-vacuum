@@ -20,7 +20,7 @@
         @focus="$emit('focus', true)"
         @blur="$emit('focus', false)"
         @input="
-          $emit('update', internalValue)
+          $emit('input', $event.target.value)
           validation.validateInput()
         "
       />
@@ -176,7 +176,7 @@ export default defineComponent({
      * @event change
      * @property {string} value
      */
-    'update',
+    'input',
     /**
      * Fired on icon clicked.
      *

@@ -1,6 +1,7 @@
 <template>
   <div class="general-request">
     <PvInput
+      v-model="requestData.contact.firstName"
       :label="$t('form.contactRequest.firstname')"
       placeholder="Placeholder"
       :required="true"
@@ -10,12 +11,10 @@
           required
         ),
       }"
-      @input="
-        requestData.contact.firstName = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
     <PvInput
+      v-model="requestData.contact.lastName"
       :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
       :required="true"
@@ -25,12 +24,10 @@
           required
         ),
       }"
-      @input="
-        requestData.contact.lastName = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
     <PvInput
+      v-model="requestData.contact.email"
       :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
       :required="true"
@@ -44,10 +41,7 @@
           email
         ),
       }"
-      @input="
-        requestData.contact.email = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
     <FormCountrySelection
       @update="
@@ -56,6 +50,7 @@
       "
     />
     <PvTextArea
+      v-model="requestData.message"
       :label="$t('form.contactRequest.message')"
       placeholder="Placeholder"
       :required="true"
@@ -65,10 +60,7 @@
           required
         ),
       }"
-      @update="
-        requestData.message = $event
-        $emit('update', requestData)
-      "
+      @update="$emit('update', requestData)"
     />
   </div>
 </template>

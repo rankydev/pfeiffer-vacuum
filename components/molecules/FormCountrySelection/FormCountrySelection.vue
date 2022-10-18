@@ -1,6 +1,7 @@
 <template>
   <div class="form-country-selection">
     <PvSelect
+      v-model="countrySelection.country"
       :label="$t('form.contactRequest.country')"
       :options="countries"
       :option-label="'name'"
@@ -12,16 +13,13 @@
           required
         ),
       }"
-      :value="selectedCountry"
-      @update="
-        countrySelection.country = $event
-        $emit('update', countrySelection)
-      "
+      @input="$emit('update', countrySelection)"
     />
     <PvSelect
       v-if="
         regions.length || (selectedRegion && Object.keys(selectedRegion).length)
       "
+      v-model="countrySelection.region"
       :label="$t('form.contactRequest.region')"
       :options="regions"
       :option-label="'name'"
@@ -33,11 +31,7 @@
           required
         ),
       }"
-      :value="selectedRegion"
-      @update="
-        countrySelection.region = $event
-        $emit('update', countrySelection)
-      "
+      @input="$emit('update', countrySelection)"
     />
   </div>
 </template>
@@ -80,10 +74,10 @@ export default defineComponent({
      */
     'update',
   ],
-  setup() {
+  setup(props) {
     const countrySelection = ref({
-      country: {},
-      region: {},
+      country: props.selectedCountry,
+      region: props.selectedRegion,
     })
 
     const countriesStore = useCountriesStore()

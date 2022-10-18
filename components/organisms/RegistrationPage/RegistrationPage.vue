@@ -159,7 +159,7 @@ export default defineComponent({
         companyAddressCountryIso:
           requestData.value.personalData.address.country.isocode,
         companyAddressRegion:
-          requestData.value.personalData.address.region.name,
+          requestData.value.personalData.address.region?.name,
         companyAlreadyCustomer:
           requestData.value.companyData?.companyAlreadyCustomer || false,
       }

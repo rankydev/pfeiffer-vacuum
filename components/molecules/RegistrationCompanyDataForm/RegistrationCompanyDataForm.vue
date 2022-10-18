@@ -48,46 +48,39 @@
         </div>
 
         <PvInput
+          v-model="requestData.companyData.companyUid"
           class="registration-company-data-form__row-container--half"
           :label="$t('registration.formCompanyData.customerNumber')"
           placeholder=""
           :disabled="!requestData.companyData.companyAlreadyCustomer"
-          @input="
-            requestData.companyData.companyUid = $event
-            $emit('update', requestData)
-          "
+          @input="$emit('update', requestData)"
         />
       </div>
 
       <PvInput
+        v-model="requestData.companyData.companyFurtherDetails"
         :label="$t('registration.formCompanyData.additionalCompanyInformation')"
         placeholder=""
-        @input="
-          requestData.companyData.companyFurtherDetails = $event
-          $emit('update', requestData)
-        "
+        @input="$emit('update', requestData)"
       />
 
       <PvInput
+        v-model="requestData.companyData.department"
         :label="$t('registration.formCompanyData.department')"
         placeholder=""
-        @input="
-          requestData.companyData.department = $event
-          $emit('update', requestData)
-        "
+        @input="$emit('update', requestData)"
       />
 
       <PvInput
+        v-model="requestData.companyData.companyVatId"
         :label="$t('registration.formCompanyData.tax')"
         placeholder=""
-        @input="
-          requestData.companyData.companyVatId = $event
-          $emit('update', requestData)
-        "
+        @input="$emit('update', requestData)"
       />
 
       <div class="registration-company-data-form__row-container">
         <PvInput
+          v-model="requestData.companyData.phone"
           class="registration-company-data-form__row-container--half"
           :label="$t('registration.formCompanyData.telephoneNumber')"
           placeholder=""
@@ -98,20 +91,15 @@
               required
             ),
           }"
-          @input="
-            requestData.companyData.phone = $event
-            $emit('update', requestData)
-          "
+          @input="$emit('update', requestData)"
         />
 
         <PvInput
+          v-model="requestData.companyData.fax"
           class="registration-company-data-form__row-container--half"
           :label="$t('registration.formCompanyData.fax')"
           placeholder=""
-          @input="
-            requestData.companyData.fax = $event
-            $emit('update', requestData)
-          "
+          @input="$emit('update', requestData)"
         />
       </div>
 
@@ -123,6 +111,7 @@
 
       <div class="registration-company-data-form__row-container">
         <PvInput
+          v-model="requestData.companyData.companyAddressStreet"
           class="registration-company-data-form__row-container--three-quarters"
           :label="$t('form.contactRequest.street')"
           placeholder=""
@@ -133,13 +122,11 @@
               required
             ),
           }"
-          @input="
-            requestData.companyData.companyAddressStreet = $event
-            $emit('update', requestData)
-          "
+          @input="$emit('update', requestData)"
         />
 
         <PvInput
+          v-model="requestData.companyData.companyAddressStreetLine2"
           class="registration-company-data-form__row-container--one-quarter"
           :label="$t('form.contactRequest.houseNumber')"
           placeholder=""
@@ -150,15 +137,13 @@
               required
             ),
           }"
-          @input="
-            requestData.companyData.companyAddressStreetLine2 = $event
-            $emit('update', requestData)
-          "
+          @input="$emit('update', requestData)"
         />
       </div>
 
       <div class="registration-company-data-form__row-container">
         <PvInput
+          v-model="requestData.companyData.companyAddressPostalCode"
           class="registration-company-data-form__row-container--one-quarter"
           :label="$t('form.contactRequest.postCode')"
           placeholder=""
@@ -169,13 +154,11 @@
               required
             ),
           }"
-          @input="
-            requestData.companyData.companyAddressPostalCode = $event
-            $emit('update', requestData)
-          "
+          @input="$emit('update', requestData)"
         />
 
         <PvInput
+          v-model="requestData.companyData.companyAddressTown"
           class="registration-company-data-form__row-container--three-quarters"
           :label="$t('form.contactRequest.city')"
           placeholder=""
@@ -186,10 +169,7 @@
               required
             ),
           }"
-          @input="
-            requestData.companyData.companyAddressTown = $event
-            $emit('update', requestData)
-          "
+          @input="$emit('update', requestData)"
         />
       </div>
     </div>

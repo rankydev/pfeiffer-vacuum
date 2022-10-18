@@ -1,6 +1,7 @@
 <template>
   <div class="topic-request">
     <PvInput
+      v-model="requestData.contact.firstName"
       :label="$t('form.contactRequest.firstname')"
       placeholder="Placeholder"
       :required="true"
@@ -10,12 +11,10 @@
           required
         ),
       }"
-      @input="
-        requestData.contact.firstName = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
     <PvInput
+      v-model="requestData.contact.lastName"
       :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
       :required="true"
@@ -25,12 +24,10 @@
           required
         ),
       }"
-      @input="
-        requestData.contact.lastName = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
     <PvInput
+      v-model="requestData.contact.address.companyName"
       :label="$t('form.contactRequest.company')"
       placeholder="Placeholder"
       :required="true"
@@ -40,19 +37,18 @@
           required
         ),
       }"
-      @input="
-        requestData.contact.address.companyName = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
     <FormCountrySelection
       @update="
-        requestData.contact.address = $event
+        requestData.contact.address.country = $event.country
+        requestData.contact.address.region = $event.region
         $emit('update', requestData)
       "
     />
     <div class="topic-request__address">
       <PvInput
+        v-model="requestData.contact.address.line1"
         class="topic-request__address--street"
         :label="$t('form.contactRequest.street')"
         placeholder="Placeholder"
@@ -63,12 +59,10 @@
             required
           ),
         }"
-        @input="
-          requestData.contact.address.line1 = $event
-          $emit('update', requestData)
-        "
+        @input="$emit('update', requestData)"
       />
       <PvInput
+        v-model="requestData.contact.address.line2"
         class="topic-request__address--number"
         :label="$t('form.contactRequest.houseNumber')"
         placeholder="Placeholder"
@@ -79,14 +73,12 @@
             required
           ),
         }"
-        @input="
-          requestData.contact.address.line2 = $event
-          $emit('update', requestData)
-        "
+        @input="$emit('update', requestData)"
       />
     </div>
     <div class="topic-request__address">
       <PvInput
+        v-model="requestData.contact.address.postalCode"
         class="topic-request__address--postcode"
         :label="$t('form.contactRequest.postCode')"
         placeholder="Placeholder"
@@ -97,12 +89,10 @@
             required
           ),
         }"
-        @input="
-          requestData.contact.address.postalCode = $event
-          $emit('update', requestData)
-        "
+        @input="$emit('update', requestData)"
       />
       <PvInput
+        v-model="requestData.contact.address.town"
         class="topic-request__address--city"
         :label="$t('form.contactRequest.city')"
         placeholder="Placeholder"
@@ -113,13 +103,11 @@
             required
           ),
         }"
-        @input="
-          requestData.contact.address.town = $event
-          $emit('update', requestData)
-        "
+        @input="$emit('update', requestData)"
       />
     </div>
     <PvInput
+      v-model="requestData.contact.email"
       :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
       :required="true"
@@ -133,12 +121,10 @@
           email
         ),
       }"
-      @input="
-        requestData.contact.email = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
     <PvTextArea
+      v-model="requestData.message"
       :label="$t('form.contactRequest.message')"
       placeholder="Placeholder"
       :required="true"
@@ -148,10 +134,7 @@
           required
         ),
       }"
-      @update="
-        requestData.message = $event
-        $emit('update', requestData)
-      "
+      @update="$emit('update', requestData)"
     />
   </div>
 </template>

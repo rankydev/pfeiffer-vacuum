@@ -107,15 +107,15 @@ describe('Password', () => {
   })
 
   describe('during interaction', () => {
-    it('should emit update event when a key is pressed', () => {
+    it('should emit input event when a key is pressed', () => {
       const value = 'Some Value'
       const wrapper = shallowMount(Password)
       const input = wrapper.find('input')
 
       input.setValue(value)
 
-      expect(wrapper.emitted().update.length).toBe(1)
-      expect(wrapper.emitted().update[0]).toEqual([value])
+      expect(wrapper.emitted().input.length).toBe(1)
+      expect(wrapper.emitted().input[0]).toEqual([value])
     })
 
     it('should emit an submit event when the enter key is pressed', () => {

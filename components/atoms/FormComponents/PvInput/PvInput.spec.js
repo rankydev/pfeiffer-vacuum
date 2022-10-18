@@ -70,7 +70,6 @@ describe('Input', () => {
       const propsData = {
         required: true,
         rules: { required },
-        value: 'test',
       }
 
       const wrapper = shallowMount(Input, { propsData })
@@ -86,6 +85,7 @@ describe('Input', () => {
       const propsData = {
         required: true,
         rules: { email },
+        value: 'abc',
       }
 
       const wrapper = shallowMount(Input, { propsData })
