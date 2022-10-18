@@ -12,6 +12,7 @@
       <GenericModal
         class="filter-modal"
         :is-open="isOpen"
+        :fill-viewport="true"
         @closeModal="isOpen = false"
       >
         <div class="filter-modal__content">
