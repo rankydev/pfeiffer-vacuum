@@ -168,7 +168,7 @@ export default defineComponent({
         .register(customerData)
         .then(() => {
           loading.value = false
-          router.push(app.localePath('/registration/success'))
+          router.push(app.localePath('/shop/register/success'))
         })
         .catch(() => {
           loading.value = false
