@@ -19,7 +19,11 @@ window.matchMedia =
   function () {
     return {
       matches: false,
-      addListener: function () {},
-      removeListener: function () {},
+      addListener: () => {
+        /* mock match media add event listener */
+      },
+      removeListener: () => {
+        /* mock match media remove event listener */
+      },
     }
   }

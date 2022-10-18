@@ -75,9 +75,9 @@ async function _run() {
   }
 }
 
-export function run() {
+export async function run() {
   try {
-    _run()
+    await _run()
   } catch (err) {
     logger.fatal(err)
     process.exit(1)
