@@ -12,10 +12,15 @@ import Pagination from '~/components/molecules/Pagination/Pagination.vue'
 import CategoryTree from '~/components/molecules/CategoryTree/CategoryTree.vue'
 import Facets from '~/components/molecules/Facets/Facets.vue'
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
-
+import {
+  currentQuery,
+  facetQuery,
+} from '~/components/molecules/Facets/Facets.stories.content'
 import { shallowMount } from '@vue/test-utils'
 
 let wrapper
+const mockRouterPush = jest.fn()
+const { filterTerms } = currentQuery.query
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
@@ -23,6 +28,12 @@ jest.mock('@nuxtjs/composition-api', () => {
     __esModule: true,
     ...originalModule,
     useRoute: jest.fn(() => ({ value: {} })),
+    useRouter: jest.fn(() => ({
+      push: jest.fn((e) => mockRouterPush(e)),
+    })),
+    useContext: jest.fn(() => ({
+      app: { localePath: jest.fn((e) => e) },
+    })),
   }
 })
 
@@ -64,6 +75,28 @@ describe('SearchResult', () => {
       expect(facets.vm.facets).toBe(facetFilters)
       expect(catTree.vm.categories).toBe(categoryTree)
       expect(sizeSelection.vm.active).toBe(pagination.pageSize)
+    })
+  })
+
+  describe('during interaction', () => {
+    it('should push facets on change', async () => {
+      const propsData = {
+        products,
+        pagination,
+        categories: categoryTree,
+        facets: facetFilters,
+        currentQuery: query,
+        sorts: sortFilters,
+      }
+      createComponent(propsData)
+
+      const facets = wrapper.findComponent(Facets)
+      await facets.vm.$emit('updateFacets', filterTerms)
+
+      expect(mockRouterPush).toBeCalledTimes(1)
+      expect(mockRouterPush).toBeCalledWith({
+        query: { currentPage: 1, facets: facetQuery },
+      })
     })
   })
 })
