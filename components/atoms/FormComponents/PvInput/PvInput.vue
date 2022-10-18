@@ -17,7 +17,7 @@
         @focus="$emit('focus', true)"
         @blur="$emit('focus', false)"
         @input="
-          $emit('update', internalValue)
+          $emit('input', internalValue)
           validation.validateInput()
         "
       />
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch, computed } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
@@ -148,23 +148,26 @@ export default defineComponent({
     'submit',
     'input',
   ],
-  setup(props, { emit }) {
-    let internalIcon = ref(props.icon)
-
-    const internalValue = computed({
-      get: () => props.value,
-      set: (newVal) => {
-        emit('input', newVal)
-      },
-    })
+  setup(props) {
+    const internalIcon = ref(props.icon)
+    const internalValue = ref(props.value)
 
     const validation = ref(useInputValidator(props.rules, internalValue))
 
     watch(
       () => props.validate,
-      (value) => {
-        if (value) {
+      (newValue) => {
+        if (newValue) {
           validation.value.validateInput()
+        }
+      }
+    )
+
+    watch(
+      () => props.value,
+      (newValue) => {
+        if (newValue) {
+          internalValue.value = newValue
         }
       }
     )
