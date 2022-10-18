@@ -93,7 +93,6 @@ describe('TextArea', () => {
         const propsData = {
           required: true,
           rules: { required },
-          validate: true,
         }
 
         const wrapper = shallowMount(PvTextArea, { propsData })

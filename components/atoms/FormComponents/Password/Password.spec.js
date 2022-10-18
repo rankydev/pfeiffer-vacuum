@@ -63,7 +63,6 @@ describe('Password', () => {
       const propsData = {
         required: true,
         rules: { required },
-        validate: true,
       }
       const wrapper = shallowMount(Password, { propsData })
       const input = wrapper.find('input')
@@ -80,7 +79,6 @@ describe('Password', () => {
       const propsData = {
         required: true,
         rules: { required },
-        validate: true,
       }
 
       const wrapper = shallowMount(Password, { propsData })

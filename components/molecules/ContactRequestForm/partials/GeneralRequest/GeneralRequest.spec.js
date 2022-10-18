@@ -21,7 +21,7 @@ describe('GeneralRequest', () => {
     })
 
     test('should validate input fields given validate propsData', () => {
-      const propsData = { type: 'GENERAL_QUERY', validate: true }
+      const propsData = { type: 'GENERAL_QUERY' }
       const wrapper = shallowMount(GeneralRequest, { propsData })
 
       expect(wrapper.exists()).toBeTruthy()

@@ -4,6 +4,7 @@ import Icon from '../../Icon/Icon.vue'
 import PvLabel from '../partials/PvLabel/PvLabel.vue'
 import { expect } from '@jest/globals'
 import { required, email } from '@vuelidate/validators'
+import useVuelidate from '@vuelidate/core'
 
 describe('Input', () => {
   describe('initial state', () => {
@@ -55,22 +56,28 @@ describe('Input', () => {
       const propsData = {
         required: true,
         rules: { required, email },
-        value: 'test',
       }
       const wrapper = shallowMount(Input, { propsData })
-      await wrapper.setProps({ validate: true })
 
-      expect(wrapper.find('.pv-input__element--error').exists()).toBeTruthy()
+      const input = wrapper.find('input')
+      input.setValue('test')
+      await wrapper.vm.$nextTick()
+
+      expect(input.classes()).toContain('pv-input__element--error')
     })
 
-    test('should throw correct error message when required input is not set yet', async () => {
+    test('should throw correct error message when required input is not set', async () => {
       const propsData = {
         required: true,
         rules: { required },
+        value: 'test',
       }
 
       const wrapper = shallowMount(Input, { propsData })
-      await wrapper.setProps({ validate: true })
+
+      const input = wrapper.find('input')
+      input.setValue('')
+      await wrapper.vm.$nextTick()
 
       expect(wrapper.vm.validation.getError()).toBe('Value is required')
     })
@@ -82,7 +89,10 @@ describe('Input', () => {
       }
 
       const wrapper = shallowMount(Input, { propsData })
-      await wrapper.setProps({ validate: true, value: 'test' })
+
+      const input = wrapper.find('input')
+      input.setValue('test')
+      await wrapper.vm.$nextTick()
 
       expect(wrapper.vm.validation.getError()).toBe(
         'Value is not a valid email address'
