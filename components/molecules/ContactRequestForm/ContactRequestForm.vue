@@ -20,6 +20,7 @@
         size="normal"
         icon="send"
         class="contact-request-form__button"
+        @click.native="submit()"
       />
     </LoadingSpinner>
   </div>
