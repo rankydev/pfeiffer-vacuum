@@ -127,7 +127,7 @@ describe('Input', () => {
   })
 
   describe('during interaction', () => {
-    test('should emit update event when a key is pressed', async () => {
+    test('should emit input event when a key is pressed', async () => {
       const propsData = {
         value: 'Some Value',
       }
@@ -136,8 +136,8 @@ describe('Input', () => {
       input.trigger('input')
       await wrapper.vm.$nextTick()
 
-      expect(wrapper.emitted().update.length).toBe(1)
-      expect(wrapper.emitted().update[0]).toEqual([propsData.value])
+      expect(wrapper.emitted().input.length).toBe(1)
+      expect(wrapper.emitted().input[0]).toEqual([propsData.value])
     })
 
     test('should emit an submit event when the enter key is pressed', () => {
