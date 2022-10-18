@@ -16,7 +16,7 @@
         :label="$t('registration.registrationSuccessPage.buttonLabel')"
         icon="arrow_forward"
         variant="secondary"
-        :href="`/${$i18n.locale}`"
+        :href="localePath('/')"
       />
     </div>
   </div>
