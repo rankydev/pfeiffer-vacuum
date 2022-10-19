@@ -344,4 +344,7 @@ export const currentQuery = {
   },
 }
 
+export const facetQuery =
+  '3912:ISO-KF:3795:ISO-KF:3796:ISO-LOREM:3797:ISO-KF:3798:ISO-DN'
+
 export default { facets, sorts, currentQuery }

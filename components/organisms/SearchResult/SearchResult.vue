@@ -32,7 +32,6 @@
 <script>
 import {
   defineComponent,
-  toRefs,
   computed,
   useRouter,
   useRoute,
