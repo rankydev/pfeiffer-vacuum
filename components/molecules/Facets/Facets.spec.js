@@ -12,7 +12,7 @@ jest.mock('@nuxtjs/composition-api', () => {
       return {
         app: {
           $breakpoints: {
-            isMobile: mockIsMobile(),
+            isMobile: { value: mockIsMobile },
           },
         },
       }
