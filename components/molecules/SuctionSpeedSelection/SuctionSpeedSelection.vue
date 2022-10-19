@@ -16,7 +16,6 @@
         placeholder="0"
         input-type="number"
         :required="true"
-        @update="lowerBound = $event"
       />
 
       <hr class="suction-speed-selection__divider-line" />
@@ -28,7 +27,6 @@
           input-type="number"
           class="suction-speed-selection__maximum--selected-value"
           :required="true"
-          @update="upperBound = $event"
         />
 
         <div class="suction-speed-selection__maximum--selected-unit">

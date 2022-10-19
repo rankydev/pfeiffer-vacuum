@@ -16,16 +16,13 @@
         @keypress.enter="$emit('submit', internalValue)"
         @focus="$emit('focus', true)"
         @blur="$emit('focus', false)"
-        @input="
-          $emit('update', internalValue)
-          validation.validateInput()
-        "
+        @input="validation.validateInput()"
       />
       <Icon
-        v-if="internalIcon || validation.getError()"
+        v-if="icon || validation.getError()"
         class="pv-input__icon"
         :class="{ 'pv-input__icon--error': !!validation.getError() }"
-        :icon="!!validation.getError() ? 'error_outline' : internalIcon"
+        :icon="!!validation.getError() ? 'error_outline' : icon"
         @click.native="$emit('click:icon', internalValue)"
       />
     </div>
@@ -37,7 +34,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
@@ -107,14 +104,7 @@ export default defineComponent({
      */
     rules: {
       type: Object,
-      default: () => {},
-    },
-    /**
-     * determines whether a validation can be executed
-     */
-    validate: {
-      type: Boolean,
-      default: false,
+      default: () => ({}),
     },
   },
   emits: [
@@ -125,13 +115,6 @@ export default defineComponent({
      * @property {boolean} isFocused
      */
     'focus',
-    /**
-     * Fired on keystroke.
-     *
-     * @event change
-     * @property {string} value
-     */
-    'update',
     /**
      * Fired on icon clicked.
      *
@@ -149,8 +132,6 @@ export default defineComponent({
     'input',
   ],
   setup(props, { emit }) {
-    let internalIcon = ref(props.icon)
-
     const internalValue = computed({
       get: () => props.value,
       set: (newVal) => {
@@ -158,20 +139,10 @@ export default defineComponent({
       },
     })
 
-    const validation = ref(useInputValidator(props.rules, internalValue))
-
-    watch(
-      () => props.validate,
-      (value) => {
-        if (value) {
-          validation.value.validateInput()
-        }
-      }
-    )
+    const validation = useInputValidator(props.rules, internalValue)
 
     return {
       internalValue,
-      internalIcon,
       validation,
     }
   },

@@ -23,7 +23,7 @@ describe('CreateAccount', () => {
     })
 
     test('should validate input fields given validate propsData', () => {
-      const propsData = { validate: true }
+      const propsData = {}
       const wrapper = shallowMount(CreateAccount, { propsData })
 
       expect(wrapper.exists()).toBeTruthy()

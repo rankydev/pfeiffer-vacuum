@@ -3,13 +3,11 @@
     <LoadingSpinner :show="loading">
       <GeneralRequest
         v-if="contactRequestType === 'GENERAL_QUERY'"
-        :validate="validate"
         :type="contactRequestType"
         @update="requestData = $event"
       />
       <TopicRequest
         v-else
-        :validate="validate"
         :type="contactRequestType"
         @update="requestData = $event"
       />
@@ -20,6 +18,7 @@
         size="normal"
         icon="send"
         class="contact-request-form__button"
+        @click.native="submit()"
       />
     </LoadingSpinner>
   </div>
@@ -68,10 +67,8 @@ export default defineComponent({
     const v = useVuelidate()
     const requestData = ref({})
 
-    let validate = ref(false)
-
     const submit = async () => {
-      validate.value = true
+      v.value.$validate()
       if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
         loading.value = true
         await contactStore
@@ -97,7 +94,7 @@ export default defineComponent({
       }
     }
 
-    return { v, validate, submit, requestData, loading }
+    return { v, submit, requestData, loading }
   },
 })
 </script>

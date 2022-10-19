@@ -25,7 +25,7 @@
           icon-size="small"
           class="facets__multiselect"
           no-input
-          @update="$emit('updateSort', $event)"
+          @input="$emit('updateSort', $event)"
         />
         <Popup v-if="vacuumRangePresent">
           <template #activator="{ togglePopup }">
@@ -83,7 +83,7 @@
           class="facets__multiselect"
           multiple
           no-input
-          @update="updateFacets(facet.code, $event)"
+          @input="updateFacets(facet.code, $event)"
         />
         <Button
           v-if="multiSelectFacets.length > 2"

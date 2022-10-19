@@ -174,7 +174,7 @@ export const useKeycloak = () => {
     }
 
     const token = reconstructToken()
-    await setCookiesAndSaveAuthData(token)
+    setCookiesAndSaveAuthData(token)
 
     isLoginProcess.value = false
   }

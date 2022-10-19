@@ -69,14 +69,7 @@ export default {
    */
   rules: {
     type: Object,
-    default: () => {},
-  },
-  /**
-   * defines wether the validation should be turned on or off for this select
-   */
-  validate: {
-    type: Boolean,
-    default: false,
+    default: () => ({}),
   },
   /**
    * enables multi selection

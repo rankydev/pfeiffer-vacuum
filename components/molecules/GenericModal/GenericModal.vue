@@ -2,7 +2,10 @@
   <transition name="fade">
     <div v-if="isOpen" class="modal">
       <div class="modal__background closeModal">
-        <ContentWrapper class="modal__box closeModal">
+        <ContentWrapper
+          class="modal__box closeModal"
+          :class="{ 'modal__box--fill': fillViewport }"
+        >
           <div class="modal__box-wrapper">
             <slot @closeModal="$emit('closeModal')" />
             <Icon
@@ -28,6 +31,10 @@ export default defineComponent({
   components: { Icon, ContentWrapper },
   props: {
     isOpen: {
+      type: Boolean,
+      default: false,
+    },
+    fillViewport: {
       type: Boolean,
       default: false,
     },
@@ -83,7 +90,14 @@ export default defineComponent({
 
   &__box {
     @apply tw-py-4;
-    @apply tw-h-full;
+    @apply tw-h-auto;
+    @apply tw-max-h-full;
+    @apply tw-w-auto;
+    @apply tw-max-w-full;
+
+    &--fill {
+      @apply tw-w-full;
+    }
   }
 
   &__box-wrapper {
@@ -94,7 +108,9 @@ export default defineComponent({
     @apply tw-bg-pv-white;
     @apply tw-p-4;
     @apply tw-overflow-y-auto;
-    @apply tw-h-full;
+
+    // making sure the modal is never too big for the viewport, also need to remove the padding from modal__box
+    max-height: calc(100vh - theme('spacing.4') * 2);
 
     @screen md {
       @apply tw-p-6;
