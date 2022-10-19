@@ -4,11 +4,19 @@ import { shallowMount } from '@vue/test-utils'
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  const { ref } = originalModule
   return {
     ...originalModule,
     useRoute: () => {
-      return {
+      return ref({
         query: 'searchTerm=hipace',
+      })
+    },
+    useContext: () => {
+      return {
+        app: {
+          localePath: (value) => value,
+        },
       }
     },
   }

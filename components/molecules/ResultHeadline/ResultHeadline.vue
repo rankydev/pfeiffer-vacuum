@@ -7,7 +7,7 @@
       'result-headline--without-link': !link,
     }"
   >
-    <nuxt-link v-if="link" class="result-headline__link" :to="link">
+    <nuxt-link v-if="link" class="result-headline__link" :to="url">
       <Icon v-if="link" class="result-headline__icon" icon="arrow_back_ios" />
     </nuxt-link>
     <div class="result-headline__content">
@@ -26,9 +26,14 @@
 
 <script>
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  useRoute,
+  useContext,
+} from '@nuxtjs/composition-api'
 
-export default {
+export default defineComponent({
   name: 'ResultHeadline',
   components: { Icon },
   props: {
@@ -50,11 +55,12 @@ export default {
       default: null,
     },
     link: {
-      type: [String, Object],
+      type: String,
       default: null,
     },
   },
   setup(props) {
+    const route = useRoute()
     const { i18n } = useContext()
     const headlineText = computed(() =>
       props.searchTerm
@@ -62,9 +68,14 @@ export default {
         : props.headline
     )
 
-    return { headlineText }
+    const url = computed(() => ({
+      path: props.link,
+      query: { ...route.value.query, currentPage: 1 },
+    }))
+
+    return { headlineText, url }
   },
-}
+})
 </script>
 
 <style lang="scss">

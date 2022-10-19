@@ -54,7 +54,7 @@
           "
         />
         <Icon
-          v-if="option.icon && !!!multiple"
+          v-if="option.icon && !multiple"
           class="pv-select__icon-option"
           :icon="option.icon"
         />

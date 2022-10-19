@@ -42,7 +42,12 @@
 </template>
 <script>
 import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min.js'
-import { ref, onBeforeMount, useContext } from '@nuxtjs/composition-api'
+import {
+  ref,
+  onBeforeMount,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
 import { sections, ranges } from './VacuumRangeSlider.json'
 
 export default {
@@ -51,27 +56,44 @@ export default {
     VueSlider,
   },
   props: {
-    value: {
+    initialValues: {
       type: Array,
-      default: () => ['0', '16'],
+      default: () => [],
     },
     showRanges: {
       type: Boolean,
       default: true,
     },
   },
-  emits: ['update'],
+  emits: ['update', 'input'],
   setup(props, { emit }) {
     const { i18n } = useContext()
     const marks = ref({})
     let data = ref([])
-    let modelValue = ref(props.value)
+
+    const modelValue = ref(['0', '16'])
+
+    const setIntitialModelValue = () => {
+      const [first, second] = props.initialValues
+      const cleanValue = (value = '', op) => value.replace(op, '')
+      const findLower = ({ value }) => value === cleanValue(first, '>=')
+      const findUpper = ({ value }) => value === cleanValue(second, '<=')
+      const lower = data.value.findIndex(findLower)
+      const upper = data.value.findIndex(findUpper)
+
+      modelValue.value = [
+        String(lower === -1 ? 0 : lower),
+        String(upper === -1 ? 16 : upper),
+      ]
+    }
 
     onBeforeMount(() => {
       for (const section of sections.data) {
         marks.value[String(section.point)] = section.name
         data.value = data.value.concat(section.dataPoints)
       }
+
+      setIntitialModelValue()
     })
 
     const getTooltipLabel = (value) => {
@@ -110,9 +132,9 @@ export default {
       data,
       sections,
       ranges,
+      selectionUpdated,
       getRangeWidth,
       getTooltipLabel,
-      selectionUpdated,
       rangeClicked,
     }
   },
