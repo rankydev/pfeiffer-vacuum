@@ -44,7 +44,7 @@
           </template>
           <div class="facets__vacuum-range-popup">
             <VacuumRangeSlider
-              :initial-values="vaccuumRange"
+              :initial-values="vacuumRange"
               @update="updateFacets(null, $event, true)"
             />
           </div>
@@ -67,6 +67,7 @@
           </template>
           <div class="facets__suction-speed-popup">
             <SuctionSpeedSelection
+              :value="suctionSpeed"
               @update="updateFacets(null, $event, false, true)"
             />
           </div>

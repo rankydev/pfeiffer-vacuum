@@ -84,17 +84,26 @@ export default {
         ) || []
     )
 
-    const vaccuumRange = computed({
-      get: () => {
-        const lower = currentQuery.value?.query?.filterTerms?.find(
-          (e) => e.key === vacuumRangeIds[0]
-        )
-        const upper = currentQuery.value?.query?.filterTerms?.find(
-          (e) => e.key === vacuumRangeIds[1]
-        )
+    const vacuumRange = computed(() => {
+      const lower = currentQuery.value?.query?.filterTerms?.find(
+        (e) => e.key === vacuumRangeIds[0]
+      )
+      const upper = currentQuery.value?.query?.filterTerms?.find(
+        (e) => e.key === vacuumRangeIds[1]
+      )
 
-        return [lower?.value, upper?.value]
-      },
+      return [lower?.value, upper?.value]
+    })
+
+    const suctionSpeed = computed(() => {
+      const lower = currentQuery.value?.query?.filterTerms?.find(
+        (e) => e.key === suctionSpeedIds[0]
+      )
+      const upper = currentQuery.value?.query?.filterTerms?.find(
+        (e) => e.key === suctionSpeedIds[1]
+      )
+
+      return [lower?.value, upper?.value]
     })
 
     const vacuumRangePresent = computed(
@@ -146,6 +155,7 @@ export default {
         })
       }
 
+      console.log('updateFacets', newFacets)
       emit('updateFacets', newFacets)
     }
 
@@ -162,12 +172,13 @@ export default {
       shrinkedFacets,
       selectedFacets,
       vacuumRangeIds,
-      vaccuumRange,
+      vacuumRange,
       suctionSpeedIds,
       vacuumRangePresent,
       suctionSpeedPresent,
       vacuumRangeActive,
       suctionSpeedActive,
+      suctionSpeed,
       updateFacets,
       removeFacet,
     }
