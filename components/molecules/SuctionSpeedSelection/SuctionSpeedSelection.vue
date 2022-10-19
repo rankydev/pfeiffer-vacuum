@@ -51,7 +51,6 @@ import { defineComponent, onBeforeMount, ref } from '@nuxtjs/composition-api'
 import ButtonGroup from '~/components/atoms/FormComponents/ButtonGroup/ButtonGroup'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import Button from '~/components/atoms/Button/Button'
-import { sections } from '../VacuumRangeSlider/VacuumRangeSlider.json'
 
 export default defineComponent({
   name: 'SuctionSpeedSelection',
