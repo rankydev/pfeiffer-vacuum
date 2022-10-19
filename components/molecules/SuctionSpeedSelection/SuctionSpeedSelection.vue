@@ -69,7 +69,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const lowerBound = ref(props.value?.[0] || 0)
     const upperBound = ref(props.value?.[1] || 10000)
-    const internalValue = ref(props.values)
+    const internalValue = ref(props.value)
     const meters = ref(true)
     const liters = ref(false)
     const unit = ref('m³/h')

@@ -13,6 +13,7 @@
         @click="removeFacet(filter)"
       />
     </div>
+
     <FilterModal>
       <div class="facets__selects">
         <PvSelect
@@ -42,9 +43,13 @@
             />
           </template>
           <div class="facets__vacuum-range-popup">
-            <VacuumRangeSlider @update="updateFacets(null, $event, true)" />
+            <VacuumRangeSlider
+              :initial-values="vacuumRange"
+              @update="updateFacets(null, $event, true)"
+            />
           </div>
         </Popup>
+
         <Popup v-if="suctionSpeedPresent">
           <template #activator="{ togglePopup }">
             <Button
@@ -62,10 +67,12 @@
           </template>
           <div class="facets__suction-speed-popup">
             <SuctionSpeedSelection
+              :value="suctionSpeed"
               @update="updateFacets(null, $event, false, true)"
             />
           </div>
         </Popup>
+
         <PvSelect
           v-for="facet in shrinkedFacets"
           :key="facet.code"

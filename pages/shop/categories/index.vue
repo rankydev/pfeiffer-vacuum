@@ -27,6 +27,7 @@ import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
 import { useLogger } from '~/composables/useLogger.js'
 
 export default defineComponent({
+  name: 'CategoryShopPage',
   layout: 'default',
   setup() {
     const route = useRoute()
