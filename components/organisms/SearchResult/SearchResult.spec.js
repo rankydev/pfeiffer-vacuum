@@ -43,7 +43,7 @@ function createComponent(propsData = {}) {
 
 describe('SearchResult', () => {
   describe('initial state', () => {
-    it('should render with given only required props', () => {
+    it('should render given only required props', () => {
       const propsData = {
         facets: facetFilters,
         pagination,
