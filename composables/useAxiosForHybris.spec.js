@@ -28,6 +28,11 @@ jest.mock('@nuxtjs/composition-api', () => {
       },
       req: mockReq(),
     }),
+    useRouter: () => ({
+      options: {
+        base: 'test',
+      },
+    }),
   }
 })
 
@@ -50,13 +55,12 @@ beforeEach(() => {
 describe('axiosForHybris', () => {
   describe('during interaction', () => {
     test('should return axios instance with proper configuration', () => {
-      process.env.SHOP_BASE_URL = 'test'
       const { useAxiosForHybris } = require('./useAxiosForHybris')
       const { axios } = useAxiosForHybris()
 
       expect(axios).toBeDefined()
       expect(mockAxios).toBeCalledTimes(1)
-      expect(mockSetBaseUrl).toBeCalledWith('test')
+      expect(mockSetBaseUrl).toBeCalledWith('http://localhost/test/api/shop')
       expect(mockSetHeader).toBeCalledWith('Content-Type', 'application/json')
       expect(mockUseRequestInterceptor).toBeCalledWith(
         'fulfilledRequest',
@@ -81,7 +85,10 @@ describe('axiosForHybris', () => {
     })
 
     test('should return axios instance from req that was already created on server side', () => {
-      mockReq.mockReturnValue({})
+      mockReq.mockReturnValue({
+        protocol: 'http',
+        headers: { host: 'www.example.com' },
+      })
       const { useAxiosForHybris } = require('./useAxiosForHybris')
       const { axios } = useAxiosForHybris()
       expect(axios).toBeDefined()
@@ -91,6 +98,9 @@ describe('axiosForHybris', () => {
       expect(anotherAxios).toBeDefined()
       expect(mockAxios).toBeCalledTimes(1)
       expect(axios).toStrictEqual(anotherAxios)
+      expect(mockSetBaseUrl).toBeCalledWith(
+        'http://www.example.com/test/api/shop'
+      )
     })
   })
 })
