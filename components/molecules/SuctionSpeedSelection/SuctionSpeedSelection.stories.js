@@ -18,16 +18,16 @@ const Template = () => ({
   setup() {
     let result = ref([0, 10000])
 
-    const initializeResult = (e) => {
+    const updateResult = (e) => {
       result.value = e
     }
 
-    return { result, initializeResult }
+    return { result, updateResult }
   },
   template: `
   <div class="documentation-preview">
     <SuctionSpeedSelection
-      @input="initializeResult($event)" />
+      @update="updateResult($event)" />
     <br />
     <div>Minimum in m³/h: {{ result[0] }}</div>
     <div>Maximum in m³/h: {{ result[1] }}</div>

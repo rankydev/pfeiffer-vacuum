@@ -23,7 +23,7 @@ describe('TopicRequest', () => {
     })
 
     test('should validate input fields given validate propsData', () => {
-      const propsData = { type: 'QUOTE', validate: true }
+      const propsData = { type: 'QUOTE' }
       const wrapper = shallowMount(TopicRequest, { propsData })
 
       expect(wrapper.exists()).toBeTruthy()
