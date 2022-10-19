@@ -103,9 +103,7 @@
     </FilterModal>
   </div>
 </template>
-
 <script src="./Facets.js" />
-
 <style lang="scss">
 @import 'Facets';
 </style>
