@@ -89,7 +89,8 @@ export default defineComponent({
 
     const setIntitialModelValue = () => {
       const [first, second] = props.value
-      const cleanValue = (value = '', op) => parseInt(value.replace(op, ''))
+      const cleanValue = (value = '', op) =>
+        parseInt(toString(value).replace(op, ''))
       lowerBound.value = cleanValue(first || '0', '>=')
       upperBound.value = cleanValue(second || '10000', '<=')
 
