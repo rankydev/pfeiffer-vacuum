@@ -8,10 +8,19 @@ let wrapper
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  const { ref } = originalModule
+
   return {
     __esModule: true,
     ...originalModule,
-    useRoute: jest.fn(() => ({ value: {} })),
+    useRoute: jest.fn(() => ref({})),
+    useContext: () => {
+      return {
+        app: {
+          localePath: (value) => value,
+        },
+      }
+    },
   }
 })
 
@@ -31,9 +40,7 @@ describe('CategoryCollapse', () => {
       })
 
       const link = wrapper.find('.category-collapse__parent')
-      const arrowIcon = wrapper.findComponent(Icon)
 
-      expect(arrowIcon.exists()).toBeTruthy()
       expect(link.text()).toBe(
         `${category.category.name} (${category.productCount})`
       )
