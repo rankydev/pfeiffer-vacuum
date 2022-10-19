@@ -5,22 +5,20 @@
         >{{ `${label} (${count})` }}
       </NuxtLink>
       <Icon
+        v-if="hasChildren"
         class="category-collapse__icon"
         :icon="isOpen ? 'expand_less' : 'expand_more'"
         @click="isOpen = !isOpen"
       />
     </div>
-    <AnimatedCollapse speed="fast">
+    <AnimatedCollapse v-if="hasChildren" speed="fast">
       <div v-show="isOpen" class="category-collapse__children">
         <NuxtLink
-          v-for="category in children"
-          :key="getKey(category.category.name)"
+          v-for="child in children"
+          :key="child.category.id"
           class="category-collapse__child"
-          :to="{
-            path: joinURL(localePath('shop-categories'), category.category.id),
-            query: { ...route.query, currentPage: 1 },
-          }"
-          >{{ `${category.category.name} (${category.productCount})` }}
+          :to="getUrl(child.category.id)"
+          >{{ `${child.category.name} (${child.productCount})` }}
         </NuxtLink>
       </div>
     </AnimatedCollapse>
@@ -29,11 +27,16 @@
 <script>
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse'
 import Icon from '~/components/atoms/Icon/Icon'
-import getKey from '~/composables/useUniqueKey'
 import { joinURL } from 'ufo'
-import { ref, useRoute } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  ref,
+  useRoute,
+  useContext,
+} from '@nuxtjs/composition-api'
 
-export default {
+export default defineComponent({
   components: {
     AnimatedCollapse,
     Icon,
@@ -56,13 +59,21 @@ export default {
       default: () => [],
     },
   },
-  setup() {
-    const isOpen = ref(false)
+  setup(props) {
     const route = useRoute()
+    const { app } = useContext()
+    const isOpen = ref(false)
 
-    return { isOpen, getKey, joinURL, route }
+    const hasChildren = computed(() => props.children.length || 0 > 0)
+
+    const getUrl = (id) => ({
+      path: joinURL(app.localePath('shop-categories'), id),
+      query: { ...route.value.query, currentPage: 1 },
+    })
+
+    return { isOpen, getUrl, hasChildren }
   },
-}
+})
 </script>
 <style lang="scss">
 .category-collapse {

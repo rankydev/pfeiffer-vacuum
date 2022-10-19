@@ -9,6 +9,24 @@ function createComponent(propsData = {}, { CustomStub } = {}) {
   wrapper = shallowMount(ResultHeadline, { propsData, stubs })
 }
 
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  const { ref } = originalModule
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    useRoute: jest.fn(() => ref({})),
+    useContext: () => {
+      return {
+        app: {
+          localePath: (value) => value,
+        },
+      }
+    },
+  }
+})
+
 describe('ResultHeadline', () => {
   describe('initial state', () => {
     it('should render component given only headline', () => {
@@ -38,7 +56,10 @@ describe('ResultHeadline', () => {
 
       const link = wrapper.findComponent(RouterLinkStub)
       expect(link.exists()).toBeTruthy()
-      expect(link.vm.to).toBe(resultHeadlineContent.link)
+      expect(link.vm.to).toStrictEqual({
+        path: resultHeadlineContent.link,
+        query: { currentPage: 1 },
+      })
     })
   })
 })
