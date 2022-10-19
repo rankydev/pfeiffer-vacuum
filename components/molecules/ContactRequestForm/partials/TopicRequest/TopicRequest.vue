@@ -134,7 +134,7 @@
           required
         ),
       }"
-      @update="$emit('update', requestData)"
+      @input="$emit('update', requestData)"
     />
   </div>
 </template>
