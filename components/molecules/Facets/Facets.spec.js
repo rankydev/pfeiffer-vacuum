@@ -64,5 +64,31 @@ describe('Facets.vue', () => {
 
       expect(filterTags.exists()).toBeTruthy()
     })
+
+    it('should render vm correctly given props', () => {
+      const propsData = {
+        facets,
+        sorts,
+      }
+      createComponent(propsData)
+
+      expect(wrapper.vm.isExtended).toBeFalsy()
+      expect(wrapper.vm.multiSelectFacets[0]).toBe(facets[2])
+      expect(wrapper.vm.shrinkedFacets[0]).toBe(facets[2])
+      expect(wrapper.vm.selectedFacets).toEqual([])
+      expect(wrapper.vm.vacuumRangeIds).toEqual(['3913', '3912'])
+      expect(wrapper.vm.suctionSpeedIds).toEqual(['3983', '3982'])
+      expect(wrapper.vm.vacuumRangePresent).toBeTruthy()
+      expect(wrapper.vm.suctionSpeedPresent).toBeTruthy()
+      expect(wrapper.vm.vacuumRangeActive).toBeFalsy()
+      expect(wrapper.vm.suctionSpeedActive).toBeFalsy()
+      expect(wrapper.vm.updateFacets).toBeInstanceOf(Function)
+      expect(wrapper.vm.removeFacet).toBeInstanceOf(Function)
+    })
+  })
+
+  describe('during interaction', () => {
+    // update facet
+    // remove facet
   })
 })
