@@ -111,7 +111,7 @@ export default defineComponent({
     )
 
     const context = useContext()
-    let buildImage = () => ({})
+    let buildImage
 
     switch (props.provider) {
       case 'storyblok':
@@ -121,6 +121,7 @@ export default defineComponent({
         buildImage = useHybrisProvider(context).buildImage
         break
       default:
+        buildImage = () => ({})
     }
 
     return {

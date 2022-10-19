@@ -89,7 +89,7 @@ describe('RegistrationCompanyDataForm', () => {
     })
 
     test('should validate input fields given validate', () => {
-      const propsData = { validate: true }
+      const propsData = {}
       const wrapper = shallowMount(RegistrationCompanyDataForm, { propsData })
 
       expect(wrapper.exists()).toBeTruthy()

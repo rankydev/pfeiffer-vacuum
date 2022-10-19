@@ -5,6 +5,7 @@
     </h2>
 
     <PvInput
+      v-model="requestData.registration.companyName"
       :label="$t('form.contactRequest.company')"
       placeholder="Placeholder"
       :required="true"
@@ -14,10 +15,7 @@
           required
         ),
       }"
-      @update="
-        requestData.registration.companyName = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
 
     <FormCountrySelection
@@ -30,6 +28,7 @@
     />
 
     <PvInput
+      v-model="requestData.registration.firstName"
       :label="$t('form.contactRequest.firstname')"
       placeholder="Placeholder"
       :required="true"
@@ -39,13 +38,11 @@
           required
         ),
       }"
-      @update="
-        requestData.registration.firstName = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
 
     <PvInput
+      v-model="requestData.registration.lastName"
       :label="$t('form.contactRequest.surname')"
       placeholder="Placeholder"
       :required="true"
@@ -55,13 +52,11 @@
           required
         ),
       }"
-      @update="
-        requestData.registration.lastName = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
 
     <PvInput
+      v-model="requestData.registration.email"
       :label="$t('form.contactRequest.mail')"
       placeholder="Placeholder"
       :required="true"
@@ -75,13 +70,11 @@
           email
         ),
       }"
-      @update="
-        requestData.registration.email = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
 
     <Password
+      v-model="requestData.registration.password"
       :label="$t('registration.registrationRequest.password')"
       placeholder="Placeholder"
       :required="true"
@@ -92,10 +85,7 @@
         ),
       }"
       :show-validation-criterias="true"
-      @update="
-        requestData.registration.password = $event
-        $emit('update', requestData)
-      "
+      @input="$emit('update', requestData)"
     />
   </div>
 </template>

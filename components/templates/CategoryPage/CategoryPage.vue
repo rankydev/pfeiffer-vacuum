@@ -17,13 +17,25 @@
       <main>
         <ContentWrapper>
           <ResultHeadline
-            :headline="headline"
-            :link="link"
+            v-bind="{ headline, link, searchTerm }"
             :result-count="count"
           />
         </ContentWrapper>
 
-        <ContentWrapper> Placeholder for SearchResults </ContentWrapper>
+        <div class="category-page__search-result">
+          <ContentWrapper>
+            <SearchResult
+              v-bind="{
+                products,
+                pagination,
+                categories,
+                facets,
+                currentQuery,
+                sorts,
+              }"
+            />
+          </ContentWrapper>
+        </div>
       </main>
     </template>
   </Page>
@@ -46,6 +58,7 @@ import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline
 
 import schema from '~/components/templates/CategoryContentPage/CategoryContentPage.schema.js'
 import { useCategoryStore } from '~/stores/category'
+import SearchResult from '~/components/organisms/SearchResult/SearchResult.vue'
 import { transformUrl } from '~/resolver/linksTransformer.js'
 import { joinURL } from 'ufo'
 
@@ -57,11 +70,12 @@ export default defineComponent({
     ContentWrapper,
     OnPageNavigation,
     ResultHeadline,
+    SearchResult,
   },
   props: {
     content: {
       type: Object,
-      default: /* istanbul ignore next */ () => {},
+      default: /* istanbul ignore next */ () => ({}),
     },
   },
   setup(props) {
@@ -106,8 +120,15 @@ export default defineComponent({
      */
     const categoryStore = useCategoryStore()
     const headline = computed(() => categoryStore.categoryName)
+    const searchTerm = computed(() => categoryStore.searchTerm || '')
     const link = computed(() => categoryStore.parentCategoryPath)
     const count = computed(() => categoryStore.result?.pagination?.totalResults)
+    const products = computed(() => categoryStore.result?.products)
+    const pagination = computed(() => categoryStore.result?.pagination || {})
+    const categories = computed(() => categoryStore.result?.categorySubtree)
+    const facets = computed(() => categoryStore.result?.facets || [])
+    const currentQuery = computed(() => categoryStore.result?.currentQuery)
+    const sorts = computed(() => categoryStore.result?.sorts)
 
     return {
       hasLinkedCat,
@@ -115,9 +136,24 @@ export default defineComponent({
 
       quicklinks: props.content.quicklinks,
       headline,
+      searchTerm,
       link,
       count,
+      products,
+      pagination,
+      categories,
+      facets,
+      currentQuery,
+      sorts,
     }
   },
 })
 </script>
+
+<style lang="scss">
+.category-page {
+  &__search-result {
+    @apply tw-bg-pv-grey-96;
+  }
+}
+</style>

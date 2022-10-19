@@ -1,5 +1,12 @@
 {
   "itemsPerPage": "Items per Page:",
+  "sort": "Sort by:",
+  "lessFilters": "Less filters",
+  "moreFilters": "More filters",
+  "activeFilters": "Active filters:",
+  "searchResult": "Search results for",
   "sortAndFilter": "Sort & Filter",
-  "applyFilter": "Apply filter"
+  "applyFilter": "Apply filter",
+  "noMatchingProducts": "No matching products found",
+  "checkSearchCriteria": "Please check the selected search criteria."
 }

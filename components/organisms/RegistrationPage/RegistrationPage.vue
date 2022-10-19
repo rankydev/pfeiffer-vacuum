@@ -159,7 +159,7 @@ export default defineComponent({
         companyAddressCountryIso:
           requestData.value.personalData.address.country.isocode,
         companyAddressRegion:
-          requestData.value.personalData.address.region.name,
+          requestData.value.personalData.address.region?.name,
         companyAlreadyCustomer:
           requestData.value.companyData?.companyAlreadyCustomer || false,
       }
@@ -168,7 +168,7 @@ export default defineComponent({
         .register(customerData)
         .then(() => {
           loading.value = false
-          router.push(app.localePath('/registration/success'))
+          router.push(app.localePath('/shop/register/success'))
         })
         .catch(() => {
           loading.value = false

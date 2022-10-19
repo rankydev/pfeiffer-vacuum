@@ -57,12 +57,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '/assets/scss/mixins';
+
 .hint-modal {
   @apply tw-w-full;
-
-  .modal__box-wrapper {
-    @apply tw-justify-between;
-  }
 
   &__headline {
     @apply tw-mb-0;
@@ -92,18 +90,22 @@ export default defineComponent({
 
   &__btn-proceed {
     @apply tw-mb-6;
+
+    @screen lg {
+      @apply tw-mb-0;
+    }
   }
 
   &__btn-add {
     @apply tw-block;
-    @apply tw-w-full;
+    @include fill-available;
 
     @screen md {
       @apply tw-w-max;
     }
 
     .button {
-      @apply tw-w-full;
+      @include fill-available;
 
       @screen md {
         @apply tw-w-max;

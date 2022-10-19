@@ -80,13 +80,15 @@ export default defineComponent({
 
     const left = computed(() => {
       const { activator, content } = dimensions
-      const widthActivator = activator.width / 2
-      const widthContent = content.width / 2
-      const left = activator.offsetLeft + widthActivator - widthContent
-      const fullContentWidth =
-        content.width + content.marginLeft + content.marginRight
-
-      return `${calcXOverflow(left, fullContentWidth)}px`
+      const widthActivator = activator.width
+      const widthContent = content.width
+      const marginContent = content.marginLeft + content.marginRight
+      const left =
+        activator.offsetLeft +
+        widthActivator / 2 -
+        widthContent / 2 -
+        content.marginLeft
+      return `${calcXOverflow(left, widthContent + marginContent)}px`
     })
 
     const isBottom = computed(() => props.position === 'bottom')
@@ -134,7 +136,7 @@ export default defineComponent({
 <style lang="scss">
 .popup {
   &__activator {
-    @apply tw-inline-block;
+    @apply tw-inline-flex;
   }
 
   &__content {

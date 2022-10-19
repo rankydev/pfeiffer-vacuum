@@ -5,15 +5,12 @@
       <textarea
         v-model="internalValue"
         name="textarea"
-        v-bind="{ text, placeholder, required, disabled }"
+        v-bind="{ placeholder, required, disabled }"
         class="pv-textarea__input"
         :class="{ 'pv-textarea__input--error': !!validation.getError() }"
         @focus="$emit('focus', true)"
         @blur="$emit('focus', false)"
-        @input="
-          $emit('update', internalValue)
-          validation.validateInput()
-        "
+        @input="validation.validateInput()"
       />
       <Icon
         v-if="!!validation.getError()"
@@ -29,7 +26,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
@@ -40,9 +37,9 @@ export default defineComponent({
   components: { PvLabel, ErrorMessage, Icon },
   props: {
     /**
-     * The internal text
+     * The internal value
      */
-    text: {
+    value: {
       type: String,
       default: '',
     },
@@ -79,14 +76,7 @@ export default defineComponent({
      */
     rules: {
       type: Object,
-      default: () => {},
-    },
-    /**
-     * determines whether a validation can be executed
-     */
-    validate: {
-      type: Boolean,
-      default: false,
+      default: () => ({}),
     },
   },
   emits: [
@@ -103,21 +93,17 @@ export default defineComponent({
      * @event change
      * @property {string} value
      */
-    'update',
+    'input',
   ],
-  setup(props) {
-    const internalValue = ref(props.text)
+  setup(props, { emit }) {
+    const internalValue = computed({
+      get: () => props.value,
+      set: (newVal) => {
+        emit('input', newVal)
+      },
+    })
 
-    const validation = ref(useInputValidator(props.rules, internalValue))
-
-    watch(
-      () => props.validate,
-      (value) => {
-        if (value === true) {
-          validation.value.validateInput()
-        }
-      }
-    )
+    const validation = useInputValidator(props.rules, internalValue)
 
     return { internalValue, validation }
   },

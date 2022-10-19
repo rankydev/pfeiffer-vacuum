@@ -45,7 +45,7 @@ describe('FormCountrySelection', () => {
         isocode: 'US',
         name: 'United States of America',
       }
-      select.vm.$emit('update', selectedOption)
+      select.vm.$emit('input', selectedOption)
       await select.vm.$nextTick()
       await wrapper.vm.$nextTick()
       const allSelects = wrapper.findAllComponents(PvSelect)

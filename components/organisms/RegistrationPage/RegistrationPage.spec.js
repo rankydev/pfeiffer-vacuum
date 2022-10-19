@@ -117,7 +117,6 @@ describe('RegistrationPage', () => {
 
       expect(spyTriggerSendRegistrationProcess).toHaveBeenCalled()
       expect(wrapper.vm.proceedWithoutCompany).toBeFalsy()
-      expect(wrapper.vm.validate).toBeFalsy()
       expect(wrapper.vm.modalIsOpen).toBeTruthy()
       expect(modal.vm.isOpen).toBeTruthy()
     })

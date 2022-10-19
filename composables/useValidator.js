@@ -1,4 +1,3 @@
-import { computed } from '@nuxtjs/composition-api'
 import useVuelidate from '@vuelidate/core'
 
 export const useInputValidator = (rules, data) => {
@@ -15,14 +14,10 @@ export const useInputValidator = (rules, data) => {
     await v$.value.$validate()
   }
 
-  const getError = computed(() => {
-    return () => {
-      const error = v$.value.$errors?.find(
-        (i) => i.$property === 'internalValue'
-      )
-      return error?.$message
-    }
-  })
+  const getError = () => {
+    const error = v$.value.$errors?.find((i) => i.$property === 'internalValue')
+    return error?.$message
+  }
 
   return {
     v$,

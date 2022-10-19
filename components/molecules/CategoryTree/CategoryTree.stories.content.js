@@ -1,52 +1,63 @@
-export const category = {
+import getKey from '~/composables/useUniqueKey.js'
+
+const getCategory = () => ({
   href: '/categoryName',
-  count: 123,
+  productCount: 1000,
   category: {
-    id: 'CATEGORY_ID',
+    id: getKey('CATEGORY_ID'),
     name: 'Category Name',
   },
   children: [
     {
       category: {
-        id: 'CATEGORY_ID',
-        name: 'Subcategory Name',
+        id: getKey('CATEGORY_ID'),
+        name: 'Subcategory Name 1',
       },
       href: '/categoryName',
-      count: 123,
+      productCount: 23,
     },
     {
       category: {
-        id: 'CATEGORY_ID',
-        name: 'Subcategory Name',
+        id: getKey('CATEGORY_ID'),
+        name: 'Subcategory Name 2',
       },
       href: '/categoryName',
-      count: 123,
+      productCount: 76,
     },
     {
       category: {
-        id: 'CATEGORY_ID',
-        name: 'Subcategory Name',
+        id: getKey('CATEGORY_ID'),
+        name: 'Subcategory Name 3',
       },
       href: '/categoryName',
-      count: 123,
+      productCount: 104,
     },
     {
       category: {
-        id: 'CATEGORY_ID',
-        name: 'Subcategory Name',
+        id: getKey('CATEGORY_ID'),
+        name: 'Subcategory Name 4',
       },
       href: '/categoryName',
-      count: 123,
+      productCount: 123,
     },
     {
       category: {
-        id: 'CATEGORY_ID',
-        name: 'Subcategory Name',
+        id: getKey('CATEGORY_ID'),
+        name: 'Subcategory Name 5',
       },
       href: '/categoryName',
-      count: 123,
+      productCount: 22,
     },
   ],
-}
+})
 
-export default [category, category, category, category, category, category]
+export const category = getCategory()
+
+export default [
+  getCategory(),
+  getCategory(),
+  getCategory(),
+  getCategory(),
+  getCategory(),
+  getCategory(),
+]

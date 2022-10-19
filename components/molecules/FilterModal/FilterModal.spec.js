@@ -1,8 +1,6 @@
 import { expect } from '@jest/globals'
 import { shallowMount } from '@vue/test-utils'
 import FilterModal from './FilterModal.vue'
-import Button from '~/components/atoms/Button/Button.vue'
-import GenericModal from '~/components/molecules/GenericModal/GenericModal.vue'
 
 const mockIsMobile = jest.fn()
 jest.mock('@nuxtjs/composition-api', () => {

@@ -10,10 +10,12 @@
       tooltip="always"
       @drag-end="selectionUpdated"
     >
+      <!-- eslint-disable-next-line vue/no-template-shadow -->
       <template #label="{ value }">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="vue-slider-mark-label" v-html="getTooltipLabel(value)" />
       </template>
+      <!-- eslint-disable-next-line vue/no-template-shadow -->
       <template #tooltip="{ value }">
         <div class="vue-slider-dot-tooltip-inner">
           <!-- eslint-disable vue/no-v-html -->
@@ -40,7 +42,12 @@
 </template>
 <script>
 import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min.js'
-import { ref, onBeforeMount, useContext } from '@nuxtjs/composition-api'
+import {
+  ref,
+  onBeforeMount,
+  useContext,
+  computed,
+} from '@nuxtjs/composition-api'
 import { sections, ranges } from './VacuumRangeSlider.json'
 
 export default {
@@ -49,23 +56,44 @@ export default {
     VueSlider,
   },
   props: {
+    initialValues: {
+      type: Array,
+      default: () => [],
+    },
     showRanges: {
       type: Boolean,
       default: true,
     },
   },
-  emits: ['update'],
-  setup(_, { emit }) {
+  emits: ['update', 'input'],
+  setup(props, { emit }) {
     const { i18n } = useContext()
     const marks = ref({})
     let data = ref([])
-    let modelValue = ref(['0', '16'])
+
+    const modelValue = ref(['0', '16'])
+
+    const setIntitialModelValue = () => {
+      const [first, second] = props.initialValues
+      const cleanValue = (value = '', op) => value.replace(op, '')
+      const findLower = ({ value }) => value === cleanValue(first, '>=')
+      const findUpper = ({ value }) => value === cleanValue(second, '<=')
+      const lower = data.value.findIndex(findLower)
+      const upper = data.value.findIndex(findUpper)
+
+      modelValue.value = [
+        String(lower === -1 ? 0 : lower),
+        String(upper === -1 ? 16 : upper),
+      ]
+    }
 
     onBeforeMount(() => {
       for (const section of sections.data) {
         marks.value[String(section.point)] = section.name
         data.value = data.value.concat(section.dataPoints)
       }
+
+      setIntitialModelValue()
     })
 
     const getTooltipLabel = (value) => {
@@ -84,9 +112,12 @@ export default {
     }
 
     const selectionUpdated = () => {
+      const lower = modelValue.value[0]
+      const upper = modelValue.value[1]
+
       emit('update', [
-        data.value[modelValue.value[0]].value,
-        data.value[modelValue.value[1]].value,
+        lower > 0 ? `>=${data.value[lower].value}` : null,
+        upper < 16 ? `<=${data.value[upper].value}` : null,
       ])
     }
 
@@ -101,9 +132,9 @@ export default {
       data,
       sections,
       ranges,
+      selectionUpdated,
       getRangeWidth,
       getTooltipLabel,
-      selectionUpdated,
       rangeClicked,
     }
   },

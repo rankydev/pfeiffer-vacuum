@@ -12,6 +12,7 @@
       <GenericModal
         class="filter-modal"
         :is-open="isOpen"
+        :fill-viewport="true"
         @closeModal="isOpen = false"
       >
         <div class="filter-modal__content">
@@ -50,7 +51,6 @@ export default defineComponent({
     Button,
     GenericModal,
   },
-  props: {},
   emits: ['closeModal'],
   setup() {
     const isOpen = ref(false)
@@ -66,6 +66,11 @@ export default defineComponent({
 @import '/assets/scss/mixins';
 
 .filter-modal {
+  &__open-button {
+    @include fill-available;
+    @apply tw-justify-center;
+  }
+
   &__content {
     @apply tw-flex;
     @apply tw-flex-col;

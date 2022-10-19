@@ -117,6 +117,7 @@
 /* wrapper and range style */
 .vacuum-range-slider {
   @apply tw-mt-10;
+  @apply tw-px-12;
 
   &__ranges {
     @apply tw-hidden;

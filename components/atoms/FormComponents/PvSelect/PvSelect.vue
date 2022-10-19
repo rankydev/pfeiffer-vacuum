@@ -2,7 +2,8 @@
   <div>
     <PvLabel v-if="label" :label="label" />
     <v-select
-      v-bind="{ options, disabled, multiple, reduce }"
+      v-model="internalValue"
+      v-bind="{ options, disabled, multiple, reduce, clearable }"
       :required="isRequired"
       :class="{
         'pv-select--error': !!validation.getError(),
@@ -14,19 +15,18 @@
       :components="{ Deselect }"
       deselect-from-dropdown
       :close-on-select="!!!multiple"
-      :value="internalValue"
-      @input="
-        $emit('update', $event)
-        validation.validateInput()
-      "
+      @input="validation.validateInput()"
     >
       <template #search="{ attributes, events }">
-        <Icon
-          v-if="prependIcon"
-          class="pv-select__icon-prepend"
-          :icon="prependIcon"
-        />
-        <input class="vs__search" v-bind="attributes" v-on="events" />
+        <div class="pv-select__search-wrapper">
+          <Icon
+            v-if="prependIcon"
+            class="pv-select__icon-prepend"
+            :icon="prependIcon"
+          />
+          <input class="vs__search" v-bind="attributes" v-on="events" />
+          <div class="pv-select__search-helper">{{ placeholder }}</div>
+        </div>
       </template>
 
       <template #open-indicator>
@@ -34,10 +34,12 @@
           v-if="!!validation.getError()"
           class="pv-select__icon-error"
           icon="error_outline"
+          :size="iconSize"
         />
         <Icon
           class="vs__open-indicator pv-select__icon-indicator"
           icon="arrow_drop_down"
+          :size="iconSize"
         />
       </template>
 
@@ -52,7 +54,7 @@
           "
         />
         <Icon
-          v-if="option.icon && !!!multiple"
+          v-if="option.icon && !multiple"
           class="pv-select__icon-option"
           :icon="option.icon"
         />
@@ -74,8 +76,13 @@
           class="pv-select__icon-option"
           :icon="option.icon"
         />
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-html="option[optionLabel]" />
+        <!-- eslint-disable vue/no-v-html -->
+        <span
+          v-html="
+            `${prependLabel ? prependLabel + ' ' : ''}${option[optionLabel]}`
+          "
+        />
+        <!-- eslint-enable vue/no-v-html -->
       </template>
 
       <template #no-options>
@@ -96,7 +103,7 @@ import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import Checkbox from '../Checkbox/Checkbox'
 import Icon from '~/components/atoms/Icon/Icon'
-import { defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { useInputValidator } from '~/composables/useValidator'
 import props from './partials/props.js'
 
@@ -110,10 +117,16 @@ export default defineComponent({
     Checkbox,
   },
   props,
-  emits: ['update'],
-  setup(props) {
-    const { value: internalValue } = toRefs(props)
-    const validation = ref(useInputValidator(props.rules, internalValue))
+  emits: ['input'],
+  setup(props, { emit }) {
+    const internalValue = computed({
+      get: () => props.value,
+      set: (newVal) => {
+        emit('input', newVal)
+      },
+    })
+
+    const validation = useInputValidator(props.rules, internalValue)
 
     const Deselect = {
       render: (h) => h('span', { class: ['deselect-option'] }),

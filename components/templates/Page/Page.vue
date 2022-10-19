@@ -79,7 +79,7 @@ export default defineComponent({
   props: {
     content: {
       type: Object,
-      default: /* istanbul ignore next */ () => {},
+      default: /* istanbul ignore next */ () => ({}),
     },
   },
   setup(props, context) {
@@ -115,7 +115,7 @@ export default defineComponent({
 .page-template {
   @apply tw-flex;
   @apply tw-flex-col;
-  @apply tw-h-screen;
+  @apply tw-min-h-screen;
   @apply tw-overflow-x-hidden;
 }
 </style>

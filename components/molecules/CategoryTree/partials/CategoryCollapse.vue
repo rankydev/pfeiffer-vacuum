@@ -1,45 +1,44 @@
 <template>
   <div class="category-collapse">
     <div class="category-collapse__trigger">
-      <Button
-        class="category-collapse__parent"
-        v-bind="{ href }"
-        :label="`${label} (${count})`"
-        variant="secondary"
-        shape="plain"
-      />
+      <NuxtLink class="category-collapse__parent" :to="href"
+        >{{ `${label} (${count})` }}
+      </NuxtLink>
       <Icon
+        v-if="hasChildren"
         class="category-collapse__icon"
         :icon="isOpen ? 'expand_less' : 'expand_more'"
         @click="isOpen = !isOpen"
       />
     </div>
-    <AnimatedCollapse speed="fast">
+    <AnimatedCollapse v-if="hasChildren" speed="fast">
       <div v-show="isOpen" class="category-collapse__children">
-        <Button
-          v-for="category in children"
-          :key="getKey(category.category.name)"
-          :href="category.href"
-          :label="`${category.category.name} (${category.count})`"
+        <NuxtLink
+          v-for="child in children"
+          :key="child.category.id"
           class="category-collapse__child"
-          variant="secondary"
-          shape="plain"
-        />
+          :to="getUrl(child.category.id)"
+          >{{ `${child.category.name} (${child.productCount})` }}
+        </NuxtLink>
       </div>
     </AnimatedCollapse>
   </div>
 </template>
 <script>
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse'
-import Button from '~/components/atoms/Button/Button'
 import Icon from '~/components/atoms/Icon/Icon'
-import { ref } from '@vue/composition-api'
-import getKey from '~/composables/useUniqueKey'
+import { joinURL } from 'ufo'
+import {
+  defineComponent,
+  computed,
+  ref,
+  useRoute,
+  useContext,
+} from '@nuxtjs/composition-api'
 
-export default {
+export default defineComponent({
   components: {
     AnimatedCollapse,
-    Button,
     Icon,
   },
   props: {
@@ -48,7 +47,7 @@ export default {
       required: true,
     },
     href: {
-      type: String,
+      type: [String, Object],
       default: '',
     },
     count: {
@@ -60,16 +59,25 @@ export default {
       default: () => [],
     },
   },
-  setup() {
+  setup(props) {
+    const route = useRoute()
+    const { app } = useContext()
     const isOpen = ref(false)
 
-    return { isOpen, getKey }
+    const hasChildren = computed(() => props.children.length || 0 > 0)
+
+    const getUrl = (id) => ({
+      path: joinURL(app.localePath('shop-categories'), id),
+      query: { ...route.value.query, currentPage: 1 },
+    })
+
+    return { isOpen, getUrl, hasChildren }
   },
-}
+})
 </script>
 <style lang="scss">
 .category-collapse {
-  @apply tw-min-w-max;
+  @apply tw-w-full;
 
   &__trigger {
     @apply tw-flex tw-items-center tw-justify-between;
@@ -79,15 +87,21 @@ export default {
   &__child {
     @apply tw-p-0;
 
-    .button__label {
-      @apply tw-text-pv-grey-16;
-      @apply tw-font-normal;
-    }
+    @apply tw-text-pv-grey-16;
+    @apply tw-font-normal;
+    @apply tw-overflow-hidden;
+    @apply tw-text-ellipsis;
 
     &:hover {
-      .button__label {
-        @apply tw-text-pv-red-lighter;
-      }
+      @apply tw-text-pv-red-lighter;
+    }
+  }
+
+  &__parent {
+    @apply tw-whitespace-nowrap;
+
+    @screen lg {
+      @apply tw-whitespace-normal;
     }
   }
 
@@ -100,9 +114,7 @@ export default {
       @apply tw-pb-2;
     }
 
-    .button__label {
-      @apply tw-text-pv-grey-32;
-    }
+    @apply tw-text-pv-grey-32;
   }
 
   &__icon {
