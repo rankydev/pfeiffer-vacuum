@@ -45,14 +45,6 @@ lint:
   script:
     - npm ci --cache .npm --prefer-offline
     - npm run lint:ci
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - report/*.json
-    paths:
-      - report/
-    expire_in: 3 week
 
 .lint-junit-report:
   extends: .node-image
