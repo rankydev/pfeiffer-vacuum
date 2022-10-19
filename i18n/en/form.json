@@ -39,6 +39,14 @@
   },
   "message": {
     "success": "Your request was sent successfully!",
-    "error": "Could not send your request."
+    "error": {
+      "defaultError": "Could not send your request.",
+      "customerAlreadyExists":
+        "You already have a Pfeiffer Vacuum account and your password remains unchanged.",
+      "technicalError":
+        "A technical error occurred. Please contact the Pfeiffer Vacuum support.",
+      "customerInconsistentError":
+        "There is a problem with your account. Please contact our customer service."
+    } 
   }
 }

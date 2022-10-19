@@ -170,11 +170,37 @@ export default defineComponent({
           loading.value = false
           router.push(app.localePath('/shop/register/success'))
         })
-        .catch(() => {
-          loading.value = false
-          toast.error({
-            description: i18n.t('form.message.error'),
+        .catch((e) => {
+          console.log(e, 'FEHLER')
+          e.data.errors.forEach((error) => {
+            switch (error.type) {
+              case 'CustomerAlreadyExistsError':
+                toast.error({
+                  description: i18n.t(
+                    'form.message.error.customerAlreadyExists'
+                  ),
+                })
+                break
+              case 'CustomerInconsistentError':
+                toast.error({
+                  description: i18n.t(
+                    'form.message.error.customerInconsistentError'
+                  ),
+                })
+                break
+              case 'B2bRegistrationFailedError':
+                toast.error({
+                  description: i18n.t('form.message.error.technicalError'),
+                })
+                break
+              default:
+                toast.error({
+                  description: i18n.t('form.message.error.defaultError'),
+                })
+                break
+            }
           })
+          loading.value = false
         })
     }
 

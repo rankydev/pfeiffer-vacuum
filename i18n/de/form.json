@@ -38,6 +38,15 @@
   },
   "message": {
     "success": "Ihre Anfrage wurde erfolgreich gesendet",
-    "error": "Anfrage konnte nicht gesendet werden"
+    "error": {
+      "defaultError": "Anfrage konnte nicht gesendet werden",
+      "customerAlreadyExists":
+        "Sie haben bereits ein Konto bei Pfeiffer Vacuum und Ihr Passwort bleibt unverändert.",
+      "technicalError":
+        "Ein technischer Fehler ist aufgetreten. Bitte kontaktieren Sie den Pfeiffer Vacuum Support.",
+      "customerInconsistentError":
+        "Es gibt ein Problem mit Ihrem Account. Bitte wenden Sie sich direkt an den Kundenservice."
+
+    } 
   }
 }
