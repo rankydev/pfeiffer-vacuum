@@ -170,9 +170,8 @@ export default defineComponent({
           loading.value = false
           router.push(app.localePath('/shop/register/success'))
         })
-        .catch((e) => {
-          console.log(e, 'FEHLER')
-          e.data.errors.forEach((error) => {
+        .catch((err) => {
+          err.data.errors.forEach((error) => {
             switch (error.type) {
               case 'CustomerAlreadyExistsError':
                 toast.error({
