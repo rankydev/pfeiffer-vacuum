@@ -5,8 +5,6 @@ import FilterModal from '~/components/molecules/FilterModal/FilterModal'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import Popup from '~/components/atoms/Popup/Popup'
 
-const mockIsMobile = jest.fn()
-
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   return {
@@ -16,7 +14,7 @@ jest.mock('@nuxtjs/composition-api', () => {
       return {
         app: {
           $breakpoints: {
-            isMobile: { value: mockIsMobile },
+            isMobile: { value: jest.fn() },
           },
         },
       }
@@ -88,7 +86,24 @@ describe('Facets.vue', () => {
   })
 
   describe('during interaction', () => {
-    // update facet
-    // remove facet
+    it('should update facet properly', () => {
+      const propsData = {
+        facets,
+        sorts,
+      }
+      createComponent(propsData)
+
+      wrapper.vm.updateFacets(facets[0].code, facets[0].values)
+    })
+
+    it('should remove facet properly', () => {
+      const propsData = {
+        facets,
+        sorts,
+      }
+      createComponent(propsData)
+
+      wrapper.vm.removeFacet(facets[0])
+    })
   })
 })
