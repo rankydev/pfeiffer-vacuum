@@ -44,7 +44,6 @@ module.exports = {
     '/composables/useAxiosInterceptors.js',
     '/composables/useContextUtil.js',
     '/stores/user/partials/useKeycloak.js',
-    '/components/molecules/Facets/Facets.js',
   ],
   coverageThreshold: {
     global: {
