@@ -62,7 +62,7 @@ export default defineComponent({
   props: {
     value: {
       type: Array,
-      default: () => [0, 10000],
+      default: () => ['0', '10000'],
     },
   },
   emits: ['update'],
