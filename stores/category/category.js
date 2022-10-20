@@ -60,14 +60,13 @@ export const useCategoryStore = defineStore('category', () => {
 
   const loadProducts = async () => {
     const id = route.value.params.category || ''
-    const sort = route.value.query.sort || 'name-asc'
+    const sort = route.value.query.sort || 'relevance'
     const facets = route.value.query.facets || ''
     const url = joinURL(basePath, config.PRODUCTS_API, 'search')
     const term = route.value.query.searchTerm || ''
     const params = {
       currentPage: route.value.query.currentPage - 1 || 0,
       pageSize: 9,
-      //TODO: Facet filter need to merge with the query
       query: `${term}:${sort}${id ? ':category:' + id : ''}${
         facets ? ':' + facets : ''
       }`,
