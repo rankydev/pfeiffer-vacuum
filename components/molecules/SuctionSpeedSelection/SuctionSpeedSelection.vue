@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, onBeforeMount, ref } from '@nuxtjs/composition-api'
 import ButtonGroup from '~/components/atoms/FormComponents/ButtonGroup/ButtonGroup'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import Button from '~/components/atoms/Button/Button'
@@ -62,14 +62,11 @@ export default defineComponent({
   props: {
     value: {
       type: Array,
-      default: () => [0, 10000],
+      default: () => ['0', '10000'],
     },
   },
   emits: ['update'],
   setup(props, { emit }) {
-    const lowerBound = ref(props.value?.[0] || 0)
-    const upperBound = ref(props.value?.[1] || 10000)
-    const internalValue = ref(props.value)
     const meters = ref(true)
     const liters = ref(false)
     const unit = ref('m³/h')
@@ -85,6 +82,27 @@ export default defineComponent({
         value: 'liters',
       },
     ]
+
+    let lowerBound = ref(0)
+    let upperBound = ref(10000)
+    const internalValue = ref([])
+
+    const setIntitialModelValue = () => {
+      const [first, second] = props.value
+      const cleanValue = (value = '', op) =>
+        parseInt(toString(value).replace(op, ''))
+      lowerBound.value = cleanValue(first || '0', '>=')
+      upperBound.value = cleanValue(second || '10000', '<=')
+
+      internalValue.value = [
+        lowerBound ? 0 : lowerBound,
+        upperBound ? 10000 : upperBound,
+      ]
+    }
+
+    onBeforeMount(() => {
+      setIntitialModelValue()
+    })
 
     // limit the given value dependent on its unit (liters or meters)
     const fixMaxBounds = (val) => {
@@ -191,7 +209,10 @@ export default defineComponent({
     const sendUpdate = () => {
       const lower = internalValue.value[0]
       const upper = internalValue.value[1]
-      emit('update', [lower > 0 ? lower : null, upper < 10000 ? upper : null])
+      emit('update', [
+        lower > 0 ? `>=${lower}` : null,
+        upper < 10000 ? `<=${upper}` : null,
+      ])
     }
 
     return {
