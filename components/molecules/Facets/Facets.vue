@@ -34,7 +34,7 @@
                 'facets__slider-buttons',
                 { 'facets__slider-buttons--active': vacuumRangeActive },
               ]"
-              label="Vacuum Range"
+              :label="$t('category.vacuumRange')"
               variant="secondary"
               shape="outlined"
               size="xsmall"
@@ -57,7 +57,7 @@
                 'facets__slider-buttons',
                 { 'facets__slider-buttons--active': suctionSpeedActive },
               ]"
-              label="Suction Speed"
+              :label="$t('category.suctionSpeed')"
               variant="secondary"
               shape="outlined"
               size="xsmall"
