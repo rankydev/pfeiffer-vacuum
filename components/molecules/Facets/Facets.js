@@ -155,7 +155,6 @@ export default {
         })
       }
 
-      console.log('updateFacets', newFacets)
       emit('updateFacets', newFacets)
     }
 

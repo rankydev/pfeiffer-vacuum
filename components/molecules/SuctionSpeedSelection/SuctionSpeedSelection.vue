@@ -83,21 +83,18 @@ export default defineComponent({
       },
     ]
 
-    let lowerBound = ref(0)
-    let upperBound = ref(10000)
+    let lowerBound = ref(null)
+    let upperBound = ref(null)
     const internalValue = ref([])
 
     const setIntitialModelValue = () => {
       const [first, second] = props.value
-      const cleanValue = (value = '', op) =>
-        parseInt(toString(value).replace(op, ''))
+      const cleanValue = (value = '', op) => value?.replace(op, '')
+
       lowerBound.value = cleanValue(first || '0', '>=')
       upperBound.value = cleanValue(second || '10000', '<=')
 
-      internalValue.value = [
-        lowerBound ? 0 : lowerBound,
-        upperBound ? 10000 : upperBound,
-      ]
+      internalValue.value = [lowerBound, upperBound]
     }
 
     onBeforeMount(() => {
