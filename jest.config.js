@@ -42,5 +42,5 @@ module.exports = {
     'stores/menu/',
     '/stores/user/partials/useKeycloak.js',
     '/components/molecules/Facets/Facets.js',
-  ]
+  ],
 }
