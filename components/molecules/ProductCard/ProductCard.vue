@@ -91,4 +91,8 @@ export default defineComponent({
     @apply tw-font-bold;
   }
 }
+
+em {
+  @apply tw-not-italic;
+}
 </style>
