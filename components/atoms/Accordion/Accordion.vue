@@ -162,6 +162,16 @@ export default defineComponent({
 
   &__content {
     @apply tw-overflow-hidden;
+
+    .paragraph-section,
+    .image-with-description,
+    .button {
+      @apply tw-mb-4;
+
+      @screen md {
+        @apply tw-mb-6;
+      }
+    }
   }
 }
 </style>
