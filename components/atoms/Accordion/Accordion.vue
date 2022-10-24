@@ -164,6 +164,7 @@ export default defineComponent({
     @apply tw-overflow-hidden;
 
     .paragraph-section,
+    .image-with-description,
     .button {
       @apply tw-mb-4;
 
