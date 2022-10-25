@@ -40,18 +40,7 @@ module.exports = {
     'stores/countries/',
     'stores/product',
     'stores/menu/',
-    '/composables/useAxiosForHybris.js',
-    '/composables/useAxiosInterceptors.js',
-    '/composables/useContextUtil.js',
     '/stores/user/partials/useKeycloak.js',
     '/components/molecules/Facets/Facets.js',
   ],
-  coverageThreshold: {
-    global: {
-      statements: 98,
-      branches: 91,
-      functions: 98,
-      lines: 98,
-    },
-  },
 }

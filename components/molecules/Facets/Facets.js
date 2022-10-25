@@ -84,6 +84,28 @@ export default {
         ) || []
     )
 
+    const vacuumRange = computed(() => {
+      const lower = currentQuery.value?.query?.filterTerms?.find(
+        (e) => e.key === vacuumRangeIds[0]
+      )
+      const upper = currentQuery.value?.query?.filterTerms?.find(
+        (e) => e.key === vacuumRangeIds[1]
+      )
+
+      return [lower?.value, upper?.value]
+    })
+
+    const suctionSpeed = computed(() => {
+      const lower = currentQuery.value?.query?.filterTerms?.find(
+        (e) => e.key === suctionSpeedIds[0]
+      )
+      const upper = currentQuery.value?.query?.filterTerms?.find(
+        (e) => e.key === suctionSpeedIds[1]
+      )
+
+      return [lower?.value, upper?.value]
+    })
+
     const vacuumRangePresent = computed(
       () => !!facets.value?.filter((e) => vacuumRangeIds.includes(e.code))
     )
@@ -149,11 +171,13 @@ export default {
       shrinkedFacets,
       selectedFacets,
       vacuumRangeIds,
+      vacuumRange,
       suctionSpeedIds,
       vacuumRangePresent,
       suctionSpeedPresent,
       vacuumRangeActive,
       suctionSpeedActive,
+      suctionSpeed,
       updateFacets,
       removeFacet,
     }

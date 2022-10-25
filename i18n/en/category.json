@@ -4,9 +4,11 @@
   "lessFilters": "Less filters",
   "moreFilters": "More filters",
   "activeFilters": "Active filters:",
-  "searchResult": "search result for",
+  "searchResult": "Search results for",
   "sortAndFilter": "Sort & Filter",
   "applyFilter": "Apply filter",
   "noMatchingProducts": "No matching products found",
-  "checkSearchCriteria": "Please check the selected search criteria."
+  "checkSearchCriteria": "Please check the selected search criteria.",
+  "vacuumRange": "Vacuum Range",
+  "suctionSpeed": "Pumping Speed"
 }

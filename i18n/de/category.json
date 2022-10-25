@@ -8,5 +8,7 @@
   "sortAndFilter": "Sortieren & Filtern",
   "applyFilter": "Filter anwenden",
   "noMatchingProducts": "Keine passenden Produkte gefunden",
-  "checkSearchCriteria": "Bitte prüfen Sie die ausgewählten Suchkriterien."
+  "checkSearchCriteria": "Bitte prüfen Sie die ausgewählten Suchkriterien.",
+  "vacuumRange": "Vakuumbereich",
+  "suctionSpeed": "Saugvermögen"
 }

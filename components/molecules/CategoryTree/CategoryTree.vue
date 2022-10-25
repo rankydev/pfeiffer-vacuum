@@ -9,24 +9,25 @@
       @touchend="toggleScrollbarClass"
     >
       <CategoryCollapse
-        v-for="category in categories"
-        :key="getKey(category.category.name)"
-        :label="category.category.name"
-        :count="category.productCount"
-        :href="{
-          path: joinURL(localePath('shop-categories'), category.category.id),
-          query: { ...route.query, currentPage: 1 },
-        }"
-        :children="category.children"
+        v-for="child in categories"
+        :key="child.category.id"
+        :label="child.category.name"
+        :count="child.productCount"
+        :href="getUrl(child.category.id)"
+        :children="child.children"
       />
     </div>
     <div class="category-tree__mobile-overlay"></div>
   </div>
 </template>
 <script>
-import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useRoute,
+  useContext,
+} from '@nuxtjs/composition-api'
 import CategoryCollapse from './partials/CategoryCollapse'
-import getKey from '~/composables/useUniqueKey'
 import { joinURL } from 'ufo'
 
 export default defineComponent({
@@ -41,18 +42,22 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute()
+    const { app } = useContext()
     const showScrollbar = ref(false)
 
     const toggleScrollbarClass = () => {
       showScrollbar.value = !showScrollbar.value
     }
 
+    const getUrl = (id) => ({
+      path: joinURL(app.localePath('shop-categories'), id),
+      query: { ...route.value.query, currentPage: 1 },
+    })
+
     return {
-      route,
-      getKey,
       toggleScrollbarClass,
       showScrollbar,
-      joinURL,
+      getUrl,
     }
   },
 })

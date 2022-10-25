@@ -25,9 +25,11 @@
       <!-- eslint-disable-next-line vue/no-v-html -->
       <p v-html="description || ''" />
     </template>
+    <!-- TODO: We need to bin in sanitizer for v-html -->
+    <!-- eslint-disable vue/no-v-html -->
     <template #additionalInfo>
       <template v-if="product.orderNumber">
-        <span>{{ product.orderNumber }}</span>
+        <span v-html="product.orderNumber"></span>
       </template>
 
       <template v-else-if="product.numberOfVariants">
@@ -88,5 +90,9 @@ export default defineComponent({
     @apply tw-mr-1;
     @apply tw-font-bold;
   }
+}
+
+em {
+  @apply tw-not-italic;
 }
 </style>

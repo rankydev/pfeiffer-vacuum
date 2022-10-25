@@ -20,12 +20,19 @@ Object.defineProperties(window.HTMLElement.prototype, {
 })
 
 window.getComputedStyle = () => ({
-  styles: { marginTop: 10, marginBottom: 10, marginLeft: 10, marginRight: 10 },
+  marginTop: 10,
+  marginBottom: 10,
+  marginLeft: 10,
+  marginRight: 10,
 })
 
 const orgSetup = Popup.setup
 const contentEle = document.createElement('div')
 const activatorEle = document.createElement('div')
+
+jest
+  .spyOn(document.documentElement, 'clientWidth', 'get')
+  .mockImplementation(() => 1024)
 
 activatorEle.getBoundingClientRect = () => ({ width: 100, height: 100 })
 contentEle.getBoundingClientRect = () => ({ width: 200, height: 200 })
@@ -115,7 +122,7 @@ describe('Popup', () => {
 
         const domContent = wrapper.find('.popup__content')
 
-        expect(domContent.attributes('style')).toBe('left: 50px; top: 150px;')
+        expect(domContent.attributes('style')).toBe('left: 40px; top: 150px;')
       })
 
       test('should not render default slot given a second click', async () => {
