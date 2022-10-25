@@ -53,6 +53,7 @@ export default {
         'VideoPlayer',
         'HelpContainer',
         'ImageBanner',
+        'ColumnView',
       ],
     },
     bottom: {
