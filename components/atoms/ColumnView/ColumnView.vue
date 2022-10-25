@@ -1,10 +1,26 @@
 <template>
   <div class="column-view tw-column-view" :class="columnPlacment">
     <NuxtDynamic
-      v-for="item in content"
+      v-for="item in column1"
       :key="item._uid"
       v-editable="item"
-      class="column-view__content"
+      class="column-view__column1"
+      v-bind="item"
+      :name="item.uiComponent || item.component"
+    />
+    <NuxtDynamic
+      v-for="item in column2"
+      :key="item._uid"
+      v-editable="item"
+      class="column-view__column2"
+      v-bind="item"
+      :name="item.uiComponent || item.component"
+    />
+    <NuxtDynamic
+      v-for="item in column3"
+      :key="item._uid"
+      v-editable="item"
+      class="column-view__column3"
       v-bind="item"
       :name="item.uiComponent || item.component"
     />
@@ -20,7 +36,15 @@ export default defineComponent({
     /**
      * Array of content rendered in the Column View
      */
-    content: {
+    column1: {
+      type: Array,
+      default: () => [],
+    },
+    column2: {
+      type: Array,
+      default: () => [],
+    },
+    column3: {
       type: Array,
       default: () => [],
     },
@@ -61,11 +85,6 @@ export default defineComponent({
     @apply tw-mb-24;
   }
 
-  :nth-child(2) {
-    @apply tw-col-start-5;
-    @apply tw-col-span-4;
-  }
-
   &__width-33 {
     @screen md {
       @apply tw-flex;
@@ -74,23 +93,50 @@ export default defineComponent({
       @apply tw-grid;
     }
 
-    :nth-child(1) {
+    .column-view__column1 {
       @apply tw-col-span-4;
+
+      @screen md {
+        @apply tw-w-2/6;
+      }
+
+      @screen lg {
+        @apply tw-w-full;
+        @apply tw-col-span-4;
+      }
     }
 
-    :nth-child(2) {
-      @apply tw-col-start-5;
+    .column-view__column2 {
       @apply tw-col-span-4;
+
+      @screen md {
+        @apply tw-w-2/6;
+      }
+
+      @screen lg {
+        @apply tw-w-full;
+        @apply tw-col-start-5;
+        @apply tw-col-end-9;
+      }
     }
 
-    :nth-child(3) {
-      @apply tw-col-start-9;
+    .column-view__column3 {
       @apply tw-col-span-4;
+
+      @screen md {
+        @apply tw-w-2/6;
+      }
+
+      @screen lg {
+        @apply tw-w-full;
+        @apply tw-col-start-9;
+        @apply tw-col-end-13;
+      }
     }
   }
 
   &__width-50 {
-    :nth-child(1) {
+    .column-view__column1 {
       @apply tw-col-span-4;
 
       @screen md {
@@ -102,7 +148,7 @@ export default defineComponent({
       }
     }
 
-    :nth-child(2) {
+    .column-view__column2 {
       @apply tw-col-span-4;
 
       @screen md {
@@ -118,7 +164,7 @@ export default defineComponent({
   }
 
   &__width-full {
-    :nth-child(1) {
+    .column-view__column1 {
       @apply tw-col-start-1;
       @apply tw-col-end-5;
 

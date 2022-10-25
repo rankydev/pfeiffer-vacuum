@@ -22,10 +22,34 @@ export default {
         },
       ],
     },
-    content: {
-      display_name: 'Content',
+    column1: {
+      display_name: 'Column 1',
       type: 'bloks',
-      maximum: 3,
+      maximum: 1,
+      restrict_components: true,
+      component_whitelist: [
+        'Accordion',
+        'ImageWithSource',
+        'ImageWithDescription',
+        'Richtext',
+      ],
+    },
+    column2: {
+      display_name: 'Column 2',
+      type: 'bloks',
+      maximum: 1,
+      restrict_components: true,
+      component_whitelist: [
+        'Accordion',
+        'ImageWithSource',
+        'ImageWithDescription',
+        'Richtext',
+      ],
+    },
+    column3: {
+      display_name: 'Column 3',
+      type: 'bloks',
+      maximum: 1,
       restrict_components: true,
       component_whitelist: [
         'Accordion',
