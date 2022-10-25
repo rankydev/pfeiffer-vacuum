@@ -1,29 +1,40 @@
 <template>
-  <div class="column-view tw-column-view" :class="columnPlacment">
-    <NuxtDynamic
-      v-for="item in column1"
-      :key="item._uid"
-      v-editable="item"
-      class="column-view__column1"
-      v-bind="item"
-      :name="item.uiComponent || item.component"
-    />
-    <NuxtDynamic
-      v-for="item in column2"
-      :key="item._uid"
-      v-editable="item"
+  <div class="column-view tw-column-view" :class="columnPlacement">
+    <div class="column-view__column1">
+      <NuxtDynamic
+        v-for="item in column1"
+        :key="item._uid"
+        v-editable="item"
+        v-bind="item"
+        :name="item.uiComponent || item.component"
+      />
+    </div>
+    <div
+      v-if="
+        columnPlacement === 'column-view__width-50' || 'column-view__width-33'
+      "
       class="column-view__column2"
-      v-bind="item"
-      :name="item.uiComponent || item.component"
-    />
-    <NuxtDynamic
-      v-for="item in column3"
-      :key="item._uid"
-      v-editable="item"
+    >
+      <NuxtDynamic
+        v-for="item in column2"
+        :key="item._uid"
+        v-editable="item"
+        v-bind="item"
+        :name="item.uiComponent || item.component"
+      />
+    </div>
+    <div
+      v-if="columnPlacement === 'column-view__width-33'"
       class="column-view__column3"
-      v-bind="item"
-      :name="item.uiComponent || item.component"
-    />
+    >
+      <NuxtDynamic
+        v-for="item in column3"
+        :key="item._uid"
+        v-editable="item"
+        v-bind="item"
+        :name="item.uiComponent || item.component"
+      />
+    </div>
   </div>
 </template>
 <script>
@@ -34,16 +45,22 @@ export default defineComponent({
   components: {},
   props: {
     /**
-     * Array of content rendered in the Column View
+     * Array of content rendered in column 1
      */
     column1: {
       type: Array,
       default: () => [],
     },
+    /**
+     * Array of content rendered in column 2
+     */
     column2: {
       type: Array,
       default: () => [],
     },
+    /**
+     * Array of content rendered in column 3
+     */
     column3: {
       type: Array,
       default: () => [],
@@ -57,7 +74,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const columnPlacment = computed(() => {
+    const columnPlacement = computed(() => {
       if (props.variant === '33:33:33') {
         return 'column-view__width-33'
       }
@@ -69,7 +86,7 @@ export default defineComponent({
     })
 
     return {
-      columnPlacment,
+      columnPlacement,
     }
   },
 })
