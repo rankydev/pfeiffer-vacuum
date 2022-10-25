@@ -42,7 +42,6 @@ import { defineComponent, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'ColumnView',
-  components: {},
   props: {
     /**
      * Array of content rendered in column 1

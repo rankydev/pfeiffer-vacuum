@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid'
 
 const accordionEntry = (isActive = false) => ({
   _uid: nanoid(),
+  uiComponent: 'Accordion',
   label: 'Lorem Ipsum',
   items: [richtext.content],
   isActive,
