@@ -20,7 +20,7 @@
     <slot name="onPageNavigation">
       <OnPageNavigation v-bind="(quicklinks || [])[0]" />
     </slot>
-
+    <StickyBar />
     <slot>
       <main>
         <nuxt-dynamic
@@ -69,12 +69,14 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
+import StickyBar from '~/components/atoms/StickyBar/StickyBar.vue'
 
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
     OnPageNavigation,
+    StickyBar,
   },
   props: {
     content: {
