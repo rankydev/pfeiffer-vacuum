@@ -54,6 +54,9 @@
         :name="item.uiComponent || item.component"
       />
     </slot>
+    <StickyBar v-bind="stickyBar">
+      <slot name="stickyBar" />
+    </StickyBar>
   </div>
 </template>
 
@@ -69,7 +72,8 @@ export default defineComponent({
   },
   setup(props) {
     const { content } = toRefs(props)
-    const { top, header, stage, body, bottom, footer } = content.value
+    const { top, header, stage, body, bottom, footer, stickyBar } =
+      content.value
     return {
       top,
       header,
@@ -77,6 +81,7 @@ export default defineComponent({
       body,
       bottom,
       footer,
+      stickyBar,
     }
   },
 })

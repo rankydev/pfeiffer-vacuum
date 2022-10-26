@@ -38,6 +38,17 @@
         </div>
       </main>
     </template>
+
+    <template #stickyBar>
+      <Button
+        v-if="hasLinkedCat"
+        class="category-page__sticky-btn"
+        :label="$t('navigation.button.overview.label')"
+        :href="categoryHref"
+        variant="secondary"
+        shape="outlined"
+      />
+    </template>
   </Page>
 </template>
 
@@ -154,6 +165,13 @@ export default defineComponent({
 .category-page {
   &__search-result {
     @apply tw-bg-pv-grey-96;
+  }
+
+  &__sticky-btn {
+    @apply tw-bg-pv-white;
+    @screen md {
+      @apply tw-hidden;
+    }
   }
 }
 </style>

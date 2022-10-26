@@ -10,6 +10,15 @@
         />
       </OnPageNavigation>
     </template>
+
+    <template #stickyBar>
+      <Button
+        v-if="hasLinkedCat"
+        class="category-content-page__sticky-btn"
+        :label="$t('navigation.button.shop.label')"
+        :href="href"
+      />
+    </template>
   </Page>
 </template>
 
@@ -49,3 +58,12 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss">
+.category-content-page {
+  &__sticky-btn {
+    @screen md {
+      @apply tw-hidden;
+    }
+  }
+}
+</style>
