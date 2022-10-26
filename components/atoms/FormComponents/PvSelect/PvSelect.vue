@@ -58,9 +58,8 @@
           class="pv-select__icon-option"
           :icon="option.icon"
         />
-        <!--  TODO sanitizer -->
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-html="option[optionLabel]" />
+        <span v-html="sanitizer.inline(option[optionLabel])" />
       </template>
 
       <template v-if="!!multiple" #selected-option-container>
@@ -70,7 +69,6 @@
       </template>
 
       <template v-else #selected-option="option">
-        <!--  TODO sanitizer -->
         <Icon
           v-if="option.icon"
           class="pv-select__icon-option"
@@ -79,7 +77,9 @@
         <!-- eslint-disable vue/no-v-html -->
         <span
           v-html="
-            `${prependLabel ? prependLabel + ' ' : ''}${option[optionLabel]}`
+            sanitizer.inline(
+              `${prependLabel ? prependLabel + ' ' : ''}${option[optionLabel]}`
+            )
           "
         />
         <!-- eslint-enable vue/no-v-html -->
@@ -106,6 +106,7 @@ import Icon from '~/components/atoms/Icon/Icon'
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { useInputValidator } from '~/composables/useValidator'
 import props from './partials/props.js'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({
   name: 'PvSelect',
@@ -132,10 +133,13 @@ export default defineComponent({
       render: (h) => h('span', { class: ['deselect-option'] }),
     }
 
+    const sanitizer = useSanitizer()
+
     return {
       internalValue,
       Deselect,
       validation,
+      sanitizer,
     }
   },
 })
