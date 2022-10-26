@@ -40,7 +40,6 @@ export default {
       component_whitelist: [
         'Accordion',
         'AnchorWrapper',
-        'ContactFormSection',
         'ContentMediaBlock',
         'ContentTextBlock',
         'CustomContentCardCarousel',

@@ -7,10 +7,6 @@ export default {
       display_name: 'Identifier',
       required: true,
     },
-    content: {
-      type: 'bloks',
-      display_name: 'Content',
-    },
   },
   image: null,
   preview_field: null,
