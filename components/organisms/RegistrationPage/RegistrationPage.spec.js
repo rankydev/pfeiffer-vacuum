@@ -1,15 +1,8 @@
 import RegistrationPage from './RegistrationPage'
-import { createLocalVue, shallowMount } from '@vue/test-utils'
-import { expect } from '@jest/globals'
+import { shallowMount } from '@vue/test-utils'
 import { setActivePinia, createPinia } from 'pinia'
 import HintModal from '~/components/organisms/RegistrationPage/HintModal/HintModal'
 import { ref, useRoute } from '@nuxtjs/composition-api'
-import Button from '~/components/atoms/Button/Button'
-
-const create = {
-  setBaseURL: jest.fn(),
-  setHeader: jest.fn(),
-}
 
 const requestData = {
   personalData: {
@@ -38,19 +31,27 @@ const requestData = {
   },
 }
 
-const badRequestData = {
-  ...requestData,
-  companyData: { companyAlreadyCustomer: undefined },
-}
-
+const mockRouterPush = jest.fn()
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   return {
     __esModule: true,
     ...originalModule,
     useRoute: jest.fn(),
+    useRouter: () => ({
+      push: mockRouterPush,
+    }),
+    useContext: () => ({
+      app: {
+        localePath: (path) => `/test${path}`,
+      },
+      i18n: {
+        t: (key) => key,
+      },
+    }),
   }
 })
+
 const mockRegister = jest.fn()
 jest.mock('~/stores/user', () => {
   return {
@@ -69,26 +70,16 @@ jest.mock('~/composables/useToast', () => {
   }
 })
 
-const localVue = createLocalVue()
-localVue.prototype.$nuxt = {
-  context: {
-    $axios: {
-      create: jest.fn(() => create),
-    },
-    i18n: {
-      t: () => 'some specific text',
-    },
-  },
-}
-
 describe('RegistrationPage', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    jest.resetAllMocks()
+  })
+
   describe('initial state', () => {
     useRoute.mockImplementation(() => ref({ query: { isLoginProcess: false } }))
-    beforeEach(() => setActivePinia(createPinia()))
     test('should render', () => {
-      const wrapper = shallowMount(RegistrationPage, {
-        localVue,
-      })
+      const wrapper = shallowMount(RegistrationPage)
 
       const component = wrapper.find('.registration-page')
 
@@ -97,11 +88,8 @@ describe('RegistrationPage', () => {
   })
 
   describe('during interaction', () => {
-    beforeEach(() => setActivePinia(createPinia()))
     test('should show modal when submit btn is clicked', async () => {
-      const wrapper = shallowMount(RegistrationPage, {
-        localVue,
-      })
+      const wrapper = shallowMount(RegistrationPage)
 
       const spyTriggerSendRegistrationProcess = jest.spyOn(
         wrapper.vm,
@@ -122,9 +110,7 @@ describe('RegistrationPage', () => {
     })
 
     test('should call register given requestData', async () => {
-      const wrapper = shallowMount(RegistrationPage, {
-        localVue,
-      })
+      const wrapper = shallowMount(RegistrationPage)
       mockRegister.mockReturnValue(Promise.resolve())
       await wrapper.setData({
         proceedWithoutCompany: true,
@@ -138,16 +124,26 @@ describe('RegistrationPage', () => {
 
       expect(mockRegister).toBeCalledTimes(1)
       expect(mockToastError).toBeCalledTimes(0)
+      expect(mockRouterPush).toBeCalledWith('/test/shop/register/success')
     })
 
-    test('should not call register given wrong requestData', async () => {
-      const wrapper = shallowMount(RegistrationPage, {
-        localVue,
+    test('should fail register given already existing customer', async () => {
+      const wrapper = shallowMount(RegistrationPage)
+      mockRegister.mockReturnValue(
+        Promise.reject({
+          data: { errors: [{ type: 'CustomerAlreadyExistsError' }] },
+        })
+      )
+
+      mockToastError.mockImplementation((message) => {
+        expect(message).toStrictEqual({
+          description: 'form.message.error.customerAlreadyExists',
+        })
       })
-      mockRegister.mockReturnValue(Promise.resolve())
+
       await wrapper.setData({
         proceedWithoutCompany: true,
-        requestData: badRequestData,
+        requestData: requestData,
       })
       const submitButton = wrapper.find(
         '.registration-page__form-section__submit-button'
@@ -155,8 +151,7 @@ describe('RegistrationPage', () => {
       submitButton.trigger('click')
       await wrapper.vm.$nextTick()
 
-      expect(mockRegister).toBeCalled()
-      expect(mockToastError).toBeCalledTimes(1)
+      expect(mockRegister).toBeCalledTimes(1)
     })
   })
 })
