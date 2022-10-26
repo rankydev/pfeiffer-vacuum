@@ -1,14 +1,13 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
-
-import Richtext from './Richtext.vue'
+import { createLocalVue, shallowMount } from '@vue/test-utils'
 import {
   headlines,
-  styleOptions,
-  linksTargetSelf,
   linksTargetBlank,
-  unorderedList,
+  linksTargetSelf,
   orderedList,
+  styleOptions,
+  unorderedList,
 } from './Richtext.stories.content'
+import Richtext from './Richtext.vue'
 
 const localVue = createLocalVue()
 localVue.directive('editable', (el, key) => {
@@ -78,9 +77,10 @@ describe('Richtext', () => {
     afterAll(() => useRouterMock.mockRestore())
 
     test('should not trigger router push on non link elements', async () => {
-      createComponent({ richtext: '<button>Some button</button>' })
-      const button = wrapper.find('button')
+      createComponent({ richtext: '<div>Some button</div>' })
+      const button = wrapper.find('div')
       await button.trigger('click')
+
       expect(routerMock.push).toBeCalledTimes(0)
     })
 
@@ -91,6 +91,7 @@ describe('Richtext', () => {
           createComponent({ richtext: linksTargetBlank })
           const link = wrapper.find(`.link-${type}`)
           await link.trigger('click')
+
           expect(routerMock.push).toBeCalledTimes(0)
         }
       )
@@ -103,6 +104,7 @@ describe('Richtext', () => {
           createComponent({ richtext: linksTargetSelf })
           const link = wrapper.find(`.link-${type}`)
           await link.trigger('click')
+
           expect(routerMock.push).toBeCalledTimes(0)
         }
       )
@@ -119,6 +121,7 @@ describe('Richtext', () => {
           })
 
           await link.trigger('click')
+
           expect(routerMock.push).toBeCalledTimes(1)
           expect(preventSpy).toBeCalledTimes(1)
         }
