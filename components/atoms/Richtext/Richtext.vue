@@ -1,11 +1,12 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <div
     v-editable="richtext"
     class="paragraph-section"
     @click="handleClick"
     v-html="sanitizer.block(richtext)"
   ></div>
+  <!-- eslint-enable vue/no-v-html -->
 </template>
 <script>
 import { defineComponent, useRouter } from '@nuxtjs/composition-api'

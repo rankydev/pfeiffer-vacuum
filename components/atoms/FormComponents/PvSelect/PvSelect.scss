@@ -1,6 +1,5 @@
 @import 'vue-select/src/scss/vue-select';
-
-/* Default overritings */
+/* Default overwritings */
 .vs {
   $root: &;
 
@@ -9,7 +8,6 @@
   }
 
   &__selected-options {
-    all: unset;
     @apply tw-items-center;
     @apply tw-p-0;
   }
@@ -196,7 +194,6 @@
   &__icon {
     &-prepend {
       @apply tw-absolute;
-      @apply tw-bottom-0;
     }
 
     &-error {

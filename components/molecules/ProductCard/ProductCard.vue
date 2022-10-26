@@ -23,9 +23,9 @@
       <!-- eslint-disable-next-line vue/no-v-html -->
       <p v-html="sanitizer.clear(description) || ''" />
     </template>
-    <!-- eslint-disable vue/no-v-html -->
     <template #additionalInfo>
       <template v-if="product.orderNumber">
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <span v-html="sanitizer.clear(product.orderNumber)"></span>
       </template>
 

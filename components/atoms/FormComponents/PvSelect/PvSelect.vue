@@ -25,7 +25,9 @@
             :icon="prependIcon"
           />
           <input class="vs__search" v-bind="attributes" v-on="events" />
-          <div class="pv-select__search-helper">{{ placeholder }}</div>
+          <div class="pv-select__search-helper">
+            {{ placeholder }}
+          </div>
         </div>
       </template>
 
@@ -74,15 +76,9 @@
           class="pv-select__icon-option"
           :icon="option.icon"
         />
-        <!-- eslint-disable vue/no-v-html -->
-        <span
-          v-html="
-            sanitizer.inline(
-              `${prependLabel ? prependLabel + ' ' : ''}${option[optionLabel]}`
-            )
-          "
-        />
-        <!-- eslint-enable vue/no-v-html -->
+        <span>{{
+          `${prependLabel ? prependLabel + ' ' : ''}${option[optionLabel]}`
+        }}</span>
       </template>
 
       <template #no-options>

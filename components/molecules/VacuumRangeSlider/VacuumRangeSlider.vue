@@ -17,10 +17,12 @@
           class="vue-slider-mark-label"
           v-html="sanitizer.inline(getTooltipLabel(value))"
         />
+        <!-- eslint-enable vue/no-v-html -->
       </template>
       <!-- eslint-disable-next-line vue/no-template-shadow -->
       <template #tooltip="{ value }">
         <div class="vue-slider-dot-tooltip-inner">
+          <!-- eslint-disable vue/no-v-html -->
           <span
             class="vue-slider-dot-tooltip-text"
             v-html="sanitizer.inline(getTooltipLabel(value))"
