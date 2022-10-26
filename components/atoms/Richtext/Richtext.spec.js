@@ -77,7 +77,7 @@ describe('Richtext', () => {
     afterAll(() => useRouterMock.mockRestore())
 
     test('should not trigger router push on non link elements', async () => {
-      createComponent({ richtext: '<div>Some button</div>' })
+      createComponent({ richtext: '<div>Some div</div>' })
       const button = wrapper.find('div')
       await button.trigger('click')
 
