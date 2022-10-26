@@ -123,7 +123,7 @@ describe('axiosInterceptors', () => {
         { config: 'test' },
         'test'
       )
-      errorPromise.then((err) => {
+      errorPromise.catch((err) => {
         expect(err).toStrictEqual({ config: 'test' })
       })
     })
@@ -132,7 +132,7 @@ describe('axiosInterceptors', () => {
 
       const errorPromise = rejectedRequest({})
       expect(mockError).toBeCalledWith('Auth error:', {}, null)
-      errorPromise.then((err) => {
+      errorPromise.catch((err) => {
         expect(err).toStrictEqual({})
       })
     })
@@ -173,7 +173,7 @@ describe('axiosInterceptors', () => {
         { test: 'test' }
       )
       expect(mockError).toBeCalledWith('something went wrong')
-      errorPromise.then((response) => {
+      errorPromise.catch((response) => {
         expect(response).toStrictEqual({
           status: 404,
           data: {
@@ -190,7 +190,7 @@ describe('axiosInterceptors', () => {
         response: {},
       })
 
-      errorPromise.then((response) => {
+      errorPromise.catch((response) => {
         expect(response).toStrictEqual({})
       })
     })

@@ -49,7 +49,7 @@ export const useAxiosInterceptors = () => {
 
   function onRejectedRequestHandler(error) {
     logger.error('Auth error:', error, error.config ? error.config : null)
-    return Promise.resolve(error)
+    return Promise.reject(error)
   }
 
   /**
@@ -75,7 +75,7 @@ export const useAxiosInterceptors = () => {
     logResponseError(error)
 
     // always resolve error with enhanced response
-    return Promise.resolve(error.response)
+    return Promise.reject(error.response)
   }
 
   /**
