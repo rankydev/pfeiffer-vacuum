@@ -28,6 +28,7 @@ export const withValue = {
 export const icon = {
   ...normal,
   prependIcon: 'info',
+  placeholder: 'Please select...',
 }
 
 export const optionIcon = {
