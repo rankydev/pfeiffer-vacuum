@@ -31,11 +31,13 @@ export default {
     },
     href: Link.href,
   },
-  image: null,
-  preview_field: null,
+  preview_tmpl:
+    '<div>' +
+    '<div>Headline: {{ title }}</div>' +
+    '<div>{{ image(options.image.filename)/ }}</div>' +
+    '</div>',
   is_root: false,
   is_nestable: true,
   all_presets: [],
-  preset_id: null,
   real_name: 'CustomContentCard',
 }
