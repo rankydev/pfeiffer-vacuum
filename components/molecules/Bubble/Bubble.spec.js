@@ -62,7 +62,7 @@ describe('Bubble', () => {
       }
       delete propsData.richtext[0].uiComponent
       createComponent(propsData)
-      const domRichtext = wrapper.find('[name="RichtextBasic"]')
+      const domRichtext = wrapper.find('[name="Richtext"]')
       expect(domRichtext.exists()).toBeTruthy()
     })
   })

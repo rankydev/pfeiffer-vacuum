@@ -22,7 +22,7 @@ export default {
       type: 'bloks',
       maximum: 1,
       restrict_components: true,
-      component_whitelist: ['RichtextBasic'],
+      component_whitelist: ['Richtext'],
       display_name: 'Description',
     },
   },
