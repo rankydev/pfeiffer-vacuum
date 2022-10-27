@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: Abgreundete Ecken im Button über cutaway für bottom entfernen und generelles stylen von Abständen -->
   <!-- TODO: Clarify if sticky buttons shall be fixed on the sites right edge or within the ContentWrapper -->
   <!-- <ContentWrapper class="sticky-bar"> -->
   <div class="sticky-bar">
