@@ -10,7 +10,7 @@
       />
     </div>
     <div
-      v-if="columnPlacement !== 'column-view__width-full'"
+      v-if="columnPlacement !== 'column-view__width-66'"
       class="column-view__column2"
     >
       <NuxtDynamic
@@ -79,7 +79,7 @@ export default defineComponent({
       if (props.variant === '50:50') {
         return 'column-view__width-50'
       } else {
-        return 'column-view__width-full'
+        return 'column-view__width-66'
       }
     })
 
@@ -178,7 +178,7 @@ export default defineComponent({
     }
   }
 
-  &__width-full {
+  &__width-66 {
     .column-view__column1 {
       @apply tw-col-span-full;
 
