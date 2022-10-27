@@ -185,8 +185,8 @@ export default defineComponent({
       @apply tw-col-end-5;
 
       @screen md {
-        @apply tw-col-start-2;
-        @apply tw-col-end-8;
+        @apply tw-col-start-1;
+        @apply tw-col-end-9;
       }
 
       @screen lg {
