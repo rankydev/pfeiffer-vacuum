@@ -1,3 +1,5 @@
+import Richtext from '~/components/atoms/Richtext/Richtext.schema.js'
+
 export default {
   name: 'Bubble',
   display_name: 'Bubble',
@@ -8,10 +10,7 @@ export default {
       translatable: true,
     },
     richtext: {
-      type: 'bloks',
-      maximum: 1,
-      restrict_components: true,
-      component_whitelist: ['Richtext'],
+      ...Richtext.schema.richtext,
       display_name: 'Description',
     },
     position: {

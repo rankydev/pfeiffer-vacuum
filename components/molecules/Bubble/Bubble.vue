@@ -2,21 +2,16 @@
 <template>
   <div class="bubble__wrapper" :class="`bubble__wrapper--${position}`">
     <h5 class="bubble__headline">{{ title }}</h5>
-    <NuxtDynamic
-      v-for="item in richtext"
-      :key="item._uid"
-      class="bubble__richtext"
-      v-bind="item"
-      :name="item.uiComponent || item.component"
-    />
+    <Richtext :richtext="richtext" class="bubble__richtext" />
   </div>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 
 export default defineComponent({
-  components: {},
+  components: { Richtext },
   props: {
     /**
      * The title of the component
@@ -29,8 +24,8 @@ export default defineComponent({
      * richtext element, containing the description
      */
     richtext: {
-      type: Array,
-      default: () => [],
+      type: String,
+      default: '',
     },
     /**
      * The position of the element

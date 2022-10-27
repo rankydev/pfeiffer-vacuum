@@ -13,9 +13,8 @@
 </template>
 
 <script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
-import { renderHeadline, renderSubline } from '@/utils/richtext'
 
 export default defineComponent({
   name: 'FooterNewsletter',
