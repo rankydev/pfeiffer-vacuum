@@ -1,7 +1,4 @@
 <template>
-  <!-- TODO: Abgreundete Ecken im Button über cutaway für bottom entfernen und generelles stylen von Abständen -->
-  <!-- TODO: Clarify if sticky buttons shall be fixed on the sites right edge or within the ContentWrapper -->
-  <!-- <ContentWrapper class="sticky-bar"> -->
   <div class="sticky-bar">
     <div class="sticky-bar__content">
       <slot />
@@ -24,23 +21,15 @@
       />
     </div>
   </div>
-  <!-- </ContentWrapper> -->
 </template>
 
 <script>
-import {
-  defineComponent,
-  useContext,
-  onBeforeMount,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
-// import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper.vue'
 
 export default defineComponent({
   components: {
     Button,
-    // ContentWrapper,
   },
   props: {
     label: {
@@ -70,19 +59,6 @@ export default defineComponent({
       default: '_self',
       validator: (val) => ['_self', '_blank'].includes(val),
     },
-  },
-  setup(props) {
-    const context = useContext()
-    let route = ''
-
-    const logContext = async () => {
-      console.log(context.route.value)
-      route = context.route.value
-    }
-
-    onBeforeMount(logContext)
-
-    return { route }
   },
 })
 </script>
