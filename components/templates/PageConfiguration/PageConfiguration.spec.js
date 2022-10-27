@@ -1,5 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import PageConfiguration from './PageConfiguration.vue'
+import StickyBar from '~/components/atoms/StickyBar/StickyBar.vue'
+import { expect } from '@jest/globals'
 
 const localVue = createLocalVue()
 localVue.directive('editable', (el, key) => {
@@ -58,6 +60,14 @@ describe('PageConfiguration', () => {
                 component: 'Footer',
               },
             ],
+            stickyBar: [
+              {
+                label: 'Kontakt',
+                icon: 'mail_outline',
+                href: '',
+                target: '_self',
+              },
+            ],
           },
         }
         createComponent(propsData)
@@ -81,6 +91,12 @@ describe('PageConfiguration', () => {
         expect(sections.at(5).attributes('component')).toBe(
           propsData.content.footer[0].component
         )
+
+        let stickyBar = wrapper.findComponent(StickyBar)
+        expect(stickyBar.vm.label).toBe(propsData.content.stickyBar[0].label)
+        expect(stickyBar.vm.icon).toBe(propsData.content.stickyBar[0].icon)
+        expect(stickyBar.vm.href).toBe(propsData.content.stickyBar[0].href)
+        expect(stickyBar.vm.target).toBe(propsData.content.stickyBar[0].target)
       })
 
       it('should set content', () => {
@@ -94,6 +110,7 @@ describe('PageConfiguration', () => {
               body: {},
               bottom: {},
               footer: {},
+              stickyBar: {},
             },
           },
         })
@@ -103,6 +120,7 @@ describe('PageConfiguration', () => {
         expect(wrapper.vm.body).toBeDefined()
         expect(wrapper.vm.bottom).toBeDefined()
         expect(wrapper.vm.footer).toBeDefined()
+        expect(wrapper.vm.stickyBar).toBeDefined()
       })
     })
   })

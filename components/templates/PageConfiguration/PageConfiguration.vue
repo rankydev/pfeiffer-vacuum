@@ -62,8 +62,12 @@
 
 <script>
 import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import StickyBar from '~/components/atoms/StickyBar/StickyBar.vue'
 export default defineComponent({
   name: 'PageConfiguration',
+  components: {
+    StickyBar,
+  },
   props: {
     content: {
       type: Object,
