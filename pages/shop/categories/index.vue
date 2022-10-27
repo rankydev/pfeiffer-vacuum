@@ -6,33 +6,81 @@
     :language="language"
   >
     <template #default="{ result: { data } }">
-      <CmsRootComponent v-if="data" v-bind="data" />
+      <Page v-if="data" v-bind="data" :meta-data="metaData">
+        <template #onPageNavigation>
+          <OnPageNavigation v-bind="(data.quicklinks || [])[0]">
+            <Button
+              v-if="hasLink"
+              :label="$t('navigation.button.overview.label')"
+              :href="href"
+              size="small"
+              variant="secondary"
+              shape="outlined"
+            />
+          </OnPageNavigation>
+        </template>
+
+        <template #default>
+          <ContentWrapper>
+            <ResultHeadline
+              v-bind="{ headline, link, searchTerm }"
+              :result-count="count"
+            />
+          </ContentWrapper>
+
+          <div class="category-page__search-result">
+            <ContentWrapper>
+              <SearchResult
+                v-bind="{
+                  products,
+                  pagination,
+                  categories,
+                  facets,
+                  currentQuery,
+                  sorts,
+                }"
+              />
+            </ContentWrapper>
+          </div>
+        </template>
+      </Page>
     </template>
   </CmsQuery>
 </template>
 
 <script>
-import {
-  useRoute,
-  defineComponent,
-  onBeforeMount,
-  watch,
-  onServerPrefetch,
-  useContext,
-  ssrRef,
-} from '@nuxtjs/composition-api'
-import { useCategoryStore } from '~/stores/category/category'
+import { defineComponent, watch, computed } from '@nuxtjs/composition-api'
+import { onBeforeMount, onServerPrefetch } from '@nuxtjs/composition-api'
+import { useRoute, useContext } from '@nuxtjs/composition-api'
+
+import Page from '~/components/templates/Page/Page'
+import Button from '~/components/atoms/Button/Button'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation'
+import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
+import SearchResult from '~/components/organisms/SearchResult/SearchResult.vue'
+
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
+import { useCategoryStore } from '~/stores/category/category'
 import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
-import { useLogger } from '~/composables/useLogger.js'
+import { useErrorHandler } from '~/composables/useErrorHandler'
+import { useStoryblokData } from '~/composables/useStoryblokData'
 
 export default defineComponent({
   name: 'CategoryShopPage',
+  components: {
+    Page,
+    Button,
+    ContentWrapper,
+    OnPageNavigation,
+    ResultHeadline,
+    SearchResult,
+  },
   layout: 'default',
   setup() {
     const route = useRoute()
     const context = useContext()
-    const { logger } = useLogger()
+    const { redirectOnError } = useErrorHandler()
 
     /**
      * Set the type of the pages, enabling components
@@ -46,28 +94,9 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const catgeoryStore = useCategoryStore()
-    const hasError = ssrRef(false)
-
-    const show404 = (error) =>
-      context.error({ statusCode: 404, message: error && error.message })
-
-    const loadCategory = async () => {
-      try {
-        await catgeoryStore.loadByPath()
-      } catch (error) {
-        logger.error(error)
-
-        if (process.server) {
-          context.res.statusCode = 404
-          hasError.value = error
-        } else {
-          show404(error)
-        }
-      }
-    }
+    const loadCategory = () => redirectOnError(catgeoryStore.loadByPath)
 
     onServerPrefetch(loadCategory)
-    onBeforeMount(() => hasError.value && show404(hasError.value))
     onBeforeMount(loadCategory)
     watch(route, loadCategory)
 
@@ -78,11 +107,56 @@ export default defineComponent({
     const path = context.app.localePath('shop-categories')
     const { slug, fallbackSlug, language } = buildSlugs(path)
 
+    /**
+     * data to link to category content page
+     */
+    const { getContentCategoryLink } = useStoryblokData()
+    const { href, hasLink } = getContentCategoryLink()
+
+    /**
+     * category data
+     */
+    const categoryStore = useCategoryStore()
+    const headline = computed(() => categoryStore.categoryName)
+    const searchTerm = computed(() => categoryStore.searchTerm || '')
+    const link = computed(() => categoryStore.parentCategoryPath)
+    const count = computed(() => categoryStore.result?.pagination?.totalResults)
+    const products = computed(() => categoryStore.result?.products)
+    const pagination = computed(() => categoryStore.result?.pagination || {})
+    const categories = computed(() => categoryStore.result?.categorySubtree)
+    const facets = computed(() => categoryStore.result?.facets || [])
+    const currentQuery = computed(() => categoryStore.result?.currentQuery)
+    const sorts = computed(() => categoryStore.result?.sorts)
+    const metaData = computed(() => categoryStore.metaData)
+
     return {
       slug,
       fallbackSlug,
       language,
+
+      hasLink,
+      href,
+
+      headline,
+      searchTerm,
+      link,
+      count,
+      products,
+      pagination,
+      categories,
+      facets,
+      currentQuery,
+      sorts,
+      metaData,
     }
   },
 })
 </script>
+
+<style lang="scss">
+.category-page {
+  &__search-result {
+    @apply tw-bg-pv-grey-96;
+  }
+}
+</style>

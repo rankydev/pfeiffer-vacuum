@@ -28,14 +28,17 @@ export const useCategoryStore = defineStore('category', () => {
   const reqId = ref(null)
 
   const breadcrumb = computed(() => {
-    const cmsPrefix = cmsStore.breadcrumb.slice(0, 2)
+    const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
     const categoryPath = category.value?.categoryPath || []
+    const rootUrl = app.localePath('shop-categories')
+    const rootCat = { name: i18n.t('category.rootCategory'), href: rootUrl }
 
     const breadcrumbArr = [
       ...cmsPrefix,
+      rootCat,
       ...categoryPath.map(({ name, id }) => ({
         name,
-        href: joinURL(app.localePath('shop-categories'), id),
+        href: joinURL(rootUrl, id),
       })),
     ]
 
@@ -48,6 +51,20 @@ export const useCategoryStore = defineStore('category', () => {
   })
 
   const categoryName = computed(() => breadcrumb.value.at(-1)?.name)
+
+  const metaData = computed(() => ({
+    title: categoryName.value || '',
+    seoTitle: '',
+    seoDescription: '',
+
+    ogTitle: categoryName.value || '',
+    ogDescription: '',
+    ogImage: null,
+
+    twitterTitle: categoryName.value || '',
+    twitterDescription: '',
+    twitterImage: null,
+  }))
 
   const parentCategoryPath = computed(() => {
     const categoryPath = category.value?.categoryPath || []
@@ -71,8 +88,6 @@ export const useCategoryStore = defineStore('category', () => {
         facets ? ':' + facets : ''
       }`,
       ..._pick(route.value.query, 'pageSize'),
-      lang: i18n.locale,
-      curr: 'EUR',
       fields: 'FULL',
       categoryTreeDepth: 2,
     }
@@ -87,8 +102,7 @@ export const useCategoryStore = defineStore('category', () => {
       id ? config.CATEGORY_API : config.CATEGORIES_API,
       id
     )
-    const params = { lang: i18n.locale, curr: 'EUR' }
-    category.value = await $axios.get(url, { params }).then(({ data }) => data)
+    category.value = await $axios.get(url).then(({ data }) => data)
   }
 
   const loadByPath = async () => {
@@ -106,6 +120,7 @@ export const useCategoryStore = defineStore('category', () => {
 
     // getters
     breadcrumb,
+    metaData,
     categoryName,
     parentCategoryPath,
 

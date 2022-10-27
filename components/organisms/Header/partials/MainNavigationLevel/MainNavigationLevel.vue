@@ -26,10 +26,7 @@
           }"
           v-bind="entry"
           :before-navigation="
-            ($event) =>
-              !hasSubmenu(entry)
-                ? (activeElement = null) && true
-                : toggleActive($event, idx)
+            () => (!hasSubmenu(entry) ? closeMenu() || true : toggleActive(idx))
           "
         >
           <span :class="`${prefix}__label`">{{ entry.label }}</span>
@@ -182,10 +179,7 @@ export default defineComponent({
       if (!isActive) activeElement.value = null
     })
 
-    const toggleActive = function ($event, idx) {
-      $event.preventDefault()
-      $event.stopPropagation()
-
+    const toggleActive = function (idx) {
       if (props.level >= 2) return false
 
       if (activeElement.value === idx) {
@@ -212,6 +206,7 @@ export default defineComponent({
       isHovered,
       hasSubmenu,
       selectedPrimaryLink,
+      closeMenu: menu.close,
     }
   },
 })

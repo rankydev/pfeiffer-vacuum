@@ -1,9 +1,23 @@
-const useMeta = (
-  { value: content },
-  defaultSlug,
-  translatedSlugs,
-  { root: context }
-) => {
+import { useContext, useRoute } from '@nuxtjs/composition-api'
+import { useLogger } from './useLogger'
+import _difference from 'lodash/difference'
+
+const validateRequiredKeys = (keys, content) => {
+  const { logger } = useLogger()
+  const missingKeys = _difference(keys, Object.keys(content))
+
+  if (missingKeys.length > 0) {
+    logger.warn(`Missing following keys: ${missingKeys.join(', ')}`)
+  }
+}
+
+const useMeta = (content = {}, defaultSlug, translatedSlugs) => {
+  const context = useContext()
+  const route = useRoute()
+
+  const reqKeys = ['title', 'seoTitle', 'seoDescription']
+  validateRequiredKeys(reqKeys, content)
+
   const getMetaData = () => {
     const { title, seoTitle, seoDescription } = content
     let meta = []
@@ -38,7 +52,7 @@ const useMeta = (
       content: seoDescription,
     })
 
-    const routeFullPath = context.$route.fullPath
+    const routeFullPath = route.value.fullPath
     addCanonical(link, content, baseUrl, routeFullPath)
 
     addHreflang(link, defaultSlug, translatedSlugs, baseUrl)
@@ -76,6 +90,9 @@ function addOpenGraph(
   baseUrl,
   imageService
 ) {
+  const reqKeys = ['ogTitle', 'ogDescription', 'ogImage']
+  validateRequiredKeys(reqKeys, content)
+
   const { ogTitle, ogDescription, ogImage } = content
   const ogFallbackImage = baseUrl + '/og_image.png'
   const ogImageUrl = getImageUrl(
@@ -85,25 +102,24 @@ function addOpenGraph(
     630,
     imageService
   )
-  const meta = []
 
-  meta.push({
-    hid: 'og:title',
-    name: 'og:title',
-    content: ogTitle || fallbackTitle,
-  })
-  meta.push({
-    hid: 'og:description',
-    name: 'og:description',
-    content: ogDescription || fallbackDescription,
-  })
-  meta.push({
-    hid: 'og:image',
-    name: 'og:image',
-    content: ogImageUrl,
-  })
-
-  return meta
+  return [
+    {
+      hid: 'og:title',
+      name: 'og:title',
+      content: ogTitle || fallbackTitle,
+    },
+    {
+      hid: 'og:description',
+      name: 'og:description',
+      content: ogDescription || fallbackDescription,
+    },
+    {
+      hid: 'og:image',
+      name: 'og:image',
+      content: ogImageUrl,
+    },
+  ]
 }
 
 function addTwitter(
@@ -113,6 +129,9 @@ function addTwitter(
   baseUrl,
   imageService
 ) {
+  const reqKeys = ['twitterTitle', 'twitterDescription', 'twitterImage']
+  validateRequiredKeys(reqKeys, content)
+
   const { twitterTitle, twitterDescription, twitterImage } = content
   const twitterFallbackImage = baseUrl + '/twitter_image.png'
   const twitterImageUrl = getImageUrl(
@@ -122,38 +141,33 @@ function addTwitter(
     150,
     imageService
   )
-  const meta = []
 
-  meta.push({
-    hid: 'twitter:title',
-    name: 'twitter:title',
-    content: twitterTitle || fallbackTitle,
-  })
-  meta.push({
-    hid: 'twitter:description',
-    name: 'twitter:description',
-    content: twitterDescription || fallbackDescription,
-  })
-
-  meta.push({
-    hid: 'twitter:image',
-    name: 'twitter:image',
-    content: twitterImageUrl,
-  })
-
-  return meta
+  return [
+    {
+      hid: 'twitter:title',
+      name: 'twitter:title',
+      content: twitterTitle || fallbackTitle,
+    },
+    {
+      hid: 'twitter:description',
+      name: 'twitter:description',
+      content: twitterDescription || fallbackDescription,
+    },
+    {
+      hid: 'twitter:image',
+      name: 'twitter:image',
+      content: twitterImageUrl,
+    },
+  ]
 }
 
 function addRobots({ noindex, nofollow }) {
-  const robotsContent = []
-  if (noindex) {
-    robotsContent.push('noindex')
-  }
-  if (nofollow) {
-    robotsContent.push('nofollow')
-  }
+  const robotsContent = [
+    ...(noindex ? ['noindex'] : []),
+    ...(nofollow ? ['nofollow'] : []),
+  ]
 
-  if (robotsContent.length) {
+  if (robotsContent.length > 0) {
     return [
       {
         hid: 'robots',
@@ -162,6 +176,7 @@ function addRobots({ noindex, nofollow }) {
       },
     ]
   }
+
   return []
 }
 

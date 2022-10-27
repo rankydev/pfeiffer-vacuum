@@ -18,7 +18,7 @@
     </slot>
 
     <slot name="onPageNavigation">
-      <OnPageNavigation v-bind="(quicklinks || [])[0]" />
+      <OnPageNavigation v-bind="(content.quicklinks || [])[0]" />
     </slot>
 
     <slot>
@@ -81,17 +81,20 @@ export default defineComponent({
       type: Object,
       default: /* istanbul ignore next */ () => ({}),
     },
+    metaData: {
+      type: Object,
+      default: null,
+    },
   },
-  setup(props, context) {
+  setup(props) {
     const { content } = toRefs(props)
     const translatedSlugs = inject('getTranslatedSlugs', () => [])()
     const defaultFullSlug = inject('getDefaultFullSlug', () => '')()
     const { top, header, stage, body, bottom, footer } = useTemplating(content)
     const { getMetaData } = useMeta(
-      content,
+      props.metaData || content.value,
       defaultFullSlug,
-      translatedSlugs,
-      context
+      translatedSlugs
     )
 
     return {
@@ -101,12 +104,11 @@ export default defineComponent({
       body,
       bottom,
       footer,
-      quicklinks: content.value.quicklinks,
-      metaData: getMetaData(),
+      head: getMetaData(),
     }
   },
   head() {
-    return this.metaData
+    return this.head
   },
 })
 </script>

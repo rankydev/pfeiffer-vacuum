@@ -2,7 +2,7 @@
   <GenericCard
     :has-link="false"
     image-size="contain"
-    :href="(product || {}).url || ''"
+    :href="url"
     :class="{ 'product-card--master': product.numberOfVariants }"
   >
     <template #image>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
 export default defineComponent({
@@ -62,12 +62,21 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const context = useContext()
+
     const image = computed(() => props.product.images?.[0])
     const description = computed(() => (props.product.bullets || []).join(', '))
     const name = computed(() => props.product.name)
     const categoryName = computed(() => props.product.categories?.[0]?.name)
 
-    return { image, name, categoryName, description }
+    const url = computed(() =>
+      context.app.localePath({
+        name: 'shop-products-product',
+        params: { product: props.product?.code },
+      })
+    )
+
+    return { url, image, name, categoryName, description }
   },
 })
 </script>
