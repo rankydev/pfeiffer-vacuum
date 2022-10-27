@@ -54,6 +54,7 @@
     "nuxt": "^2.15.8",
     "pinia": "^2.0.13",
     "qs": "^6.9.6",
+    "sanitize-html": "^2.7.2",
     "storyblok-js-client": "^4.2.1",
     "stylelint-config-standard-scss": "^3.0.0",
     "ufo": "^0.7.11",
