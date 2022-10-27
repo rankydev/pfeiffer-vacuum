@@ -37,7 +37,7 @@ describe('FooterNewsletter', () => {
     }
     createComponent(propsData, false)
     const newsletterHeadline = wrapper.find('.newsletter__headline')
-    const domRichtext = wrapper.find('[name="Richtext"]')
+    const domRichtext = wrapper.find('richtext-stub')
     expect(newsletterHeadline.text()).toEqual(propsData.headline)
     expect(domRichtext.attributes('richtext')).toBe(newsletterText.richtext)
   })

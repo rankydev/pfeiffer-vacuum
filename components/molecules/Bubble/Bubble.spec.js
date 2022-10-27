@@ -1,7 +1,7 @@
 import { createLocalVue, shallowMount } from '@vue/test-utils'
 import Bubble from './Bubble'
 import { bubble } from '~/components/organisms/HomeStage/HomeStageSlide/HomeStageSlide.stories.content'
-import { bubbleText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
+import { bubbleText } from '~/components/organisms/HomeStage/HomeStageSlide/HomeStageSlide.stories.content'
 
 const defaultProps = () => JSON.parse(JSON.stringify(bubble[0]))
 
@@ -37,12 +37,12 @@ describe('Bubble', () => {
       }
       createComponent(propsData, false)
       const bubbleHeadline = wrapper.find('.bubble__headline')
-      const domRichtext = wrapper.find('[name="Richtext"]')
+      const domRichtext = wrapper.find('richtext-stub')
 
       // checking default position (right)
       const bubblePosition = wrapper.find('.bubble__wrapper--right')
       expect(bubbleHeadline.text()).toEqual(propsData.title)
-      expect(domRichtext.attributes('richtext')).toBe(bubbleText.richtext)
+      expect(domRichtext.attributes('richtext')).toBe(bubbleText)
       expect(bubblePosition.exists()).toBeTruthy()
     })
     // position left
@@ -62,7 +62,7 @@ describe('Bubble', () => {
       }
       delete propsData.richtext[0].uiComponent
       createComponent(propsData)
-      const domRichtext = wrapper.find('[name="Richtext"]')
+      const domRichtext = wrapper.find('richtext-stub')
       expect(domRichtext.exists()).toBeTruthy()
     })
   })

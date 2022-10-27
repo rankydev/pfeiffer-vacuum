@@ -120,23 +120,9 @@ export const smallText = {
   uiComponent: 'Richtext',
 }
 
-export const bubbleText = {
-  richtext:
-    '<p>10<sup class="superscript">3 </sup>- 10<sup class="superscript">-6 </sup>hPa</p>',
-  component: 'Richtext',
-  uiComponent: 'Richtext',
-}
-
 export const newsletterText = {
   richtext:
     '<p>Sie möchten über aktuelle News von Pfeiffer Vacuum informiert werden? Dann abonnieren Sie unseren Newsletter.</p>',
-  component: 'Richtext',
-  uiComponent: 'Richtext',
-}
-
-export const homestageSlideContentText = {
-  richtext:
-    '<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>',
   component: 'Richtext',
   uiComponent: 'Richtext',
 }
