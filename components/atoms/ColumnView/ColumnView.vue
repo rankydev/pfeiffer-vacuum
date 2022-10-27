@@ -1,5 +1,8 @@
 <template>
-  <div class="column-view tw-column-view" :class="columnPlacement">
+  <div
+    class="column-view tw-column-view"
+    :class="`column-view__width-${variant}`"
+  >
     <div class="column-view__column1">
       <NuxtDynamic
         v-for="item in column1"
@@ -9,10 +12,7 @@
         :name="item.uiComponent || item.component"
       />
     </div>
-    <div
-      v-if="columnPlacement !== 'column-view__width-66'"
-      class="column-view__column2"
-    >
+    <div v-if="variant !== '66'" class="column-view__column2">
       <NuxtDynamic
         v-for="item in column2"
         :key="item._uid"
@@ -21,10 +21,7 @@
         :name="item.uiComponent || item.component"
       />
     </div>
-    <div
-      v-if="columnPlacement === 'column-view__width-33'"
-      class="column-view__column3"
-    >
+    <div v-if="variant === '33'" class="column-view__column3">
       <NuxtDynamic
         v-for="item in column3"
         :key="item._uid"
@@ -36,7 +33,7 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'ColumnView',
@@ -68,24 +65,8 @@ export default defineComponent({
     variant: {
       type: String,
       default: '66',
-      validator: (val) => ['66', '50:50', '33:33:33'].includes(val),
+      validator: (val) => ['66', '50', '33'].includes(val),
     },
-  },
-  setup(props) {
-    const columnPlacement = computed(() => {
-      if (props.variant === '33:33:33') {
-        return 'column-view__width-33'
-      }
-      if (props.variant === '50:50') {
-        return 'column-view__width-50'
-      } else {
-        return 'column-view__width-66'
-      }
-    })
-
-    return {
-      columnPlacement,
-    }
   },
 })
 </script>

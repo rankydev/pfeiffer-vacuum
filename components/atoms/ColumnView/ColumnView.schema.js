@@ -13,11 +13,11 @@ export default {
           name: 'one column',
         },
         {
-          value: '50:50',
+          value: '50',
           name: 'two columns',
         },
         {
-          value: '33:33:33',
+          value: '33',
           name: 'three columns',
         },
       ],
