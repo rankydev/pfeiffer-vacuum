@@ -9,12 +9,9 @@
       <span>{{ image.copyright }}</span>
     </div>
     <template v-if="description">
-      <NuxtDynamic
-        v-for="item in description"
-        :key="item._uid"
+      <Richtext
+        :richtext="description"
         class="image-with-description__component"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
       />
     </template>
   </div>
@@ -23,11 +20,13 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 
 export default defineComponent({
   name: 'ImageWithDescription',
   components: {
     ResponsiveImage,
+    Richtext,
   },
   props: {
     /**
@@ -41,8 +40,8 @@ export default defineComponent({
      * Richtext which is rendered underneath the image
      */
     description: {
-      type: Array,
-      default: () => [],
+      type: String,
+      default: '',
     },
     /**
      * The Images Format selected by an editor in CMS

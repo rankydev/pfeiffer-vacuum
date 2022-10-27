@@ -1,14 +1,12 @@
 import responsiveImage from './../../atoms/ResponsiveImage/ResponsiveImage.schema.js'
+import Richtext from '~/components/atoms/Richtext/Richtext.schema.js'
 
 export default {
   name: 'ImageWithDescription',
   display_name: 'Image module with source',
   schema: {
     description: {
-      type: 'bloks',
-      maximum: 1,
-      restrict_components: true,
-      component_whitelist: ['Richtext'],
+      ...Richtext.schema.richtext,
       display_name: 'Description',
     },
     image: responsiveImage.schema.image,
