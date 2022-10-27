@@ -10,9 +10,7 @@
       />
     </div>
     <div
-      v-if="
-        columnPlacement === 'column-view__width-50' || 'column-view__width-33'
-      "
+      v-if="columnPlacement !== 'column-view__width-full'"
       class="column-view__column2"
     >
       <NuxtDynamic
