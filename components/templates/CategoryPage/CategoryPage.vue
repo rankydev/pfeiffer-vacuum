@@ -47,6 +47,7 @@
         :href="categoryHref"
         variant="secondary"
         shape="outlined"
+        cutaway="bottom"
       />
     </template>
   </Page>

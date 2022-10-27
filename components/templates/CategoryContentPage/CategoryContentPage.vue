@@ -17,6 +17,7 @@
         class="category-content-page__sticky-btn"
         :label="$t('navigation.button.shop.label')"
         :href="href"
+        cutaway="bottom"
       />
     </template>
   </Page>

@@ -5,17 +5,13 @@
   <div class="sticky-bar">
     <div class="sticky-bar__content">
       <slot />
-      <!-- <Button
-        class="sticky-bar__btn-icon sticky-bar__btn-shop"
-        label="Shop"
-        href="/de/shop/categories"
-      /> -->
       <Button
         class="sticky-bar__btn-icon"
         variant="secondary"
         :icon="icon"
         :href="href"
         :target="target"
+        cutaway="bottom"
       />
       <Button
         class="sticky-bar__btn-full"
@@ -24,6 +20,7 @@
         :icon="icon"
         :href="href"
         :target="target"
+        cutaway="bottom"
       />
     </div>
   </div>
