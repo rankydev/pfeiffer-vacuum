@@ -82,57 +82,27 @@ export default defineComponent({
   }
 
   &__width-33 {
+    @apply tw-flex;
+    @apply tw-flex-col;
+
     @screen md {
-      @apply tw-flex;
-    }
-    @screen lg {
-      @apply tw-grid;
+      @apply tw-flex-row;
     }
 
-    .column-view__column1 {
-      @apply tw-col-span-4;
-
-      @screen md {
-        @apply tw-w-2/6;
-      }
-
-      @screen lg {
-        @apply tw-w-full;
-        @apply tw-col-span-4;
-      }
-    }
-
-    .column-view__column2 {
-      @apply tw-col-span-4;
-
-      @screen md {
-        @apply tw-w-2/6;
-      }
-
-      @screen lg {
-        @apply tw-w-full;
-        @apply tw-col-start-5;
-        @apply tw-col-end-9;
-      }
-    }
-
+    .column-view__column1,
+    .column-view__column2,
     .column-view__column3 {
-      @apply tw-col-span-4;
+      @apply tw-w-full;
 
       @screen md {
         @apply tw-w-2/6;
-      }
-
-      @screen lg {
-        @apply tw-w-full;
-        @apply tw-col-start-9;
-        @apply tw-col-end-13;
       }
     }
   }
 
   &__width-50 {
-    .column-view__column1 {
+    .column-view__column1,
+    .column-view__column2 {
       @apply tw-col-span-4;
 
       @screen md {
@@ -145,16 +115,12 @@ export default defineComponent({
     }
 
     .column-view__column2 {
-      @apply tw-col-span-4;
-
       @screen md {
         @apply tw-col-start-5;
-        @apply tw-col-span-4;
       }
 
       @screen lg {
         @apply tw-col-start-7;
-        @apply tw-col-span-6;
       }
     }
   }
