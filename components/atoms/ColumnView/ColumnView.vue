@@ -68,6 +68,7 @@ export default defineComponent({
     variant: {
       type: String,
       default: '66',
+      validator: (val) => ['66', '50:50', '33:33:33'].includes(val),
     },
   },
   setup(props) {
@@ -179,12 +180,10 @@ export default defineComponent({
 
   &__width-full {
     .column-view__column1 {
-      @apply tw-col-start-1;
-      @apply tw-col-end-5;
+      @apply tw-col-span-full;
 
       @screen md {
-        @apply tw-col-start-1;
-        @apply tw-col-end-9;
+        @apply tw-col-span-full;
       }
 
       @screen lg {
