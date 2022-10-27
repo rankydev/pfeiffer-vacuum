@@ -1,3 +1,5 @@
+import Richtext from '~/components/atoms/Richtext/Richtext.schema.js'
+
 export default {
   name: 'HomeStageSlideContent',
   display_name: 'HomeStageSlideContent',
@@ -11,10 +13,7 @@ export default {
       pos: 1,
     },
     richtext: {
-      type: 'bloks',
-      maximum: 1,
-      restrict_components: true,
-      component_whitelist: ['Richtext'],
+      ...Richtext.schema.richtext,
       display_name: 'Description',
     },
     buttons: {
