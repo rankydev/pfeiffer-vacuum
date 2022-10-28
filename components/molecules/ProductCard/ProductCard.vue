@@ -90,9 +90,9 @@ export default defineComponent({
     @apply tw-mr-1;
     @apply tw-font-bold;
   }
-}
 
-em {
-  @apply tw-not-italic;
+  em {
+    @apply tw-not-italic;
+  }
 }
 </style>
