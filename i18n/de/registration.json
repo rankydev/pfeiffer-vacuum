@@ -43,8 +43,8 @@
   },
   "registrationHintModal": {
     "title": "Registrierung ohne Firmendaten?",
-    "subline": "Sind Sie sicher, dass sie keine Firmendaten angeben möchten?",
-    "richtext": "Nur mit Firmendaten können Sie:<br/><ul><li>Onlinepreise einsehen</li><li>Angebotsanfragen an ihren Vertriebsingenieur senden</li><li>Das Installed Base Management (VSM) nutzen</li></ul>",
+    "subline": "Sind Sie sicher, dass Sie keine Firmendaten angeben möchten?",
+    "richtext": "Nur mit Firmendaten können Sie:<br/><ul><li>Onlinepreise einsehen</li><li>Angebotsanfragen an Ihren Vertriebsingenieur senden</li><li>Das Installed Base Management (VSM) nutzen</li></ul>",
     "buttonLeft": "Ohne Firmendaten registrieren",
     "buttonRight": "Firmendaten hinzufügen"
   }
