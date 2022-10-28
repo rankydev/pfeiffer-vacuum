@@ -1,8 +1,8 @@
 <template>
   <div class="infobox">
     <div class="infobox__content">
-      <!-- eslint-disable vue/no-v-html -->
-      <p class="infobox__content__text" v-html="text" />
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <p class="infobox__content__text" v-html="sanitizer.block(text)" />
     </div>
     <div class="infobox__media">
       <Icon icon="info" size="large" />
@@ -13,6 +13,7 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({
   name: 'Infobox',
@@ -26,6 +27,13 @@ export default defineComponent({
       type: String,
       default: '',
     },
+  },
+  setup() {
+    const sanitizer = useSanitizer()
+
+    return {
+      sanitizer,
+    }
   },
 })
 </script>

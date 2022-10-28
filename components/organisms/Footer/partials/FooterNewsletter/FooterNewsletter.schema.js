@@ -1,4 +1,4 @@
-import RichtextBasic from '~/components/atoms/Richtext/RichtextBasic.schema'
+import Richtext from '~/components/atoms/Richtext/Richtext.schema.js'
 
 export default {
   name: 'FooterNewsletter',
@@ -10,10 +10,7 @@ export default {
       translatable: true,
     },
     richtext: {
-      type: 'bloks',
-      maximum: 1,
-      restrict_components: true,
-      component_whitelist: ['RichtextBasic'],
+      ...Richtext.schema.richtext,
       display_name: 'Newsletter Description',
     },
     button: {

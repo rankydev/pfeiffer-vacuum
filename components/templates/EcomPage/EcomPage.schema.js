@@ -35,6 +35,10 @@ export default {
   is_root: true,
   preview_tmpl: '<div><i class="uk-icon-cog"></i></div>',
   is_nestable: false,
-  real_name: 'ProductContentPage',
+  all_presets: [],
+  preset_id: null,
+  real_name: 'EcomPage',
+  color: null,
+  icon: null,
   component_group_name: 'Templates',
 }
