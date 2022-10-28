@@ -43,12 +43,4 @@ module.exports = {
     '/stores/user/partials/useKeycloak.js',
     '/components/molecules/Facets/Facets.js',
   ],
-  coverageThreshold: {
-    global: {
-      statements: 98,
-      branches: 91,
-      functions: 98,
-      lines: 98,
-    },
-  },
 }

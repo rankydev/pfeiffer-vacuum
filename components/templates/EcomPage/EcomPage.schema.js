@@ -39,7 +39,7 @@ export default {
   is_nestable: false,
   all_presets: [],
   preset_id: null,
-  real_name: 'ProductContentPage',
+  real_name: 'EcomPage',
   color: null,
   icon: null,
   component_group_name: 'Templates',

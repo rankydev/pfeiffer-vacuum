@@ -4,12 +4,9 @@
       {{ headline }}
     </h2>
 
-    <NuxtDynamic
-      v-for="item in richtext"
-      :key="item._uid"
+    <Richtext
+      :richtext="richtext"
       class="home-stage-slide-content__description tw-teaser"
-      v-bind="item"
-      :name="item.uiComponent || item.component"
     />
 
     <div v-if="buttons.length" class="home-stage-slide-content__buttons">
@@ -27,10 +24,11 @@
 
 <script>
 import Button from '~/components/atoms/Button/Button.vue'
+import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 
 export default {
   name: 'HomeStageSlideContent',
-  components: { Button },
+  components: { Button, Richtext },
   props: {
     /**
      * The headline of the stage
@@ -43,8 +41,8 @@ export default {
      * richtext element, containing the description
      */
     richtext: {
-      type: Array,
-      default: () => [],
+      type: String,
+      default: '',
     },
     /**
      * Up to 2 buttons can be added optional

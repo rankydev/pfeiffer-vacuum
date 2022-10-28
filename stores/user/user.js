@@ -1,6 +1,7 @@
 import {
   computed,
   useContext,
+  useRoute,
   onBeforeMount,
   onServerPrefetch,
   ssrRef,
@@ -11,10 +12,12 @@ import { useUserApi } from './partials/useUserApi'
 import { watch } from '@nuxtjs/composition-api'
 import { useLogger } from '~/composables/useLogger'
 import { useOciStore } from '~/stores/oci'
+import { joinURL } from 'ufo'
 
 export const useUserStore = defineStore('user', () => {
   const { logger } = useLogger('userStore')
   const ctx = useContext()
+  const route = useRoute()
   const userApi = useUserApi()
   const ociStore = useOciStore()
   const {
@@ -68,8 +71,16 @@ export const useUserStore = defineStore('user', () => {
 
   const login = async () => {
     logger.debug('login')
-    const { i18n } = ctx
-    const url = `${window.location.href}?isLoginProcess=true`
+    const { i18n, app } = ctx
+    const { router, localePath } = app
+    const url = joinURL(
+      window.location.origin,
+      router.options.base,
+      localePath({
+        path: route.value.path,
+        query: { ...route.value.query, isLoginProcess: true },
+      })
+    )
     const options = { locale: i18n.locale, redirectUri: url }
     await keycloakInstance.value.login(options)
   }

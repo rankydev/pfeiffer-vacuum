@@ -39,6 +39,14 @@
   },
   "message": {
     "success": "요청이 성공적으로 전송되었습니다!",
-    "error": "요청을 보낼 수 없습니다."
+    "error": {
+      "defaultError": "요청을 보낼 수 없습니다.",
+      "customerAlreadyExists":
+        "파이퍼 베큠 계정이 이미 있으며 암호는 변경되지 않고 그대로 유지됩니다.",
+      "technicalError":
+        "기술적인 오류가 발생했습니다. 파이퍼 베큠 지원 팀에 문의하십시오.",
+      "customerInconsistentError":
+        "계정에 문제가 있습니다. 당사 고객 서비스에 문의하십시오."
+    } 
   }
 }

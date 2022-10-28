@@ -11,6 +11,7 @@ export default {
       'Page',
       'ProductContentPage',
       'CategoryContentPage',
+      'CategoryPage',
       'StandardPage',
     ],
   },

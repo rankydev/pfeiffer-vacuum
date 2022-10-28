@@ -16,18 +16,17 @@
       {{ categoryName || '' }}
     </template>
     <template #heading>
-      <!-- TODO: We need to bin in sanitizer for v-html -->
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-html="name || ''" />
+      <span v-html="sanitizer.clear(name) || ''" />
     </template>
     <template #description>
-      <!-- TODO: We need to bin in sanitizer for v-html -->
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <p v-html="description || ''" />
+      <p v-html="sanitizer.clear(description) || ''" />
     </template>
     <template #additionalInfo>
       <template v-if="product.orderNumber">
-        <span>{{ product.orderNumber }}</span>
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <span v-html="sanitizer.clear(product.orderNumber)"></span>
       </template>
 
       <template v-else-if="product.numberOfVariants">
@@ -43,6 +42,7 @@
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({
   components: { ResponsiveImage },
@@ -65,7 +65,9 @@ export default defineComponent({
     const name = computed(() => props.product.name)
     const categoryName = computed(() => props.product.categories?.[0]?.name)
 
-    return { image, name, categoryName, description }
+    const sanitizer = useSanitizer()
+
+    return { image, name, categoryName, description, sanitizer }
   },
 })
 </script>
@@ -88,5 +90,9 @@ export default defineComponent({
     @apply tw-mr-1;
     @apply tw-font-bold;
   }
+}
+
+em {
+  @apply tw-not-italic;
 }
 </style>

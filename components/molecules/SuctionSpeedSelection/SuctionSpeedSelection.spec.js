@@ -51,7 +51,7 @@ describe('SuctionSpeedSelection', () => {
       await wrapper.vm.unitChanged('liters')
       await wrapper.vm.$nextTick()
 
-      wrapper.setData({ lowerBound: -23, upperBound: 6219 })
+      wrapper.setData({ lowerBound: '-23', upperBound: '6219' })
 
       await wrapper.vm.applyFilter()
       await wrapper.vm.$nextTick()
@@ -63,7 +63,7 @@ describe('SuctionSpeedSelection', () => {
     test('should calculate the correct upper and lower bound when unit is meters', async () => {
       const wrapper = shallowMount(SuctionSpeedSelection)
 
-      wrapper.setData({ lowerBound: -23, upperBound: 60219 })
+      wrapper.setData({ lowerBound: '-23', upperBound: '60219' })
 
       await wrapper.vm.applyFilter()
       await wrapper.vm.$nextTick()

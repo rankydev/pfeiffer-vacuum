@@ -1,9 +1,8 @@
-import { homestageSlideContentText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
-
 export const homeStageSlideContentMock = {
   headline: 'Komplettlösungen für jeden Vakuumbereich',
   component: 'HomeStageSlideContent',
-  richtext: [homestageSlideContentText],
+  richtext:
+    '<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>',
   buttons: [
     {
       icon: 'arrow_forward',
@@ -31,7 +30,8 @@ export const homeStageSlideContentMock = {
 export const errorStageTeaserContent = {
   headline: '404 – Hier ist die Luft raus!',
   component: 'HomeStageSlideContent',
-  richtext: [homestageSlideContentText],
+  richtext:
+    '<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>',
   buttons: [
     {
       icon: 'arrow_forward',

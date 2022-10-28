@@ -12,8 +12,12 @@
     >
       <!-- eslint-disable-next-line vue/no-template-shadow -->
       <template #label="{ value }">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <div class="vue-slider-mark-label" v-html="getTooltipLabel(value)" />
+        <!-- eslint-disable vue/no-v-html -->
+        <div
+          class="vue-slider-mark-label"
+          v-html="sanitizer.inline(getTooltipLabel(value))"
+        />
+        <!-- eslint-enable vue/no-v-html -->
       </template>
       <!-- eslint-disable-next-line vue/no-template-shadow -->
       <template #tooltip="{ value }">
@@ -21,7 +25,7 @@
           <!-- eslint-disable vue/no-v-html -->
           <span
             class="vue-slider-dot-tooltip-text"
-            v-html="getTooltipLabel(value)"
+            v-html="sanitizer.inline(getTooltipLabel(value))"
           />
           <!-- eslint-enable vue/no-v-html -->
         </div>
@@ -42,12 +46,9 @@
 </template>
 <script>
 import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd.min.js'
-import {
-  ref,
-  onBeforeMount,
-  useContext,
-  computed,
-} from '@nuxtjs/composition-api'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
+
+import { ref, onBeforeMount, useContext } from '@nuxtjs/composition-api'
 import { sections, ranges } from './VacuumRangeSlider.json'
 
 export default {
@@ -68,6 +69,7 @@ export default {
   emits: ['update', 'input'],
   setup(props, { emit }) {
     const { i18n } = useContext()
+    const sanitizer = useSanitizer()
     const marks = ref({})
     let data = ref([])
 
@@ -136,6 +138,7 @@ export default {
       getRangeWidth,
       getTooltipLabel,
       rangeClicked,
+      sanitizer,
     }
   },
 }
