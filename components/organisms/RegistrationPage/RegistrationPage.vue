@@ -35,7 +35,10 @@
       </div>
       <div class="tw-column-view--right-side">
         <ContentCTABox v-bind="contentCTABoxHelpData" />
-        <ContentCTABox v-bind="contentCTABoxLoginData" />
+        <ContentCTABox
+          v-bind="contentCTABoxLoginData"
+          :custom-button-action="login"
+        />
       </div>
     </div>
 
@@ -116,7 +119,7 @@ export default defineComponent({
       return undefined
     })
 
-    const contentCTABoxHelpData = getContentCTABoxHelpData(i18n)
+    const contentCTABoxHelpData = getContentCTABoxHelpData(i18n, app.localePath)
     const contentCTABoxLoginData = getContentCTABoxLoginData(i18n)
 
     /**
@@ -159,7 +162,7 @@ export default defineComponent({
         companyAddressCountryIso:
           requestData.value.personalData.address.country.isocode,
         companyAddressRegion:
-          requestData.value.personalData.address.region?.name,
+          requestData.value.personalData.address.region?.isocode,
         companyAlreadyCustomer:
           requestData.value.companyData?.companyAlreadyCustomer || false,
       }
@@ -215,6 +218,7 @@ export default defineComponent({
       selectedRegion,
       toggleModal,
       triggerSendRegistrationProcess,
+      login: userStore.login,
     }
   },
 })

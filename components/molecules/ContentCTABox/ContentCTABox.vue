@@ -14,6 +14,7 @@
       class="contact-cta-box__button"
       v-bind="item"
       :name="item.uiComponent || item.component"
+      @click="customButtonAction"
     />
   </div>
 </template>
@@ -32,6 +33,10 @@ export default {
     button: {
       type: Array,
       default: () => [],
+    },
+    customButtonAction: {
+      type: Function,
+      default: () => {},
     },
   },
 }

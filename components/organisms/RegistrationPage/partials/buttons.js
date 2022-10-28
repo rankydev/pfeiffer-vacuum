@@ -3,7 +3,7 @@ import getKey from '~/composables/useUniqueKey'
 /**
  * data of content cta boxes
  */
-export const getContentCTABoxHelpData = (i18n) => {
+export const getContentCTABoxHelpData = (i18n, localePath) => {
   return {
     headline: i18n.t('registration.registrationPage.contentCTABoxHelpTitle'),
     description: [
@@ -23,6 +23,7 @@ export const getContentCTABoxHelpData = (i18n) => {
         shape: 'outlined',
         variant: 'secondary',
         component: 'Button',
+        href: localePath('/contact'),
       },
     ],
   }
