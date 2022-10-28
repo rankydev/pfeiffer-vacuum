@@ -30,19 +30,14 @@
         />
       </template>
     </div>
-    <NuxtDynamic
-      v-for="item in description"
-      :key="item._uid"
-      class="video-player__component"
-      v-bind="item"
-      :name="item.uiComponent || item.component"
-    />
+    <Richtext :richtext="description" class="video-player__component" />
   </div>
 </template>
 
 <script>
 import { defineComponent, watch, reactive } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import { useYoutube } from './player/youtube.js'
 
 const DEFAULT_DATA = {
@@ -56,6 +51,7 @@ const DEFAULT_DATA = {
 export default defineComponent({
   components: {
     Icon,
+    Richtext,
   },
   props: {
     /**
@@ -76,8 +72,8 @@ export default defineComponent({
      * Subcomponent which is rendered underneath the video
      */
     description: {
-      type: Array,
-      default: () => [],
+      type: String,
+      default: '',
     },
   },
   setup(props) {

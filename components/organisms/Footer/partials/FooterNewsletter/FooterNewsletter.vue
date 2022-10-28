@@ -4,13 +4,8 @@
       {{ headline }}
     </h2>
 
-    <NuxtDynamic
-      v-for="item in richtext"
-      :key="item._uid"
-      v-bind="item"
-      :name="item.uiComponent || item.component"
-      class="newsletter__description"
-    />
+    <Richtext :richtext="richtext" class="newsletter__description" />
+
     <div v-if="button.length">
       <Button v-for="btn in button" :key="btn._uid" v-bind="btn" />
     </div>
@@ -19,10 +14,11 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 
 export default defineComponent({
   name: 'FooterNewsletter',
-  components: {},
+  components: { Richtext },
   props: {
     /**
      * This is a headline
@@ -32,11 +28,11 @@ export default defineComponent({
       default: '',
     },
     /**
-     * richtext element, containing the description
+     * richtext element
      */
     richtext: {
-      type: Array,
-      default: () => [],
+      type: String,
+      default: '',
     },
     /**
      * This is a button
