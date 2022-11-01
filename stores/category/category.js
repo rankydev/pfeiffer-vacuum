@@ -22,10 +22,13 @@ export const useCategoryStore = defineStore('category', () => {
   let searchTerm = ref('')
 
   const basePath = joinURL(router.options.base, PATH_SHOP)
-
   const category = ref(null)
   const result = ref(null)
   const reqId = ref(null)
+
+  const defaultSort = computed(() => {
+    return searchTerm.value.length > 0 ? 'name-asc' : 'relevance'
+  })
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 2)
@@ -60,7 +63,7 @@ export const useCategoryStore = defineStore('category', () => {
 
   const loadProducts = async () => {
     const id = route.value.params.category || ''
-    const sort = route.value.query.sort || 'relevance'
+    const sort = route.value.query.sort || defaultSort.value
     const facets = route.value.query.facets || ''
     const url = joinURL(basePath, config.PRODUCTS_API, 'search')
     const term = route.value.query.searchTerm || ''
