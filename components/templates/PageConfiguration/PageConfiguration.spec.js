@@ -1,7 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import PageConfiguration from './PageConfiguration.vue'
 import StickyBar from '~/components/atoms/StickyBar/StickyBar.vue'
-import { expect } from '@jest/globals'
 
 const localVue = createLocalVue()
 localVue.directive('editable', (el, key) => {
