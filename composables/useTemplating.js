@@ -7,6 +7,7 @@ const useTemplating = (content) => {
   const body = ref(undefined)
   const bottom = ref(undefined)
   const footer = ref(undefined)
+  const stickyBar = ref(undefined)
 
   const getTemplateContentByName = (name) => {
     return content?.value?.template?.content?.[name]
@@ -33,6 +34,7 @@ const useTemplating = (content) => {
     body.value = getContentByName('body')
     bottom.value = getContentByName('bottom')
     footer.value = getContentByName('footer')
+    stickyBar.value = getContentByName('stickyBar')
   }
 
   watch(content, getContent, { immediate: true })
@@ -44,6 +46,7 @@ const useTemplating = (content) => {
     body,
     bottom,
     footer,
+    stickyBar,
   }
 }
 

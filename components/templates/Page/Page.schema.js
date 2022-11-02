@@ -62,6 +62,12 @@ export default {
       restrict_components: true,
       component_whitelist: ['HelpContainer'],
     },
+    stickyBar: {
+      type: 'bloks',
+      display_name: 'Sticky Bar',
+      restrict_components: true,
+      component_whitelist: ['StickyBar'],
+    },
     ...Seo,
     ...Social,
     ...Template,

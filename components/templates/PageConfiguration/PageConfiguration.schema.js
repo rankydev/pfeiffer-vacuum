@@ -28,6 +28,13 @@ export default {
       restrict_components: true,
       component_whitelist: ['Footer'],
     },
+    stickyBar: {
+      type: 'bloks',
+      display_name: 'Sticky Bar',
+      maximum: 1,
+      restrict_components: true,
+      component_whitelist: ['StickyBar'],
+    },
   },
   image: null,
   preview_field: null,
