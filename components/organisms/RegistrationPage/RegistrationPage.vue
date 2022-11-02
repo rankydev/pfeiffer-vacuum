@@ -35,10 +35,7 @@
       </div>
       <div class="tw-column-view--right-side">
         <ContentCTABox v-bind="contentCTABoxHelpData" />
-        <ContentCTABox
-          v-bind="contentCTABoxLoginData"
-          :custom-button-action="login"
-        />
+        <ContentCTABox v-bind="contentCTABoxLoginData" @click="login" />
       </div>
     </div>
 

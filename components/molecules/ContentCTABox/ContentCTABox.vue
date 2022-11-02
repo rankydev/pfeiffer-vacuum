@@ -14,7 +14,7 @@
       class="contact-cta-box__button"
       v-bind="item"
       :name="item.uiComponent || item.component"
-      @click="customButtonAction"
+      @click="$emit('click')"
     />
   </div>
 </template>
@@ -34,11 +34,8 @@ export default {
       type: Array,
       default: () => [],
     },
-    customButtonAction: {
-      type: Function,
-      default: () => {},
-    },
   },
+  emits: ['click'],
 }
 </script>
 <style lang="scss">

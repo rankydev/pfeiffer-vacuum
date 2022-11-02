@@ -56,7 +56,7 @@ const mockRegister = jest.fn()
 jest.mock('~/stores/user', () => {
   return {
     useUserStore: () => {
-      return { register: mockRegister }
+      return { register: mockRegister, login: jest.fn() }
     },
   }
 })
