@@ -12,6 +12,7 @@ export default {
     },
     icon: {
       type: 'text',
+      required: true,
       description:
         'Use an icon from https://fonts.google.com/icons here (e.g. calculate)',
     },
