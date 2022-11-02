@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <div class="bubble__wrapper" :class="`bubble__wrapper--${position}`">
     <h5 class="bubble__headline">{{ title }}</h5>

@@ -1,15 +1,16 @@
-import PvSelect from './PvSelect.vue'
+import { ref } from '@nuxtjs/composition-api'
 import {
-  normal,
-  withValue,
-  icon,
-  optionIcon,
   disabled,
   disabledWithValue,
   error,
+  icon,
   label,
   multiple,
+  normal,
+  optionIcon,
+  withValue,
 } from './PvSelect.stories.content'
+import PvSelect from './PvSelect.vue'
 
 const argTypes = {
   error,
@@ -33,32 +34,51 @@ const Template = (args, { argTypes }) => ({
   components: { PvSelect },
   props: Object.keys(argTypes),
   setup() {
-    return { args }
+    const valueNormal = ref()
+    const valueWithValue = ref('OptionValue 2')
+    const valueIcon = ref()
+    const valueOptionIcon = ref()
+    const valueDisabled = ref('OptionValue 2')
+    const valueDisabledWithValue = ref()
+    const valueError = ref()
+    const valueLabel = ref()
+
+    return {
+      args,
+      valueNormal,
+      valueWithValue,
+      valueIcon,
+      valueOptionIcon,
+      valueDisabled,
+      valueDisabledWithValue,
+      valueError,
+      valueLabel,
+    }
   },
   template: `
     <div class="documentation-preview" style="max-width:500px;">
-    <PvSelect v-bind="args['Normal']" />
+    <PvSelect v-bind="args['Normal']" v-model="valueNormal"/>
     <br/>
-    <PvSelect v-bind="args['WithValue']" />
+    <PvSelect v-bind="args['WithValue']" v-model="valueWithValue"/>
     <br/>
-    <PvSelect v-bind="args['Icon']" />
+    <PvSelect v-bind="args['Icon']" v-model="valueIcon"/>
     <br/>
-    <PvSelect v-bind="args['OptionIcon']" />
+    <PvSelect v-bind="args['OptionIcon']" v-model="valueOptionIcon"/>
     <br/>
-    <PvSelect v-bind="args['Disabled']" />
+    <PvSelect v-bind="args['Disabled']" v-model="valueDisabled"/>
     <br/>
-    <PvSelect v-bind="args['DisabledWithValue']" />
+    <PvSelect v-bind="args['DisabledWithValue']" v-model="valueDisabledWithValue"/>
     <br/>
-    <PvSelect v-bind="args['Error']" />
+    <PvSelect v-bind="args['Error']" v-model="valueError"/>
     <br/>
-    <PvSelect v-bind="args['Label']" />
+    <PvSelect v-bind="args['Label']" v-model="valueLabel"/>
     <br/>
     </div>
   `,
 })
 
-export const Default = Template.bind({})
-Default.args = {
+export const Overview = Template.bind({})
+Overview.args = {
   Normal: { ...normal },
   WithValue: { ...withValue },
   Icon: { ...icon },
@@ -73,11 +93,13 @@ const MultipleTemplate = (args, { argTypes }) => ({
   components: { PvSelect },
   props: Object.keys(argTypes),
   setup() {
-    return { args }
+    const value = ref()
+
+    return { args, value }
   },
   template: `
     <div class="documentation-preview" style="max-width:500px;">
-      <PvSelect v-bind="args['Multiple']" />
+      <PvSelect v-bind="args['Multiple']" v-model="value"/>
     </div>
   `,
 })

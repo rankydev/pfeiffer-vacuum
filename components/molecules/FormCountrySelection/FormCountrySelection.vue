@@ -88,6 +88,7 @@ export default defineComponent({
     watch(isoCode, async (newIsoCode) => {
       await countriesStore.loadRegions(newIsoCode)
       regions.value = countriesStore.regions[newIsoCode] || []
+      countrySelection.value.region = null
     })
 
     return {

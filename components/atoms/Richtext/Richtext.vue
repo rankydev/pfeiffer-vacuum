@@ -1,14 +1,16 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <div
     v-editable="richtext"
     class="paragraph-section"
     @click="handleClick"
-    v-html="richtext"
+    v-html="sanitizer.block(richtext)"
   ></div>
+  <!-- eslint-enable vue/no-v-html -->
 </template>
 <script>
 import { defineComponent, useRouter } from '@nuxtjs/composition-api'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({
   props: {
@@ -22,6 +24,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter()
+    const sanitizer = useSanitizer()
 
     const handleClick = (event) => {
       const linkNode = event.target
@@ -47,7 +50,7 @@ export default defineComponent({
       event.preventDefault()
       router.push(targetUrl)
     }
-    return { handleClick }
+    return { handleClick, sanitizer }
   },
 })
 </script>

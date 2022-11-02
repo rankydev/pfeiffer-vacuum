@@ -39,6 +39,14 @@
   },
   "message": {
     "success": "您的请求已发送成功！",
-    "error": "无法发送您的请求。"
+    "error": {
+      "defaultError": "无法发送您的请求。",
+      "customerAlreadyExists":
+        "您已经拥有一个普发真空帐户，而且您的密码仍保持未变。",
+      "technicalError":
+        "发生技术错误。 请联系普发真空支持。",
+      "customerInconsistentError":
+        "出现了与您帐户有关的问题。 请联系我们的客服。"
+    } 
   }
 }

@@ -1,18 +1,5 @@
-import { expect } from '@jest/globals'
 import { setActivePinia, createPinia } from 'pinia'
 import { useContactStore } from './contact'
-
-const mockLogger = jest.fn()
-
-jest.mock('~/composables/useLogger', () => ({
-  useLogger: () => {
-    return {
-      logger: {
-        error: mockLogger,
-      },
-    }
-  },
-}))
 
 const mockIsLoggedIn = jest.fn()
 const mockAuth = jest.fn()
@@ -85,15 +72,13 @@ describe('contact store', () => {
         mockIsLoggedIn.mockReturnValue(false)
 
         const contactStore = useContactStore()
-        const result = await contactStore.submitContact({
-          someInformation: 'test',
-        })
-
-        expect(mockLogger).toBeCalledWith(
-          'Error when sending contact form. Returning false.',
-          'something went wrong'
-        )
-        expect(result).toBeFalsy()
+        await contactStore
+          .submitContact({
+            someInformation: 'test',
+          })
+          .catch((error) => {
+            expect(error).toBe('something went wrong')
+          })
       })
     })
   })
