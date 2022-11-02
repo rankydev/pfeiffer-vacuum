@@ -10,11 +10,6 @@ import Button from '~/components/atoms/Button/Button.vue'
 
 let wrapper
 
-const eventMock = () => ({
-  preventDefault: jest.fn(),
-  stopPropagation: jest.fn(),
-})
-
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   return {
@@ -173,25 +168,6 @@ describe('MainNavigationLevel', () => {
   describe('during interaction', () => {
     describe('given navigation entries', () => {
       describe('given viewport tablet/desktop', () => {
-        it('should prevent default behavior when link was clicked', () => {
-          createComponent({ navigationEntries })
-
-          const links = wrapper.findAllComponents(Link)
-
-          links.wrappers.forEach((link, idx) => {
-            const $event = eventMock()
-            const result = link.vm.beforeNavigation($event)
-            const hasSubEntries =
-              navigationEntries[idx].navigationEntries?.length
-
-            expect(result).toBe(!hasSubEntries ? null : !hasSubEntries)
-            expect($event.preventDefault).toBeCalledTimes(hasSubEntries ? 1 : 0)
-            expect($event.stopPropagation).toBeCalledTimes(
-              hasSubEntries ? 1 : 0
-            )
-          })
-        })
-
         it('should set active element when link was clicked', () => {
           createComponent({ navigationEntries })
 
@@ -201,7 +177,7 @@ describe('MainNavigationLevel', () => {
             const hasSubEntries =
               navigationEntries[idx].navigationEntries?.length
 
-            link.vm.beforeNavigation(eventMock())
+            link.vm.beforeNavigation()
 
             expect(wrapper.vm.activeElement).toBe(hasSubEntries ? idx : null)
           })
@@ -213,8 +189,8 @@ describe('MainNavigationLevel', () => {
           const links = wrapper.findAllComponents(Link)
 
           links.wrappers.forEach((link) => {
-            link.vm.beforeNavigation(eventMock())
-            link.vm.beforeNavigation(eventMock())
+            link.vm.beforeNavigation()
+            link.vm.beforeNavigation()
             expect(wrapper.vm.activeElement).toBe(null)
           })
         })
@@ -243,7 +219,7 @@ describe('MainNavigationLevel', () => {
 
         for (const [idx, link] of links.wrappers.entries()) {
           const hasSubEntries = navigationEntries[idx].navigationEntries?.length
-          link.vm.beforeNavigation(eventMock())
+          link.vm.beforeNavigation()
 
           if (hasSubEntries) expect(wrapper.vm.activeElement).toBe(idx)
 

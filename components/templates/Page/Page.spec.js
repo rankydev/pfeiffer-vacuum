@@ -1,3 +1,4 @@
+import { it } from '@jest/globals'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import VueMeta from 'vue-meta'
 import Page from './Page.vue'
@@ -7,6 +8,42 @@ localVue.directive('editable', (el, key) => {
   el.innerText = key.value
 })
 localVue.use(VueMeta, { keyName: 'head' })
+
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  const { ref } = originalModule
+  return {
+    __esModule: true,
+    ...originalModule,
+    useRoute: () => ref({ fullPath: '' }),
+    useContext: () => ({
+      $config: {
+        baseURL: '',
+      },
+      $imageService: {
+        getResponsiveImageUrl: () => '',
+      },
+    }),
+  }
+})
+
+const seoProps = {
+  title: 'title',
+  seoDescription: 'seoDescription',
+  ogTitle: 'ogTitle',
+  ogDescription: 'ogDescription',
+  ogImage: {
+    filename: '',
+  },
+  twitterTitle: 'twitterTitle',
+  twitterDescription: 'twitterDescription',
+  twitterImage: {
+    filename: '',
+  },
+  noindex: true,
+  nofollow: true,
+  canonical: 'canonical',
+}
 
 describe('Page', () => {
   let wrapper
@@ -46,6 +83,7 @@ describe('Page', () => {
       it('should render components', () => {
         const propsData = {
           content: {
+            ...seoProps,
             top: [
               {
                 component: 'Top',
@@ -105,23 +143,7 @@ describe('Page', () => {
     describe('given header information are set', () => {
       it('should use composable and set head tags', () => {
         const propsData = {
-          content: {
-            title: 'title',
-            seoDescription: 'seoDescription',
-            ogTitle: 'ogTitle',
-            ogDescription: 'ogDescription',
-            ogImage: {
-              filename: '',
-            },
-            twitterTitle: 'twitterTitle',
-            twitterDescription: 'twitterDescription',
-            twitterImage: {
-              filename: '',
-            },
-            noindex: true,
-            nofollow: true,
-            canonical: 'canonical',
-          },
+          content: seoProps,
         }
         const provide = {
           getTranslatedSlugs() {
@@ -178,6 +200,69 @@ describe('Page', () => {
           rel: 'canonical',
           href: 'canonical',
         })
+      })
+    })
+
+    it('should use the meta data from the prop if given', () => {
+      const props = {
+        content: seoProps,
+        metaData: {
+          title: 'Other title',
+          seoDescription: 'Other seoDescription',
+          ogTitle: 'Other ogTitle',
+          ogDescription: 'Other ogDescription',
+          ogImage: {
+            filename: '',
+          },
+          twitterTitle: 'Other twitterTitle',
+          twitterDescription: 'Other twitterDescription',
+          twitterImage: {
+            filename: '',
+          },
+          noindex: false,
+          nofollow: false,
+        },
+      }
+      const provide = {
+        getTranslatedSlugs() {
+          return ''
+        },
+        getDefaultFullSlug() {
+          return ''
+        },
+      }
+      createComponent(props, provide)
+      const metaInfo = wrapper.vm.$meta().refresh().metaInfo
+      expect(metaInfo.title).toBe(props.metaData.title)
+      expect(metaInfo.meta).toContainEqual({
+        hid: 'description',
+        name: 'description',
+        content: props.metaData.seoDescription,
+      })
+      expect(metaInfo.meta).toContainEqual({
+        hid: 'twitter:title',
+        name: 'twitter:title',
+        content: props.metaData.twitterTitle,
+      })
+      expect(metaInfo.meta).toContainEqual({
+        hid: 'twitter:description',
+        name: 'twitter:description',
+        content: props.metaData.twitterDescription,
+      })
+      expect(metaInfo.meta).toContainEqual({
+        hid: 'og:title',
+        name: 'og:title',
+        content: props.metaData.ogTitle,
+      })
+      expect(metaInfo.meta).toContainEqual({
+        hid: 'og:description',
+        name: 'og:description',
+        content: props.metaData.ogDescription,
+      })
+      expect(metaInfo.meta).not.toContainEqual({
+        hid: 'robots',
+        name: 'robots',
+        content: 'noindex,nofollow',
       })
     })
   })

@@ -193,6 +193,11 @@ export default defineComponent({
       return false
     }
 
+    const closeMenu = () => {
+      activeElement.value = null
+      menu.close()
+    }
+
     const hasSubmenu = (entry) => entry?.navigationEntries?.length > 0
 
     return {
@@ -206,7 +211,7 @@ export default defineComponent({
       isHovered,
       hasSubmenu,
       selectedPrimaryLink,
-      closeMenu: menu.close,
+      closeMenu,
     }
   },
 })

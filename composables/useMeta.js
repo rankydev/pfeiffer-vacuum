@@ -15,7 +15,8 @@ const useMeta = (content = {}, defaultSlug, translatedSlugs) => {
   const context = useContext()
   const route = useRoute()
 
-  const reqKeys = ['title', 'seoTitle', 'seoDescription']
+  const title = content.seoTitle === undefined ? 'title' : 'seoTitle'
+  const reqKeys = [title, 'seoDescription']
   validateRequiredKeys(reqKeys, content)
 
   const getMetaData = () => {
@@ -52,8 +53,7 @@ const useMeta = (content = {}, defaultSlug, translatedSlugs) => {
       content: seoDescription,
     })
 
-    const routeFullPath = route.value.fullPath
-    addCanonical(link, content, baseUrl, routeFullPath)
+    addCanonical(link, content, baseUrl, route.value.fullPath)
 
     addHreflang(link, defaultSlug, translatedSlugs, baseUrl)
 
