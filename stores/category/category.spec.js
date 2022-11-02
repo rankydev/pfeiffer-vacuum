@@ -56,7 +56,7 @@ jest.mock('@nuxtjs/composition-api', () => {
         $axios: {
           get: axiosRequest,
         },
-        i18n: { locale: 'en' },
+        i18n: { locale: 'en', t: (val) => val },
         app: {
           localePath: jest.fn(() => mockLocalePath),
         },
@@ -89,6 +89,8 @@ jest.mock('~/stores/cms', () => {
   }
 })
 
+const rootCat = { href: 'localePath', name: 'category.rootCategory' }
+
 describe('useCategoryStore', () => {
   beforeEach(() => setActivePinia(createPinia()))
   describe('initial state', () => {
@@ -97,8 +99,8 @@ describe('useCategoryStore', () => {
 
       expect(categoryStore.category).toBe(null)
       expect(categoryStore.result).toBe(null)
-      expect(categoryStore.breadcrumb).toStrictEqual([entries[0], entries[1]])
-      expect(categoryStore.categoryName).toBe(entries[1].name)
+      expect(categoryStore.breadcrumb).toStrictEqual([entries[0], rootCat])
+      expect(categoryStore.categoryName).toBe(rootCat.name)
       expect(categoryStore.parentCategoryPath).toBe(null)
       expect(categoryStore.loadByPath).toBeInstanceOf(Function)
     })
@@ -140,7 +142,7 @@ describe('useCategoryStore', () => {
 
       expect(categoryStore.breadcrumb).toStrictEqual([
         entries[0],
-        entries[1],
+        rootCat,
         ...mockChildCategory.categoryPath.map(({ name, id }) => ({
           name,
           href: `${mockLocalePath}/${id}`,

@@ -121,7 +121,7 @@ describe('User store', () => {
     })
 
     test('should throw logger error given user error', async () => {
-      mockGetUserData.mockReturnValue(null)
+      mockGetUserData.mockRejectedValue(null)
       mockIsLoggedIn.value = true
       const userStore = useUserStore()
 

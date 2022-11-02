@@ -28,9 +28,9 @@ export const useStoryblokData = () => {
         },
       }
       const { data } = await $cms.query({ options })
-
       fetched.value = true
 
+      /* istanbul ignore next */
       if (!data?.[0]?.full_slug) return
 
       const fullSlug = joinURL(i18n.locale, data[0].full_slug)

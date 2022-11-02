@@ -24,6 +24,40 @@ jest.mock('~/composables/useAxiosForHybris', () => ({
   },
 }))
 
+jest.mock('~/stores/cms', () => {
+  const {
+    entries,
+  } = require('~/components/molecules/Breadcrumb/Breadcrumb.stories.content')
+
+  return {
+    __esModule: true,
+    useCmsStore: () => ({ breadcrumb: entries }),
+  }
+})
+
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  const { ref } = originalModule
+
+  return {
+    ...originalModule,
+    useContext: () => ({
+      i18n: { locale: 'en', t: (val) => val },
+      app: {
+        localePath: jest.fn((val) => val),
+      },
+    }),
+    useRoute: jest.fn(() =>
+      ref({
+        fullPath: '/someExample/',
+        params: {},
+        query: {},
+      })
+    ),
+    ssrRef: ref,
+  }
+})
+
 describe('Product store', () => {
   beforeEach(() => {
     jest.resetAllMocks()
