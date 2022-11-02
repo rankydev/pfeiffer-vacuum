@@ -62,10 +62,7 @@ import HintModal from '~/components/organisms/RegistrationPage/HintModal/HintMod
 import { useToast } from '~/composables/useToast'
 import useVuelidate from '@vuelidate/core'
 import { useUserStore } from '~/stores/user'
-import {
-  getContentCTABoxLoginData,
-  getContentCTABoxHelpData,
-} from './partials/buttons'
+import { useCTABoxHelper } from './partials/useCTABoxHelper'
 
 export default defineComponent({
   name: 'RegistrationPage',
@@ -80,7 +77,7 @@ export default defineComponent({
     HintModal,
   },
   setup() {
-    const { i18n, app } = useContext()
+    const { i18n, localePath } = useContext()
     const userStore = useUserStore()
     const router = useRouter()
     const toast = useToast()
@@ -116,8 +113,7 @@ export default defineComponent({
       return undefined
     })
 
-    const contentCTABoxHelpData = getContentCTABoxHelpData(i18n, app.localePath)
-    const contentCTABoxLoginData = getContentCTABoxLoginData(i18n)
+    const { contentCTABoxHelpData, contentCTABoxLoginData } = useCTABoxHelper()
 
     /**
      * Function triggered by triggerSendRegistrationProcess() or emitted event "closeModal"
@@ -168,7 +164,7 @@ export default defineComponent({
         .register(customerData)
         .then(() => {
           loading.value = false
-          router.push(app.localePath('/shop/register/success'))
+          router.push(localePath('/shop/register/success'))
         })
         .catch((err) => {
           err.data.errors.forEach((error) => {

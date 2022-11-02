@@ -42,9 +42,7 @@ jest.mock('@nuxtjs/composition-api', () => {
       push: mockRouterPush,
     }),
     useContext: () => ({
-      app: {
-        localePath: (path) => `/test${path}`,
-      },
+      localePath: (path) => `/test${path}`,
       i18n: {
         t: (key) => key,
       },
