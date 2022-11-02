@@ -6,7 +6,7 @@
   >
     <span class="filter-tag__text">
       {{ `${filter}: ` }}
-      <span class="filter-tag__value">{{ value }}</span>
+      <span class="filter-tag__value" v-html="value"></span>
     </span>
     <Icon
       class="filter-tag__icon"

@@ -56,6 +56,9 @@ export default {
     const vacuumRangeIds = ['3913', '3912']
     const suctionSpeedIds = ['3983', '3982']
 
+    // Unit for suction speed, which will be set by frontend
+    const suctionSpeedUnit = 'm<sup>3</sup>/h'
+
     // Switch for showing less or more filters
     const isExtended = ref(false)
 
@@ -77,12 +80,29 @@ export default {
     )
 
     // Generate array with current selected facets from given currentQuery
-    const selectedFacets = computed(
-      () =>
+    const selectedFacets = computed(() => {
+      const arr =
         currentQuery.value?.query?.filterTerms?.filter(
           (e) => e.key !== 'category'
         ) || []
-    )
+
+      arr.forEach((el) => {
+        // Remove min/max from displayName string
+        if ([...vacuumRangeIds, ...suctionSpeedIds].includes(el.key)) {
+          el.displayName = el.displayName.replaceAll(/,?\s(min|max)/g, '')
+        }
+
+        // Add suction speed unit if not present
+        if (
+          suctionSpeedIds.includes(el.key) &&
+          !el.value.includes(suctionSpeedUnit)
+        ) {
+          el.value += ` ${suctionSpeedUnit}`
+        }
+      })
+
+      return arr
+    })
 
     const vacuumRange = computed(() => {
       const lower = currentQuery.value?.query?.filterTerms?.find(
@@ -96,14 +116,19 @@ export default {
     })
 
     const suctionSpeed = computed(() => {
-      const lower = currentQuery.value?.query?.filterTerms?.find(
+      let lower = currentQuery.value?.query?.filterTerms?.find(
         (e) => e.key === suctionSpeedIds[0]
       )
-      const upper = currentQuery.value?.query?.filterTerms?.find(
+      let upper = currentQuery.value?.query?.filterTerms?.find(
         (e) => e.key === suctionSpeedIds[1]
       )
 
-      return [lower?.value, upper?.value]
+      const reg = new RegExp(`(<|>)=|${suctionSpeedUnit}|\\s`, 'g')
+
+      lower = lower?.value?.replace(reg, '')
+      upper = upper?.value?.replace(reg, '')
+
+      return [lower, upper]
     })
 
     const vacuumRangePresent = computed(
