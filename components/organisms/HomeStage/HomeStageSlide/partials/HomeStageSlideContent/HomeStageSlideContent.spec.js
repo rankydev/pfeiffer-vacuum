@@ -48,10 +48,8 @@ describe('HomeStageSlideContent', () => {
         ...defaultProps(),
       }
       createComponent(propsData)
-      const domRichtext = wrapper.find('[name="Richtext"]')
-      expect(domRichtext.attributes('richtext')).toBe(
-        propsData.richtext[0].richtext
-      )
+      const domRichtext = wrapper.find('richtext-stub')
+      expect(domRichtext.attributes('richtext')).toBe(propsData.richtext)
     })
 
     // buttons

@@ -1,7 +1,7 @@
 import ContactFormSection from '~/components/organisms/ContactFormSection/ContactFormSection.vue'
 import {
   requestForms,
-  // contactPersons,
+  contactPersons,
 } from './ContactFormSection.stories.content'
 const argTypes = {}
 export default {
@@ -35,7 +35,6 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {
-  requestForms: requestForms,
-  // ToDo: replace ContactRequestSelection with Array of Contact Persons for contactPersons
-  // contactPersons: contactPersons,
+  requestForms,
+  contactPersons,
 }

@@ -34,16 +34,8 @@ describe('VideoPlayer', () => {
     it('should render a rich text component, given these as a description', () => {
       const propsData = { description }
       createComponent(propsData)
-
-      const elements = wrapper.findAll('.video-player__component')
-
-      expect(elements.length).toBe(description.length)
-
-      description.forEach((ele, idx) => {
-        expect(elements.at(idx).attributes('name')).toBe(
-          ele.uiComponent || ele.component
-        )
-      })
+      const domRichtext = wrapper.find('richtext-stub')
+      expect(domRichtext.attributes('richtext')).toBe(description)
     })
 
     describe('given no url', () => {

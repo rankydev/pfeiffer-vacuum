@@ -54,6 +54,7 @@ export default {
         'HelpContainer',
         'ImageBanner',
         'StickyBar',
+        'ColumnView',
       ],
     },
     bottom: {

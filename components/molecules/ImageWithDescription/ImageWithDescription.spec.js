@@ -38,15 +38,11 @@ describe('ImageWithDescription', () => {
         ...defaultProps(),
       }
       createComponent(propsData)
-
-      const activeElements = wrapper.findAll(
-        '.image-with-description__component'
+      const domRichtext = wrapper.find('richtext-stub')
+      expect(domRichtext.exists()).toBeTruthy()
+      expect(domRichtext.attributes('richtext')).toBe(
+        imageWithDescriptionContent.description
       )
-      expect(activeElements.length).toBe(1)
-      expect(activeElements.at(0).attributes('richtext')).toBe(
-        propsData.description[0].richtext
-      )
-      expect(activeElements.at(0).attributes('name')).toBe('Richtext')
     })
     test('should render image', () => {
       const propsData = {

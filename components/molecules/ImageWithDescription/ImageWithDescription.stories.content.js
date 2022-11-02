@@ -1,9 +1,9 @@
 import image from './../../atoms/ResponsiveImage/ResponsiveImage.stories.content.js'
-import { smallText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
 
 export const imageWithDescriptionContent = {
   _uid: '0fbbfe8f-5ed3-4652-a2aa-08f10412b3e0',
-  description: [smallText],
+  description:
+    '<p><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b><br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est velit pharetra tincidunt rhoncus, sed</p>',
   image: image.image,
   aspectRatio: '1:1',
   component: 'ImageWithDescription',
