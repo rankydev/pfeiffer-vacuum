@@ -11,7 +11,14 @@
       <p class="tw-subline-3 hint-modal__subline">
         {{ $t('registration.registrationHintModal.subline') }}
       </p>
-      <Richtext :richtext="$t('registration.registrationHintModal.richtext')" />
+      <Richtext
+        :richtext="`${$t('registration.registrationHintModal.text')}<br />
+        <ul>
+          <li>${$t('registration.registrationHintModal.benefit1')}</li>
+          <li>${$t('registration.registrationHintModal.benefit2')}</li>
+          <li>${$t('registration.registrationHintModal.benefit3')}</li>
+        </ul>`"
+      />
       <div class="hint-modal__button-section">
         <Button
           class="hint-modal__btn-proceed"
