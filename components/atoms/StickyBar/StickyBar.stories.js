@@ -4,7 +4,7 @@ import { label, icon, href, target } from './StickyBar.stories.content.js'
 const argTypes = {}
 
 export default {
-  title: 'Atoms/a_XXX StickyBar',
+  title: 'Atoms/a_116 StickyBar',
   component: StickyBar,
   parameters: {
     docs: {
