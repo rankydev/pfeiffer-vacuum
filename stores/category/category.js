@@ -27,7 +27,7 @@ export const useCategoryStore = defineStore('category', () => {
   const reqId = ref(null)
 
   const defaultSort = computed(() => {
-    return searchTerm.value.length > 0 ? 'name-asc' : 'relevance'
+    return searchTerm.value.length > 0 ? 'relevance' : 'name-asc'
   })
 
   const breadcrumb = computed(() => {
