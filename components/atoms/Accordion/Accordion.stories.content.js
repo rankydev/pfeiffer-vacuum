@@ -26,6 +26,16 @@ export const accordionEntries = [
   accordionEntry(),
 ]
 
+export const accordion = {
+  _uid: nanoid(),
+  level: 'h3',
+  multiple: false,
+  component: 'Accordion',
+  accordionEntries,
+  _editable:
+    '<!--#storyblok#{"name": "Accordion", "space": "158542", "uid": "47cad62c-d867-4f2f-a6d0-d66e1b70776e", "id": "137975252"}-->',
+}
+
 export const accordionEntriesWithImg = [accordionEntryImage()]
 
 export const levels = ['h3', 'paragraph']
