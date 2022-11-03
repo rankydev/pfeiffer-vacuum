@@ -139,6 +139,8 @@
     @apply tw-p-1.5;
     @apply tw-border-x-pv-white tw-border-x;
     @apply tw-text-xs;
+    hyphens: auto;
+    @apply tw-break-all;
 
     &:hover {
       @apply tw-bg-pv-red;
