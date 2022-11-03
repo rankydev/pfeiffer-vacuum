@@ -77,7 +77,7 @@ export default defineComponent({
   }
 
   &__text {
-    font-size: 16px;
+    @apply tw-text-base;
   }
 
   ul {
