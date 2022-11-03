@@ -1,5 +1,4 @@
 import { homeStageSlideContentMock } from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.stories.content'
-import { bubbleText } from '~/components/atoms/Richtext/Richtext.stories.content'
 
 const requiredContent = {
   image: {
@@ -16,11 +15,14 @@ const requiredContent = {
   stageContent: [homeStageSlideContentMock],
 }
 
+export const bubbleText =
+  '<p>10<sup class="superscript">3 </sup>- 10<sup class="superscript">-6 </sup>hPa</p>'
+
 export const bubble = [
   {
     title: 'Hochvakuum',
     position: 'right',
-    richtext: [bubbleText],
+    richtext: bubbleText,
     component: 'Bubble',
   },
 ]
@@ -29,7 +31,7 @@ export const bubble2 = [
   {
     title: 'Hochvakuum',
     position: 'left',
-    richtext: [bubbleText],
+    richtext: bubbleText,
     component: 'Bubble',
   },
 ]

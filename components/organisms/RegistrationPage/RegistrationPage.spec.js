@@ -42,9 +42,7 @@ jest.mock('@nuxtjs/composition-api', () => {
       push: mockRouterPush,
     }),
     useContext: () => ({
-      app: {
-        localePath: (path) => `/test${path}`,
-      },
+      localePath: (path) => `/test${path}`,
       i18n: {
         t: (key) => key,
       },
@@ -56,7 +54,7 @@ const mockRegister = jest.fn()
 jest.mock('~/stores/user', () => {
   return {
     useUserStore: () => {
-      return { register: mockRegister }
+      return { register: mockRegister, login: jest.fn() }
     },
   }
 })

@@ -22,7 +22,7 @@ jest.mock('@nuxtjs/composition-api', () => {
     useContext: () => {
       return {
         app: {
-          router: { push: jest.fn() },
+          router: { push: jest.fn(), options: { base: '/test' } },
           i18n: {
             locale: '',
           },

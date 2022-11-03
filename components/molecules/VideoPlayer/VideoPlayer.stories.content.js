@@ -1,8 +1,7 @@
-import { smallText } from '~/components/atoms/Richtext/Richtext.stories.content.js'
-
 export const url = 'https://www.youtube.com/watch?v=Gm18dxJKTFY'
 export const title = 'Some titel'
-export const description = [smallText]
+export const description =
+  '<p><b>Lorem ipsum dolor sit amet, consectetur adipiscing elit</b><br />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Est velit pharetra tincidunt rhoncus, sed</p>'
 
 export default {
   url,

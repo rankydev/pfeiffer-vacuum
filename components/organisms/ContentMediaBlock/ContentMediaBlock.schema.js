@@ -1,4 +1,4 @@
-import RichtextBasic from '~/components/atoms/Richtext/RichtextBasic.schema.js'
+import Richtext from '~/components/atoms/Richtext/Richtext.schema.js'
 
 export default {
   name: 'ContentMediaBlock',
@@ -15,7 +15,7 @@ export default {
       translatable: true,
     },
     richtext: {
-      ...RichtextBasic.schema.richtext,
+      ...Richtext.schema.richtext,
       required: true,
     },
     buttons: {

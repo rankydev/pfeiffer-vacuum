@@ -47,7 +47,10 @@
   "registrationHintModal": {
     "title": "沒有公司數據的註冊？",
     "subline": "您確定不想輸入公司信息嗎？",
-    "richtext": "只有使用公司詳細信息，您才能：<br/><ul><li>查看在線價格</li><li>向您的銷售工程師發送報價請求</li><li>使用安裝基礎管理 (VSM)。</li></ul>",
+    "text": "若添加了公司数据，您能够：",
+    "benefit1": "查看在线价格",
+    "benefit2": "向您的销售工程师发送报价请求",
+    "benefit3": "使用已安装的基础管理",
     "buttonLeft": "註冊沒有公司數據",
     "buttonRight": "添加公司信息"
   }

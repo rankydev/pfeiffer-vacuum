@@ -43,7 +43,10 @@
   "registrationHintModal": {
     "title": "Registration without company data?",
     "subline": "Are you sure you don't want to enter company information?",
-    "richtext": "Only with company details you can:<br/><ul><li>View online prices</li><li>Send a request for a quote to your sales engineer</li><li>Use Installed Base Management (VSM). </li></ul>",
+    "text": "When adding your company data you will be able to:",
+    "benefit1": "See online prices",
+    "benefit2": "Send requests for quotes to your sales engineer",
+    "benefit3": "Use the installed base management",
     "buttonLeft": "Register without company data",
     "buttonRight": "Add Company Info"
   }
