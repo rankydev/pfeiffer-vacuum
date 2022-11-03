@@ -43,6 +43,18 @@
             </ContentWrapper>
           </div>
         </template>
+
+        <template #stickyBar>
+          <Button
+            v-if="hasLink"
+            class="category-page__sticky-btn"
+            :label="$t('navigation.button.overview.label')"
+            :href="href"
+            variant="secondary"
+            shape="outlined"
+            cutaway="bottom"
+          />
+        </template>
       </Page>
     </template>
   </CmsQuery>
