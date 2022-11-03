@@ -56,3 +56,5 @@ export const useCTABoxHelper = () => {
     contentCTABoxHelpData,
   }
 }
+
+export default {}

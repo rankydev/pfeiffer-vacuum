@@ -30,20 +30,29 @@ const mockSearchResult = {
 
 const mockAxiosRequest = jest.fn((url) => {
   switch (url) {
-    case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online':
+    case '/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online':
       return Promise.resolve({ data: mockRootCategory })
-    case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online/categories/Category':
+    case '/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online/categories/Category':
       return Promise.resolve({ data: mockExampleCategory })
-    case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online/categories/ChildCategory':
+    case '/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online/categories/ChildCategory':
       return Promise.resolve({ data: mockChildCategory })
-    case '/api/shop/pfeifferwebservices/v2/pfeiffer/products/search':
+    case '/pfeifferwebservices/v2/pfeiffer/products/search':
     default:
       return Promise.resolve({ data: mockSearchResult })
   }
 })
 
-const mockLocalePath = 'localePath'
+jest.mock('~/composables/useAxiosForHybris', () => ({
+  useAxiosForHybris: () => {
+    return {
+      axios: {
+        get: mockAxiosRequest,
+      },
+    }
+  },
+}))
 
+const mockLocalePath = 'localePath'
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   const { ref } = originalModule
@@ -52,13 +61,8 @@ jest.mock('@nuxtjs/composition-api', () => {
     ...originalModule,
     useContext: jest.fn(() => {
       return {
-        $axios: {
-          get: mockAxiosRequest,
-        },
         i18n: { locale: 'en', t: (val) => val },
-        app: {
-          localePath: jest.fn(() => mockLocalePath),
-        },
+        localePath: jest.fn(() => mockLocalePath),
       }
     }),
     useRouter: jest.fn(() => ({ options: { base: '' } })),

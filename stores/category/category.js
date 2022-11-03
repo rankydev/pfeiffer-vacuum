@@ -7,6 +7,7 @@ import {
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
+import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
 import { PATH_SHOP } from '~/server/constants'
 import { useCmsStore } from '~/stores/cms'
@@ -17,7 +18,8 @@ export const useCategoryStore = defineStore('category', () => {
   const router = useRouter()
   const route = useRoute()
   const cmsStore = useCmsStore()
-  const { $axios, i18n, app } = useContext()
+  const { axios } = useAxiosForHybris()
+  const { i18n, localePath } = useContext()
 
   let searchTerm = ref('')
 
@@ -33,7 +35,7 @@ export const useCategoryStore = defineStore('category', () => {
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
     const categoryPath = category.value?.categoryPath || []
-    const rootUrl = app.localePath('shop-categories')
+    const rootUrl = localePath('shop-categories')
     const rootCat = { name: i18n.t('category.rootCategory'), href: rootUrl }
 
     const breadcrumbArr = [
@@ -72,17 +74,17 @@ export const useCategoryStore = defineStore('category', () => {
   const parentCategoryPath = computed(() => {
     const categoryPath = category.value?.categoryPath || []
     if (categoryPath.length === 0) return null
-    if (categoryPath.length === 1) return app.localePath('shop-categories')
+    if (categoryPath.length === 1) return localePath('shop-categories')
 
     const idx = categoryPath.length - 2
-    return joinURL(app.localePath('shop-categories'), categoryPath[idx].id)
+    return joinURL(localePath('shop-categories'), categoryPath[idx].id)
   })
 
   const loadProducts = async () => {
     const id = route.value.params.category || ''
     const sort = route.value.query.sort || defaultSort.value
     const facets = route.value.query.facets || ''
-    const url = joinURL(basePath, config.PRODUCTS_API, 'search')
+    const url = joinURL(config.PRODUCTS_API, 'search')
     const term = route.value.query.searchTerm || ''
     const params = {
       currentPage: route.value.query.currentPage - 1 || 0,
@@ -95,17 +97,13 @@ export const useCategoryStore = defineStore('category', () => {
       categoryTreeDepth: 2,
     }
     searchTerm.value = term
-    result.value = await $axios.get(url, { params }).then(({ data }) => data)
+    result.value = await axios.get(url, { params }).then(({ data }) => data)
   }
 
   const loadCategory = async () => {
     const id = route.value.params.category || ''
-    const url = joinURL(
-      basePath,
-      id ? config.CATEGORY_API : config.CATEGORIES_API,
-      id
-    )
-    category.value = await $axios.get(url).then(({ data }) => data)
+    const url = joinURL(id ? config.CATEGORY_API : config.CATEGORIES_API, id)
+    category.value = await axios.get(url).then(({ data }) => data)
   }
 
   const loadByPath = async () => {

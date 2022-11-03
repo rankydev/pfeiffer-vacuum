@@ -69,9 +69,7 @@ jest.mock('@nuxtjs/composition-api', () => {
     ...originalModule,
     useContext: () => ({
       i18n: { locale: 'en', t: (val) => val },
-      app: {
-        localePath: jest.fn(() => mockLocalePath),
-      },
+      localePath: jest.fn(() => mockLocalePath),
     }),
     useRoute: () =>
       ref({

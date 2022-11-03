@@ -18,7 +18,7 @@ export const useProductStore = defineStore('product', () => {
   const cmsStore = useCmsStore()
   const { logger } = useLogger('productStore')
   const { axios } = useAxiosForHybris()
-  const { app, i18n } = useContext()
+  const { localePath, i18n } = useContext()
 
   const product = ref(null)
   const reqId = ssrRef(null)
@@ -28,7 +28,7 @@ export const useProductStore = defineStore('product', () => {
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
     const categoryPath = product.value?.categoryPath || []
-    const rootUrl = app.localePath('shop-categories')
+    const rootUrl = localePath('shop-categories')
     const rootCat = { name: i18n.t('category.rootCategory'), href: rootUrl }
     const productName = product.value?.name
 
