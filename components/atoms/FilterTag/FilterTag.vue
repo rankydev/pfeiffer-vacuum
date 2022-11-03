@@ -7,7 +7,7 @@
     <span class="filter-tag__text">
       {{ `${filter}: ` }}
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <span class="filter-tag__value" v-html="value"></span>
+      <span class="filter-tag__value" v-html="sanitizer.clear(value)"></span>
     </span>
     <Icon
       class="filter-tag__icon"
@@ -21,6 +21,7 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({
   components: {
@@ -41,6 +42,10 @@ export default defineComponent({
     },
   },
   emits: ['click'],
+  setup() {
+    const sanitizer = useSanitizer()
+    return { sanitizer }
+  },
 })
 </script>
 
