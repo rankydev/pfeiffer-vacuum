@@ -74,8 +74,6 @@ describe('Facets.vue', () => {
       expect(wrapper.vm.multiSelectFacets[0]).toBe(facets[2])
       expect(wrapper.vm.shrinkedFacets[0]).toBe(facets[2])
       expect(wrapper.vm.selectedFacets).toEqual([])
-      expect(wrapper.vm.vacuumRangeIds).toEqual(['3913', '3912'])
-      expect(wrapper.vm.suctionSpeedIds).toEqual(['3983', '3982'])
       expect(wrapper.vm.vacuumRangePresent).toBeTruthy()
       expect(wrapper.vm.suctionSpeedPresent).toBeTruthy()
       expect(wrapper.vm.vacuumRangeActive).toBeFalsy()
