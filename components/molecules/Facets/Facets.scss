@@ -98,7 +98,7 @@
 
   &__vacuum-range-popup {
     @apply tw-p-4;
-    width: 640px;
+    width: 660px;
 
     /* viewport minus paddings minus border */
     max-width: calc(100vw - 64px - 4px)

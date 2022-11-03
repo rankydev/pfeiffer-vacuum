@@ -6,6 +6,7 @@
   >
     <span class="filter-tag__text">
       {{ `${filter}: ` }}
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <span class="filter-tag__value" v-html="value"></span>
     </span>
     <Icon
