@@ -1,4 +1,3 @@
-import { describe, it, test } from '@jest/globals'
 import { useStoryblokData } from './index.js'
 
 const data = [{ full_slug: 'someSlug' }]

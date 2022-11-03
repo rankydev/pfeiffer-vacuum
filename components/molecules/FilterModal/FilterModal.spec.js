@@ -1,4 +1,3 @@
-import { expect } from '@jest/globals'
 import { shallowMount } from '@vue/test-utils'
 import FilterModal from './FilterModal.vue'
 

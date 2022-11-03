@@ -1,6 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
 import ErrorMessage from './ErrorMessage.vue'
-import { expect } from '@jest/globals'
 
 describe('Input', () => {
   describe('initial state', () => {

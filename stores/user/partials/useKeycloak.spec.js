@@ -1,4 +1,3 @@
-import { expect } from '@jest/globals'
 import { setActivePinia, createPinia } from 'pinia'
 import { useKeycloak } from './useKeycloak'
 

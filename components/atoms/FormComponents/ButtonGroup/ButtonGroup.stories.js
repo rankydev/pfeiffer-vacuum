@@ -41,7 +41,7 @@ Default.args = {
   values,
 }
 
-const OverviewTemplate = (args) => ({
+const OverviewTemplate = () => ({
   components: { ButtonGroup },
   setup() {
     return {

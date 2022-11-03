@@ -2,7 +2,6 @@ import { shallowMount } from '@vue/test-utils'
 import ResponsiveImage from './ResponsiveImage.vue'
 import responsiveImageEntry from './ResponsiveImage.stories.content'
 import { hybrisResponsiveImageEntry } from './ResponsiveImage.stories.content'
-import { describe } from '@jest/globals'
 
 const nuxtImg = {
   template: '<div>some image</div>',

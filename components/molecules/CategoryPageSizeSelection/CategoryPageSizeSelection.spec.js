@@ -1,7 +1,6 @@
 import CategoryPageSizeSelection from './CategoryPageSizeSelection'
 import Button from '~/components/atoms/Button/Button'
 import { shallowMount } from '@vue/test-utils'
-import { expect } from '@jest/globals'
 
 describe('CategoryPageSizeSelection', () => {
   describe('initial state', () => {

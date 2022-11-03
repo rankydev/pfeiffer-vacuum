@@ -3,7 +3,6 @@ import { icon, label, normal, error } from './PvSelect.stories.content'
 import { shallowMount } from '@vue/test-utils'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import Icon from '~/components/atoms/Icon/Icon'
-import { describe, expect, it } from '@jest/globals'
 
 let wrapper
 

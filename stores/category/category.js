@@ -1,21 +1,12 @@
 import { joinURL } from 'ufo'
 import { defineStore } from 'pinia'
-import {
-  useRouter,
-  useRoute,
-  ref,
-  useContext,
-  computed,
-} from '@nuxtjs/composition-api'
+import { useRoute, ref, useContext, computed } from '@nuxtjs/composition-api'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
-import { PATH_SHOP } from '~/server/constants'
 import { useCmsStore } from '~/stores/cms'
-
 import _pick from 'lodash/pick'
 
 export const useCategoryStore = defineStore('category', () => {
-  const router = useRouter()
   const route = useRoute()
   const cmsStore = useCmsStore()
   const { axios } = useAxiosForHybris()
@@ -23,7 +14,6 @@ export const useCategoryStore = defineStore('category', () => {
 
   let searchTerm = ref('')
 
-  const basePath = joinURL(router.options.base, PATH_SHOP)
   const category = ref(null)
   const result = ref(null)
   const reqId = ref(null)

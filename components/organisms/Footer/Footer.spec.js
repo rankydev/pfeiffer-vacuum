@@ -1,7 +1,6 @@
 import { createLocalVue, RouterLinkStub, shallowMount } from '@vue/test-utils'
 import Footer from './Footer'
 import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
-import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter'
 import Link from '~/components/atoms/Link/Link'
 import newsletterContent from './partials/FooterNewsletter/FooterNewsletter.stories.content'
 

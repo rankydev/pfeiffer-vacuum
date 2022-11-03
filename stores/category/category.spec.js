@@ -1,7 +1,6 @@
 import { useCategoryStore } from '~/stores/category'
 import { setActivePinia, createPinia } from 'pinia'
 import { entries } from '~/components/molecules/Breadcrumb/Breadcrumb.stories.content'
-import { test } from '@jest/globals'
 
 const mockQuery = jest.fn()
 const mockParams = jest.fn()

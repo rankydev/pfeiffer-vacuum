@@ -42,7 +42,7 @@ Default.args = {
   disabled: false,
 }
 
-const OverviewTemplate = (args) => ({
+const OverviewTemplate = () => ({
   components: { Checkbox },
   setup() {
     return { examples }

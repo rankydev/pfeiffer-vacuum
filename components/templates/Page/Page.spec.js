@@ -1,4 +1,3 @@
-import { it } from '@jest/globals'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import VueMeta from 'vue-meta'
 import Page from './Page.vue'

@@ -1,4 +1,3 @@
-import { expect } from '@jest/globals'
 import { shallowMount } from '@vue/test-utils'
 import InformationModal from './InformationModal.vue'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'

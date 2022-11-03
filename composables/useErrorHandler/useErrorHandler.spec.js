@@ -1,4 +1,3 @@
-import { beforeEach, describe, expect } from '@jest/globals'
 import { useErrorHandler } from './index.js'
 
 const mockError = jest.fn()

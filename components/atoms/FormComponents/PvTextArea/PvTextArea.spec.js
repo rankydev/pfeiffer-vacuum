@@ -1,7 +1,6 @@
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea.vue'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel.vue'
 import { shallowMount } from '@vue/test-utils'
-import { expect } from '@jest/globals'
 import { required } from '@vuelidate/validators'
 
 const propsTextArea = {
