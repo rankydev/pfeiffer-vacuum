@@ -1,11 +1,10 @@
 import { useCategoryStore } from '~/stores/category'
 import { setActivePinia, createPinia } from 'pinia'
 import { entries } from '~/components/molecules/Breadcrumb/Breadcrumb.stories.content'
-import {
-  setCategory,
-  useContext,
-  getAxiosRequest,
-} from '@nuxtjs/composition-api'
+import { test } from '@jest/globals'
+
+const mockQuery = jest.fn()
+const mockParams = jest.fn()
 
 const mockRootCategory = {
   categoryPath: [{ id: 'category', name: 'Category' }],
@@ -29,32 +28,32 @@ const mockSearchResult = {
   products: [],
 }
 
+const mockAxiosRequest = jest.fn((url) => {
+  switch (url) {
+    case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online':
+      return Promise.resolve({ data: mockRootCategory })
+    case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online/categories/Category':
+      return Promise.resolve({ data: mockExampleCategory })
+    case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online/categories/ChildCategory':
+      return Promise.resolve({ data: mockChildCategory })
+    case '/api/shop/pfeifferwebservices/v2/pfeiffer/products/search':
+    default:
+      return Promise.resolve({ data: mockSearchResult })
+  }
+})
+
 const mockLocalePath = 'localePath'
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   const { ref } = originalModule
-  let returnCategory = ''
-  const axiosRequest = jest.fn((url) => {
-    switch (url) {
-      case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online':
-        return Promise.resolve({ data: mockRootCategory })
-      case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online/categories/Category':
-        return Promise.resolve({ data: mockExampleCategory })
-      case '/api/shop/pfeifferwebservices/v2/pfeiffer/catalogs/pfeifferProductCatalog/Online/categories/ChildCategory':
-        return Promise.resolve({ data: mockChildCategory })
-      case '/api/shop/pfeifferwebservices/v2/pfeiffer/products/search':
-      default:
-        return Promise.resolve({ data: mockSearchResult })
-    }
-  })
 
   return {
     ...originalModule,
     useContext: jest.fn(() => {
       return {
         $axios: {
-          get: axiosRequest,
+          get: mockAxiosRequest,
         },
         i18n: { locale: 'en', t: (val) => val },
         app: {
@@ -66,14 +65,10 @@ jest.mock('@nuxtjs/composition-api', () => {
     useRoute: jest.fn(() =>
       ref({
         fullPath: '/someExample/',
-        params: { category: returnCategory },
-        query: {},
+        params: mockParams(),
+        query: mockQuery(),
       })
     ),
-    setCategory: (category) => {
-      returnCategory = category
-    },
-    getAxiosRequest: () => axiosRequest,
     ssrRef: ref,
   }
 })
@@ -92,7 +87,13 @@ jest.mock('~/stores/cms', () => {
 const rootCat = { href: 'localePath', name: 'category.rootCategory' }
 
 describe('useCategoryStore', () => {
-  beforeEach(() => setActivePinia(createPinia()))
+  beforeEach(() => {
+    setActivePinia(createPinia())
+    mockAxiosRequest.mockClear()
+    mockParams.mockReturnValue({})
+    mockQuery.mockReturnValue({})
+  })
+
   describe('initial state', () => {
     test('should return all expected properties', async () => {
       const categoryStore = await useCategoryStore()
@@ -123,7 +124,7 @@ describe('useCategoryStore', () => {
     })
 
     test('should initialize parentCategoryPath given categoryPath array with several categories', async () => {
-      setCategory('ChildCategory')
+      mockParams.mockReturnValue({ category: 'ChildCategory' })
 
       const categoryStore = await useCategoryStore()
 
@@ -134,7 +135,7 @@ describe('useCategoryStore', () => {
     })
 
     test('should create the breadcrumb given categoryPath array with several categories', async () => {
-      setCategory('ChildCategory')
+      mockParams.mockReturnValue({ category: 'ChildCategory' })
 
       const categoryStore = await useCategoryStore()
 
@@ -152,25 +153,62 @@ describe('useCategoryStore', () => {
 
     test('should return if path has been loaded before', async () => {
       const categoryStore = await useCategoryStore()
-      const context = useContext()
-      const axios = getAxiosRequest()
-      axios.mockClear()
 
       await categoryStore.loadByPath()
       await categoryStore.loadByPath()
       await categoryStore.loadByPath()
       await categoryStore.loadByPath()
 
-      expect(axios).toBeCalledTimes(2)
+      expect(mockAxiosRequest).toBeCalledTimes(2)
     })
 
     test('should load single category given category id', async () => {
-      setCategory('Category')
+      mockParams.mockReturnValue({ category: 'Category' })
 
       const categoryStore = await useCategoryStore()
       await categoryStore.loadByPath()
 
       expect(categoryStore.category).toStrictEqual(mockExampleCategory)
+    })
+
+    test('should add breadcrumb element if search term is present', async () => {
+      const query = { searchTerm: 'A200L' }
+      mockQuery.mockReturnValue(query)
+
+      const categoryStore = await useCategoryStore()
+      await categoryStore.loadByPath()
+
+      expect(categoryStore.breadcrumb).toStrictEqual([
+        entries[0],
+        rootCat,
+        ...mockRootCategory.categoryPath.map(({ name, id }) => ({
+          name,
+          href: `${mockLocalePath}/${id}`,
+        })),
+        {
+          href: '',
+          name: `category.searchResult "${query.searchTerm}"`,
+        },
+      ])
+    })
+
+    test('should create meta data given a category', async () => {
+      const categoryStore = await useCategoryStore()
+      await categoryStore.loadByPath()
+
+      expect(categoryStore.metaData).toStrictEqual({
+        title: categoryStore.categoryName,
+        seoTitle: '',
+        seoDescription: '',
+
+        ogTitle: categoryStore.categoryName,
+        ogDescription: '',
+        ogImage: null,
+
+        twitterTitle: categoryStore.categoryName,
+        twitterDescription: '',
+        twitterImage: null,
+      })
     })
   })
 })

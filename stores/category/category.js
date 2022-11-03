@@ -50,18 +50,18 @@ export const useCategoryStore = defineStore('category', () => {
     return breadcrumbArr
   })
 
-  const categoryName = computed(() => breadcrumb.value.at(-1)?.name)
+  const categoryName = computed(() => breadcrumb.value.at(-1)?.name || '')
 
   const metaData = computed(() => ({
-    title: categoryName.value || '',
+    title: categoryName.value,
     seoTitle: '',
     seoDescription: '',
 
-    ogTitle: categoryName.value || '',
+    ogTitle: categoryName.value,
     ogDescription: '',
     ogImage: null,
 
-    twitterTitle: categoryName.value || '',
+    twitterTitle: categoryName.value,
     twitterDescription: '',
     twitterImage: null,
   }))
