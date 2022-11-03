@@ -11,14 +11,14 @@
       <p class="tw-subline-3 hint-modal__subline">
         {{ $t('registration.registrationHintModal.subline') }}
       </p>
-      <Richtext
-        :richtext="`${$t('registration.registrationHintModal.text')}<br />
-        <ul>
-          <li>${$t('registration.registrationHintModal.benefit1')}</li>
-          <li>${$t('registration.registrationHintModal.benefit2')}</li>
-          <li>${$t('registration.registrationHintModal.benefit3')}</li>
-        </ul>`"
-      />
+      <p class="tw-subline-3 hint-modal__text">
+        {{ $t('registration.registrationHintModal.text') }}
+      </p>
+      <ul>
+        <li>{{ $t('registration.registrationHintModal.benefit1') }}</li>
+        <li>{{ $t('registration.registrationHintModal.benefit2') }}</li>
+        <li>{{ $t('registration.registrationHintModal.benefit3') }}</li>
+      </ul>
       <div class="hint-modal__button-section">
         <Button
           class="hint-modal__btn-proceed"
@@ -46,12 +46,11 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
 import Button from '~/components/atoms/Button/Button'
-import Richtext from '~/components/atoms/Richtext/Richtext'
 import Link from '~/components/atoms/Link/Link'
 
 export default defineComponent({
   name: 'HintModal',
-  components: { GenericModal, Button, Richtext, Link },
+  components: { GenericModal, Button, Link },
   props: {
     isOpen: {
       type: Boolean,
@@ -77,12 +76,29 @@ export default defineComponent({
     @apply tw-mb-4;
   }
 
-  .paragraph-section {
-    ul {
-      @apply tw-my-4;
+  &__text {
+    font-size: 16px;
+  }
 
-      li {
-        @apply tw-mb-4;
+  ul {
+    @apply tw-list-square;
+    @apply tw-ml-5;
+    @apply tw-mb-8;
+
+    @screen md {
+      @apply tw-mb-7;
+    }
+
+    li {
+      p {
+        @apply tw-mb-2;
+        margin-left: -4px;
+      }
+
+      &::marker {
+        // Safari needs explicit opacity declaration in order to load color of marker correctly
+        @apply tw-text-pv-red/100;
+        @apply tw-text-lg;
       }
     }
   }
@@ -91,7 +107,6 @@ export default defineComponent({
     @screen lg {
       @apply tw-flex;
       @apply tw-justify-between;
-      @apply tw-mt-4;
     }
   }
 
