@@ -3,7 +3,6 @@ import OnPageNavigation from './OnPageNavigation'
 import { quicklinks } from './OnPageNavigation.stories.content'
 import Breadcrumb from '~/components/molecules/Breadcrumb/Breadcrumb.vue'
 import Link from '~/components/atoms/Link/Link.vue'
-import { expect } from '@jest/globals'
 
 let wrapper
 

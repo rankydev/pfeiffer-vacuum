@@ -1,19 +1,19 @@
-schemaVersion: '2.0.0'
+schemaVersion: "2.0.0"
 
 commandTests:
-  - name: 'node'
-    command: 'node'
-    args: ['--version']
-    expectedOutput: [ "v16\\.[0-9]+\\.[0-9]+" ]
+  - name: "node"
+    command: "node"
+    args: ["--version"]
+    expectedOutput: ["v16\\.[0-9]+\\.[0-9]+"]
     exitCode: 0
-  - name: 'npm'
-    command: 'npm'
-    args: ['-v']
+  - name: "npm"
+    command: "npm"
+    args: ["-v"]
     expectedOutput: ["8\\.[0-9]+\\.[0-9]+"]
     exitCode: 0
 
 metadataTest:
-  env:
+  envVars:
     - key: PORT
       value: ${PORT}
     - key: HOST
@@ -66,5 +66,5 @@ metadataTest:
       value: "${USERCENTRICS_ID}"
 
   exposedPorts: ["3000"]
-  cmd: ["npm","start"]
+  cmd: ["npm", "start"]
   workdir: "/opt/pvac-frontend"

@@ -4,7 +4,6 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import { createPinia, setActivePinia } from 'pinia'
-import { expect } from '@jest/globals'
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
@@ -49,7 +48,7 @@ describe('ShopNavigation', () => {
 
       expect(navLinks.length).toBe(2)
 
-      navLinks.wrappers.forEach((eleWrapper, idx) => {
+      navLinks.wrappers.forEach((eleWrapper) => {
         const icon = eleWrapper.findComponent(Icon)
 
         expect(icon.exists()).toBeTruthy()
@@ -70,7 +69,7 @@ describe('ShopNavigation', () => {
 
       expect(navLinks.length).toBe(2)
 
-      navLinks.wrappers.forEach((eleWrapper, idx) => {
+      navLinks.wrappers.forEach((eleWrapper) => {
         const icon = eleWrapper.findComponent(Icon)
 
         expect(icon.exists()).toBeTruthy()

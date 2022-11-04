@@ -9,7 +9,6 @@ import { reactive } from '@nuxtjs/composition-api'
 
 const localVue = createLocalVue()
 
-const mockLoadCountries = jest.fn()
 const mockedRegions = reactive({})
 const mockLoadRegions = jest.fn((isoCode) => {
   mockedRegions[isoCode] = ['Region1']

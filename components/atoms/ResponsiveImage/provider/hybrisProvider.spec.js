@@ -1,6 +1,5 @@
 import { useHybrisProvider } from './hybrisProvider.js'
 import { hybrisResponsiveImageEntry } from '~/components/atoms/ResponsiveImage/ResponsiveImage.stories.content'
-import { expect, test } from '@jest/globals'
 
 describe('HybrisProvider', () => {
   describe('initial state', () => {

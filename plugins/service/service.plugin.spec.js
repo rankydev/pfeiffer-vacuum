@@ -1,4 +1,3 @@
-import { expect, jest, test } from '@jest/globals'
 import servicePlugin from './service.plugin.js'
 import { StoryblokApiClient } from '~/plugins/storyblok/storyblok-api-client'
 

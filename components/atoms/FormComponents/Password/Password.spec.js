@@ -2,7 +2,6 @@ import { shallowMount } from '@vue/test-utils'
 import Password from './Password.vue'
 import Icon from '../../Icon/Icon.vue'
 import PvLabel from '../partials/PvLabel/PvLabel.vue'
-import { expect } from '@jest/globals'
 import { required } from '@vuelidate/validators'
 
 describe('Password', () => {

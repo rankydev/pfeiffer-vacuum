@@ -2,7 +2,6 @@ import { shallowMount } from '@vue/test-utils'
 import FilterTag from './FilterTag.vue'
 import props from './FilterTag.stories.content.js'
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import { expect } from '@jest/globals'
 
 let wrapper
 

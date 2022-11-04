@@ -1,7 +1,5 @@
-import { expect } from '@jest/globals'
 import { shallowMount, mount } from '@vue/test-utils'
 import GenericModal from './GenericModal.vue'
-import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
 const propsData = {

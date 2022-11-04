@@ -18,9 +18,8 @@
     </slot>
 
     <slot name="onPageNavigation">
-      <OnPageNavigation v-bind="(quicklinks || [])[0]" />
+      <OnPageNavigation v-bind="(content.quicklinks || [])[0]" />
     </slot>
-
     <slot>
       <main>
         <nuxt-dynamic
@@ -60,6 +59,9 @@
         :name="item.uiComponent || item.component"
       />
     </slot>
+    <StickyBar v-bind="stickyBar">
+      <slot name="stickyBar" />
+    </StickyBar>
   </div>
 </template>
 
@@ -69,29 +71,35 @@ import useMeta from '~/composables/useMeta'
 import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
+import StickyBar from '~/components/atoms/StickyBar/StickyBar.vue'
 
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
     OnPageNavigation,
+    StickyBar,
   },
   props: {
     content: {
       type: Object,
       default: /* istanbul ignore next */ () => ({}),
     },
+    metaData: {
+      type: Object,
+      default: null,
+    },
   },
-  setup(props, context) {
+  setup(props) {
     const { content } = toRefs(props)
     const translatedSlugs = inject('getTranslatedSlugs', () => [])()
     const defaultFullSlug = inject('getDefaultFullSlug', () => '')()
-    const { top, header, stage, body, bottom, footer } = useTemplating(content)
+    const { top, header, stage, body, bottom, footer, stickyBar } =
+      useTemplating(content)
     const { getMetaData } = useMeta(
-      content,
+      props.metaData || content.value,
       defaultFullSlug,
-      translatedSlugs,
-      context
+      translatedSlugs
     )
 
     return {
@@ -101,12 +109,12 @@ export default defineComponent({
       body,
       bottom,
       footer,
-      quicklinks: content.value.quicklinks,
-      metaData: getMetaData(),
+      stickyBar,
+      head: getMetaData(),
     }
   },
   head() {
-    return this.metaData
+    return this.head
   },
 })
 </script>
