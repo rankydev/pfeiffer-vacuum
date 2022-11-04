@@ -75,7 +75,7 @@ describe('Facets.vue', () => {
       expect(wrapper.vm.shrinkedFacets[0]).toBe(facets[2])
       expect(wrapper.vm.selectedFacets).toEqual([])
       expect(wrapper.vm.isVacuumRangePresent).toBeTruthy()
-      expect(wrapper.vm.suctionSpeedPresent).toBeTruthy()
+      expect(wrapper.vm.isSuctionSpeedPresent).toBeTruthy()
       expect(wrapper.vm.isVacuumRangeActive).toBeFalsy()
       expect(wrapper.vm.isSuctionSpeedActive).toBeFalsy()
       expect(wrapper.vm.updateFacets).toBeInstanceOf(Function)
