@@ -72,10 +72,11 @@ export const useCategoryStore = defineStore('category', () => {
 
   const loadProducts = async () => {
     const id = route.value.params.category || ''
-    const sort = route.value.query.sort || defaultSort.value
     const facets = route.value.query.facets || ''
     const url = joinURL(config.PRODUCTS_API, 'search')
     const term = route.value.query.searchTerm || ''
+    searchTerm.value = term
+    const sort = route.value.query.sort || defaultSort.value
     const params = {
       currentPage: route.value.query.currentPage - 1 || 0,
       pageSize: 9,
@@ -86,7 +87,6 @@ export const useCategoryStore = defineStore('category', () => {
       fields: 'FULL',
       categoryTreeDepth: 2,
     }
-    searchTerm.value = term
     result.value = await axios.get(url, { params }).then(({ data }) => data)
   }
 
