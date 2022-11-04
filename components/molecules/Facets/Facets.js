@@ -84,10 +84,10 @@ export default {
     const {
       vacuumRange,
       suctionSpeed,
-      vacuumRangePresent,
-      suctionSpeedPresent,
-      vacuumRangeActive,
-      suctionSpeedActive,
+      isVacuumRangePresent,
+      isSuctionSpeedPresent,
+      isVacuumRangeActive,
+      isSuctionSpeedActive,
     } = useRangeSliderHandling(currentQuery, facets, selectedFacets)
 
     const { updateFacets, removeFacet } = useFacetActions(selectedFacets, emit)
@@ -115,10 +115,10 @@ export default {
       shrinkedFacets,
       selectedFacets,
       vacuumRange,
-      vacuumRangePresent,
-      suctionSpeedPresent,
-      vacuumRangeActive,
-      suctionSpeedActive,
+      isVacuumRangePresent,
+      isSuctionSpeedPresent,
+      isVacuumRangeActive,
+      isSuctionSpeedActive,
       suctionSpeed,
       updateFacets,
       removeFacet,

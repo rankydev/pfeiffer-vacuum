@@ -39,21 +39,21 @@ export const useRangeSliderHandling = (
     return [lower, upper]
   })
 
-  const vacuumRangePresent = computed(
+  const isVacuumRangePresent = computed(
     () => !!facets.value?.filter((e) => vacuumRangeIds.includes(e.code))
   )
 
-  const suctionSpeedPresent = computed(
+  const isSuctionSpeedPresent = computed(
     () => !!facets.value?.filter((e) => suctionSpeedIds.includes(e.code))
   )
 
-  const vacuumRangeActive = computed(
+  const isVacuumRangeActive = computed(
     () =>
       !!selectedFacets.value.filter((e) => vacuumRangeIds.includes(e.key))
         .length
   )
 
-  const suctionSpeedActive = computed(
+  const isSuctionSpeedActive = computed(
     () =>
       !!selectedFacets.value.filter((e) => suctionSpeedIds.includes(e.key))
         .length
@@ -62,9 +62,9 @@ export const useRangeSliderHandling = (
   return {
     vacuumRange,
     suctionSpeed,
-    vacuumRangePresent,
-    suctionSpeedPresent,
-    vacuumRangeActive,
-    suctionSpeedActive,
+    isVacuumRangePresent,
+    isSuctionSpeedPresent,
+    isVacuumRangeActive,
+    isSuctionSpeedActive,
   }
 }
