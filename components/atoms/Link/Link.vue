@@ -1,5 +1,5 @@
 <template>
-  <a v-if="isExternalLink" v-bind="bindings" @click="beforeNavigation">
+  <a v-if="isExternalLink" v-bind="bindings" @click="clickHandler">
     <slot :isActive="false" :isExactActive="false">{{ label }}</slot>
   </a>
 
@@ -9,14 +9,7 @@
     v-bind="bindings"
     custom
   >
-    <a
-      :href="link"
-      @click="
-        ($event) => {
-          beforeNavigation($event) && navigate($event)
-        }
-      "
-    >
+    <a :href="link" @click="($e) => clickHandler($e, navigate)">
       <slot :isActive="isActive" :isExactActive="isExactActive"
         >{{ label }}
       </slot>
@@ -108,9 +101,19 @@ export default defineComponent({
       class: `link--${props.variant}`,
     }))
 
+    const clickHandler = ($event, navigate) => {
+      if (props.beforeNavigation()) {
+        navigate?.($event)
+      } else {
+        $event.preventDefault()
+        $event.stopPropagation()
+      }
+    }
+
     return {
       isExternalLink,
       bindings,
+      clickHandler,
     }
   },
 })

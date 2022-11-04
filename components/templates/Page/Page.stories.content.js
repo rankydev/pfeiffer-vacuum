@@ -5,38 +5,7 @@ import { OnPageNavigationContent } from '~/components/molecules/OnPageNavigation
 export default {
   content: {
     top: [],
-    body: [
-      {
-        links: [
-          {
-            href: '/home',
-            label: 'Link',
-            target: '_self',
-            component: 'TextLink',
-          },
-          {
-            href: '/home',
-            label: 'Link',
-            target: '_self',
-            component: 'TextLink',
-          },
-          {
-            href: '/home',
-            label: 'Link',
-            target: '_self',
-            component: 'TextLink',
-          },
-          {
-            href: '/home',
-            label: 'Link',
-            target: '_self',
-            component: 'TextLink',
-          },
-        ],
-        title: 'This is an example',
-        component: 'LinkList',
-      },
-    ],
+    body: [],
     name: 'Welcome',
     text: 'Build with Storyblok-CMS right now',
     stage: [],

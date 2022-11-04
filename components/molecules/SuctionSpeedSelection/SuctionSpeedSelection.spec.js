@@ -3,7 +3,6 @@ import SuctionSpeedSelection from '~/components/molecules/SuctionSpeedSelection/
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import ButtonGroup from '~/components/atoms/FormComponents/ButtonGroup/ButtonGroup'
 import Button from '~/components/atoms/Button/Button'
-import { expect } from '@jest/globals'
 
 describe('SuctionSpeedSelection', () => {
   describe('initial state', () => {

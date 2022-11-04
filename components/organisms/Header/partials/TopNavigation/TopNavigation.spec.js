@@ -73,7 +73,7 @@ describe('TopNavigation', () => {
 
       const flyoutEntries = wrapper.findAllComponents(FlyoutEntry)
 
-      flyoutEntries.wrappers.forEach((eleWrapper, idx) => {
+      flyoutEntries.wrappers.forEach((eleWrapper) => {
         expect(eleWrapper.vm.active).toBe(true)
       })
     })
@@ -83,7 +83,7 @@ describe('TopNavigation', () => {
 
       const flyoutEntries = wrapper.findAllComponents(FlyoutEntry)
 
-      flyoutEntries.wrappers.forEach((eleWrapper, idx) => {
+      flyoutEntries.wrappers.forEach((eleWrapper) => {
         expect(eleWrapper.vm.active).toBe(false)
       })
     })

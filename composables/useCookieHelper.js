@@ -46,7 +46,6 @@ export const useCookieHelper = () => {
       return
     }
 
-    const date = new Date()
     const cookieOptions = {
       expires: expiresAt,
       path: '/',

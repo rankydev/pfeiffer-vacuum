@@ -77,7 +77,7 @@ export default defineComponent({
       default: () => [],
     },
   },
-  setup(props) {
+  setup() {
     const router = useRouter()
     const route = useRoute()
     const pageSize = computed(() => route.value.query?.pageSize || 9)

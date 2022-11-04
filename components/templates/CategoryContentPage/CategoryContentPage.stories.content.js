@@ -1,6 +1,5 @@
 import header from '~/components/organisms/Header/Header.stories.content.js'
 import { footerContent } from '~/components/organisms/Footer/Footer.stories.content.js'
-import { OnPageNavigationContent } from '~/components/molecules/OnPageNavigation/OnPageNavigation.stories.content.js'
 import stageContent from '~/components/molecules/Stage/Stage.stories.content.js'
 import contentTextBlock from '~/components/organisms/ContentTextBlock/ContentTextBlock.stories.content.js'
 

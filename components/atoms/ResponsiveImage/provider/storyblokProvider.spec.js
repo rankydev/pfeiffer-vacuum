@@ -1,8 +1,7 @@
 import { useStoryblokProvider } from './storyblokProvider.js'
 import responsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.stories.content'
-import { expect } from '@jest/globals'
 
-const imgMock = jest.fn((src, modifications, options) => {
+const imgMock = jest.fn((src) => {
   return src
 })
 
