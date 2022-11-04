@@ -1,8 +1,5 @@
 import OnPageNavigation from './OnPageNavigation'
 import { quicklinks } from './OnPageNavigation.stories.content'
-import { useCmsStore } from '~/stores/cms'
-import { watch } from '@nuxtjs/composition-api'
-import cmsLinks from '~/components/molecules/Breadcrumb/Breadcrumb.stories.content.js'
 
 export default {
   title: 'Molecules/m_102 Quicklink Navigation',

@@ -1,7 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import Breadcrumb from '~/components/molecules/Breadcrumb/Breadcrumb.vue'
 import { entries } from './Breadcrumb.stories.content.js'
-import { expect } from '@jest/globals'
 
 let wrapper
 

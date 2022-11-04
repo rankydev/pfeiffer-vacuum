@@ -1,6 +1,5 @@
 import RegistrationSuccessPage from './RegistrationSuccessPage'
 import { shallowMount } from '@vue/test-utils'
-import { expect } from '@jest/globals'
 
 describe('RegistrationSuccessPage', () => {
   describe('initial state', () => {

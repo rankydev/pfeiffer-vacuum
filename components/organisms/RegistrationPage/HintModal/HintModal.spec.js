@@ -1,6 +1,5 @@
 import HintModal from './HintModal'
 import { shallowMount } from '@vue/test-utils'
-import { expect } from '@jest/globals'
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 

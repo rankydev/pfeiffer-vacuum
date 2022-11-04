@@ -1,7 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import CategoryContentPage from './CategoryContentPage.vue'
 import Button from '~/components/atoms/Button/Button.vue'
-import { expect } from '@jest/globals'
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')

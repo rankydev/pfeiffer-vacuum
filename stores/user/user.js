@@ -61,11 +61,11 @@ export const useUserStore = defineStore('user', () => {
       return
     }
 
-    const user = await userApi.getUserData()
-    if (user && !user.error) {
+    try {
+      const user = await userApi.getUserData()
       currentUser.value = user
-    } else {
-      logger.error('user not found', user)
+    } catch (e) {
+      logger.error('user not found', e)
     }
   }
 

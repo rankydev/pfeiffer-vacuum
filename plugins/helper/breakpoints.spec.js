@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals'
 import breakpointsPlugin from './breakpoints.js'
 
 let injectMock

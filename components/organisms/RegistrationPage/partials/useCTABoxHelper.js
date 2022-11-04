@@ -1,4 +1,4 @@
-import { ref, useContext } from '@nuxtjs/composition-api'
+import { useContext } from '@nuxtjs/composition-api'
 import getKey from '~/composables/useUniqueKey'
 
 export const useCTABoxHelper = () => {
@@ -56,3 +56,5 @@ export const useCTABoxHelper = () => {
     contentCTABoxHelpData,
   }
 }
+
+export default {}

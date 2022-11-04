@@ -152,18 +152,51 @@ describe('Link', () => {
 
   describe('during interaction', () => {
     describe('given beforeNavigation function', () => {
-      it('should call function before executing navigation when link is external', () => {
+      it('should call beforeNavigation before executing navigation when link is external', () => {
         const propsData = {
           target: '_blank',
           href: 'https://google.de',
-          beforeNavigation: jest.fn(),
+          beforeNavigation: jest.fn(() => true),
         }
         createComponent(propsData)
 
         const link = wrapper.find('a')
-        link.trigger('click')
+        const event = { preventDefault: jest.fn(), stopPropagation: jest.fn() }
+        link.trigger('click', event)
 
         expect(propsData.beforeNavigation).toBeCalledTimes(1)
+      })
+
+      it('should prevent navigation when beforeNavigation returns false', () => {
+        const propsData = {
+          target: '_blank',
+          href: 'https://google.de',
+          beforeNavigation: jest.fn(() => false),
+        }
+        createComponent(propsData)
+
+        const link = wrapper.find('a')
+        const event = { preventDefault: jest.fn(), stopPropagation: jest.fn() }
+        link.trigger('click', event)
+
+        expect(event.preventDefault).toBeCalledTimes(1)
+        expect(event.stopPropagation).toBeCalledTimes(1)
+      })
+
+      it('should not prevent navigation when beforeNavigation returns true', () => {
+        const propsData = {
+          target: '_blank',
+          href: 'https://google.de',
+          beforeNavigation: jest.fn(() => true),
+        }
+        createComponent(propsData)
+
+        const link = wrapper.find('a')
+        const event = { preventDefault: jest.fn(), stopPropagation: jest.fn() }
+        link.trigger('click', event)
+
+        expect(event.preventDefault).toBeCalledTimes(0)
+        expect(event.stopPropagation).toBeCalledTimes(0)
       })
 
       let navigateSpy = null
@@ -193,10 +226,13 @@ describe('Link', () => {
         createComponent(propsData, { CustomStub: customRouterStub() })
 
         const link = wrapper.find('a')
-        link.trigger('click')
+        const event = { preventDefault: jest.fn(), stopPropagation: jest.fn() }
+        link.trigger('click', event)
 
         expect(propsData.beforeNavigation).toBeCalledTimes(1)
         expect(navigateSpy).toBeCalledTimes(0)
+        expect(event.preventDefault).toBeCalledTimes(1)
+        expect(event.stopPropagation).toBeCalledTimes(1)
       })
 
       it('should allow a Nuxt Link navigate action when returning true', () => {
@@ -208,10 +244,13 @@ describe('Link', () => {
         createComponent(propsData, { CustomStub: customRouterStub() })
 
         const link = wrapper.find('a')
-        link.trigger('click')
+        const event = { preventDefault: jest.fn(), stopPropagation: jest.fn() }
+        link.trigger('click', event)
 
         expect(propsData.beforeNavigation).toBeCalledTimes(1)
         expect(navigateSpy).toBeCalledTimes(1)
+        expect(event.preventDefault).toBeCalledTimes(0)
+        expect(event.stopPropagation).toBeCalledTimes(0)
       })
     })
   })

@@ -1,4 +1,3 @@
-import { beforeEach, describe } from '@jest/globals'
 import { useCookieHelper } from './useCookieHelper'
 
 const cookieKey = 'dummyKey'
@@ -214,8 +213,6 @@ describe('cookieHelper', () => {
       })
 
       test('should throw logger warning when try catch fails', () => {
-        const getMock = jest.fn((val) => val)
-        const setMock = jest.fn((val) => val)
         mockRes.mockReturnValueOnce({ getHeader: jest.fn() })
 
         const { removeCookie } = useCookieHelper()

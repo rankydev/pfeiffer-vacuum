@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
@@ -74,10 +74,6 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
-  },
-
-  setup(props) {
-    return {}
   },
 })
 </script>

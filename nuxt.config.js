@@ -14,7 +14,7 @@ export default {
   ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'pvweb', // @todo make dynamic
+    title: 'Pfeiffer Vacuum', // @todo make dynamic
     htmlAttrs: {
       lang: 'en-EN', // @todo make dynamic
     },
