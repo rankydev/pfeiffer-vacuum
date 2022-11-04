@@ -1,6 +1,5 @@
 import ProductCardGrid from './ProductCardGrid.vue'
 import { createLocalVue, shallowMount } from '@vue/test-utils'
-import { expect } from '@jest/globals'
 
 let wrapper
 function createComponent(propsData) {

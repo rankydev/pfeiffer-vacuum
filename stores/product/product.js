@@ -1,11 +1,61 @@
 import { defineStore } from 'pinia'
+import {
+  ssrRef,
+  ref,
+  useRoute,
+  computed,
+  useContext,
+} from '@nuxtjs/composition-api'
 import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
+import { joinURL } from 'ufo'
+import { useUserStore } from '~/stores/user'
+import { useCmsStore } from '~/stores/cms'
 
 export const useProductStore = defineStore('product', () => {
+  const route = useRoute()
+  const cmsStore = useCmsStore()
   const { logger } = useLogger('productStore')
   const { axios } = useAxiosForHybris()
+  const { localePath, i18n } = useContext()
+
+  const product = ref(null)
+  const reqId = ssrRef(null)
+  const variationMatrix = ref(null)
+  const price = ref(null)
+
+  const breadcrumb = computed(() => {
+    const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
+    const categoryPath = product.value?.categoryPath || []
+    const rootUrl = localePath('shop-categories')
+    const rootCat = { name: i18n.t('category.rootCategory'), href: rootUrl }
+    const productName = product.value?.name
+
+    return [
+      ...cmsPrefix,
+      rootCat,
+      ...categoryPath.map(({ name, id }) => ({
+        name,
+        href: joinURL(rootUrl, id),
+      })),
+      ...(productName ? [{ name: productName }] : []),
+    ]
+  })
+
+  const metaData = computed(() => ({
+    title: product.value?.name || '',
+    seoTitle: '',
+    seoDescription: '',
+
+    ogTitle: product.value?.name || '',
+    ogDescription: '',
+    ogImage: null,
+
+    twitterTitle: product.value?.name || '',
+    twitterDescription: '',
+    twitterImage: null,
+  }))
 
   const getProducts = async (ids) => {
     if (!Array.isArray(ids)) {
@@ -34,7 +84,59 @@ export const useProductStore = defineStore('product', () => {
     return result.products
   }
 
+  const loadProduct = async (id) => {
+    const url = joinURL(config.PRODUCTS_API, id)
+    const result = await axios.$get(url, {
+      params: { fields: 'FULL' },
+    })
+    product.value = result
+  }
+
+  const loadVariationMatrix = async (id) => {
+    const url = joinURL(config.PRODUCTS_API, id, 'variationmatrix')
+    const result = await axios.$get(url, {
+      params: { fields: 'FULL' },
+    })
+    variationMatrix.value = result
+  }
+
+  const loadPrice = async (id) => {
+    const userStore = useUserStore()
+
+    // don't load product prices if the user is not approved yet
+    if (!userStore.isApprovedUser) {
+      return
+    }
+
+    const { uid } = userStore.currentUser
+    const url = joinURL(config.PRODUCTS_API, id, uid, 'price')
+    const result = await axios.$get(url, {
+      params: { fields: 'FULL' },
+    })
+    price.value = result
+  }
+
+  const loadByPath = async () => {
+    const id = route.value.params.product || ''
+
+    if (!id) {
+      throw new Error('No valid id given in route object.')
+    }
+
+    // if we already loaded the path we just return
+    if (route.value.fullPath === reqId.value) return
+    reqId.value = route.value.fullPath
+
+    await Promise.all([loadProduct(id), loadVariationMatrix(id), loadPrice(id)])
+  }
+
   return {
+    product,
+    variationMatrix,
+    price,
+    breadcrumb,
+    metaData,
+    loadByPath,
     getProducts,
   }
 })

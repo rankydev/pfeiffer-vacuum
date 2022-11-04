@@ -2,9 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import Input from './PvInput.vue'
 import Icon from '../../Icon/Icon.vue'
 import PvLabel from '../partials/PvLabel/PvLabel.vue'
-import { expect } from '@jest/globals'
 import { required, email } from '@vuelidate/validators'
-import useVuelidate from '@vuelidate/core'
 
 describe('Input', () => {
   describe('initial state', () => {

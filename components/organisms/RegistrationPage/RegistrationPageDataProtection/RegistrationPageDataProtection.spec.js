@@ -1,6 +1,5 @@
 import RegistrationPageDataProtection from './RegistrationPageDataProtection'
 import { shallowMount } from '@vue/test-utils'
-import { expect } from '@jest/globals'
 
 describe('RegistrationPageDataProtection', () => {
   describe('initial state', () => {

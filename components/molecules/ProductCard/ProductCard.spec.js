@@ -21,6 +21,24 @@ const GenericCard = {
     </div>`,
 }
 
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  const { ref } = originalModule
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    useRoute: jest.fn(() => ref({})),
+    useContext: () => {
+      return {
+        app: {
+          localePath: (value) => value,
+        },
+      }
+    },
+  }
+})
+
 function createComponent(propsData = {}) {
   const options = {
     propsData,

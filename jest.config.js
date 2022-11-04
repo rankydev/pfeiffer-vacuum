@@ -29,18 +29,10 @@ module.exports = {
   ],
   coveragePathIgnorePatterns: [
     '/node_modules/',
-    'spec.js',
     'stories.js',
     'stories.content.js',
     'schema.js',
     'schema.partial.js',
     'index.js',
-    'stores/user/',
-    'stores/contact/',
-    'stores/countries/',
-    'stores/product',
-    'stores/menu/',
-    '/stores/user/partials/useKeycloak.js',
-    '/components/molecules/Facets/Facets.js',
   ],
 }

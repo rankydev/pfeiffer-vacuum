@@ -32,7 +32,6 @@
 
 <script>
 import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.vue'
-import { ref } from '@nuxtjs/composition-api'
 
 export default {
   name: 'ErrorImageStage',

@@ -1,5 +1,3 @@
-import FooterNewsletter from './partials/FooterNewsletter/FooterNewsletter.schema'
-
 export default {
   name: 'Footer',
   display_name: 'Footer',

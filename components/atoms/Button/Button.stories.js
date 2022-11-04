@@ -60,7 +60,7 @@ Default.args = {
   label: label,
 }
 
-const OverviewTemplate = (args) => ({
+const OverviewTemplate = () => ({
   components: { Button },
   setup() {
     return { buttonVariants }

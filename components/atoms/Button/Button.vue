@@ -114,7 +114,7 @@ export default defineComponent({
     cutaway: {
       type: String,
       default: 'none',
-      validator: (val) => ['none', 'left', 'right'].includes(val),
+      validator: (val) => ['none', 'left', 'right', 'bottom'].includes(val),
     },
     /**
      * Defines button link if needed
@@ -333,6 +333,10 @@ export default defineComponent({
   &--cutaway-right {
     @apply tw-rounded-l-none;
     @apply tw-rounded-r-md;
+  }
+
+  &--cutaway-bottom {
+    @apply tw-rounded-b-none;
   }
 
   &--gap {

@@ -1,4 +1,3 @@
-import { beforeEach, describe, expect } from '@jest/globals'
 import { useAxiosInterceptors } from './useAxiosInterceptors'
 
 const mockTrace = jest.fn()

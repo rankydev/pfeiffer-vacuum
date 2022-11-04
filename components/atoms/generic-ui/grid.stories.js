@@ -47,7 +47,7 @@ export default {
 
 const defaultClasses = 'tw-p-3 tw-text-center tw-font-bold tw-rounded'
 
-export const GridLayout = (args) => ({
+export const GridLayout = () => ({
   template: `
   <div class="tw-grid-container tw-p-1 md:tw-p-6 tw-text-white">
     <div class="tw-col-span-full">

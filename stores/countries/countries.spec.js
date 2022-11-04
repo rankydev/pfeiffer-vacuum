@@ -1,6 +1,5 @@
 import { useCountriesStore } from '~/stores/countries'
 import { setActivePinia, createPinia } from 'pinia'
-import { expect } from '@jest/globals'
 
 const mockCountries = ['Land1']
 const mockGet = jest.fn()
@@ -106,7 +105,6 @@ describe('useCountriesStore', () => {
     })
 
     test('should log info given no isocode', async () => {
-      const regions = ['Region1', 'Region2']
       mockGet.mockReturnValueOnce(Promise.resolve({ countries: mockCountries }))
       const countriesStore = useCountriesStore()
 

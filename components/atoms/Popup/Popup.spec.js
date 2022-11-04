@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils'
 import Popup from '~/components/atoms/Popup/Popup.vue'
 import { onClickOutside } from '@vueuse/core'
-import { expect } from '@jest/globals'
 
 jest.useFakeTimers()
 

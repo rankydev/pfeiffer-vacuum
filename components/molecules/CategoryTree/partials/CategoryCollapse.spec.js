@@ -2,7 +2,6 @@ import CategoryCollapse from './CategoryCollapse'
 import Icon from '~/components/atoms/Icon/Icon'
 import { category } from '../CategoryTree.stories.content'
 import { shallowMount } from '@vue/test-utils'
-import { expect } from '@jest/globals'
 
 let wrapper
 
