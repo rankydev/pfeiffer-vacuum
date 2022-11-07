@@ -14,6 +14,7 @@
       class="contact-cta-box__button"
       v-bind="item"
       :name="item.uiComponent || item.component"
+      @click="$emit('click')"
     />
   </div>
 </template>
@@ -34,6 +35,7 @@ export default {
       default: () => [],
     },
   },
+  emits: ['click'],
 }
 </script>
 <style lang="scss">

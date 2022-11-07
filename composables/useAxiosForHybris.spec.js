@@ -1,5 +1,3 @@
-import { beforeEach, describe, expect } from '@jest/globals'
-
 const mockSetBaseUrl = jest.fn()
 const mockSetHeader = jest.fn()
 const mockUseRequestInterceptor = jest.fn()

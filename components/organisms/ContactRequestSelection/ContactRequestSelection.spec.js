@@ -7,7 +7,6 @@ import {
   text,
   requestSubjects,
 } from './ContactRequestSelection.stories.content.js'
-import { expect, it } from '@jest/globals'
 
 let wrapper
 

@@ -142,36 +142,9 @@ export const useKeycloak = () => {
     logger.debug('Keycloak initialized')
   }
 
-  const kcRedirect = (query) => {
-    logger.debug('kcRedirect')
-    logger.trace(
-      'kcRedirect:: authenticated, ',
-      keycloakInstance.value.authenticated
-    )
-    const { app } = ctx
-    const { localePath, router } = app
-    const path = router.currentRoute?.query?.redirectTo
-
-    if (path) {
-      logger.trace('kcRedirect::path: ', path)
-      return router.push({ path, query })
-    }
-
-    logger.trace('kcRedirect::shop: ', query)
-    return router.push(localePath({ path: '/', query }))
-  }
-
   const kcOnAuthSuccess = async () => {
     logger.debug('kcOnAuthSuccess')
     isLoginProcess.value = true
-    const canAccessApprovedCustomerFunctionality =
-      keycloakInstance.value.hasRealmRole('customer_ecommerce')
-
-    if (!canAccessApprovedCustomerFunctionality) {
-      const unverified = keycloakInstance.value.tokenParsed?.email
-      removeCookiesAndDeleteAuthData()
-      return kcRedirect(unverified && { unverified })
-    }
 
     const token = reconstructToken()
     setCookiesAndSaveAuthData(token)

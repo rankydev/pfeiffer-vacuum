@@ -50,6 +50,7 @@ export default {
         'TeaserCardCarousel',
         'HelpContainer',
         'ImageBanner',
+        'ColumnView',
       ],
     },
     bottom: {

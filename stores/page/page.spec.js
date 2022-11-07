@@ -1,7 +1,8 @@
 import { setActivePinia, createPinia } from 'pinia'
 import { usePageStore, CMS_PAGE, CATEGORY_PAGE, PRODUCT_PAGE } from './page'
 import { entries } from '~/components/molecules/Breadcrumb/Breadcrumb.stories.content'
-import { breadcrumb } from '~/stores/category/category.stories.content'
+import { breadcrumb as catBreadcrumb } from '~/stores/category/category.stories.content'
+import { breadcrumb as prodBreadcrumb } from '~/stores/product/product.stories.content'
 
 jest.mock('~/stores/cms', () => {
   const {
@@ -20,6 +21,15 @@ jest.mock('~/stores/category', () => {
   return {
     __esModule: true,
     useCategoryStore: () => ({ breadcrumb: breadcrumb }),
+  }
+})
+
+jest.mock('~/stores/product', () => {
+  const { breadcrumb } = require('~/stores/product/product.stories.content')
+
+  return {
+    __esModule: true,
+    useProductStore: () => ({ breadcrumb: breadcrumb }),
   }
 })
 
@@ -54,7 +64,14 @@ describe('Page store', () => {
       const pageStore = usePageStore()
 
       await pageStore.setPageType(CATEGORY_PAGE)
-      expect(pageStore.breadcrumb).toBe(breadcrumb)
+      expect(pageStore.breadcrumb).toBe(catBreadcrumb)
+    })
+
+    test('should initialize product page breadcrumb if page type is set to product page', async () => {
+      const pageStore = usePageStore()
+
+      await pageStore.setPageType(PRODUCT_PAGE)
+      expect(pageStore.breadcrumb).toBe(prodBreadcrumb)
     })
   })
 

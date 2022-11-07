@@ -22,7 +22,7 @@ jest.mock('@nuxtjs/composition-api', () => {
     useContext: () => {
       return {
         app: {
-          router: { push: jest.fn() },
+          router: { push: jest.fn(), options: { base: '/test' } },
           i18n: {
             locale: '',
           },
@@ -121,7 +121,7 @@ describe('User store', () => {
     })
 
     test('should throw logger error given user error', async () => {
-      mockGetUserData.mockReturnValue(null)
+      mockGetUserData.mockRejectedValue(null)
       mockIsLoggedIn.value = true
       const userStore = useUserStore()
 

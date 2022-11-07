@@ -1,4 +1,3 @@
-import { beforeEach, describe } from '@jest/globals'
 import { useContextUtil } from './useContextUtil'
 
 let windowSpy

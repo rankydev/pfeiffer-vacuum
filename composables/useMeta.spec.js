@@ -1,40 +1,38 @@
 import useMeta from './useMeta.js'
 
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  const { ref } = originalModule
+  return {
+    __esModule: true,
+    ...originalModule,
+    useRoute: () => ref({ fullPath: '/full/path' }),
+    useContext: () => ({
+      $config: {
+        baseURL: 'local',
+      },
+      $imageService: {
+        getResponsiveImageUrl: (val) => val,
+      },
+    }),
+  }
+})
+
+const content = {
+  title: 'title',
+  seoDescription: 'seoDescription',
+  twitterTitle: '',
+  twitterDescription: '',
+  twitterImage: '',
+  ogTitle: '',
+  ogDescription: '',
+  ogImage: '',
+}
+
 describe('useMeta ', () => {
-  function createContext(context = {}) {
-    return {
-      root: {
-        $config: {
-          baseURL: '',
-        },
-        $route: {
-          fullPath: '',
-        },
-        ...context,
-      },
-    }
-  }
-
-  function createContent(content = {}) {
-    return {
-      value: {
-        ...content,
-      },
-    }
-  }
-
   describe('getMetaData ', () => {
     it('should set title and description', () => {
-      const content = {
-        title: 'title',
-        seoDescription: 'seoDescription',
-      }
-      const metaData = useMeta(
-        createContent(content),
-        '',
-        [],
-        createContext()
-      ).getMetaData()
+      const metaData = useMeta(content, '', []).getMetaData()
       expect(metaData.title).toBe('title')
       expect(metaData.meta).toContainEqual({
         hid: 'description',
@@ -44,27 +42,15 @@ describe('useMeta ', () => {
     })
 
     it('should set twitter information', () => {
-      const content = {
+      const localContent = {
+        ...content,
         twitterTitle: 'twitterTitle',
         twitterDescription: 'twitterDescription',
         twitterImage: {
-          filename: 'filename',
+          filename: 'twitterImage',
         },
       }
-      const context = {
-        $imageService: {
-          getResponsiveImageUrl: function () {
-            return 'twitterImage'
-          },
-        },
-      }
-
-      const metaData = useMeta(
-        createContent(content),
-        '',
-        [],
-        createContext(context)
-      ).getMetaData()
+      const metaData = useMeta(localContent, '', []).getMetaData()
 
       expect(metaData.meta).toContainEqual({
         hid: 'twitter:title',
@@ -84,26 +70,15 @@ describe('useMeta ', () => {
     })
 
     it('should set open graph information', () => {
-      const content = {
+      const localContent = {
+        ...content,
         ogTitle: 'ogTitle',
         ogDescription: 'ogDescription',
         ogImage: {
-          filename: 'filename',
+          filename: 'ogImage',
         },
       }
-      const context = {
-        $imageService: {
-          getResponsiveImageUrl: function () {
-            return 'ogImage'
-          },
-        },
-      }
-      const metaData = useMeta(
-        createContent(content),
-        '',
-        [],
-        createContext(context)
-      ).getMetaData()
+      const metaData = useMeta(localContent, '', []).getMetaData()
 
       expect(metaData.meta).toContainEqual({
         hid: 'og:title',
@@ -123,17 +98,7 @@ describe('useMeta ', () => {
     })
 
     it('should overwrite social media information', () => {
-      const content = {
-        title: 'title',
-        seoDescription: 'seoDescription',
-      }
-
-      const metaData = useMeta(
-        createContent(content),
-        '',
-        [],
-        createContext()
-      ).getMetaData()
+      const metaData = useMeta(content, '', []).getMetaData()
 
       expect(metaData.meta).toContainEqual({
         hid: 'twitter:title',
@@ -158,42 +123,28 @@ describe('useMeta ', () => {
     })
 
     it('should use twitter and open graph fallback images', () => {
-      const context = {
-        $config: {
-          baseURL: 'fallback',
-        },
-      }
-
-      const metaData = useMeta(
-        createContent(),
-        '',
-        [],
-        createContext(context)
-      ).getMetaData()
+      const metaData = useMeta(content, '', []).getMetaData()
 
       expect(metaData.meta).toContainEqual({
         hid: 'twitter:image',
         name: 'twitter:image',
-        content: 'fallback/twitter_image.png',
+        content: 'local/twitter_image.png',
       })
       expect(metaData.meta).toContainEqual({
         hid: 'og:image',
         name: 'og:image',
-        content: 'fallback/og_image.png',
+        content: 'local/og_image.png',
       })
     })
 
     it('should set no-index and no-follow to robots', () => {
-      const content = {
+      const localContent = {
+        ...content,
         noindex: true,
         nofollow: true,
       }
-      const metaData = useMeta(
-        createContent(content),
-        '',
-        [],
-        createContext()
-      ).getMetaData()
+
+      const metaData = useMeta(localContent, '', []).getMetaData()
 
       expect(metaData.meta).toContainEqual({
         hid: 'robots',
@@ -203,16 +154,12 @@ describe('useMeta ', () => {
     })
 
     it('should add canonical', () => {
-      const content = {
+      const localContent = {
+        ...content,
         canonical: 'canonicalLink',
       }
 
-      const metaData = useMeta(
-        createContent(content),
-        '',
-        [],
-        createContext()
-      ).getMetaData()
+      const metaData = useMeta(localContent, '', []).getMetaData()
 
       expect(metaData.link).toContainEqual({
         rel: 'canonical',
@@ -221,21 +168,7 @@ describe('useMeta ', () => {
     })
 
     it('should get canonical from route', () => {
-      const context = {
-        $config: {
-          baseURL: 'local',
-        },
-        $route: {
-          fullPath: '/full/path',
-        },
-      }
-
-      const metaData = useMeta(
-        createContent(),
-        '',
-        [],
-        createContext(context)
-      ).getMetaData()
+      const metaData = useMeta(content, '', []).getMetaData()
 
       expect(metaData.link).toContainEqual({
         rel: 'canonical',
@@ -244,21 +177,12 @@ describe('useMeta ', () => {
     })
 
     it('should get canonical for internal page', () => {
-      const content = {
+      const localContent = {
+        ...content,
         canonical: '/internal/path',
       }
-      const context = {
-        $config: {
-          baseURL: 'local',
-        },
-      }
 
-      const metaData = useMeta(
-        createContent(content),
-        '',
-        [],
-        createContext(context)
-      ).getMetaData()
+      const metaData = useMeta(localContent, '', []).getMetaData()
 
       expect(metaData.link).toContainEqual({
         rel: 'canonical',
@@ -267,11 +191,6 @@ describe('useMeta ', () => {
     })
 
     it('should add hreflang for each language and default', () => {
-      const context = {
-        $config: {
-          baseURL: 'local',
-        },
-      }
       const defaultSlug = 'default/full/slug'
       const translatedSlugs = [
         {
@@ -284,10 +203,9 @@ describe('useMeta ', () => {
         },
       ]
       const metaData = useMeta(
-        createContent(),
+        content,
         defaultSlug,
-        translatedSlugs,
-        createContext(context)
+        translatedSlugs
       ).getMetaData()
 
       expect(metaData.link).toContainEqual({

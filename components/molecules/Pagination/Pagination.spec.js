@@ -1,7 +1,6 @@
 import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import Pagination from './Pagination.vue'
 import { useRoute, ref } from '@nuxtjs/composition-api'
-import { expect } from '@jest/globals'
 
 let wrapper
 

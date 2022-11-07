@@ -27,12 +27,12 @@
           no-input
           @input="$emit('updateSort', $event)"
         />
-        <Popup v-if="vacuumRangePresent">
+        <Popup v-if="isVacuumRangePresent">
           <template #activator="{ togglePopup }">
             <Button
               :class="[
                 'facets__slider-buttons',
-                { 'facets__slider-buttons--active': vacuumRangeActive },
+                { 'facets__slider-buttons--active': isVacuumRangeActive },
               ]"
               :label="$t('category.vacuumRange')"
               variant="secondary"
@@ -50,12 +50,12 @@
           </div>
         </Popup>
 
-        <Popup v-if="suctionSpeedPresent">
+        <Popup v-if="isSuctionSpeedPresent">
           <template #activator="{ togglePopup }">
             <Button
               :class="[
                 'facets__slider-buttons',
-                { 'facets__slider-buttons--active': suctionSpeedActive },
+                { 'facets__slider-buttons--active': isSuctionSpeedActive },
               ]"
               :label="$t('category.suctionSpeed')"
               variant="secondary"

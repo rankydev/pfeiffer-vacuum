@@ -24,7 +24,7 @@ export default {
   argTypes: argTypes,
 }
 
-const Template = (args, { argTypes }) => ({
+const Template = (args) => ({
   components: { SearchResult },
   setup() {
     let active = ref(args.active || 9)

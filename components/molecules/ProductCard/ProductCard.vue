@@ -2,7 +2,7 @@
   <GenericCard
     :has-link="false"
     image-size="contain"
-    :href="(product || {}).url || ''"
+    :href="url"
     :class="{ 'product-card--master': product.numberOfVariants }"
   >
     <template #image>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
@@ -60,14 +60,23 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const context = useContext()
+
     const image = computed(() => props.product.images?.[0])
     const description = computed(() => (props.product.bullets || []).join(', '))
     const name = computed(() => props.product.name)
     const categoryName = computed(() => props.product.categories?.[0]?.name)
 
+    const url = computed(() =>
+      context.app.localePath({
+        name: 'shop-products-product',
+        params: { product: props.product?.code },
+      })
+    )
+
     const sanitizer = useSanitizer()
 
-    return { image, name, categoryName, description, sanitizer }
+    return { url, image, name, categoryName, description, sanitizer }
   },
 })
 </script>
@@ -90,9 +99,9 @@ export default defineComponent({
     @apply tw-mr-1;
     @apply tw-font-bold;
   }
-}
 
-em {
-  @apply tw-not-italic;
+  em {
+    @apply tw-not-italic;
+  }
 }
 </style>

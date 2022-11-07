@@ -3,7 +3,6 @@ import Button from './Button.vue'
 import Link from '~/components/atoms/Link/Link.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import { icon, label } from '~/components/atoms/Button/Button.stories.content'
-import { expect } from '@jest/globals'
 
 describe('Button', () => {
   describe('initial state', () => {
