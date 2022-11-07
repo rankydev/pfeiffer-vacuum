@@ -3,6 +3,7 @@ import {
   suctionSpeedIds,
   vacuumRangeIds,
   suctionSpeedUnit,
+  vacuumRangeUnit,
 } from './useRangeSliderHandling'
 
 export const useFacetActions = (selectedFacets, emit) => {
@@ -46,7 +47,7 @@ export const useFacetActions = (selectedFacets, emit) => {
         el.value = el.value.replace(suctionSpeedUnit, '')
       }
       if (['3912', '3913'].includes(el.key)) {
-        el.value = el.value.replace(suctionSpeedUnit, '')
+        el.value = el.value.replace(vacuumRangeUnit, '')
       }
     })
     emit('updateFacets', newFacetsArr)

@@ -83,7 +83,7 @@ export default {
           vacuumRangeIds.includes(el.key) &&
           !el.value.includes(vacuumRangeUnit)
         ) {
-          el.value += ` ${vacuumRangeUnit}`
+          el.value += vacuumRangeUnit
         }
       })
 
