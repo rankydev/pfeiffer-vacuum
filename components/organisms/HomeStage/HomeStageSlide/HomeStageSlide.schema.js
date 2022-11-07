@@ -29,10 +29,9 @@ export default {
       component_whitelist: ['Bubble'],
     },
   },
-  image: null,
-  preview_field: null,
   is_root: false,
-  preview_tmpl: null,
+  preview_tmpl:
+    '<div>' + '<div>{{image(options.interlay.filename)/}}</div>' + '</div>',
   is_nestable: true,
   all_presets: [],
   preset_id: null,
