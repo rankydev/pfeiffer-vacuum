@@ -6,6 +6,7 @@ export const suctionSpeedIds = ['3983', '3982']
 
 // Unit for suction speed, which will be set by frontend
 export const suctionSpeedUnit = 'm<sup>3</sup>/h'
+export const vacuumRangeUnit = 'mbar'
 
 export const useRangeSliderHandling = (
   currentQuery = {},
@@ -13,12 +14,17 @@ export const useRangeSliderHandling = (
   selectedFacets
 ) => {
   const vacuumRange = computed(() => {
-    const lower = currentQuery.value?.query?.filterTerms?.find(
+    let lower = currentQuery.value?.query?.filterTerms?.find(
       (e) => e.key === vacuumRangeIds[0]
     )
-    const upper = currentQuery.value?.query?.filterTerms?.find(
+    let upper = currentQuery.value?.query?.filterTerms?.find(
       (e) => e.key === vacuumRangeIds[1]
     )
+
+    const reg = new RegExp(`(<|>)=|${vacuumRangeUnit}|\\s`, 'g')
+
+    lower = lower?.value?.replace(reg, '')
+    upper = upper?.value?.replace(reg, '')
 
     return [lower?.value, upper?.value]
   })
@@ -68,3 +74,5 @@ export const useRangeSliderHandling = (
     isSuctionSpeedActive,
   }
 }
+
+export default {}
