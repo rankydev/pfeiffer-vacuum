@@ -75,7 +75,7 @@ export default {
           suctionSpeedIds.includes(el.key) &&
           !el.value.includes(suctionSpeedUnit)
         ) {
-          el.value += ` ${suctionSpeedUnit}`
+          el.value += suctionSpeedUnit
         }
 
         // Add vacuum range unit if not present
