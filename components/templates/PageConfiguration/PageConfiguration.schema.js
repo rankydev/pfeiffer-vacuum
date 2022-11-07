@@ -30,7 +30,7 @@ export default {
     },
   },
   is_root: true,
-  preview_tmpl: '<div><i class="uk-icon-cog"></i></div>',
+  preview_tmpl: '<i class="uk-icon-cog" />',
   is_nestable: false,
   real_name: 'PageConfiguration',
   component_group_name: 'Templates',

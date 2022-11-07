@@ -33,7 +33,7 @@ export default {
     ...Template,
   },
   is_root: true,
-  preview_tmpl: '<div><i class="uk-icon-cog"></i></div>',
+  preview_tmpl: '<i class="uk-icon-cog" />',
   is_nestable: false,
   all_presets: [],
   preset_id: null,
