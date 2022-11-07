@@ -15,6 +15,11 @@ export default {
     image: responsiveImage.schema.image,
     ...Link,
   },
+  preview_tmpl:
+    '<div>' +
+    '<div>Headline: {{ headline }}</div>' +
+    '<div>{{ image(options.image.filename)/ }}</div>' +
+    '</div>',
   is_root: false,
   is_nestable: true,
   real_name: 'TeaserCard',

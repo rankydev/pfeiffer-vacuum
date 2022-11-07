@@ -18,8 +18,8 @@ export default {
     infinite: GenericCarousel.infinite,
   },
   image: null,
-  preview_field: null,
-  preview_tmpl: '<div>{{ label }}</div>',
+  preview_tmpl:
+    '<div>' + '<div>Number of Slides: {{ slides.length }}</div>' + '</div>',
   is_root: false,
   is_nestable: true,
   all_presets: [],

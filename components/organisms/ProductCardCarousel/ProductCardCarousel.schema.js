@@ -19,13 +19,14 @@ export default {
       pos: 3,
     },
   },
-  image: null,
-  preview_field: null,
-  preview_tmpl: '<div>{{ label }}</div>',
+  preview_tmpl:
+    '<div>' +
+    '<div>Headline: {{ headline }}</div>' +
+    '<div>Number of Slides: {{ slides.length }}</div>' +
+    '</div>',
   is_root: false,
   is_nestable: true,
   all_presets: [],
-  preset_id: null,
   real_name: 'ProductCardCarousel',
   component_group_uuid: null,
 }

@@ -20,12 +20,14 @@ export default {
       default_value: 'true',
     },
   },
-  image: null,
-  preview_field: null,
+  preview_tmpl:
+    '<div>' +
+    '<div>Headline: {{ headline }}</div>' +
+    '<div>Number of Slides: {{ slides.length }}</div>' +
+    '</div>',
   is_root: false,
   is_nestable: true,
   all_presets: [],
-  preset_id: null,
   real_name: 'GeneralTeaserCarousel',
   component_group_uuid: null,
 }
