@@ -70,13 +70,20 @@ describe('GenericCard', () => {
     })
 
     it('should render all content given slot content', () => {
-      const tag = '<div class="test-tag" />'
+      const tagHtml = '<div class="test-tag" />'
       const image = '<div class="test-image" />'
-      const subheading = '<div class="test-subheading" />'
-      const heading = '<div class="test-heading" />'
+      const subheadingHtml = '<div class="test-subheading" />'
+      const headingHtml = '<div class="test-heading" />'
       const tags = '<div class="test-tags" />'
-      const description = '<div class="test-description" />'
-      const slots = { tag, image, subheading, heading, tags, description }
+      const descriptionHtml = '<div class="test-description" />'
+      const slots = {
+        tagHtml,
+        image,
+        subheadingHtml,
+        headingHtml,
+        tags,
+        descriptionHtml,
+      }
 
       const propsData = { ...defaultProps() }
       createComponent(propsData, { shallow: false, slots })

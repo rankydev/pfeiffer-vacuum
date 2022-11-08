@@ -101,7 +101,7 @@ import Checkbox from '../Checkbox/Checkbox'
 import Icon from '~/components/atoms/Icon/Icon'
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { useInputValidator } from '~/composables/useValidator'
-import props from './partials/props.js'
+import propsData from './partials/props.js'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({
@@ -113,7 +113,7 @@ export default defineComponent({
     ErrorMessage,
     Checkbox,
   },
-  props,
+  props: propsData,
   emits: ['input'],
   setup(props, { emit }) {
     const internalValue = computed({

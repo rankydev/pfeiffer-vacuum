@@ -7,10 +7,9 @@ const propsLabel = {
 
 describe('PvLabel', () => {
   describe('initial state', () => {
-    const propsData = { ...propsLabel }
-    const wrapper = shallowMount(PvLabel, { propsData })
-
     test('should be rendered correctly given props', () => {
+      const propsData = { ...propsLabel }
+      const wrapper = shallowMount(PvLabel, { propsData })
       const labelWrapper = wrapper.find('label')
 
       expect(labelWrapper.exists()).toBeTruthy()
@@ -29,8 +28,8 @@ describe('PvLabel', () => {
         optional: true,
         disabled: true,
       }
-      const wrapper = shallowMount(PvLabel, { propsData })
-      const labelWrapper = wrapper.findAll('span')
+      const componentWrapper = shallowMount(PvLabel, { propsData })
+      const labelWrapper = componentWrapper.findAll('span')
 
       expect(labelWrapper.at(0).text()).toBe(propsLabel.label)
       expect(labelWrapper.at(1).text()).toBe('form.label.optional')

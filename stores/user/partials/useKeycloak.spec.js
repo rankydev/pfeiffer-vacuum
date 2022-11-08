@@ -82,5 +82,5 @@ describe('useKeycloak', () => {
     })
   })
 
-  describe('during interaction', () => {})
+  // describe('during interaction', () => {})
 })

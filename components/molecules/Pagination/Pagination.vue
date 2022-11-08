@@ -112,26 +112,26 @@ export default defineComponent({
       // calculate first and last value of the page array for a given page
       const first = parseInt(currentPage.value) - Math.floor((cols - 1) / 2)
       const last = parseInt(currentPage.value) + Math.floor(cols / 2)
-      let pageArray = []
+      let pageArr = []
 
       // build page array which does not exceed the given range
       if (first <= 0) {
-        pageArray = buildRange(1, cols)
+        pageArr = buildRange(1, cols)
       } else if (last >= props.totalPages) {
-        pageArray = buildRange(props.totalPages - cols + 1, props.totalPages)
+        pageArr = buildRange(props.totalPages - cols + 1, props.totalPages)
       } else {
-        pageArray = buildRange(first, last)
+        pageArr = buildRange(first, last)
       }
 
       // check if the first/last page is included in the page array
-      const hasFirst = pageArray[0] === 1
-      const hasLast = pageArray[pageArray.length - 1] === props.totalPages
+      const hasFirst = pageArr[0] === 1
+      const hasLast = pageArr[pageArr.length - 1] === props.totalPages
 
       return [
         // add first page and dot values if the first page is not present
         ...(!hasFirst ? [1, 'dots-left'] : []),
         // remove the first/last two elements if the first/last page is not included in the page array
-        ...pageArray.slice(!hasFirst && 2).slice(...(!hasLast ? [0, -2] : [])),
+        ...pageArr.slice(!hasFirst && 2).slice(...(!hasLast ? [0, -2] : [])),
         // add dot values and last page if the first page is not present
         ...(!hasLast ? ['dots-right', props.totalPages] : []),
       ]
@@ -144,14 +144,14 @@ export default defineComponent({
     /**
      * build a nuxt link to object for the given page id.
      */
-    const createNavLink = (currentPage) => {
+    const createNavLink = (actualPage) => {
       const { hash, params, path, query } = route.value
       return {
         to: {
           hash,
           params,
           path,
-          query: { ...query, currentPage },
+          query: { ...query, actualPage },
         },
       }
     }
