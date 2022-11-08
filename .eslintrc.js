@@ -23,7 +23,7 @@ module.exports = {
     'unused-imports/no-unused-imports': 'warn',
     'unused-imports/no-unused-vars': 'warn',
     'no-restricted-imports': ['error', '@jest/globals'],
-    'no-empty-function': 'warn',
-    'no-shadow': 'warn',
+    // 'no-empty-function': 'warn',
+    // 'no-shadow': 'warn',
   },
 }
