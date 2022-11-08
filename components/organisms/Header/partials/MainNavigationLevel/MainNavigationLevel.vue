@@ -1,6 +1,7 @@
 <template>
   <div :class="`${prefix}__wrapper`">
     <ul
+      ref="menu"
       :class="{
         [prefix]: true,
         [`${prefix}--passive`]: hasActiveElement,
@@ -146,7 +147,7 @@ export default defineComponent({
       default: 0,
     },
   },
-  setup(props) {
+  setup(props, { refs }) {
     const { app } = useContext()
 
     const menu = useMenuStore()
@@ -183,10 +184,10 @@ export default defineComponent({
       if (props.level >= 2) return false
 
       if (activeElement.value === idx) {
-        if (!isMobile.value && props.level === 0) menu.close()
+        if (!isMobile.value && props.level === 0) menu.close('toggle')
         activeElement.value = null
       } else {
-        if (!isMobile.value && props.level === 0) menu.open()
+        if (!isMobile.value && props.level === 0) menu.open(refs.menu)
         activeElement.value = idx
       }
 
@@ -195,7 +196,7 @@ export default defineComponent({
 
     const closeMenu = () => {
       activeElement.value = null
-      menu.close()
+      menu.close('close')
     }
 
     const hasSubmenu = (entry) => entry?.navigationEntries?.length > 0

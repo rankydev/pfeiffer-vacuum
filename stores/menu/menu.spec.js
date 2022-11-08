@@ -1,78 +1,131 @@
+import { it } from '@jest/globals'
 import { useMenuStore } from '~/stores/menu'
 
 let menu = null
-let addListenerSpy = null
-let remListenerSpy = null
+let resizeEvent = null
+let escEvent = null
+let addListenerSpy = jest.fn((type, func) =>
+  type === 'resize' ? (resizeEvent = func) : (escEvent = func)
+)
+let remListenerSpy = jest.fn()
+
+const mockWarn = jest.fn()
+const mockClickOutside = jest.fn()
+
+jest.mock('~/composables/useLogger', () => ({
+  useLogger: () => ({
+    logger: {
+      warn: mockWarn,
+    },
+  }),
+}))
+
+jest.mock('@vueuse/core', () => ({
+  onClickOutside: (...args) => mockClickOutside(...args),
+}))
 
 const setup = ({ isOpen = false } = {}) => {
   jest.useFakeTimers()
   menu = useMenuStore()
-  isOpen ? menu.open() : menu.close()
-  addListenerSpy = jest.fn()
-  remListenerSpy = jest.fn()
+  isOpen ? menu.open(mockElement) : menu.close()
+  addListenerSpy.mockClear()
+  remListenerSpy.mockClear()
   window.addEventListener = addListenerSpy
   window.removeEventListener = remListenerSpy
+  jest.runAllTimers()
 }
+
+const mockElement = document.createElement('div')
+
 describe('Menu', () => {
+  beforeEach(() => {
+    mockWarn.mockClear()
+    mockClickOutside.mockClear()
+  })
+
+  afterEach(() => menu?.close?.())
+
   describe('initial state', () => {
     describe('given is Active=false', () => {
       it('should only register resize listener once', () => {
         setup()
-        menu.open()
+        menu.open(mockElement)
         jest.runAllTimers()
 
-        expect(addListenerSpy).toBeCalledTimes(4)
-        expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'touchend', menu.close)
-        expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
-        expect(addListenerSpy).nthCalledWith(4, 'resize', menu.close, {
-          passive: true,
-        })
+        expect(addListenerSpy).toBeCalledTimes(2)
+        expect(addListenerSpy).nthCalledWith(1, 'keydown', expect.any(Function))
+        expect(addListenerSpy).nthCalledWith(
+          2,
+          'resize',
+          expect.any(Function),
+          {
+            passive: true,
+          }
+        )
 
         setup()
-        menu.open()
+        menu.open(mockElement)
         jest.runAllTimers()
 
-        expect(addListenerSpy).toBeCalledTimes(3)
-        expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'touchend', menu.close)
-        expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
+        expect(addListenerSpy).toBeCalledTimes(1)
+        expect(addListenerSpy).toBeCalledWith('keydown', expect.any(Function))
       })
 
       it('should set isActive=true when open was called', () => {
         setup()
-        menu.open()
+        menu.open(mockElement)
         jest.runAllTimers()
+
         expect(menu.isActive.value).toBe(true)
       })
 
       it('should register all event listeners when open was called', () => {
-        expect(addListenerSpy).toBeCalledTimes(3)
-        expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'touchend', menu.close)
-        expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
+        setup()
+        menu.open(mockElement)
+        jest.runAllTimers()
+
+        expect(addListenerSpy).toBeCalledTimes(1)
+        expect(addListenerSpy).toBeCalledWith('keydown', expect.any(Function))
+
+        expect(mockClickOutside).toBeCalledTimes(1)
+        expect(mockClickOutside).toBeCalledWith(mockElement, menu.close)
       })
 
       it('should set isActive=true when toggle was called', () => {
         setup()
-        menu.toggle()
+        menu.toggle(mockElement)
         jest.runAllTimers()
+
         expect(menu.isActive.value).toBe(true)
       })
 
       it('should register all event listeners when toggle was called', () => {
-        expect(addListenerSpy).toBeCalledTimes(3)
-        expect(addListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(addListenerSpy).nthCalledWith(2, 'touchend', menu.close)
-        expect(addListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
+        setup()
+        menu.toggle(mockElement)
+        jest.runAllTimers()
+
+        expect(addListenerSpy).toBeCalledTimes(1)
+        expect(addListenerSpy).toBeCalledWith('keydown', expect.any(Function))
+
+        expect(mockClickOutside).toBeCalledTimes(1)
+        expect(mockClickOutside).toBeCalledWith(mockElement, menu.close)
       })
 
       it('should remove no event listeners when close was called', () => {
         setup()
-        menu.close()
-        jest.runAllTimers()
 
         expect(remListenerSpy).toBeCalledTimes(0)
+      })
+
+      it('should log a warning when no taget was provided on menu open call', () => {
+        setup()
+        menu.open()
+        jest.runAllTimers()
+
+        expect(mockWarn).toBeCalledTimes(1)
+        expect(mockWarn).toBeCalledWith(
+          "Click outside event listener can't be registered. No taget provided."
+        )
       })
     })
 
@@ -84,10 +137,8 @@ describe('Menu', () => {
       })
 
       it('should remove all event listeners when close was called', () => {
-        expect(remListenerSpy).toBeCalledTimes(3)
-        expect(remListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(remListenerSpy).nthCalledWith(2, 'touchend', menu.close)
-        expect(remListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
+        expect(remListenerSpy).toBeCalledTimes(1)
+        expect(remListenerSpy).nthCalledWith(1, 'keydown', expect.any(Function))
       })
 
       it('should set isActive=false when toggle was called', () => {
@@ -97,16 +148,58 @@ describe('Menu', () => {
       })
 
       it('should remove all event listeners when toggle was called', () => {
-        expect(remListenerSpy).toBeCalledTimes(3)
-        expect(remListenerSpy).nthCalledWith(1, 'click', menu.close)
-        expect(remListenerSpy).nthCalledWith(2, 'touchend', menu.close)
-        expect(remListenerSpy).nthCalledWith(3, 'keydown', expect.any(Function))
+        expect(remListenerSpy).toBeCalledTimes(1)
+        expect(remListenerSpy).nthCalledWith(1, 'keydown', expect.any(Function))
       })
 
-      it('should register no new event listeners when open was called', () => {
+      it('should register no new event listeners when open was called twice', () => {
         setup({ isOpen: true })
-        menu.open()
-        expect(addListenerSpy).toBeCalledTimes(0)
+        menu.open(mockElement)
+
+        expect(addListenerSpy).toBeCalledTimes(1)
+      })
+
+      it('should not remove any event listeners if resize was called without a different window width', () => {
+        setup({ isOpen: true })
+
+        expect(resizeEvent).toStrictEqual(expect.any(Function))
+
+        resizeEvent()
+
+        expect(remListenerSpy).toBeCalledTimes(0)
+      })
+
+      it('should remove all event listeners if resize was called with a different window width', () => {
+        setup({ isOpen: true })
+
+        expect(resizeEvent).toStrictEqual(expect.any(Function))
+
+        window.innerWidth = 500
+        resizeEvent()
+
+        expect(remListenerSpy).toBeCalledTimes(1)
+        expect(remListenerSpy).nthCalledWith(1, 'keydown', expect.any(Function))
+      })
+
+      it('should not remove any event listeners if not esc key was pressed', () => {
+        setup({ isOpen: true })
+
+        expect(escEvent).toStrictEqual(expect.any(Function))
+
+        escEvent({ key: 'Any key' })
+
+        expect(remListenerSpy).toBeCalledTimes(0)
+      })
+
+      it('should remove all event listeners if esc key was pressed', () => {
+        setup({ isOpen: true })
+
+        expect(escEvent).toStrictEqual(expect.any(Function))
+
+        escEvent({ key: 'Escape' })
+
+        expect(remListenerSpy).toBeCalledTimes(1)
+        expect(remListenerSpy).nthCalledWith(1, 'keydown', expect.any(Function))
       })
     })
   })
