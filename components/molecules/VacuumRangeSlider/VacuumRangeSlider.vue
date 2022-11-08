@@ -38,8 +38,8 @@
         :key="range.name"
         class="vacuum-range-slider__range"
         :style="{ width: getRangeWidth(range) }"
-        v-html="sanitizer.inline($t(range.name))"
         @click="rangeClicked(data[range.start].id, data[range.end].id)"
+        v-html="sanitizer.inline($t(range.name))"
       />
       <!-- eslint-enable vue/no-v-html -->
     </div>
