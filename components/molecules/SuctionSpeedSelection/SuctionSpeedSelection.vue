@@ -143,7 +143,6 @@ export default defineComponent({
 
     // when the unit changes, f.ex from liters to meters, the displayed value and unit are supposed to change
     const unitChanged = () => {
-      console.log($event, 'EVENT')
       const tempLower =
         Number(upperBound.value) >= Number(lowerBound.value)
           ? Number(lowerBound.value)
@@ -153,7 +152,6 @@ export default defineComponent({
           ? Number(upperBound.value)
           : Number(lowerBound.value)
 
-      console.log(tempLower, tempUpper, '<<<----------------->>>> BLABLABLA')
       if (meters.value) {
         switchCubicMetersPerHourToLitersPerSecond(tempLower, tempUpper)
       } else {
@@ -170,7 +168,6 @@ export default defineComponent({
 
     // after submitting the entered minimum and maximum values, the internalValue gets initialized using internally the unit cubic meters per hour, which can be used for filtering products
     const applyFilter = () => {
-      console.log('------------ENTERED FUNCTION!!!------------')
       if (!upperBound.value) {
         upperBound.value = 10000
       }
@@ -207,7 +204,6 @@ export default defineComponent({
     }
 
     const sendUpdate = () => {
-      console.log(internalValue.value, '<<<<<---------------------->>>>>')
       const lower = internalValue.value[0]
       const upper = internalValue.value[1]
       emit('update', [
