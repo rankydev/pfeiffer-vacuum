@@ -72,10 +72,10 @@ describe('cookieHelper', () => {
 
         const { getCookie } = useCookieHelper()
 
-        const defaultCookie = 'lorem ipsum'
-        const cookie = getCookie(undefined, defaultCookie)
+        const newDefaultCookie = 'lorem ipsum'
+        const cookie = getCookie(undefined, newDefaultCookie)
 
-        expect(cookie).toBe(defaultCookie)
+        expect(cookie).toBe(newDefaultCookie)
       })
 
       test('should return default cookie given undefined request', () => {
@@ -84,10 +84,10 @@ describe('cookieHelper', () => {
         const { getCookie } = useCookieHelper()
         window.process.client = false
 
-        const defaultCookie = 'lorem ipsum'
-        const cookie = getCookie(undefined, defaultCookie)
+        const newDefaultCookie = 'lorem ipsum'
+        const cookie = getCookie(undefined, newDefaultCookie)
 
-        expect(cookie).toBe(defaultCookie)
+        expect(cookie).toBe(newDefaultCookie)
       })
 
       test('should get cookie given client = false', () => {

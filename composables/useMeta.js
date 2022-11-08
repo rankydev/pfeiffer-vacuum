@@ -20,11 +20,11 @@ const useMeta = (content = {}, defaultSlug, translatedSlugs) => {
   validateRequiredKeys(reqKeys, content)
 
   const getMetaData = () => {
-    const { title, seoTitle, seoDescription } = content
+    const { metaTitle, seoTitle, seoDescription } = content
     let meta = []
     const link = []
 
-    const _seoTitle = seoTitle || title
+    const _seoTitle = seoTitle || metaTitle
 
     const baseUrl = context.$config.baseURL
 
@@ -58,7 +58,7 @@ const useMeta = (content = {}, defaultSlug, translatedSlugs) => {
     addHreflang(link, defaultSlug, translatedSlugs, baseUrl)
 
     return {
-      title,
+      metaTitle,
       meta,
       link,
     }
