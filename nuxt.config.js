@@ -167,7 +167,10 @@ export default {
       process.env.STORYBLOK_EXCLUDE_ROUTES &&
       (process.env.STORYBLOK_EXCLUDE_ROUTES || '').split(','),
     linksTransformer: './resolver/linksTransformer',
-    resolver: { multilink: './resolver/linkResolver' },
+    resolver: {
+      multilink: './resolver/linkResolver',
+      asset: './resolver/assetResolver',
+    },
   },
 
   server: {
