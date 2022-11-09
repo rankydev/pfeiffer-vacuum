@@ -90,6 +90,7 @@ export default defineComponent({
     &::after {
       @apply tw-fixed;
       @apply tw-inset-0;
+      @apply tw--bottom-20;
       @apply tw--z-10;
       @apply tw--z-10;
       @apply tw-bg-pv-black/50;

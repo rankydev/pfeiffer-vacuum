@@ -1,5 +1,5 @@
 <template>
-  <nav class="main-navigation" aria-label="Main Menu">
+  <nav ref="menu" class="main-navigation" aria-label="Main Menu">
     <button
       aria-controls="js__main-navigation"
       class="main-navigation__trigger"
@@ -38,9 +38,11 @@ export default defineComponent({
       default: /* istanbul ignore next */ () => [],
     },
   },
-  setup() {
+  setup(_, { refs }) {
     const menu = useMenuStore()
-    return { isActive: menu.isActive, toggle: menu.toggle }
+    const toggle = () => menu.toggle(refs.menu)
+
+    return { isActive: menu.isActive, toggle }
   },
 })
 </script>
