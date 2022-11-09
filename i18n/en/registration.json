@@ -21,11 +21,19 @@
     "countryAutofill": "Will be filled automatically"
   },
   "infotext": "You can enter your company's address data here. <br /> <b>This step is optional</b> <br /><br /> <b>Please note:</b> Only with A full account allows you to see prices and send requests!",
-  "registrationSuccessPage": {
-    "title": "Your registration was sent successfully",
-    "subline": "Thank you for your request",
-    "paragraph": "We have sent a copy of your request to your email address. Your request will be processed by our service team as soon as possible.",
-    "buttonLabel": "To the homepage"
+    "registrationSuccessPage": {
+      "lite": {
+        "title": "Your registration was sent successfully",
+        "subline": "Thank you for your registration",
+        "paragraph": "In order to get access to the desired information, please confirm your registration. You will find a link for this in your e-mail inbox shortly.",
+        "buttonLabel": "To the homepage"
+      },
+      "full": {
+        "title": "Your registration was sent successfully",
+        "subline": "Thank you for your request",
+        "paragraph": "We have sent a copy of your request to your email address. Your request will be processed by our service team as soon as possible.",
+        "buttonLabel": "To the homepage"
+      }
   },
   "registrationPage": {
     "title": "Create Account",

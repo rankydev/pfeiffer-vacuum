@@ -9,7 +9,13 @@
         {{ $t('registration.registrationSuccessPage.subline') }}
       </p>
       <p class="registration-success-page__paragraph">
-        {{ $t('registration.registrationSuccessPage.paragraph') }}
+        {{
+          $t(
+            `registration.registrationSuccessPage.${
+              isLiteRegistration ? 'lite' : 'full'
+            }.paragraph`
+          )
+        }}
       </p>
       <Button
         class="registration-success-page__button"
@@ -23,7 +29,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useRoute } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon'
 import Button from '~/components/atoms/Button/Button'
 
@@ -31,7 +37,13 @@ export default defineComponent({
   name: 'RegistrationSuccessPage',
   components: { Icon, Button },
   setup() {
-    return {}
+    const route = useRoute()
+
+    const isLiteRegistration = () => {
+      return route.value.query?.type === 'lite'
+    }
+
+    return { isLiteRegistration }
   },
 })
 </script>

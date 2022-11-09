@@ -22,10 +22,18 @@
   },
   "infotext": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br /> <b>Dieser Schritt ist optional</b> <br /><br /> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
   "registrationSuccessPage": {
-    "title": "Ihre Registrierung wurde erfolgreich gesendet",
-    "subline": "Vielen Dank für Ihre Anfrage",
-    "paragraph": "Wir haben eine Kopie Ihrer Anfrage an Ihre E-Mail Adresse geschickt. Ihre Anfrage wird so schnell wie möglich von unserem Service Team bearbeitet.",
-    "buttonLabel": "Zur Homepage"
+    "lite": {
+      "title": "Ihre Registrierung wurde erfolgreich gesendet",
+      "subline": "Vielen Dank für Ihre Registrierung",
+      "paragraph": "Damit Sie Zugang zu den gewünschten Informationen erhalten, müssen Sie diese nur noch bestätigen. Dafür erhalten Sie von uns in Kürze einen Link per E-Mail. Schauen Sie dazu in Ihr E-Mail-Postfach.",
+      "buttonLabel": "Zur Homepage"
+    },
+    "full": {
+      "title": "Ihre Registrierung wurde erfolgreich gesendet",
+      "subline": "Vielen Dank für Ihre Anfrage",
+      "paragraph": "Wir haben eine Kopie Ihrer Anfrage an Ihre E-Mail Adresse geschickt. Ihre Anfrage wird so schnell wie möglich von unserem Service Team bearbeitet.",
+      "buttonLabel": "Zur Homepage"
+    }
   },
   "registrationPage": {
     "title": "Konto erstellen",
