@@ -58,7 +58,8 @@ const closeMenu = () => {
 
 const closeMenuEsc = ($event) => $event.key === 'Escape' && closeMenu()
 
-const toggleMenu = (ref) => (!isActive.value ? openMenu(ref) : closeMenu())
+const toggleMenu = (newRef) =>
+  !isActive.value ? openMenu(newRef) : closeMenu()
 
 export const useMenuStore = () => ({
   isActive: readonly(isActive),
