@@ -122,7 +122,9 @@ describe('RegistrationPage', () => {
 
       expect(mockRegister).toBeCalledTimes(1)
       expect(mockToastError).toBeCalledTimes(0)
-      expect(mockRouterPush).toBeCalledWith('/test/shop/register/success')
+      expect(mockRouterPush).toBeCalledWith(
+        '/test/shop/register/success?type=lite'
+      )
     })
 
     test('should fail register given already existing customer', async () => {
