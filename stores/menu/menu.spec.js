@@ -1,4 +1,3 @@
-import { it } from '@jest/globals'
 import { useMenuStore } from '~/stores/menu'
 
 let menu = null
