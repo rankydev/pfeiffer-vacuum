@@ -7,10 +7,9 @@ const propsLabel = {
 
 describe('PvLabel', () => {
   describe('initial state', () => {
-    const propsData = { ...propsLabel }
-    const wrapper = shallowMount(PvLabel, { propsData })
-
     test('should be rendered correctly given props', () => {
+      const propsData = { ...propsLabel }
+      const wrapper = shallowMount(PvLabel, { propsData })
       const labelWrapper = wrapper.find('label')
 
       expect(labelWrapper.exists()).toBeTruthy()

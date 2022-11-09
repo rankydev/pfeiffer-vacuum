@@ -89,9 +89,9 @@ export default defineComponent({
   },
 
   setup(props) {
-    const getClass = (props, type) => {
-      const ratios = props.ratio.split('/')
-      const orders = props.order.split('/')
+    const getClass = (propsData, type) => {
+      const ratios = propsData.ratio.split('/')
+      const orders = propsData.order.split('/')
       const index = orders.findIndex((val) => val === type)
       const order = index === 0 ? 'first' : 'last'
       return [

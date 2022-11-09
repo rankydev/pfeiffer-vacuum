@@ -64,14 +64,12 @@ describe('LanguageSwitcher', () => {
     })
   })
 
-  describe('during interaction', () => {
-    // TODO: this test is supposed to be implemented later
-    it('should switch language properly', () => {})
-
-    it('should open menu properly', async () => {})
-
-    it('should close menu properly', async () => {})
-  })
+  // describe('during interaction', () => {
+  // TODO: this test is supposed to be implemented later
+  // it('should switch language properly', () => {})
+  // it('should open menu properly', async () => {})
+  // it('should close menu properly', async () => {})
+  // })
 
   // describe('business requirements', () => {})
 })

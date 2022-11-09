@@ -6,8 +6,8 @@ export const label = 'Button text'
 
 const prepred = { prependIcon: true, icon: 'arrow_back' }
 
-const generateContent = (variant, shapes) => {
-  return shapes.map((shape) => {
+const generateContent = (variant, shapeArr) => {
+  return shapeArr.map((shape) => {
     return sizes.reduce((memo, size) => {
       const basic = { variant, shape, size, icon, label }
       const prepend = { ...basic, ...prepred }
@@ -15,8 +15,8 @@ const generateContent = (variant, shapes) => {
       const iconOnly = { ...basic, label: null }
 
       const elements = [basic, prepend, textOnly, iconOnly].reduce(
-        (memo, element) => {
-          return [...memo, element, { ...element, disabled: true }]
+        (memoArr, element) => {
+          return [...memoArr, element, { ...element, disabled: true }]
         },
         []
       )

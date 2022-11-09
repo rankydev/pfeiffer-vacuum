@@ -33,9 +33,9 @@ export default {
   argTypes,
 }
 
-const Template = (args, { argTypes }) => ({
+const Template = (args, { argTypes: types }) => ({
   components: { HomeStage },
-  props: Object.keys(argTypes),
+  props: Object.keys(types),
   setup() {
     return { args }
   },
