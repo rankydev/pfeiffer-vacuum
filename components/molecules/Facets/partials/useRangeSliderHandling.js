@@ -5,8 +5,8 @@ export const vacuumRangeIds = ['3913', '3912']
 export const suctionSpeedIds = ['3983', '3982']
 
 // Unit for suction speed, which will be set by frontend
-export const suctionSpeedUnit = 'm<sup>3</sup>/h'
-export const vacuumRangeUnit = 'mbar'
+export const suctionSpeedUnit = ' m<sup>3</sup>/h'
+export const vacuumRangeUnit = ' mbar'
 
 export const useRangeSliderHandling = (
   currentQuery = {},

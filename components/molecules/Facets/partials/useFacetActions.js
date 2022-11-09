@@ -1,5 +1,10 @@
 import { unref } from '@nuxtjs/composition-api'
-import { suctionSpeedIds, vacuumRangeIds } from './useRangeSliderHandling'
+import {
+  suctionSpeedIds,
+  vacuumRangeIds,
+  suctionSpeedUnit,
+  vacuumRangeUnit,
+} from './useRangeSliderHandling'
 
 export const useFacetActions = (selectedFacets, emit) => {
   // Add recent selected facet and values to current selection and emit
@@ -36,10 +41,16 @@ export const useFacetActions = (selectedFacets, emit) => {
 
   // Removes clicked
   const removeFacet = (facet) => {
-    emit(
-      'updateFacets',
-      unref(selectedFacets).filter((e) => e !== facet)
-    )
+    const newFacetsArr = unref(selectedFacets).filter((e) => e !== facet)
+    newFacetsArr.forEach((el) => {
+      if (['3982', '3983'].includes(el.key)) {
+        el.value = el.value.replace(suctionSpeedUnit, '')
+      }
+      if (['3912', '3913'].includes(el.key)) {
+        el.value = el.value.replace(vacuumRangeUnit, '')
+      }
+    })
+    emit('updateFacets', newFacetsArr)
   }
 
   return { updateFacets, removeFacet }
