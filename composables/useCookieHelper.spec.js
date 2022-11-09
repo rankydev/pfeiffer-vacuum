@@ -1,7 +1,6 @@
 import { useCookieHelper } from './useCookieHelper'
 
 const cookieKey = 'dummyKey'
-const defaultCookie = 'defaultCookie'
 const mockDebug = jest.fn()
 const mockTrace = jest.fn()
 const mockWarn = jest.fn()
@@ -115,6 +114,7 @@ describe('cookieHelper', () => {
         const { getCookie } = useCookieHelper()
         window.process.client = false
 
+        const defaultCookie = 'defaultCookie'
         const cookie = getCookie(null, defaultCookie)
 
         expect(cookie).toBe(defaultCookie)

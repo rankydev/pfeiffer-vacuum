@@ -83,12 +83,12 @@ export default defineComponent({
       const widthActivator = activator.width
       const widthContent = content.width
       const marginContent = content.marginLeft + content.marginRight
-      const left =
+      const posLeft =
         activator.offsetLeft +
         widthActivator / 2 -
         widthContent / 2 -
         content.marginLeft
-      return `${calcXOverflow(left, widthContent + marginContent)}px`
+      return `${calcXOverflow(posLeft, widthContent + marginContent)}px`
     })
 
     const isBottom = computed(() => props.position === 'bottom')
@@ -98,11 +98,11 @@ export default defineComponent({
       const fullContentHeight =
         content.height + content.marginTop + content.marginBottom
 
-      const top =
+      const posTop =
         activator.offsetTop +
         (isBottom.value ? activator.height : -fullContentHeight)
 
-      return `${top}px`
+      return `${posTop}px`
     })
 
     let stopFunction = null

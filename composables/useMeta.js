@@ -15,8 +15,8 @@ const useMeta = (content = {}, defaultSlug, translatedSlugs) => {
   const context = useContext()
   const route = useRoute()
 
-  const title = content.seoTitle === undefined ? 'title' : 'seoTitle'
-  const reqKeys = [title, 'seoDescription']
+  const titleType = content.seoTitle === undefined ? 'title' : 'seoTitle'
+  const reqKeys = [titleType, 'seoDescription']
   validateRequiredKeys(reqKeys, content)
 
   const getMetaData = () => {

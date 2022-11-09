@@ -129,8 +129,8 @@ describe('Accordion', () => {
 
         await inactiveButton.trigger('click')
 
-        activeElements.wrappers.forEach((wrapper) => {
-          expect(wrapper.attributes('class')).toContain(
+        activeElements.wrappers.forEach((childWrapper) => {
+          expect(childWrapper.attributes('class')).toContain(
             'accordion__button--active'
           )
         })

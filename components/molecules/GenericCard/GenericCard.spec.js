@@ -70,25 +70,31 @@ describe('GenericCard', () => {
     })
 
     it('should render all content given slot content', () => {
-      const tag = '<div class="test-tag" />'
-      const image = '<div class="test-image" />'
-      const subheading = '<div class="test-subheading" />'
-      const heading = '<div class="test-heading" />'
-      const tags = '<div class="test-tags" />'
-      const description = '<div class="test-description" />'
-      const slots = { tag, image, subheading, heading, tags, description }
+      const tagHtml = '<div class="test-tag" />'
+      const imageHtml = '<div class="test-image" />'
+      const subheadingHtml = '<div class="test-subheading" />'
+      const headingHtml = '<div class="test-heading" />'
+      const tagsHtml = '<div class="test-tags" />'
+      const descriptionHtml = '<div class="test-description" />'
+      const slots = {
+        tag: tagHtml,
+        image: imageHtml,
+        subheading: subheadingHtml,
+        heading: headingHtml,
+        tags: tagsHtml,
+        description: descriptionHtml,
+      }
 
       const propsData = { ...defaultProps() }
       createComponent(propsData, { shallow: false, slots })
 
       const genericCard = wrapper.findComponent(GenericCard)
-
-      expect(genericCard.find('.test-tag')).toBeTruthy()
-      expect(genericCard.find('.test-image')).toBeTruthy()
-      expect(genericCard.find('.test-subheading')).toBeTruthy()
-      expect(genericCard.find('.test-heading')).toBeTruthy()
-      expect(genericCard.find('.test-tags')).toBeTruthy()
-      expect(genericCard.find('.test-description')).toBeTruthy()
+      expect(genericCard.find('.test-tag').exists()).toBeTruthy()
+      expect(genericCard.find('.test-image').exists()).toBeTruthy()
+      expect(genericCard.find('.test-subheading').exists()).toBeTruthy()
+      expect(genericCard.find('.test-heading').exists()).toBeTruthy()
+      expect(genericCard.find('.test-tags').exists()).toBeTruthy()
+      expect(genericCard.find('.test-description').exists()).toBeTruthy()
     })
   })
 
