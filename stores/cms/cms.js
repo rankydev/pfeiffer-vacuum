@@ -28,7 +28,7 @@ export const useCmsStore = defineStore('cms', () => {
   const cmsLinks = useAsync(loadCmsLinks, unref(cmsLinkRef))
 
   const breadcrumb = computed(() => {
-    const { path } = unref(route)
+    const { path: routePath } = unref(route)
     const filterFolders = ({ isFolder }) => !isFolder
 
     const prepareSlugName = (name) => (slug) => ({
@@ -47,14 +47,13 @@ export const useCmsStore = defineStore('cms', () => {
     const cleanSlug = (slug) => slug.replace(/\/$/, '').replace(/^\//, '')
     const joinSlug = (prefix, val) => (prefix ? `${prefix}/${val}` : val)
     const joinSlugs = (acc, ele) => [...acc, joinSlug([...acc].pop(), ele)]
-    const isSlug = (val, { pathParam }) =>
-      (pathParam ? cleanSlug(path) : false) === val
+    const isSlug = (val, { path }) => (path ? cleanSlug(path) : false) === val
     const findSlug = (slug) => links.find((link) => isSlug(slug, link))
-    const getHref = ({ pathParam }) => `/${pathParam ? cleanSlug(path) : ''}`
+    const getHref = ({ path }) => `/${path ? cleanSlug(path) : ''}`
     const hasName = (slug) => slug?.name
     const buildSlug = (slug) => ({ href: getHref(slug), name: slug.name })
 
-    const slugs = cleanSlug(path).split('/').reduce(joinSlugs, [])
+    const slugs = cleanSlug(routePath).split('/').reduce(joinSlugs, [])
     return slugs.map(findSlug).filter(hasName).map(buildSlug)
   })
 

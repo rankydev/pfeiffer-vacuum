@@ -4,9 +4,9 @@ import { cmsLinks } from './cms.stories.content.js'
 import { useRoute, ref } from '@nuxtjs/composition-api'
 
 jest.mock('@nuxtjs/composition-api', () => {
-  const { cmsLinks } = require('./cms.stories.content.js')
+  const { cmsLinks: cmsLinksArr } = require('./cms.stories.content.js')
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
-  const { ref } = originalModule
+  const { ref: orgRef } = originalModule
 
   const key = '' + Math.random()
   const getLinks = jest
@@ -18,14 +18,14 @@ jest.mock('@nuxtjs/composition-api', () => {
         /*empty function*/
       })
     ) // unresolved promise
-    .mockReturnValue(Promise.resolve(cmsLinks)) // normal behaviour
+    .mockReturnValue(Promise.resolve(cmsLinksArr)) // normal behaviour
 
   return {
     __esModule: true,
     ...originalModule,
     useContext: jest.fn(() => ({ $cms: { getLinks } })),
     useRoute: jest.fn(),
-    ssrRef: ref,
+    ssrRef: orgRef,
     useAsync: (cb) => originalModule.useAsync(cb, key),
   }
 })
