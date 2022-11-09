@@ -35,7 +35,7 @@ export default {
   argTypes: argTypes,
 }
 
-const Template = (args, { types }) => ({
+const Template = (args, { argTypes: types }) => ({
   components: { ProductCardGrid },
   props: Object.keys(types),
   setup() {
