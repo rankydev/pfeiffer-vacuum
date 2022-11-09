@@ -147,6 +147,10 @@ export default defineComponent({
         return submit()
     }
 
+    const isLiteRegistration = () => {
+      return !!requestData.value.companyData
+    }
+
     const submit = async () => {
       loading.value = true
       const customerData = {
@@ -164,7 +168,11 @@ export default defineComponent({
         .register(customerData)
         .then(() => {
           loading.value = false
-          router.push(localePath('/shop/register/success'))
+          if (isLiteRegistration) {
+            router.push(localePath('/shop/register/success?type=lite'))
+          } else {
+            router.push(localePath('/shop/register/success'))
+          }
         })
         .catch((err) => {
           err.data.errors.forEach((error) => {
