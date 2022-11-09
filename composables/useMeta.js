@@ -15,16 +15,16 @@ const useMeta = (content = {}, defaultSlug, translatedSlugs) => {
   const context = useContext()
   const route = useRoute()
 
-  const title = content.seoTitle === undefined ? 'title' : 'seoTitle'
-  const reqKeys = [title, 'seoDescription']
+  const titleType = content.seoTitle === undefined ? 'title' : 'seoTitle'
+  const reqKeys = [titleType, 'seoDescription']
   validateRequiredKeys(reqKeys, content)
 
   const getMetaData = () => {
-    const { metaTitle, seoTitle, seoDescription } = content
+    const { title, seoTitle, seoDescription } = content
     let meta = []
     const link = []
 
-    const _seoTitle = seoTitle || metaTitle
+    const _seoTitle = seoTitle || title
 
     const baseUrl = context.$config.baseURL
 
@@ -58,7 +58,7 @@ const useMeta = (content = {}, defaultSlug, translatedSlugs) => {
     addHreflang(link, defaultSlug, translatedSlugs, baseUrl)
 
     return {
-      metaTitle,
+      title,
       meta,
       link,
     }

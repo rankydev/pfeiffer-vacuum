@@ -6,7 +6,7 @@ localVue.directive('editable', (el, key) => {
   el.innerText = key.value
 })
 
-const propsDataMock = {
+const props = {
   id: 'testAnchor',
   content: [
     {
@@ -27,20 +27,20 @@ describe('AnchorWrapper', () => {
   describe('initial state', () => {
     test('should render given only required id', () => {
       createComponent({
-        id: propsDataMock.id,
+        id: props.id,
       })
 
-      expect(wrapper.find(propsDataMock.id)).toBeTruthy()
+      expect(wrapper.find(props.id)).toBeTruthy()
     })
 
     test('should render given nested component example', () => {
-      createComponent(propsDataMock)
+      createComponent(props)
 
       const subComponent = wrapper.find('nuxtdynamic-stub')
 
       expect(subComponent).toBeTruthy()
       expect(subComponent.attributes('component')).toBe(
-        propsDataMock.content[0].component
+        props.content[0].component
       )
     })
   })

@@ -1,7 +1,6 @@
 import { useCookieHelper } from './useCookieHelper'
 
 const cookieKey = 'dummyKey'
-const defaultCookie = 'defaultCookie'
 const mockDebug = jest.fn()
 const mockTrace = jest.fn()
 const mockWarn = jest.fn()
@@ -72,10 +71,10 @@ describe('cookieHelper', () => {
 
         const { getCookie } = useCookieHelper()
 
-        const newDefaultCookie = 'lorem ipsum'
-        const cookie = getCookie(undefined, newDefaultCookie)
+        const defaultCookie = 'lorem ipsum'
+        const cookie = getCookie(undefined, defaultCookie)
 
-        expect(cookie).toBe(newDefaultCookie)
+        expect(cookie).toBe(defaultCookie)
       })
 
       test('should return default cookie given undefined request', () => {
@@ -84,10 +83,10 @@ describe('cookieHelper', () => {
         const { getCookie } = useCookieHelper()
         window.process.client = false
 
-        const newDefaultCookie = 'lorem ipsum'
-        const cookie = getCookie(undefined, newDefaultCookie)
+        const defaultCookie = 'lorem ipsum'
+        const cookie = getCookie(undefined, defaultCookie)
 
-        expect(cookie).toBe(newDefaultCookie)
+        expect(cookie).toBe(defaultCookie)
       })
 
       test('should get cookie given client = false', () => {
@@ -115,6 +114,7 @@ describe('cookieHelper', () => {
         const { getCookie } = useCookieHelper()
         window.process.client = false
 
+        const defaultCookie = 'defaultCookie'
         const cookie = getCookie(null, defaultCookie)
 
         expect(cookie).toBe(defaultCookie)

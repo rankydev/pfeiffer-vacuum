@@ -28,8 +28,8 @@ describe('PvLabel', () => {
         optional: true,
         disabled: true,
       }
-      const componentWrapper = shallowMount(PvLabel, { propsData })
-      const labelWrapper = componentWrapper.findAll('span')
+      const wrapper = shallowMount(PvLabel, { propsData })
+      const labelWrapper = wrapper.findAll('span')
 
       expect(labelWrapper.at(0).text()).toBe(propsLabel.label)
       expect(labelWrapper.at(1).text()).toBe('form.label.optional')

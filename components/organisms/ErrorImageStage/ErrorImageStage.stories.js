@@ -30,7 +30,7 @@ export default {
   argTypes,
 }
 
-const Template = (args, { types }) => ({
+const Template = (args, { argTypes: types }) => ({
   components: { ErrorImageStage },
   props: Object.keys(types),
   setup() {

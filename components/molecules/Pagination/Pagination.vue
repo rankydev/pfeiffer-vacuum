@@ -144,14 +144,14 @@ export default defineComponent({
     /**
      * build a nuxt link to object for the given page id.
      */
-    const createNavLink = (actualPage) => {
+    const createNavLink = (page) => {
       const { hash, params, path, query } = route.value
       return {
         to: {
           hash,
           params,
           path,
-          query: { ...query, actualPage },
+          query: { ...query, currentPage: page },
         },
       }
     }

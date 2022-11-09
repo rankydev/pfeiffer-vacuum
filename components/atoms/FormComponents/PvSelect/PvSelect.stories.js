@@ -30,7 +30,7 @@ export default {
   argTypes,
 }
 
-const Template = (args, { types }) => ({
+const Template = (args, { argTypes: types }) => ({
   components: { PvSelect },
   props: Object.keys(types),
   setup() {
@@ -89,7 +89,7 @@ Overview.args = {
   Label: { ...label },
 }
 
-const MultipleTemplate = (args, { types }) => ({
+const MultipleTemplate = (args, { argTypes: types }) => ({
   components: { PvSelect },
   props: Object.keys(types),
   setup() {

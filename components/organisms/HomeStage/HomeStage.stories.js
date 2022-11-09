@@ -33,7 +33,7 @@ export default {
   argTypes,
 }
 
-const Template = (args, { types }) => ({
+const Template = (args, { argTypes: types }) => ({
   components: { HomeStage },
   props: Object.keys(types),
   setup() {

@@ -22,7 +22,7 @@ export default {
   argTypes,
 }
 
-const Template = (args, { types }) => ({
+const Template = (args, { argTypes: types }) => ({
   components: { Checkbox },
   props: Object.keys(types),
   setup() {
