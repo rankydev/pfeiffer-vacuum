@@ -10,6 +10,9 @@
           v-for="item in buttons"
           :key="item._uid"
           class="content-media-block__button"
+          :class="{
+            'content-media-block__button--ghost': isGhostButton(item),
+          }"
           v-bind="item"
           :name="item.uiComponent || item.component"
         />
@@ -111,7 +114,11 @@ export default defineComponent({
       ].join('')
     )
 
-    return { contentClass, mediaClass, enrichedRichtext }
+    const isGhostButton = (item) => {
+      return item.variant === 'inverted' && item.shape === 'filled'
+    }
+
+    return { contentClass, mediaClass, enrichedRichtext, isGhostButton }
   },
 })
 </script>
@@ -178,7 +185,7 @@ export default defineComponent({
   &__button {
     @apply tw-basis-full;
 
-    &:nth-child(2) {
+    &--ghost {
       @apply tw-justify-start;
     }
 
