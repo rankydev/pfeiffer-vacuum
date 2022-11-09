@@ -164,7 +164,7 @@ export default defineComponent({
         .register(customerData)
         .then(() => {
           loading.value = false
-          if (JSON.stringify(requestData.value.companyData) === '{}') {
+          if (proceedWithoutCompany.value) {
             router.push(localePath('/shop/register/success?type=lite'))
           } else {
             router.push(localePath('/shop/register/success'))
