@@ -16,7 +16,7 @@ const getImageResolution = (path) => {
   }
 }
 
-export const render = ({ node, assets = [] } = {}) => {
+export const render = ({ node, assets = [] }) => {
   const assetMetaInfo = assets.find((asset) => asset.id === node.id) || {}
 
   if (isImage(node)) {
