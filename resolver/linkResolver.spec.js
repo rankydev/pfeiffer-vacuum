@@ -130,8 +130,13 @@ describe('linkResolver', () => {
 
     test('should add a trailing slash given withTralingSlash true', () => {
       const node = storyLink
-      const $storyblok = { linksWithTrailingSlash: true }
-      const result = render({ node, $storyblok, links, context })
+      const $storyblokTrainlingSlash = { linksWithTrailingSlash: true }
+      const result = render({
+        node,
+        $storyblok: $storyblokTrainlingSlash,
+        links,
+        context,
+      })
 
       expect(result).toBe(`${links.linkId.path}/`)
     })
