@@ -13,7 +13,11 @@ jest.mock('@nuxtjs/composition-api', () => {
     .fn()
     .mockReturnValueOnce(null) // return empty object
     .mockReturnValueOnce({}) // return empty object
-    .mockReturnValueOnce(new Promise(() => {/*empty function*/})) // unresolved promise
+    .mockReturnValueOnce(
+      new Promise(() => {
+        /*empty function*/
+      })
+    ) // unresolved promise
     .mockReturnValue(Promise.resolve(cmsLinks)) // normal behaviour
 
   return {
