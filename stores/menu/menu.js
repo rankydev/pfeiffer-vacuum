@@ -1,54 +1,65 @@
 import { ref, readonly } from '@nuxtjs/composition-api'
+import { onClickOutside } from '@vueuse/core'
+import { useLogger } from '~/composables/useLogger'
 
 const isActive = ref(false)
-let hasResizeListener = false
 
-const openMenu = () => {
+let windowWidth = null
+let hasResizeListener = false
+let removeClickListener = null
+
+const openMenu = (target) => {
+  const { logger } = useLogger('menu-store')
+
   if (isActive.value) return
 
   isActive.value = true
+
   setTimeout(() => {
-    addEventListener('click', closeMenu)
-    addEventListener('touchend', closeMenu)
+    removeClickListener?.()
+
+    if (target) {
+      removeClickListener = onClickOutside(target, closeMenu)
+    } else {
+      logger.warn(
+        "Click outside event listener can't be registered. No taget provided."
+      )
+    }
+
     addEventListener('keydown', closeMenuEsc)
+
+    windowWidth = window.innerWidth
 
     if (hasResizeListener) return
     hasResizeListener = true
-    addEventListener('resize', closeMenu, { passive: true })
+    addEventListener('resize', closeWindowOnResize, { passive: true })
   }, 0)
 }
 
-const closeMenu = (event) => {
+const closeWindowOnResize = () => {
+  /* istanbul ignore next */
   if (!isActive.value) return
 
-  /*
-   * if className is string and includes defined class, navItem was clicked
-   * burger-icon returns animatedSVGClassname as object
-   */
+  const newWidth = window.innerWidth
 
-  if (
-    event &&
-    typeof event.target?.className === 'string' &&
-    event.target?.className.includes('primary-nav')
-  )
-    return
+  if (newWidth !== windowWidth) closeMenu()
+}
 
-  if (
-    event &&
-    event.target?.className?.baseVal &&
-    event.target?.className?.baseVal.includes('burger-icon')
-  )
-    event.preventDefault()
+const closeMenu = () => {
+  if (!isActive.value) return
 
   isActive.value = false
-  removeEventListener('click', closeMenu)
-  removeEventListener('touchend', closeMenu)
+
+  removeClickListener?.()
+  removeClickListener = null
+
   removeEventListener('keydown', closeMenuEsc)
 }
 
 const closeMenuEsc = ($event) => $event.key === 'Escape' && closeMenu()
 
-const toggleMenu = (event) => (!isActive.value ? openMenu() : closeMenu(event))
+const toggleMenu = (target) =>
+  !isActive.value ? openMenu(target) : closeMenu()
 
 export const useMenuStore = () => ({
   isActive: readonly(isActive),

@@ -164,7 +164,11 @@ export default defineComponent({
         .register(customerData)
         .then(() => {
           loading.value = false
-          router.push(localePath('/shop/register/success'))
+          if (proceedWithoutCompany.value) {
+            router.push(localePath('/shop/register/success?type=lite'))
+          } else {
+            router.push(localePath('/shop/register/success'))
+          }
         })
         .catch((err) => {
           err.data.errors.forEach((error) => {

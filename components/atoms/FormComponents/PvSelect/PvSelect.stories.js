@@ -30,9 +30,9 @@ export default {
   argTypes,
 }
 
-const Template = (args, { argTypes }) => ({
+const Template = (args, { argTypes: types }) => ({
   components: { PvSelect },
-  props: Object.keys(argTypes),
+  props: Object.keys(types),
   setup() {
     const valueNormal = ref()
     const valueWithValue = ref('OptionValue 2')
@@ -89,9 +89,9 @@ Overview.args = {
   Label: { ...label },
 }
 
-const MultipleTemplate = (args, { argTypes }) => ({
+const MultipleTemplate = (args, { argTypes: types }) => ({
   components: { PvSelect },
-  props: Object.keys(argTypes),
+  props: Object.keys(types),
   setup() {
     const value = ref()
 

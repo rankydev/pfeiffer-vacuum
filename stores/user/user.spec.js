@@ -16,7 +16,7 @@ const mockWatch = jest.fn()
 
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
-  const { ref } = originalModule
+  const { ref: orgRef } = originalModule
   return {
     ...originalModule,
     useContext: () => {
@@ -39,7 +39,7 @@ jest.mock('@nuxtjs/composition-api', () => {
     onBeforeMount: jest.fn(),
     onServerPrefetch: jest.fn(),
     watch: (variable, callback) => mockWatch(variable, callback),
-    ssrRef: ref,
+    ssrRef: orgRef,
   }
 })
 

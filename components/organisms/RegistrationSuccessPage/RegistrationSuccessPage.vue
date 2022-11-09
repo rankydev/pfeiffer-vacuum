@@ -3,17 +3,41 @@
     <div class="registration-success-page--content-wrapper">
       <Icon class="registration-success-page__icon" icon="check_circle" />
       <h1 class="registration-success-page__title">
-        {{ $t('registration.registrationSuccessPage.title') }}
+        {{
+          $t(
+            `registration.registrationSuccessPage.${
+              isLiteRegistration ? 'lite' : 'full'
+            }.title`
+          )
+        }}
       </h1>
       <p class="registration-success-page__subline tw-subline-1">
-        {{ $t('registration.registrationSuccessPage.subline') }}
+        {{
+          $t(
+            `registration.registrationSuccessPage.${
+              isLiteRegistration ? 'lite' : 'full'
+            }.subline`
+          )
+        }}
       </p>
       <p class="registration-success-page__paragraph">
-        {{ $t('registration.registrationSuccessPage.paragraph') }}
+        {{
+          $t(
+            `registration.registrationSuccessPage.${
+              isLiteRegistration ? 'lite' : 'full'
+            }.paragraph`
+          )
+        }}
       </p>
       <Button
         class="registration-success-page__button"
-        :label="$t('registration.registrationSuccessPage.buttonLabel')"
+        :label="
+          $t(
+            `registration.registrationSuccessPage.${
+              isLiteRegistration ? 'lite' : 'full'
+            }.buttonLabel`
+          )
+        "
         icon="arrow_forward"
         variant="secondary"
         :href="localePath('/')"
@@ -23,7 +47,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useRoute, computed } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon'
 import Button from '~/components/atoms/Button/Button'
 
@@ -31,7 +55,13 @@ export default defineComponent({
   name: 'RegistrationSuccessPage',
   components: { Icon, Button },
   setup() {
-    return {}
+    const route = useRoute()
+
+    const isLiteRegistration = computed(() => {
+      return route.value.query?.type === 'lite'
+    })
+
+    return { isLiteRegistration }
   },
 })
 </script>

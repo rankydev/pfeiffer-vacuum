@@ -6,12 +6,12 @@ import { breadcrumb as prodBreadcrumb } from '~/stores/product/product.stories.c
 
 jest.mock('~/stores/cms', () => {
   const {
-    entries,
+    entries: breadcrumb,
   } = require('~/components/molecules/Breadcrumb/Breadcrumb.stories.content')
 
   return {
     __esModule: true,
-    useCmsStore: () => ({ breadcrumb: entries }),
+    useCmsStore: () => ({ breadcrumb }),
   }
 })
 

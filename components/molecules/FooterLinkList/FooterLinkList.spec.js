@@ -18,9 +18,10 @@ localVue.directive('editable', (el, key) => {
   el.innerText = key.value
 })
 
-const { links, title } = footerMenuOne
-
-const defaultProps = () => ({ links, title })
+const defaultProps = () => {
+  const { links, title } = footerMenuOne
+  return { links, title }
+}
 
 describe('FooterLinkList', () => {
   describe('initial state', () => {
@@ -60,8 +61,8 @@ describe('FooterLinkList', () => {
         localVue,
       })
 
-      const links = wrapper.findAll('.link-list__item')
-      expect(links).toHaveLength(5)
+      const linksArr = wrapper.findAll('.link-list__item')
+      expect(linksArr).toHaveLength(5)
     })
 
     it('should render a privacy link given an privacy link entry', () => {

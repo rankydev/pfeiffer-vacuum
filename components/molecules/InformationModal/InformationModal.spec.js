@@ -27,5 +27,5 @@ describe('InformationModal', () => {
       expect(btn.exists()).toBeTruthy()
     })
   })
-  describe('during interaction', () => {})
+  // describe('during interaction', () => {})
 })

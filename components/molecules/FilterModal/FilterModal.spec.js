@@ -41,5 +41,5 @@ describe('FilterModal', () => {
       expect(wrapper.find('.filter-modal__content').exists()).toBeTruthy()
     })
   })
-  describe('during interaction', () => {})
+  // describe('during interaction', () => {})
 })

@@ -99,7 +99,7 @@ describe('PageConfiguration', () => {
       })
 
       it('should set content', () => {
-        const wrapper = shallowMount(PageConfiguration, {
+        wrapper = shallowMount(PageConfiguration, {
           localVue,
           propsData: {
             content: {

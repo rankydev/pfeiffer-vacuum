@@ -11,6 +11,7 @@ import {
   vacuumRangeIds,
   suctionSpeedIds,
   suctionSpeedUnit,
+  vacuumRangeUnit,
 } from './partials/useRangeSliderHandling'
 import { useFacetActions } from './partials/useFacetActions'
 
@@ -74,7 +75,15 @@ export default {
           suctionSpeedIds.includes(el.key) &&
           !el.value.includes(suctionSpeedUnit)
         ) {
-          el.value += ` ${suctionSpeedUnit}`
+          el.value += suctionSpeedUnit
+        }
+
+        // Add vacuum range unit if not present
+        if (
+          vacuumRangeIds.includes(el.key) &&
+          !el.value.includes(vacuumRangeUnit)
+        ) {
+          el.value += vacuumRangeUnit
         }
       })
 

@@ -32,15 +32,16 @@
       </template>
     </VueSlider>
     <div v-if="showRanges" class="vacuum-range-slider__ranges">
+      <!-- eslint-disable vue/no-v-html -->
       <div
         v-for="range in ranges"
         :key="range.name"
         class="vacuum-range-slider__range"
         :style="{ width: getRangeWidth(range) }"
         @click="rangeClicked(data[range.start].id, data[range.end].id)"
-      >
-        {{ $t(range.name) }}
-      </div>
+        v-html="sanitizer.inline($t(range.name))"
+      />
+      <!-- eslint-enable vue/no-v-html -->
     </div>
   </div>
 </template>
