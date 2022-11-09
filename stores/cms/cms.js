@@ -47,9 +47,10 @@ export const useCmsStore = defineStore('cms', () => {
     const cleanSlug = (slug) => slug.replace(/\/$/, '').replace(/^\//, '')
     const joinSlug = (prefix, val) => (prefix ? `${prefix}/${val}` : val)
     const joinSlugs = (acc, ele) => [...acc, joinSlug([...acc].pop(), ele)]
-    const isSlug = (val, { path }) => (path ? cleanSlug(path) : false) === val
+    const isSlug = (val, { pathParam }) =>
+      (pathParam ? cleanSlug(path) : false) === val
     const findSlug = (slug) => links.find((link) => isSlug(slug, link))
-    const getHref = ({ path }) => `/${path ? cleanSlug(path) : ''}`
+    const getHref = ({ pathParam }) => `/${pathParam ? cleanSlug(path) : ''}`
     const hasName = (slug) => slug?.name
     const buildSlug = (slug) => ({ href: getHref(slug), name: slug.name })
 

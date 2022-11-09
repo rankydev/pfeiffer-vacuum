@@ -156,8 +156,8 @@ export const useKeycloak = () => {
     logger.debug('kcOnAuthLogout')
     removeCookiesAndDeleteAuthData()
     const { app } = ctx
-    const { router, localePath } = app
-    return router.push(localePath('/'))
+    const { routerMock, localePath } = app
+    return routerMock.push(localePath('/'))
   }
 
   const setCookiesAndSaveAuthData = (token) => {
