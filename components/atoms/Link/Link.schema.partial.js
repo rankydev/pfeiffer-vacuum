@@ -8,11 +8,10 @@ export default {
     link_scope: '{0}/',
     force_link_scope: true,
     component_whitelist: [
-      'Page',
-      'ProductContentPage',
       'CategoryContentPage',
-      'CategoryPage',
-      'StandardPage',
+      'ContactPage',
+      'Page',
+      'EcomPage',
     ],
   },
   target: {
