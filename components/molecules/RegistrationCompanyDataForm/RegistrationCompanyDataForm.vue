@@ -37,6 +37,7 @@
                 checked: true,
               },
             ]"
+            :initial-value="requestData.companyData.companyAlreadyCustomer"
             @update="
               requestData.companyData.companyAlreadyCustomer = $event
               $emit('update:data', requestData)
@@ -250,7 +251,7 @@ export default defineComponent({
     const resetForm = () => {
       emit('update:isOpen', false)
       requestData.value = {
-        companyData: {},
+        companyData: { companyAlreadyCustomer: false },
       }
       emit('update:data', requestData)
     }
