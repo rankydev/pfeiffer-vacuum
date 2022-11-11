@@ -1,11 +1,9 @@
 <template>
   <div class="detail-tabs">
-    <div
-      v-for="(tab, index) in tabs.filter((o) => o.active)"
-      :key="index"
-      class="tab-navigation"
-    >
+    <div class="tab-navigation">
       <Button
+        v-for="(tab, index) in tabs.filter((o) => o.active)"
+        :key="index"
         :label="tab.name"
         :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
         cutaway="bottom"
@@ -15,7 +13,7 @@
         @click="selectTab(tab.trigger)"
       />
     </div>
-    <!-- <div class="tab-content-wrapper">
+    <div class="tab-content-wrapper">
       <div
         v-if="lastTabSelected === 'productInfo'"
         :title="$t('product.productInformation')"
@@ -83,16 +81,16 @@
           </div>
           <accessories-slider :entries="spareParts" />
         </div>
-      </div> -->
-    <!-- Service Tab should not be visible in MVP -->
-    <!-- <div v-if="false" :title="$t('product.service')">Service</div>
+      </div>
+      <!-- Service Tab should not be visible in MVP -->
+      <div v-if="false" :title="$t('product.service')">Service</div>
       <div
         v-if="lastTabSelected === 'downloads'"
         :title="$t('product.downloads')"
       >
         <ProductFiles :files="downloads" :loading="loadingReferences" />
-      </div> -->
-    <!-- </div> -->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -303,7 +301,12 @@ export default defineComponent({
 <style lang="scss">
 .detail-tabs {
   @apply tw-flex;
+  @apply tw-flex-col;
   @apply tw-w-full;
+}
+
+.tab-navigation {
+  @apply tw-flex;
   @apply tw-justify-evenly;
 }
 
