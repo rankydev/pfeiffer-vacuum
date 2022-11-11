@@ -6,64 +6,41 @@
       class="tab-navigation"
     >
       <Button
-        v-if="lastTabSelected === tab.trigger"
         :label="tab.name"
-        variant="secondary"
+        :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
         cutaway="bottom"
         class="tab-nav-item"
         :class="{ active: lastTabSelected === tab.trigger }"
         :disabled="isDisabled(tab.trigger)"
         @click="selectTab(tab.trigger)"
       />
-      <Button
-        v-else
-        :label="tab.name"
-        variant="inverted"
-        cutaway="bottom"
-        class="tab-nav-item"
-        :class="{ active: lastTabSelected === tab.trigger }"
-        :disabled="isDisabled(tab.trigger)"
-        @click="selectTab(tab.trigger)"
-      />
-
-      <!-- <Button
-        v-for="(tab, index) in tabs.filter((o) => o.active)"
-        :key="index"
-        :label="tab.name"
-        variant="secondary"
-        cutaway="bottom"
-        class="tab-nav-item"
-        :class="{ active: lastTabSelected === tab.trigger }"
-        :disabled="isDisabled(tab.trigger)"
-        @click="selectTab(tab.trigger)"
-      /> -->
     </div>
-    <div class="tab-content-wrapper">
+    <!-- <div class="tab-content-wrapper">
       <div
         v-if="lastTabSelected === 'productInfo'"
         :title="$t('product.productInformation')"
       >
-        <!-- <ProductInformation :product="product" /> -->
+        <ProductInformation :product="product" />
       </div>
       <div
         v-if="lastTabSelected === 'technicalData'"
         :title="$t('product.technicalData')"
       >
-        <!-- <ProductTechnicalData
+        <ProductTechnicalData
           :features="getSortedFeatures(product, 'TechnicalData')"
-        /> -->
+        />
       </div>
       <div
         v-if="lastTabSelected === 'dimensions'"
         :title="$t('product.dimensions')"
       >
-        <!-- <Dimensions :product="product" /> -->
+        <Dimensions :product="product" />
       </div>
       <div
         v-if="lastTabSelected === 'accessories'"
         :title="$t('product.accessories')"
       >
-        <!-- <ProductAccessories :accessories="accessories" /> -->
+        <ProductAccessories :accessories="accessories" />
       </div>
       <div
         v-if="lastTabSelected === 'consumables'"
@@ -76,7 +53,7 @@
             </h4>
           </div>
         </div>
-        <!-- <accessories-slider :entries="consumables" /> -->
+        <accessories-slider :entries="consumables" />
       </div>
       <div
         v-if="lastTabSelected === 'spareparts'"
@@ -88,7 +65,7 @@
           >
             <div class="tw-col-span-4 lg:tw-col-span-2 icon">
               <div class="tw-p-3">
-                <!-- <material-icon icon="info" /> -->
+                <material-icon icon="info" />
               </div>
             </div>
             <div class="tw-col-span-8 lg:tw-col-span-10 info tw-p-3">
@@ -104,18 +81,18 @@
               </h4>
             </div>
           </div>
-          <!-- <accessories-slider :entries="spareParts" /> -->
+          <accessories-slider :entries="spareParts" />
         </div>
-      </div>
-      <!-- Service Tab should not be visible in MVP -->
-      <div v-if="false" :title="$t('product.service')">Service</div>
+      </div> -->
+    <!-- Service Tab should not be visible in MVP -->
+    <!-- <div v-if="false" :title="$t('product.service')">Service</div>
       <div
         v-if="lastTabSelected === 'downloads'"
         :title="$t('product.downloads')"
       >
-        <!-- <ProductFiles :files="downloads" :loading="loadingReferences" /> -->
-      </div>
-    </div>
+        <ProductFiles :files="downloads" :loading="loadingReferences" />
+      </div> -->
+    <!-- </div> -->
   </div>
 </template>
 
@@ -165,7 +142,7 @@ export default defineComponent({
   ],
   setup(props, { emit }) {
     const { i18n } = useContext()
-    const lastTabSelected = ref('productInfo')
+    let lastTabSelected = ref('productInfo')
     const tabs = ref([
       {
         name: i18n.t('product.productInformation'),
@@ -272,7 +249,7 @@ export default defineComponent({
     }
 
     const selectTab = (code) => {
-      lastTabSelected = code
+      lastTabSelected.value = code
 
       if (code === 'accessories') {
         emit('getAccessories')
