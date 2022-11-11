@@ -39,7 +39,7 @@ export default {
       default: false,
     },
     initialValue: {
-      type: String,
+      type: undefined,
       default: '',
     },
   },
