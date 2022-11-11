@@ -53,7 +53,7 @@
               :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
               style="height: 700px"
             >
-              Details Tabs
+              <DetailTabs />
             </div>
           </div>
           <!-- placeholder end -->
@@ -77,10 +77,11 @@ import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import Page from '~/components/templates/Page/Page'
+import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page },
+  components: { Page, DetailTabs },
   setup() {
     const route = useRoute()
     const context = useContext()
