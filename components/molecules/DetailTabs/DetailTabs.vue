@@ -1,17 +1,19 @@
 <template>
   <div class="detail-tabs">
-    <div class="tab-navigation-desktop">
-      <Button
-        v-for="(tab, index) in tabs.filter((o) => o.active)"
-        :key="index"
-        :label="tab.name"
-        :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
-        cutaway="bottom"
-        class="tab-nav-item"
-        :class="{ active: lastTabSelected === tab.trigger }"
-        :disabled="isDisabled(tab.trigger)"
-        @click="selectTab(tab.trigger)"
-      />
+    <div class="tav-nvigation-wrapper">
+      <div class="tab-navigation-desktop">
+        <Button
+          v-for="(tab, index) in tabs.filter((o) => o.active)"
+          :key="index"
+          :label="tab.name"
+          :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
+          cutaway="bottom"
+          class="tab-nav-item"
+          :class="{ active: lastTabSelected === tab.trigger }"
+          :disabled="isDisabled(tab.trigger)"
+          @click="selectTab(tab.trigger)"
+        />
+      </div>
     </div>
     <div class="tab-navigation-mobile">
       <Button
@@ -314,6 +316,10 @@ export default defineComponent({
 
 <style lang="scss">
 .detail-tabs {
+  @apply tw-w-full;
+}
+
+.tab-navigation-wrapper {
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-w-full;
@@ -325,7 +331,9 @@ export default defineComponent({
   @screen lg {
     @apply tw-flex;
     @apply tw-flex-row;
-    @apply tw-justify-evenly;
+    @apply tw-justify-between;
+    @apply tw-border-b-2;
+    @apply tw-border-pv-red;
   }
 }
 
