@@ -63,7 +63,7 @@
           >
             <div class="tw-col-span-4 lg:tw-col-span-2 icon">
               <div class="tw-p-3">
-                <material-icon icon="info" />
+                <Icon icon="info" />
               </div>
             </div>
             <div class="tw-col-span-8 lg:tw-col-span-10 info tw-p-3">
@@ -102,9 +102,10 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
-  components: { Button },
+  components: { Button, Icon },
   props: {
     product: {
       type: Object,
