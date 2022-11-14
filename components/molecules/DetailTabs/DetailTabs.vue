@@ -19,7 +19,7 @@
         :key="index"
         :label="tab.name"
         :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
-        icon="expand_more"
+        :icon="lastTabSelected === tab.trigger ? 'expand_less' : 'expand_more'"
         class="tab-nav-item"
         :class="{ active: lastTabSelected === tab.trigger }"
         :disabled="isDisabled(tab.trigger)"
@@ -336,6 +336,10 @@ export default defineComponent({
 
   @screen lg {
     @apply tw-hidden;
+  }
+
+  .tab-nav-item {
+    @apply tw-mt-8;
   }
 }
 
