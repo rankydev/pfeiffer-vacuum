@@ -53,7 +53,10 @@
               :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
               style="height: 700px"
             >
-              <DetailTabs />
+              <DetailTabs
+                :product="productStore.product"
+                :product-code="productStore.code"
+              />
             </div>
           </div>
           <!-- placeholder end -->

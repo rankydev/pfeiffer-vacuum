@@ -1,6 +1,6 @@
 <template>
   <div class="detail-tabs">
-    <div class="tab-navigation">
+    <div class="tab-navigation-desktop">
       <Button
         v-for="(tab, index) in tabs.filter((o) => o.active)"
         :key="index"
@@ -13,32 +13,45 @@
         @click="selectTab(tab.trigger)"
       />
     </div>
+    <div class="tab-navigation-mobile">
+      <Button
+        v-for="(tab, index) in tabs.filter((o) => o.active)"
+        :key="index"
+        :label="tab.name"
+        :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
+        icon="expand_more"
+        class="tab-nav-item"
+        :class="{ active: lastTabSelected === tab.trigger }"
+        :disabled="isDisabled(tab.trigger)"
+        @click="selectTab(tab.trigger)"
+      />
+    </div>
     <div class="tab-content-wrapper">
       <div
         v-if="lastTabSelected === 'productInfo'"
         :title="$t('product.productInformation')"
       >
-        <ProductInformation :product="product" />
+        <!-- <ProductInformation :product="product" /> -->
       </div>
       <div
         v-if="lastTabSelected === 'technicalData'"
         :title="$t('product.technicalData')"
       >
-        <ProductTechnicalData
+        <!-- <ProductTechnicalData
           :features="getSortedFeatures(product, 'TechnicalData')"
-        />
+        /> -->
       </div>
       <div
         v-if="lastTabSelected === 'dimensions'"
         :title="$t('product.dimensions')"
       >
-        <Dimensions :product="product" />
+        <!-- <Dimensions :product="product" /> -->
       </div>
       <div
         v-if="lastTabSelected === 'accessories'"
         :title="$t('product.accessories')"
       >
-        <ProductAccessories :accessories="accessories" />
+        <!-- <ProductAccessories :accessories="accessories" /> -->
       </div>
       <div
         v-if="lastTabSelected === 'consumables'"
@@ -51,7 +64,7 @@
             </h4>
           </div>
         </div>
-        <accessories-slider :entries="consumables" />
+        <!-- <accessories-slider :entries="consumables" /> -->
       </div>
       <div
         v-if="lastTabSelected === 'spareparts'"
@@ -79,7 +92,7 @@
               </h4>
             </div>
           </div>
-          <accessories-slider :entries="spareParts" />
+          <!-- <accessories-slider :entries="spareParts" /> -->
         </div>
       </div>
       <!-- Service Tab should not be visible in MVP -->
@@ -88,7 +101,7 @@
         v-if="lastTabSelected === 'downloads'"
         :title="$t('product.downloads')"
       >
-        <ProductFiles :files="downloads" :loading="loadingReferences" />
+        <!-- <ProductFiles :files="downloads" :loading="loadingReferences" /> -->
       </div>
     </div>
   </div>
@@ -306,9 +319,24 @@ export default defineComponent({
   @apply tw-w-full;
 }
 
-.tab-navigation {
+.tab-navigation-desktop {
+  @apply tw-hidden;
+
+  @screen lg {
+    @apply tw-flex;
+    @apply tw-flex-row;
+    @apply tw-justify-evenly;
+  }
+}
+
+.tab-navigation-mobile {
   @apply tw-flex;
   @apply tw-justify-evenly;
+  @apply tw-flex-col;
+
+  @screen lg {
+    @apply tw-hidden;
+  }
 }
 
 .accessories-container,
