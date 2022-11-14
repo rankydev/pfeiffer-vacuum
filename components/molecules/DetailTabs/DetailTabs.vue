@@ -1,6 +1,6 @@
 <template>
-  <div class="detail-tabs">
-    <div class="tav-nvigation-wrapper">
+  <div class="tab-navigation">
+    <div class="tab-navigation-wrapper">
       <div class="tab-navigation-desktop">
         <Button
           v-for="(tab, index) in tabs.filter((o) => o.active)"
@@ -315,13 +315,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.detail-tabs {
-  @apply tw-w-full;
-}
-
-.tab-navigation-wrapper {
-  @apply tw-flex;
-  @apply tw-flex-col;
+.tab-navigation {
   @apply tw-w-full;
 }
 
@@ -353,22 +347,24 @@ export default defineComponent({
 
 .accessories-container,
 .spareparts-container {
-  padding: 32px 16px;
+  @apply tw-py-8;
+  @apply tw-px-4;
 
   @screen md {
-    padding-left: 24px;
+    @apply tw-pl-6;
   }
 }
 
 .previous-versions {
-  padding: 0 16px;
+  @apply tw-py-0;
+  @apply tw-px-4;
 
   .icon {
     @apply tw-bg-pv-red;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-justify-center;
+    @apply tw-items-center;
 
     .material-icons {
       font-size: 80px;
@@ -378,7 +374,7 @@ export default defineComponent({
 
   .info {
     @apply tw-bg-pv-grey-96;
-    padding-left: 32px;
+    @apply tw-pl-8;
   }
 }
 </style>
