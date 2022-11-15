@@ -124,8 +124,8 @@ export default defineComponent({
       registration: {
         companyName: '',
         address: {
-          country: {},
-          region: {},
+          country: undefined,
+          region: undefined,
         },
         firstName: '',
         lastName: '',
