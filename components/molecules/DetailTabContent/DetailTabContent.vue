@@ -80,12 +80,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  useContext,
-  ref,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
@@ -100,58 +95,8 @@ export default defineComponent({
       default: '',
     },
   },
-  emits: [
-    'getAccessories',
-    'getConsumables',
-    'getReferences',
-    'getSpareParts',
-    'getDownloads',
-  ],
-  setup(props, { emit }) {
+  setup(props) {
     const { i18n } = useContext()
-
-    const tabs = ref([
-      {
-        name: i18n.t('product.productInformation'),
-        trigger: 'productInfo',
-        active: true,
-      },
-      {
-        name: i18n.t('product.technicalData'),
-        trigger: 'technicalData',
-        active: true,
-      },
-      {
-        name: i18n.t('product.dimensions'),
-        trigger: 'dimensions',
-        active: true,
-      },
-      {
-        name: i18n.t('product.accessories'),
-        trigger: 'accessories',
-        active: true,
-      },
-      {
-        name: i18n.t('product.consumables'),
-        trigger: 'consumables',
-        active: true,
-      },
-      {
-        name: i18n.t('product.spareParts'),
-        trigger: 'spareparts',
-        active: true,
-      },
-      {
-        name: 'Service',
-        trigger: 'service',
-        active: false,
-      },
-      {
-        name: i18n.t('product.downloads'),
-        trigger: 'downloads',
-        active: true,
-      },
-    ])
 
     const spareParts = computed(() => {
       return props.references.filter((o) => o.referenceType === 'SPAREPART')
@@ -235,7 +180,6 @@ export default defineComponent({
     }
 
     return {
-      tabs,
       spareParts,
       consumables,
       hasConsumables,
@@ -250,36 +194,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.tab-navigation {
-  @apply tw-w-full;
-}
-
-.tab-navigation-desktop {
-  @apply tw-hidden;
-
-  @screen lg {
-    @apply tw-flex;
-    @apply tw-flex-row;
-    @apply tw-justify-between;
-    @apply tw-border-b-2;
-    @apply tw-border-pv-red;
-  }
-}
-
-.tab-navigation-mobile {
-  @apply tw-flex;
-  @apply tw-justify-evenly;
-  @apply tw-flex-col;
-
-  @screen lg {
-    @apply tw-hidden;
-  }
-
-  .tab-nav-item {
-    @apply tw-mt-8;
-  }
-}
-
 .accessories-container,
 .spareparts-container {
   @apply tw-py-8;

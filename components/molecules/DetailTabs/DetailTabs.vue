@@ -251,12 +251,18 @@ export default defineComponent({
 .tab-navigation-desktop {
   @apply tw-hidden;
 
-  @screen lg {
+  @screen md {
     @apply tw-flex;
     @apply tw-flex-row;
     @apply tw-justify-between;
     @apply tw-border-b-2;
     @apply tw-border-pv-red;
+    @apply tw-w-full;
+    @apply tw-overflow-scroll;
+  }
+
+  .tab-nav-item {
+    @apply tw-ml-4;
   }
 }
 
@@ -265,7 +271,7 @@ export default defineComponent({
   @apply tw-justify-evenly;
   @apply tw-flex-col;
 
-  @screen lg {
+  @screen md {
     @apply tw-hidden;
   }
 
