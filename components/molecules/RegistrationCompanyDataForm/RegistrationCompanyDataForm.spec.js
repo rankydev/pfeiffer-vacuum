@@ -1,4 +1,4 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import RegistrationCompanyDataForm from '~/components/molecules/RegistrationCompanyDataForm/RegistrationCompanyDataForm'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
@@ -6,8 +6,6 @@ import ButtonGroup from '~/components/atoms/FormComponents/ButtonGroup/ButtonGro
 import Infobox from '~/components/molecules/Infobox/Infobox'
 import { setActivePinia, createPinia } from 'pinia'
 import { reactive } from '@nuxtjs/composition-api'
-
-const localVue = createLocalVue()
 
 const mockedRegions = reactive({})
 const mockLoadRegions = jest.fn((isoCode) => {
@@ -34,9 +32,7 @@ describe('RegistrationCompanyDataForm', () => {
   describe('initial state', () => {
     beforeEach(() => setActivePinia(createPinia()))
     test('should render component correctly, hide form initially', () => {
-      const wrapper = shallowMount(RegistrationCompanyDataForm, {
-        localVue,
-      })
+      const wrapper = shallowMount(RegistrationCompanyDataForm)
 
       const headline = wrapper.find('h2')
       const inputFields = wrapper.findAllComponents(PvInput)
@@ -59,12 +55,10 @@ describe('RegistrationCompanyDataForm', () => {
       expect(removeBtn.exists()).toBeFalsy()
     })
 
-    test('should show form, when addCompany is true', async () => {
+    test('should show form when isOpen is true', async () => {
       const wrapper = shallowMount(RegistrationCompanyDataForm, {
-        localVue,
+        propsData: { isOpen: true },
       })
-      wrapper.vm.addCompany = true
-      await wrapper.vm.$nextTick()
 
       const headline = wrapper.find('h2')
       const inputFields = wrapper.findAllComponents(PvInput)

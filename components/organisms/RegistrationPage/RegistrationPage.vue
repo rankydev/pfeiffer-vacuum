@@ -16,10 +16,15 @@
           />
           <RegistrationCompanyDataForm
             id="registrationCompanyDataForm"
+            :is-open="isCompanyAddressFormVisible"
             :selected-country="selectedCountry"
             :selected-region="selectedRegion"
             :proceed-without-company="proceedWithoutCompany"
-            @update="requestData.companyData = $event.companyData"
+            @update:isOpen="
+              isCompanyAddressFormVisible = $event
+              if (!isCompanyAddressFormVisible) proceedWithoutCompany = false
+            "
+            @update:data="requestData.companyData = $event.companyData"
           />
           <RegistrationPageDataProtection />
           <Button
@@ -83,9 +88,10 @@ export default defineComponent({
     const toast = useToast()
     const v = useVuelidate()
     const loading = ref(false)
-    let proceedWithoutCompany = ref(false)
+    const proceedWithoutCompany = ref(false)
     const requestData = ref({ personalData: {}, companyData: {} })
     const modalIsOpen = ref(false)
+    const isCompanyAddressFormVisible = ref(false)
 
     const hasCountrySelectionData = computed(() => {
       if (!requestData.value.personalData?.address) return false
@@ -127,7 +133,11 @@ export default defineComponent({
       if (eventData) {
         proceedWithoutCompany.value = eventData.proceedWithoutCompany
 
-        if (proceedWithoutCompany.value) return triggerSendRegistrationProcess()
+        if (proceedWithoutCompany.value) {
+          triggerSendRegistrationProcess()
+        } else {
+          isCompanyAddressFormVisible.value = true
+        }
       }
     }
 
@@ -139,12 +149,16 @@ export default defineComponent({
         requestData.value.companyData &&
         Object.values(requestData.value.companyData).length
 
-      if (!hasCompanyData && !proceedWithoutCompany.value) return toggleModal()
-
       v.value.$validate()
 
-      if (v.value.$errors.length + v.value.$silentErrors.length === 0)
-        return submit()
+      if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
+        if (!hasCompanyData && !proceedWithoutCompany.value) {
+          toggleModal()
+          return
+        }
+
+        submit()
+      }
     }
 
     const submit = async () => {
@@ -164,11 +178,11 @@ export default defineComponent({
         .register(customerData)
         .then(() => {
           loading.value = false
-          if (proceedWithoutCompany.value) {
-            router.push(localePath('/shop/register/success?type=lite'))
-          } else {
-            router.push(localePath('/shop/register/success'))
+          let successPagePath = '/shop/register/success'
+          if (!isCompanyAddressFormVisible.value) {
+            successPagePath += '?type=lite'
           }
+          router.push(localePath(successPagePath))
         })
         .catch((err) => {
           err.data.errors.forEach((error) => {
@@ -209,6 +223,7 @@ export default defineComponent({
       hasCountrySelectionData,
       loading,
       modalIsOpen,
+      isCompanyAddressFormVisible,
       proceedWithoutCompany,
       requestData,
       selectedCountry,
