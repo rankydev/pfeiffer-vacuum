@@ -1,90 +1,43 @@
 <template>
-  <div class="tab-content__wrapper">
+  <div class="tab-content">
     <div
       v-if="lastTabSelected === 'productInfo'"
       :title="$t('product.productInformation')"
-    >
-      <!-- <ProductInformation :product="product" /> -->
-    </div>
+    ></div>
     <div
       v-if="lastTabSelected === 'technicalData'"
       :title="$t('product.technicalData')"
-    >
-      <!-- <ProductTechnicalData
-      :features="getSortedFeatures(product, 'TechnicalData')"
-      /> -->
-    </div>
+    ></div>
     <div
       v-if="lastTabSelected === 'dimensions'"
       :title="$t('product.dimensions')"
-    >
-      <!-- <Dimensions :product="product" /> -->
-    </div>
+    ></div>
     <div
       v-if="lastTabSelected === 'accessories'"
       :title="$t('product.accessories')"
-    >
-      <!-- <ProductAccessories :accessories="accessories" /> -->
-    </div>
+    ></div>
     <div
       v-if="lastTabSelected === 'consumables'"
       :title="$t('product.consumables')"
-    >
-      <div class="tw-grid tw-grid-cols-12 tw-pt-4 tw-text-center">
-        <div class="tw-col-span-12">
-          <h4>
-            {{ $t('product.consumables') }}
-          </h4>
-        </div>
-      </div>
-      <!-- <accessories-slider :entries="consumables" /> -->
-    </div>
+    ></div>
     <div
       v-if="lastTabSelected === 'spareparts'"
       :title="$t('product.spareParts')"
-    >
-      <div class="tab-content__spareparts-container">
-        <div
-          class="tw-grid tw-grid-cols-12 tw-text-center tab-content__spareparts-container__previous-versions tw-mb-6"
-        >
-          <div class="tw-col-span-4 lg:tw-col-span-2 icon">
-            <div class="tw-p-3">
-              <Icon icon="info" />
-            </div>
-          </div>
-          <div class="tw-col-span-8 lg:tw-col-span-10 info tw-p-3">
-            <h6 class="tw-mt-4">
-              {{ $t('product.previousVersionsSpareParts') }}
-            </h6>
-          </div>
-        </div>
-        <div class="tw-grid tw-grid-cols-12">
-          <div class="tw-col-span-12">
-            <h4>
-              {{ $t('product.spareParts') }}
-            </h4>
-          </div>
-        </div>
-        <!-- <accessories-slider :entries="spareParts" /> -->
-      </div>
-    </div>
+    ></div>
     <!-- Service Tab should not be visible in MVP -->
     <div v-if="false" :title="$t('product.service')">Service</div>
     <div
       v-if="lastTabSelected === 'downloads'"
       :title="$t('product.downloads')"
-    >
-      <!-- <ProductFiles :files="downloads" :loading="loadingReferences" /> -->
-    </div>
+    ></div>
   </div>
 </template>
 
 <script>
 import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
-import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
-  components: { Icon },
+  components: {},
   props: {
     lastTabSelected: {
       type: String,
@@ -189,38 +142,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
-.tab-content {
-  &__spareparts-container {
-    @apply tw-py-8;
-    @apply tw-px-4;
-
-    @screen md {
-      @apply tw-pl-6;
-    }
-
-    &__previous-versions {
-      @apply tw-py-0;
-      @apply tw-px-4;
-
-      .icon {
-        @apply tw-bg-pv-red;
-        @apply tw-flex;
-        @apply tw-flex-col;
-        @apply tw-justify-center;
-        @apply tw-items-center;
-
-        .material-icons {
-          font-size: 80px;
-          @apply tw-text-pv-white;
-        }
-      }
-
-      .info {
-        @apply tw-bg-pv-grey-96;
-        @apply tw-pl-8;
-      }
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
