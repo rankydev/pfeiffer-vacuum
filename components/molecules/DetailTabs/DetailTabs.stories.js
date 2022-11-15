@@ -1,8 +1,8 @@
 import DetailTabs from './DetailTabs'
-import categories from './DetailTabs.stories.content'
+import { product } from '~/components/molecules/ProductCard/ProductCard.stories.content'
 
 const argTypes = {
-  categories,
+  product: product,
 }
 
 export default {
@@ -35,4 +35,6 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = {
+  product: product,
+}

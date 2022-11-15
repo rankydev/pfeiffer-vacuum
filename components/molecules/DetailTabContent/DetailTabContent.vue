@@ -90,10 +90,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    tab: {
-      type: String,
-      default: '',
-    },
   },
   setup(props) {
     const { i18n } = useContext()
