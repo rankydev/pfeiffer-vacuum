@@ -258,7 +258,7 @@ export default defineComponent({
     @apply tw-border-b-2;
     @apply tw-border-pv-red;
     @apply tw-w-full;
-    @apply tw-overflow-scroll;
+    @apply tw-overflow-y-auto;
   }
 
   .tab-nav-item {
