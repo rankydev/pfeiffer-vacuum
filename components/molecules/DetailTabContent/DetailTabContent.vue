@@ -1,39 +1,80 @@
 <template>
-  <div class="tab-navigation">
-    <div class="tab-navigation-wrapper">
-      <div class="tab-navigation-desktop">
-        <Button
-          v-for="(tab, index) in tabs.filter((o) => o.active)"
-          :key="index"
-          :label="tab.name"
-          :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
-          cutaway="bottom"
-          class="tab-nav-item"
-          :class="{ active: lastTabSelected === tab.trigger }"
-          :disabled="isDisabled(tab.trigger)"
-          @click="selectTab(tab.trigger)"
-        />
-      </div>
-      <DetailTabContent :last-tab-selected="lastTabSelected" />
+  <div class="tab-content-wrapper">
+    <div
+      v-if="lastTabSelected === 'productInfo'"
+      :title="$t('product.productInformation')"
+    >
+      <!-- <ProductInformation :product="product" /> -->
     </div>
     <div
-      v-for="(tab, index) in tabs.filter((o) => o.active)"
-      :key="index"
-      class="tab-navigation-mobile"
+      v-if="lastTabSelected === 'technicalData'"
+      :title="$t('product.technicalData')"
     >
-      <Button
-        :label="tab.name"
-        :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
-        :icon="lastTabSelected === tab.trigger ? 'expand_less' : 'expand_more'"
-        class="tab-nav-item"
-        :class="{ active: lastTabSelected === tab.trigger }"
-        :disabled="isDisabled(tab.trigger)"
-        @click="selectTab(tab.trigger)"
-      />
-      <DetailTabContent
-        v-if="lastTabSelected === tab.trigger"
-        :last-tab-selected="lastTabSelected"
-      />
+      <!-- <ProductTechnicalData
+    :features="getSortedFeatures(product, 'TechnicalData')"
+  /> -->
+    </div>
+    <div
+      v-if="lastTabSelected === 'dimensions'"
+      :title="$t('product.dimensions')"
+    >
+      <!-- <Dimensions :product="product" /> -->
+    </div>
+    <div
+      v-if="lastTabSelected === 'accessories'"
+      :title="$t('product.accessories')"
+    >
+      <!-- <ProductAccessories :accessories="accessories" /> -->
+    </div>
+    <div
+      v-if="lastTabSelected === 'consumables'"
+      :title="$t('product.consumables')"
+    >
+      <div class="tw-grid tw-grid-cols-12 tw-pt-4 tw-text-center">
+        <div class="tw-col-span-12">
+          <h4>
+            {{ $t('product.consumables') }}
+          </h4>
+        </div>
+      </div>
+      <!-- <accessories-slider :entries="consumables" /> -->
+    </div>
+    <div
+      v-if="lastTabSelected === 'spareparts'"
+      :title="$t('product.spareParts')"
+    >
+      <div class="spareparts-container">
+        <div
+          class="tw-grid tw-grid-cols-12 tw-text-center previous-versions tw-mb-6"
+        >
+          <div class="tw-col-span-4 lg:tw-col-span-2 icon">
+            <div class="tw-p-3">
+              <Icon icon="info" />
+            </div>
+          </div>
+          <div class="tw-col-span-8 lg:tw-col-span-10 info tw-p-3">
+            <h6 class="tw-mt-4">
+              {{ $t('product.previousVersionsSpareParts') }}
+            </h6>
+          </div>
+        </div>
+        <div class="tw-grid tw-grid-cols-12">
+          <div class="tw-col-span-12">
+            <h4>
+              {{ $t('product.spareParts') }}
+            </h4>
+          </div>
+        </div>
+        <!-- <accessories-slider :entries="spareParts" /> -->
+      </div>
+    </div>
+    <!-- Service Tab should not be visible in MVP -->
+    <div v-if="false" :title="$t('product.service')">Service</div>
+    <div
+      v-if="lastTabSelected === 'downloads'"
+      :title="$t('product.downloads')"
+    >
+      <!-- <ProductFiles :files="downloads" :loading="loadingReferences" /> -->
     </div>
   </div>
 </template>
@@ -45,35 +86,18 @@ import {
   ref,
   computed,
 } from '@nuxtjs/composition-api'
-import Button from '~/components/atoms/Button/Button.vue'
-import DetailTabContent from '~/components/molecules/DetailTabContent/DetailTabContent.vue'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
-  components: { Button, DetailTabContent },
+  components: { Icon },
   props: {
-    product: {
-      type: Object,
+    lastTabSelected: {
+      type: String,
       required: true,
     },
-    productCode: {
+    tab: {
       type: String,
       default: '',
-    },
-    accessories: {
-      type: Array,
-      default: () => [],
-    },
-    references: {
-      type: Array,
-      default: () => [],
-    },
-    downloads: {
-      type: Array,
-      default: () => [],
-    },
-    loadingReferences: {
-      type: Boolean,
-      default: false,
     },
   },
   emits: [
@@ -85,7 +109,7 @@ export default defineComponent({
   ],
   setup(props, { emit }) {
     const { i18n } = useContext()
-    let lastTabSelected = ref('productInfo')
+
     const tabs = ref([
       {
         name: i18n.t('product.productInformation'),
@@ -191,22 +215,6 @@ export default defineComponent({
       }
     }
 
-    const selectTab = (code) => {
-      lastTabSelected.value = code
-
-      if (code === 'accessories') {
-        emit('getAccessories')
-      } else if (code === 'consumables') {
-        emit('getConsumables')
-        emit('getReferences')
-      } else if (code === 'spareparts') {
-        emit('getSpareParts')
-        emit('getReferences')
-      } else if (code === 'downloads') {
-        emit('getDownloads')
-      }
-    }
-
     const isDisabled = (code) => {
       switch (code) {
         case 'technicalData':
@@ -227,14 +235,12 @@ export default defineComponent({
     }
 
     return {
-      lastTabSelected,
       tabs,
       spareParts,
       consumables,
       hasConsumables,
       hasSpareParts,
       hasAccessories,
-      selectTab,
       isDisabled,
       getSortedFeatures,
       i18n,
