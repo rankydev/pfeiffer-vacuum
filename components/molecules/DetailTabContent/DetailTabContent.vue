@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-content-wrapper">
+  <div class="tab-content__wrapper">
     <div
       v-if="lastTabSelected === 'productInfo'"
       :title="$t('product.productInformation')"
@@ -11,8 +11,8 @@
       :title="$t('product.technicalData')"
     >
       <!-- <ProductTechnicalData
-    :features="getSortedFeatures(product, 'TechnicalData')"
-  /> -->
+      :features="getSortedFeatures(product, 'TechnicalData')"
+      /> -->
     </div>
     <div
       v-if="lastTabSelected === 'dimensions'"
@@ -43,9 +43,9 @@
       v-if="lastTabSelected === 'spareparts'"
       :title="$t('product.spareParts')"
     >
-      <div class="spareparts-container">
+      <div class="tab-content__spareparts-container">
         <div
-          class="tw-grid tw-grid-cols-12 tw-text-center previous-versions tw-mb-6"
+          class="tw-grid tw-grid-cols-12 tw-text-center tab-content__spareparts-container__previous-versions tw-mb-6"
         >
           <div class="tw-col-span-4 lg:tw-col-span-2 icon">
             <div class="tw-p-3">
@@ -190,36 +190,37 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.accessories-container,
-.spareparts-container {
-  @apply tw-py-8;
-  @apply tw-px-4;
+.tab-content {
+  &__spareparts-container {
+    @apply tw-py-8;
+    @apply tw-px-4;
 
-  @screen md {
-    @apply tw-pl-6;
-  }
-}
-
-.previous-versions {
-  @apply tw-py-0;
-  @apply tw-px-4;
-
-  .icon {
-    @apply tw-bg-pv-red;
-    @apply tw-flex;
-    @apply tw-flex-col;
-    @apply tw-justify-center;
-    @apply tw-items-center;
-
-    .material-icons {
-      font-size: 80px;
-      @apply tw-text-pv-white;
+    @screen md {
+      @apply tw-pl-6;
     }
-  }
 
-  .info {
-    @apply tw-bg-pv-grey-96;
-    @apply tw-pl-8;
+    &__previous-versions {
+      @apply tw-py-0;
+      @apply tw-px-4;
+
+      .icon {
+        @apply tw-bg-pv-red;
+        @apply tw-flex;
+        @apply tw-flex-col;
+        @apply tw-justify-center;
+        @apply tw-items-center;
+
+        .material-icons {
+          font-size: 80px;
+          @apply tw-text-pv-white;
+        }
+      }
+
+      .info {
+        @apply tw-bg-pv-grey-96;
+        @apply tw-pl-8;
+      }
+    }
   }
 }
 </style>

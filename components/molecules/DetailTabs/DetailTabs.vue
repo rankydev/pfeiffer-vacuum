@@ -1,31 +1,34 @@
 <template>
   <div class="tab-navigation">
-    <div class="tab-navigation-wrapper">
-      <div class="tab-navigation-desktop">
+    <div class="tab-navigation__wrapper">
+      <div class="tab-navigation__desktop">
         <Button
           v-for="(tab, index) in tabs.filter((o) => o.active)"
           :key="index"
           :label="tab.name"
           :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
           cutaway="bottom"
-          class="tab-nav-item"
+          class="tab-navigation__desktop__item"
           :class="{ active: lastTabSelected === tab.trigger }"
           :disabled="isDisabled(tab.trigger)"
           @click="selectTab(tab.trigger)"
         />
       </div>
-      <DetailTabContent :last-tab-selected="lastTabSelected" />
+      <DetailTabContent
+        class="tab-navigation__desktop__content"
+        :last-tab-selected="lastTabSelected"
+      />
     </div>
     <div
       v-for="(tab, index) in tabs.filter((o) => o.active)"
       :key="index"
-      class="tab-navigation-mobile"
+      class="tab-navigation__mobile"
     >
       <Button
         :label="tab.name"
         :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
         :icon="lastTabSelected === tab.trigger ? 'expand_less' : 'expand_more'"
-        class="tab-nav-item"
+        class="tab-navigation__mobile__item"
         :class="{ active: lastTabSelected === tab.trigger }"
         :disabled="isDisabled(tab.trigger)"
         @click="selectTab(tab.trigger)"
@@ -246,41 +249,49 @@ export default defineComponent({
 <style lang="scss">
 .tab-navigation {
   @apply tw-w-full;
-}
 
-.tab-navigation-desktop {
-  @apply tw-hidden;
+  &__desktop {
+    @apply tw-hidden;
 
-  @screen md {
-    @apply tw-flex;
-    @apply tw-flex-row;
-    @apply tw-justify-start;
-    @apply tw-border-b-2;
-    @apply tw-border-pv-red;
-    @apply tw-w-full;
-    @apply tw-overflow-y-auto;
-  }
+    @screen md {
+      @apply tw-flex;
+      @apply tw-flex-row;
+      @apply tw-justify-start;
+      @apply tw-border-b-2;
+      @apply tw-border-pv-red;
+      @apply tw-w-full;
+      @apply tw-overflow-y-auto;
+    }
 
-  .tab-nav-item {
-    @apply tw-ml-2;
+    &__content {
+      @apply tw-hidden;
 
-    &:first-child {
-      @apply tw-ml-0;
+      @screen md {
+        @apply tw-flex;
+      }
+    }
+
+    &__item {
+      @apply tw-ml-2;
+
+      &:first-child {
+        @apply tw-ml-0;
+      }
     }
   }
-}
 
-.tab-navigation-mobile {
-  @apply tw-flex;
-  @apply tw-justify-evenly;
-  @apply tw-flex-col;
+  &__mobile {
+    @apply tw-flex;
+    @apply tw-justify-evenly;
+    @apply tw-flex-col;
 
-  @screen md {
-    @apply tw-hidden;
-  }
+    @screen md {
+      @apply tw-hidden;
+    }
 
-  .tab-nav-item {
-    @apply tw-mt-2;
+    &__item {
+      @apply tw-mt-2;
+    }
   }
 }
 </style>
