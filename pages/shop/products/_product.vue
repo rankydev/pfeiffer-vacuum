@@ -47,12 +47,6 @@
             >
               Recommended Accessories
             </div>
-
-            <div
-              class="tw-bg-pv-grey-88 tw-w-full tw-rounded-lg"
-              :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-              style="height: 700px"
-            ></div>
             <DetailTabs
               :product="productStore.product"
               :product-code="productStore.code"
