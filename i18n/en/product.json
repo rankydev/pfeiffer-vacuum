@@ -1,3 +1,8 @@
 {
-  "variantsAvailable": "no variants available | {count} variant available | {count} variants available"
+  "variantsAvailable": "no variants available | {count} variant available | {count} variants available",
+  "productInformation": "Product Information",
+  "furtherDetails": "Further product details",
+  "selectVariantExplained":
+  "Please select the appropriate product variant for your individual requirements to see the corresponding product details.",
+  "scrollToVariantSelection": "Select variant"
 }

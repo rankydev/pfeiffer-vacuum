@@ -1,3 +1,8 @@
 {
-  "variantsAvailable": "keine verfügbare Variante | {count} verfügbare Variante | {count} verfügbare Varianten"
+  "variantsAvailable": "keine verfügbare Variante | {count} verfügbare Variante | {count} verfügbare Varianten",
+  "productInformation": "Produktinformationen",
+  "furtherDetails": "Weitere Produktdetails",
+  "selectVariantExplained":
+  "Bitte wählen Sie eine Variante basierend auf Ihren individuellen Anforderungen um weitere Details einzusehen.",
+  "scrollToVariantSelection": "Variante auswählen"
 }

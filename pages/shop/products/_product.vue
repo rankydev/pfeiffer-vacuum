@@ -34,6 +34,7 @@
               Image
             </div>
             <div
+              id="variantselection"
               class="tw-bg-pv-grey-88 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
               :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
               style="height: 600px"
@@ -48,15 +49,8 @@
               Recommended Accessories
             </div>
 
-            <div
-              class="tw-bg-pv-grey-88 tw-w-full tw-rounded-lg"
-              :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-              style="height: 700px"
-            >
-              Details Tabs
-            </div>
+            <ProductInformation :product="productStore.product" />
           </div>
-          <!-- placeholder end -->
         </ContentWrapper>
       </Page>
     </template>
@@ -77,10 +71,11 @@ import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import Page from '~/components/templates/Page/Page'
+import ProductInformation from '~/components/molecules/ProductInformation/ProductInformation'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page },
+  components: { Page, ProductInformation },
   setup() {
     const route = useRoute()
     const context = useContext()
