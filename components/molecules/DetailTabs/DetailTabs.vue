@@ -262,7 +262,11 @@ export default defineComponent({
   }
 
   .tab-nav-item {
-    @apply tw-ml-4;
+    @apply tw-ml-2;
+
+    &:first-child {
+      @apply tw-ml-0;
+    }
   }
 }
 
