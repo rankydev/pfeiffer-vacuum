@@ -254,7 +254,7 @@ export default defineComponent({
   @screen md {
     @apply tw-flex;
     @apply tw-flex-row;
-    @apply tw-justify-between;
+    @apply tw-justify-start;
     @apply tw-border-b-2;
     @apply tw-border-pv-red;
     @apply tw-w-full;
@@ -276,40 +276,7 @@ export default defineComponent({
   }
 
   .tab-nav-item {
-    @apply tw-mt-8;
-  }
-}
-
-.accessories-container,
-.spareparts-container {
-  @apply tw-py-8;
-  @apply tw-px-4;
-
-  @screen md {
-    @apply tw-pl-6;
-  }
-}
-
-.previous-versions {
-  @apply tw-py-0;
-  @apply tw-px-4;
-
-  .icon {
-    @apply tw-bg-pv-red;
-    @apply tw-flex;
-    @apply tw-flex-col;
-    @apply tw-justify-center;
-    @apply tw-items-center;
-
-    .material-icons {
-      font-size: 80px;
-      @apply tw-text-pv-white;
-    }
-  }
-
-  .info {
-    @apply tw-bg-pv-grey-96;
-    @apply tw-pl-8;
+    @apply tw-mt-2;
   }
 }
 </style>
