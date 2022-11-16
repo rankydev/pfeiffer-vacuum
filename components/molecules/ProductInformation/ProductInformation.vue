@@ -140,7 +140,7 @@ export default {
 
   &__bullet {
     @apply tw-pl-4;
-    position: relative;
+    @apply relative;
 
     &:not(:last-child) {
       @apply tw-mb-2;
@@ -149,14 +149,14 @@ export default {
     &::before {
       @apply tw-text-pv-red;
       content: '\25A0';
-      font-size: 12px;
-      line-height: 20px;
-      position: absolute;
+      @apply tw-text-xs;
+      @apply tw-leading-5;
+      @apply tw-absolute;
       top: 0;
       left: 0;
 
       @screen md {
-        font-size: 24px;
+        @apply tw-text-xl;
       }
     }
   }
