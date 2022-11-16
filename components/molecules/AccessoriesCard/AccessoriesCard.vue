@@ -3,7 +3,7 @@
     <template #image>
       <!-- <img :src="imageUrl(product.images)" alt="" /> -->
       <ResponsiveImage
-        :image="product.images || {}"
+        :image="image || {}"
         aspect-ratio="16:9"
         :provider="provider"
       />
@@ -139,13 +139,18 @@ export default defineComponent({
   props: {
     product: {
       type: Object,
-      required: true,
+      default: () => ({}),
+    },
+    provider: {
+      type: String,
+      default: 'hybris',
     },
   },
   setup(props) {
     const { i18n } = useContext()
     const context = useContext()
     const userStore = useUserStore()
+    const image = computed(() => props.product.images?.[0])
 
     const quantity = ref(1)
     const infoModalVisible = ref(false)
@@ -224,6 +229,7 @@ export default defineComponent({
     return {
       context,
       quantity,
+      image,
       infoModalVisible,
       hasAddToListButton,
       hasPrice,
