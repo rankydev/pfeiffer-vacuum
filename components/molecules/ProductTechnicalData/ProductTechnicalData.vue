@@ -1,6 +1,5 @@
 <template>
   <ul v-if="(features || []).length > 0" class="technical-data">
-    <div>Halo</div>
     <li
       v-for="(feature, index) in features"
       :key="index"
