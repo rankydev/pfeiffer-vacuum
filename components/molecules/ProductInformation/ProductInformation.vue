@@ -44,14 +44,14 @@
           {{ $t('product.selectVariantExplained') }}
         </span>
 
-        <Link
-          class="product-information__anchor"
-          anchor="#variantselection"
+        <Button
+          :label="$t('product.scrollToVariantSelection')"
           variant="secondary"
-        >
-          {{ $t('product.scrollToVariantSelection') }}
-          <Icon icon="arrow_upward" />
-        </Link>
+          shape="outlined"
+          size="normal"
+          icon="arrow_upward"
+          href="#variantselection"
+        />
       </div>
     </div>
   </div>
@@ -60,14 +60,12 @@
 <script>
 import { computed } from '@nuxtjs/composition-api'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
-import Link from '~/components/atoms/Link/Link'
-import Icon from '~/components/atoms/Icon/Icon'
+import Button from '~/components/atoms/Button/Button'
 
 export default {
   name: 'ProductInformation',
   components: {
-    Link,
-    Icon,
+    Button,
   },
   props: {
     product: {
