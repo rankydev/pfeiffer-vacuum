@@ -44,8 +44,11 @@
       @input="$emit('update', requestData)"
     />
     <FormCountrySelection
+      :selected-country="requestData.contact.address.country"
+      :selected-region="requestData.contact.address.region"
       @update="
-        requestData.contact.address = $event
+        requestData.contact.address.country = $event.country
+        requestData.contact.address.region = $event.region
         $emit('update', requestData)
       "
     />
@@ -103,8 +106,8 @@ export default defineComponent({
     const requestData = ref({
       contact: {
         address: {
-          country: {},
-          region: {},
+          country: undefined,
+          region: undefined,
         },
         firstName: '',
         lastName: '',

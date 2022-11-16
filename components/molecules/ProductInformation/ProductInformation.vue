@@ -17,6 +17,7 @@
             class="product-information__footnote"
             v-html="sanitizer.block(footnote)"
           />
+          <!-- eslint-enable vue/no-v-html -->
         </ul>
 
         <ul
@@ -27,6 +28,7 @@
             },
           ]"
         >
+          <!-- eslint-disable vue/no-v-html -->
           <li
             v-for="(bullet, index) in (product || {}).bullets"
             :key="index"

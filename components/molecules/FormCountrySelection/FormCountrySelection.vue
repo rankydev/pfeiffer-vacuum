@@ -1,7 +1,7 @@
 <template>
   <div class="form-country-selection">
     <PvSelect
-      v-model="countrySelection.country"
+      v-model="internalCountry"
       :label="$t('form.contactRequest.country')"
       :options="countries"
       :option-label="'name'"
@@ -13,13 +13,12 @@
           required
         ),
       }"
-      @input="$emit('update', countrySelection)"
     />
     <PvSelect
       v-if="
         regions.length || (selectedRegion && Object.keys(selectedRegion).length)
       "
-      v-model="countrySelection.region"
+      v-model="internalRegion"
       :label="$t('form.contactRequest.region')"
       :options="regions"
       :option-label="'name'"
@@ -31,7 +30,6 @@
           required
         ),
       }"
-      @input="$emit('update', countrySelection)"
     />
   </div>
 </template>
@@ -74,27 +72,46 @@ export default defineComponent({
      */
     'update',
   ],
-  setup(props) {
-    const countrySelection = ref({
-      country: props.selectedCountry,
-      region: props.selectedRegion,
+  setup(props, { emit }) {
+    const internalCountry = computed({
+      get: () => props.selectedCountry,
+      set: (newVal) => {
+        emit('update', {
+          country: newVal,
+          region: internalRegion.value,
+        })
+      },
+    })
+
+    const internalRegion = computed({
+      get: () => props.selectedRegion,
+      set: (newVal) => {
+        emit('update', {
+          country: internalCountry.value,
+          region: newVal,
+        })
+      },
     })
 
     const countriesStore = useCountriesStore()
-    const isoCode = computed(() => countrySelection.value.country?.isocode)
+    const isoCode = computed(() => internalCountry.value?.isocode)
     const regions = ref([])
     const countries = toRef(countriesStore, 'countries')
 
     watch(isoCode, async (newIsoCode) => {
       await countriesStore.loadRegions(newIsoCode)
       regions.value = countriesStore.regions[newIsoCode] || []
-      countrySelection.value.region = null
+      emit('update', {
+        country: internalCountry.value,
+        region: null,
+      })
     })
 
     return {
       helpers,
       required,
-      countrySelection,
+      internalCountry,
+      internalRegion,
       regions,
       countries,
     }

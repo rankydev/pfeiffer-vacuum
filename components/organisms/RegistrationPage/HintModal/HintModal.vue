@@ -104,7 +104,7 @@ export default defineComponent({
   }
 
   &__button-section {
-    @screen lg {
+    @screen md {
       @apply tw-flex;
       @apply tw-justify-between;
     }
@@ -113,7 +113,7 @@ export default defineComponent({
   &__btn-proceed {
     @apply tw-mb-6;
 
-    @screen lg {
+    @screen md {
       @apply tw-mb-0;
     }
   }

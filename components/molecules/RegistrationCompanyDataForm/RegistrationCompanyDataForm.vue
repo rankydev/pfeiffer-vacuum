@@ -3,7 +3,7 @@
     <div class="registration-company-data-form__header">
       <h2>{{ $t('registration.formCompanyData.title') }}</h2>
       <Button
-        v-if="addCompany"
+        v-if="isOpen"
         :label="$t('registration.formCompanyData.removeCompanyData')"
         variant="secondary"
         shape="plain"
@@ -15,10 +15,7 @@
 
     <Infobox :text="$t('registration.infotext')" />
 
-    <div
-      v-if="addCompany && !proceedWithoutCompany"
-      class="registration-company-data-form__form-section"
-    >
+    <div v-if="isOpen" class="registration-company-data-form__form-section">
       <div class="registration-company-data-form__row-container">
         <div class="registration-company-data-form__row-container--half">
           <PvLabel
@@ -40,9 +37,10 @@
                 checked: true,
               },
             ]"
+            :initial-value="requestData.companyData.companyAlreadyCustomer"
             @update="
               requestData.companyData.companyAlreadyCustomer = $event
-              $emit('update', requestData)
+              $emit('update:data', requestData)
             "
           />
         </div>
@@ -53,7 +51,7 @@
           :label="$t('registration.formCompanyData.customerNumber')"
           placeholder=""
           :disabled="!requestData.companyData.companyAlreadyCustomer"
-          @input="$emit('update', requestData)"
+          @input="$emit('update:data', requestData)"
         />
       </div>
 
@@ -61,21 +59,21 @@
         v-model="requestData.companyData.companyFurtherDetails"
         :label="$t('registration.formCompanyData.additionalCompanyInformation')"
         placeholder=""
-        @input="$emit('update', requestData)"
+        @input="$emit('update:data', requestData)"
       />
 
       <PvInput
         v-model="requestData.companyData.department"
         :label="$t('registration.formCompanyData.department')"
         placeholder=""
-        @input="$emit('update', requestData)"
+        @input="$emit('update:data', requestData)"
       />
 
       <PvInput
         v-model="requestData.companyData.companyVatId"
         :label="$t('registration.formCompanyData.tax')"
         placeholder=""
-        @input="$emit('update', requestData)"
+        @input="$emit('update:data', requestData)"
       />
 
       <div class="registration-company-data-form__row-container">
@@ -91,7 +89,7 @@
               required
             ),
           }"
-          @input="$emit('update', requestData)"
+          @input="$emit('update:data', requestData)"
         />
 
         <PvInput
@@ -99,7 +97,7 @@
           class="registration-company-data-form__row-container--half"
           :label="$t('registration.formCompanyData.fax')"
           placeholder=""
-          @input="$emit('update', requestData)"
+          @input="$emit('update:data', requestData)"
         />
       </div>
 
@@ -122,7 +120,7 @@
               required
             ),
           }"
-          @input="$emit('update', requestData)"
+          @input="$emit('update:data', requestData)"
         />
 
         <PvInput
@@ -137,7 +135,7 @@
               required
             ),
           }"
-          @input="$emit('update', requestData)"
+          @input="$emit('update:data', requestData)"
         />
       </div>
 
@@ -154,7 +152,7 @@
               required
             ),
           }"
-          @input="$emit('update', requestData)"
+          @input="$emit('update:data', requestData)"
         />
 
         <PvInput
@@ -169,27 +167,27 @@
               required
             ),
           }"
-          @input="$emit('update', requestData)"
+          @input="$emit('update:data', requestData)"
         />
       </div>
     </div>
 
     <div>
       <Button
-        v-if="!addCompany"
+        v-if="!isOpen"
         :label="$t('registration.formCompanyData.addCompanyData')"
         variant="secondary"
         shape="outlined"
         icon="domain"
         class="registration-company-data-form__add-button"
-        @click="handleOpener"
+        @click="$emit('update:isOpen', true)"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import ButtonGroup from '~/components/atoms/FormComponents/ButtonGroup/ButtonGroup'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
@@ -209,17 +207,17 @@ export default defineComponent({
     PvLabel,
   },
   props: {
-    proceedWithoutCompany: {
+    isOpen: {
       type: Boolean,
       default: false,
     },
     selectedCountry: {
       type: Object,
-      default: () => ({}),
+      default: () => undefined,
     },
     selectedRegion: {
       type: Object,
-      default: () => ({}),
+      default: () => undefined,
     },
   },
   emits: [
@@ -228,10 +226,10 @@ export default defineComponent({
      * @event change
      * @property {string} value
      */
-    'update',
+    'update:data',
+    'update:isOpen',
   ],
-  setup(props, { emit }) {
-    let { proceedWithoutCompany } = toRefs(props)
+  setup(_, { emit }) {
     const companyDataObject = {
       companyData: {
         companyAlreadyCustomer: false,
@@ -249,18 +247,13 @@ export default defineComponent({
     }
 
     const requestData = ref(companyDataObject)
-    const addCompany = ref(false)
-
-    const handleOpener = () => {
-      addCompany.value = true
-      proceedWithoutCompany.value = false
-    }
 
     const resetForm = () => {
-      requestData.value = companyDataObject
-
-      addCompany.value = false
-      emit('update', requestData)
+      emit('update:isOpen', false)
+      requestData.value = {
+        companyData: { companyAlreadyCustomer: false },
+      }
+      emit('update:data', requestData)
     }
 
     return {
@@ -268,9 +261,7 @@ export default defineComponent({
       required,
       requiredIf,
       requestData,
-      addCompany,
       resetForm,
-      handleOpener,
     }
   },
 })

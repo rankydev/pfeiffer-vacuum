@@ -46,8 +46,18 @@ describe('FormCountrySelection', () => {
         name: 'United States of America',
       }
       select.vm.$emit('input', selectedOption)
-      await select.vm.$nextTick()
+
+      expect(wrapper.emitted().update[0]).toStrictEqual([
+        {
+          country: selectedOption,
+          region: undefined,
+        },
+      ])
+
+      // This simulates that the parent component will pass the changed prop back to the FormCountrySelection
+      await wrapper.setProps({ selectedCountry: selectedOption })
       await wrapper.vm.$nextTick()
+
       const allSelects = wrapper.findAllComponents(PvSelect)
 
       expect(mockLoadRegions).toHaveBeenCalledWith(selectedOption.isocode)

@@ -48,8 +48,10 @@
             >
               Recommended Accessories
             </div>
-
-            <ProductInformation :product="productStore.product" />
+            <DetailTabs
+              :product="productStore.product"
+              :product-code="productStore.code"
+            />
           </div>
         </ContentWrapper>
       </Page>
@@ -71,11 +73,11 @@ import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import Page from '~/components/templates/Page/Page'
-import ProductInformation from '~/components/molecules/ProductInformation/ProductInformation'
+import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page, ProductInformation },
+  components: { Page, DetailTabs },
   setup() {
     const route = useRoute()
     const context = useContext()
