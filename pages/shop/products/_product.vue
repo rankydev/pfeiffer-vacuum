@@ -45,7 +45,7 @@
               :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
               style="height: 350px"
             >
-              Recommended Accessories
+              <AccessoriesCard :product="productStore.product" />
             </div>
             <DetailTabs
               :product="productStore.product"
@@ -74,10 +74,11 @@ import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import Page from '~/components/templates/Page/Page'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
+import AccessoriesCard from '~/components/molecules/AccessoriesCard/AccessoriesCard.vue'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page, DetailTabs },
+  components: { Page, DetailTabs, AccessoriesCard },
   setup() {
     const route = useRoute()
     const context = useContext()
