@@ -14,7 +14,7 @@
         <!-- eslint-disable vue/no-v-html -->
         <span
           v-for="(el, i) in feature.featureValues"
-          :key="genKey(i)"
+          :key="i"
           v-html="sanitizer.block(getFeatureText(feature, el))"
         />
         <!-- eslint-enable vue/no-v-html -->
