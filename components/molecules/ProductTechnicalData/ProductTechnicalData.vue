@@ -6,14 +6,18 @@
       class="technical-data__feature"
     >
       <div class="technical-data__child">
+        <!-- eslint-disable vue/no-v-html -->
         <span v-html="sanitizer.inline(feature.name || '')" />
+        <!-- eslint-enable vue/no-v-html -->
       </div>
       <div class="technical-data__child">
+        <!-- eslint-disable vue/no-v-html -->
         <span
           v-for="(el, i) in feature.featureValues"
           :key="genKey(i)"
           v-html="sanitizer.block(getFeatureText(feature, el))"
         />
+        <!-- eslint-enable vue/no-v-html -->
       </div>
     </li>
   </ul>
