@@ -17,6 +17,7 @@
       <DetailTabContent
         class="tab-navigation__desktop__content"
         :last-tab-selected="lastTabSelected"
+        :product="product"
       />
     </div>
     <div
@@ -36,6 +37,7 @@
       <DetailTabContent
         v-if="lastTabSelected === tab.trigger"
         :last-tab-selected="lastTabSelected"
+        :product="product"
       />
     </div>
   </div>
