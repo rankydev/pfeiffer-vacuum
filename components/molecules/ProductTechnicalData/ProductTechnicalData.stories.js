@@ -14,7 +14,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'The language switcher element to adjust the shop language',
+        component:
+          'The technical data that is visible on the product detail page.',
       },
     },
   },

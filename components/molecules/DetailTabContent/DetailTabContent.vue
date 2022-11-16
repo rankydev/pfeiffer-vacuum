@@ -8,7 +8,6 @@
       v-if="lastTabSelected === 'technicalData'"
       :title="$t('product.technicalData')"
     >
-      <!--TODO: product object needs to be inserted instead empty object in getSortedFeatures-->
       <ProductTechnicalData
         :features="getSortedFeatures(product, 'TechnicalData')"
       />
