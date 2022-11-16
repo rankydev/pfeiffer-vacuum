@@ -43,14 +43,13 @@
         <span class="product-information__select-variant-info">
           {{ $t('product.selectVariantExplained') }}
         </span>
-
         <Button
           :label="$t('product.scrollToVariantSelection')"
           variant="secondary"
           shape="outlined"
           size="normal"
           icon="arrow_upward"
-          href="#variantselection"
+          anchor="#variantselection"
         />
       </div>
     </div>

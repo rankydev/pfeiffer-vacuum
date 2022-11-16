@@ -1,4 +1,49 @@
-export const product = {
+export const noProductInformation = {
+  categories: [
+    {
+      id: 'HIPACE__10',
+      name: 'HiPace® 10',
+    },
+  ],
+  categoryPath: [
+    {
+      id: 'PUMPS',
+      name: 'Pumps',
+    },
+    {
+      id: 'TURBOPUMPS',
+      name: 'Turbopumps',
+    },
+    {
+      id: 'HIPACE__10',
+      name: 'HiPace® 10',
+    },
+  ],
+  code: '334565dc-8d3a-4728-a2d6-e703d355cd6b_sample',
+  configurable: false,
+  description: '',
+  images: [
+    {
+      altText: 'HiPace® 10 with TC 110 and power supply pack OPS 40, DN 25',
+      format: 'product',
+      imageType: 'PRIMARY',
+      url: '/medias/?context=bWFzdGVyfGltYWdlc3w1MDc0MDJ8aW1hZ2UvcG5nfGg3NC9oZmQvODgyNDY4ODU3NDQ5NHxjYmUxYmNmN2Y5OTgwNDBiZWFlNTZiMjhiNzE5MjYyYTZjYTg5NWM0YjhiNGQ3OGQyMjYxOGMyNmU2ZGQzODI3',
+    },
+  ],
+  name: 'HiPace® 10',
+  numberOfVariants: 3,
+  priceRange: {},
+  productType: 'MASTERPRODUCT',
+  purchasable: false,
+  stock: {
+    stockLevel: 0,
+    stockLevelStatus: 'outOfStock',
+  },
+  summary: '',
+  url: '/Pumps/Turbopumps/HiPace%C2%AE-10/HiPace%C2%AE-10/p/334565dc-8d3a-4728-a2d6-e703d355cd6b_sample',
+}
+
+export const withProductInformation = {
   bullets: [
     '5-axis magnetically levitated turbopump with a pumping speed of 790 l/s for N<sub>2</sub>',
     'Integrated digital magnetic bearing controller TM 700',

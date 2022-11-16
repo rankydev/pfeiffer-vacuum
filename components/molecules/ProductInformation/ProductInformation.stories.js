@@ -1,10 +1,13 @@
 import ProductInformation from '~/components/molecules/ProductInformation/ProductInformation.vue'
-import { product } from '~/components/molecules/ProductCard/ProductCard.stories.content'
+import {
+  noProductInformation,
+  withProductInformation,
+} from '~/components/molecules/ProductInformation/ProductInformation.stories.content'
 
 const argTypes = {
   product: {
     control: { type: 'array' },
-    defaultValue: product,
+    defaultValue: noProductInformation,
   },
 }
 
@@ -34,4 +37,12 @@ const Template = (args) => ({
 `,
 })
 
-export const Default = Template.bind({})
+export const Without = Template.bind({})
+Without.args = {
+  product: noProductInformation,
+}
+
+export const With = Template.bind({})
+With.args = {
+  product: withProductInformation,
+}

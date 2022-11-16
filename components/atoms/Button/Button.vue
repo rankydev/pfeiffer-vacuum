@@ -1,7 +1,7 @@
 <template>
   <component
-    :is="href ? 'Link' : 'button'"
-    v-bind="href && { href, target }"
+    :is="href || anchor ? 'Link' : 'button'"
+    v-bind="{ href, anchor, target }"
     class="button"
     :class="[
       `button--${variant}`,
@@ -120,6 +120,13 @@ export default defineComponent({
      * Defines button link if needed
      */
     href: {
+      type: String,
+      default: '',
+    },
+    /**
+     * Defines internal button link if needed
+     */
+    anchor: {
       type: String,
       default: '',
     },
