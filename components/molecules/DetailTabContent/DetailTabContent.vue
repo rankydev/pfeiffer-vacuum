@@ -7,7 +7,12 @@
     <div
       v-if="lastTabSelected === 'technicalData'"
       :title="$t('product.technicalData')"
-    ></div>
+    >
+      <!--TODO: product object needs to be inserted instead empty object in getSortedFeatures-->
+      <ProductTechnicalData
+        :features="getSortedFeatures({}, 'TechnicalData')"
+      />
+    </div>
     <div
       v-if="lastTabSelected === 'dimensions'"
       :title="$t('product.dimensions')"
@@ -35,9 +40,10 @@
 
 <script>
 import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
+import ProductTechnicalData from '~/components/molecules/ProductTechnicalData/ProductTechnicalData.vue'
 
 export default defineComponent({
-  components: {},
+  components: { ProductTechnicalData },
   props: {
     lastTabSelected: {
       type: String,
