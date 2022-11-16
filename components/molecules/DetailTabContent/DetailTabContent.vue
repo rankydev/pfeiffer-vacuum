@@ -10,7 +10,7 @@
     >
       <!--TODO: product object needs to be inserted instead empty object in getSortedFeatures-->
       <ProductTechnicalData
-        :features="getSortedFeatures({}, 'TechnicalData')"
+        :features="getSortedFeatures(product, 'TechnicalData')"
       />
     </div>
     <div
@@ -47,6 +47,10 @@ export default defineComponent({
   props: {
     lastTabSelected: {
       type: String,
+      required: true,
+    },
+    product: {
+      type: Object,
       required: true,
     },
   },
