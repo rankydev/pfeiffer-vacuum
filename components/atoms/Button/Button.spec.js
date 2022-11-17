@@ -239,20 +239,6 @@ describe('Button', () => {
 
         expect(link.exists()).toBe(false)
       })
-      it('should not add href on button', () => {
-        const wrapper = shallowMount(Button)
-
-        const button = wrapper.findComponent('button')
-
-        expect(button.attributes('href')).toBeUndefined()
-      })
-      it('should not add target on button', () => {
-        const wrapper = shallowMount(Button)
-
-        const button = wrapper.findComponent('button')
-
-        expect(button.attributes('target')).toBeUndefined()
-      })
     })
   })
 
