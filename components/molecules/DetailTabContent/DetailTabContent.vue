@@ -9,7 +9,7 @@
       :title="$t('product.technicalData')"
     >
       <ProductTechnicalData
-        :features="getSortedFeatures(currentProduct, 'TechnicalData')"
+        :features="getSortedFeatures(product, 'TechnicalData')"
       />
     </div>
     <div
@@ -52,7 +52,7 @@ export default defineComponent({
   },
   setup(props) {
     const { i18n } = useContext()
-    const currentProduct = useProductStore().product
+    const { product } = useProductStore()
 
     const spareParts = computed(() => {
       return props.references.filter((o) => o.referenceType === 'SPAREPART')
@@ -63,8 +63,8 @@ export default defineComponent({
     })
 
     const hasConsumables = computed(() => {
-      if (currentProduct && currentProduct.productReferences) {
-        return currentProduct.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'CONSUMABLE'
         )
       }
@@ -72,8 +72,8 @@ export default defineComponent({
     })
 
     const hasSpareParts = computed(() => {
-      if (currentProduct && currentProduct.productReferences) {
-        return currentProduct.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'SPAREPART'
         )
       }
@@ -81,15 +81,15 @@ export default defineComponent({
     })
 
     const hasAccessories = computed(() => {
-      if (currentProduct && currentProduct.productReferences) {
-        return currentProduct.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'ACCESSORIES'
         )
       }
       return []
     })
 
-    const getSortedFeatures = (product, code) => {
+    const getSortedFeatures = (currentProduct, code) => {
       if (!product || !product.typedFeatureList) {
         return []
       }
@@ -119,11 +119,9 @@ export default defineComponent({
     const isDisabled = (code) => {
       switch (code) {
         case 'technicalData':
-          return (
-            getSortedFeatures(currentProduct, 'TechnicalData')?.length === 0
-          )
+          return getSortedFeatures(product, 'TechnicalData')?.length === 0
         case 'dimensions':
-          return !currentProduct || !currentProduct.dimensionImage
+          return !product || !product.dimensionImage
         case 'accessories':
           return props.hasAccessories?.length === 0
         case 'consumables':
@@ -146,7 +144,7 @@ export default defineComponent({
       isDisabled,
       getSortedFeatures,
       i18n,
-      currentProduct,
+      product,
     }
   },
 })
