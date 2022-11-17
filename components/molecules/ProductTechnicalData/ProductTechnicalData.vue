@@ -48,14 +48,18 @@ export default {
 
 <style lang="scss" scoped>
 .technical-data {
-  @apply tw-grid tw-grid-cols-12;
+  @apply tw-grid tw-grid-cols-6;
   @apply tw-gap-x-8;
   @apply tw-py-8 tw-px-4;
   @apply tw-list-none;
 
-  &__feature {
+  @screen lg {
     @apply tw-grid tw-grid-cols-12;
-    @apply tw-col-span-12;
+  }
+
+  &__feature {
+    @apply tw-grid tw-grid-cols-6;
+    @apply tw-col-span-6;
     @apply tw-bg-pv-grey-96;
     @apply tw-p-4;
 
@@ -64,6 +68,7 @@ export default {
     }
 
     @screen lg {
+      @apply tw-grid tw-grid-cols-12;
       @apply tw-col-span-6;
 
       // Override color with help of specific selector
@@ -79,12 +84,16 @@ export default {
   }
 
   &__child {
-    @apply tw-col-span-6;
+    @apply tw-col-span-3;
     @apply tw-text-left;
     @apply tw-break-words;
 
     &:first-child {
       @apply tw-mr-4;
+    }
+
+    @screen lg {
+      @apply tw-col-span-6;
     }
 
     span {
