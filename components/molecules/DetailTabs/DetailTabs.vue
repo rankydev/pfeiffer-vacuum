@@ -6,10 +6,14 @@
           v-for="(tab, index) in tabs.filter((o) => o.active)"
           :key="index"
           :label="tab.name"
-          :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
+          :variant="
+            lastTabSelected === tab.trigger || isDisabled(tab.trigger)
+              ? 'secondary'
+              : 'inverted'
+          "
+          :class="{ active: lastTabSelected === tab.trigger }"
           cutaway="bottom"
           class="tab-navigation__desktop__item"
-          :class="{ active: lastTabSelected === tab.trigger }"
           :disabled="isDisabled(tab.trigger)"
           @click="selectTab(tab.trigger)"
         />
@@ -88,6 +92,8 @@ export default defineComponent({
   ],
   setup(props, { emit }) {
     const { i18n } = useContext()
+
+    console.log(props.product)
     let lastTabSelected = ref('productInfo')
     const tabs = ref([
       {
@@ -217,11 +223,12 @@ export default defineComponent({
         case 'dimensions':
           return !props.product || !props.product.dimensionImage
         case 'accessories':
-          return props.hasAccessories?.length === 0
+          console.log(props.hasAccessories, 'ACCESSORIES')
+          return props.hasAccessories?.length === 0 || !props.hasAccessories
         case 'consumables':
-          return props.hasConsumables?.length === 0
+          return props.hasConsumables?.length === 0 || !props.hasConsumables
         case 'spareparts':
-          return props.hasSpareParts?.length === 0
+          return props.hasSpareParts?.length === 0 || !props.hasSpareParts
         case 'service':
           return true
         default:
