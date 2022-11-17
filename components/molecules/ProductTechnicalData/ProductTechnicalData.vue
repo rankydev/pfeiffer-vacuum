@@ -64,7 +64,8 @@ export default {
     }
 
     @screen lg {
-      @apply tw-tw-col-span-6;
+      @apply tw-col-span-6;
+
       // Override color with help of specific selector
       &:nth-child(n) {
         @apply tw-bg-pv-grey-96;
