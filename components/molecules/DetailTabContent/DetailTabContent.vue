@@ -49,6 +49,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    product: {
+      type: Object,
+      required: true,
+    },
   },
   setup(props) {
     const { i18n } = useContext()
