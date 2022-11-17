@@ -55,7 +55,7 @@ export default {
 
   &__feature {
     @apply tw-grid tw-grid-cols-12;
-    @apply tw-col-span-12 lg:tw-col-span-6;
+    @apply tw-col-span-12;
     @apply tw-bg-pv-grey-96;
     @apply tw-p-4;
 
@@ -64,6 +64,7 @@ export default {
     }
 
     @screen lg {
+      @apply tw-tw-col-span-6;
       // Override color with help of specific selector
       &:nth-child(n) {
         @apply tw-bg-pv-grey-96;
