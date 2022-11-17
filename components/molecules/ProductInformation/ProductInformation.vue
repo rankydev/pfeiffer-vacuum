@@ -59,8 +59,8 @@
 <script>
 import { computed } from '@nuxtjs/composition-api'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
-import Button from '~/components/atoms/Button/Button'
 import { useProductStore } from '~/stores/product'
+import Button from '~/components/atoms/Button/Button'
 
 export default {
   name: 'ProductInformation',
