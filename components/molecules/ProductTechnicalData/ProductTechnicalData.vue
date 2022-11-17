@@ -83,6 +83,10 @@ export default {
     @apply tw-text-left;
     @apply tw-break-words;
 
+    &:first-child {
+      @apply tw-mr-4;
+    }
+
     span {
       @apply tw-block;
     }
