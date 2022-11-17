@@ -12,7 +12,7 @@
         >
           <!-- eslint-disable vue/no-v-html -->
           <li
-            v-for="(footnote, index) in (currentProduct || {}).footnotes"
+            v-for="(footnote, index) in currentProduct.footnotes"
             :key="index"
             class="product-information__footnote"
             v-html="sanitizer.block(footnote)"
@@ -30,7 +30,7 @@
         >
           <!-- eslint-disable vue/no-v-html -->
           <li
-            v-for="(bullet, index) in (currentProduct || {}).bullets"
+            v-for="(bullet, index) in currentProduct.bullets"
             :key="index"
             class="product-information__bullet"
             v-html="sanitizer.block(bullet)"
