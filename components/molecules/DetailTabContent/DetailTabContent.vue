@@ -8,9 +8,7 @@
       v-if="lastTabSelected === 'technicalData'"
       :title="$t('product.technicalData')"
     >
-      <ProductTechnicalData
-        :features="getSortedFeatures(product, 'TechnicalData')"
-      />
+      <ProductTechnicalData :features="getSortedFeatures()" />
     </div>
     <div
       v-if="lastTabSelected === 'dimensions'"
@@ -89,7 +87,9 @@ export default defineComponent({
       return []
     })
 
-    const getSortedFeatures = (currentProduct, code) => {
+    const getSortedFeatures = () => {
+      const code = 'TechnicalData'
+
       if (!product || !product.typedFeatureList) {
         return []
       }
@@ -119,7 +119,7 @@ export default defineComponent({
     const isDisabled = (code) => {
       switch (code) {
         case 'technicalData':
-          return getSortedFeatures(product, 'TechnicalData')?.length === 0
+          return getSortedFeatures()?.length === 0
         case 'dimensions':
           return !product || !product.dimensionImage
         case 'accessories':
@@ -144,7 +144,6 @@ export default defineComponent({
       isDisabled,
       getSortedFeatures,
       i18n,
-      product,
     }
   },
 })
