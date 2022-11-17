@@ -140,7 +140,7 @@ export default {
 
   &__bullet {
     @apply tw-pl-4;
-    @apply relative;
+    @apply tw-relative;
 
     &:not(:last-child) {
       @apply tw-mb-2;

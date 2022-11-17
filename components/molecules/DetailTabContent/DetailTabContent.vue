@@ -4,7 +4,7 @@
       v-if="lastTabSelected === 'productInfo'"
       :title="$t('product.productInformation')"
     >
-      <ProductInformation :product="product" />
+      <ProductInformation :product="currentProduct" />
     </div>
     <div
       v-if="lastTabSelected === 'technicalData'"
@@ -38,6 +38,7 @@
 <script>
 import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
 import ProductInformation from '~/components/molecules/ProductInformation/ProductInformation'
+import { useProductStore } from '~/stores/product'
 
 export default defineComponent({
   components: {
@@ -48,13 +49,10 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    product: {
-      type: Object,
-      required: true,
-    },
   },
   setup(props) {
     const { i18n } = useContext()
+    const currentProduct = useProductStore().product
 
     const spareParts = computed(() => {
       return props.references.filter((o) => o.referenceType === 'SPAREPART')
@@ -146,6 +144,7 @@ export default defineComponent({
       isDisabled,
       getSortedFeatures,
       i18n,
+      currentProduct,
     }
   },
 })
