@@ -49,10 +49,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    product: {
-      type: Object,
-      required: true,
-    },
   },
   setup(props) {
     const { i18n } = useContext()
@@ -67,8 +63,8 @@ export default defineComponent({
     })
 
     const hasConsumables = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (currentProduct && currentProduct.productReferences) {
+        return currentProduct.productReferences.filter(
           (o) => o.referenceType === 'CONSUMABLE'
         )
       }
@@ -76,8 +72,8 @@ export default defineComponent({
     })
 
     const hasSpareParts = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (currentProduct && currentProduct.productReferences) {
+        return currentProduct.productReferences.filter(
           (o) => o.referenceType === 'SPAREPART'
         )
       }
@@ -85,8 +81,8 @@ export default defineComponent({
     })
 
     const hasAccessories = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (currentProduct && currentProduct.productReferences) {
+        return currentProduct.productReferences.filter(
           (o) => o.referenceType === 'ACCESSORIES'
         )
       }
@@ -123,9 +119,11 @@ export default defineComponent({
     const isDisabled = (code) => {
       switch (code) {
         case 'technicalData':
-          return getSortedFeatures(props.product, 'TechnicalData')?.length === 0
+          return (
+            getSortedFeatures(currentProduct, 'TechnicalData')?.length === 0
+          )
         case 'dimensions':
-          return !props.product || !props.product.dimensionImage
+          return !currentProduct || !currentProduct.dimensionImage
         case 'accessories':
           return props.hasAccessories?.length === 0
         case 'consumables':
