@@ -12,7 +12,7 @@
         >
           <!-- eslint-disable vue/no-v-html -->
           <li
-            v-for="(footnote, index) in (product || {}).footnotes"
+            v-for="(footnote, index) in (currentProduct || {}).footnotes"
             :key="index"
             class="product-information__footnote"
             v-html="sanitizer.block(footnote)"
@@ -30,7 +30,7 @@
         >
           <!-- eslint-disable vue/no-v-html -->
           <li
-            v-for="(bullet, index) in (product || {}).bullets"
+            v-for="(bullet, index) in (currentProduct || {}).bullets"
             :key="index"
             class="product-information__bullet"
             v-html="sanitizer.block(bullet)"
@@ -60,28 +60,25 @@
 import { computed } from '@nuxtjs/composition-api'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import Button from '~/components/atoms/Button/Button'
+import { useProductStore } from '~/stores/product'
 
 export default {
   name: 'ProductInformation',
   components: {
     Button,
   },
-  props: {
-    product: {
-      type: Object,
-      required: true,
-    },
-  },
-  setup(props) {
+  setup() {
     const sanitizer = useSanitizer()
+    const currentProduct = useProductStore().product
+
     const hasFootnotes = computed(
-      () => props.product?.footnotes?.length > 0 || false
+      () => currentProduct?.footnotes?.length > 0 || false
     )
     const isMaster = computed(
-      () => props.product?.productType === 'MASTERPRODUCT'
+      () => currentProduct?.productType === 'MASTERPRODUCT'
     )
 
-    return { sanitizer, hasFootnotes, isMaster }
+    return { sanitizer, hasFootnotes, isMaster, currentProduct }
   },
 }
 </script>
