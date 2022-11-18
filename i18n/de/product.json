@@ -105,7 +105,6 @@
     "passwordCapitalLetter": "Mindestens ein Großbuchstabe",
     "passwordDigit": "Mindestens eine Ziffer",
     "passwordTooLong": "Ihr Passwort ist zu lang (max. 255 Charaktere)",
-    // TODO: check for unused translation when registration is finalized
     "createAccountBenefitsOld": {
       "title":
         "Erstellen Sie jetzt Ihr eigenes Konto, um mehr Funktionen zu nutzen. Sobald Sie sich registriert haben, können Sie:",

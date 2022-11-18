@@ -109,7 +109,6 @@
       "Contains at least 1 capital letter and 1 lower case",
     "passwordDigit": "Contains at least 1 digit",
     "passwordTooLong": "Your password may be too long (max. 255 characters)",
-    // TODO": check for unused translation when registration is finalized
     "createAccountBenefitsOld": {
       "title":
         "Create your own account now to use more functionalities. Once you registered you will be able to:",
