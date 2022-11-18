@@ -8,8 +8,11 @@
     </div>
     <div
       v-if="lastTabSelected === 'technicalData'"
+      class="tab-content__technicalData"
       :title="$t('product.technicalData')"
-    ></div>
+    >
+      <ProductTechnicalData :features="getSortedFeatures()" />
+    </div>
     <div
       v-if="lastTabSelected === 'dimensions'"
       :title="$t('product.dimensions')"
@@ -38,11 +41,11 @@
 <script>
 import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
 import ProductInformation from '~/components/molecules/ProductInformation/ProductInformation'
+import ProductTechnicalData from '~/components/molecules/ProductTechnicalData/ProductTechnicalData.vue'
+import { useProductStore } from '~/stores/product'
 
 export default defineComponent({
-  components: {
-    ProductInformation,
-  },
+  components: { ProductTechnicalData, ProductInformation },
   props: {
     lastTabSelected: {
       type: String,
@@ -51,6 +54,7 @@ export default defineComponent({
   },
   setup(props) {
     const { i18n } = useContext()
+    const { product } = useProductStore()
 
     const spareParts = computed(() => {
       return props.references.filter((o) => o.referenceType === 'SPAREPART')
@@ -61,8 +65,8 @@ export default defineComponent({
     })
 
     const hasConsumables = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'CONSUMABLE'
         )
       }
@@ -70,8 +74,8 @@ export default defineComponent({
     })
 
     const hasSpareParts = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'SPAREPART'
         )
       }
@@ -79,15 +83,17 @@ export default defineComponent({
     })
 
     const hasAccessories = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'ACCESSORIES'
         )
       }
       return []
     })
 
-    const getSortedFeatures = (product, code) => {
+    const getSortedFeatures = () => {
+      const code = 'TechnicalData'
+
       if (!product || !product.typedFeatureList) {
         return []
       }
@@ -117,9 +123,9 @@ export default defineComponent({
     const isDisabled = (code) => {
       switch (code) {
         case 'technicalData':
-          return getSortedFeatures(props.product, 'TechnicalData')?.length === 0
+          return getSortedFeatures()?.length === 0
         case 'dimensions':
-          return !props.product || !props.product.dimensionImage
+          return !product || !product.dimensionImage
         case 'accessories':
           return props.hasAccessories?.length === 0
         case 'consumables':
@@ -147,4 +153,10 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.tab-content {
+  &__technicalData {
+    @apply tw-w-full;
+  }
+}
+</style>
