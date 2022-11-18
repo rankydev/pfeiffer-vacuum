@@ -6,6 +6,7 @@
     ></div>
     <div
       v-if="lastTabSelected === 'technicalData'"
+      class="tab-content__technicalData"
       :title="$t('product.technicalData')"
     >
       <ProductTechnicalData :features="getSortedFeatures()" />
@@ -149,4 +150,10 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.tab-content {
+  &__technicalData {
+    @apply tw-w-full;
+  }
+}
+</style>
