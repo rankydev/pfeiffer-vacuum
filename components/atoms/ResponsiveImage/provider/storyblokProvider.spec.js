@@ -32,14 +32,14 @@ describe('StoryblokProvider', () => {
         expect(image.alt.value).toBe(responsiveImage.image.alt)
         expect(image.title.value).toBe(responsiveImage.image.title)
         expect(image.modifiers.value).toStrictEqual(modifiers)
-        screenSizes.forEach(([key, width], idx) => {
+        screenSizes.reverse().forEach(([key, width], idx) => {
           expect(image.webpSources.value[idx]).toStrictEqual({
             key: key,
             media: `(min-width: ${width}px)`,
             srcset: `${responsiveImage.image.originalFilename} 1x, ${responsiveImage.image.originalFilename} 2x`,
           })
         })
-        screenSizes.forEach(([key, width], idx) => {
+        screenSizes.reverse().forEach(([key, width], idx) => {
           expect(image.pngSources.value[idx]).toStrictEqual({
             key: key,
             media: `(min-width: ${width}px)`,
@@ -67,14 +67,14 @@ describe('StoryblokProvider', () => {
       expect(image.alt.value).toBe('')
       expect(image.title.value).toBe('')
       expect(image.modifiers.value).toStrictEqual(modifiersForEmptyImageObject)
-      screenSizes.forEach(([key, width], idx) => {
+      screenSizes.reverse().forEach(([key, width], idx) => {
         expect(image.webpSources.value[idx]).toStrictEqual({
           key: key,
           media: `(min-width: ${width}px)`,
           srcset: ' 1x,  2x',
         })
       })
-      screenSizes.forEach(([key, width], idx) => {
+      screenSizes.reverse().forEach(([key, width], idx) => {
         expect(image.pngSources.value[idx]).toStrictEqual({
           key: key,
           media: `(min-width: ${width}px)`,
