@@ -1,7 +1,7 @@
 <template>
   <component
     :is="href || anchor ? 'Link' : 'button'"
-    v-bind="{ href, anchor, target }"
+    v-bind="(href || anchor) && { href, anchor, target }"
     class="button"
     :class="[
       `button--${variant}`,
