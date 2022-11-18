@@ -48,27 +48,36 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-flex-nowrap;
     @apply tw-overflow-x-hidden;
-
-    @screen lg {
-      @apply tw-justify-center;
-    }
+    @apply tw-justify-center;
   }
 
   &__image-wrapper {
     @apply tw-flex;
     @apply tw-items-center;
     @apply tw-justify-center;
-    @apply tw-w-20;
-    @apply tw-h-20;
-    @apply tw-border-pv-grey-80;
-    @apply tw-border-2;
-    @apply tw-border-solid;
+    @apply tw-w-2;
+    @apply tw-h-2;
     @apply tw-p-2;
     @apply tw-mr-2;
-    @apply tw-rounded-lg;
+    @apply tw-bg-pv-grey-80;
+
+    @screen md {
+      @apply tw-rounded-lg;
+      @apply tw-w-20;
+      @apply tw-h-20;
+      @apply tw-border-pv-grey-80;
+      @apply tw-border-2;
+      @apply tw-border-solid;
+      @apply tw-bg-pv-transparent;
+
+      &--active {
+        @apply tw-border-pv-red;
+        background-color: transparent !important;
+      }
+    }
 
     &--active {
-      @apply tw-border-pv-red;
+      @apply tw-bg-pv-red;
     }
 
     &:hover {
@@ -77,8 +86,12 @@ export default defineComponent({
   }
 
   &__image {
-    @apply tw-max-h-12;
-    max-width: 48px;
+    @apply tw-invisible;
+    @screen md {
+      @apply tw-visible;
+      @apply tw-max-h-12;
+      max-width: 48px;
+    }
   }
 }
 </style>
