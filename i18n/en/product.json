@@ -59,5 +59,13 @@
     "title": "Recommended Accessories for "
   },
   "showProductDetails": "Show product details",
-  "similarImage": "Image similar"
+  "similarImage": "Image similar",
+  "loginToSeePrices": {
+    "part1": "Bitte",
+    "part2": "anmelden",
+    "part3": "um Preise zu sehen",
+    "lead": "Bitte fügen Sie Unternehmensdaten hinzu, um Preise zu sehen",
+    "open": "Bitte warten Sie auf die Freischaltung, um die Preise zu sehen",
+    "rejected": "Sie dürfen keine Preise sehen"
+  }
 }

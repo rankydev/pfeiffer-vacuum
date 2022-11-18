@@ -1,17 +1,15 @@
 <template>
   <GenericCard :has-link="false" image-size="contain" :href="url">
     <template #image>
-      <!-- <img :src="imageUrl(product.images)" alt="" /> -->
       <ResponsiveImage
-        :image="image || {}"
+        :image="accessoryImage"
         aspect-ratio="16:9"
         :provider="provider"
       />
     </template>
 
     <template #heading>
-      <!-- <span class="accessories-card__product-name" v-html="productName" /> -->
-      <span v-html="sanitizer.clear(productName) || ''" />
+      <span class="accessories-card__product-name" v-html="productName" />
       <p class="accessories-card__product-number">
         {{ product.orderNumber }}
       </p>
@@ -54,13 +52,13 @@
         </template>
         <template v-else-if="!loggedIn">
           <p class="accessories-card__login-link">
-            {{ $t('login.loginToSeePrices.part1') }}
+            {{ $t('product.loginToSeePrices.part1') }}
             <span
               class="login-modal-link"
               @click="login()"
-              v-html="sanitizer.clear($t('login.loginToSeePrices.part2'))"
+              v-html="sanitizer.clear($t('product.loginToSeePrices.part2'))"
             ></span>
-            {{ $t('login.loginToSeePrices.part3') }}
+            {{ $t('product.loginToSeePrices.part3') }}
           </p>
         </template>
       </div>
@@ -76,16 +74,14 @@
           required
         />
         <div class="accessories-card__add-to-cart-buttons">
-          <!-- <t-button variant="cta" class="tw-mr-2" @click.prevent="addToCart()"> -->
-          <Button icon="shopping_cart" />
-          <!-- <Icon icon="shopping_cart" /> -->
-          <!-- </t-button> -->
-          <!-- <t-button -->
-          <!-- v-if="hasAddToListButton" variant="secondary"
-          @click.prevent="addToList()" > -->
-          <Button icon="assignment" />
-          <!-- <Icon icon="assignment" /> -->
-          <!-- </t-button> -->
+          <Button icon="shopping_cart" @click.prevent="addToCart()" />
+          <Button
+            v-if="hasAddToListButton"
+            variant="secondary"
+            shape="outlined"
+            icon="assignment"
+            @click.prevent="addToList()"
+          />
         </div>
       </div>
 
@@ -118,8 +114,10 @@ import {
   useContext,
   ref,
   computed,
+  toRefs,
 } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
+import { useOciStore } from '~/stores/oci'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import InformationModal from '~/components/molecules/InformationModal/InformationModal'
@@ -150,12 +148,14 @@ export default defineComponent({
     const { i18n } = useContext()
     const context = useContext()
     const userStore = useUserStore()
-    const image = computed(() => props.product.images?.[0])
+    const ociStore = useOciStore()
+    const sanitizer = useSanitizer()
+    const { product } = toRefs(props)
+    const image = computed(() => product.value.images?.[0])
 
     const quantity = ref(1)
     const infoModalVisible = ref(false)
 
-    // const image = computed(() => props.product.images?.[0])
     // const description = computed(() => (props.product.bullets || []).join(', '))
     // const name = computed(() => props.product.name)
     // const categoryName = computed(() => props.product.categories?.[0]?.name)
@@ -166,65 +166,60 @@ export default defineComponent({
     //     params: { product: props.product?.code },
     //   })
     // )
+
     const hasAddToListButton = computed(() => {
-      return this.loggedIn && !this.isOciUser
+      return true
+      //return userStore.isLoggedIn && !ociStore.isOciUser
     })
     const hasPrice = computed(() => {
-      return !!props.product.price
+      return !!product.value.price
     })
     const isPriceVisible = computed(() => {
-      return props.product?.price?.value && this.isApprovedUser
+      return product.value?.price?.value && userStore.isApprovedUser
     })
     const hasCustomerPrice = computed(() => {
-      return !!props.product.price?.customerPrice
+      return !!product.value.price?.customerPrice
     })
     const productPrice = computed(() => {
-      if (!props.product.price?.value) {
-        return this.$t('product.priceOnRequest')
+      if (!product.value.price?.value) {
+        return i18n.t('product.priceOnRequest')
       }
-      return props.product.price?.formattedValue || ''
+      return product.value.price?.formattedValue || ''
     })
     const userStatusType = computed(() => {
       return (
-        (this.isLeadUser && 'lead') ||
-        (this.isOpenUser && 'open') ||
-        (this.isRejectedUser && 'rejected')
+        (userStore.isLeadUser && 'lead') ||
+        (userStore.isOpenUser && 'open') ||
+        (userStore.isRejectedUser && 'rejected')
       )
     })
 
     const productName = computed(() => {
-      return sanitizer.inline(props.product.name || props.product.id)
+      console.log('xxx Prod name', product.value.name)
+      return sanitizer.inline(product.value.name || product.value.id)
     })
 
     const addToCart = () => {
-      const params = { code: props.product.code, quantity: this.quantity }
+      const params = { code: product.value.code, quantity: quantity.value }
       this.$store.dispatch('addToCart', params)
     }
     const addToList = () => {
-      this.$store.commit('setShoppingListLastProduct', props.product)
-      this.$store.commit('setShoppingListLastProductQuantity', this.quantity)
+      this.$store.commit('setShoppingListLastProduct', product.value)
+      this.$store.commit('setShoppingListLastProductQuantity', quantity.value)
       this.$store.dispatch('addToList')
     }
     const login = async () => {
-      await this.$authApi.login()
+      await userStore.login()
     }
-    const imageUrl = (images) => {
-      if (images) {
-        const isPrimaryImage = (img) => img.imageType === 'PRIMARY'
-        const isProductImage = (img) => img.format === 'product'
-        const findImage = (img) => isPrimaryImage(img) && isProductImage(img)
 
-        const { url } = images.find(findImage) || {}
-
-        if (url) {
-          return this.getShopMedia(url)
-        }
+    const accessoryImage = computed(() => {
+      if (product.value.images) {
+        const { url } =
+          product.value.images.find(
+            (img) => img.imageType === 'PRIMARY' && img.format === 'product'
+          ) || {}
       }
-
-      return this.getAssetImage(this.$t('product.placeholderImage'))
-    }
-
-    const sanitizer = useSanitizer()
+    })
 
     return {
       context,
@@ -241,22 +236,11 @@ export default defineComponent({
       addToCart,
       addToList,
       login,
-      imageUrl,
+      accessoryImage,
       sanitizer,
       i18n,
     }
   },
-  // computed: {
-  //   ...mapGetters([
-  //     'currentUser',
-  //     'loggedIn',
-  //     'isApprovedUser',
-  //     'isRejectedUser',
-  //     'isOpenUser',
-  //     'isLeadUser',
-  //     'isOciUser',
-  //   ]),
-  // },
 })
 </script>
 <style lang="scss">
@@ -322,6 +306,10 @@ export default defineComponent({
     &-buttons {
       @apply tw-flex;
       @apply tw-justify-end;
+
+      button:first-child {
+        @apply tw-mr-2;
+      }
     }
   }
 }

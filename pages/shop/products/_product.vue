@@ -43,7 +43,6 @@
             <div
               class="tw-bg-pv-grey-88 tw-w-full tw-rounded-lg"
               :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-              style="height: 350px"
             >
               <AccessoriesCard :product="productStore.product" />
             </div>
