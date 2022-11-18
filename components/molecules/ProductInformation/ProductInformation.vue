@@ -12,7 +12,7 @@
         >
           <!-- eslint-disable vue/no-v-html -->
           <li
-            v-for="(footnote, index) in currentProduct.footnotes"
+            v-for="(footnote, index) in product.footnotes"
             :key="index"
             class="product-information__footnote"
             v-html="sanitizer.block(footnote)"
@@ -30,7 +30,7 @@
         >
           <!-- eslint-disable vue/no-v-html -->
           <li
-            v-for="(bullet, index) in currentProduct.bullets"
+            v-for="(bullet, index) in product.bullets"
             :key="index"
             class="product-information__bullet"
             v-html="sanitizer.block(bullet)"
@@ -69,16 +69,12 @@ export default {
   },
   setup() {
     const sanitizer = useSanitizer()
-    const currentProduct = useProductStore().product
+    const { product } = useProductStore()
 
-    const hasFootnotes = computed(
-      () => currentProduct?.footnotes?.length > 0 || false
-    )
-    const isMaster = computed(
-      () => currentProduct?.productType === 'MASTERPRODUCT'
-    )
+    const hasFootnotes = computed(() => product?.footnotes?.length > 0 || false)
+    const isMaster = computed(() => product?.productType === 'MASTERPRODUCT')
 
-    return { sanitizer, hasFootnotes, isMaster, currentProduct }
+    return { sanitizer, hasFootnotes, isMaster, product }
   },
 }
 </script>
