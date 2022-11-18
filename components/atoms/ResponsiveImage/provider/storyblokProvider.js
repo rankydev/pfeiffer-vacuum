@@ -47,29 +47,33 @@ export function useStoryblokProvider({ $img }) {
     })
 
     const webpSources = computed(() => {
-      return imageResolutions.value.map(({ key, media, width, height }) => {
-        const mods = { ...modifiers.value, height, width, format: 'webp' }
-        const modsRetina = { ...mods, height: height * 2, width: width * 2 }
-        const options = { provider: props.provider }
+      return imageResolutions.value
+        .reverse()
+        .map(({ key, media, width, height }) => {
+          const mods = { ...modifiers.value, height, width, format: 'webp' }
+          const modsRetina = { ...mods, height: height * 2, width: width * 2 }
+          const options = { provider: props.provider }
 
-        const img1x = $img(src.value, mods, options)
-        const img2x = $img(src.value, modsRetina, options)
+          const img1x = $img(src.value, mods, options)
+          const img2x = $img(src.value, modsRetina, options)
 
-        return { key, media, srcset: `${img1x} 1x, ${img2x} 2x` }
-      })
+          return { key, media, srcset: `${img1x} 1x, ${img2x} 2x` }
+        })
     })
 
     const pngSources = computed(() => {
-      return imageResolutions.value.map(({ key, media, width, height }) => {
-        const mods = { ...modifiers.value, height, width, format: 'png' }
-        const modsRetina = { ...mods, height: height * 2, width: width * 2 }
-        const options = { provider: props.provider }
+      return imageResolutions.value
+        .reverse()
+        .map(({ key, media, width, height }) => {
+          const mods = { ...modifiers.value, height, width, format: 'png' }
+          const modsRetina = { ...mods, height: height * 2, width: width * 2 }
+          const options = { provider: props.provider }
 
-        const img1x = $img(src.value, mods, options)
-        const img2x = $img(src.value, modsRetina, options)
+          const img1x = $img(src.value, mods, options)
+          const img2x = $img(src.value, modsRetina, options)
 
-        return { key, media, srcset: `${img1x} 1x, ${img2x} 2x` }
-      })
+          return { key, media, srcset: `${img1x} 1x, ${img2x} 2x` }
+        })
     })
 
     return {
