@@ -26,11 +26,7 @@
 
             <div class="tw--my-4" style="width: 100%; height: 0px">&nbsp;</div>
 
-            <div
-              class="tw-min-w-full md:tw-min-w-0 tw-flex-1"
-              :class="'tw-flex tw-items-center tw-justify-center tw-text-5xl tw-text-center'"
-              style="aspect-ratio: 100 / 73"
-            >
+            <div class="product-page__image-gallery">
               <ImageGallery
                 :images="sortedImages(productStore.product.images)"
               />
@@ -165,3 +161,16 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss">
+.product-page {
+  &__image-gallery {
+    @apply tw-min-w-full;
+    @apply tw-flex-1;
+    @apply tw-flex;
+
+    @screen md {
+      @apply tw-min-w-0;
+    }
+  }
+}
+</style>

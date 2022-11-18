@@ -4,7 +4,7 @@
     :fill-viewport="true"
     @closeModal="$emit('input', $event)"
   >
-    <div class="image-lightbox tw-flex tw-justify-between tw-flex-col tw-p-6">
+    <div class="image-lightbox">
       <div class="image-lightbox__selected-image-wrapper">
         <Button
           icon="arrow_back_ios_new"
@@ -82,11 +82,15 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .image-lightbox {
   @apply tw-w-full;
   @apply tw-h-full;
   @apply tw-bg-pv-white;
+  @apply tw-flex;
+  @apply tw-flex-col;
+  @apply tw-justify-between;
+  @apply tw-p-6;
 
   &__selected-image-wrapper {
     @apply tw-block;
@@ -98,10 +102,13 @@ export default defineComponent({
 
     @screen md {
       padding: 32px 160px;
+      @apply tw-py-8;
+      @apply tw-px-40;
     }
 
     @screen xl {
-      padding: 32px 350px;
+      @apply tw-py-8;
+      @apply tw-px-80;
     }
   }
 
