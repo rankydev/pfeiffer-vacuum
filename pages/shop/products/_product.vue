@@ -27,11 +27,13 @@
             <div class="tw--my-4" style="width: 100%; height: 0px">&nbsp;</div>
 
             <div
-              class="tw-min-w-full md:tw-min-w-0 tw-bg-pv-grey-88 tw-flex-1 tw-rounded-lg"
-              :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
+              class="tw-min-w-full md:tw-min-w-0 tw-flex-1"
+              :class="'tw-flex tw-items-center tw-justify-center tw-text-5xl tw-text-center'"
               style="aspect-ratio: 100 / 73"
             >
-              Image
+              <ImageSlider
+                :images="sortedImages(productStore.product.images)"
+              />
             </div>
             <div
               class="tw-bg-pv-grey-88 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
@@ -74,10 +76,12 @@ import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import Page from '~/components/templates/Page/Page'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
+import ImageSlider from '~/components/organisms/ImageSlider/ImageSlider'
+import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page, DetailTabs },
+  components: { Page, DetailTabs, ImageSlider },
   setup() {
     const route = useRoute()
     const context = useContext()
@@ -108,12 +112,55 @@ export default defineComponent({
     const path = context.app.localePath('shop-products-product')
     const { slug, fallbackSlug, language } = buildSlugs(path)
 
+    const { getAssetImage, getShopMedia } = useImageHelper()
+
+    const sortedImages = (imgArr) => {
+      let images = []
+
+      if (imgArr) {
+        const primArr = imgArr.filter((i) => i.imageType === 'PRIMARY')
+        const gallArr = imgArr.filter((i) => i.imageType === 'GALLERY')
+
+        gallArr.sort(function (a, b) {
+          if (a.galleryIndex < b.galleryIndex) {
+            return -1
+          }
+          if (a.galleryIndex > b.galleryIndex) {
+            return 1
+          }
+          return 0
+        })
+
+        images = primArr.concat(gallArr)
+      }
+
+      const result = []
+
+      if (images && images.length > 0) {
+        for (const image of images) {
+          result.push({
+            type: image.imageType,
+            url: getShopMedia(image.url),
+            altText: image.altText,
+          })
+        }
+      } else {
+        result.push({
+          url: getAssetImage(context.app.i18n.t('product.placeholderImage')),
+        })
+      }
+
+      return result
+    }
+
     return {
       slug,
       fallbackSlug,
       language,
 
       productStore,
+
+      sortedImages,
     }
   },
 })

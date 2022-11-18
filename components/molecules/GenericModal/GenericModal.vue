@@ -6,7 +6,10 @@
           class="modal__box closeModal"
           :class="{ 'modal__box--fill': fillViewport }"
         >
-          <div class="modal__box-wrapper">
+          <div
+            class="modal__box-wrapper"
+            :class="{ 'modal__box-wrapper--fill': fillViewport }"
+          >
             <slot @closeModal="$emit('closeModal')" />
             <Icon
               class="modal__icon"
@@ -73,7 +76,7 @@ export default defineComponent({
 
 <style lang="scss">
 .modal {
-  z-index: 100;
+  z-index: 110;
   @apply tw-top-0;
   @apply tw-right-0;
   @apply tw-h-screen;
@@ -97,6 +100,7 @@ export default defineComponent({
 
     &--fill {
       @apply tw-w-full;
+      @apply tw-h-full;
     }
   }
 
@@ -118,6 +122,11 @@ export default defineComponent({
 
     @screen lg {
       @apply tw-p-8;
+    }
+
+    &--fill {
+      @apply tw-w-full;
+      @apply tw-h-full;
     }
   }
 

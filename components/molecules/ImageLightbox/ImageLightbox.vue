@@ -1,0 +1,139 @@
+<template>
+  <GenericModal
+    :is-open="value"
+    :fill-viewport="true"
+    @closeModal="$emit('input', $event)"
+  >
+    <div class="image-lightbox tw-flex tw-justify-between tw-flex-col tw-p-6">
+      <div class="image-lightbox__selected-image-wrapper">
+        <Icon
+          icon="arrow_back"
+          class="image-lightbox__arrow image-lightbox__arrow--left"
+          @click.native="prevImage"
+        />
+        <img
+          v-touch:swipe.left="nextImage"
+          v-touch:swipe.right="prevImage"
+          class="image-lightbox__selected-image"
+          :src="images[currentImage].url"
+          :alt="images[currentImage].altText || 'Lightbox Image'"
+        />
+        <Icon
+          icon="arrow_forward"
+          class="image-lightbox__arrow image-lightbox__arrow--right"
+          @click.native="nextImage"
+        />
+      </div>
+      <ImageThumbnails
+        :images="images"
+        :current-image="currentImage"
+        @update="$emit('setCurr', $event)"
+      />
+    </div>
+  </GenericModal>
+</template>
+
+<script>
+import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import GenericModal from '~/components/molecules/GenericModal/GenericModal'
+import ImageThumbnails from '~/components/molecules/ImageThumbnails/ImageThumbnails'
+
+export default defineComponent({
+  name: 'ImageLightbox',
+  components: {
+    GenericModal,
+    ImageThumbnails,
+  },
+  props: {
+    value: {
+      type: Boolean,
+      default: false,
+    },
+    images: {
+      type: Array,
+      required: true,
+    },
+    currentImage: {
+      type: Number,
+      default: 0,
+    },
+  },
+  emits: ['input', 'increaseCurr', 'decreaseCurr', 'setCurr'],
+  setup(props, { emit }) {
+    const { currentImage, images } = toRefs(props)
+
+    const nextImage = () => {
+      if (currentImage.value < images.value.length - 1) {
+        emit('increaseCurr')
+      }
+    }
+    const prevImage = () => {
+      if (currentImage.value > 0) {
+        emit('decreaseCurr')
+      }
+    }
+
+    return { nextImage, prevImage }
+  },
+})
+</script>
+
+<style lang="scss" scoped>
+.image-lightbox {
+  @apply tw-w-full;
+  @apply tw-h-full;
+  @apply tw-bg-pv-white;
+
+  &__selected-image-wrapper {
+    @apply tw-block;
+    @apply tw-relative;
+    @apply tw-py-8;
+    @apply tw-w-full;
+    @apply tw-h-full;
+    @apply tw-overflow-hidden;
+
+    @screen md {
+      padding: 32px 160px;
+    }
+
+    @screen xl {
+      padding: 32px 350px;
+    }
+  }
+
+  &__selected-image {
+    @apply tw-w-full;
+    @apply tw-h-full;
+    @apply tw-object-contain;
+  }
+
+  &__arrow {
+    @apply tw-hidden;
+    @apply tw-absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10000;
+    @apply tw-text-5xl;
+
+    @screen md {
+      @apply tw-block;
+    }
+
+    &::selection {
+      @apply tw-bg-pv-transparent;
+    }
+
+    &:hover {
+      @apply tw-cursor-pointer;
+    }
+
+    &--left {
+      @apply tw-left-6;
+    }
+
+    &--right {
+      @apply tw-right-6;
+    }
+  }
+}
+</style>
