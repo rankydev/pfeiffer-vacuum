@@ -1,4 +1,4 @@
-import ImageSlider from './ImageSlider.vue'
+import ImageGallery from './ImageGallery.vue'
 
 const argTypes = {
   images: {
@@ -25,11 +25,11 @@ const argTypes = {
 
 export default {
   title: 'Technical Components/Image Slider',
-  component: ImageSlider,
+  component: ImageGallery,
   parameters: {
     docs: {
       description: {
-        component: 'ImageSlider component used on the product detail page.',
+        component: 'ImageGallery component used on the product detail page.',
       },
     },
   },
@@ -37,14 +37,14 @@ export default {
 }
 
 const Template = (args, { argTypes: types }) => ({
-  components: { ImageSlider },
+  components: { ImageGallery },
   props: Object.keys(types),
   setup() {
     return { args }
   },
   template: `
     <div class="documentation-preview" style="max-width: 750px">
-      <ImageSlider v-bind="args" />
+      <ImageGallery v-bind="args" />
     </div>
   `,
 })

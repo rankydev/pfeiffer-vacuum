@@ -58,16 +58,21 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-items-center;
     @apply tw-justify-center;
-    @apply tw-w-16;
-    @apply tw-h-16;
+    @apply tw-w-20;
+    @apply tw-h-20;
     @apply tw-border-pv-grey-80;
     @apply tw-border-2;
     @apply tw-border-solid;
     @apply tw-p-2;
     @apply tw-mr-2;
+    @apply tw-rounded-lg;
 
     &--active {
       @apply tw-border-pv-red;
+    }
+
+    &:hover {
+      @apply tw-border-pv-red-lighter;
     }
   }
 

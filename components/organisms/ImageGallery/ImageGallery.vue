@@ -1,6 +1,6 @@
 <template>
-  <div class="image-slider">
-    <div class="image-slider__container">
+  <div class="image-gallery">
+    <div class="image-gallery__container">
       <client-only>
         <zoom-on-hover
           :img-normal="(images[currentImage] || {}).url"
@@ -8,16 +8,22 @@
           :disabled="!isDesktop"
           @click.native="showLightBox = true"
         />
-        <span v-if="showSimilarLabel" class="image-slider__similar-label">{{
-          $t('product.similarImage')
-        }}</span>
-        <Icon
-          icon="ic_zoom_in"
-          class="image-slider__zoom-indicator"
+        <Button
+          icon="zoom_out_map"
+          variant="secondary"
+          shape="outlined"
+          class="image-gallery__zoom-indicator"
           @click.native="showLightBox = true"
         />
       </client-only>
     </div>
+    <span
+      class="image-gallery__similar-label"
+      :class="{
+        'image-gallery__similar-label--hidden': !showSimilarLabel,
+      }"
+      >{{ $t('product.similarImage') }}</span
+    >
     <ImageThumbnails
       :images="images"
       :current-image="currentImage"
@@ -46,7 +52,7 @@ import ImageLightbox from '~/components/molecules/ImageLightbox/ImageLightbox'
 import ImageThumbnails from '~/components/molecules/ImageThumbnails/ImageThumbnails'
 
 export default defineComponent({
-  name: 'ImageSlider',
+  name: 'ImageGallery',
   components: {
     ImageLightbox,
     ImageThumbnails,
@@ -77,9 +83,11 @@ export default defineComponent({
 <style lang="scss">
 .zoom-on-hover {
   @apply tw-relative;
-  height: 380px !important;
-  width: 450px !important;
+  height: 100% !important;
+  width: 100% !important;
   outline: none !important;
+  @apply tw-rounded-lg;
+  @apply tw-p-4;
 
   &:hover {
     @apply tw-cursor-zoom-in;
@@ -92,7 +100,9 @@ export default defineComponent({
   }
 }
 
-.image-slider {
+.image-gallery {
+  @apply tw-flex;
+  @apply tw-flex-col;
   @apply tw-w-full;
   @apply tw-my-8;
 
@@ -101,8 +111,10 @@ export default defineComponent({
     @apply tw-justify-center;
     @apply tw-items-center;
     @apply tw-relative;
-    @apply tw-mb-10;
+    @apply tw-mb-2;
     height: 400px;
+    @apply tw-rounded-lg;
+    @apply tw-bg-pv-grey-96;
   }
 
   &__zoom-indicator {
@@ -110,18 +122,22 @@ export default defineComponent({
     @apply tw-right-4;
     @apply tw-bottom-4;
     @apply tw-cursor-pointer;
-    @apply tw-outline-none;
+
+    &:hover {
+      @apply tw-text-pv-white;
+    }
   }
 
   &__similar-label {
-    @apply tw-absolute;
-    @apply tw-bottom-0;
-    @apply tw-left-0;
     @apply tw-bg-pv-white;
-    @apply tw-py-1;
-    @apply tw-px-2;
     @apply tw-text-xs;
     @apply tw-text-pv-grey-48;
+    @apply tw-mb-6;
+    @apply tw-self-start;
+
+    &--hidden {
+      @apply tw-invisible;
+    }
   }
 }
 </style>

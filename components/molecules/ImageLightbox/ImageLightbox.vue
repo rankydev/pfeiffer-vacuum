@@ -6,9 +6,11 @@
   >
     <div class="image-lightbox tw-flex tw-justify-between tw-flex-col tw-p-6">
       <div class="image-lightbox__selected-image-wrapper">
-        <Icon
-          icon="arrow_back"
+        <Button
+          icon="arrow_back_ios_new"
           class="image-lightbox__arrow image-lightbox__arrow--left"
+          variant="secondary"
+          shape="filled"
           @click.native="prevImage"
         />
         <img
@@ -18,9 +20,11 @@
           :src="images[currentImage].url"
           :alt="images[currentImage].altText || 'Lightbox Image'"
         />
-        <Icon
-          icon="arrow_forward"
+        <Button
+          icon="arrow_forward_ios"
           class="image-lightbox__arrow image-lightbox__arrow--right"
+          variant="secondary"
+          shape="filled"
           @click.native="nextImage"
         />
       </div>
@@ -113,10 +117,9 @@ export default defineComponent({
     top: 50%;
     transform: translateY(-50%);
     z-index: 10000;
-    @apply tw-text-5xl;
 
     @screen md {
-      @apply tw-block;
+      @apply tw-inline-flex;
     }
 
     &::selection {
@@ -128,11 +131,11 @@ export default defineComponent({
     }
 
     &--left {
-      @apply tw-left-6;
+      @apply tw-left-0;
     }
 
     &--right {
-      @apply tw-right-6;
+      @apply tw-right-0;
     }
   }
 }

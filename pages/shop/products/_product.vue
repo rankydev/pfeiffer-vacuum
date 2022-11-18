@@ -31,7 +31,7 @@
               :class="'tw-flex tw-items-center tw-justify-center tw-text-5xl tw-text-center'"
               style="aspect-ratio: 100 / 73"
             >
-              <ImageSlider
+              <ImageGallery
                 :images="sortedImages(productStore.product.images)"
               />
             </div>
@@ -76,12 +76,12 @@ import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import Page from '~/components/templates/Page/Page'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
-import ImageSlider from '~/components/organisms/ImageSlider/ImageSlider'
+import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page, DetailTabs, ImageSlider },
+  components: { Page, DetailTabs, ImageGallery },
   setup() {
     const route = useRoute()
     const context = useContext()
