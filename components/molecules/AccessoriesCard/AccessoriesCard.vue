@@ -68,12 +68,22 @@
 
     <template #actionItems>
       <div class="accessories-card__add-to-cart">
-        <PvInput
+        <!-- <PvInput
           v-model="quantity"
           validation-type="onlyErrors"
           type="number"
           min="1"
           required
+        /> -->
+        <PvSelect
+          :options="sorts"
+          :value="sorts.find((e) => e.selected)"
+          :clearable="false"
+          :prepend-label="'1'"
+          icon-size="small"
+          class=""
+          no-input
+          @input="$emit('updateSort', $event)"
         />
         <div class="accessories-card__add-to-cart-buttons">
           <Button icon="shopping_cart" @click.prevent="addToCart()" />
@@ -124,7 +134,7 @@ import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import InformationModal from '~/components/molecules/InformationModal/InformationModal'
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
+import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect.vue'
 // import cardFunctions from '~/components/common/mixins/cardFunctions'
 
 export default defineComponent({
@@ -133,7 +143,8 @@ export default defineComponent({
     GenericCard,
     InformationModal,
     Icon,
-    PvInput,
+    // PvInput,
+    PvSelect,
   },
   // mixins: [cardFunctions],
   props: {
@@ -146,6 +157,7 @@ export default defineComponent({
       default: 'hybris',
     },
   },
+  emits: ['updateSort'],
   setup(props) {
     const { i18n } = useContext()
     const context = useContext()
@@ -154,6 +166,7 @@ export default defineComponent({
     const sanitizer = useSanitizer()
     const { product } = toRefs(props)
     const image = computed(() => product.value.images?.[0])
+    const sorts = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
     const quantity = ref(1)
     const infoModalVisible = ref(false)
@@ -227,6 +240,7 @@ export default defineComponent({
       context,
       quantity,
       image,
+      sorts,
       infoModalVisible,
       hasAddToListButton,
       hasPrice,
@@ -250,12 +264,14 @@ export default defineComponent({
   &__product-name {
     @apply tw-text-pv-black;
     @apply tw-text-base;
+    @apply tw-text-left;
     @apply tw-font-bold;
   }
 
   &__product-number {
     @apply tw-text-pv-grey-48;
     @apply tw-text-xs;
+    @apply tw-text-left;
     @apply tw-mt-auto;
   }
 
@@ -285,6 +301,8 @@ export default defineComponent({
   &__login-link {
     @apply tw-text-pv-black tw-font-bold;
     @apply tw-text-base;
+    @apply tw-text-right;
+    @apply tw-mb-2;
 
     span,
     .login-modal-link {
