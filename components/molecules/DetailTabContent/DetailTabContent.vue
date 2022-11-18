@@ -3,7 +3,9 @@
     <div
       v-if="lastTabSelected === 'productInfo'"
       :title="$t('product.productInformation')"
-    ></div>
+    >
+      <ProductInformation />
+    </div>
     <div
       v-if="lastTabSelected === 'technicalData'"
       class="tab-content__technicalData"
@@ -38,11 +40,12 @@
 
 <script>
 import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
+import ProductInformation from '~/components/molecules/ProductInformation/ProductInformation'
 import ProductTechnicalData from '~/components/molecules/ProductTechnicalData/ProductTechnicalData.vue'
 import { useProductStore } from '~/stores/product'
 
 export default defineComponent({
-  components: { ProductTechnicalData },
+  components: { ProductTechnicalData, ProductInformation },
   props: {
     lastTabSelected: {
       type: String,

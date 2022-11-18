@@ -1,5 +1,5 @@
 import DetailTabs from './DetailTabs'
-import { product } from '~/components/molecules/ProductCard/ProductCard.stories.content'
+import { product } from '~/components/molecules/DetailTabs/DetailTabs.stories.content'
 
 const argTypes = {
   product: product,
@@ -12,7 +12,7 @@ export default {
     docs: {
       description: {
         component:
-          'The DetailTabs is used on the product page to show some tabs with further informations for the product. ',
+          'The Detail Tabs is used on the product page to show some tabs with further informations for the product. ',
       },
       source: {
         code: '<detail-tabs :product="productStore.product" :product-code="productStore.code"/>',

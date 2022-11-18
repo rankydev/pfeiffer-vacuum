@@ -1,59 +1,15 @@
 {
   "variantsAvailable": "keine verfügbare Variante | {count} verfügbare Variante | {count} verfügbare Varianten",
-  "notFound": "Produkt nicht gefunden",
-  "price": "Preis",
-  "stock": "Verfügbarkeit",
-  "viewBtn": "Produkt ansehen",
-  "addToCartButton": "In den Warenkorb",
-  "orderNumber": "Artikelnummer",
   "productInformation": "Produktinformationen",
   "technicalData": "Technische Daten",
   "spareParts": "Ersatzteile",
   "service": "Service",
-  "selectVariantHeadline": "Weitere Produktdetails",
-  "selectVariantDescription": "Bitte wählen Sie eine Variante um weitere Details einzusehen.",
   "selectVariant": "Variante auswählen",
   "downloads": "Downloads",
-  "download": "Download",
   "accessories": "Zubehör",
   "consumables": "Verbrauchsmaterialien",
-  "placeholderImage": "missing_product_DE.jpg",
-  "previousVersionsSpareParts": "Hier werden nur Ersatzteile für die aktuelle Version angezeigt. Kontaktieren Sie bitte den Pfeiffer Vacuum Service für ältere Produkte. Bitte schauen Sie in der Betriebsanleitung im Downloadbereich nac, um das richtige Ersatzteil für Ihre Anforderungen zu identifizieren oder wenden Sie sich direkt an Pfeiffer Vacuum.",
-  "priceOnRequest": "Preis auf Anfrage",
-  "inactiveProduct": "Inaktiv",
-  "contact": "Kontakt",
-  "name": "Name",
   "dimensions": "Abmessungen",
   "furtherDetails": "Weitere Produktdetails",
   "selectVariantExplained": "Bitte wählen Sie eine Variante basierend auf Ihren individuellen Anforderungen um weitere Details einzusehen.",
-  "scrollToVariantSelection": "Variante auswählen",
-  "file": {
-    "description": "Beschreibung",
-    "type": "Typ",
-    "language": "Sprache",
-    "date": "Datum",
-    "size": "Größe",
-    "category": "Kategorie"
-  },
-  "noDownloads": "Keine Downloads verfügbar",
-  "searchInAccessories": "In Zubehör suchen...",
-  "type": "Typ",
-  "removeFilter": "Auswahl entfernen",
-  "removeSelection": "Auswahl entfernen",
-  "removeAll": "Alle entfernen",
-  "priceInfo": {
-    "InfoOnline": "Onlinepreis",
-    "InfoPersonal": "Ihr persönlicher Preis",
-    "textInfoOnlineLine1":
-      "Der hier angezeigte Online-Preis ist ein Referenzprei, der keine Frach, Zölle und Steuern enthält und nicht in allen Landeswährungen gepflegt wird.",
-    "textInfoOnlineLine2":
-      "Um Ihr individuelles Angebot (in Ihrer Landeswährung) zu erhalte, senden Sie uns bitte Ihre Anfrag, so dass Ihnen Ihr lokales Pfeiffer Vacuum Unternehmen / Partnerunternehmen ein individuelles Angebot mit Ihren Preisen zur Verfügung stellen kann.",
-    "textInfoPersonal":
-      "Dieser Preis ist Ihr persönlicher Preis. Er wird auf der Grundlage Ihrer individuellen Preise bzw. Rabattvereinbarungen berechnet. Die Möglichkei, Ihre persönlichen Preise innerhalb unseres E-Commerce-Systems beizubehalte, ist innerhalb der verschiedenen Regionen unseres Pfeiffer Vacuum Vertriebsnetzes unterschiedlich. Für weitere Fragen wenden Sie sich bitte an Ihren lokalen Vertriebskontakt."
-  },
-  "recommended": {
-    "title": "Empfohlenes Zubehör für "
-  },
-  "showProductDetails": "Produktdetails anzeigen",
-  "similarImage": "Abbildung ähnlich"
+  "scrollToVariantSelection": "Variante auswählen"
 }
