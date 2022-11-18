@@ -52,13 +52,15 @@
         </template>
         <template v-else-if="!loggedIn">
           <p class="accessories-card__login-link">
-            {{ $t('product.loginToSeePrices.part1') }}
+            {{ $t('product.login.loginToSeePrices.part1') }}
             <span
               class="login-modal-link"
               @click="login()"
-              v-html="sanitizer.clear($t('product.loginToSeePrices.part2'))"
+              v-html="
+                sanitizer.clear($t('product.login.loginToSeePrices.part2'))
+              "
             ></span>
-            {{ $t('product.loginToSeePrices.part3') }}
+            {{ $t('product.login.loginToSeePrices.part3') }}
           </p>
         </template>
       </div>
