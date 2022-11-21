@@ -222,11 +222,11 @@ export default defineComponent({
         case 'dimensions':
           return !props.product || !props.product.dimensionImage
         case 'accessories':
-          return props.hasAccessories?.length === 0 || !props.hasAccessories
+          return !props.hasAccessories?.length || !props.hasAccessories
         case 'consumables':
           return !props.hasConsumables?.length || !props.hasConsumables
         case 'spareparts':
-          return props.hasSpareParts?.length === 0 || !props.hasSpareParts
+          return !props.hasSpareParts?.length || !props.hasSpareParts
         case 'service':
           return true
         default:
