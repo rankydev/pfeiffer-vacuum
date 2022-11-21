@@ -93,7 +93,6 @@ export default defineComponent({
   setup(props, { emit }) {
     const { i18n } = useContext()
 
-    console.log(props.product)
     let lastTabSelected = ref('productInfo')
     const tabs = ref([
       {
@@ -223,10 +222,9 @@ export default defineComponent({
         case 'dimensions':
           return !props.product || !props.product.dimensionImage
         case 'accessories':
-          console.log(props.hasAccessories, 'ACCESSORIES')
           return props.hasAccessories?.length === 0 || !props.hasAccessories
         case 'consumables':
-          return props.hasConsumables?.length === 0 || !props.hasConsumables
+          return !props.hasConsumables?.length || !props.hasConsumables
         case 'spareparts':
           return props.hasSpareParts?.length === 0 || !props.hasSpareParts
         case 'service':
