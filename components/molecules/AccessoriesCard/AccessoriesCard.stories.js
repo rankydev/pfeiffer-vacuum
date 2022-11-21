@@ -31,7 +31,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <div>
+    <div class="documentation-preview card-wrapper">
       <accessories-card v-bind="args" />
     </div>
   `,
