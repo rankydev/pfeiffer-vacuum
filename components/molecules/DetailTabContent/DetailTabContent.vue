@@ -16,7 +16,9 @@
     <div
       v-if="lastTabSelected === 'dimensions'"
       :title="$t('product.dimensions')"
-    ></div>
+    >
+      <Dimensions />
+    </div>
     <div
       v-if="lastTabSelected === 'accessories'"
       :title="$t('product.accessories')"
@@ -43,9 +45,10 @@ import { defineComponent, useContext, computed } from '@nuxtjs/composition-api'
 import ProductInformation from '~/components/molecules/ProductInformation/ProductInformation'
 import ProductTechnicalData from '~/components/molecules/ProductTechnicalData/ProductTechnicalData.vue'
 import { useProductStore } from '~/stores/product'
+import Dimensions from './dimensions/Dimensions.vue'
 
 export default defineComponent({
-  components: { ProductTechnicalData, ProductInformation },
+  components: { ProductTechnicalData, ProductInformation, Dimensions },
   props: {
     lastTabSelected: {
       type: String,
