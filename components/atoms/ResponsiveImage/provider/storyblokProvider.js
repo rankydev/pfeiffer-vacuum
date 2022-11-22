@@ -43,7 +43,7 @@ export function useStoryblokProvider({ $img }) {
 
         return [...memo, { key: val[0], media, width, height }]
       }
-      return configScreensArr.reduce(createResolution, [])
+      return configScreensArr.reduce(createResolution, []).reverse()
     })
 
     const webpSources = computed(() => {

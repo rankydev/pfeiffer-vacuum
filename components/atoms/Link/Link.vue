@@ -58,7 +58,14 @@ export default defineComponent({
       type: String,
       default: 'none',
       validator: (val) =>
-        ['none', 'inline', 'breadcrumb', 'quicklink', 'textlink'].includes(val),
+        [
+          'none',
+          'inline',
+          'breadcrumb',
+          'quicklink',
+          'textlink',
+          'secondary',
+        ].includes(val),
     },
     /**
      * The label of the link. Optional, can be used instead of providing content for the template slot.
@@ -145,6 +152,23 @@ export default defineComponent({
     @apply tw-ease-out;
     @apply tw-leading-6;
     @apply hover:tw-underline;
+  }
+
+  &--secondary {
+    @apply tw-py-3 tw-px-4;
+    @apply tw-leading-6;
+    @apply tw-text-base;
+    @apply tw-rounded-md;
+    @apply tw-text-pv-red;
+    @apply tw-shadow-border-red;
+
+    &:hover,
+    &:focus {
+      @apply tw-outline-pv-red-lighter;
+      @apply tw-text-pv-red-lighter;
+      @apply tw-bg-pv-red-lighter;
+      @apply tw-bg-opacity-10;
+    }
   }
 }
 </style>
