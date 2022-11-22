@@ -95,7 +95,10 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const productStore = useProductStore()
-    const loadProduct = () => redirectOnError(productStore.loadByPath)
+    const loadProduct = () => {
+      productStore.getProductAccessories()
+      redirectOnError(productStore.loadByPath)
+    }
 
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)

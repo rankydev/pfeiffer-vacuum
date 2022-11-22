@@ -155,20 +155,8 @@ export default defineComponent({
     const quantity = ref(1)
     const infoModalVisible = ref(false)
 
-    // const description = computed(() => (props.product.bullets || []).join(', '))
-    // const name = computed(() => props.product.name)
-    // const categoryName = computed(() => props.product.categories?.[0]?.name)
-
-    // const url = computed(() =>
-    //   context.app.localePath({
-    //     name: 'shop-products-product',
-    //     params: { product: props.product?.code },
-    //   })
-    // )
-
     const hasAddToListButton = computed(() => {
-      // return userStore.isLoggedIn && !ociStore.isOciUser
-      return true
+      return userStore.isLoggedIn && !ociStore.isOciUser
     })
     const hasPrice = computed(() => {
       return !!product.value.price
@@ -211,7 +199,7 @@ export default defineComponent({
     }
 
     const accessoryImage = computed(() => {
-      if (product.value.images) {
+      if (product.value?.productReferences[0]?.image) {
         const { url } =
           product.value.images.find(
             (img) => img.imageType === 'PRIMARY' && img.format === 'product'
@@ -245,6 +233,10 @@ export default defineComponent({
 <style lang="scss">
 .pv-card__heading {
   @apply tw-text-left;
+}
+
+.pv-input {
+  @apply tw-w-full;
 }
 
 .accessories-card {
