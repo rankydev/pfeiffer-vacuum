@@ -1,5 +1,7 @@
 {
   "variantsAvailable": "사용 가능한 변형 없음 | {count}개의 변형 사용 가능 | {count}개의 변형 사용 가능",
+  "placeholderImage": "missing_product_EN.jpg",
+  "similarImage": "유사한 그림",
   "productInformation": "제품 정보",
   "technicalData": "기술 데이터",
   "spareParts": "예비 부품",
@@ -9,7 +11,6 @@
   "accessories": "부속품",
   "consumables": "소모품",
   "dimensions": "치수",
-  "selectVariantExplained":
-  "해당 제품 세부 정보를 보려면 귀하의 개별 요구 사항에 적합한 제품 사양을 선택하십시오.",
+  "selectVariantExplained": "해당 제품 세부 정보를 보려면 귀하의 개별 요구 사항에 적합한 제품 사양을 선택하십시오.",
   "scrollToVariantSelection": "사양 선택"
 }

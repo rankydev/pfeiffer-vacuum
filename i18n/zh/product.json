@@ -1,5 +1,7 @@
 {
   "variantsAvailable": "没有可用的变型 | {count}  个可用变体 | {count}  种可用变型",
+  "placeholderImage": "missing_product_EN.jpg",
+  "similarImage": "类似的插图",
   "productInformation": "产品信息",
   "technicalData": "技术数据",
   "spareParts": "备件",
@@ -9,7 +11,6 @@
   "accessories": "配件",
   "consumables": "耗材",
   "dimensions": "方面",
-  "selectVariantExplained":
-  "请根据您的个性化需求选择合适的产品变体，以查看相应的产品详情。",
+  "selectVariantExplained": "请根据您的个性化需求选择合适的产品变体，以查看相应的产品详情。",
   "scrollToVariantSelection": "选择变体"
 }

@@ -6,10 +6,14 @@
           v-for="(tab, index) in tabs.filter((o) => o.active)"
           :key="index"
           :label="tab.name"
-          :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
+          :variant="
+            lastTabSelected === tab.trigger || isDisabled(tab.trigger)
+              ? 'secondary'
+              : 'inverted'
+          "
+          :class="{ active: lastTabSelected === tab.trigger }"
           cutaway="bottom"
           class="tab-navigation__desktop__item"
-          :class="{ active: lastTabSelected === tab.trigger }"
           :disabled="isDisabled(tab.trigger)"
           @click="selectTab(tab.trigger)"
         />
@@ -48,16 +52,13 @@ import {
   ref,
   computed,
 } from '@nuxtjs/composition-api'
+import { useProductStore } from '~/stores/product'
 import Button from '~/components/atoms/Button/Button.vue'
 import DetailTabContent from '~/components/molecules/DetailTabContent/DetailTabContent.vue'
 
 export default defineComponent({
   components: { Button, DetailTabContent },
   props: {
-    product: {
-      type: Object,
-      required: true,
-    },
     productCode: {
       type: String,
       default: '',
@@ -88,6 +89,9 @@ export default defineComponent({
   ],
   setup(props, { emit }) {
     const { i18n } = useContext()
+
+    const { product } = useProductStore()
+
     let lastTabSelected = ref('productInfo')
     const tabs = ref([
       {
@@ -141,8 +145,8 @@ export default defineComponent({
     })
 
     const hasConsumables = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'CONSUMABLE'
         )
       }
@@ -150,8 +154,8 @@ export default defineComponent({
     })
 
     const hasSpareParts = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'SPAREPART'
         )
       }
@@ -159,15 +163,15 @@ export default defineComponent({
     })
 
     const hasAccessories = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'ACCESSORIES'
         )
       }
       return []
     })
 
-    const getSortedFeatures = (product, code) => {
+    const getSortedFeatures = (code) => {
       if (!product || !product.typedFeatureList) {
         return []
       }
@@ -213,15 +217,15 @@ export default defineComponent({
     const isDisabled = (code) => {
       switch (code) {
         case 'technicalData':
-          return getSortedFeatures(props.product, 'TechnicalData')?.length === 0
+          return getSortedFeatures('TechnicalData')?.length === 0
         case 'dimensions':
-          return !props.product || !props.product.dimensionImage
+          return !product || !product.dimensionImage
         case 'accessories':
-          return props.hasAccessories?.length === 0
+          return !hasAccessories.value?.length
         case 'consumables':
-          return props.hasConsumables?.length === 0
+          return !hasConsumables.value?.length
         case 'spareparts':
-          return props.hasSpareParts?.length === 0
+          return !hasSpareParts.value?.length
         case 'service':
           return true
         default:
