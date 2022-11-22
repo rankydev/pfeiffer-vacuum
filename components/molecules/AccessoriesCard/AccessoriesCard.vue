@@ -9,6 +9,7 @@
     </template>
 
     <template #heading>
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <span class="accessories-card__product-name" v-html="productName" />
       <p class="accessories-card__product-number">
         {{ product.orderNumber }}
@@ -53,6 +54,7 @@
         <template v-else-if="!loggedIn">
           <p class="accessories-card__login-link">
             {{ $t('product.login.loginToSeePrices.part1') }}
+            <!-- eslint-disable vue/no-v-html -->
             <span
               class="login-modal-link"
               @click="login()"
@@ -60,6 +62,7 @@
                 sanitizer.clear($t('product.login.loginToSeePrices.part2'))
               "
             ></span>
+            <!-- eslint-enable vue/no-v-html -->
             {{ $t('product.login.loginToSeePrices.part3') }}
           </p>
         </template>
@@ -68,23 +71,7 @@
 
     <template #actionItems>
       <div class="accessories-card__add-to-cart">
-        <!-- <PvInput
-          v-model="quantity"
-          validation-type="onlyErrors"
-          type="number"
-          min="1"
-          required
-        /> -->
-        <PvSelect
-          :options="sorts"
-          :value="sorts.find((e) => e.selected)"
-          :clearable="false"
-          :prepend-label="'1'"
-          icon-size="small"
-          class=""
-          no-input
-          @input="$emit('updateSort', $event)"
-        />
+        <PvInput v-model="quantity" input-type="number" min="1" required />
         <div class="accessories-card__add-to-cart-buttons">
           <Button icon="shopping_cart" @click.prevent="addToCart()" />
           <Button
@@ -134,8 +121,7 @@ import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import InformationModal from '~/components/molecules/InformationModal/InformationModal'
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect.vue'
-// import cardFunctions from '~/components/common/mixins/cardFunctions'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 
 export default defineComponent({
   name: 'AccessoriesCard',
@@ -143,10 +129,8 @@ export default defineComponent({
     GenericCard,
     InformationModal,
     Icon,
-    // PvInput,
-    PvSelect,
+    PvInput,
   },
-  // mixins: [cardFunctions],
   props: {
     product: {
       type: Object,
@@ -183,8 +167,8 @@ export default defineComponent({
     // )
 
     const hasAddToListButton = computed(() => {
+      // return userStore.isLoggedIn && !ociStore.isOciUser
       return true
-      //return userStore.isLoggedIn && !ociStore.isOciUser
     })
     const hasPrice = computed(() => {
       return !!product.value.price
@@ -210,7 +194,6 @@ export default defineComponent({
     })
 
     const productName = computed(() => {
-      console.log('xxx Prod name', product.value.name)
       return sanitizer.inline(product.value.name || product.value.id)
     })
 
@@ -260,18 +243,20 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
+.pv-card__heading {
+  @apply tw-text-left;
+}
+
 .accessories-card {
   &__product-name {
     @apply tw-text-pv-black;
     @apply tw-text-base;
-    @apply tw-text-left;
     @apply tw-font-bold;
   }
 
   &__product-number {
     @apply tw-text-pv-grey-48;
     @apply tw-text-xs;
-    @apply tw-text-left;
     @apply tw-mt-auto;
   }
 
@@ -319,13 +304,14 @@ export default defineComponent({
 
     input {
       @apply tw-pr-4;
-      @apply tw-w-32;
+      @apply tw-mr-2;
       @apply tw-leading-8;
     }
 
     &-buttons {
       @apply tw-flex;
       @apply tw-justify-end;
+      @apply tw-ml-2;
 
       button:first-child {
         @apply tw-mr-2;
