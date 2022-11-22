@@ -149,8 +149,6 @@ export default defineComponent({
     const ociStore = useOciStore()
     const sanitizer = useSanitizer()
     const { product } = toRefs(props)
-    const image = computed(() => product.value.images?.[0])
-    const sorts = ref([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
     const quantity = ref(1)
     const infoModalVisible = ref(false)
@@ -210,8 +208,6 @@ export default defineComponent({
     return {
       context,
       quantity,
-      image,
-      sorts,
       infoModalVisible,
       hasAddToListButton,
       hasPrice,
