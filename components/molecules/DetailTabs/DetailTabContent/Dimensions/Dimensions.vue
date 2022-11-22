@@ -33,19 +33,22 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/product'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
+import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
+import { useTabsHelper } from '../../partials/useTabsHelper'
 
 export default defineComponent({
   name: 'Dimensions',
   setup() {
     const { product } = useProductStore()
     const sanitizer = useSanitizer()
+    const { getShopMedia } = useImageHelper()
+    const { getSortedFeatures } = useTabsHelper()
 
     const dimensions = computed(() => {
-      // TODO need to merge the other branch so I can use this
-      return this.getSortedFeatures(this.product, 'Dimension')
+      return getSortedFeatures(product, 'Dimension')
     })
 
     const getFeatureText = (feature) => {
@@ -55,14 +58,13 @@ export default defineComponent({
     }
 
     const getDimensionPicture = () => {
-      const picture = this.product.dimensionImage
+      const picture = product.dimensionImage
 
       if (!picture) {
         return null
       }
 
-      // TODO need to merge the other branch so I can use this
-      return this.getShopMedia(picture.url)
+      return getShopMedia(picture.url)
     }
 
     return {

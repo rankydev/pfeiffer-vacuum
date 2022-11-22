@@ -53,8 +53,9 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/product'
-import Button from '~/components/atoms/Button/Button.vue'
-import DetailTabContent from '~/components/molecules/DetailTabContent/DetailTabContent.vue'
+import Button from '~/components/atoms/Button/Button'
+import DetailTabContent from './DetailTabContent/DetailTabContent'
+import { useTabsHelper } from './partials/useTabsHelper'
 
 export default defineComponent({
   components: { Button, DetailTabContent },
@@ -91,6 +92,7 @@ export default defineComponent({
     const { i18n } = useContext()
 
     const { product } = useProductStore()
+    const { getSortedFeatures } = useTabsHelper()
 
     let lastTabSelected = ref('productInfo')
     const tabs = ref([
@@ -171,33 +173,6 @@ export default defineComponent({
       return []
     })
 
-    const getSortedFeatures = (code) => {
-      if (!product || !product.typedFeatureList) {
-        return []
-      }
-
-      const data = product.typedFeatureList.filter((o) => o.code === code)
-
-      if (data && data?.length > 0) {
-        const features = [...data[0].features]
-        return features.sort((a, b) => {
-          const nameA = a.name.toUpperCase()
-          const nameB = b.name.toUpperCase()
-
-          if (nameA < nameB) {
-            return -1
-          }
-          if (nameA > nameB) {
-            return 1
-          }
-
-          return 0
-        })
-      } else {
-        return []
-      }
-    }
-
     const selectTab = (code) => {
       lastTabSelected.value = code
 
@@ -217,7 +192,7 @@ export default defineComponent({
     const isDisabled = (code) => {
       switch (code) {
         case 'technicalData':
-          return getSortedFeatures('TechnicalData')?.length === 0
+          return getSortedFeatures(product, 'TechnicalData')?.length === 0
         case 'dimensions':
           return !product || !product.dimensionImage
         case 'accessories':
@@ -243,7 +218,6 @@ export default defineComponent({
       hasAccessories,
       selectTab,
       isDisabled,
-      getSortedFeatures,
       i18n,
     }
   },

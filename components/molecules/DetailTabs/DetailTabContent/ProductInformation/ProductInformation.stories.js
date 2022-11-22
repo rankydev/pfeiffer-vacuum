@@ -1,8 +1,8 @@
-import ProductInformation from '~/components/molecules/ProductInformation/ProductInformation.vue'
+import ProductInformation from './ProductInformation'
 import {
   noProductInformation,
   withProductInformation,
-} from '~/components/molecules/ProductInformation/ProductInformation.stories.content'
+} from './ProductInformation.stories.content'
 
 const argTypes = {
   product: {

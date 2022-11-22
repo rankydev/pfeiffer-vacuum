@@ -11,7 +11,9 @@
       class="tab-content__technicalData"
       :title="$t('product.technicalData')"
     >
-      <ProductTechnicalData :features="getSortedFeatures()" />
+      <ProductTechnicalData
+        :features="getSortedFeatures(product, 'TechnicalData')"
+      />
     </div>
     <div
       v-if="lastTabSelected === 'dimensions'"
@@ -42,10 +44,11 @@
 
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
-import ProductInformation from '~/components/molecules/ProductInformation/ProductInformation'
-import ProductTechnicalData from '~/components/molecules/ProductTechnicalData/ProductTechnicalData.vue'
 import { useProductStore } from '~/stores/product'
-import Dimensions from './dimensions/Dimensions.vue'
+import ProductInformation from './ProductInformation/ProductInformation'
+import ProductTechnicalData from './ProductTechnicalData/ProductTechnicalData'
+import Dimensions from './Dimensions/Dimensions'
+import { useTabsHelper } from '../partials/useTabsHelper'
 
 export default defineComponent({
   components: { ProductTechnicalData, ProductInformation, Dimensions },
@@ -58,37 +61,10 @@ export default defineComponent({
   setup() {
     const { i18n } = useContext()
     const { product } = useProductStore()
-
-    const getSortedFeatures = () => {
-      const code = 'TechnicalData'
-
-      if (!product || !product.typedFeatureList) {
-        return []
-      }
-
-      const data = product.typedFeatureList.filter((o) => o.code === code)
-
-      if (data && data?.length > 0) {
-        const features = [...data[0].features]
-        return features.sort((a, b) => {
-          const nameA = a.name.toUpperCase()
-          const nameB = b.name.toUpperCase()
-
-          if (nameA < nameB) {
-            return -1
-          }
-          if (nameA > nameB) {
-            return 1
-          }
-
-          return 0
-        })
-      } else {
-        return []
-      }
-    }
+    const { getSortedFeatures } = useTabsHelper()
 
     return {
+      product,
       getSortedFeatures,
       i18n,
     }

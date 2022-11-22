@@ -1,5 +1,5 @@
-import ProductTechnicalData from '~/components/molecules/ProductTechnicalData/ProductTechnicalData.vue'
-import { features } from '~/components/molecules/ProductTechnicalData/ProductTechnicalData.stories.content'
+import ProductTechnicalData from './ProductTechnicalData'
+import { features } from './ProductTechnicalData.stories.content'
 
 const argTypes = {
   features: {
