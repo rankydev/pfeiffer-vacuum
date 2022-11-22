@@ -31,6 +31,7 @@ export default {
       description: {
         component: 'ImageGallery component used on the product detail page.',
       },
+      code: `<ImageGallery :images="images)"/>`,
     },
   },
   argTypes,

@@ -3,7 +3,7 @@
     <div class="image-thumbnails__container">
       <div
         v-for="(image, index) in images"
-        :key="index"
+        :key="`image-thumbnails__image-wrapper-${index}`"
         class="image-thumbnails__image-wrapper"
         :class="{
           'image-thumbnails__image-wrapper--active': currentImage === index,
