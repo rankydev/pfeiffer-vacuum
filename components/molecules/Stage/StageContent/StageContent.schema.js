@@ -7,14 +7,14 @@ export default {
       translatable: true,
       required: true,
       display_name: 'Headline',
-      max_length: '50',
+      max_length: '65',
       pos: 1,
     },
     subline: {
       type: 'text',
       translatable: true,
       display_name: 'Subheadline',
-      max_length: '50',
+      max_length: '65',
       pos: 2,
     },
     teaserText: {
