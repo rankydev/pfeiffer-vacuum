@@ -27,9 +27,7 @@
             <div class="tw--my-4" style="width: 100%; height: 0px">&nbsp;</div>
 
             <div class="product-page__image-gallery">
-              <ImageGallery
-                :images="sortedImages(productStore.product.images)"
-              />
+              <ImageGallery :images="sortedImages" />
             </div>
             <div
               id="variantselection"
@@ -62,6 +60,7 @@ import {
   watch,
   onServerPrefetch,
   useContext,
+  computed,
 } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/product'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
@@ -107,8 +106,9 @@ export default defineComponent({
 
     const { getAssetImage, getShopMedia } = useImageHelper()
 
-    const sortedImages = (imgArr) => {
+    const sortedImages = computed(() => {
       let images = []
+      const imgArr = productStore.product?.images
 
       if (imgArr) {
         const primArr = imgArr.filter((i) => i.imageType === 'PRIMARY')
@@ -144,7 +144,7 @@ export default defineComponent({
       }
 
       return result
-    }
+    })
 
     return {
       slug,

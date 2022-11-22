@@ -4,10 +4,10 @@
       class="dimensions-tab__image-wrapper"
       :class="{ 'dimensions-tab__image-wrapper--half': dimensions.length > 0 }"
     >
-      <img
-        :src="getDimensionPicture()"
-        alt="Dimensions Image"
+      <ImageGallery
         class="dimensions-tab__image"
+        hide-single-thumbnail
+        :images="[dimensionImage]"
       />
     </div>
 
@@ -34,6 +34,7 @@
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
+import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useProductStore } from '~/stores/product'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
@@ -41,6 +42,7 @@ import { useTabsHelper } from '../../partials/useTabsHelper'
 
 export default defineComponent({
   name: 'Dimensions',
+  components: { ImageGallery },
   setup() {
     const { product } = useProductStore()
     const sanitizer = useSanitizer()
@@ -57,21 +59,21 @@ export default defineComponent({
       return `${value} ${unit}`
     }
 
-    const getDimensionPicture = () => {
-      const picture = product.dimensionImage
+    const dimensionImage = computed(() => {
+      const image = product.dimensionImage
 
-      if (!picture) {
+      if (!image) {
         return null
       }
 
-      return getShopMedia(picture.url)
-    }
+      return { ...product.dimensionImage, url: getShopMedia(image.url) }
+    })
 
     return {
       product,
       dimensions,
       getFeatureText,
-      getDimensionPicture,
+      dimensionImage,
       sanitizer,
     }
   },
