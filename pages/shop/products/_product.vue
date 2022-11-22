@@ -48,10 +48,7 @@
             >
               Recommended Accessories
             </div>
-            <DetailTabs
-              :product="productStore.product"
-              :product-code="productStore.code"
-            />
+            <DetailTabs :product-code="productStore.code" />
           </div>
         </ContentWrapper>
       </Page>
