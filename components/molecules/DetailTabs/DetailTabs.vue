@@ -194,7 +194,11 @@ export default defineComponent({
         case 'technicalData':
           return getSortedFeatures(product, 'TechnicalData')?.length === 0
         case 'dimensions':
-          return !product || !product.dimensionImage
+          return (
+            !product ||
+            (!product.dimensionImage &&
+              getSortedFeatures(product, 'Dimension')?.length === 0)
+          )
         case 'accessories':
           return !hasAccessories.value?.length
         case 'consumables':
