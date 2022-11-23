@@ -1,8 +1,9 @@
 <template>
   <div v-if="product" class="dimensions-tab">
     <div
+      v-if="dimensionImage"
       class="dimensions-tab__image-wrapper"
-      :class="{ 'dimensions-tab__image-wrapper--half': dimensions.length > 0 }"
+      :class="{ 'dimensions-tab__image-wrapper--half': hasDimensionsTable }"
     >
       <ImageGallery
         class="dimensions-tab__image"
@@ -11,7 +12,7 @@
       />
     </div>
 
-    <div class="dimensions-tab__feature-wrapper">
+    <div v-if="hasDimensionsTable" class="dimensions-tab__feature-wrapper">
       <div
         v-for="(feature, index) in dimensions"
         :key="index"
@@ -59,6 +60,10 @@ export default defineComponent({
       return `${value} ${unit}`
     }
 
+    const hasDimensionsTable = computed(() => {
+      return dimensions.value.length > 0
+    })
+
     const dimensionImage = computed(() => {
       const image = product.dimensionImage
 
@@ -75,6 +80,7 @@ export default defineComponent({
       getFeatureText,
       dimensionImage,
       sanitizer,
+      hasDimensionsTable,
     }
   },
 })
