@@ -55,7 +55,7 @@ import {
 import { useProductStore } from '~/stores/product'
 import Button from '~/components/atoms/Button/Button'
 import DetailTabContent from './DetailTabContent/DetailTabContent'
-import { useTabsHelper } from './partials/useTabsHelper'
+import getSortedFeatures from './partials/getSortedFeatures'
 
 export default defineComponent({
   components: { Button, DetailTabContent },
@@ -92,7 +92,6 @@ export default defineComponent({
     const { i18n } = useContext()
 
     const { product } = useProductStore()
-    const { getSortedFeatures } = useTabsHelper()
 
     let lastTabSelected = ref('productInfo')
     const tabs = ref([

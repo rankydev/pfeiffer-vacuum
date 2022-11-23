@@ -39,7 +39,7 @@ import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useProductStore } from '~/stores/product'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
-import { useTabsHelper } from '../../partials/useTabsHelper'
+import getSortedFeatures from '../../partials/getSortedFeatures'
 
 export default defineComponent({
   name: 'Dimensions',
@@ -48,7 +48,6 @@ export default defineComponent({
     const { product } = useProductStore()
     const sanitizer = useSanitizer()
     const { getShopMedia } = useImageHelper()
-    const { getSortedFeatures } = useTabsHelper()
 
     const dimensions = computed(() => {
       return getSortedFeatures(product, 'Dimension')

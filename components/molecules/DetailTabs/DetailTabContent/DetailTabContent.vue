@@ -49,7 +49,7 @@ import { useProductStore } from '~/stores/product'
 import ProductInformation from './ProductInformation/ProductInformation'
 import ProductTechnicalData from './ProductTechnicalData/ProductTechnicalData'
 import Dimensions from './Dimensions/Dimensions'
-import { useTabsHelper } from '../partials/useTabsHelper'
+import getSortedFeatures from '../partials/getSortedFeatures'
 
 export default defineComponent({
   components: { ProductTechnicalData, ProductInformation, Dimensions },
@@ -62,7 +62,6 @@ export default defineComponent({
   setup() {
     const { i18n } = useContext()
     const { product } = useProductStore()
-    const { getSortedFeatures } = useTabsHelper()
 
     return {
       product,
