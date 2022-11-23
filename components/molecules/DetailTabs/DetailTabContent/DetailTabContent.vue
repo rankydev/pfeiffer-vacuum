@@ -18,6 +18,7 @@
     <div
       v-if="lastTabSelected === 'dimensions'"
       :title="$t('product.dimensions')"
+      class="tab-content__dimensions"
     >
       <Dimensions />
     </div>
@@ -76,6 +77,10 @@ export default defineComponent({
 .tab-content {
   &__technicalData {
     @apply tw-w-full;
+  }
+
+  &__dimensions {
+    @apply tw-m-auto;
   }
 }
 </style>

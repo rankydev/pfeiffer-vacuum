@@ -246,7 +246,6 @@ export default defineComponent({
 
       @screen md {
         @apply tw-flex;
-        @apply tw-justify-center;
       }
     }
 
