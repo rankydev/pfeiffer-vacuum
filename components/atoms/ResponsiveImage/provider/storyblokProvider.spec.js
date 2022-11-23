@@ -9,7 +9,7 @@ const screenSizes = [
   ['sm', 0],
   ['md', 768],
   ['lg', 1280],
-]
+].reverse()
 
 describe('StoryblokProvider', () => {
   describe('initial state', () => {

@@ -1,3 +1,17 @@
 {
-  "variantsAvailable": "keine verfügbare Variante | {count} verfügbare Variante | {count} verfügbare Varianten"
+  "variantsAvailable": "keine verfügbare Variante | {count} verfügbare Variante | {count} verfügbare Varianten",
+  "placeholderImage": "missing_product_DE.jpg",
+  "similarImage": "Abbildung ähnlich",
+  "productInformation": "Produktinformationen",
+  "technicalData": "Technische Daten",
+  "spareParts": "Ersatzteile",
+  "service": "Service",
+  "selectVariant": "Variante auswählen",
+  "downloads": "Downloads",
+  "accessories": "Zubehör",
+  "consumables": "Verbrauchsmaterialien",
+  "dimensions": "Abmessungen",
+  "furtherDetails": "Weitere Produktdetails",
+  "selectVariantExplained": "Bitte wählen Sie eine Variante basierend auf Ihren individuellen Anforderungen um weitere Details einzusehen.",
+  "scrollToVariantSelection": "Variante auswählen"
 }

@@ -1,3 +1,16 @@
 {
-  "variantsAvailable": "no variants available | {count} variant available | {count} variants available"
+  "variantsAvailable": "no variants available | {count} variant available | {count} variants available",
+  "placeholderImage": "missing_product_EN.jpg",
+  "similarImage": "Image similar",
+  "productInformation": "Product Information",
+  "technicalData": "Technical Data",
+  "spareParts": "Spare parts",
+  "service": "Service",
+  "selectVariant": "Please select variant",
+  "downloads": "Downloads",
+  "accessories": "Accessories",
+  "consumables": "Consumables",
+  "dimensions": "Dimensions",
+  "selectVariantExplained": "Please select the appropriate product variant for your individual requirements to see the corresponding product details.",
+  "scrollToVariantSelection": "Select variant"
 }
