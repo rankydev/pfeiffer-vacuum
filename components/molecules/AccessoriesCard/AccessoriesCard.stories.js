@@ -18,7 +18,7 @@ export default {
           'The AccessoriesCard is used on the product page to show some complementing products for the displayed product. The Accessoiries Card will be used in a carousel . ',
       },
       source: {
-        code: '<detail-tabs :product="productStore.product" :provider="provider" />',
+        code: '<accessories-card :product="productStore.product" :provider="provider" />',
       },
     },
   },

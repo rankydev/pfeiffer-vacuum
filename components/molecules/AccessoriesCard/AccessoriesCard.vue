@@ -267,7 +267,7 @@ export default defineComponent({
       @apply tw-block;
       @apply tw-text-pv-black tw-font-bold;
       @apply tw-mt-1 tw-mb-3;
-      font-size: 20px;
+      @apply tw-text-xl;
     }
   }
 
