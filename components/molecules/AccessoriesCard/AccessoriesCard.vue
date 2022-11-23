@@ -198,10 +198,9 @@ export default defineComponent({
 
     const accessoryImage = computed(() => {
       if (product.value?.productReferences[0]?.image) {
-        const { url } =
-          product.value.images.find(
-            (img) => img.imageType === 'PRIMARY' && img.format === 'product'
-          ) || {}
+        product.value.images.find(
+          (img) => img.imageType === 'PRIMARY' && img.format === 'product'
+        ) || {}
       }
     })
 
