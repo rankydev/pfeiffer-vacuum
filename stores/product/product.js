@@ -24,6 +24,7 @@ export const useProductStore = defineStore('product', () => {
   const reqId = ssrRef(null)
   const variationMatrix = ref(null)
   const price = ref(null)
+  const accessories = ref(null)
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -116,6 +117,32 @@ export const useProductStore = defineStore('product', () => {
     price.value = result
   }
 
+  const getProductAccessories = async () => {
+    const id = route.value.params.product || ''
+
+    if (!id) {
+      throw new Error('No valid id given in route object.')
+    }
+
+    const result = await axios.$get(
+      `${config.PRODUCTS_API}/${id}/referenceGroups/ACCESSORIES`,
+      { params: { fields: 'FULL' } }
+    )
+
+    if (
+      typeof result === 'object' &&
+      !result.error &&
+      result.references?.length > 0
+    ) {
+      accessories = result.references
+    } else {
+      logger.error(
+        `Error when fetching product references for '${id}'. Returning empty array.`,
+        result.error ? result.error : ''
+      )
+    }
+  }
+
   const loadByPath = async () => {
     const id = route.value.params.product || ''
 
@@ -127,6 +154,9 @@ export const useProductStore = defineStore('product', () => {
     if (route.value.fullPath === reqId.value) return
     reqId.value = route.value.fullPath
 
+    // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
+    product.value = null
+
     await Promise.all([loadProduct(id), loadVariationMatrix(id), loadPrice(id)])
   }
 
@@ -134,9 +164,11 @@ export const useProductStore = defineStore('product', () => {
     product,
     variationMatrix,
     price,
+    accessories,
     breadcrumb,
     metaData,
     loadByPath,
     getProducts,
+    getProductAccessories,
   }
 })

@@ -25,6 +25,7 @@
       >{{ $t('product.similarImage') }}</span
     >
     <ImageThumbnails
+      v-if="images.length > 1 || showSingleThumbnail"
       :images="images"
       :current-image="currentImage"
       @update="currentImage = $event"
@@ -61,6 +62,10 @@ export default defineComponent({
     images: {
       type: Array,
       required: true,
+    },
+    showSingleThumbnail: {
+      type: Boolean,
+      default: true,
     },
   },
   setup(props) {
@@ -104,7 +109,6 @@ export default defineComponent({
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-w-full;
-  @apply tw-my-8;
 
   &__container {
     @apply tw-flex;
