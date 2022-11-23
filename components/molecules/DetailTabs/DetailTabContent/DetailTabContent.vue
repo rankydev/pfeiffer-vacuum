@@ -11,12 +11,17 @@
       class="tab-content__technicalData"
       :title="$t('product.technicalData')"
     >
-      <ProductTechnicalData :features="getSortedFeatures()" />
+      <ProductTechnicalData
+        :features="getSortedFeatures(product, 'TechnicalData')"
+      />
     </div>
     <div
       v-if="lastTabSelected === 'dimensions'"
       :title="$t('product.dimensions')"
-    ></div>
+      class="tab-content__dimensions"
+    >
+      <Dimensions />
+    </div>
     <div
       v-if="lastTabSelected === 'accessories'"
       :title="$t('product.accessories')"
@@ -40,12 +45,14 @@
 
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
-import ProductInformation from '~/components/molecules/ProductInformation/ProductInformation'
-import ProductTechnicalData from '~/components/molecules/ProductTechnicalData/ProductTechnicalData.vue'
 import { useProductStore } from '~/stores/product'
+import ProductInformation from './ProductInformation/ProductInformation'
+import ProductTechnicalData from './ProductTechnicalData/ProductTechnicalData'
+import Dimensions from './Dimensions/Dimensions'
+import getSortedFeatures from '../partials/getSortedFeatures'
 
 export default defineComponent({
-  components: { ProductTechnicalData, ProductInformation },
+  components: { ProductTechnicalData, ProductInformation, Dimensions },
   props: {
     lastTabSelected: {
       type: String,
@@ -56,36 +63,8 @@ export default defineComponent({
     const { i18n } = useContext()
     const { product } = useProductStore()
 
-    const getSortedFeatures = () => {
-      const code = 'TechnicalData'
-
-      if (!product || !product.typedFeatureList) {
-        return []
-      }
-
-      const data = product.typedFeatureList.filter((o) => o.code === code)
-
-      if (data && data?.length > 0) {
-        const features = [...data[0].features]
-        return features.sort((a, b) => {
-          const nameA = a.name.toUpperCase()
-          const nameB = b.name.toUpperCase()
-
-          if (nameA < nameB) {
-            return -1
-          }
-          if (nameA > nameB) {
-            return 1
-          }
-
-          return 0
-        })
-      } else {
-        return []
-      }
-    }
-
     return {
+      product,
       getSortedFeatures,
       i18n,
     }
@@ -97,6 +76,10 @@ export default defineComponent({
 .tab-content {
   &__technicalData {
     @apply tw-w-full;
+  }
+
+  &__dimensions {
+    @apply tw-m-auto;
   }
 }
 </style>

@@ -127,6 +127,9 @@ export const useProductStore = defineStore('product', () => {
     if (route.value.fullPath === reqId.value) return
     reqId.value = route.value.fullPath
 
+    // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
+    product.value = null
+
     await Promise.all([loadProduct(id), loadVariationMatrix(id), loadPrice(id)])
   }
 
