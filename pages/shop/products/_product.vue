@@ -44,11 +44,11 @@
             <div
               class="tw-bg-pv-grey-88 tw-w-full tw-rounded-lg"
               :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-              style="height: 350px"
-            >
-              Recommended Accessories
-            </div>
-            <DetailTabs :product-code="productStore.code" />
+            ></div>
+            <DetailTabs
+              :product="productStore.product"
+              :product-code="productStore.code"
+            />
           </div>
         </ContentWrapper>
       </Page>
@@ -95,7 +95,10 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const productStore = useProductStore()
-    const loadProduct = () => redirectOnError(productStore.loadByPath)
+    const loadProduct = () => {
+      productStore.getProductAccessories()
+      redirectOnError(productStore.loadByPath)
+    }
 
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)
