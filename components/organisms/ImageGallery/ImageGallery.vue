@@ -1,6 +1,10 @@
 <template>
   <div class="image-gallery">
-    <div class="image-gallery__container">
+    <div
+      v-touch:swipe.left="nextImage"
+      v-touch:swipe.right="prevImage"
+      class="image-gallery__container"
+    >
       <client-only>
         <zoom-on-hover
           :img-normal="(images[currentImage] || {}).url"
@@ -34,8 +38,8 @@
       v-model="showLightBox"
       :images="images"
       :current-image="currentImage"
-      @increaseCurr="currentImage++"
-      @decreaseCurr="currentImage--"
+      @increaseCurr="nextImage"
+      @decreaseCurr="prevImage"
       @setCurr="currentImage = $event"
     />
   </div>
@@ -80,7 +84,26 @@ export default defineComponent({
       return images.value[currentImage.value]?.type === 'PRIMARY'
     })
 
-    return { showLightBox, currentImage, showSimilarLabel, isDesktop }
+    const nextImage = () => {
+      if (currentImage.value < images.value.length - 1) {
+        currentImage.value++
+      }
+    }
+
+    const prevImage = () => {
+      if (currentImage.value > 0) {
+        currentImage.value--
+      }
+    }
+
+    return {
+      showLightBox,
+      currentImage,
+      showSimilarLabel,
+      isDesktop,
+      nextImage,
+      prevImage,
+    }
   },
 })
 </script>
