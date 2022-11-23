@@ -25,7 +25,7 @@
       >{{ $t('product.similarImage') }}</span
     >
     <ImageThumbnails
-      v-if="!hideSingleThumbnail"
+      v-if="images.length > 1 || showSingleThumbnail"
       :images="images"
       :current-image="currentImage"
       @update="currentImage = $event"
@@ -63,9 +63,9 @@ export default defineComponent({
       type: Array,
       required: true,
     },
-    hideSingleThumbnail: {
+    showSingleThumbnail: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
   setup(props) {

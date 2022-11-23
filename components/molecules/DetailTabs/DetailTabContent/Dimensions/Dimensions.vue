@@ -7,7 +7,7 @@
     >
       <ImageGallery
         class="dimensions-tab__image"
-        hide-single-thumbnail
+        :show-single-thumbnail="false"
         :images="[dimensionImage]"
       />
     </div>
