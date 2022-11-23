@@ -6,7 +6,11 @@
     :language="language"
   >
     <template #default="{ result: { data } }">
-      <Page v-if="data" v-bind="data" :meta-data="productStore.metaData">
+      <Page
+        v-if="data && productStore.product"
+        v-bind="data"
+        :meta-data="productStore.metaData"
+      >
         <ContentWrapper>
           <!-- placeholder start -->
           <div
