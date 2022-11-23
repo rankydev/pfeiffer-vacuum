@@ -109,7 +109,6 @@ export default defineComponent({
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-w-full;
-  @apply tw-my-8;
 
   &__container {
     @apply tw-flex;
