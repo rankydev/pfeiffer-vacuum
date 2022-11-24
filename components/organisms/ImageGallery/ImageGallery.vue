@@ -114,8 +114,6 @@ export default defineComponent({
   height: 100% !important;
   width: 100% !important;
   outline: none !important;
-  @apply tw-rounded-lg;
-  @apply tw-p-4;
 
   &:hover {
     @apply tw-cursor-zoom-in;
@@ -140,8 +138,6 @@ export default defineComponent({
     @apply tw-relative;
     @apply tw-mb-2;
     height: 400px;
-    @apply tw-rounded-lg;
-    @apply tw-bg-pv-grey-96;
   }
 
   &__zoom-indicator {
