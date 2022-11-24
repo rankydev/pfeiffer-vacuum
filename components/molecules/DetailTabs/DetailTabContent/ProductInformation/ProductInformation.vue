@@ -1,10 +1,6 @@
 <template>
   <div class="product-information">
     <div class="product-information__info">
-      <h4>
-        {{ $t('product.productInformation') }}
-      </h4>
-
       <div class="product-information__content">
         <ul
           v-if="!isMaster && hasFootnotes"
