@@ -87,10 +87,18 @@ export default defineComponent({
 
 <style lang="scss">
 .dimensions-tab {
-  @apply tw-mt-8;
   @apply tw-grid;
   @apply tw-grid-cols-12;
   @apply tw-gap-6;
+  @apply tw-pt-6;
+
+  @screen md {
+    @apply tw-pt-8;
+  }
+
+  @screen lg {
+    @apply tw-pt-12;
+  }
 
   &__image-wrapper {
     @apply tw-col-span-12;

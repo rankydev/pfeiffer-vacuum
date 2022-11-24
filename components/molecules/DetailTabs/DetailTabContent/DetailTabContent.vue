@@ -1,15 +1,11 @@
 <template>
   <div class="tab-content">
-    <div
-      v-if="lastTabSelected === 'productInfo'"
-      :title="$t('product.productInformation')"
-    >
+    <div v-if="lastTabSelected === 'productInfo'">
       <ProductInformation />
     </div>
     <div
       v-if="lastTabSelected === 'technicalData'"
       class="tab-content__technicalData"
-      :title="$t('product.technicalData')"
     >
       <ProductTechnicalData
         :features="getSortedFeatures(product, 'TechnicalData')"
@@ -17,29 +13,16 @@
     </div>
     <div
       v-if="lastTabSelected === 'dimensions'"
-      :title="$t('product.dimensions')"
       class="tab-content__dimensions"
     >
       <Dimensions />
     </div>
-    <div
-      v-if="lastTabSelected === 'accessories'"
-      :title="$t('product.accessories')"
-    ></div>
-    <div
-      v-if="lastTabSelected === 'consumables'"
-      :title="$t('product.consumables')"
-    ></div>
-    <div
-      v-if="lastTabSelected === 'spareparts'"
-      :title="$t('product.spareParts')"
-    ></div>
+    <div v-if="lastTabSelected === 'accessories'"></div>
+    <div v-if="lastTabSelected === 'consumables'"></div>
+    <div v-if="lastTabSelected === 'spareparts'"></div>
     <!-- Service Tab should not be visible in MVP -->
-    <div v-if="false" :title="$t('product.service')">Service</div>
-    <div
-      v-if="lastTabSelected === 'downloads'"
-      :title="$t('product.downloads')"
-    ></div>
+    <div v-if="false">Service</div>
+    <div v-if="lastTabSelected === 'downloads'"></div>
   </div>
 </template>
 

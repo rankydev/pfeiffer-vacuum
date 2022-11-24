@@ -80,18 +80,18 @@ export default {
   @apply tw-grid;
   @apply tw-grid-cols-12;
   @apply tw-gap-6;
-  @apply tw-pt-10;
+  @apply tw-pt-6;
+
+  @screen md {
+    @apply tw-pt-8;
+  }
+
+  @screen lg {
+    @apply tw-pt-12;
+  }
 
   &__info {
     @apply tw-col-span-12;
-
-    h4 {
-      @apply tw-mb-4;
-
-      @screen lg {
-        @apply tw-mb-6;
-      }
-    }
 
     &--small {
       @apply tw-col-span-6;
