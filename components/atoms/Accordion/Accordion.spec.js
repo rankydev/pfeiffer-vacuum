@@ -1,4 +1,4 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils'
+import { mount, createLocalVue } from '@vue/test-utils'
 
 import Accordion from './Accordion.vue'
 import { accordionEntries } from './Accordion.stories.content'
@@ -19,7 +19,7 @@ function createComponent(propsData = {}) {
     propsData,
   }
 
-  wrapper = shallowMount(Accordion, options)
+  wrapper = mount(Accordion, options)
 }
 
 describe('Accordion', () => {
