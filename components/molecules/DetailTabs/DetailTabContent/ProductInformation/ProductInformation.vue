@@ -77,6 +77,7 @@ export default {
 
 <style lang="scss">
 .product-information {
+  @apply tw-w-full;
   @apply tw-grid;
   @apply tw-grid-cols-12;
   @apply tw-gap-6;
@@ -142,17 +143,15 @@ export default {
     }
 
     &::before {
-      @apply tw-text-pv-red;
-      content: '\25A0';
+      @apply tw-bg-pv-red;
+      content: '';
+      @apply tw-h-2;
+      @apply tw-w-2;
       @apply tw-text-xs;
       @apply tw-leading-5;
       @apply tw-absolute;
-      top: 0;
-      left: 0;
-
-      @screen md {
-        @apply tw-text-xl;
-      }
+      @apply tw-top-2;
+      @apply tw-left-0;
     }
   }
 

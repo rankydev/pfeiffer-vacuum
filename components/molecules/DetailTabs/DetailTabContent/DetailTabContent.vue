@@ -1,22 +1,18 @@
 <template>
   <div class="tab-content">
-    <div v-if="lastTabSelected === 'productInfo'">
-      <ProductInformation />
-    </div>
-    <div
+    <ProductInformation v-if="lastTabSelected === 'productInfo'" />
+
+    <ProductTechnicalData
       v-if="lastTabSelected === 'technicalData'"
       class="tab-content__technicalData"
-    >
-      <ProductTechnicalData
-        :features="getSortedFeatures(product, 'TechnicalData')"
-      />
-    </div>
-    <div
+      :features="getSortedFeatures(product, 'TechnicalData')"
+    />
+
+    <Dimensions
       v-if="lastTabSelected === 'dimensions'"
       class="tab-content__dimensions"
-    >
-      <Dimensions />
-    </div>
+    />
+
     <div v-if="lastTabSelected === 'accessories'"></div>
     <div v-if="lastTabSelected === 'consumables'"></div>
     <div v-if="lastTabSelected === 'spareparts'"></div>
