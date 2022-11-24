@@ -114,7 +114,6 @@ export default defineComponent({
       slug,
       fallbackSlug,
       language,
-
       productStore,
     }
   },

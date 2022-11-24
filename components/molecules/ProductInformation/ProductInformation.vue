@@ -30,7 +30,7 @@
         >
           <!-- eslint-disable vue/no-v-html -->
           <li
-            v-for="(bullet, index) in product.bullets"
+            v-for="(bullet, index) in (product || {}).bullets"
             :key="index"
             class="product-information__bullet"
             v-html="sanitizer.block(bullet)"

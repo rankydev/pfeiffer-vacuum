@@ -63,7 +63,9 @@ export default defineComponent({
     const context = useContext()
 
     const image = computed(() => props.product.images?.[0])
-    const description = computed(() => (props.product.bullets || []).join(', '))
+    const description = computed(() =>
+      (props.product?.bullets || []).join(', ')
+    )
     const name = computed(() => props.product.name)
     const categoryName = computed(() => props.product.categories?.[0]?.name)
 
