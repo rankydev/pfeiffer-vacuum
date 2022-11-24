@@ -150,9 +150,10 @@ export const useProductStore = defineStore('product', () => {
       throw new Error('No valid id given in route object.')
     }
 
-    // if we already loaded the path we just return
-    if (route.value.fullPath === reqId.value) return
-    reqId.value = route.value.fullPath
+    // if we already loaded the product we just return
+    // using product id instead of fullpath to allow page caching for same product page but with anchor tags f.e. for "#variantselection"
+    if (id === reqId.value) return
+    reqId.value = id
 
     // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
     product.value = null

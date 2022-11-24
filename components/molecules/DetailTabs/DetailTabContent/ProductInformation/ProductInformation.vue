@@ -113,7 +113,6 @@ export default {
     }
   }
 
-  &__bullets,
   &__footnotes {
     @apply tw-col-span-12;
     @apply tw-list-none;
@@ -121,9 +120,16 @@ export default {
     @screen md {
       @apply tw-col-span-6;
     }
+  }
+
+  &__bullets {
+    @apply tw-col-span-12;
+    @apply tw-list-none;
 
     &--small {
-      @apply tw-col-span-6;
+      @screen md {
+        @apply tw-col-span-6;
+      }
     }
   }
 
