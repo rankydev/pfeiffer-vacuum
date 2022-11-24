@@ -25,6 +25,7 @@
     </div>
     <GenericAccordion
       :accordion-entries="mobileAccordionItems"
+      use-tab-styles
       class="tab-navigation__mobile"
     >
       <template v-for="item in mobileAccordionItems" #[item.slotName]>

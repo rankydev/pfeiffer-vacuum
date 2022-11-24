@@ -66,3 +66,8 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {}
+
+export const TabStyles = Template.bind({})
+TabStyles.args = {
+  useTabStyles: true,
+}

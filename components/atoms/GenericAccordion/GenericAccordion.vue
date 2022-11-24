@@ -1,5 +1,5 @@
 <template>
-  <div class="accordion">
+  <div class="accordion" :class="{ 'accordion--tab-styles': useTabStyles }">
     <div
       v-for="(entry, idx) in accordionEntries"
       :key="idx"
@@ -70,6 +70,13 @@ export default defineComponent({
      * Allow multiple open items at the same time
      */
     multiple: {
+      type: Boolean,
+      default: false,
+    },
+    /**
+     * Use the tab layout instead of the standard accordion layout
+     */
+    useTabStyles: {
       type: Boolean,
       default: false,
     },
@@ -185,6 +192,37 @@ export default defineComponent({
       @screen md {
         @apply tw-mb-6;
       }
+    }
+  }
+
+  &--tab-styles {
+    @apply tw-border-b-0;
+
+    // negative values lead to compiling errors
+    margin: 0 -1.25rem;
+
+    .accordion__heading {
+      @apply tw-border-t-0;
+      @apply tw-my-1;
+    }
+
+    .accordion__button {
+      @apply tw-bg-pv-grey-88;
+      @apply tw-px-5;
+      @apply tw-text-base;
+
+      &--active {
+        @apply tw-text-pv-white;
+        @apply tw-bg-pv-red;
+
+        .accordion__label {
+          @apply tw-text-pv-white;
+        }
+      }
+    }
+
+    .accordion__content {
+      @apply tw-px-5;
     }
   }
 }
