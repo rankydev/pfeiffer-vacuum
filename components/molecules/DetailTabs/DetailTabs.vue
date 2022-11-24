@@ -25,6 +25,7 @@
     </div>
     <GenericAccordion
       :accordion-entries="mobileAccordionItems"
+      level="h3"
       use-tab-styles
       class="tab-navigation__mobile"
     >

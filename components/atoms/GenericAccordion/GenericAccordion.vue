@@ -209,7 +209,6 @@ export default defineComponent({
     .accordion__button {
       @apply tw-bg-pv-grey-88;
       @apply tw-px-5;
-      @apply tw-text-base;
 
       &--active {
         @apply tw-text-pv-white;
