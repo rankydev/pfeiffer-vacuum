@@ -4,7 +4,7 @@
     <div class="pv-input__wrapper">
       <input
         v-model="internalValue"
-        v-bind="{ placeholder, disabled }"
+        v-bind="{ placeholder, disabled, ...$attrs }"
         :required="required"
         :type="inputType"
         class="pv-input__element"

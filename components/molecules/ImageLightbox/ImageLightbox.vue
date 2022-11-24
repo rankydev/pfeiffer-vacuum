@@ -90,7 +90,6 @@ export default defineComponent({
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-justify-between;
-  @apply tw-p-6;
 
   &__selected-image-wrapper {
     @apply tw-block;

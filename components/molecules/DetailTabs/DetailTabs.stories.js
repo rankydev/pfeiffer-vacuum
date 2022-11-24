@@ -1,8 +1,12 @@
 import DetailTabs from './DetailTabs'
 import { product } from '~/components/molecules/DetailTabs/DetailTabs.stories.content'
+import { useProductStore } from '~/stores/product'
 
 const argTypes = {
-  product: product,
+  product: {
+    control: { type: 'array' },
+    defaultValue: product,
+  },
 }
 
 export default {
@@ -25,6 +29,8 @@ export default {
 const Template = (args) => ({
   components: { DetailTabs },
   setup() {
+    const productStore = useProductStore()
+    productStore.product = args.product
     return { args }
   },
   template: `

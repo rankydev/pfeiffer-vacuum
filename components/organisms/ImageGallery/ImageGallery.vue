@@ -1,6 +1,10 @@
 <template>
   <div class="image-gallery">
-    <div class="image-gallery__container">
+    <div
+      v-touch:swipe.left="nextImage"
+      v-touch:swipe.right="prevImage"
+      class="image-gallery__container"
+    >
       <client-only>
         <zoom-on-hover
           :img-normal="(images[currentImage] || {}).url"
@@ -25,6 +29,7 @@
       >{{ $t('product.similarImage') }}</span
     >
     <ImageThumbnails
+      v-if="images.length > 1 || showSingleThumbnail"
       :images="images"
       :current-image="currentImage"
       @update="currentImage = $event"
@@ -33,8 +38,8 @@
       v-model="showLightBox"
       :images="images"
       :current-image="currentImage"
-      @increaseCurr="currentImage++"
-      @decreaseCurr="currentImage--"
+      @increaseCurr="nextImage"
+      @decreaseCurr="prevImage"
       @setCurr="currentImage = $event"
     />
   </div>
@@ -62,6 +67,10 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+    showSingleThumbnail: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props) {
     const { images } = toRefs(props)
@@ -75,7 +84,26 @@ export default defineComponent({
       return images.value[currentImage.value]?.type === 'PRIMARY'
     })
 
-    return { showLightBox, currentImage, showSimilarLabel, isDesktop }
+    const nextImage = () => {
+      if (currentImage.value < images.value.length - 1) {
+        currentImage.value++
+      }
+    }
+
+    const prevImage = () => {
+      if (currentImage.value > 0) {
+        currentImage.value--
+      }
+    }
+
+    return {
+      showLightBox,
+      currentImage,
+      showSimilarLabel,
+      isDesktop,
+      nextImage,
+      prevImage,
+    }
   },
 })
 </script>
@@ -104,7 +132,6 @@ export default defineComponent({
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-w-full;
-  @apply tw-my-8;
 
   &__container {
     @apply tw-flex;
