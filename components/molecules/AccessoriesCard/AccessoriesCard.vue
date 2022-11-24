@@ -1,8 +1,8 @@
 <template>
-  <GenericCard :has-link="false" image-size="contain" :href="url">
+  <GenericCard :has-link="false" image-size="contain" :href="''">
     <template #image>
       <ResponsiveImage
-        :image="accessoryImage"
+        :image="imageUrl(product.images)"
         aspect-ratio="16:9"
         :provider="provider"
       />
@@ -122,6 +122,7 @@ import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import InformationModal from '~/components/molecules/InformationModal/InformationModal'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
+import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 
 export default defineComponent({
   name: 'AccessoriesCard',
@@ -149,6 +150,7 @@ export default defineComponent({
     const ociStore = useOciStore()
     const sanitizer = useSanitizer()
     const { product } = toRefs(props)
+    const { imageUrl } = useImageHelper()
 
     const quantity = ref(1)
     const infoModalVisible = ref(false)
@@ -196,16 +198,17 @@ export default defineComponent({
       await userStore.login()
     }
 
-    const accessoryImage = computed(() => {
-      if (product.value?.productReferences[0]?.image) {
-        product.value.images.find(
-          (img) => img.imageType === 'PRIMARY' && img.format === 'product'
-        ) || {}
-      }
-    })
+    // const accessoryImage = computed(() => {
+    //   if (product.value?.images[0]) {
+    //     product.value.images.find(
+    //       (img) => img.imageType === 'PRIMARY' && img.format === 'product'
+    //     ) || {}
+    //   }
+    // })
 
     return {
       context,
+      imageUrl,
       quantity,
       infoModalVisible,
       hasAddToListButton,
@@ -218,7 +221,6 @@ export default defineComponent({
       addToCart,
       addToList,
       login,
-      accessoryImage,
       sanitizer,
       i18n,
     }

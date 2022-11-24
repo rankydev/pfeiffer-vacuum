@@ -44,7 +44,11 @@
             <div
               class="tw-bg-pv-grey-88 tw-w-full tw-rounded-lg"
               :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-            ></div>
+            >
+              <AccessoriesCardCarousel
+                :headline="$t('product.recommended.title')"
+              />
+            </div>
             <DetailTabs
               :product="productStore.product"
               :product-code="productStore.code"
@@ -74,10 +78,11 @@ import Page from '~/components/templates/Page/Page'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
+import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page, DetailTabs, ImageGallery },
+  components: { Page, DetailTabs, ImageGallery, AccessoriesCardCarousel },
   setup() {
     const route = useRoute()
     const context = useContext()
