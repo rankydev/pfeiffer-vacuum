@@ -23,25 +23,15 @@
         :last-tab-selected="lastTabSelected"
       />
     </div>
-    <div
-      v-for="(tab, index) in tabs.filter((o) => o.active)"
-      :key="index"
+    <GenericAccordion
+      :accordion-entries="mobileAccordionItems"
       class="tab-navigation__mobile"
     >
-      <Button
-        :label="tab.name"
-        :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
-        :icon="lastTabSelected === tab.trigger ? 'expand_less' : 'expand_more'"
-        class="tab-navigation__mobile__item"
-        :class="{ active: lastTabSelected === tab.trigger }"
-        :disabled="isDisabled(tab.trigger)"
-        @click="selectTab(tab.trigger)"
-      />
-      <DetailTabContent
-        v-if="lastTabSelected === tab.trigger"
-        :last-tab-selected="lastTabSelected"
-      />
-    </div>
+      <template v-for="item in mobileAccordionItems" #[item.slotName]>
+        <!-- eslint-disable-next-line vue/valid-v-for -->
+        <DetailTabContent :last-tab-selected="item.slotName" />
+      </template>
+    </GenericAccordion>
   </div>
 </template>
 
@@ -56,9 +46,14 @@ import { useProductStore } from '~/stores/product'
 import Button from '~/components/atoms/Button/Button'
 import DetailTabContent from './DetailTabContent/DetailTabContent'
 import getSortedFeatures from './partials/getSortedFeatures'
+import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
 
 export default defineComponent({
-  components: { Button, DetailTabContent },
+  components: {
+    Button,
+    DetailTabContent,
+    GenericAccordion,
+  },
   props: {
     productCode: {
       type: String,
@@ -81,14 +76,7 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: [
-    'getAccessories',
-    'getConsumables',
-    'getReferences',
-    'getSpareParts',
-    'getDownloads',
-  ],
-  setup(props, { emit }) {
+  setup(props) {
     const { i18n } = useContext()
 
     const { product } = useProductStore()
@@ -137,6 +125,19 @@ export default defineComponent({
       },
     ])
 
+    const mobileAccordionItems = computed(() => {
+      return tabs.value
+        .filter((o) => o.active)
+        .map((item, index) => {
+          return {
+            label: item.name,
+            isActive: index === 0 ? true : false, // isActive means if item should be initially open. We just pick first one.
+            disabled: isDisabled(item.trigger),
+            slotName: item.trigger,
+          }
+        })
+    })
+
     const spareParts = computed(() => {
       return props.references.filter((o) => o.referenceType === 'SPAREPART')
     })
@@ -174,18 +175,6 @@ export default defineComponent({
 
     const selectTab = (code) => {
       lastTabSelected.value = code
-
-      if (code === 'accessories') {
-        emit('getAccessories')
-      } else if (code === 'consumables') {
-        emit('getConsumables')
-        emit('getReferences')
-      } else if (code === 'spareparts') {
-        emit('getSpareParts')
-        emit('getReferences')
-      } else if (code === 'downloads') {
-        emit('getDownloads')
-      }
     }
 
     const isDisabled = (code) => {
@@ -214,6 +203,7 @@ export default defineComponent({
     return {
       lastTabSelected,
       tabs,
+      mobileAccordionItems,
       spareParts,
       consumables,
       hasConsumables,
