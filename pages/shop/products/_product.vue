@@ -42,6 +42,8 @@
               Variant Selection
             </div>
             <div class="tw-w-full">
+              <!-- ToDo: -->
+              <!-- carouselEntries has to be replaced with data from store later -->
               <AccessoriesCardCarousel
                 :headline="
                   $t('product.recommended.title') + productStore.product.name

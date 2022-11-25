@@ -49,6 +49,96 @@ export const carouselEntries = [
   {
     referenceType: 'RECOMMENDEDACCESSORIES',
     target: {
+      categoryPath: [
+        {
+          id: 'COMPONENTS__VALVES',
+          image: {
+            format: '300Wx300H',
+            url: '/medias/Product-image-320RKS063.eps-1edd6d41-6908-11e6-80ca-005056950a30.png?context=bWFzdGVyfGltYWdlc3wyMjY3NzN8aW1hZ2UvcG5nfGhiOC9oZTcvODg0NDIzNDA2MzkwMi9Qcm9kdWN0IGltYWdlIDMyMFJLUzA2My5lcHN-MWVkZDZkNDEtNjkwOC0xMWU2LTgwY2EtMDA1MDU2OTUwYTMwLnBuZ3w5NmZjMzFlOGI5ODU1ODlkYTA0ZDU4MGJiMmIxZTNlNzA2YTQ3M2MzNjBlNmIzNWJlMWM0ZGU5OGZkYzcyZGY5',
+          },
+          name: 'Komponenten & Ventile',
+        },
+        { id: 'COMPONENTS', name: 'Komponenten' },
+        {
+          id: 'HOSES__FLEXIBLE_CONNECTORS',
+          name: 'Schläuche/elast. Verbindung',
+        },
+        { id: 'CONNECTION_KITS_FOR_PUMPS', name: 'Verbindungssets Pumpen' },
+      ],
+      code: '120SWS016_1000',
+      configurable: false,
+      dimensionImage: {
+        altText:
+          'Dimensions for Verbindungsset zur Montage von Pumpen, DN 16 ISO-KF',
+        format: '300Wx300H',
+        url: '/medias/?context=bWFzdGVyfGltYWdlc3wzNTE0Njd8aW1hZ2UvcG5nfGg0Yy9oZjYvODgyNDY4ODM0NTExOHxmNGNkNjcwYjc3OWZkY2E5NzU5OWNiNzVhZGU2YzJjMGNhZDkwYmU1OTNiM2QwYjk1NDkyNGU5NmJhZWZkNWUz',
+      },
+      images: [
+        {
+          altText: 'Verbindungsset zur Montage von Pumpen, DN 16 ISO-KF',
+          format: 'product',
+          imageType: 'PRIMARY',
+          url: imageAsBase64,
+        },
+      ],
+      name: 'Verbindungsset zur Montage von Pumpen, DN 16 ISO-KF',
+      orderNumber: '120SWS016-1000',
+      priceRange: {},
+      productType: 'PRODUCT',
+      purchasable: true,
+      stock: { stockLevelStatus: 'inStock' },
+      summary: '',
+      url: '/Komponenten-%26-Ventile/Komponenten/Schl%C3%A4uche-elast-Verbindung/Verbindungssets-Pumpen/Verbindungsset-zur-Montage-von-Pumpen%2C-DN-16-ISO-KF/p/120SWS016_1000',
+    },
+  },
+  {
+    referenceType: 'RECOMMENDEDACCESSORIES',
+    target: {
+      categoryPath: [
+        {
+          id: 'COMPONENTS__VALVES',
+          image: {
+            format: '300Wx300H',
+            url: '/medias/Product-image-320RKS063.eps-1edd6d41-6908-11e6-80ca-005056950a30.png?context=bWFzdGVyfGltYWdlc3wyMjY3NzN8aW1hZ2UvcG5nfGhiOC9oZTcvODg0NDIzNDA2MzkwMi9Qcm9kdWN0IGltYWdlIDMyMFJLUzA2My5lcHN-MWVkZDZkNDEtNjkwOC0xMWU2LTgwY2EtMDA1MDU2OTUwYTMwLnBuZ3w5NmZjMzFlOGI5ODU1ODlkYTA0ZDU4MGJiMmIxZTNlNzA2YTQ3M2MzNjBlNmIzNWJlMWM0ZGU5OGZkYzcyZGY5',
+          },
+          name: 'Komponenten & Ventile',
+        },
+        { id: 'COMPONENTS', name: 'Komponenten' },
+        {
+          id: 'HOSES__FLEXIBLE_CONNECTORS',
+          name: 'Schläuche/elast. Verbindung',
+        },
+        { id: 'CONNECTION_KITS_FOR_PUMPS', name: 'Verbindungssets Pumpen' },
+      ],
+      code: '120SWS016_1000',
+      configurable: false,
+      dimensionImage: {
+        altText:
+          'Dimensions for Verbindungsset zur Montage von Pumpen, DN 16 ISO-KF',
+        format: '300Wx300H',
+        url: '/medias/?context=bWFzdGVyfGltYWdlc3wzNTE0Njd8aW1hZ2UvcG5nfGg0Yy9oZjYvODgyNDY4ODM0NTExOHxmNGNkNjcwYjc3OWZkY2E5NzU5OWNiNzVhZGU2YzJjMGNhZDkwYmU1OTNiM2QwYjk1NDkyNGU5NmJhZWZkNWUz',
+      },
+      images: [
+        {
+          altText: 'Verbindungsset zur Montage von Pumpen, DN 16 ISO-KF',
+          format: 'product',
+          imageType: 'PRIMARY',
+          url: imageAsBase64,
+        },
+      ],
+      name: 'Verbindungsset zur Montage von Pumpen, DN 16 ISO-KF',
+      orderNumber: '120SWS016-1000',
+      priceRange: {},
+      productType: 'PRODUCT',
+      purchasable: true,
+      stock: { stockLevelStatus: 'inStock' },
+      summary: '',
+      url: '/Komponenten-%26-Ventile/Komponenten/Schl%C3%A4uche-elast-Verbindung/Verbindungssets-Pumpen/Verbindungsset-zur-Montage-von-Pumpen%2C-DN-16-ISO-KF/p/120SWS016_1000',
+    },
+  },
+  {
+    referenceType: 'RECOMMENDEDACCESSORIES',
+    target: {
       bullets: [
         'Universelles Steuergerät für alle Produkte mit Pfeiffer Vacuum RS-485-Protokoll',
         "Einfache Bedienung über 3,5'' Touchdisplay",
