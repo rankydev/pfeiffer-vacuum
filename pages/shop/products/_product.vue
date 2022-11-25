@@ -41,12 +41,11 @@
             >
               Variant Selection
             </div>
-            <div
-              class="tw-bg-pv-grey-88 tw-w-full tw-rounded-lg"
-              :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-            >
+            <div class="tw-w-full">
               <AccessoriesCardCarousel
-                :headline="$t('product.recommended.title')"
+                :headline="
+                  $t('product.recommended.title') + productStore.product.name
+                "
                 :entries="carouselEntries"
               />
             </div>

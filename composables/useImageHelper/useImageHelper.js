@@ -34,15 +34,10 @@ export const useImageHelper = () => {
       const image = images.find(findImage) || {}
 
       if (image?.url) {
-        console.log(image.url, '-------------> AUSGABE IMAGE')
         return { ...image, url: image.url }
       }
     }
-    console.log(i18n, 'i18n ----------------- is da')
-    console.log(
-      i18n.t('product.placeholderImage'),
-      'Übersetzung ----------------- is da'
-    )
+
     return { url: getAssetImage(i18n.t('product.placeholderImage')) }
   }
 

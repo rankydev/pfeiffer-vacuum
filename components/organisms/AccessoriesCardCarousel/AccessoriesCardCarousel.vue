@@ -1,6 +1,8 @@
 <template>
   <div class="accessories-card-carousel">
-    <h2>{{ headline }}</h2>
+    <ContentWrapper>
+      <h2 class="accessories-card-carousel__headline">{{ headline }}</h2>
+    </ContentWrapper>
     <GenericCarousel>
       <template #slides>
         <div v-for="entry in entries" :key="entry.id">
@@ -13,11 +15,12 @@
 
 <script>
 import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'AccessoriesCardCarousel',
-  components: { GenericCarousel },
+  components: { GenericCarousel, ContentWrapper },
   props: {
     /**
      * Headline of the carousel
@@ -34,6 +37,13 @@ export default defineComponent({
       default: () => [],
     },
   },
-  setup() {},
+  // setup() {},
 })
 </script>
+<style lang="scss">
+.accessories-card-carousel {
+  &__headline {
+    @apply tw-mb-4;
+  }
+}
+</style>

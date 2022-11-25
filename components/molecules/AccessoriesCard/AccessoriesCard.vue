@@ -189,13 +189,12 @@ export default defineComponent({
     })
 
     const addToCart = () => {
-      const params = { code: product.value.code, quantity: quantity.value }
-      this.$store.dispatch('addToCart', params)
+      // ToDo:
+      // still has to be done
     }
     const addToList = () => {
-      this.$store.commit('setShoppingListLastProduct', product.value)
-      this.$store.commit('setShoppingListLastProductQuantity', quantity.value)
-      this.$store.dispatch('addToList')
+      // ToDo:
+      // still has to be done
     }
     const login = async () => {
       await userStore.login()
