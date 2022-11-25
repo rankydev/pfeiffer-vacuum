@@ -6,10 +6,14 @@
           v-for="(tab, index) in tabs.filter((o) => o.active)"
           :key="index"
           :label="tab.name"
-          :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
+          :variant="
+            lastTabSelected === tab.trigger || isDisabled(tab.trigger)
+              ? 'secondary'
+              : 'inverted'
+          "
+          :class="{ active: lastTabSelected === tab.trigger }"
           cutaway="bottom"
           class="tab-navigation__desktop__item"
-          :class="{ active: lastTabSelected === tab.trigger }"
           :disabled="isDisabled(tab.trigger)"
           @click="selectTab(tab.trigger)"
         />
@@ -19,25 +23,17 @@
         :last-tab-selected="lastTabSelected"
       />
     </div>
-    <div
-      v-for="(tab, index) in tabs.filter((o) => o.active)"
-      :key="index"
+    <GenericAccordion
+      :accordion-entries="mobileAccordionItems"
+      level="h3"
+      use-tab-styles
       class="tab-navigation__mobile"
     >
-      <Button
-        :label="tab.name"
-        :variant="lastTabSelected === tab.trigger ? 'secondary' : 'inverted'"
-        :icon="lastTabSelected === tab.trigger ? 'expand_less' : 'expand_more'"
-        class="tab-navigation__mobile__item"
-        :class="{ active: lastTabSelected === tab.trigger }"
-        :disabled="isDisabled(tab.trigger)"
-        @click="selectTab(tab.trigger)"
-      />
-      <DetailTabContent
-        v-if="lastTabSelected === tab.trigger"
-        :last-tab-selected="lastTabSelected"
-      />
-    </div>
+      <template v-for="item in mobileAccordionItems" #[item.slotName]>
+        <!-- eslint-disable-next-line vue/valid-v-for -->
+        <DetailTabContent :last-tab-selected="item.slotName" />
+      </template>
+    </GenericAccordion>
   </div>
 </template>
 
@@ -48,16 +44,19 @@ import {
   ref,
   computed,
 } from '@nuxtjs/composition-api'
-import Button from '~/components/atoms/Button/Button.vue'
-import DetailTabContent from '~/components/molecules/DetailTabContent/DetailTabContent.vue'
+import { useProductStore } from '~/stores/product'
+import Button from '~/components/atoms/Button/Button'
+import DetailTabContent from './DetailTabContent/DetailTabContent'
+import getSortedFeatures from './partials/getSortedFeatures'
+import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
 
 export default defineComponent({
-  components: { Button, DetailTabContent },
+  components: {
+    Button,
+    DetailTabContent,
+    GenericAccordion,
+  },
   props: {
-    product: {
-      type: Object,
-      required: true,
-    },
     productCode: {
       type: String,
       default: '',
@@ -79,15 +78,11 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: [
-    'getAccessories',
-    'getConsumables',
-    'getReferences',
-    'getSpareParts',
-    'getDownloads',
-  ],
-  setup(props, { emit }) {
+  setup(props) {
     const { i18n } = useContext()
+
+    const { product } = useProductStore()
+
     let lastTabSelected = ref('productInfo')
     const tabs = ref([
       {
@@ -132,6 +127,19 @@ export default defineComponent({
       },
     ])
 
+    const mobileAccordionItems = computed(() => {
+      return tabs.value
+        .filter((o) => o.active)
+        .map((item) => {
+          return {
+            label: item.name,
+            isActive: false, // no initial open tab
+            disabled: isDisabled(item.trigger),
+            slotName: item.trigger,
+          }
+        })
+    })
+
     const spareParts = computed(() => {
       return props.references.filter((o) => o.referenceType === 'SPAREPART')
     })
@@ -141,8 +149,8 @@ export default defineComponent({
     })
 
     const hasConsumables = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'CONSUMABLE'
         )
       }
@@ -150,8 +158,8 @@ export default defineComponent({
     })
 
     const hasSpareParts = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'SPAREPART'
         )
       }
@@ -159,69 +167,34 @@ export default defineComponent({
     })
 
     const hasAccessories = computed(() => {
-      if (props.product && props.product.productReferences) {
-        return props.product.productReferences.filter(
+      if (product && product.productReferences) {
+        return product.productReferences.filter(
           (o) => o.referenceType === 'ACCESSORIES'
         )
       }
       return []
     })
 
-    const getSortedFeatures = (product, code) => {
-      if (!product || !product.typedFeatureList) {
-        return []
-      }
-
-      const data = product.typedFeatureList.filter((o) => o.code === code)
-
-      if (data && data?.length > 0) {
-        const features = [...data[0].features]
-        return features.sort((a, b) => {
-          const nameA = a.name.toUpperCase()
-          const nameB = b.name.toUpperCase()
-
-          if (nameA < nameB) {
-            return -1
-          }
-          if (nameA > nameB) {
-            return 1
-          }
-
-          return 0
-        })
-      } else {
-        return []
-      }
-    }
-
     const selectTab = (code) => {
       lastTabSelected.value = code
-
-      if (code === 'accessories') {
-        emit('getAccessories')
-      } else if (code === 'consumables') {
-        emit('getConsumables')
-        emit('getReferences')
-      } else if (code === 'spareparts') {
-        emit('getSpareParts')
-        emit('getReferences')
-      } else if (code === 'downloads') {
-        emit('getDownloads')
-      }
     }
 
     const isDisabled = (code) => {
       switch (code) {
         case 'technicalData':
-          return getSortedFeatures(props.product, 'TechnicalData')?.length === 0
+          return getSortedFeatures(product, 'TechnicalData')?.length === 0
         case 'dimensions':
-          return !props.product || !props.product.dimensionImage
+          return (
+            !product ||
+            (!product.dimensionImage &&
+              getSortedFeatures(product, 'Dimension')?.length === 0)
+          )
         case 'accessories':
-          return props.hasAccessories?.length === 0
+          return !hasAccessories.value?.length
         case 'consumables':
-          return props.hasConsumables?.length === 0
+          return !hasConsumables.value?.length
         case 'spareparts':
-          return props.hasSpareParts?.length === 0
+          return !hasSpareParts.value?.length
         case 'service':
           return true
         default:
@@ -232,6 +205,7 @@ export default defineComponent({
     return {
       lastTabSelected,
       tabs,
+      mobileAccordionItems,
       spareParts,
       consumables,
       hasConsumables,
@@ -239,7 +213,6 @@ export default defineComponent({
       hasAccessories,
       selectTab,
       isDisabled,
-      getSortedFeatures,
       i18n,
     }
   },

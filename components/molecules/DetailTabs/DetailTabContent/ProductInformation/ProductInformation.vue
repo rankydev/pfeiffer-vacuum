@@ -1,10 +1,6 @@
 <template>
   <div class="product-information">
     <div class="product-information__info">
-      <h4>
-        {{ $t('product.productInformation') }}
-      </h4>
-
       <div class="product-information__content">
         <ul
           v-if="!isMaster && hasFootnotes"
@@ -81,21 +77,22 @@ export default {
 
 <style lang="scss">
 .product-information {
+  @apply tw-w-full;
   @apply tw-grid;
   @apply tw-grid-cols-12;
   @apply tw-gap-6;
-  @apply tw-pt-10;
+  @apply tw-pt-6;
+
+  @screen md {
+    @apply tw-pt-8;
+  }
+
+  @screen lg {
+    @apply tw-pt-12;
+  }
 
   &__info {
     @apply tw-col-span-12;
-
-    h4 {
-      @apply tw-mb-4;
-
-      @screen lg {
-        @apply tw-mb-6;
-      }
-    }
 
     &--small {
       @apply tw-col-span-6;
@@ -113,7 +110,6 @@ export default {
     }
   }
 
-  &__bullets,
   &__footnotes {
     @apply tw-col-span-12;
     @apply tw-list-none;
@@ -121,9 +117,16 @@ export default {
     @screen md {
       @apply tw-col-span-6;
     }
+  }
+
+  &__bullets {
+    @apply tw-col-span-12;
+    @apply tw-list-none;
 
     &--small {
-      @apply tw-col-span-6;
+      @screen md {
+        @apply tw-col-span-6;
+      }
     }
   }
 
@@ -140,17 +143,15 @@ export default {
     }
 
     &::before {
-      @apply tw-text-pv-red;
-      content: '\25A0';
+      @apply tw-bg-pv-red;
+      content: '';
+      @apply tw-h-2;
+      @apply tw-w-2;
       @apply tw-text-xs;
       @apply tw-leading-5;
       @apply tw-absolute;
-      top: 0;
-      left: 0;
-
-      @screen md {
-        @apply tw-text-xl;
-      }
+      @apply tw-top-2;
+      @apply tw-left-0;
     }
   }
 

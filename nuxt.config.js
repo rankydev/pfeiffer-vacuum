@@ -67,6 +67,8 @@ export default {
     { src: '~/plugins/storyblok/storyblok-api-client', mode: 'client' },
     '~/plugins/helper/breakpoints',
     { src: '~/plugins/service/service.plugin', mode: 'client' },
+    '~/plugins/zoomOnHover',
+    '~/plugins/touchEvents',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

@@ -1,7 +1,8 @@
 # pvweb
 
 ## Installation Guide
-[Confluence Installation Guide](https://confluence.diva-e.com/display/PVWEB/Installation+Guide)
+
+[Confluence Installation Guide](https://confluence.diva-e.com/display/PVAC/Setup+PVWEB+-+Installation+Guide)
 
 ## Build Setup
 
@@ -23,26 +24,31 @@ $ npm run generate
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
 ## Node version
+
 16.x
 
 ## Create or update Storyblok Components from schema.json
 
 ### Sync all components
+
 ```bash
 npm run storyblok:sync
 ```
 
 ### Sync one component
+
 ```bash
 npm run storyblok:sync ./components/atoms/YourComponent
 ```
 
 ## Run living style guide
+
 ```bash
 npm run lsg
 ```
 
 ## Make Storyblok v2 work
+
 Start a development server with https proxy:
 
 ```bash
