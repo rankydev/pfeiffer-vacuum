@@ -130,10 +130,10 @@ export default defineComponent({
     const mobileAccordionItems = computed(() => {
       return tabs.value
         .filter((o) => o.active)
-        .map((item, index) => {
+        .map((item) => {
           return {
             label: item.name,
-            isActive: index === 0 ? true : false, // isActive means if item should be initially open. We just pick first one.
+            isActive: false, // no initial open tab
             disabled: isDisabled(item.trigger),
             slotName: item.trigger,
           }
