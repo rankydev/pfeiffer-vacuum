@@ -41,7 +41,6 @@
             >
               Variant Selection
             </div>
-            <GenericTable />
             <div
               class="tw-bg-pv-grey-88 tw-w-full tw-rounded-lg"
               :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
@@ -75,11 +74,10 @@ import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import Page from '~/components/templates/Page/Page'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
-import GenericTable from '~/components/molecules/GenericTable/GenericTable.vue'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page, DetailTabs, GenericTable },
+  components: { Page, DetailTabs },
   setup() {
     const route = useRoute()
     const context = useContext()
