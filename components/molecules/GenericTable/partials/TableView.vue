@@ -1,50 +1,56 @@
 <template>
   <table class="table-view">
-    <tr class="table-view__head">
-      <th
-        v-for="(entry, i) in header"
-        :key="'head-' + i"
-        :class="[
-          'table-view__head-entry',
-          {
-            'table-view__head-entry--active': sorting.id === i,
-            'table-view__head-entry--no-sort': !isSortable(entry),
-          },
-        ]"
-        @click="isSortable(entry) ? changeSorting(i) : null"
-      >
-        {{ entry.title }}
-        <Icon
-          v-if="isSortable(entry)"
-          class="table-view__sort-icon"
-          :icon="`sort_${
-            sorting.id === i ? sortingStates[sorting.state] : 'neutral'
-          }`"
-          type="svg"
-          size="small"
-        />
-      </th>
-      <th class="table-view__head-entry table-view__head-entry--no-sort"></th>
-    </tr>
-    <tr v-for="(row, i) in data" :key="'row-' + i" class="table-view__row">
-      <td
-        v-for="(cell, j) in row.entries"
-        :key="`row${i}-${j}`"
-        class="table-view__cell"
-      >
-        {{ typeof cell === 'object' ? cell.text : cell }}
-        <span v-if="cell.marginal" class="table-view__cell-marginal">
-          {{ cell.marginal }}
-        </span>
-      </td>
-      <td class="table-view__cell table-view__cell--action">
-        <Button
-          v-for="(btn, k) in row.actions"
-          :key="`row${i}-action-${k}`"
-          v-bind="btn"
-        />
-      </td>
-    </tr>
+    <thead>
+      <tr class="table-view__head">
+        <th
+          v-for="(entry, i) in header"
+          :key="'head-' + i"
+          :class="[
+            'table-view__head-entry',
+            {
+              'table-view__head-entry--active': sorting.id === i,
+              'table-view__head-entry--no-sort': !isSortable(entry),
+            },
+          ]"
+          @click="isSortable(entry) ? changeSorting(i) : null"
+        >
+          {{ entry.title }}
+          <Icon
+            v-if="isSortable(entry)"
+            class="table-view__sort-icon"
+            :icon="`sort_${
+              sorting.id === i ? sortingStates[sorting.state] : 'neutral'
+            }`"
+            type="svg"
+            size="small"
+          />
+        </th>
+        <th class="table-view__head-entry table-view__head-entry--no-sort"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(row, i) in data" :key="'row-' + i" class="table-view__row">
+        <td
+          v-for="(cell, j) in row.entries"
+          :key="`row${i}-${j}`"
+          class="table-view__cell"
+        >
+          {{ typeof cell === 'object' ? cell.text : cell }}
+          <span v-if="cell.marginal" class="table-view__cell-marginal">
+            {{ cell.marginal }}
+          </span>
+        </td>
+        <td class="table-view__cell table-view__cell--action">
+          <Button
+            v-for="(btn, k) in row.actions.filter(
+              (e) => !('desktop' in e) || e.desktop
+            )"
+            :key="`row${i}-action-${k}`"
+            v-bind="btn"
+          />
+        </td>
+      </tr>
+    </tbody>
   </table>
 </template>
 <script>
