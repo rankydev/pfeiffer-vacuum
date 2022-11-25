@@ -47,6 +47,7 @@
             >
               <AccessoriesCardCarousel
                 :headline="$t('product.recommended.title')"
+                :entries="carouselEntries"
               />
             </div>
             <DetailTabs
@@ -79,6 +80,7 @@ import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
+import { carouselEntries } from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel.stories.content.js'
 
 export default defineComponent({
   name: 'ProductShopPage',
@@ -164,6 +166,7 @@ export default defineComponent({
       language,
 
       productStore,
+      carouselEntries,
 
       sortedImages,
     }

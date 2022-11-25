@@ -9,11 +9,13 @@
     </template>
 
     <template #heading>
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <span class="accessories-card__product-name" v-html="productName" />
-      <p class="accessories-card__product-number">
-        {{ product.orderNumber }}
-      </p>
+      <div class="accessories-card__heading">
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <h5 class="accessories-card__product-name" v-html="productName" />
+        <p class="accessories-card__product-number">
+          {{ product.orderNumber }}
+        </p>
+      </div>
     </template>
 
     <template #additionalInfo>
@@ -76,6 +78,7 @@
           <Button icon="shopping_cart" @click.prevent="addToCart()" />
           <Button
             v-if="hasAddToListButton"
+            class="accessories-card__add-to-cart-buttons__add-to-list"
             variant="secondary"
             shape="outlined"
             icon="assignment"
@@ -198,14 +201,6 @@ export default defineComponent({
       await userStore.login()
     }
 
-    // const accessoryImage = computed(() => {
-    //   if (product.value?.images[0]) {
-    //     product.value.images.find(
-    //       (img) => img.imageType === 'PRIMARY' && img.format === 'product'
-    //     ) || {}
-    //   }
-    // })
-
     return {
       context,
       imageUrl,
@@ -241,12 +236,16 @@ export default defineComponent({
     @apply tw-text-pv-black;
     @apply tw-text-base;
     @apply tw-font-bold;
+    @apply tw-w-full;
+    @apply tw-overflow-hidden;
+    @apply tw-leading-6;
+    height: 3em;
   }
 
   &__product-number {
     @apply tw-text-pv-grey-48;
     @apply tw-text-xs;
-    @apply tw-mt-auto;
+    @apply tw-mt-2;
   }
 
   &__price {
@@ -302,8 +301,8 @@ export default defineComponent({
       @apply tw-justify-end;
       @apply tw-ml-2;
 
-      button:first-child {
-        @apply tw-mr-2;
+      &__add-to-list {
+        @apply tw-ml-2;
       }
     }
   }

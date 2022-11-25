@@ -1,3 +1,5 @@
+import { imageAsBase64 } from '~/components/molecules/ProductCard/ProductCard.stories.content'
+
 export const carouselEntries = [
   {
     referenceType: 'RECOMMENDEDACCESSORIES',
@@ -24,14 +26,14 @@ export const carouselEntries = [
         altText:
           'Dimensions for Verbindungsset zur Montage von Pumpen, DN 16 ISO-KF',
         format: '300Wx300H',
-        url: '/medias/Dimensions-120SWD-SWN-SWG040-0250-4468066b-6863-11e6-80ca-005056950a30.png?context=bWFzdGVyfGltYWdlc3wxODMxMXxpbWFnZS9wbmd8aGRlL2g0My84ODQ1OTQ0MDk0NzUwL0RpbWVuc2lvbnMgMTIwU1dEX1NXTl9TV0cwNDAtMDI1MH40NDY4MDY2Yi02ODYzLTExZTYtODBjYS0wMDUwNTY5NTBhMzAucG5nfGFhZGVmMjQ1NjE5ODRjYjJkMDIwZDc1MDdhOTViN2JjYWZiYjE5MWZiYTRhNjIzOTE0NjhkYjM3OWYzY2FmY2E',
+        url: '/medias/?context=bWFzdGVyfGltYWdlc3wzNTE0Njd8aW1hZ2UvcG5nfGg0Yy9oZjYvODgyNDY4ODM0NTExOHxmNGNkNjcwYjc3OWZkY2E5NzU5OWNiNzVhZGU2YzJjMGNhZDkwYmU1OTNiM2QwYjk1NDkyNGU5NmJhZWZkNWUz',
       },
       images: [
         {
           altText: 'Verbindungsset zur Montage von Pumpen, DN 16 ISO-KF',
           format: 'product',
           imageType: 'PRIMARY',
-          url: '/medias/Product-image-120SWS016-025-040-1000-d4b1d1c7-8cd0-11e9-80d0-005056950a30.png?context=bWFzdGVyfGltYWdlc3wxMzA4MTZ8aW1hZ2UvcG5nfGg0OC9oMWIvODg0NDIzMjI5NDQzMC9Qcm9kdWN0IGltYWdlIDEyMFNXUzAxNl8wMjVfMDQwLTEwMDB-ZDRiMWQxYzctOGNkMC0xMWU5LTgwZDAtMDA1MDU2OTUwYTMwLnBuZ3w4NGFlNzhmMjA1Y2QzZmUyMTU5YmUyOTE1MmJjYTJkNDJlMDdhMWZiOGUwODBmYTY3Mjk2NDkwMzljNTE5ZDZj',
+          url: imageAsBase64,
         },
       ],
       name: 'Verbindungsset zur Montage von Pumpen, DN 16 ISO-KF',
@@ -74,7 +76,7 @@ export const carouselEntries = [
           altText: 'OmniControl 300, Rackgerät mit integriertem Netzteil',
           format: 'product',
           imageType: 'PRIMARY',
-          url: '/medias/Product-image-OmniControl-Rack-200-300-400-d288f6d0-4789-11ec-80e2-005056950a30.png?context=bWFzdGVyfGltYWdlc3wxNDM3MTg0fGltYWdlL3BuZ3xoMTcvaDM0Lzg4NDQyNDkxNjk5NTAvUHJvZHVjdCBpbWFnZSBPbW5pQ29udHJvbCBSYWNrIDIwMCAtIDMwMCAtIDQwMH5kMjg4ZjZkMC00Nzg5LTExZWMtODBlMi0wMDUwNTY5NTBhMzAucG5nfDMwZGQxZjQ2MWE2ZDEwYTE4NmM2NmZkZWVhZGVlNTU4Nzk5NjEyOGRhZmVjMGJiNmJhMDY1YjdmNjQ3NjhiYTk',
+          url: imageAsBase64,
         },
       ],
       name: 'OmniControl 300, Rackgerät mit integriertem Netzteil',
@@ -126,7 +128,7 @@ export const carouselEntries = [
           altText: 'Luftkühlung für HiPace 300 mit TC 400',
           format: 'product',
           imageType: 'PRIMARY',
-          url: '/medias/Product-image-Air-cooling-for-HiPace-300-with-TC-400-73cec39d-690b-11e6-80ca-005056950a30.png?context=bWFzdGVyfGltYWdlc3wzMzI2MTV8aW1hZ2UvcG5nfGhlMi9oZjYvODg0NDIzOTUwMzM5MC9Qcm9kdWN0IGltYWdlIEFpciBjb29saW5nIGZvciBIaVBhY2UgMzAwIHdpdGggVEMgNDAwfjczY2VjMzlkLTY5MGItMTFlNi04MGNhLTAwNTA1Njk1MGEzMC5wbmd8MGUyN2NlZWQ5MjljOTg3MTBlZmY1OTAwYjgxNTM5YTE1YTFhNmMzMzc0MGU5YTZhYjZiZjNmMDFkNzMyNDVlOQ',
+          url: imageAsBase64,
         },
       ],
       name: 'Luftkühlung für HiPace 300 mit TC 400',
@@ -171,7 +173,7 @@ export const carouselEntries = [
             'Verbindungskabel für HiPace mit TC 400/TM 700 zu Netzteil TPS/DCU 310/311/400/401',
           format: 'product',
           imageType: 'PRIMARY',
-          url: '/medias/product-image-Connection-cabels-for-HiPace-with-TC-400-to-mains-pack-TPS-DCU-310-311-400-401-690635d7-6a1a-11e6-80c.png?context=bWFzdGVyfGltYWdlc3w4OTU2MHxpbWFnZS9wbmd8aDRiL2g4OS84ODQ0MTQ2NjM4ODc4L3Byb2R1Y3QgaW1hZ2UgQ29ubmVjdGlvbiBjYWJlbHMgZm9yIEhpUGFjZSB3aXRoIFRDIDQwMCB0byBtYWlucyBwYWNrIFRQUyAtIERDVSAzMTAgLSAzMTEgLSA0MDAgLSA0MDF-NjkwNjM1ZDctNmExYS0xMWU2LTgwYy5wbmd8MjdiZGQ2YWM4M2U2Y2ZjOWZiY2E1ZWFmMDUwMGJkNjVkZDA3NTQ3N2FhOWViYTczZDhjNjk5NDQ0ODZlNGJiYg',
+          url: imageAsBase64,
         },
       ],
       name: 'Verbindungskabel für HiPace mit TC 400/TM 700 zu Netzteil TPS/DCU 310/311/400/401',
@@ -196,45 +198,45 @@ export const carouselEntries = [
       url: '/Zubeh%C3%B6re/Kabel/Verbindungskabel/Verbindungskabel-f%C3%BCr-HiPace-mit-TC-400-TM-700-zu-Netzteil-TPS-DCU-310-311-400-401/p/PM_061_352_T',
     },
   },
-  {
-    referenceType: 'RECOMMENDEDACCESSORIES',
-    target: {
-      bullets: [
-        'Länge, 3 m, andere Längen auf Anfrage',
-        'M12 Stecker gerade/M12 Stecker gerade',
-      ],
-      categoryPath: [
-        { id: 'ACCESSORIES', name: 'Zubehöre' },
-        { id: 'CABLES', name: 'Kabel' },
-        {
-          id: 'RS-485_INTERFACE_CABLES',
-          name: 'RS-485-Schnittstellenkabel',
-        },
-      ],
-      code: 'PM_061_283_T',
-      configurable: false,
-      name: 'Schnittstellenkabel, M12 m gerade / M12 m gerade, 3 m',
-      orderNumber: 'PM 061 283 -T',
-      potentialPromotions: [
-        {
-          code: 'Kobe_Promotion_A',
-          description: 'Kobe_Promotion_Pumps_1500_CHF_20% DE',
-          promotionType: 'Regelbasierte Werbeaktion',
-        },
-        {
-          code: 'Kobe_Promotion_A_2',
-          description: 'Kobe_Promotion_Pumps_5000-74999_CHF_30% DE',
-          promotionType: 'Regelbasierte Werbeaktion',
-        },
-      ],
-      priceRange: {},
-      productType: 'PRODUCT',
-      purchasable: true,
-      stock: { stockLevelStatus: 'inStock' },
-      summary: '',
-      url: '/Zubeh%C3%B6re/Kabel/RS-485-Schnittstellenkabel/Schnittstellenkabel%2C-M12%C2%A0m%C2%A0gerade-M12%C2%A0m%C2%A0gerade%2C-3%C2%A0m/p/PM_061_283_T',
-    },
-  },
+  // {
+  //   referenceType: 'RECOMMENDEDACCESSORIES',
+  //   target: {
+  //     bullets: [
+  //       'Länge, 3 m, andere Längen auf Anfrage',
+  //       'M12 Stecker gerade/M12 Stecker gerade',
+  //     ],
+  //     categoryPath: [
+  //       { id: 'ACCESSORIES', name: 'Zubehöre' },
+  //       { id: 'CABLES', name: 'Kabel' },
+  //       {
+  //         id: 'RS-485_INTERFACE_CABLES',
+  //         name: 'RS-485-Schnittstellenkabel',
+  //       },
+  //     ],
+  //     code: 'PM_061_283_T',
+  //     configurable: false,
+  //     name: 'Schnittstellenkabel, M12 m gerade / M12 m gerade, 3 m',
+  //     orderNumber: 'PM 061 283 -T',
+  //     potentialPromotions: [
+  //       {
+  //         code: 'Kobe_Promotion_A',
+  //         description: 'Kobe_Promotion_Pumps_1500_CHF_20% DE',
+  //         promotionType: 'Regelbasierte Werbeaktion',
+  //       },
+  //       {
+  //         code: 'Kobe_Promotion_A_2',
+  //         description: 'Kobe_Promotion_Pumps_5000-74999_CHF_30% DE',
+  //         promotionType: 'Regelbasierte Werbeaktion',
+  //       },
+  //     ],
+  //     priceRange: {},
+  //     productType: 'PRODUCT',
+  //     purchasable: true,
+  //     stock: { stockLevelStatus: 'inStock' },
+  //     summary: '',
+  //     url: '/Zubeh%C3%B6re/Kabel/RS-485-Schnittstellenkabel/Schnittstellenkabel%2C-M12%C2%A0m%C2%A0gerade-M12%C2%A0m%C2%A0gerade%2C-3%C2%A0m/p/PM_061_283_T',
+  //   },
+  // },
   {
     referenceType: 'RECOMMENDEDACCESSORIES',
     target: {
@@ -260,7 +262,7 @@ export const carouselEntries = [
           altText: 'OmniControl 200 mit PKR 361, 40 CF',
           format: 'product',
           imageType: 'PRIMARY',
-          url: '/medias/Product-image-OmniControl-200-with-PKR-b388613d-5cc8-11ec-80e3-005056950a30.png?context=bWFzdGVyfGltYWdlc3wxMDYyMTAzfGltYWdlL3BuZ3xoNmMvaDM3Lzg4NDQyNDkwNzE2NDYvUHJvZHVjdCBpbWFnZSBPbW5pQ29udHJvbCAyMDAgd2l0aCBQS1J-YjM4ODYxM2QtNWNjOC0xMWVjLTgwZTMtMDA1MDU2OTUwYTMwLnBuZ3xjZGE4NWM5YWQ5ZGZkNjE2MjZkZTI1NWQ4ZTUwYzIxOWRjZmRkNzU3NTQyZjI3MGY4NDE1ZGE1MTZhMDFmM2Y2',
+          url: imageAsBase64,
         },
       ],
       name: 'OmniControl 200 mit PKR 361, 40 CF',
@@ -325,7 +327,7 @@ export const carouselEntries = [
             'HV-Schieber, DN 100 ISO-F, elektropneumatisch, SG (RS)/SV 24 V DC, 304/FKM',
           format: 'product',
           imageType: 'PRIMARY',
-          url: '/medias/Product-image-GVP2-a67ab870-04db-11eb-80d4-005056950a30.png?context=bWFzdGVyfGltYWdlc3wxOTU2MzJ8aW1hZ2UvcG5nfGhlYy9oYTEvODg0NDI0MzUwMTA4Ni9Qcm9kdWN0IGltYWdlIEdWUDJ-YTY3YWI4NzAtMDRkYi0xMWViLTgwZDQtMDA1MDU2OTUwYTMwLnBuZ3xhN2JkMzhiYTVjYWRlODViMjUwZDg2NWIyZmI4ZWI4ZDgyYzBjMWI0OTQ5M2IyMDMzYTFlNGJiOWEyYjUzYmNk',
+          url: imageAsBase64,
         },
       ],
       master: '239d63b0-f834-4c6b-a80e-79a57c77e341',
