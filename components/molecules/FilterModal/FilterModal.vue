@@ -85,6 +85,7 @@ export default defineComponent({
     @include hide-scrollbar;
     @apply tw-overflow-hidden;
     @apply tw-overflow-y-auto;
+    @apply tw-h-full;
   }
 
   &__apply-button {

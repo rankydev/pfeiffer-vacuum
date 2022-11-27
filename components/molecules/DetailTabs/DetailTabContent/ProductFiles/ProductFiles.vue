@@ -1,268 +1,65 @@
 <template>
   <div class="product-files">
     <div v-if="files.length">
-      <h4>
-        {{ $t('product.downloads') }}
-      </h4>
-      <div class="filters">
-        Filters
-        <!-- Replace with filter components -->
-        <!-- <t-dropdown class="filters__dropdown">
-          <div
-            slot="trigger"
-            slot-scope="{
-              mousedownHandler,
-              focusHandler,
-              blurHandler,
-              keydownHandler,
-            }"
-          >
-            <t-button
-              variant="trigger"
-              class="active-filter"
-              @mousedown="mousedownHandler"
-              @focus="focusHandler"
-              @blur="blurHandler"
-              @keydown="keydownHandler"
-            >
-              {{ $t('product.file.category') }}
-              <material-icon icon="arrow_drop_down" />
-            </t-button>
+      <div class="product-files__filter-wrapper">
+        <FilterModal>
+          <div class="product-files__filter">
+            <PvSelect
+              v-model="categoryFilter"
+              :placeholder="$t('product.file.category')"
+              :options="availableCategories"
+              option-label="value"
+              icon-size="small"
+              multiple
+              no-input
+            />
+
+            <PvSelect
+              v-model="languageFilter"
+              :placeholder="$t('product.file.language')"
+              :options="availableLanguages"
+              option-label="value"
+              icon-size="small"
+              multiple
+              no-input
+            />
           </div>
-          <div>
-            <div
-              v-for="(item, index) in availableCategories"
-              :key="index"
-              class="filter-item"
-              @click="filterChanged('category', item)"
-            >
-              <div class="filter-item-content">
-                <pv-form-checkbox
-                  class="tw-cursor-pointer"
-                  :value="categoryFilter.find((o) => o === item) !== undefined"
-                >
-                  {{ item }}
-                </pv-form-checkbox>
-              </div>
-            </div>
-          </div>
-        </t-dropdown>
-        <t-dropdown class="filter-dropdown">
-          <div
-            slot="trigger"
-            slot-scope="{
-              mousedownHandler,
-              focusHandler,
-              blurHandler,
-              keydownHandler,
-            }"
-          >
-            <t-button
-              variant="trigger"
-              class="active-filter"
-              @mousedown="mousedownHandler"
-              @focus="focusHandler"
-              @blur="blurHandler"
-              @keydown="keydownHandler"
-            >
-              {{ $t('product.file.language') }}
-              <material-icon icon="arrow_drop_down" />
-            </t-button>
-          </div>
-          <div>
-            <div
-              v-for="(item, index) in availableLanguages"
-              :key="index"
-              class="filter-item"
-              @click="filterChanged('language', item)"
-            >
-              <div class="filter-item-content">
-                <pv-form-checkbox
-                  :value="languageFilter.find((o) => o === item) !== undefined"
-                >
-                  {{ item }}
-                </pv-form-checkbox>
-              </div>
-            </div>
-          </div>
-        </t-dropdown>
+        </FilterModal>
+
         <div
           v-if="categoryFilter.length > 0 || languageFilter.length > 0"
-          class="selected-elements"
+          class="product-files__filter-tags"
         >
-          <div class="filter-category-label">
-            {{ $t('documents.activeFilters') }}
-          </div>
-          <div class="document-filters">
-            <div v-for="(item, index) in categoryFilter" :key="index">
-              <div class="selected-item">
-                <span
-                  class="item-label"
-                  v-html="`${$t('product.file.category')}: <b>${item}</b>`"
-                />
-                <material-icon
-                  icon="close"
-                  class="remove-item"
-                  @click.native="filterChanged('category', item)"
-                />
-              </div>
-            </div>
-            <div v-for="(item, index) in languageFilter" :key="index">
-              <div class="selected-item">
-                <span
-                  class="item-label"
-                  v-html="`${$t('product.file.language')}: <b>${item}</b>`"
-                />
-                <material-icon
-                  icon="close"
-                  class="remove-item"
-                  @click.native="filterChanged('language', item)"
-                />
-              </div>
-            </div>
-          </div>
-        </div> -->
-      </div>
-
-      <GenericTable
-        :header="[{ title: 'Test' }]"
-        :data="[{ entries: [{ text: 'Test123', marginal: 'marginal123' }] }]"
-      />
-
-      <!-- Replace table with GenericTable -->
-      <table class="tw-hidden lg:tw-block tw-table-fixed">
-        <tr class="tw-bg-pv-grey-32">
-          <th
-            v-for="(field, index) in fields"
-            :key="index"
-            :class="
-              'tw-cursor-pointer tw-text-left tw-whitespace-nowrap tw-px-2 tw-text-white tw-p-4 ' +
-              `tw-w-${field.width}/12`
-            "
-          >
-            {{ field.label }}
-            <img
-              v-if="field.sortable"
-              class="tw-inline-block"
-              src="~/assets/images/sort.svg"
-              alt="Product File Image"
+          <div v-for="(item, index) in categoryFilter" :key="index">
+            <FilterTag
+              :filter="$t('product.file.category')"
+              :value="item.value"
+              @click="categoryFilter = categoryFilter.filter((e) => e !== item)"
             />
-          </th>
-        </tr>
-        <tr
-          v-for="(file, index) in filteredFiles"
-          :key="index"
-          :class="{ 'tw-bg-pv-grey-96': index % 2 === 0 }"
-        >
-          <td class="tw-p-4">
-            <h6 class="sub" v-html="file.title" />
-            <p class="category">
-              {{
-                file.downloadLink.substring(
-                  file.downloadLink.lastIndexOf('/') + 1
-                )
-              }}
-            </p>
-          </td>
-          <td class="tw-p-4">
-            <p class="sub">
-              {{ file.informationType ? file.informationType.label[0] : '' }}
-            </p>
-          </td>
-          <td class="tw-p-4">
-            <h6
-              v-if="
-                Array.isArray(file.languages.label) &&
-                file.languages.label.length > 1 &&
-                file.informationType.value[0] === 'Step-File'
-              "
-              class="sub"
+          </div>
+          <div v-for="(item, index) in languageFilter" :key="index">
+            <FilterTag
+              :filter="$t('product.file.language')"
+              :value="item.value"
+              @click="languageFilter = languageFilter.filter((e) => e !== item)"
             />
-            <h6 v-else-if="Array.isArray(file.languages.label)" class="sub">
-              {{ file.languages.label.join(', ') }}
-            </h6>
-          </td>
-          <td class="tw-p-4">
-            <h6 class="sub tw-whitespace-nowrap">
-              {{ $d(new Date(file.modificationDate.value), 'date') }}
-            </h6>
-          </td>
-          <td>
-            <h6 class="sub tw-whitespace-nowrap">
-              ~ {{ formatFileSize(file.fileSize) }}
-            </h6>
-          </td>
-          <td class="tw-p-4">
-            <a
-              :href="`${empolisProxyDownloadPath}/${file.downloadLink}`"
-              :download="isStepFile(file) ? `${file.title}.stp` : null"
-              target="_blank"
-            >
-              <t-button variant="secondary">
-                <Icon icon="file_download" />
-              </t-button>
-            </a>
-          </td>
-        </tr>
-      </table>
-
-      <!-- Replace table with GenericTable -->
-      <div class="tw-block lg:tw-hidden mobile">
-        <div
-          v-for="(file, index) of filteredFiles"
-          :key="index"
-          :class="index % 2 === 0 ? 'even tw-grid' : 'odd tw-grid'"
-        >
-          <div class="tw-col-span-12 md:tw-col-span-6">
-            <h6 class="sub" v-html="file.title" />
-            <div class="category">
-              {{ file.informationType ? file.informationType.label[0] : '' }}
-            </div>
-          </div>
-          <div class="badges tw-col-span-12 md:tw-col-span-4">
-            <template
-              v-if="
-                Array.isArray(file.languages.label) &&
-                file.languages.label.length > 1 &&
-                file.informationType.value[0] === 'Step-File'
-              "
-            >
-            </template>
-            <template v-else-if="Array.isArray(file.languages.label)">
-              <t-tag
-                v-for="(language, indexLang) of file.languages.label"
-                :key="indexLang"
-              >
-                {{ language }}
-              </t-tag>
-            </template>
-            <t-tag>
-              {{ $d(new Date(file.modificationDate.value), 'date') }}
-            </t-tag>
-            <t-tag class="badge tw-w-auto">
-              ~ {{ formatFileSize(file.fileSize) }}
-            </t-tag>
-          </div>
-
-          <div class="download-button">
-            <a
-              :href="`${empolisProxyDownloadPath}/${file.downloadLink}`"
-              :download="isStepFile(file) ? `${file.title}.stp` : null"
-              target="_blank"
-            >
-              <t-button variant="secondary" class="tw-w-full">
-                <span class="tw-inline md:tw-hidden">
-                  {{ $t('product.download') }}
-                </span>
-                <Icon icon="file_download" />
-              </t-button>
-            </a>
           </div>
         </div>
+
+        <div class="product-files__result">
+          {{
+            $t('product.file.results', {
+              count: filteredFiles.length,
+              total: files.length,
+            })
+          }}
+        </div>
       </div>
+
+      <GenericTable :header="tableHeader" :data="tableData" />
     </div>
     <div v-if="!files.length && !loading">
-      <Icon class="downloads-icon" icon="file_download" />
+      <Icon class="product-files__downloads-icon" icon="file_download" />
       <h4 class="tw-text-center">
         {{ $t('product.noDownloads') }}
       </h4>
@@ -278,6 +75,9 @@ import {
   computed,
   onBeforeMount,
 } from '@nuxtjs/composition-api'
+import FilterTag from '~/components/atoms/FilterTag/FilterTag'
+import FilterModal from '~/components/molecules/FilterModal/FilterModal'
+import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import GenericTable from '~/components/molecules/GenericTable/GenericTable'
 import { useProductStore } from '~/stores/product'
 import { results } from './mock'
@@ -285,47 +85,14 @@ export default defineComponent({
   name: 'ProductFiles',
   components: {
     GenericTable,
+    PvSelect,
+    FilterTag,
+    FilterModal,
   },
   setup() {
     const { product } = useProductStore()
     const { i18n } = useContext()
-    const fields = ref([
-      {
-        key: 'Title',
-        label: i18n.t('product.file.description'),
-        sortable: true,
-        width: 5,
-      },
-      {
-        key: 'Category',
-        label: i18n.t('product.file.category'),
-        sortable: true,
-        width: 2,
-      },
-      {
-        key: 'Language',
-        label: i18n.t('product.file.language'),
-        sortable: true,
-        width: 2,
-      },
-      {
-        key: 'ModificationDate',
-        label: i18n.t('product.file.date'),
-        sortable: true,
-        width: 1,
-      },
-      {
-        key: 'FileSize',
-        label: i18n.t('product.file.size'),
-        sortable: true,
-        width: 1,
-      },
-      {
-        key: 'DownloadLink',
-        label: '',
-        width: 1,
-      },
-    ])
+
     const categoryFilter = ref([])
     const languageFilter = ref([])
     const loading = ref(false)
@@ -333,7 +100,7 @@ export default defineComponent({
 
     const availableCategories = computed(() => {
       const result = new Set()
-      files.value.map((o) => {
+      files.value.forEach((o) => {
         if (
           o.informationType?.label &&
           Array.isArray(o.informationType.label)
@@ -346,18 +113,18 @@ export default defineComponent({
           result.add(o.informationType.label)
         }
       })
-      return result
+      return Array.from(result).map((category) => ({ value: category }))
     })
     const availableLanguages = computed(() => {
       const result = new Set()
-      files.value.map((o) => {
-        if (Array.isArray(o.languages.label)) {
+      files.value.forEach((o) => {
+        if (o.languages?.label && Array.isArray(o.languages.label)) {
           o.languages.label.forEach((language) => result.add(language))
-        } else {
+        } else if (o.languages?.label) {
           result.add(o.languages.label)
         }
       })
-      return result
+      return Array.from(result).map((language) => ({ value: language }))
     })
     const filteredFiles = computed(() => {
       if (
@@ -374,12 +141,13 @@ export default defineComponent({
           categoryFilter.value.length > 0 &&
           file.informationType &&
           categoryFilter.value.find(
-            (o) => o === file.informationType.label[0]
+            (o) => o.value === file.informationType.label[0]
           ) &&
           languageFilter.value.length > 0 &&
           languageFilter.value.find(
             (o) =>
-              o === file.languages.label || file.languages.label.includes(o)
+              o.value === file.languages.label ||
+              file.languages.label.includes(o.value)
           )
         ) {
           result.add(file)
@@ -388,7 +156,9 @@ export default defineComponent({
           languageFilter.value.length === 0 &&
           categoryFilter.value.length > 0 &&
           file.informationType &&
-          categoryFilter.value.find((o) => o === file.informationType.label[0])
+          categoryFilter.value.find(
+            (o) => o.value === file.informationType.label[0]
+          )
         ) {
           result.add(file)
         }
@@ -397,7 +167,8 @@ export default defineComponent({
           languageFilter.value.length > 0 &&
           languageFilter.value.find(
             (o) =>
-              o === file.languages.label || file.languages.label.includes(o)
+              o.value === file.languages.label ||
+              file.languages.label.includes(o.value)
           )
         ) {
           result.add(file)
@@ -407,6 +178,7 @@ export default defineComponent({
       return Array.from(result)
     })
     const empolisProxyDownloadPath = computed(() => {
+      // TODO this needs to be fixed
       return 'this.$env.PROXY_PATH_EMPOLIS'
     })
 
@@ -415,6 +187,7 @@ export default defineComponent({
         loading.value = true
         console.log('### loading results')
         files.value = results
+        // TODO this needs to be fixed
         // await this.$empolisApi.getProductDownloads(
         //   product.orderNumber
         // )
@@ -445,30 +218,77 @@ export default defineComponent({
 
       return bytes.toFixed(precision) + ' ' + units[u]
     }
-    const filterChanged = (type, item) => {
-      switch (type) {
-        case 'category':
-          if (categoryFilter.value.find((o) => o === item)) {
-            categoryFilter.value.splice(categoryFilter.value.indexOf(item), 1)
-          } else {
-            categoryFilter.value.push(item)
-          }
-          break
-        case 'language':
-          if (languageFilter.value.find((o) => o === item)) {
-            languageFilter.value.splice(languageFilter.value.indexOf(item), 1)
-          } else {
-            languageFilter.value.push(item)
-          }
-          break
+
+    const tableHeader = computed(() => [
+      {
+        title: i18n.t('product.file.description'),
+      },
+      {
+        title: i18n.t('product.file.category'),
+      },
+      {
+        title: i18n.t('product.file.language'),
+      },
+      {
+        title: i18n.t('product.file.date'),
+      },
+      {
+        title: i18n.t('product.file.size'),
+      },
+    ])
+
+    const tableData = computed(() => {
+      const result = []
+
+      for (const file of filteredFiles.value) {
+        const entries = []
+
+        console.log('### filteredFiles.value', filteredFiles.value)
+        console.log('### file', file)
+        entries.push({
+          text: file.title,
+          marginal: file.downloadLink.substring(
+            file.downloadLink.lastIndexOf('/') + 1
+          ),
+        })
+        entries.push({
+          text: file.informationType ? file.informationType.label[0] : '',
+        })
+        entries.push({
+          text:
+            Array.isArray(file.languages.label) &&
+            file.informationType.value[0] !== 'Step-File'
+              ? file.languages.label.join(', ')
+              : '',
+        })
+        entries.push({
+          text: i18n.d(new Date(file.modificationDate.value), 'date'),
+        })
+        entries.push({
+          text: `~ ${formatFileSize(file.fileSize)}`,
+        })
+
+        const actions = [
+          {
+            label: i18n.t('product.download'),
+            icon: 'file_download',
+            variant: 'secondary',
+            shape: 'outlined',
+            // TODO needs to be fixed
+            href: '`${empolisProxyDownloadPath}/${file.downloadLink}`',
+          },
+        ]
+
+        result.push({
+          entries,
+          actions,
+        })
       }
-    }
-    const isStepFile = (file) => {
-      return file.informationType?.value?.includes('Step-File')
-    }
+
+      return result
+    })
 
     return {
-      fields,
       categoryFilter,
       languageFilter,
       loading,
@@ -481,195 +301,67 @@ export default defineComponent({
 
       getProductDownloads,
       formatFileSize,
-      filterChanged,
-      isStepFile,
+
+      tableHeader,
+      tableData,
     }
   },
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .product-files {
-  @apply tw-px-4;
-  @apply tw-py-8;
+  @apply tw-w-full;
+  @apply tw-pt-6;
 
   @screen md {
-    @apply tw-pl-6;
+    @apply tw-pt-8;
   }
 
-  a {
-    @apply tw-float-right;
+  @screen lg {
+    @apply tw-pt-12;
   }
 
-  h6 {
-    @apply tw-text-pv-black;
+  &__filter-wrapper {
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-mb-6;
   }
 
-  p {
-    &.category {
-      @apply tw-text-xs;
-      @apply tw-text-pv-grey-32;
+  &__filter {
+    @apply tw-flex;
+    @apply tw-gap-2;
+    @apply tw-flex-col;
+
+    @screen md {
+      @apply tw-mb-6;
+      @apply tw-flex-row;
     }
-  }
 
-  .header-label {
-    @apply tw-text-pv-white;
-  }
-
-  .filters {
-    &__dropdown {
-      @apply tw-mb-4;
-
-      ul.dropdown-menu.show {
-        @apply tw-py-0;
-
-        .filter-item {
-          @apply tw-h-full;
-
-          .filter-item-content {
-            @apply tw-my-1.5;
-            @apply tw-h-full;
-            @apply tw-flex;
-            @apply tw-items-center;
-
-            span {
-              @apply tw-h-6;
-            }
-          }
-        }
+    & > * {
+      @apply tw-min-w-full;
+      @screen md {
+        min-width: 250px;
       }
     }
   }
 
-  .document-filters {
+  &__filter-tags {
     @apply tw-flex;
     @apply tw-flex-wrap;
-
-    .selected-item {
-      @apply tw-relative;
-      @apply tw-inline-block;
-      @apply tw-mr-2;
-      @apply tw-mb-2;
-      @apply tw-px-2;
-      @apply tw-py-1.5;
-      @apply tw-border-pv-red;
-      @apply tw-border-2;
-
-      .item-label,
-      .remove-item {
-        @apply tw-text-pv-red;
-      }
-
-      .remove-item {
-        @apply tw-cursor-pointer;
-      }
-    }
+    @apply tw-gap-2;
+    @apply tw-mb-6;
   }
 
-  .mobile {
-    .even,
-    .odd {
-      @apply tw-p-4;
-    }
-
-    .even {
-      @apply tw-bg-pv-grey-96;
-    }
-
-    h6 {
-      @apply tw-text-pv-black;
-      @apply tw-mb-0;
-    }
-
-    .category {
-      @apply tw-text-sm;
-      @apply tw-text-pv-grey-48;
-      @apply tw-mb-2;
-    }
-
-    .badges {
-      .badge {
-        @apply tw-flex;
-        @apply tw-justify-center;
-        @apply tw-text-xs;
-        @apply tw-p-0.5;
-        @apply tw-border-2;
-        @apply tw-border-pv-grey-80;
-        border-radius: 12px;
-        max-width: 80px;
-      }
-    }
-
-    .download-button {
-      @apply tw-col-span-12;
-      @apply tw-pt-3;
-
-      @screen md {
-        @apply tw-col-span-2;
-        @apply tw-pt-0;
-      }
-    }
-
-    a {
-      @apply tw-w-full;
-      @apply tw-mt-4;
-
-      @screen md {
-        @apply tw-mt-0;
-        @apply tw-w-auto;
-      }
-
-      .material-icons {
-        @apply tw-float-right;
-      }
-    }
+  &__result {
+    @apply tw-text-pv-grey-48;
+    @apply tw-text-xs;
   }
 
-  .downloads-icon {
+  &__downloads-icon {
     @apply tw-block;
     @apply tw-text-center;
     @apply tw-text-5xl;
-  }
-}
-</style>
-
-<style lang="scss">
-.files-table {
-  thead {
-    tr {
-      @apply tw-bg-pv-grey-32;
-      @apply tw-text-pv-white;
-    }
-
-    > tr > [aria-sort='none'],
-    > tr > [aria-sort='descending'],
-    > tr > [aria-sort='ascending'] {
-      background-image: none !important;
-    }
-  }
-
-  td {
-    vertical-align: middle;
-  }
-}
-
-.filters {
-  .dropdown {
-    button {
-      @apply tw-border-2;
-      @apply tw-border-solid;
-      @apply tw-border-pv-grey-80;
-      @apply tw-text-pv-grey-80;
-      @apply tw-text-left;
-
-      &[aria-expanded='true'] {
-        @apply tw-border-2;
-        @apply tw-border-solid;
-        @apply tw-border-pv-black;
-        @apply tw-text-pv-black;
-        background-color: transparent;
-      }
-    }
   }
 }
 </style>
