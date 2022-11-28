@@ -39,6 +39,8 @@ export default {
 </script>
 <style lang="scss">
 .generic-table {
+  @apply tw-w-full;
+
   &__card-wrapper {
     @apply tw-flex;
     @apply tw-flex-col;
