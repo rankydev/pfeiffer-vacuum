@@ -35,7 +35,9 @@
         <PvInput
           v-model="searchQuery"
           :placeholder="$t('product.searchInAccessories')"
+          :icon="searchQuery ? 'close' : 'search'"
           autocomplete="off"
+          @click:icon="searchBarIconClick"
         />
       </div>
     </div>
@@ -165,14 +167,7 @@ export default {
 
           for (const reference of type.references) {
             if (searchQuery.value && searchQuery.value.length > 0) {
-              if (
-                !reference.target.name
-                  .toLowerCase()
-                  .includes(searchQuery.value.toLowerCase()) &&
-                !reference.target.orderNumber
-                  .toLowerCase()
-                  .includes(searchQuery.value.toLowerCase())
-              ) {
+              if (targetMissmatchesFilters(reference, searchQuery)) {
                 continue
               }
             }
@@ -190,14 +185,7 @@ export default {
 
       if (category.references) {
         for (const reference of category.references) {
-          if (
-            !reference.target.name
-              .toLowerCase()
-              .includes(searchQuery.value.toLowerCase()) &&
-            !reference.target.orderNumber.includes(
-              searchQuery.value.toLowerCase()
-            )
-          ) {
+          if (targetMissmatchesFilters(reference)) {
             continue
           }
 
@@ -208,6 +196,25 @@ export default {
       }
 
       return result
+    }
+
+    const targetMissmatchesFilters = (reference) => {
+      return (
+        !reference.target.name ||
+        !reference.target.orderNumber ||
+        (!reference.target.name
+          .toLowerCase()
+          .includes(searchQuery.value.toLowerCase()) &&
+          !reference.target.orderNumber
+            .toLowerCase()
+            .includes(searchQuery.value.toLowerCase()))
+      )
+    }
+
+    const searchBarIconClick = () => {
+      if (searchQuery.value) {
+        searchQuery.value = ''
+      }
     }
 
     return {
@@ -222,6 +229,7 @@ export default {
       referencesForCategory,
       categorySelected,
       typeSelected,
+      searchBarIconClick,
     }
   },
 }
