@@ -24,7 +24,8 @@ export const useProductStore = defineStore('product', () => {
   const reqId = ssrRef(null)
   const variationMatrix = ref(null)
   const price = ref(null)
-  const accessories = ref(null)
+  const accessoriesReceommended = ref(null)
+  const accessoriesGroups = ref(null)
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -131,10 +132,15 @@ export const useProductStore = defineStore('product', () => {
 
     if (
       typeof result === 'object' &&
-      !result.error &&
-      result.references?.length > 0
+      !result.error
+      // && result.references?.length > 0
     ) {
-      accessories = result.references
+      if (result.references) {
+        accessoriesReceommended.value = result.references
+      }
+      if (result.groups) {
+        accessoriesGroups.value = result.groups
+      }
     } else {
       logger.error(
         `Error when fetching product references for '${id}'. Returning empty array.`,
@@ -165,7 +171,8 @@ export const useProductStore = defineStore('product', () => {
     product,
     variationMatrix,
     price,
-    accessories,
+    accessoriesReceommended,
+    accessoriesGroups,
     breadcrumb,
     metaData,
     loadByPath,

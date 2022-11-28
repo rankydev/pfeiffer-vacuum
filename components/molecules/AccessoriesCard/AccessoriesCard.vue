@@ -200,6 +200,14 @@ export default defineComponent({
       await userStore.login()
     }
 
+    const loggedIn = computed(() => {
+      return userStore.isLoggedIn
+    })
+
+    const isApprovedUser = computed(() => {
+      return userStore.isApprovedUser
+    })
+
     return {
       context,
       imageUrl,
@@ -215,6 +223,8 @@ export default defineComponent({
       addToCart,
       addToList,
       login,
+      loggedIn,
+      isApprovedUser,
       sanitizer,
       i18n,
     }

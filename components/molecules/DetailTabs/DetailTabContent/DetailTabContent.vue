@@ -13,7 +13,9 @@
       class="tab-content__dimensions"
     />
 
-    <div v-if="lastTabSelected === 'accessories'"></div>
+    <div v-if="lastTabSelected === 'accessories'">
+      <ProductAccessories />
+    </div>
     <div v-if="lastTabSelected === 'consumables'"></div>
     <div v-if="lastTabSelected === 'spareparts'"></div>
     <!-- Service Tab should not be visible in MVP -->
@@ -29,9 +31,15 @@ import ProductInformation from './ProductInformation/ProductInformation'
 import ProductTechnicalData from './ProductTechnicalData/ProductTechnicalData'
 import Dimensions from './Dimensions/Dimensions'
 import getSortedFeatures from '../partials/getSortedFeatures'
+import ProductAccessories from './ProductAccessories/ProductAccessories'
 
 export default defineComponent({
-  components: { ProductTechnicalData, ProductInformation, Dimensions },
+  components: {
+    ProductTechnicalData,
+    ProductInformation,
+    Dimensions,
+    ProductAccessories,
+  },
   props: {
     lastTabSelected: {
       type: String,
