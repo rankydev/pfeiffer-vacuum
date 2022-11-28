@@ -1,7 +1,25 @@
 <template>
   <div class="accessories">
     <div class="filters tw-grid tw-grid-cols-12">
-      <div class="tw-col-span-12 md:tw-col-span-8 md:tw-pr-2">
+      <div class="tw-col-span-12 tw-inline-flex md:tw-col-span-8 md:tw-pr-2">
+        <PvSelect
+          :options="availableCategories"
+          :value="selectedCategory"
+          :disabled="availableCategories.length === 0"
+          :clearable="false"
+          :placeholder="$t('product.file.category')"
+          class="category-filter"
+          @input="categorySelected"
+        />
+        <PvSelect
+          :options="availableTypes"
+          :value="selectedType"
+          :disabled="!selectedCategory || availableTypes.length < 1"
+          :clearable="false"
+          :placeholder="$t('product.type')"
+          class="category-filter"
+          @input="typeSelected"
+        />
         <div
           v-if="selectedCategory"
           class="remove-filters"
@@ -39,12 +57,12 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
 import { computed, ref } from '@nuxtjs/composition-api'
 import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import { useProductStore } from '~/stores/product'
+import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 
 export default {
   name: 'ProductAccessories',
@@ -52,6 +70,7 @@ export default {
     AccessoriesCardCarousel,
     Icon,
     PvInput,
+    PvSelect,
   },
   setup() {
     const searchQuery = ref('')
@@ -115,17 +134,17 @@ export default {
       return result
     })
 
-    // const categorySelected = (category) => {
-    //   selectedCategory.value = category
+    const categorySelected = (category) => {
+      selectedCategory.value = category
 
-    //   if (selectedType.value) {
-    //     selectedType.value = null
-    //   }
-    // }
+      if (selectedType.value) {
+        selectedType.value = null
+      }
+    }
 
-    // const typeSelected = (type) => {
-    //   selectedType.value = type
-    // }
+    const typeSelected = (type) => {
+      selectedType.value = type
+    }
 
     const resetFilter = () => {
       selectedCategory.value = undefined
@@ -201,17 +220,17 @@ export default {
       availableTypes,
       resetFilter,
       referencesForCategory,
+      categorySelected,
+      typeSelected,
     }
   },
-  // computed: {
-  //   ...mapGetters(['currentUser']),
-  // },
 }
 </script>
 
 <style lang="scss" scoped>
 .accessories {
   @apply tw-bg-pv-grey-96;
+  width: 100%;
 
   .filters {
     padding: 20px 16px;

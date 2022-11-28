@@ -13,9 +13,7 @@
       class="tab-content__dimensions"
     />
 
-    <div v-if="lastTabSelected === 'accessories'">
-      <ProductAccessories />
-    </div>
+    <ProductAccessories v-if="lastTabSelected === 'accessories'" />
     <div v-if="lastTabSelected === 'consumables'"></div>
     <div v-if="lastTabSelected === 'spareparts'"></div>
     <!-- Service Tab should not be visible in MVP -->
