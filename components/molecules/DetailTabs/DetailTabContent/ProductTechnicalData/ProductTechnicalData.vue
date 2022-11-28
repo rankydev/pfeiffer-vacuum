@@ -50,10 +50,15 @@ export default {
 .technical-data {
   @apply tw-grid tw-grid-cols-6;
   @apply tw-gap-x-8;
-  @apply tw-py-8 tw-px-4;
+  @apply tw-pt-6;
   @apply tw-list-none;
 
+  @screen md {
+    @apply tw-pt-8;
+  }
+
   @screen lg {
+    @apply tw-pt-12;
     @apply tw-grid tw-grid-cols-12;
   }
 
