@@ -289,7 +289,6 @@ export default defineComponent({
       @apply tw-text-pv-red;
       @apply tw-cursor-pointer;
       @apply tw-outline-none;
-      @apply tw-italic;
     }
   }
 
