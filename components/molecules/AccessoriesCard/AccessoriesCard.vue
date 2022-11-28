@@ -239,6 +239,10 @@ export default defineComponent({
     @apply tw-overflow-hidden;
     @apply tw-leading-6;
     height: 3em;
+
+    &:hover {
+      @apply tw-text-pv-red;
+    }
   }
 
   &__product-number {
@@ -275,6 +279,10 @@ export default defineComponent({
     @apply tw-text-base;
     @apply tw-text-right;
     @apply tw-mb-2;
+
+    &:hover {
+      @apply tw-text-pv-red;
+    }
 
     span,
     .login-modal-link {
