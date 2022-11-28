@@ -46,7 +46,7 @@
               <!-- carouselEntries has to be replaced with data from store later -->
               <AccessoriesCardCarousel
                 :headline="
-                  $t('product.recommended.title') + productStore.product.name
+                  :headline="`$t('product.recommended.title') productStore.product.name`"
                 "
                 :entries="carouselEntries"
               />
