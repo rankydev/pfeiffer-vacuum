@@ -41,10 +41,16 @@
             >
               Variant Selection
             </div>
-            <div
-              class="tw-bg-pv-grey-88 tw-w-full tw-rounded-lg"
-              :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-            ></div>
+            <div class="tw-w-full">
+              <!-- ToDo: -->
+              <!-- carouselEntries has to be replaced with data from store later -->
+              <AccessoriesCardCarousel
+                :headline="
+                  $t('product.recommended.title') + productStore.product.name
+                "
+                :entries="carouselEntries"
+              />
+            </div>
             <DetailTabs
               :product="productStore.product"
               :product-code="productStore.code"
@@ -74,10 +80,12 @@ import Page from '~/components/templates/Page/Page'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
+import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
+import { carouselEntries } from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel.stories.content.js'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page, DetailTabs, ImageGallery },
+  components: { Page, DetailTabs, ImageGallery, AccessoriesCardCarousel },
   setup() {
     const route = useRoute()
     const context = useContext()
@@ -159,6 +167,7 @@ export default defineComponent({
       language,
 
       productStore,
+      carouselEntries,
 
       sortedImages,
     }
