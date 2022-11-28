@@ -1,7 +1,12 @@
 <template>
   <div class="generic-table">
     <div v-if="isMobile" class="generic-table__card-wrapper">
-      <TableCard v-for="(row, i) in data" :key="`row${i}`" :data="row" />
+      <TableCard
+        v-for="(row, i) in data"
+        :key="`row${i}`"
+        :data="row"
+        v-bind="{ primary, secondary }"
+      />
     </div>
     <template v-else>
       <TableView
@@ -26,6 +31,20 @@ export default {
     data: {
       type: Array,
       default: () => [],
+    },
+    primary: {
+      type: Object,
+      default: () => ({
+        position: 0,
+        active: true,
+      }),
+    },
+    secondary: {
+      type: Object,
+      default: () => ({
+        position: 1,
+        active: true,
+      }),
     },
   },
   emits: ['sortingChanged'],
