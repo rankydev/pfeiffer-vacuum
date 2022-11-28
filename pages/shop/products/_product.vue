@@ -41,9 +41,7 @@
             >
               Variant Selection
             </div>
-            <div class="tw-w-full">
-              <!-- ToDo: -->
-              <!-- carouselEntries has to be replaced with data from store later -->
+            <div v-if="carouselEntries.length" class="tw-w-full">
               <AccessoriesCardCarousel
                 :headline="
                   $t('product.recommended.title') + productStore.product.name
@@ -81,7 +79,6 @@ import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
-import { carouselEntries } from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel.stories.content.js'
 
 export default defineComponent({
   name: 'ProductShopPage',
@@ -111,6 +108,10 @@ export default defineComponent({
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)
     watch(route, loadProduct)
+
+    const carouselEntries = computed(() => {
+      return productStore.accessoriesReceommended || []
+    })
 
     /**
      * build the cms slug

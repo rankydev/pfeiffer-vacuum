@@ -125,6 +125,10 @@ export const useProductStore = defineStore('product', () => {
       throw new Error('No valid id given in route object.')
     }
 
+    // reset accessories when loading new ones. Makes sure to not display old product data
+    accessoriesReceommended.value = null
+    accessoriesGroups.value = null
+
     const result = await axios.$get(
       `${config.PRODUCTS_API}/${id}/referenceGroups/ACCESSORIES`,
       { params: { fields: 'FULL' } }
