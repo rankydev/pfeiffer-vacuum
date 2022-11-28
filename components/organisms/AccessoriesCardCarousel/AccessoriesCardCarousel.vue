@@ -1,6 +1,6 @@
 <template>
   <div class="accessories-card-carousel">
-    <ContentWrapper>
+    <ContentWrapper v-if="headline">
       <h2 class="accessories-card-carousel__headline">{{ headline }}</h2>
     </ContentWrapper>
     <GenericCarousel>
@@ -33,11 +33,11 @@ export default defineComponent({
      * Slider items
      */
     entries: {
+      required: true,
       type: Array,
       default: () => [],
     },
   },
-  // setup() {},
 })
 </script>
 <style lang="scss">
