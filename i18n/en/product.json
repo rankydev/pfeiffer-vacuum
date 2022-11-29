@@ -22,7 +22,8 @@
     "date": "Date",
     "size": "Size",
     "category": "Category",
-    "results": "{count} of {total} results"
+    "results": "{count} of {total} results",
+    "filter": "Filter"
   },
   "download": "Download",
   "noDownloads": "No downloads available",

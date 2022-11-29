@@ -14,7 +14,8 @@
     "date": "日期",
     "size": "尺寸",
     "category": "类别 ",
-    "results": "{count}个结果中的{total}个"
+    "results": "{count}个结果中的{total}个",
+    "filter": "筛选"
   },
   "downloads": "下载",
   "download": "下载",

@@ -2,7 +2,7 @@
   <div class="product-files">
     <div v-if="files.length">
       <div class="product-files__filter-wrapper">
-        <FilterModal>
+        <FilterModal :label="$t('product.file.filter')">
           <div class="product-files__filter">
             <PvSelect
               v-model="categoryFilter"
@@ -30,20 +30,21 @@
           v-if="categoryFilter.length > 0 || languageFilter.length > 0"
           class="product-files__filter-tags"
         >
-          <div v-for="(item, index) in categoryFilter" :key="index">
-            <FilterTag
-              :filter="$t('product.file.category')"
-              :value="item.value"
-              @click="categoryFilter = categoryFilter.filter((e) => e !== item)"
-            />
-          </div>
-          <div v-for="(item, index) in languageFilter" :key="index">
-            <FilterTag
-              :filter="$t('product.file.language')"
-              :value="item.value"
-              @click="languageFilter = languageFilter.filter((e) => e !== item)"
-            />
-          </div>
+          <FilterTag
+            v-for="(item, index) in categoryFilter"
+            :key="`tag-category-${index}`"
+            :filter="$t('product.file.category')"
+            :value="item.value"
+            @click="categoryFilter = categoryFilter.filter((e) => e !== item)"
+          />
+
+          <FilterTag
+            v-for="(item, index) in languageFilter"
+            :key="`tag-language-${index}`"
+            :filter="$t('product.file.language')"
+            :value="item.value"
+            @click="languageFilter = languageFilter.filter((e) => e !== item)"
+          />
         </div>
 
         <div class="product-files__result">
@@ -56,7 +57,11 @@
         </div>
       </div>
 
-      <GenericTable :header="tableHeader" :data="tableData" />
+      <GenericTable
+        :header="tableHeader"
+        :data="tableData"
+        @sortingChanged="tableSorting = $event"
+      />
     </div>
     <div v-if="!files.length && !loading">
       <Icon class="product-files__downloads-icon" icon="file_download" />
@@ -188,7 +193,7 @@ export default defineComponent({
         console.log('### loading results')
         files.value = results
         // TODO this needs to be fixed
-        // await this.$empolisApi.getProductDownloads(
+        // await empolisStore.getProductDownloads(
         //   product.orderNumber
         // )
         loading.value = false
@@ -237,14 +242,14 @@ export default defineComponent({
       },
     ])
 
+    const tableSorting = ref({})
+
     const tableData = computed(() => {
       const result = []
 
       for (const file of filteredFiles.value) {
         const entries = []
 
-        console.log('### filteredFiles.value', filteredFiles.value)
-        console.log('### file', file)
         entries.push({
           text: file.title,
           marginal: file.downloadLink.substring(
@@ -285,6 +290,26 @@ export default defineComponent({
         })
       }
 
+      result.sort((a, b) => {
+        console.log('###', tableSorting.value)
+        if (tableSorting.value.id) {
+          switch (tableSorting.value.state) {
+            case 'neutral':
+              return 0
+            case 'asc':
+              return a.entries[tableSorting.value.id].text.localeCompare(
+                b.entries[tableSorting.value.id].text
+              )
+            case 'desc':
+              return b.entries[tableSorting.value.id].text.localeCompare(
+                a.entries[tableSorting.value.id].text
+              )
+          }
+        }
+
+        return 0
+      })
+
       return result
     })
 
@@ -304,6 +329,7 @@ export default defineComponent({
 
       tableHeader,
       tableData,
+      tableSorting,
     }
   },
 })

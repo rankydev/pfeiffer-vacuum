@@ -14,7 +14,7 @@
       />
     </div>
 
-    <FilterModal>
+    <FilterModal :label="$t('category.sortAndFilter')">
       <div class="facets__selects">
         <PvSelect
           :options="sorts"

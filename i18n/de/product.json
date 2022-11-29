@@ -21,7 +21,8 @@
     "date": "Datum",
     "size": "Größe",
     "category": "Kategorie",
-    "results": "{count} von {total} Ergebnissen"
+    "results": "{count} von {total} Ergebnissen",
+    "filter": "Filtern"
   },
   "download": "Download",
   "noDownloads": "Keine Downloads verfügbar",
