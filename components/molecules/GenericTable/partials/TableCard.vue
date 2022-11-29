@@ -17,7 +17,9 @@
     </div>
     <div class="table-card__actions">
       <Button
-        v-for="(btn, j) in data.actions"
+        v-for="(btn, j) in data.actions.filter(
+          (e) => !('mobile' in e) || e.mobile
+        )"
         :key="`action${j}`"
         v-bind="btn"
       />
