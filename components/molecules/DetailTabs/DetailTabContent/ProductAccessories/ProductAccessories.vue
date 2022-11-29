@@ -1,14 +1,14 @@
 <template>
-  <div class="accessories">
-    <div class="filters tw-grid tw-grid-cols-12">
-      <div class="tw-col-span-12 tw-inline-flex md:tw-col-span-8 md:tw-pr-2">
+  <div class="product-accessories">
+    <div class="product-accessories__select-wrapper">
+      <div class="product-accessories__select-fields">
         <PvSelect
           :options="availableCategories"
           :value="selectedCategory"
           :disabled="availableCategories.length === 0"
           :clearable="false"
           :placeholder="$t('product.file.category')"
-          class="category-filter"
+          class="product-accessories__category-filter"
           @input="categorySelected"
         />
         <PvSelect
@@ -17,12 +17,12 @@
           :disabled="!selectedCategory || availableTypes.length < 1"
           :clearable="false"
           :placeholder="$t('product.type')"
-          class="category-filter"
+          class="product-accessories__type-filter"
           @input="typeSelected"
         />
         <div
           v-if="selectedCategory"
-          class="remove-filters"
+          class="product-accessories__remove-filters"
           @click="resetFilter()"
         >
           <Icon icon="delete" />
@@ -31,7 +31,7 @@
           </span>
         </div>
       </div>
-      <div class="tw-col-span-12 md:tw-col-span-4">
+      <div class="product-accessories__search">
         <PvInput
           v-model="searchQuery"
           :placeholder="$t('product.searchInAccessories')"
@@ -41,7 +41,7 @@
         />
       </div>
     </div>
-    <div class="items">
+    <div class="product-accessories__content">
       <div
         v-for="(category, index) in filteredAccessories"
         :key="index"
@@ -235,67 +235,56 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.accessories {
+<style lang="scss">
+.product-accessories {
   @apply tw-bg-pv-grey-96;
   width: 100%;
 
-  .filters {
+  &__select-wrapper {
     padding: 20px 16px;
+    @apply tw-grid;
+    @apply tw-grid-cols-12;
+  }
 
-    .input-group {
-      position: relative;
-      padding-bottom: 8px;
+  &__select-fields {
+    @apply tw-col-span-12;
+    @apply tw-inline-flex;
 
-      @screen md {
-        max-width: 300px;
-        float: right;
-      }
-
-      .input-group-append {
-        position: absolute;
-        top: 12px;
-        right: 8px;
-        z-index: 3;
-
-        @screen md {
-          top: 8px;
-        }
-
-        .material-icons {
-          font-size: 24px;
-          cursor: pointer;
-
-          @screen md {
-            font-size: 32px;
-          }
-        }
-      }
-    }
-
-    .category-filter,
-    .type-filter {
-      width: 100%;
-
-      @screen md {
-        width: 33%;
-        max-width: 33%;
-      }
-      padding-bottom: 8px;
-    }
-
-    .remove-filters {
-      display: inline-block;
-      @apply tw-text-pv-red;
-      cursor: pointer;
-
-      .label {
-        font-weight: bold;
-      }
+    @screen md {
+      @apply tw-col-span-8;
+      @apply tw-pr-2;
     }
   }
 
-  .items {
+  &__category-filter,
+  &__type-filter {
+    width: 100%;
+
+    @screen md {
+      width: 33%;
+      max-width: 33%;
+    }
+    padding-bottom: 8px;
+  }
+
+  &__remove-filters {
+    display: inline-block;
+    @apply tw-text-pv-red;
+    cursor: pointer;
+
+    .label {
+      font-weight: bold;
+    }
+  }
+
+  &__search {
+    @apply tw-col-span-12;
+    @screen md {
+      @apply tw-col-span-4;
+    }
+  }
+
+  &__content {
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 32px;
@@ -304,30 +293,16 @@ export default {
 </style>
 
 <style lang="scss">
-.category-filter,
-.type-filter {
-  button {
-    &.selected-dropdown {
-      @apply tw-text-pv-black;
-    }
+// .reference-type-popover {
+//   @apply tw-bg-pv-white;
 
-    @screen md {
-      overflow: hidden;
-      width: 100%;
-    }
-  }
-}
+//   // TODO:
+//   // border: 1px solid $pv-grey-80;
+//   padding: 4px 8px;
+//   width: auto;
 
-.reference-type-popover {
-  @apply tw-bg-pv-white;
-
-  // TODO:
-  // border: 1px solid $pv-grey-80;
-  padding: 4px 8px;
-  width: auto;
-
-  .popover-body {
-    @apply tw-text-pv-black;
-  }
-}
+//   .popover-body {
+//     @apply tw-text-pv-black;
+//   }
+// }
 </style>
