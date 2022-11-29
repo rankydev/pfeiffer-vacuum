@@ -41,7 +41,10 @@
         />
       </div>
     </div>
-    <div class="product-accessories__content">
+    <div
+      v-if="filteredAccessories.length > 0"
+      class="product-accessories__content"
+    >
       <AccessoriesCardCarousel
         v-for="(category, index) in filteredAccessories"
         :key="index"
