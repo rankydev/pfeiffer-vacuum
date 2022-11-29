@@ -9,10 +9,7 @@
       />
     </div>
     <template v-else>
-      <TableView
-        v-bind="{ header, data }"
-        @sorting="$emit('sortingChanged', $event)"
-      />
+      <TableView v-bind="{ header, data }" />
     </template>
   </div>
 </template>
@@ -47,7 +44,6 @@ export default {
       }),
     },
   },
-  emits: ['sortingChanged'],
   setup() {
     const { app } = useContext()
     const { isMobile } = app.$breakpoints

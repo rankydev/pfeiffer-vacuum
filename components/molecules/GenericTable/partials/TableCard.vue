@@ -22,6 +22,7 @@
         )"
         :key="`action${j}`"
         v-bind="btn"
+        class="table-card__action"
       />
     </div>
   </div>
@@ -119,6 +120,10 @@ export default {
   &__actions {
     @apply tw-flex;
     @apply tw-gap-2;
+  }
+
+  &__action {
+    @apply tw-grow;
   }
 }
 </style>

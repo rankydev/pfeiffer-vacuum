@@ -57,11 +57,7 @@
         </div>
       </div>
 
-      <GenericTable
-        :header="tableHeader"
-        :data="tableData"
-        @sortingChanged="tableSorting = $event"
-      />
+      <GenericTable :header="tableHeader" :data="tableData" />
     </div>
     <div v-if="!files.length && !loading">
       <Icon class="product-files__downloads-icon" icon="file_download" />
@@ -86,6 +82,8 @@ import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import GenericTable from '~/components/molecules/GenericTable/GenericTable'
 import { useProductStore } from '~/stores/product'
 import { results } from './mock'
+import { sortAsString } from '~/utils/sortHelper'
+
 export default defineComponent({
   name: 'ProductFiles',
   components: {
@@ -227,12 +225,15 @@ export default defineComponent({
     const tableHeader = computed(() => [
       {
         title: i18n.t('product.file.description'),
+        sort: sortAsString,
       },
       {
         title: i18n.t('product.file.category'),
+        sort: sortAsString,
       },
       {
         title: i18n.t('product.file.language'),
+        sort: sortAsString,
       },
       {
         title: i18n.t('product.file.date'),
@@ -241,8 +242,6 @@ export default defineComponent({
         title: i18n.t('product.file.size'),
       },
     ])
-
-    const tableSorting = ref({})
 
     const tableData = computed(() => {
       const result = []
@@ -290,26 +289,6 @@ export default defineComponent({
         })
       }
 
-      result.sort((a, b) => {
-        console.log('###', tableSorting.value)
-        if (tableSorting.value.id) {
-          switch (tableSorting.value.state) {
-            case 'neutral':
-              return 0
-            case 'asc':
-              return a.entries[tableSorting.value.id].text.localeCompare(
-                b.entries[tableSorting.value.id].text
-              )
-            case 'desc':
-              return b.entries[tableSorting.value.id].text.localeCompare(
-                a.entries[tableSorting.value.id].text
-              )
-          }
-        }
-
-        return 0
-      })
-
       return result
     })
 
@@ -329,7 +308,6 @@ export default defineComponent({
 
       tableHeader,
       tableData,
-      tableSorting,
     }
   },
 })
