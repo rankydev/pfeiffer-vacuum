@@ -46,8 +46,8 @@
       class="product-accessories__content"
     >
       <AccessoriesCardCarousel
-        v-for="(category, index) in filteredAccessories"
-        :key="index"
+        v-for="category in filteredAccessories"
+        :key="category.name + selectedCategory + selectedType + searchQuery"
         :headline="category.name"
         :entries="referencesForCategory(category)"
         class="product-accessories__carousel-element"
