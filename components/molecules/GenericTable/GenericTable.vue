@@ -1,7 +1,12 @@
 <template>
   <div class="generic-table">
     <div v-if="isMobile" class="generic-table__card-wrapper">
-      <TableCard v-for="(row, i) in data" :key="`row${i}`" :data="row" />
+      <TableCard
+        v-for="(row, i) in data"
+        :key="`row${i}`"
+        :data="row"
+        v-bind="{ primary, secondary }"
+      />
     </div>
     <template v-else>
       <TableView
@@ -27,6 +32,20 @@ export default {
       type: Array,
       default: () => [],
     },
+    primary: {
+      type: Object,
+      default: () => ({
+        position: 0,
+        active: true,
+      }),
+    },
+    secondary: {
+      type: Object,
+      default: () => ({
+        position: 1,
+        active: true,
+      }),
+    },
   },
   emits: ['sortingChanged'],
   setup() {
@@ -39,6 +58,8 @@ export default {
 </script>
 <style lang="scss">
 .generic-table {
+  @apply tw-w-full;
+
   &__card-wrapper {
     @apply tw-flex;
     @apply tw-flex-col;

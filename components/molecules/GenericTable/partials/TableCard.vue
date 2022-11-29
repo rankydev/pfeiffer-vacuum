@@ -42,17 +42,11 @@ export default {
     },
     primary: {
       type: Object,
-      default: () => ({
-        position: 0,
-        active: true,
-      }),
+      required: true,
     },
     secondary: {
       type: Object,
-      default: () => ({
-        position: 1,
-        active: true,
-      }),
+      required: true,
     },
   },
   setup(props) {
