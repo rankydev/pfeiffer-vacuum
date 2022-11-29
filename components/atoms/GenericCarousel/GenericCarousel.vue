@@ -92,6 +92,7 @@ export default defineComponent({
           'homeStage',
           'documentCardCarousel',
           'customContentCardCarousel',
+          'accessoriesCardCarousel',
         ].includes(val),
     },
     /**
@@ -266,6 +267,7 @@ export default defineComponent({
         customContentCardCarouselSettings.value),
       ...(props.variant === 'homeStage' && homeStageSettings.value),
       ...(props.variant === 'default' && defaultSettings.value),
+      ...(props.variant === 'accessoriesCardCarousel' && defaultSettings.value),
     }))
 
     return {
@@ -344,6 +346,12 @@ export default defineComponent({
 
       .slick-track {
         @apply tw-gap-0;
+      }
+    }
+
+    &--accessoriesCardCarousel {
+      .slick-track {
+        @apply tw-px-5;
       }
     }
   }

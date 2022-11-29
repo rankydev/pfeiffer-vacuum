@@ -1,11 +1,17 @@
 <template>
   <div class="accessories-card-carousel">
-    <ContentWrapper v-if="headline">
+    <ContentWrapper v-if="headline" no-padding>
       <h2 class="accessories-card-carousel__headline">{{ headline }}</h2>
     </ContentWrapper>
-    <GenericCarousel>
+    <GenericCarousel :is-wide="false" variant="accessoriesCardCarousel">
       <template #slides>
         <div v-for="entry in entries" :key="entry.id">
+          <h3
+            class="accessories-card-carousel__card-headline"
+            :title="entry.type ? entry.type.name : ''"
+          >
+            {{ entry.type ? entry.type.name : '' }}
+          </h3>
           <AccessoriesCard :product="entry.target" />
         </div>
       </template>
@@ -44,6 +50,16 @@ export default defineComponent({
 .accessories-card-carousel {
   &__headline {
     @apply tw-mb-4;
+    @apply tw-px-5;
+  }
+
+  &__card-headline {
+    @apply tw-text-lg;
+    @apply tw-mb-3;
+    min-height: 36px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 </style>

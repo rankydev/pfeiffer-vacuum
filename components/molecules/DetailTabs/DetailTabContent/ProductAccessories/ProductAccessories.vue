@@ -47,11 +47,11 @@
         :key="index"
         class="category"
       >
-        <h5>
-          {{ category.name }}
-        </h5>
         <div>
-          <AccessoriesCardCarousel :entries="referencesForCategory(category)" />
+          <AccessoriesCardCarousel
+            :headline="category.name"
+            :entries="referencesForCategory(category)"
+          />
         </div>
       </div>
     </div>
@@ -235,7 +235,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .product-accessories {
   @apply tw-bg-pv-grey-96;
   @apply tw-w-full;
@@ -292,8 +292,6 @@ export default {
   }
 
   &__content {
-    @apply tw-pl-4;
-    @apply tw-pr-4;
     @apply tw-pb-8;
   }
 }
