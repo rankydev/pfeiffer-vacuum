@@ -42,18 +42,13 @@
       </div>
     </div>
     <div class="product-accessories__content">
-      <div
+      <AccessoriesCardCarousel
         v-for="(category, index) in filteredAccessories"
         :key="index"
-        class="category"
-      >
-        <div>
-          <AccessoriesCardCarousel
-            :headline="category.name"
-            :entries="referencesForCategory(category)"
-          />
-        </div>
-      </div>
+        :headline="category.name"
+        :entries="referencesForCategory(category)"
+        class="product-accessories__carousel-element"
+      />
     </div>
   </div>
 </template>
@@ -293,6 +288,10 @@ export default {
 
   &__content {
     @apply tw-pb-8;
+  }
+
+  &__carousel-element {
+    @apply tw-mb-10;
   }
 }
 </style>
