@@ -81,7 +81,7 @@ import FilterModal from '~/components/molecules/FilterModal/FilterModal'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import GenericTable from '~/components/molecules/GenericTable/GenericTable'
 import { useProductStore } from '~/stores/product'
-import { results } from './mock'
+import { useEmpolisStore } from '~/stores/empolis'
 import { sortAsString } from '~/utils/sortHelper'
 
 export default defineComponent({
@@ -94,6 +94,7 @@ export default defineComponent({
   },
   setup() {
     const { product } = useProductStore()
+    const empolisStore = useEmpolisStore()
     const { i18n } = useContext()
 
     const categoryFilter = ref([])
@@ -189,11 +190,7 @@ export default defineComponent({
       if (product.orderNumber) {
         loading.value = true
         console.log('### loading results')
-        files.value = results
-        // TODO this needs to be fixed
-        // await empolisStore.getProductDownloads(
-        //   product.orderNumber
-        // )
+        files.value = empolisStore.getProductDownloads(product.orderNumber)
         loading.value = false
       } else {
         files.value = []
