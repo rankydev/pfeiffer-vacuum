@@ -170,6 +170,8 @@ export default {
             if (firstInType) {
               reference.type = type
               firstInType = false
+            } else {
+              reference.type = null
             }
             result.push(reference)
 
