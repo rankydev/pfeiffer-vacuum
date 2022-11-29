@@ -1,19 +1,21 @@
 <template>
-  <GenericCard :has-link="false" image-size="contain" :href="url">
+  <GenericCard :has-link="false" image-size="contain" :href="''">
     <template #image>
       <ResponsiveImage
-        :image="accessoryImage"
+        :image="imageUrl(product.images)"
         aspect-ratio="16:9"
         :provider="provider"
       />
     </template>
 
     <template #heading>
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <span class="accessories-card__product-name" v-html="productName" />
-      <p class="accessories-card__product-number">
-        {{ product.orderNumber }}
-      </p>
+      <div class="accessories-card__heading">
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <h5 class="accessories-card__product-name" v-html="productName" />
+        <p class="accessories-card__product-number">
+          {{ product.orderNumber }}
+        </p>
+      </div>
     </template>
 
     <template #additionalInfo>
@@ -76,6 +78,7 @@
           <Button icon="shopping_cart" @click.prevent="addToCart()" />
           <Button
             v-if="hasAddToListButton"
+            class="accessories-card__add-to-cart-buttons__add-to-list"
             variant="secondary"
             shape="outlined"
             icon="assignment"
@@ -122,6 +125,7 @@ import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import InformationModal from '~/components/molecules/InformationModal/InformationModal'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
+import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 
 export default defineComponent({
   name: 'AccessoriesCard',
@@ -149,6 +153,7 @@ export default defineComponent({
     const ociStore = useOciStore()
     const sanitizer = useSanitizer()
     const { product } = toRefs(props)
+    const { imageUrl } = useImageHelper()
 
     const quantity = ref(1)
     const infoModalVisible = ref(false)
@@ -184,28 +189,20 @@ export default defineComponent({
     })
 
     const addToCart = () => {
-      const params = { code: product.value.code, quantity: quantity.value }
-      this.$store.dispatch('addToCart', params)
+      // ToDo:
+      // still has to be done
     }
     const addToList = () => {
-      this.$store.commit('setShoppingListLastProduct', product.value)
-      this.$store.commit('setShoppingListLastProductQuantity', quantity.value)
-      this.$store.dispatch('addToList')
+      // ToDo:
+      // still has to be done
     }
     const login = async () => {
       await userStore.login()
     }
 
-    const accessoryImage = computed(() => {
-      if (product.value?.productReferences[0]?.image) {
-        product.value.images.find(
-          (img) => img.imageType === 'PRIMARY' && img.format === 'product'
-        ) || {}
-      }
-    })
-
     return {
       context,
+      imageUrl,
       quantity,
       infoModalVisible,
       hasAddToListButton,
@@ -218,7 +215,6 @@ export default defineComponent({
       addToCart,
       addToList,
       login,
-      accessoryImage,
       sanitizer,
       i18n,
     }
@@ -239,12 +235,20 @@ export default defineComponent({
     @apply tw-text-pv-black;
     @apply tw-text-base;
     @apply tw-font-bold;
+    @apply tw-w-full;
+    @apply tw-overflow-hidden;
+    @apply tw-leading-6;
+    height: 3em;
+
+    &:hover {
+      @apply tw-text-pv-red;
+    }
   }
 
   &__product-number {
     @apply tw-text-pv-grey-48;
     @apply tw-text-xs;
-    @apply tw-mt-auto;
+    @apply tw-mt-2;
   }
 
   &__price {
@@ -276,12 +280,15 @@ export default defineComponent({
     @apply tw-text-right;
     @apply tw-mb-2;
 
+    &:hover {
+      @apply tw-text-pv-red;
+    }
+
     span,
     .login-modal-link {
       @apply tw-text-pv-red;
       @apply tw-cursor-pointer;
       @apply tw-outline-none;
-      @apply tw-italic;
     }
   }
 
@@ -300,8 +307,8 @@ export default defineComponent({
       @apply tw-justify-end;
       @apply tw-ml-2;
 
-      button:first-child {
-        @apply tw-mr-2;
+      &__add-to-list {
+        @apply tw-ml-2;
       }
     }
   }
