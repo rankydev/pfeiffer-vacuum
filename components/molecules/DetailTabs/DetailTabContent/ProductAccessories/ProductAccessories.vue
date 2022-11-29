@@ -238,19 +238,22 @@ export default {
 <style lang="scss">
 .product-accessories {
   @apply tw-bg-pv-grey-96;
-  width: 100%;
+  @apply tw-w-full;
 
   &__select-wrapper {
-    padding: 20px 16px;
+    @apply tw-py-5;
+    @apply tw-px-4;
     @apply tw-grid;
     @apply tw-grid-cols-12;
   }
 
   &__select-fields {
     @apply tw-col-span-12;
-    @apply tw-inline-flex;
+    @apply tw-flex;
+    @apply tw-flex-col;
 
     @screen md {
+      @apply tw-flex-row;
       @apply tw-col-span-8;
       @apply tw-pr-2;
     }
@@ -258,22 +261,26 @@ export default {
 
   &__category-filter,
   &__type-filter {
-    width: 100%;
+    @apply tw-w-full;
 
     @screen md {
-      width: 33%;
+      @apply tw-mr-2;
+      @apply tw-w-1/3;
       max-width: 33%;
     }
-    padding-bottom: 8px;
+    @apply tw-pb-2;
   }
 
   &__remove-filters {
-    display: inline-block;
+    // @apply tw-inline-block;
+    @apply tw-flex;
+    @apply tw-items-center;
+    @apply tw-pb-2;
     @apply tw-text-pv-red;
-    cursor: pointer;
+    @apply tw-cursor-pointer;
 
     .label {
-      font-weight: bold;
+      @apply tw-font-bold;
     }
   }
 
@@ -285,24 +292,9 @@ export default {
   }
 
   &__content {
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-bottom: 32px;
+    @apply tw-pl-4;
+    @apply tw-pr-4;
+    @apply tw-pb-8;
   }
 }
-</style>
-
-<style lang="scss">
-// .reference-type-popover {
-//   @apply tw-bg-pv-white;
-
-//   // TODO:
-//   // border: 1px solid $pv-grey-80;
-//   padding: 4px 8px;
-//   width: auto;
-
-//   .popover-body {
-//     @apply tw-text-pv-black;
-//   }
-// }
 </style>
