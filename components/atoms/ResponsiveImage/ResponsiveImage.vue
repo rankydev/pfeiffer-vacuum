@@ -105,7 +105,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { i18n } = useContext()
     const context = useContext()
 
     const aspectRatioString = computed(() =>
@@ -118,7 +117,9 @@ export default defineComponent({
       }
     }
 
-    const fallbackImageUrl = getAssetImage(i18n.t('product.placeholderImage'))
+    const fallbackImageUrl = getAssetImage(
+      context.app.i18n.t('product.placeholderImage')
+    )
 
     let buildImage
 
