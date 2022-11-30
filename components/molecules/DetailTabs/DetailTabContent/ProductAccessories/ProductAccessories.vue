@@ -9,7 +9,7 @@
           <PvSelect
             :options="availableCategories"
             :value="selectedCategory"
-            :disabled="availableCategories.length === 0"
+            :disabled="!availableCategories.length"
             :clearable="false"
             :placeholder="$t('product.file.category')"
             class="product-accessories__category-filter"
@@ -18,7 +18,7 @@
           <PvSelect
             :options="availableTypes"
             :value="selectedType"
-            :disabled="!selectedCategory || availableTypes.length < 1"
+            :disabled="!selectedCategory || !availableTypes.length"
             :clearable="false"
             :placeholder="$t('product.type')"
             class="product-accessories__type-filter"
@@ -57,7 +57,7 @@
         <PvSelect
           :options="availableCategories"
           :value="selectedCategory"
-          :disabled="availableCategories.length === 0"
+          :disabled="!availableCategories.length"
           :clearable="false"
           :placeholder="$t('product.file.category')"
           class="product-accessories__category-filter"
@@ -66,7 +66,7 @@
         <PvSelect
           :options="availableTypes"
           :value="selectedType"
-          :disabled="!selectedCategory || availableTypes.length < 1"
+          :disabled="!selectedCategory || !availableTypes.length"
           :clearable="false"
           :placeholder="$t('product.type')"
           class="product-accessories__type-filter"
@@ -93,10 +93,7 @@
         />
       </div>
     </div>
-    <div
-      v-if="filteredAccessories.length > 0"
-      class="product-accessories__content"
-    >
+    <div v-if="filteredAccessories.length" class="product-accessories__content">
       <AccessoriesCardCarousel
         v-for="category in filteredAccessories"
         :key="category.name + selectedCategory + selectedType + searchQuery"
