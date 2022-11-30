@@ -19,7 +19,12 @@ function createComponent(propsData = {}) {
   const stubs = { NuxtImg: nuxtImg }
 
   const $img = () => ''
-  const mocks = { $nuxt: { context: { $img } } }
+  const mocks = {
+    $nuxt: {
+      context: { $img, app: { i18n: { t: () => 'missing_product_EN.jpg' } } },
+      getAssetImage: (i) => i,
+    },
+  }
 
   const options = {
     mocks,
