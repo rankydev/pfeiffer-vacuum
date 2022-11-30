@@ -24,7 +24,8 @@ export const useProductStore = defineStore('product', () => {
   const reqId = ssrRef(null)
   const variationMatrix = ref(null)
   const price = ref(null)
-  const accessories = ref(null)
+  const accessoriesRecommended = ref(null)
+  const accessoriesGroups = ref(null)
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -124,17 +125,22 @@ export const useProductStore = defineStore('product', () => {
       throw new Error('No valid id given in route object.')
     }
 
+    // reset accessories when loading new ones. Makes sure to not display old product data
+    accessoriesRecommended.value = null
+    accessoriesGroups.value = null
+
     const result = await axios.$get(
       `${config.PRODUCTS_API}/${id}/referenceGroups/ACCESSORIES`,
       { params: { fields: 'FULL' } }
     )
 
-    if (
-      typeof result === 'object' &&
-      !result.error &&
-      result.references?.length > 0
-    ) {
-      accessories = result.references
+    if (typeof result === 'object' && !result.error) {
+      if (result.references) {
+        accessoriesRecommended.value = result.references
+      }
+      if (result.groups) {
+        accessoriesGroups.value = result.groups
+      }
     } else {
       logger.error(
         `Error when fetching product references for '${id}'. Returning empty array.`,
@@ -165,7 +171,8 @@ export const useProductStore = defineStore('product', () => {
     product,
     variationMatrix,
     price,
-    accessories,
+    accessoriesRecommended,
+    accessoriesGroups,
     breadcrumb,
     metaData,
     loadByPath,
