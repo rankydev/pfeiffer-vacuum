@@ -3,9 +3,17 @@
     <ContentWrapper v-if="headline" no-padding>
       <h2 class="accessories-card-carousel__headline">{{ headline }}</h2>
     </ContentWrapper>
-    <GenericCarousel :is-wide="false" variant="accessoriesCardCarousel">
+    <GenericCarousel
+      :is-wide="false"
+      variant="accessoriesCardCarousel"
+      class="accessories-card-carousel__content"
+    >
       <template #slides>
-        <div v-for="entry in entries" :key="entry.id">
+        <div
+          v-for="entry in entries"
+          :key="entry.id"
+          class="accessories-card-carousel__card"
+        >
           <h3
             class="accessories-card-carousel__card-headline"
             :title="entry.type ? entry.type.name : ''"
@@ -51,6 +59,14 @@ export default defineComponent({
   &__headline {
     @apply tw-mb-4;
     @apply tw-px-5;
+  }
+
+  &__content {
+    @apply tw-px-5;
+  }
+
+  &__card {
+    @apply tw-pb-10;
   }
 
   &__card-headline {

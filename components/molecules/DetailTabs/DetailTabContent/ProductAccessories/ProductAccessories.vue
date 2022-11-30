@@ -296,7 +296,7 @@ export default {
   }
 
   &__carousel-element {
-    @apply tw-mb-10;
+    @apply tw-mt-5;
   }
 }
 </style>
