@@ -1,4 +1,8 @@
-import { PATH_SHOP, PATH_SHOP_IMAGES } from './server/constants.js'
+import {
+  PATH_EMPOLIS,
+  PATH_SHOP,
+  PATH_SHOP_IMAGES,
+} from './server/constants.js'
 import {
   languageCodes,
   defaultLanguageCode,
@@ -195,6 +199,13 @@ export default {
     KEYCLOAK_BASE_URL: process.env.KEYCLOAK_BASE_URL,
     KEYCLOAK_REALM_NAME: process.env.KEYCLOAK_REALM_NAME,
     KEYCLOAK_CLIENT_ID: process.env.KEYCLOAK_CLIENT_ID,
+
+    EMPOLIS_TIMEOUT: process.env.EMPOLIS_TIMEOUT,
+    EMPOLIS_STAGE: process.env.EMPOLIS_STAGE,
+    EMPOLIS_PATH: process.env.EMPOLIS_PATH,
+    EMPOLIS_GUEST_TOKEN_URL: process.env.EMPOLIS_GUEST_TOKEN_URL,
+    EMPOLIS_SSO_PATH: process.env.EMPOLIS_SSO_PATH,
+    EMPOLIS_AUTH_URL: process.env.EMPOLIS_AUTH_URL,
   },
 
   env: {
@@ -241,5 +252,19 @@ export default {
       path: PATH_SHOP_IMAGES,
       handler: '~/server/middleware/shop-images.js',
     },
+    {
+      path: '/',
+      handler: '~/server/middleware/empolis-authorization.js',
+    },
+    {
+      path: PATH_EMPOLIS,
+      handler: '~/server/middleware/empolis.js',
+    },
   ],
+  watchers: {
+    // Temporary fix: https://github.com/nuxt-community/tailwindcss-module/issues/359
+    webpack: {
+      ignored: ['**/.git/**'],
+    },
+  },
 }

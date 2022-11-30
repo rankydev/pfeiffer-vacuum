@@ -83,6 +83,7 @@ import GenericTable from '~/components/molecules/GenericTable/GenericTable'
 import { useProductStore } from '~/stores/product'
 import { useEmpolisStore } from '~/stores/empolis'
 import { sortAsString } from '~/utils/sortHelper'
+import { PATH_EMPOLIS } from '~/server/constants'
 
 export default defineComponent({
   name: 'ProductFiles',
@@ -181,10 +182,6 @@ export default defineComponent({
 
       return Array.from(result)
     })
-    const empolisProxyDownloadPath = computed(() => {
-      // TODO this needs to be fixed
-      return 'this.$env.PROXY_PATH_EMPOLIS'
-    })
 
     const getProductDownloads = async () => {
       if (product.orderNumber) {
@@ -275,8 +272,7 @@ export default defineComponent({
             icon: 'file_download',
             variant: 'secondary',
             shape: 'outlined',
-            // TODO needs to be fixed
-            href: '`${empolisProxyDownloadPath}/${file.downloadLink}`',
+            href: `${PATH_EMPOLIS}/${file.downloadLink}`,
           },
         ]
 
@@ -298,7 +294,6 @@ export default defineComponent({
       availableCategories,
       availableLanguages,
       filteredFiles,
-      empolisProxyDownloadPath,
 
       getProductDownloads,
       formatFileSize,
