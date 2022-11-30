@@ -24,7 +24,12 @@
             class="pv-select__icon-prepend"
             :icon="prependIcon"
           />
-          <input class="vs__search" v-bind="attributes" v-on="events" />
+          <input
+            class="vs__search"
+            :class="multiple ? 'vs__search--multiple' : ''"
+            v-bind="attributes"
+            v-on="events"
+          />
           <div class="pv-select__search-helper">
             {{ placeholder }}
           </div>
