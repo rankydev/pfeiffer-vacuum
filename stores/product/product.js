@@ -134,11 +134,7 @@ export const useProductStore = defineStore('product', () => {
       { params: { fields: 'FULL' } }
     )
 
-    if (
-      typeof result === 'object' &&
-      !result.error
-      // && result.references?.length > 0
-    ) {
+    if (typeof result === 'object' && !result.error) {
       if (result.references) {
         accessoriesRecommended.value = result.references
       }
