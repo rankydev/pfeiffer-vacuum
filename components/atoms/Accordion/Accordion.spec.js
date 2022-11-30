@@ -80,7 +80,6 @@ describe('Accordion', () => {
       expect(firstButton.attributes('class')).toContain(
         'accordion__button--active'
       )
-      expect(content.attributes('style')).toBe('')
     })
 
     test('should close accordion when second user input was tiggered on same element', async () => {
