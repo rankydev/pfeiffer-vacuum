@@ -356,7 +356,7 @@ export default defineComponent({
       .slick-slide {
         // this is important to make all items same size (flex behaviour)
         width: 0 !important;
-        flex: 1 1 0px;
+        @apply tw-flex-1;
 
         // this is here for the gaps between the cards
         margin: 0 10px;

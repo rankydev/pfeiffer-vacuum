@@ -72,10 +72,10 @@ export default defineComponent({
   &__card-headline {
     @apply tw-text-lg;
     @apply tw-mb-3;
-    min-height: 36px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @apply tw-h-9;
+    @apply tw-overflow-hidden;
+    @apply tw-text-ellipsis;
+    @apply tw-whitespace-nowrap;
   }
 }
 </style>
