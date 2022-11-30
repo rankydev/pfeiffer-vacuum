@@ -35,6 +35,23 @@
             </span>
           </div>
         </FilterModal>
+        <div
+          v-if="selectedCategory || selectedType"
+          class="product-accessories__filter-tags"
+        >
+          <FilterTag
+            v-if="selectedCategory"
+            :filter="$t('product.file.category')"
+            :value="selectedCategory"
+            @click="selectedCategory = null"
+          />
+          <FilterTag
+            v-if="selectedType"
+            :filter="$t('product.file.type')"
+            :value="selectedType"
+            @click="selectedType = null"
+          />
+        </div>
       </div>
       <div class="product-accessories__select-fields--desktop">
         <PvSelect
@@ -98,7 +115,7 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import { useProductStore } from '~/stores/product'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
-// import FilterTag from '~/components/atoms/FilterTag/FilterTag'
+import FilterTag from '~/components/atoms/FilterTag/FilterTag'
 import FilterModal from '~/components/molecules/FilterModal/FilterModal'
 
 export default {
@@ -109,7 +126,7 @@ export default {
     PvInput,
     PvSelect,
     FilterModal,
-    // FilterTag,
+    FilterTag,
   },
   setup() {
     const searchQuery = ref('')
@@ -338,8 +355,13 @@ export default {
     }
   }
 
+  &__filter-tags {
+    @apply tw-mb-4;
+  }
+
   &__search {
     @apply tw-col-span-12;
+
     @screen md {
       @apply tw-col-span-4;
     }
