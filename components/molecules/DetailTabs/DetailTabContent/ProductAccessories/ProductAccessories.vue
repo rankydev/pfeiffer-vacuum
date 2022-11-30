@@ -1,7 +1,42 @@
 <template>
   <div class="product-accessories">
     <div class="product-accessories__select-wrapper">
-      <div class="product-accessories__select-fields">
+      <div class="product-accessories__select-fields--modal">
+        <FilterModal
+          class="product-accessories__modal"
+          :label="$t('product.file.filter')"
+        >
+          <PvSelect
+            :options="availableCategories"
+            :value="selectedCategory"
+            :disabled="availableCategories.length === 0"
+            :clearable="false"
+            :placeholder="$t('product.file.category')"
+            class="product-accessories__category-filter"
+            @input="categorySelected"
+          />
+          <PvSelect
+            :options="availableTypes"
+            :value="selectedType"
+            :disabled="!selectedCategory || availableTypes.length < 1"
+            :clearable="false"
+            :placeholder="$t('product.type')"
+            class="product-accessories__type-filter"
+            @input="typeSelected"
+          />
+          <div
+            v-if="selectedCategory"
+            class="product-accessories__remove-filters"
+            @click="resetFilter()"
+          >
+            <Icon icon="delete" />
+            <span class="label">
+              {{ $t('product.removeFilter') }}
+            </span>
+          </div>
+        </FilterModal>
+      </div>
+      <div class="product-accessories__select-fields--desktop">
         <PvSelect
           :options="availableCategories"
           :value="selectedCategory"
@@ -63,6 +98,8 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import { useProductStore } from '~/stores/product'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
+// import FilterTag from '~/components/atoms/FilterTag/FilterTag'
+import FilterModal from '~/components/molecules/FilterModal/FilterModal'
 
 export default {
   name: 'ProductAccessories',
@@ -71,6 +108,8 @@ export default {
     Icon,
     PvInput,
     PvSelect,
+    FilterModal,
+    // FilterTag,
   },
   setup() {
     const searchQuery = ref('')
@@ -240,6 +279,13 @@ export default {
   @apply tw-bg-pv-grey-96;
   @apply tw-w-full;
 
+  &__modal {
+    @apply tw-block;
+    @screen md {
+      @apply tw-hidden;
+    }
+  }
+
   &__select-wrapper {
     @apply tw-py-5;
     @apply tw-px-4;
@@ -247,12 +293,21 @@ export default {
     @apply tw-grid-cols-12;
   }
 
-  &__select-fields {
+  &__select-fields--modal {
     @apply tw-col-span-12;
     @apply tw-flex;
     @apply tw-flex-col;
 
     @screen md {
+      @apply tw-hidden;
+    }
+  }
+
+  &__select-fields--desktop {
+    @apply tw-hidden;
+
+    @screen md {
+      @apply tw-flex;
       @apply tw-flex-row;
       @apply tw-col-span-8;
       @apply tw-pr-2;
@@ -272,7 +327,6 @@ export default {
   }
 
   &__remove-filters {
-    // @apply tw-inline-block;
     @apply tw-flex;
     @apply tw-items-center;
     @apply tw-pb-2;
