@@ -188,9 +188,13 @@
 /* Custom component class stylings */
 .pv-select {
   &--icon {
-    .vs__search,
-    .vs__selected {
+    .vs__search {
       @apply tw-ml-8;
+    }
+
+    .vs__selected {
+      order : 1;
+      margin-left: -10.5rem;
     }
   }
 
@@ -202,6 +206,10 @@
     &-error {
       @apply tw-text-pv-red;
       @apply tw-mr-2;
+    }
+
+    &-option {
+      @apply tw-align-bottom;
     }
   }
 

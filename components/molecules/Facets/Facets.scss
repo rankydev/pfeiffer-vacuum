@@ -24,6 +24,20 @@
       @apply tw-p-2;
       @apply tw-text-xs;
     }
+
+    &--name{
+      input {
+        @apply tw-w-0;
+
+        &:focus {
+          @apply tw-w-0;
+        }
+      }
+
+      li {
+        @apply tw-whitespace-nowrap;
+      }
+    }
   }
 
   &__expand-toggle {
