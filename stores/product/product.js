@@ -24,7 +24,7 @@ export const useProductStore = defineStore('product', () => {
   const reqId = ssrRef(null)
   const variationMatrix = ref(null)
   const price = ref(null)
-  const accessoriesReceommended = ref(null)
+  const accessoriesRecommended = ref(null)
   const accessoriesGroups = ref(null)
 
   const breadcrumb = computed(() => {
@@ -126,7 +126,7 @@ export const useProductStore = defineStore('product', () => {
     }
 
     // reset accessories when loading new ones. Makes sure to not display old product data
-    accessoriesReceommended.value = null
+    accessoriesRecommended.value = null
     accessoriesGroups.value = null
 
     const result = await axios.$get(
@@ -140,7 +140,7 @@ export const useProductStore = defineStore('product', () => {
       // && result.references?.length > 0
     ) {
       if (result.references) {
-        accessoriesReceommended.value = result.references
+        accessoriesRecommended.value = result.references
       }
       if (result.groups) {
         accessoriesGroups.value = result.groups
@@ -175,7 +175,7 @@ export const useProductStore = defineStore('product', () => {
     product,
     variationMatrix,
     price,
-    accessoriesReceommended,
+    accessoriesRecommended,
     accessoriesGroups,
     breadcrumb,
     metaData,
