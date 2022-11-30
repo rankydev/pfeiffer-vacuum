@@ -26,7 +26,7 @@
           />
           <input
             class="vs__search"
-            :class="multiple ? 'vs__search--multiple' : ''"
+            :class="{ 'vs__search--multiple': multiple }"
             v-bind="attributes"
             v-on="events"
           />
