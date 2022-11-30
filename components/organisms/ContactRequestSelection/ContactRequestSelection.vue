@@ -120,7 +120,6 @@ export default defineComponent({
 
   &__form {
     @apply tw-mt-4;
-    @apply tw-overflow-hidden;
   }
 }
 </style>
