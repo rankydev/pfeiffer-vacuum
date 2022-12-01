@@ -73,7 +73,7 @@ export const useProductStore = defineStore('product', () => {
         params: { codes: idsString, fields: 'FULL' },
       })
       .catch((error) => {
-        logger.error(error.toJSON())
+        logger.error(error)
       })
 
     if (!Array.isArray(result?.products)) {
