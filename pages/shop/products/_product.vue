@@ -110,7 +110,8 @@ export default defineComponent({
     watch(route, loadProduct)
 
     const carouselEntries = computed(() => {
-      return productStore.accessoriesRecommended || []
+      // TODO: return recommended accessories
+      return []
     })
 
     /**

@@ -24,7 +24,6 @@ export const useProductStore = defineStore('product', () => {
   const reqId = ssrRef(null)
   const variationMatrix = ref(null)
   const price = ref(null)
-  const accessoriesRecommended = ref(null)
   const accessoriesGroups = ref(null)
 
   const breadcrumb = computed(() => {
@@ -126,7 +125,6 @@ export const useProductStore = defineStore('product', () => {
     }
 
     // reset accessories when loading new ones. Makes sure to not display old product data
-    accessoriesRecommended.value = null
     accessoriesGroups.value = null
 
     const result = await axios.$get(
@@ -135,12 +133,22 @@ export const useProductStore = defineStore('product', () => {
     )
 
     if (typeof result === 'object' && !result.error) {
-      if (result.references) {
-        accessoriesRecommended.value = result.references
+      if (!Array.isArray(result.groups)) {
+        result.groups = []
       }
-      if (result.groups) {
-        accessoriesGroups.value = result.groups
+
+      if (
+        result.references &&
+        Array.isArray(result.references) &&
+        result.references.length > 0
+      ) {
+        result.groups.push({
+          name: i18n.t('product.otherAccessories'),
+          references: result.references,
+        })
       }
+
+      accessoriesGroups.value = result.groups
     } else {
       logger.error(
         `Error when fetching product references for '${id}'. Returning empty array.`,
@@ -171,7 +179,6 @@ export const useProductStore = defineStore('product', () => {
     product,
     variationMatrix,
     price,
-    accessoriesRecommended,
     accessoriesGroups,
     breadcrumb,
     metaData,
