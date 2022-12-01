@@ -101,7 +101,7 @@ export default defineComponent({
      */
     const productStore = useProductStore()
     const loadProduct = () => {
-      productStore.getProductAccessories()
+      productStore.hydrateProductAccessories()
       redirectOnError(productStore.loadByPath)
     }
 

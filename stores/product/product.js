@@ -117,14 +117,13 @@ export const useProductStore = defineStore('product', () => {
     price.value = result
   }
 
-  const getProductAccessories = async () => {
+  const hydrateProductAccessories = async () => {
     const id = route.value.params.product || ''
 
     if (!id) {
       throw new Error('No valid id given in route object.')
     }
 
-    // reset accessories when loading new ones. Makes sure to not display old product data
     accessoriesGroups.value = null
 
     const result = await axios.$get(
@@ -147,11 +146,29 @@ export const useProductStore = defineStore('product', () => {
       accessoriesGroups.value = result.groups
     } else {
       logger.error(
-        `Error when fetching product references for '${id}'. Returning empty array.`,
+        `Error when fetching product accessories for '${id}'. Returning empty array.`,
         result.error ? result.error : ''
       )
     }
   }
+
+  const getProductReferencesSpareParts = computed(() => {
+    if (product.value && product.value.productReferences) {
+      return product.value.productReferences.filter(
+        (o) => o.referenceType === 'SPAREPART'
+      )
+    }
+    return []
+  })
+
+  const productReferencesConsumables = computed(() => {
+    if (product.value && product.value.productReferences) {
+      return product.value.productReferences.filter(
+        (o) => o.referenceType === 'CONSUMABLE'
+      )
+    }
+    return []
+  })
 
   const loadByPath = async () => {
     const id = route.value.params.product || ''
@@ -180,6 +197,8 @@ export const useProductStore = defineStore('product', () => {
     metaData,
     loadByPath,
     getProducts,
-    getProductAccessories,
+    hydrateProductAccessories,
+    getProductReferencesSpareParts,
+    productReferencesConsumables,
   }
 })

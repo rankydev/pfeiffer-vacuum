@@ -81,7 +81,11 @@ export default defineComponent({
   setup(props) {
     const { i18n } = useContext()
 
-    const { product } = useProductStore()
+    const {
+      product,
+      getProductReferencesSpareParts,
+      productReferencesConsumables,
+    } = useProductStore()
 
     let lastTabSelected = ref('productInfo')
     const tabs = ref([
@@ -148,24 +152,6 @@ export default defineComponent({
       return props.references.filter((o) => o.referenceType === 'CONSUMABLE')
     })
 
-    const hasConsumables = computed(() => {
-      if (product && product.productReferences) {
-        return product.productReferences.filter(
-          (o) => o.referenceType === 'CONSUMABLE'
-        )
-      }
-      return []
-    })
-
-    const hasSpareParts = computed(() => {
-      if (product && product.productReferences) {
-        return product.productReferences.filter(
-          (o) => o.referenceType === 'SPAREPART'
-        )
-      }
-      return []
-    })
-
     const hasAccessories = computed(() => {
       if (product && product.productReferences) {
         return product.productReferences.filter(
@@ -192,9 +178,9 @@ export default defineComponent({
         case 'accessories':
           return !hasAccessories.value?.length
         case 'consumables':
-          return !hasConsumables.value?.length
+          return !productReferencesConsumables.length
         case 'spareparts':
-          return !hasSpareParts.value?.length
+          return !getProductReferencesSpareParts.length
         case 'service':
           return true
         default:
@@ -208,8 +194,6 @@ export default defineComponent({
       mobileAccordionItems,
       spareParts,
       consumables,
-      hasConsumables,
-      hasSpareParts,
       hasAccessories,
       selectTab,
       isDisabled,
