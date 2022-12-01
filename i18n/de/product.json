@@ -9,6 +9,7 @@
   "selectVariant": "Variante auswählen",
   "downloads": "Downloads",
   "accessories": "Zubehör",
+  "otherAccessories": "Andere",
   "consumables": "Verbrauchsmaterialien",
   "dimensions": "Abmessungen",
   "furtherDetails": "Weitere Produktdetails",
@@ -31,12 +32,9 @@
   "priceInfo": {
     "InfoOnline": "Onlinepreis",
     "InfoPersonal": "Ihr persönlicher Preis",
-    "textInfoOnlineLine1":
-      "Der hier angezeigte Online-Preis ist ein Referenzprei, der keine Frach, Zölle und Steuern enthält und nicht in allen Landeswährungen gepflegt wird.",
-    "textInfoOnlineLine2":
-      "Um Ihr individuelles Angebot (in Ihrer Landeswährung) zu erhalte, senden Sie uns bitte Ihre Anfrag, so dass Ihnen Ihr lokales Pfeiffer Vacuum Unternehmen / Partnerunternehmen ein individuelles Angebot mit Ihren Preisen zur Verfügung stellen kann.",
-    "textInfoPersonal":
-      "Dieser Preis ist Ihr persönlicher Preis. Er wird auf der Grundlage Ihrer individuellen Preise bzw. Rabattvereinbarungen berechnet. Die Möglichkei, Ihre persönlichen Preise innerhalb unseres E-Commerce-Systems beizubehalte, ist innerhalb der verschiedenen Regionen unseres Pfeiffer Vacuum Vertriebsnetzes unterschiedlich. Für weitere Fragen wenden Sie sich bitte an Ihren lokalen Vertriebskontakt."
+    "textInfoOnlineLine1": "Der hier angezeigte Online-Preis ist ein Referenzpreis, der keine Fracht, Zölle und Steuern enthält und nicht in allen Landeswährungen gepflegt wird.",
+    "textInfoOnlineLine2": "Um Ihr individuelles Angebot (in Ihrer Landeswährung) zu erhalte, senden Sie uns bitte Ihre Anfrag, so dass Ihnen Ihr lokales Pfeiffer Vacuum Unternehmen / Partnerunternehmen ein individuelles Angebot mit Ihren Preisen zur Verfügung stellen kann.",
+    "textInfoPersonal": "Dieser Preis ist Ihr persönlicher Preis. Er wird auf der Grundlage Ihrer individuellen Preise bzw. Rabattvereinbarungen berechnet. Die Möglichkei, Ihre persönlichen Preise innerhalb unseres E-Commerce-Systems beizubehalte, ist innerhalb der verschiedenen Regionen unseres Pfeiffer Vacuum Vertriebsnetzes unterschiedlich. Für weitere Fragen wenden Sie sich bitte an Ihren lokalen Vertriebskontakt."
   },
   "recommended": {
     "title": "Empfohlenes Zubehör für "
@@ -48,31 +46,25 @@
     "pleaseLogin": "Bitte melden Sie sich hier an, um auf ihr Konto zuzugreifen.",
     "description": "Bitte geben Sie Benutzername und Passwort ein.",
     "username": "Benutzername",
-    "badCredentials":
-      "Die Anmeldung konnte nicht durchgeführt werden. Bitte überprüfen Sie Benutzername und Passwort.",
+    "badCredentials": "Die Anmeldung konnte nicht durchgeführt werden. Bitte überprüfen Sie Benutzername und Passwort.",
     "password": "Passwort",
     "passwordForgotten": {
       "title": "Passwort vergessen?",
-      "description":
-        "Bitte geben Sie ihren Benutzernamen ein. Wir senden Ihnen eine E-Mail zum Zurücksetzen ihres Passwortes.",
+      "description": "Bitte geben Sie ihren Benutzernamen ein. Wir senden Ihnen eine E-Mail zum Zurücksetzen ihres Passwortes.",
       "message": {
         "error": "Beim Zurücksetzen des Passworts ist ein Fehler aufgetreten.",
         "resetSuccess": "Das Passwort wurde erfolgreich zurückgesetzt.",
-        "requestSuccess":
-          "Die Anfrage zum Zurücksetzen der E-Mail wurde verschickt. Bitte sehen sie in ihr E-Mail Postfach."
+        "requestSuccess": "Die Anfrage zum Zurücksetzen der E-Mail wurde verschickt. Bitte sehen sie in ihr E-Mail Postfach."
       },
       "expiredInfoHeadline": "Sicherheitstoken abgelaufen?",
-      "expiredInfo":
-        "Für das Zurücksetzen des Passworts gibt es ein Zeitlimit. Sollten Sie dieses Limit überschreiten, wird der Token ungültig. In diesem Fall müssen Sie einen neuen Token generieren.",
+      "expiredInfo": "Für das Zurücksetzen des Passworts gibt es ein Zeitlimit. Sollten Sie dieses Limit überschreiten, wird der Token ungültig. In diesem Fall müssen Sie einen neuen Token generieren.",
       "newToken": "Neuen Sicherheitstoken generieren:",
       "placeholder": "Ihr Benutzername",
       "reset": "Passwort zurücksetzen",
       "resetDescription": "Bitte geben Sie ein neues Passwort ein.",
       "submit": "Passwort zurücksetzen",
-      "expiredError":
-        "Ihr Resettoken ist ungültig! Bitte fragen Sie einen neuen Token für das Zurücksetzen ihres Passworts an.",
-      "passwordValidError":
-        "Das eingegebene Passwort ist nicht korrekt. Bitte überprüfen Sie ihre Eingabe und versuchen Sie es erneut.",
+      "expiredError": "Ihr Resettoken ist ungültig! Bitte fragen Sie einen neuen Token für das Zurücksetzen ihres Passworts an.",
+      "passwordValidError": "Das eingegebene Passwort ist nicht korrekt. Bitte überprüfen Sie ihre Eingabe und versuchen Sie es erneut.",
       "backToSignIn": "Zurück zum Anmelden",
       "sendEmail": "E-Mail senden"
     },
@@ -92,19 +84,15 @@
     "passwordDigit": "Mindestens eine Ziffer",
     "passwordTooLong": "Ihr Passwort ist zu lang (max. 255 Charaktere)",
     "createAccountBenefitsOld": {
-      "title":
-        "Erstellen Sie jetzt Ihr eigenes Konto, um mehr Funktionen zu nutzen. Sobald Sie sich registriert haben, können Sie:",
+      "title": "Erstellen Sie jetzt Ihr eigenes Konto, um mehr Funktionen zu nutzen. Sobald Sie sich registriert haben, können Sie:",
       "bullet1": "Senden Sie Angebotsanfragen direkt an Ihren Vertriebsingenieur",
       "bullet2": "Zugriff auf den 'Mein Konto-Bereich",
       "bullet3": "Nehmen Sie noch einfacher Kontakt mit uns auf"
     },
-    "createAccountBenefits":
-      "Registrieren Sie sich, um mehr Funktionalitäten zu erhalten. Dadurch wird Ihnen folgendes ermöglicht:",
+    "createAccountBenefits": "Registrieren Sie sich, um mehr Funktionalitäten zu erhalten. Dadurch wird Ihnen folgendes ermöglicht:",
     "createBenefit1": "Einsehen von Onlinepreisen",
-    "createBenefit2":
-      "Senden Sie Angebotsanfragen direkt an Ihren Vertriebsingenieur",
-    "createBenefit3":
-      "Zugriff auf den Mein Konto-Bereich mit verschiedenen Optionen:",
+    "createBenefit2": "Senden Sie Angebotsanfragen direkt an Ihren Vertriebsingenieur",
+    "createBenefit3": "Zugriff auf den Mein Konto-Bereich mit verschiedenen Optionen:",
     "createBenefitSub1": "Pflege von Einkaufslisten",
     "createBenefitSub2": "Pflege Ihrer Benutzerdaten",
     "createBenefitSub3": "Übersicht über Ihre Anfragen"

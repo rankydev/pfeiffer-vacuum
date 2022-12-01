@@ -1,6 +1,5 @@
 import { joinURL } from 'ufo'
 import { PATH_SHOP_IMAGES } from '~/server/constants.js'
-import { useContext } from '@nuxtjs/composition-api'
 
 export const useImageHelper = () => {
   /**
@@ -25,7 +24,6 @@ export const useImageHelper = () => {
   }
 
   const imageUrl = (images) => {
-    const { i18n } = useContext()
     if (images) {
       const isPrimaryImage = (img) => img.imageType === 'PRIMARY'
       const isProductImage = (img) => img.format === 'product'
@@ -38,7 +36,7 @@ export const useImageHelper = () => {
       }
     }
 
-    return { url: getAssetImage(i18n.t('product.placeholderImage')) }
+    return null
   }
 
   return { getAssetImage, getShopMedia, imageUrl }
