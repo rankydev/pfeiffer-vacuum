@@ -2,6 +2,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 import https from 'https'
 import { PATH_EMPOLIS } from '../constants.js'
 import config from '../../nuxt.config'
+import { getAccessToken } from './empolis-authorization'
 
 const agent = new https.Agent({
   keepAlive: true,
@@ -16,4 +17,8 @@ export default createProxyMiddleware({
   changeOrigin: true,
   agent,
   pathRewrite: { [`^(/(${regionsForRegex}))?${PATH_EMPOLIS}`]: '/' },
+  onProxyReq: async (proxyReq, req) => {
+    req._empolisToken = await getAccessToken(req)
+    console.log('empolis token', req._empolisToken)
+  },
 })

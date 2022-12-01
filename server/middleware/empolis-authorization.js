@@ -1,6 +1,5 @@
 import { useLogger } from '../../composables/useLogger'
 import { parseJwt } from './utils/jsonTransform'
-import { PATH_EMPOLIS } from '../constants.js'
 const axios = require('axios').default
 
 const { logger } = useLogger('empolis-authorization')
@@ -32,7 +31,7 @@ const empolisRoleMap = {
   },
 }
 
-const getAccessToken = async (req) => {
+export const getAccessToken = async (req) => {
   logger.debug('getAccessToken start')
   const formData = {
     ...empolisRoleMap.public_level,
@@ -100,20 +99,4 @@ const getAccessToken = async (req) => {
   }
 
   return ''
-}
-
-/**
- *
- * @param {Object} req
- * @param {Object} res
- * @param {Function} next
- * @returns
- */
-export default async function (req, _, next) {
-  logger.info('empolis authorization', req.originalUrl)
-  if (req.originalUrl.includes(PATH_EMPOLIS)) {
-    req._empolisToken = await getAccessToken(req)
-    logger.info('empolis token', req._empolisToken)
-  }
-  next()
 }
