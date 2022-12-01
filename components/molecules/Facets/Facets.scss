@@ -125,4 +125,8 @@
     /* viewport minus paddings minus border */
     max-width: calc(100vw - 64px - 4px)
   }
+
+  .vs__dropdown-menu {
+    @apply tw-w-max;
+  }
 }
