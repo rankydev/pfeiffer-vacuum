@@ -11,6 +11,7 @@
   &__selected-options {
     @apply tw-items-center;
     @apply tw-p-0;
+    @apply tw-overflow-x-clip;
   }
 
   &__selected {
@@ -20,6 +21,7 @@
     @apply tw-gap-2;
     @apply tw-text-pv-grey-16;
     @apply tw-hidden;
+    @apply tw-w-full;
 
     &:first-of-type{
       @apply tw-mr-0;
@@ -31,9 +33,7 @@
   }
 
   &__selected + .pv-select__search-wrapper {
-    .pv-select__search-helper {
-      @apply tw-hidden;
-    }
+    @apply tw-hidden;
   }
 
   &__deselect {
@@ -222,10 +222,12 @@
 
   &__search-wrapper {
     @apply tw-relative;
+    @apply tw-overflow-x-clip;
   }
 
   &__search-helper {
     @apply tw-opacity-0;
     @apply tw-invisible;
+    @apply tw-whitespace-nowrap;
   }
 }
