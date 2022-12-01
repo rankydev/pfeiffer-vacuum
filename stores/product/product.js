@@ -137,11 +137,7 @@ export const useProductStore = defineStore('product', () => {
         result.groups = []
       }
 
-      if (
-        result.references &&
-        Array.isArray(result.references) &&
-        result.references.length > 0
-      ) {
+      if (result.references?.length > 0) {
         result.groups.push({
           name: i18n.t('product.otherAccessories'),
           references: result.references,
