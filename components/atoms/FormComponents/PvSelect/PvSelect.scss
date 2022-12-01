@@ -87,7 +87,7 @@
 
   &--single {
     &.vs--open .vs__selected {
-      @apply tw-relative;
+      @apply tw-absolute;
     }
 
     &.vs--searching {
@@ -98,7 +98,7 @@
       }
 
       .pv-select__search-wrapper {
-        @apply tw-absolute;
+        @apply tw-relative;
         @apply tw-w-full;
         @apply tw-top-0 tw-left-0;
       }
