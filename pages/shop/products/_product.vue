@@ -41,7 +41,7 @@
             >
               Variant Selection
             </div>
-            <div v-if="carouselEntries.length && false" class="tw-w-full">
+            <div v-if="carouselEntries.length" class="tw-w-full">
               <AccessoriesCardCarousel
                 :headline="
                   $t('product.recommended.title') + productStore.product.name
