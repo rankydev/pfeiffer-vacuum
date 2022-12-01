@@ -33,7 +33,11 @@
   }
 
   &__selected + .pv-select__search-wrapper {
-    @apply tw-hidden;
+    @apply tw-w-0;
+
+    .pv-select__search-helper {
+      @apply tw-hidden;
+    }
   }
 
   &__deselect {
@@ -128,6 +132,7 @@
     @apply tw-border-solid;
     @apply tw-rounded-md;
     @apply tw-max-h-48;
+    @apply tw-table;
   }
 
   &__dropdown-option,
@@ -138,7 +143,7 @@
   }
 
   &__dropdown-option {
-    @apply tw-whitespace-normal;
+    @apply tw-whitespace-nowrap;
 
     &--highlight {
       @apply tw-bg-pv-red-lighter;
