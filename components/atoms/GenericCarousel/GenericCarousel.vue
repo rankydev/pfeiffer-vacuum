@@ -92,6 +92,7 @@ export default defineComponent({
           'homeStage',
           'documentCardCarousel',
           'customContentCardCarousel',
+          'accessoriesCardCarousel',
         ].includes(val),
     },
     /**
@@ -123,9 +124,12 @@ export default defineComponent({
      * Check if carousel is breakout (wide mode)
      */
     const { app } = useContext()
-    const isBreakout = computed(
-      () => !app.$breakpoints.isDesktop.value || props.isWide
-    )
+    const isBreakout = computed(() => {
+      if (props.variant === 'accessoriesCardCarousel') {
+        return false
+      }
+      return !app.$breakpoints.isDesktop.value || props.isWide
+    })
 
     /**
      * Get object by reference
@@ -266,6 +270,7 @@ export default defineComponent({
         customContentCardCarouselSettings.value),
       ...(props.variant === 'homeStage' && homeStageSettings.value),
       ...(props.variant === 'default' && defaultSettings.value),
+      ...(props.variant === 'accessoriesCardCarousel' && defaultSettings.value),
     }))
 
     return {
@@ -344,6 +349,40 @@ export default defineComponent({
 
       .slick-track {
         @apply tw-gap-0;
+      }
+    }
+
+    &--accessoriesCardCarousel {
+      .slick-slide {
+        // this is important to make all items same size (flex behaviour)
+        width: 0 !important;
+        @apply tw-flex-1;
+
+        // this is here for the gaps between the cards
+        margin: 0 10px;
+      }
+
+      .slick-track {
+        // the gap causes all the trouble for slick. slick has issues calculating correct equal widths when this is set
+        @apply tw-gap-0;
+      }
+
+      .slick-list {
+        // this handles the additional whitespace left and right from first and last item through margin
+        margin: 0 -10px;
+      }
+
+      // place the icons to the edges of the container
+      .carousel {
+        &__arrow {
+          &-prev {
+            left: -20px;
+          }
+
+          &-next {
+            right: -20px;
+          }
+        }
       }
     }
   }
