@@ -37,13 +37,6 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    /**
-     * Allow multiple open items at the same time
-     */
-    multiple: {
-      type: Boolean,
-      default: false,
-    },
   },
   setup(props) {
     const { product } = useProductStore()
