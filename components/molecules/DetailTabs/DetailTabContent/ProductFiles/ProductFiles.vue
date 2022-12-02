@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <GenericTable :header="tableHeader" :data="tableData" />
+      <GenericTable :header="tableHeader" :table-data="tableData" />
     </div>
     <div v-if="!files.length && !loading">
       <Icon class="product-files__downloads-icon" icon="file_download" />
@@ -186,7 +186,6 @@ export default defineComponent({
     const getProductDownloads = async () => {
       if (product.orderNumber) {
         loading.value = true
-        console.log('### loading results')
         files.value = empolisStore.getProductDownloads(product.orderNumber)
         loading.value = false
       } else {
