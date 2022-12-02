@@ -31,15 +31,15 @@
       />
       <div v-if="withGradient" class="responsive-image__gradient-overlay"></div>
     </picture>
-    <div
+
+    <img
       v-else
       :class="[
         'responsive-image__placeholder',
         `responsive-image__${aspectRatioString}`,
       ]"
-    >
-      <Icon icon="image" size="xlarge" />
-    </div>
+      :src="fallbackImageUrl"
+    />
   </div>
 </template>
 
@@ -47,10 +47,9 @@
 import { useHybrisProvider } from './provider/hybrisProvider'
 import { useStoryblokProvider } from './provider/storyblokProvider'
 import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
-import Icon from '~/components/atoms/Icon/Icon'
+import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 
 export default defineComponent({
-  components: { Icon },
   props: {
     /**
      * Image object containing source and alt text of the image
@@ -106,26 +105,42 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const context = useContext()
+
     const aspectRatioString = computed(() =>
       props.aspectRatio.replace(':', '-')
     )
+    const { getAssetImage } = useImageHelper()
+    const buildFallbackImageUrl = () => {
+      return {
+        src: null,
+      }
+    }
 
-    const context = useContext()
+    const fallbackImageUrl = getAssetImage(
+      context.app.i18n.t('product.placeholderImage')
+    )
+
     let buildImage
 
-    switch (props.provider) {
-      case 'storyblok':
-        buildImage = useStoryblokProvider(context).buildImage
-        break
-      case 'hybris':
-        buildImage = useHybrisProvider(context).buildImage
-        break
-      default:
-        buildImage = () => ({})
+    if (!props.image) {
+      buildImage = buildFallbackImageUrl
+    } else {
+      switch (props.provider) {
+        case 'storyblok':
+          buildImage = useStoryblokProvider(context).buildImage
+          break
+        case 'hybris':
+          buildImage = useHybrisProvider(context).buildImage
+          break
+        default:
+          buildImage = () => ({})
+      }
     }
 
     return {
       aspectRatioString,
+      fallbackImageUrl,
       ...buildImage(props),
     }
   },
@@ -194,7 +209,6 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-items-center;
     @apply tw-justify-center;
-    @apply tw-bg-pv-grey-96;
     @apply tw-max-w-full;
 
     span {

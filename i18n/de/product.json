@@ -9,6 +9,7 @@
   "selectVariant": "Variante auswählen",
   "downloads": "Downloads",
   "accessories": "Zubehör",
+  "otherAccessories": "Andere",
   "consumables": "Verbrauchsmaterialien",
   "dimensions": "Abmessungen",
   "furtherDetails": "Weitere Produktdetails",
@@ -34,7 +35,7 @@
   "priceInfo": {
     "InfoOnline": "Onlinepreis",
     "InfoPersonal": "Ihr persönlicher Preis",
-    "textInfoOnlineLine1": "Der hier angezeigte Online-Preis ist ein Referenzprei, der keine Frach, Zölle und Steuern enthält und nicht in allen Landeswährungen gepflegt wird.",
+    "textInfoOnlineLine1": "Der hier angezeigte Online-Preis ist ein Referenzpreis, der keine Fracht, Zölle und Steuern enthält und nicht in allen Landeswährungen gepflegt wird.",
     "textInfoOnlineLine2": "Um Ihr individuelles Angebot (in Ihrer Landeswährung) zu erhalte, senden Sie uns bitte Ihre Anfrag, so dass Ihnen Ihr lokales Pfeiffer Vacuum Unternehmen / Partnerunternehmen ein individuelles Angebot mit Ihren Preisen zur Verfügung stellen kann.",
     "textInfoPersonal": "Dieser Preis ist Ihr persönlicher Preis. Er wird auf der Grundlage Ihrer individuellen Preise bzw. Rabattvereinbarungen berechnet. Die Möglichkei, Ihre persönlichen Preise innerhalb unseres E-Commerce-Systems beizubehalte, ist innerhalb der verschiedenen Regionen unseres Pfeiffer Vacuum Vertriebsnetzes unterschiedlich. Für weitere Fragen wenden Sie sich bitte an Ihren lokalen Vertriebskontakt."
   },
