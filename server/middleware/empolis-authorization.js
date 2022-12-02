@@ -31,7 +31,7 @@ const empolisRoleMap = {
   },
 }
 
-export const getAccessToken = async (req) => {
+const getAccessToken = async (req) => {
   logger.debug('getAccessToken start')
   const formData = {
     ...empolisRoleMap.public_level,
@@ -99,4 +99,16 @@ export const getAccessToken = async (req) => {
   }
 
   return ''
+}
+
+/**
+ *
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ * @returns
+ */
+export default async function (req, _, next) {
+  req._empolisToken = await getAccessToken(req)
+  next()
 }

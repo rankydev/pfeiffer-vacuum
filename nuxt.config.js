@@ -254,6 +254,10 @@ export default {
     },
     {
       path: PATH_EMPOLIS,
+      handler: '~/server/middleware/empolis-authorization.js',
+    },
+    {
+      path: PATH_EMPOLIS,
       handler: '~/server/middleware/empolis.js',
     },
   ],
