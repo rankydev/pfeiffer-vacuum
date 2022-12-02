@@ -1,5 +1,8 @@
 <template>
-  <div class="accessories-card-carousel">
+  <div
+    :class="`accessories-card-carousel__${background}`"
+    class="accessories-card-carousel"
+  >
     <ContentWrapper v-if="headline" no-padding>
       <h2 class="accessories-card-carousel__headline">{{ headline }}</h2>
     </ContentWrapper>
@@ -44,6 +47,13 @@ export default defineComponent({
       default: '',
     },
     /**
+     * backgroundcolor of the carousel
+     */
+    background: {
+      type: String,
+      default: '',
+    },
+    /**
      * Slider items
      */
     entries: {
@@ -56,6 +66,10 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .accessories-card-carousel {
+  &__grey {
+    @apply tw-bg-pv-grey-96;
+  }
+
   &__headline {
     @apply tw-mb-4;
     @apply tw-px-5;

@@ -41,12 +41,19 @@
             >
               Variant Selection
             </div>
+            <div class="tw-w-full">
+              <RecommendedAccessories
+                :headline="
+                  $t('product.recommended.title') + productStore.product.name
+                "
+              />
+            </div>
             <div v-if="carouselEntries.length" class="tw-w-full">
               <AccessoriesCardCarousel
                 :headline="
                   $t('product.recommended.title') + productStore.product.name
                 "
-                :entries="carouselEntries"
+                :entries="hasRecommendedAccessories.value"
               />
             </div>
             <DetailTabs
@@ -79,10 +86,17 @@ import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
+import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page, DetailTabs, ImageGallery, AccessoriesCardCarousel },
+  components: {
+    Page,
+    DetailTabs,
+    ImageGallery,
+    AccessoriesCardCarousel,
+    RecommendedAccessories,
+  },
   setup() {
     const route = useRoute()
     const context = useContext()
@@ -169,7 +183,6 @@ export default defineComponent({
       language,
       productStore,
       carouselEntries,
-
       sortedImages,
     }
   },
