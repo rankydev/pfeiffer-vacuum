@@ -7,7 +7,6 @@
         label: headline,
       },
     ]"
-    :level="'h3'"
   >
     <template #accessories-carousel>
       <!-- eslint-disable-next-line vue/valid-v-for -->
