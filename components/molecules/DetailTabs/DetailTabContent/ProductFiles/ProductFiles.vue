@@ -1,70 +1,72 @@
 <template>
   <div class="product-files">
-    <div v-if="files.length">
-      <div class="product-files__filter-wrapper">
-        <FilterModal :label="$t('product.file.filter')">
-          <div class="product-files__filter">
-            <PvSelect
-              v-model="categoryFilter"
-              :placeholder="$t('product.file.category')"
-              :options="availableCategories"
-              option-label="value"
-              icon-size="small"
-              multiple
-              no-input
+    <LoadingSpinner :show="loading">
+      <div v-if="files.length">
+        <div class="product-files__filter-wrapper">
+          <FilterModal :label="$t('product.file.filter')">
+            <div class="product-files__filter">
+              <PvSelect
+                v-model="categoryFilter"
+                :placeholder="$t('product.file.category')"
+                :options="availableCategories"
+                option-label="value"
+                icon-size="small"
+                multiple
+                no-input
+              />
+
+              <PvSelect
+                v-model="languageFilter"
+                :placeholder="$t('product.file.language')"
+                :options="availableLanguages"
+                option-label="value"
+                icon-size="small"
+                multiple
+                no-input
+              />
+            </div>
+          </FilterModal>
+
+          <div
+            v-if="categoryFilter.length > 0 || languageFilter.length > 0"
+            class="product-files__filter-tags"
+          >
+            <FilterTag
+              v-for="(item, index) in categoryFilter"
+              :key="`tag-category-${index}`"
+              :filter="$t('product.file.category')"
+              :value="item.value"
+              @click="categoryFilter = categoryFilter.filter((e) => e !== item)"
             />
 
-            <PvSelect
-              v-model="languageFilter"
-              :placeholder="$t('product.file.language')"
-              :options="availableLanguages"
-              option-label="value"
-              icon-size="small"
-              multiple
-              no-input
+            <FilterTag
+              v-for="(item, index) in languageFilter"
+              :key="`tag-language-${index}`"
+              :filter="$t('product.file.language')"
+              :value="item.value"
+              @click="languageFilter = languageFilter.filter((e) => e !== item)"
             />
           </div>
-        </FilterModal>
 
-        <div
-          v-if="categoryFilter.length > 0 || languageFilter.length > 0"
-          class="product-files__filter-tags"
-        >
-          <FilterTag
-            v-for="(item, index) in categoryFilter"
-            :key="`tag-category-${index}`"
-            :filter="$t('product.file.category')"
-            :value="item.value"
-            @click="categoryFilter = categoryFilter.filter((e) => e !== item)"
-          />
-
-          <FilterTag
-            v-for="(item, index) in languageFilter"
-            :key="`tag-language-${index}`"
-            :filter="$t('product.file.language')"
-            :value="item.value"
-            @click="languageFilter = languageFilter.filter((e) => e !== item)"
-          />
+          <div class="product-files__result">
+            {{
+              $t('product.file.results', {
+                count: filteredFiles.length,
+                total: files.length,
+              })
+            }}
+          </div>
         </div>
 
-        <div class="product-files__result">
-          {{
-            $t('product.file.results', {
-              count: filteredFiles.length,
-              total: files.length,
-            })
-          }}
-        </div>
+        <GenericTable :header="tableHeader" :table-data="tableData" />
       </div>
-
-      <GenericTable :header="tableHeader" :table-data="tableData" />
-    </div>
-    <div v-if="!files.length && !loading">
-      <Icon class="product-files__downloads-icon" icon="file_download" />
-      <h4 class="tw-text-center">
-        {{ $t('product.noDownloads') }}
-      </h4>
-    </div>
+      <div v-if="!files.length && !loading">
+        <Icon class="product-files__downloads-icon" icon="file_download" />
+        <h4 class="tw-text-center">
+          {{ $t('product.noDownloads') }}
+        </h4>
+      </div>
+    </LoadingSpinner>
   </div>
 </template>
 
@@ -80,6 +82,7 @@ import FilterTag from '~/components/atoms/FilterTag/FilterTag'
 import FilterModal from '~/components/molecules/FilterModal/FilterModal'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import GenericTable from '~/components/molecules/GenericTable/GenericTable'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import { useProductStore } from '~/stores/product'
 import { useEmpolisStore } from '~/stores/empolis'
 import { sortAsString } from '~/utils/sortHelper'
@@ -92,6 +95,7 @@ export default defineComponent({
     PvSelect,
     FilterTag,
     FilterModal,
+    LoadingSpinner,
   },
   setup() {
     const { product } = useProductStore()
@@ -186,7 +190,9 @@ export default defineComponent({
     const getProductDownloads = async () => {
       if (product.orderNumber) {
         loading.value = true
-        files.value = empolisStore.getProductDownloads(product.orderNumber)
+        files.value = await empolisStore.getProductDownloads(
+          product.orderNumber
+        )
         loading.value = false
       } else {
         files.value = []
@@ -295,7 +301,6 @@ export default defineComponent({
       availableLanguages,
       filteredFiles,
 
-      getProductDownloads,
       formatFileSize,
 
       tableHeader,
