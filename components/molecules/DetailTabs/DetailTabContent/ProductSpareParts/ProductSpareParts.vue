@@ -1,9 +1,10 @@
 <template>
-  <div v-if="productReferencesConsumables.length" class="product-consumables">
-    <div class="product-consumables__carousel-wrapper">
+  <div v-if="getProductReferencesSpareParts.length" class="product-spareparts">
+    <Infobox :text="$t('product.previousVersionsSpareParts')" />
+    <div class="product-spareparts__carousel-wrapper">
       <AccessoriesCardCarousel
-        :headline="$t('product.consumables')"
-        :entries="productReferencesConsumables"
+        :headline="$t('product.spareParts')"
+        :entries="getProductReferencesSpareParts"
         :use-sub-headlines="false"
       />
     </div>
@@ -12,25 +13,27 @@
 
 <script>
 import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
+import Infobox from '~/components/molecules/Infobox/Infobox'
 import { useProductStore } from '~/stores/product'
 
 export default {
   name: 'ProductAccessories',
   components: {
+    Infobox,
     AccessoriesCardCarousel,
   },
   setup() {
-    const { productReferencesConsumables } = useProductStore()
+    const { getProductReferencesSpareParts } = useProductStore()
 
     return {
-      productReferencesConsumables,
+      getProductReferencesSpareParts,
     }
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.product-consumables {
+.product-spareparts {
   @apply tw-w-full;
 
   &__carousel-wrapper {
