@@ -273,6 +273,7 @@ export default defineComponent({
             variant: 'secondary',
             shape: 'outlined',
             href: `${PATH_EMPOLIS}/${file.downloadLink}`,
+            target: '_blank',
           },
         ]
 
