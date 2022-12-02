@@ -38,7 +38,7 @@ export default defineComponent({
       default: '',
     },
   },
-  setup(props) {
+  setup() {
     const { product } = useProductStore()
 
     const hasRecommendedAccessories = computed(() => {
@@ -50,19 +50,7 @@ export default defineComponent({
       return []
     })
 
-    console.log(hasRecommendedAccessories.value)
-
-    const mappedAccordionEntries = computed(() => {
-      return props.accordionEntries.map((item, index) => {
-        return {
-          ...item,
-          slotName: index,
-        }
-      })
-    })
-
     return {
-      mappedAccordionEntries,
       hasRecommendedAccessories,
     }
   },
