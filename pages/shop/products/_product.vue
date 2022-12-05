@@ -71,6 +71,7 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/product'
+import { useUserStore } from '~/stores/user'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
@@ -79,6 +80,7 @@ import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'ProductShopPage',
@@ -108,6 +110,13 @@ export default defineComponent({
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)
     watch(route, loadProduct)
+
+    /**
+     * react to changing user login status
+     */
+    const userStore = useUserStore()
+    const { isLoggedIn } = storeToRefs(userStore)
+    watch(isLoggedIn, loadProduct)
 
     const carouselEntries = computed(() => {
       return productStore.accessoriesRecommended || []
