@@ -24,7 +24,6 @@ export const useProductStore = defineStore('product', () => {
   const reqId = ssrRef(null)
   const variationMatrix = ref(null)
   const price = ref(null)
-  const accessoriesRecommended = ref(null)
   const accessoriesGroups = ref(null)
   const productAccessoriesPrices = ref(null)
   const productSparepartsPrices = ref(null)
@@ -76,7 +75,7 @@ export const useProductStore = defineStore('product', () => {
         params: { codes: idsString, fields: 'FULL' },
       })
       .catch((error) => {
-        logger.error(error.toJSON())
+        logger.error(error)
       })
 
     if (!Array.isArray(result?.products)) {
@@ -129,7 +128,6 @@ export const useProductStore = defineStore('product', () => {
     }
 
     // reset accessories when loading new ones. Makes sure to not display old product data
-    accessoriesRecommended.value = null
     accessoriesGroups.value = null
 
     const result = await axios.$get(
@@ -147,18 +145,19 @@ export const useProductStore = defineStore('product', () => {
 
       productAccessoriesPrices.value = resultAccessoriesPrices
 
-      if (result.references) {
-        accessoriesRecommended.value = result.references
+      if (!Array.isArray(result.groups)) {
+        result.groups = []
+      }
 
-        addPricesToProductReferenceGroupItems(
-          productAccessoriesPrices.value,
-          accessoriesRecommended.value
-        )
+      if (result.references?.length > 0) {
+        result.groups.push({
+          name: i18n.t('product.otherAccessories'),
+          references: result.references,
+        })
       }
-      if (result.groups) {
-        accessoriesGroups.value = result.groups
-        addPricesToAccessoriesGroupsItems()
-      }
+
+      accessoriesGroups.value = result.groups
+      addPricesToAccessoriesGroupsItems()
     } else {
       logger.error(
         `Error when fetching product references for '${id}'. Returning empty array.`,
@@ -167,6 +166,11 @@ export const useProductStore = defineStore('product', () => {
     }
   }
 
+  /*
+   * add prices to reference group products
+   * can be used for the following reference groups:
+   * 'ACCESSORIES', 'CONSUMABLE', 'SPAREPART'
+   */
   const addPricesToProductReferenceGroupItems = (
     pricesArr,
     referenceGroupItems
@@ -285,7 +289,6 @@ export const useProductStore = defineStore('product', () => {
     product,
     variationMatrix,
     price,
-    accessoriesRecommended,
     accessoriesGroups,
     breadcrumb,
     metaData,
