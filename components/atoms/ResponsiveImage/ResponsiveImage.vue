@@ -38,7 +38,7 @@
       `responsive-image__${aspectRatioString}`,
     ]"
   >
-    <Icon icon="image_not_supported" size="xlarge" />
+    <Icon icon="image_not_supported" :size="fallbackImageIconSize" />
   </div>
 </template>
 
@@ -102,6 +102,11 @@ export default defineComponent({
     rounded: {
       type: Boolean,
       default: true,
+    },
+    fallbackImageIconSize: {
+      type: String,
+      default: 'xlarge',
+      validator: (val) => ['xlarge', 'xxlarge'].includes(val),
     },
   },
   setup(props) {
