@@ -178,12 +178,7 @@ export const useProductStore = defineStore('product', () => {
     if (pricesArr.length && referenceGroupItems.length) {
       pricesArr.forEach((productReferenceGroupPrice) => {
         for (const referenceGroupItem of referenceGroupItems) {
-          if (
-            referenceGroupItem.target?.code === productReferenceGroupPrice?.code
-          ) {
-            referenceGroupItem.target.price = productReferenceGroupPrice.price
-            return
-          }
+          addPriceToObject(referenceGroupItem, productReferenceGroupPrice)
         }
       })
     }
@@ -199,19 +194,34 @@ export const useProductStore = defineStore('product', () => {
       accessoriesGroups.value.length
     ) {
       productAccessoriesPrices.value.forEach((productAccessoriesPrice) => {
+        // other accessories groups
         for (const accessoriesGroupGroups of accessoriesGroups.value) {
-          for (const accessoriesGroup of accessoriesGroupGroups.groups) {
-            for (const accessoryItem of accessoriesGroup.references) {
-              if (
-                accessoryItem.target?.code === productAccessoriesPrice?.code
-              ) {
-                accessoryItem.target.price = productAccessoriesPrice.price
-                return
+          if (accessoriesGroupGroups.groups) {
+            for (const accessoriesGroup of accessoriesGroupGroups.groups) {
+              for (const accessoryItem of accessoriesGroup.references) {
+                addPriceToObject(accessoryItem, productAccessoriesPrice)
               }
+            }
+          }
+
+          // recommended accessories
+          if (
+            !accessoriesGroupGroups.groups &&
+            accessoriesGroupGroups?.references.length
+          ) {
+            for (const accessoriesGroup of accessoriesGroupGroups.references) {
+              addPriceToObject(accessoriesGroup, productAccessoriesPrice)
             }
           }
         }
       })
+    }
+  }
+
+  const addPriceToObject = (item, priceItem) => {
+    if (item.target?.code === priceItem?.code) {
+      item.target.price = priceItem.price
+      return
     }
   }
 
