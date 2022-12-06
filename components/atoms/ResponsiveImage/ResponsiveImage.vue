@@ -1,6 +1,6 @@
 <template>
   <picture
-    v-if="src"
+    v-if="src && !imageLoadingError"
     class="responsive-image"
     :class="{ 'responsive-image--corners-rounded': rounded }"
   >
@@ -27,6 +27,7 @@
       :provider="provider"
       :loading="lazy ? 'lazy' : undefined"
       :class="`responsive-image__${aspectRatioString}`"
+      @error="handleImageError"
     />
     <div v-if="withGradient" class="responsive-image__gradient-overlay"></div>
   </picture>
@@ -45,7 +46,12 @@
 <script>
 import { useHybrisProvider } from './provider/hybrisProvider'
 import { useStoryblokProvider } from './provider/storyblokProvider'
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  useContext,
+  ref,
+} from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
@@ -122,6 +128,12 @@ export default defineComponent({
       }
     }
 
+    const imageLoadingError = ref(false)
+
+    const handleImageError = () => {
+      imageLoadingError.value = true
+    }
+
     let buildImage
 
     if (!props.image) {
@@ -141,6 +153,8 @@ export default defineComponent({
 
     return {
       aspectRatioString,
+      imageLoadingError,
+      handleImageError,
       ...buildImage(props),
     }
   },
