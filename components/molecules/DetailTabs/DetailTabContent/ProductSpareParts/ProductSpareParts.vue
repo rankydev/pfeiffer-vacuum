@@ -1,10 +1,10 @@
 <template>
-  <div v-if="getProductReferencesSpareParts.length" class="product-spareparts">
+  <div v-if="productReferencesSpareParts.length" class="product-spareparts">
     <Infobox :text="$t('product.previousVersionsSpareParts')" />
     <div class="product-spareparts__carousel-wrapper">
       <AccessoriesCardCarousel
         :headline="$t('product.spareParts')"
-        :entries="getProductReferencesSpareParts"
+        :entries="productReferencesSpareParts"
         :use-sub-headlines="false"
       />
     </div>
@@ -23,10 +23,10 @@ export default {
     AccessoriesCardCarousel,
   },
   setup() {
-    const { getProductReferencesSpareParts } = useProductStore()
+    const { productReferencesSpareParts } = useProductStore()
 
     return {
-      getProductReferencesSpareParts,
+      productReferencesSpareParts,
     }
   },
 }

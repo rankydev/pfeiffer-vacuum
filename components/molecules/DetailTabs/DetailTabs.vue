@@ -83,7 +83,7 @@ export default defineComponent({
 
     const {
       product,
-      getProductReferencesSpareParts,
+      productReferencesSpareParts,
       productReferencesConsumables,
     } = useProductStore()
 
@@ -180,7 +180,7 @@ export default defineComponent({
         case 'consumables':
           return !productReferencesConsumables.length
         case 'spareparts':
-          return !getProductReferencesSpareParts.length
+          return !productReferencesSpareParts.length
         case 'service':
           return true
         default:
