@@ -14,6 +14,7 @@ export default {
   ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
+    __dangerouslyDisableSanitizers: ['script'],
     title: 'Pfeiffer Vacuum', // @todo make dynamic
     htmlAttrs: {
       lang: 'en-EN', // @todo make dynamic
@@ -27,7 +28,6 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    // @todo add link alternate href lang
     script: [
       {
         src: 'https://app.usercentrics.eu/browser-ui/latest/loader.js',
@@ -36,7 +36,21 @@ export default {
         'data-tcf-enabled': true,
         defer: true,
       },
+      {
+        type: 'text/plain',
+        'data-usercentrics': 'Google Tag Manager',
+        innerHTML:
+          "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n" +
+          "new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n" +
+          "j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n" +
+          "'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n" +
+          "})(window,document,'script','dataLayer','" +
+          process.env.GOOGLE_TAG_MANAGER_ID +
+          "');",
+      },
     ],
+
+    // @todo add link alternate href lang
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -190,7 +204,9 @@ export default {
     REGION_CODES: process.env.REGION_CODES || 'global',
     DEFAULT_REGION_CODE: process.env.DEFAULT_REGION_CODE || 'global',
     CURRENT_REGION_CODE: process.env.CURRENT_REGION_CODE || 'global',
+    USERCENTRICS_ID: process.env.USERCENTRICS_ID,
     USERCENTRICS_PRIVACY_PATH: process.env.USERCENTRICS_PRIVACY_PATH,
+    GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
     // keycloak
     KEYCLOAK_BASE_URL: process.env.KEYCLOAK_BASE_URL,
     KEYCLOAK_REALM_NAME: process.env.KEYCLOAK_REALM_NAME,
