@@ -26,8 +26,10 @@ export const useProductStore = defineStore('product', () => {
   const price = ref(null)
   const accessoriesGroups = ref(null)
   const productAccessoriesPrices = ref(null)
-  const productSparepartsPrices = ref(null)
-  const productConsumablesPrices = ref(null)
+  // TODO: add whilst adding spareparts
+  //const productSparepartsPrices = ref(null)
+  // TODO: add when adding consumables
+  //const productConsumablesPrices = ref(null)
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -167,10 +169,11 @@ export const useProductStore = defineStore('product', () => {
   }
 
   /*
+   * TODO: uncomment when adding spareparts/ consumables
    * add prices to reference group products
    * can be used for the following reference groups:
    * 'ACCESSORIES', 'CONSUMABLE', 'SPAREPART'
-   */
+
   const addPricesToProductReferenceGroupItems = (
     pricesArr,
     referenceGroupItems
@@ -183,6 +186,7 @@ export const useProductStore = defineStore('product', () => {
       })
     }
   }
+   */
 
   /**
    * Function to add prices to the items of the accessories groups items
