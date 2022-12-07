@@ -64,6 +64,38 @@ metadataTest:
       value: "${USERCENTRICS_PRIVACY_PATH}"
     - key: USERCENTRICS_ID
       value: "${USERCENTRICS_ID}"
+    - key: EMPOLIS_TIMEOUT
+      value: "${EMPOLIS_TIMEOUT}"
+    - key: EMPOLIS_STAGE
+      value: "${EMPOLIS_STAGE}"
+    - key: EMPOLIS_PATH
+      value: "${EMPOLIS_PATH}"
+    - key: EMPOLIS_GUEST_TOKEN_URL
+      value: "${EMPOLIS_GUEST_TOKEN_URL}"
+    - key: EMPOLIS_SSO_PATH
+      value: "${EMPOLIS_SSO_PATH}"
+    - key: EMPOLIS_AUTH_URL
+      value: "${EMPOLIS_AUTH_URL}"
+    - key: EMPOLIS_USERNAME_CUSTOMER
+      value: "${EMPOLIS_USERNAME_CUSTOMER}"
+    - key: EMPOLIS_PASSWORD_CUSTOMER
+      value: "${EMPOLIS_PASSWORD_CUSTOMER}"
+    - key: EMPOLIS_USERNAME_INTERNAL_LEVEL_0
+      value: "${EMPOLIS_USERNAME_INTERNAL_LEVEL_0}"
+    - key: EMPOLIS_PASSWORD_INTERNAL_LEVEL_0
+      value: "${EMPOLIS_PASSWORD_INTERNAL_LEVEL_0}"
+    - key: EMPOLIS_USERNAME_INTERNAL_LEVEL_1
+      value: "${EMPOLIS_USERNAME_INTERNAL_LEVEL_1}"
+    - key: EMPOLIS_PASSWORD_INTERNAL_LEVEL_1
+      value: "${EMPOLIS_PASSWORD_INTERNAL_LEVEL_1}"
+    - key: EMPOLIS_USERNAME_INTERNAL_LEVEL_2
+      value: "${EMPOLIS_USERNAME_INTERNAL_LEVEL_2}"
+    - key: EMPOLIS_PASSWORD_INTERNAL_LEVEL_2
+      value: "${EMPOLIS_PASSWORD_INTERNAL_LEVEL_2}"
+    - key: EMPOLIS_CLIENT_ID
+      value: "${EMPOLIS_CLIENT_ID}"
+    - key: EMPOLIS_CLIENT_SECRET
+      value: "${EMPOLIS_CLIENT_SECRET}"
 
   exposedPorts: ["3000"]
   cmd: ["npm", "start"]
