@@ -9,7 +9,6 @@
     ]"
   >
     <template #accessories-carousel>
-      <!-- eslint-disable-next-line vue/valid-v-for -->
       <AccessoriesCardCarousel
         background="grey"
         :entries="hasRecommendedAccessories"
@@ -41,6 +40,7 @@ export default defineComponent({
   setup() {
     const { product } = useProductStore()
 
+    // In die Products.js auslagern
     const hasRecommendedAccessories = computed(() => {
       if (product && product.productReferences) {
         return product.productReferences.filter(
