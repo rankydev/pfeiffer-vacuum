@@ -33,14 +33,7 @@
             <div class="product-page__image-gallery">
               <ImageGallery :images="sortedImages" />
             </div>
-            <div
-              id="variantselection"
-              class="tw-bg-pv-grey-88 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
-              :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-              style="height: 600px"
-            >
-              Variant Selection
-            </div>
+            <VariantSelection class="tw-w-1/2" />
             <div v-if="carouselEntries.length" class="tw-w-full">
               <AccessoriesCardCarousel
                 :headline="
@@ -79,10 +72,17 @@ import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
+import VariantSelection from '../../../components/molecules/VariantSelection/VariantSelection'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page, DetailTabs, ImageGallery, AccessoriesCardCarousel },
+  components: {
+    Page,
+    DetailTabs,
+    ImageGallery,
+    AccessoriesCardCarousel,
+    VariantSelection,
+  },
   setup() {
     const route = useRoute()
     const context = useContext()
