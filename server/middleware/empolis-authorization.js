@@ -1,6 +1,6 @@
 import { useLogger } from '../../composables/useLogger'
 import { parseJwt } from './utils/jsonTransform'
-import config from '../../nuxt.config'
+import nuxtConfig from '../../nuxt.config'
 
 const axios = require('axios').default
 
@@ -9,27 +9,27 @@ const { logger } = useLogger('empolis-authorization')
 const EMPOLIS_AUTH_HEADER =
   'Basic ' +
   Buffer.from(
-    `${config.publicRuntimeConfig.EMPOLIS_CLIENT_ID}:${config.publicRuntimeConfig.EMPOLIS_CLIENT_SECRET}`
+    `${nuxtConfig.publicRuntimeConfig.EMPOLIS_CLIENT_ID}:${nuxtConfig.publicRuntimeConfig.EMPOLIS_CLIENT_SECRET}`
   ).toString('base64')
 const tokenCache = new Map()
 
 // public level will never occur in role mapping but is used for default
 const empolisRoleMap = {
   public_level: {
-    username: config.publicRuntimeConfig.EMPOLIS_USERNAME_CUSTOMER,
-    password: config.publicRuntimeConfig.EMPOLIS_PASSWORD_CUSTOMER,
+    username: nuxtConfig.publicRuntimeConfig.EMPOLIS_USERNAME_CUSTOMER,
+    password: nuxtConfig.publicRuntimeConfig.EMPOLIS_PASSWORD_CUSTOMER,
   },
   internal_level_0: {
-    username: config.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_0,
-    password: config.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_0,
+    username: nuxtConfig.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_0,
+    password: nuxtConfig.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_0,
   },
   internal_level_1: {
-    username: config.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_1,
-    password: config.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_1,
+    username: nuxtConfig.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_1,
+    password: nuxtConfig.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_1,
   },
   internal_level_2: {
-    username: config.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_2,
-    password: config.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_2,
+    username: nuxtConfig.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_2,
+    password: nuxtConfig.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_2,
   },
 }
 
@@ -48,7 +48,7 @@ const getAccessToken = async (req) => {
     const jwt = parseJwt(authToken)
 
     if (
-      (jwt.iss || '').startsWith(config.publicRuntimeConfig.KEYCLOAK_BASE_URL)
+      (jwt.iss || '').startsWith(nuxtConfig.publicRuntimeConfig.KEYCLOAK_BASE_URL)
     ) {
       const roles = (jwt.realm_access || {}).roles || []
       const empolisRoleMapKeys = Object.keys(empolisRoleMap)
