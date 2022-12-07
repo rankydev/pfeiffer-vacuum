@@ -102,6 +102,8 @@ metadataTest:
       value: "${EMPOLIS_CLIENT_ID}"
     - key: EMPOLIS_CLIENT_SECRET
       value: "${EMPOLIS_CLIENT_SECRET}"
+    - key: GOOGLE_TAG_MANAGER_ID
+      value: "${GOOGLE_TAG_MANAGER_ID}"
 
   exposedPorts: ["3000"]
   cmd: ["npm", "start"]
