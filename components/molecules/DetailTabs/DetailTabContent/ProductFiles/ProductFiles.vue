@@ -135,57 +135,41 @@ export default defineComponent({
       })
       return Array.from(result).map((language) => ({ value: language }))
     })
+
     const filteredFiles = computed(() => {
-      if (
-        categoryFilter.value.length === 0 &&
-        languageFilter.value.length === 0
-      ) {
-        return files.value
-      }
+      const hasCategoryFilter = categoryFilter.value.length
+      const hasLanguageFilter = languageFilter.value.length
+
+      if (!hasCategoryFilter && !hasLanguageFilter) return files.value
 
       const result = new Set([])
 
       for (const file of files.value) {
-        if (
-          categoryFilter.value.length > 0 &&
+        const isFileOfCategory =
+          hasCategoryFilter &&
           file.informationType &&
           categoryFilter.value.find(
             (o) => o.value === file.informationType.label[0]
-          ) &&
-          languageFilter.value.length > 0 &&
+          )
+
+        const isFileOfLanguage =
+          hasLanguageFilter &&
           languageFilter.value.find(
             (o) =>
               o.value === file.languages.label ||
               file.languages.label.includes(o.value)
           )
-        ) {
-          result.add(file)
-        }
-        if (
-          languageFilter.value.length === 0 &&
-          categoryFilter.value.length > 0 &&
-          file.informationType &&
-          categoryFilter.value.find(
-            (o) => o.value === file.informationType.label[0]
-          )
-        ) {
-          result.add(file)
-        }
-        if (
-          categoryFilter.value.length === 0 &&
-          languageFilter.value.length > 0 &&
-          languageFilter.value.find(
-            (o) =>
-              o.value === file.languages.label ||
-              file.languages.label.includes(o.value)
-          )
-        ) {
-          result.add(file)
+
+        if (hasCategoryFilter && hasLanguageFilter) {
+          if (isFileOfCategory && isFileOfLanguage) result.add(file)
+        } else {
+          if (isFileOfCategory || isFileOfLanguage) result.add(file)
         }
       }
 
       return Array.from(result)
     })
+
 
     const getProductDownloads = async () => {
       if (product.orderNumber) {
