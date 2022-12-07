@@ -41,7 +41,10 @@
             >
               Variant Selection
             </div>
-            <div class="tw-w-full">
+            <div
+              v-if="productReferencesRecommendedAccessories.length"
+              class="tw-w-full"
+            >
               <RecommendedAccessories
                 :headline="
                   $t('product.recommended.title') + productStore.product.name
@@ -114,6 +117,7 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const productStore = useProductStore()
+    const { productReferencesRecommendedAccessories } = useProductStore()
     const loadProduct = () => {
       productStore.getProductAccessories()
       redirectOnError(productStore.loadByPath)
@@ -184,6 +188,7 @@ export default defineComponent({
       productStore,
       carouselEntries,
       sortedImages,
+      productReferencesRecommendedAccessories,
     }
   },
 })
