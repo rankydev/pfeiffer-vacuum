@@ -64,6 +64,12 @@ metadataTest:
       value: "${USERCENTRICS_PRIVACY_PATH}"
     - key: USERCENTRICS_ID
       value: "${USERCENTRICS_ID}"
+    - key: KEYCLOAK_BASE_URL
+      value: "${KEYCLOAK_BASE_URL}"
+    - key: KEYCLOAK_REALM_NAME
+      value: "${KEYCLOAK_REALM_NAME}"
+    - key: KEYCLOAK_CLIENT_ID
+      value: "${KEYCLOAK_CLIENT_ID}"
     - key: EMPOLIS_TIMEOUT
       value: "${EMPOLIS_TIMEOUT}"
     - key: EMPOLIS_STAGE
