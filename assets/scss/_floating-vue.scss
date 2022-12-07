@@ -20,7 +20,7 @@
     z-index: 1;
   }
 
-  &[x-placement^="top"] {
+  &[x-placement="top"] {
     margin-bottom: 5px;
 
     .tooltip-arrow {
@@ -38,9 +38,20 @@
   &[x-placement="top-end"] {
     margin-bottom: 10px;
 
+    .tooltip-inner {
+      border-bottom-right-radius: 0;
+    }
+
     .tooltip-arrow {
+      border-left-color: transparent !important;
+      border-top-color: transparent !important;
+      border-bottom-color: transparent !important;
+      border-width: 0 10px 10px 0;
+      bottom: -10px;
       left: auto !important;
-      right: 0 !important;
+      right: -5px !important;
+      margin-top: 0;
+      margin-bottom: 0;
     }
   }
 
