@@ -184,6 +184,7 @@ sonar-qube:
       --build-arg KEYCLOAK_BASE_URL="${KEYCLOAK_BASE_URL}"
       --build-arg KEYCLOAK_REALM_NAME="${KEYCLOAK_REALM_NAME}"
       --build-arg KEYCLOAK_CLIENT_ID="${KEYCLOAK_CLIENT_ID}"
+      --build-arg GOOGLE_TAG_MANAGER_ID="${GOOGLE_TAG_MANAGER_ID}"
       -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
