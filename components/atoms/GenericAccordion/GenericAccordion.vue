@@ -30,7 +30,7 @@
       </component>
       <AnimatedCollapse speed="medium">
         <div
-          v-show="isActive(idx)"
+          v-if="isActive(idx)"
           :id="`accordion-${idx}`"
           class="accordion__content"
         >
