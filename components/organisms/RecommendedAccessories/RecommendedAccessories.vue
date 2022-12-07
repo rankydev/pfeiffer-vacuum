@@ -5,6 +5,7 @@
         slotName: 'accessories-carousel',
         disabled: false,
         label: headline,
+        isActive: true,
       },
     ]"
   >
