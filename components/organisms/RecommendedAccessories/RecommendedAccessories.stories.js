@@ -19,7 +19,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: RecommendedAccessories,
+        component:
+          'The Recommended Accessories consists of an Accordion holding a Carousel of recommended Products for the displayed Product.',
       },
       source: {
         code: '<recommended-accessories :headline="productStore.product.name" />',
