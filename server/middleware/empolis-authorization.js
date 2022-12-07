@@ -1,5 +1,7 @@
 import { useLogger } from '../../composables/useLogger'
 import { parseJwt } from './utils/jsonTransform'
+import config from '../../nuxt.config'
+
 const axios = require('axios').default
 
 const { logger } = useLogger('empolis-authorization')
@@ -7,27 +9,27 @@ const { logger } = useLogger('empolis-authorization')
 const EMPOLIS_AUTH_HEADER =
   'Basic ' +
   Buffer.from(
-    `${process.env.EMPOLIS_CLIENT_ID}:${process.env.EMPOLIS_CLIENT_SECRET}`
+    `${config.publicRuntimeConfig.EMPOLIS_CLIENT_ID}:${config.publicRuntimeConfig.EMPOLIS_CLIENT_SECRET}`
   ).toString('base64')
 const tokenCache = new Map()
 
 // public level will never occur in role mapping but is used for default
 const empolisRoleMap = {
   public_level: {
-    username: process.env.EMPOLIS_USERNAME_CUSTOMER,
-    password: process.env.EMPOLIS_PASSWORD_CUSTOMER,
+    username: config.publicRuntimeConfig.EMPOLIS_USERNAME_CUSTOMER,
+    password: config.publicRuntimeConfig.EMPOLIS_PASSWORD_CUSTOMER,
   },
   internal_level_0: {
-    username: process.env.EMPOLIS_USERNAME_INTERNAL_LEVEL_0,
-    password: process.env.EMPOLIS_PASSWORD_INTERNAL_LEVEL_0,
+    username: config.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_0,
+    password: config.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_0,
   },
   internal_level_1: {
-    username: process.env.EMPOLIS_USERNAME_INTERNAL_LEVEL_1,
-    password: process.env.EMPOLIS_PASSWORD_INTERNAL_LEVEL_1,
+    username: config.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_1,
+    password: config.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_1,
   },
   internal_level_2: {
-    username: process.env.EMPOLIS_USERNAME_INTERNAL_LEVEL_2,
-    password: process.env.EMPOLIS_PASSWORD_INTERNAL_LEVEL_2,
+    username: config.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_2,
+    password: config.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_2,
   },
 }
 
@@ -45,7 +47,9 @@ const getAccessToken = async (req) => {
     const authToken = headers.authorization.split(' ')[1]
     const jwt = parseJwt(authToken)
 
-    if ((jwt.iss || '').startsWith(process.env.KEYCLOAK_BASE_URL)) {
+    if (
+      (jwt.iss || '').startsWith(config.publicRuntimeConfig.KEYCLOAK_BASE_URL)
+    ) {
       const roles = (jwt.realm_access || {}).roles || []
       const empolisRoleMapKeys = Object.keys(empolisRoleMap)
 
