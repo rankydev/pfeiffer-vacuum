@@ -48,7 +48,9 @@ const getAccessToken = async (req) => {
     const jwt = parseJwt(authToken)
 
     if (
-      (jwt.iss || '').startsWith(nuxtConfig.publicRuntimeConfig.KEYCLOAK_BASE_URL)
+      (jwt.iss || '').startsWith(
+        nuxtConfig.publicRuntimeConfig.KEYCLOAK_BASE_URL
+      )
     ) {
       const roles = (jwt.realm_access || {}).roles || []
       const empolisRoleMapKeys = Object.keys(empolisRoleMap)
