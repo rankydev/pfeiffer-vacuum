@@ -41,6 +41,8 @@ services:
       - KEYCLOAK_BASE_URL=${KEYCLOAK_BASE_URL}
       - KEYCLOAK_REALM_NAME=${KEYCLOAK_REALM_NAME}
       - KEYCLOAK_CLIENT_ID=${KEYCLOAK_CLIENT_ID}
+      # google tag manager
+      - GOOGLE_TAG_MANAGER_ID=${GOOGLE_TAG_MANAGER_ID}
 
       # vsm
       #- VSM_BASE_URL=https://testing-pv.vsm-cloud.com

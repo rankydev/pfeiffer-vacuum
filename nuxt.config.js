@@ -205,7 +205,6 @@ export default {
     REGION_CODES: process.env.REGION_CODES || 'global',
     DEFAULT_REGION_CODE: process.env.DEFAULT_REGION_CODE || 'global',
     CURRENT_REGION_CODE: process.env.CURRENT_REGION_CODE || 'global',
-    USERCENTRICS_ID: process.env.USERCENTRICS_ID,
     USERCENTRICS_PRIVACY_PATH: process.env.USERCENTRICS_PRIVACY_PATH,
     GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
     // keycloak
