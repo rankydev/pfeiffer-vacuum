@@ -69,6 +69,7 @@ export default {
     { src: '~/plugins/service/service.plugin', mode: 'client' },
     '~/plugins/zoomOnHover',
     '~/plugins/touchEvents',
+    '~/plugins/floatingVue',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
