@@ -170,7 +170,6 @@ export default defineComponent({
       return Array.from(result)
     })
 
-
     const getProductDownloads = async () => {
       if (product.orderNumber) {
         loading.value = true
