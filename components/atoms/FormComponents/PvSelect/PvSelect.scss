@@ -198,7 +198,7 @@
 
     .vs__selected {
       @apply tw-order-1;
-      margin-left: -10.5rem;
+      @apply tw-w-auto;
     }
   }
 
