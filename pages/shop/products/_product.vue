@@ -41,22 +41,11 @@
             >
               Variant Selection
             </div>
-            <div
-              v-if="productReferencesRecommendedAccessories.length"
-              class="tw-w-full"
-            >
+            <div v-if="recommendedAccessories.length" class="tw-w-full">
               <RecommendedAccessories
                 :headline="
                   $t('product.recommended.title') + productStore.product.name
                 "
-              />
-            </div>
-            <div v-if="carouselEntries.length" class="tw-w-full">
-              <AccessoriesCardCarousel
-                :headline="
-                  $t('product.recommended.title') + productStore.product.name
-                "
-                :entries="hasRecommendedAccessories.value"
               />
             </div>
             <DetailTabs
@@ -88,7 +77,6 @@ import Page from '~/components/templates/Page/Page'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
-import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
 
 export default defineComponent({
@@ -97,7 +85,6 @@ export default defineComponent({
     Page,
     DetailTabs,
     ImageGallery,
-    AccessoriesCardCarousel,
     RecommendedAccessories,
   },
   setup() {
@@ -117,7 +104,7 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const productStore = useProductStore()
-    const { productReferencesRecommendedAccessories } = useProductStore()
+    const { recommendedAccessories } = useProductStore()
     const loadProduct = () => {
       productStore.getProductAccessories()
       redirectOnError(productStore.loadByPath)
@@ -188,7 +175,7 @@ export default defineComponent({
       productStore,
       carouselEntries,
       sortedImages,
-      productReferencesRecommendedAccessories,
+      recommendedAccessories,
     }
   },
 })

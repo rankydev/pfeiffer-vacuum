@@ -153,7 +153,7 @@ export const useProductStore = defineStore('product', () => {
     }
   }
 
-  const productReferencesRecommendedAccessories = computed(() => {
+  const recommendedAccessories = computed(() => {
     if (product.value && product.value.productReferences) {
       return product.value.productReferences.filter(
         (o) => o.referenceType === 'RECOMMENDEDACCESSORIES'
@@ -190,6 +190,6 @@ export const useProductStore = defineStore('product', () => {
     loadByPath,
     getProducts,
     getProductAccessories,
-    productReferencesRecommendedAccessories,
+    recommendedAccessories,
   }
 })

@@ -11,8 +11,8 @@
   >
     <template #accessories-carousel>
       <AccessoriesCardCarousel
-        background="grey"
-        :entries="productReferencesRecommendedAccessories"
+        class="accessories-carousel__bg-grey"
+        :entries="recommendedAccessories"
       />
     </template>
   </GenericAccordion>
@@ -39,11 +39,18 @@ export default defineComponent({
     },
   },
   setup() {
-    const { productReferencesRecommendedAccessories } = useProductStore()
+    const { recommendedAccessories } = useProductStore()
 
     return {
-      productReferencesRecommendedAccessories,
+      recommendedAccessories,
     }
   },
 })
 </script>
+<style lang="scss">
+.accessories-carousel {
+  &__bg-grey {
+    @apply tw-bg-pv-grey-96;
+  }
+}
+</style>
