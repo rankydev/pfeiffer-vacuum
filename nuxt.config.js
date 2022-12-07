@@ -83,6 +83,7 @@ export default {
     { src: '~/plugins/service/service.plugin', mode: 'client' },
     '~/plugins/zoomOnHover',
     '~/plugins/touchEvents',
+    { src: '~/plugins/analytics/datalayer', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
