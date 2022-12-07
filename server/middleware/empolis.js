@@ -16,4 +16,8 @@ export default createProxyMiddleware({
   changeOrigin: true,
   agent,
   pathRewrite: { [`^(/(${regionsForRegex}))?${PATH_EMPOLIS}`]: '/' },
+  onProxyReq: (proxyReq, req) => {
+    proxyReq.setHeader('Authorization', `Bearer ${req._empolisToken}`)
+    proxyReq.removeHeader('cookie')
+  },
 })

@@ -17,7 +17,7 @@
     </div>
     <div class="table-card__actions">
       <Button
-        v-for="(btn, j) in data.actions.filter(
+        v-for="(btn, j) in tableData.actions.filter(
           (e) => !('mobile' in e) || e.mobile
         )"
         :key="`action${j}`"
@@ -36,7 +36,7 @@ export default {
     Button,
   },
   props: {
-    data: {
+    tableData: {
       type: Object,
       default: () => ({
         entries: [],
@@ -54,19 +54,19 @@ export default {
   },
   setup(props) {
     const normalValues = computed(() =>
-      props.data.entries.filter(
+      props.tableData.entries.filter(
         (val, i) =>
           ![props.primary.position, props.secondary.position].includes(i)
       )
     )
 
     const primaryValue = computed(() => {
-      const val = props.data.entries[props.primary.position]
+      const val = props.tableData.entries[props.primary.position]
       return val.text || val
     })
 
     const secondaryValue = computed(() => {
-      const val = props.data.entries[props.secondary.position]
+      const val = props.tableData.entries[props.secondary.position]
       return val.text || val
     })
 

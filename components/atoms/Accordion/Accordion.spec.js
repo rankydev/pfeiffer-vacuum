@@ -72,8 +72,6 @@ describe('Accordion', () => {
 
       const selector = '.accordion__button:not(.accordion__button--active)'
       const firstButton = wrapper.findAll(selector).at(0)
-      const contentId = `#${firstButton.attributes('aria-controls')}`
-      const content = wrapper.find(contentId)
 
       await firstButton.trigger('click')
 

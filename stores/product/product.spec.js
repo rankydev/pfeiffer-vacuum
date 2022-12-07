@@ -124,13 +124,7 @@ describe('Product store', () => {
 
   describe('during interaction', () => {
     test('should invoke getProducts and thorw error', async () => {
-      mockGet.mockReturnValue(
-        Promise.reject({
-          toJSON: () => {
-            return 'error'
-          },
-        })
-      )
+      mockGet.mockReturnValue(Promise.reject('error'))
       const productStore = useProductStore()
       const productData = await productStore.getProducts([])
 

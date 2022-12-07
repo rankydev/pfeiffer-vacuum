@@ -69,7 +69,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    data: {
+    tableData: {
       type: Array,
       default: () => [],
     },
@@ -79,7 +79,7 @@ export default {
     const sortingStates = ['neutral', 'asc', 'desc']
     const sorting = ref({ id: null, state: 0 })
 
-    const { header, data } = toRefs(props)
+    const { header, tableData } = toRefs(props)
 
     const changeSorting = (i) => {
       const next =
@@ -90,7 +90,7 @@ export default {
     }
 
     const sortedData = computed(() => {
-      return data.value.slice().sort((a, b) => {
+      return tableData.value.slice().sort((a, b) => {
         if (sorting.value.id !== null) {
           switch (sortingStates[sorting.value.state]) {
             case 'neutral':

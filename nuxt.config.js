@@ -253,7 +253,7 @@ export default {
       handler: '~/server/middleware/shop-images.js',
     },
     {
-      path: '/',
+      path: PATH_EMPOLIS,
       handler: '~/server/middleware/empolis-authorization.js',
     },
     {

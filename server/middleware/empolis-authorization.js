@@ -1,6 +1,5 @@
 import { useLogger } from '../../composables/useLogger'
 import { parseJwt } from './utils/jsonTransform'
-import { PATH_EMPOLIS } from '../constants.js'
 const axios = require('axios').default
 
 const { logger } = useLogger('empolis-authorization')
@@ -110,10 +109,6 @@ const getAccessToken = async (req) => {
  * @returns
  */
 export default async function (req, _, next) {
-  logger.info('empolis authorization', req.originalUrl)
-  if (req.originalUrl.includes(PATH_EMPOLIS)) {
-    req._empolisToken = await getAccessToken(req)
-    logger.info('empolis token', req._empolisToken)
-  }
+  req._empolisToken = await getAccessToken(req)
   next()
 }
