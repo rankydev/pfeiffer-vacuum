@@ -12,7 +12,7 @@ import {
 const argTypes = {}
 
 export default {
-  title: 'Organisms/o_116 SearchResult',
+  title: 'Organisms/o_117 SearchResult',
   component: SearchResult,
   parameters: {
     docs: {

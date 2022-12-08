@@ -1,8 +1,12 @@
-import DetailTabs from './DetailTabs'
+import RecommendedAccessories from './RecommendedAccessories.vue'
 import { product } from '~/.storybook/mocks/product'
 import { useProductStore } from '~/stores/product'
 
 const argTypes = {
+  headline: {
+    control: { type: 'String' },
+    defaultValue: 'Recommended Accessories for Product',
+  },
   product: {
     control: { type: 'array' },
     defaultValue: product,
@@ -10,16 +14,16 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/m_129 Detail Tabs',
-  component: DetailTabs,
+  title: 'Organisms/o_119 Recommended Accessories',
+  component: RecommendedAccessories,
   parameters: {
     docs: {
       description: {
         component:
-          'The Detail Tabs is used on the product page to show some tabs with further informations for the product. ',
+          'The Recommended Accessories consists of an Accordion holding a Carousel of recommended Products for the displayed Product.',
       },
       source: {
-        code: '<detail-tabs :product="productStore.product" :product-code="productStore.code"/>',
+        code: '<recommended-accessories :headline="productStore.product.name" />',
       },
     },
   },
@@ -27,17 +31,17 @@ export default {
 }
 
 const Template = (args) => ({
-  components: { DetailTabs },
+  components: {
+    RecommendedAccessories,
+  },
   setup() {
     const productStore = useProductStore()
     productStore.product = args.product
     return { args }
   },
   template: `
-    <div>
-      <detail-tabs v-bind="args" />
-    </div>
-  `,
+  <recommended-accessories v-bind="args" />
+`,
 })
 
 export const Default = Template.bind({})

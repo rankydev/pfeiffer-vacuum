@@ -20,8 +20,11 @@
     "language": "Sprache",
     "date": "Datum",
     "size": "Größe",
-    "category": "Kategorie"
+    "category": "Kategorie",
+    "results": "{count} von {total} Ergebnissen",
+    "filter": "Filtern"
   },
+  "download": "Download",
   "noDownloads": "Keine Downloads verfügbar",
   "searchInAccessories": "In Zubehör suchen...",
   "type": "Typ",

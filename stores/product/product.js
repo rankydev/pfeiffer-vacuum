@@ -277,6 +277,15 @@ export const useProductStore = defineStore('product', () => {
     return []
   }
 
+  const recommendedAccessories = computed(() => {
+    if (product.value && product.value.productReferences) {
+      return product.value.productReferences.filter(
+        (o) => o.referenceType === 'RECOMMENDEDACCESSORIES'
+      )
+    }
+    return []
+  })
+
   const loadByPath = async () => {
     const id = route.value.params.product || ''
 
@@ -305,6 +314,7 @@ export const useProductStore = defineStore('product', () => {
     loadByPath,
     getProducts,
     getProductAccessories,
+    recommendedAccessories,
     getProductReferenceGroupPrices,
   }
 })

@@ -21,8 +21,11 @@
     "language": "Language",
     "date": "Date",
     "size": "Size",
-    "category": "Category"
+    "category": "Category",
+    "results": "{count} of {total} results",
+    "filter": "Filter"
   },
+  "download": "Download",
   "noDownloads": "No downloads available",
   "searchInAccessories": "Search in Accessories...",
   "type": "Type",

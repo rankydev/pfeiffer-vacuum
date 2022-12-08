@@ -14,7 +14,7 @@
       />
     </div>
 
-    <FilterModal>
+    <FilterModal :label="$t('category.sortAndFilter')">
       <div class="facets__selects">
         <PvSelect
           :options="sorts"
@@ -23,7 +23,7 @@
           option-label="name"
           :prepend-label="$t('category.sort')"
           icon-size="small"
-          class="facets__multiselect"
+          :class="['facets__multiselect', 'facets__multiselect--name']"
           no-input
           @input="$emit('updateSort', $event)"
         />
