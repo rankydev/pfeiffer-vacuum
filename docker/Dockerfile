@@ -63,6 +63,9 @@ ARG CONSOLA_LEVEL
 ARG USERCENTRICS_PRIVACY_PATH
 ARG USERCENTRICS_ID
 
+# google tag manager
+ARG GOOGLE_TAG_MANAGER_ID
+
 RUN \
   apk update \
   && apk add gettext
@@ -139,6 +142,9 @@ ARG CONSOLA_LEVEL
 ARG USERCENTRICS_PRIVACY_PATH
 ARG USERCENTRICS_ID
 
+# google tag manager
+ARG GOOGLE_TAG_MANAGER_ID
+
 # !!! IMPORTANT NOTE !!!
 # ENV variables will be set by either
 #   - pipeline
@@ -198,6 +204,9 @@ ENV CONSOLA_LEVEL="${CONSOLA_LEVEL}"
 # usercentrics
 ENV USERCENTRICS_PRIVACY_PATH="${USERCENTRICS_PRIVACY_PATH}"
 ENV USERCENTRICS_ID="${USERCENTRICS_ID}"
+
+# google tag manager
+ENV GOOGLE_TAG_MANAGER_ID="${GOOGLE_TAG_MANAGER_ID}"
 
 # Create app directory
 WORKDIR /opt/pvac-frontend

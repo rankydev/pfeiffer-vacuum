@@ -20,8 +20,9 @@ _Please delete those parts from this list, which are not relevant for this MR._
 * [ ] [Coding guidelines](https://confluence.diva-e.com/x/zEF-CQ) have been checked and obeyed
 * [ ] Left detailed instruction for QA provided at the ticket?
 * [ ] Tested in at least one browser (preferably Safari)
-* [ ] Unit tests are provided
-* [ ] Test coverage did not decrease and new code has been tested 100%
+* [ ] Modules are named after the "Modultapete" (https://confluence.diva-e.com/x/gi2yCg)
+* [ ] Set new/adjusted environment variables
+* [ ] document new/adjusted environment variables in confluence (https://confluence.diva-e.com/x/GQnoCg)
 
 ### manual tasks have to be done before/after deployment
 * [ ] provide a description in the corresponding release notes: [Release notes](https://confluence.diva-e.com/x/wDt-CQ)

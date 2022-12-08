@@ -31,7 +31,12 @@
             <div class="tw--my-4" style="width: 100%; height: 0px">&nbsp;</div>
 
             <div class="product-page__image-gallery">
-              <ImageGallery :images="sortedImages" />
+              <ImageGallery v-if="sortedImages.length" :images="sortedImages" />
+              <ResponsiveImage
+                v-else
+                aspect-ratio="3:2"
+                fallback-image-icon-size="xxlarge"
+              />
             </div>
             <div
               id="variantselection"
@@ -130,7 +135,7 @@ export default defineComponent({
     const path = context.app.localePath('shop-products-product')
     const { slug, fallbackSlug, language } = buildSlugs(path)
 
-    const { getAssetImage, getShopMedia } = useImageHelper()
+    const { getShopMedia } = useImageHelper()
 
     const sortedImages = computed(() => {
       let images = []
@@ -163,10 +168,6 @@ export default defineComponent({
             altText: image.altText,
           })
         }
-      } else {
-        result.push({
-          url: getAssetImage(context.app.i18n.t('product.placeholderImage')),
-        })
       }
 
       return result

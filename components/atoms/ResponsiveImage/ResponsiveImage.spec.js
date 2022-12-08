@@ -3,16 +3,6 @@ import ResponsiveImage from './ResponsiveImage.vue'
 import responsiveImageEntry from './ResponsiveImage.stories.content'
 import { hybrisResponsiveImageEntry } from './ResponsiveImage.stories.content'
 
-jest.mock('~/composables/useImageHelper/useImageHelper', () => {
-  return {
-    useImageHelper: () => {
-      return {
-        getAssetImage: (i) => i,
-      }
-    },
-  }
-})
-
 const nuxtImg = {
   template: '<div>some image</div>',
   props: ['src', 'modifiers', 'title', 'alt', 'provider'],
@@ -31,7 +21,7 @@ function createComponent(propsData = {}) {
   const $img = () => ''
   const mocks = {
     $nuxt: {
-      context: { $img, app: { i18n: { t: () => '' } } },
+      context: { $img },
     },
   }
 
