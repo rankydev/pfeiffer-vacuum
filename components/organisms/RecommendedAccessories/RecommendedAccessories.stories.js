@@ -14,7 +14,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Organisms/o_xyz Recommended Accessories',
+  title: 'Organisms/o_119 Recommended Accessories',
   component: RecommendedAccessories,
   parameters: {
     docs: {
