@@ -293,7 +293,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .product-accessories {
   @apply tw-bg-pv-grey-96;
   @apply tw-w-full;
@@ -336,13 +336,17 @@ export default {
   &__category-filter,
   &__type-filter {
     @apply tw-w-full;
+    @apply tw-pb-2;
 
     @screen md {
       @apply tw-mr-2;
       @apply tw-w-1/3;
       max-width: 33%;
     }
-    @apply tw-pb-2;
+
+    .pv-select__search-helper {
+      @apply tw-h-0;
+    }
   }
 
   &__remove-filters {
