@@ -22,7 +22,7 @@
           </h3>
           <AccessoriesCard
             :product="entry.target"
-            @iconClick="handleIconClick"
+            @priceInfoModalIconClick="handlePriceInfoModalIconClick"
           />
         </div>
       </template>
@@ -97,7 +97,7 @@ export default defineComponent({
         )}<br/><br/>${i18n.t('product.priceInfo.textInfoOnlineLine2')}`
     })
 
-    const handleIconClick = (e) => {
+    const handlePriceInfoModalIconClick = (e) => {
       hasCustomerPrice.value = e
       toggleModal()
     }
@@ -107,7 +107,7 @@ export default defineComponent({
       toggleModal,
       informationModalText,
       informationModalHeadline,
-      handleIconClick,
+      handlePriceInfoModalIconClick,
     }
   },
 })

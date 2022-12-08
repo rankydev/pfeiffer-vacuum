@@ -24,7 +24,7 @@
           <p
             v-if="isPriceVisible"
             class="accessories-card__price-info"
-            @click="$emit('iconClick', hasCustomerPrice)"
+            @click="$emit('priceInfoModalIconClick', hasCustomerPrice)"
           >
             {{
               hasCustomerPrice
@@ -123,7 +123,7 @@ export default defineComponent({
       default: 'hybris',
     },
   },
-  emits: ['updateSort', 'iconClick'],
+  emits: ['updateSort', 'priceInfoModalIconClick'],
   setup(props) {
     const { i18n } = useContext()
     const context = useContext()
