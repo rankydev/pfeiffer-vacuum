@@ -24,6 +24,7 @@ describe('FilterModal', () => {
     test('should render given no props for desktop', () => {
       mockIsMobile.mockReturnValue(false)
       const wrapper = shallowMount(FilterModal, {
+        propsData: { label: 'Test' },
         slots: { default: '<div class="test-content"/>' },
       })
       expect(wrapper.find('.test-content').exists()).toBeTruthy()
@@ -34,6 +35,7 @@ describe('FilterModal', () => {
     test('should render given no props for mobile', () => {
       mockIsMobile.mockReturnValue(true)
       const wrapper = shallowMount(FilterModal, {
+        propsData: { label: 'Test' },
         slots: { default: '<div class="test-content"/>' },
       })
       expect(wrapper.find('.test-content').exists()).toBeTruthy()

@@ -4,7 +4,7 @@ import { header, data } from './GenericTable.stories.content.js'
 const argTypes = {}
 
 export default {
-  title: 'Molecules/Generic Table',
+  title: 'Technical Components/Generic Table',
   component: GenericTable,
   parameters: {
     docs: {

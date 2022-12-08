@@ -9,7 +9,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Organisms/o_XXX Accessories Card Carousel',
+  title: 'Organisms/o_118 Accessories Card Carousel',
   component: AccessoriesCardCarousel,
   parameters: {
     docs: {
