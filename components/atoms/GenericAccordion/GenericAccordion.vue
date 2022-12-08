@@ -20,11 +20,14 @@
           :disabled="entry.disabled"
           @click="toggleActive(idx)"
         >
-          <span class="accordion__label">{{ entry.label }}</span>
+          <div class="tw-flex">
+            <Icon v-if="entry.icon" class="tw-mr-2" :icon="entry.icon" />
+            <span class="accordion__label">{{ entry.label }}</span>
+          </div>
           <Icon
             class="accordion__icon"
             :size="level"
-            :icon="isActive(idx) ? 'expand_less' : 'expand_more'"
+            :icon="isActive(idx) ? 'expand_less' : expandIcon"
           />
         </button>
       </component>
@@ -79,6 +82,13 @@ export default defineComponent({
     useTabStyles: {
       type: Boolean,
       default: false,
+    },
+    /**
+     * Icon for expanding the Accordion
+     */
+    expandIcon: {
+      type: String,
+      default: 'expand_more',
     },
   },
   setup(props) {
