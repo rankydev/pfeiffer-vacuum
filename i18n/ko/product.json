@@ -12,5 +12,116 @@
   "consumables": "소모품",
   "dimensions": "치수",
   "selectVariantExplained": "해당 제품 세부 정보를 보려면 귀하의 개별 요구 사항에 적합한 제품 사양을 선택하십시오.",
-  "scrollToVariantSelection": "사양 선택"
+  "scrollToVariantSelection": "사양 선택",
+  "otherAccessories": "Others",
+  "furtherDetails": "Further product details",
+  "department": "Department",
+  "file": {
+    "description": "Description",
+    "type": "Type",
+    "language": "Language",
+    "date": "Date",
+    "size": "Size",
+    "category": "Category"
+  },
+  "noDownloads": "No downloads available",
+  "searchInAccessories": "Search in Accessories...",
+  "type": "Type",
+  "removeFilter": "Remove filters",
+  "removeSelection": "Remove",
+  "removeAll": "Remove all",
+  "priceInfo": {
+    "InfoOnline": "Online Price",
+    "InfoPersonal": "Your personal price",
+    "textInfoOnlineLine1": "The here shown Online Price is a reference price that does not include freight, customs and taxes and is not maintained in all global currencies.",
+    "textInfoOnlineLine2": "To get your individual offer (in your local currency), please send us your request, so that your local Pfeiffer Vacuum Company / Partner Company will then provide you with your individual offer and pricing.",
+    "textInfoPersonal": "This price is your personal price. It's calculated on the basis of your individual prices respectively discount agreements. The possibility to maintain your personal prices within our e-commerce system, differs within the different regions within our Pfeiffer Vacuum Sales Network. For any further questions, please connect within your local Sales Contact."
+  },
+  "priceOnRequest": "요청 시 가격 안내",
+  "recommended": {
+    "title": "Recommended Accessories for "
+  },
+  "help": "도움이 필요하십니까?",
+  "showProductDetails": "Show product details",
+  "login": {
+    "title": "Sign in",
+    "account": "Already have an account?",
+    "pleaseLogin": "Please login here to access your profile.",
+    "description": "Please enter your E-mail address and password to sign in.",
+    "username": "Email address",
+    "badCredentials": "Login not possible. Please check username and password.",
+    "password": "Password",
+    "passwordForgotten": {
+      "title": "Forgot your password?",
+      "description": "Please, enter your username. We'll send you an email to reset your password.",
+      "message": {
+        "error": "An error occurred during password reset.",
+        "resetSuccess": "The password was reset successfully.",
+        "requestSuccess": "The password reset request was sent. Please check your mails."
+      },
+      "expiredInfoHeadline": "Your reset token is expired",
+      "expiredInfo": "'There is a time limit for the password reset. If you exceed the limit, the token will be invalid. You have to generate a new token to reset your password.",
+      "newToken": "Generate new security token:",
+      "placeholder": "Enter your username",
+      "reset": "Reset password",
+      "resetDescription": "Please enter a new password.",
+      "submit": "Reset password",
+      "expiredError": "'Your reset token is expired! Please request a new token to reset your password.",
+      "passwordValidError": "Your entered password is not valid. Please check your input and try again.",
+      "backToSignIn": "Back to sign in",
+      "sendEmail": "Send email"
+    },
+    "loginToSeePrices": {
+      "part1": "Please",
+      "part2": "log in",
+      "part3": "to see prices",
+      "lead": "Please add company data to see prices",
+      "open": "Please wait for approval to see prices",
+      "rejected": "You are not allowed to see prices"
+    },
+    "unapproved": "Your account has not been approved yet",
+    "noaccount": "No account yet?",
+    "register": "Register here.",
+    "passwordMinLength": "Consists of at least 8 letters",
+    "passwordCapitalLetter": "Contains at least 1 capital letter and 1 lower case",
+    "passwordDigit": "Contains at least 1 digit",
+    "passwordTooLong": "Your password may be too long (max. 255 characters)",
+    "createAccountBenefitsOld": {
+      "title": "Create your own account now to use more functionalities. Once you registered you will be able to:",
+      "bullet1": "Send a request for an official quote",
+      "bullet2": "Access the My Account area with your data and quote history",
+      "bullet3": "Get in touch with us more easily"
+    },
+    "createAccountBenefits": "'Register on our platform to use more functionalities. This will allow you to do the following:",
+    "createBenefit1": "See online prices",
+    "createBenefit2": "Send requests for quotes to your sales engineer",
+    "createBenefit3": "Access the MyAccount with various options:",
+    "createBenefitSub1": "Create and maintain shopping lists",
+    "createBenefitSub2": "Maintain your user data",
+    "createBenefitSub3": "View the request history"
+  },
+  "userStatus": {
+    "lead": {
+      "priceInfo": {
+        "text": "가격을 보려면 {link}을(를) 추가하십시오.",
+        "link": "회사 정보"
+      },
+      "requestInfo": "요청을 보내려면 회사 정보를 추가하십시오.",
+      "functionalityInfo": "이 기능을 사용하려면 회사 정보를 추가하십시오."
+    },
+    "open": {
+      "priceInfo": {
+        "text": "가격을 보려면 승인을 기다리십시오."
+      },
+      "requestInfo": "요청을 보내려면 승인을 기다리십시오.",
+      "functionalityInfo": "이 기능을 사용하려면 승인을 기다리십시오."
+    },
+    "rejected": {
+      "priceInfo": {
+        "text": "가격을 볼 수 있는 권한이 없습니다."
+      },
+      "requestInfo": "요청을 보낼 수 있는 권한이 없습니다.",
+      "functionalityInfo": "죄송합니다. 이 기능을 사용할 수 있는 권한이 없습니다."
+    }
+  }
 }

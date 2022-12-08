@@ -10,12 +10,14 @@
         <Richtext class="information-modal__text" :richtext="text" />
       </div>
       <div>
-        <Button
-          class="information-modal__btn"
-          variant="secondary"
-          label="Need any help?"
-          shape="outlined"
-        ></Button>
+        <NuxtLink :to="localePath('/contact/')">
+          <Button
+            class="information-modal__btn"
+            variant="secondary"
+            :label="$t('product.help')"
+            shape="outlined"
+          ></Button
+        ></NuxtLink>
       </div>
     </div>
   </GenericModal>

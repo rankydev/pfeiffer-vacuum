@@ -198,7 +198,7 @@ export const useProductStore = defineStore('product', () => {
       accessoriesGroups.value.length
     ) {
       productAccessoriesPrices.value.forEach((productAccessoriesPrice) => {
-        // other accessories groups
+        // accessories groups
         for (const accessoriesGroupGroups of accessoriesGroups.value) {
           if (accessoriesGroupGroups.groups) {
             for (const accessoriesGroup of accessoriesGroupGroups.groups) {
@@ -208,7 +208,7 @@ export const useProductStore = defineStore('product', () => {
             }
           }
 
-          // recommended accessories
+          // other accessories
           if (
             !accessoriesGroupGroups.groups &&
             accessoriesGroupGroups?.references.length
@@ -267,11 +267,7 @@ export const useProductStore = defineStore('product', () => {
       `${config.PRODUCTS_API}/${productId}/${uid}/referenceGroups/${referenceGroup}/prices`
     )
 
-    if (
-      result.productPrices &&
-      Array.isArray(result.productPrices) &&
-      result.productPrices.length
-    ) {
+    if (result.productPrices?.length) {
       return result.productPrices
     }
 
