@@ -3,6 +3,14 @@ import InformationModal from './InformationModal.vue'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 
+let wrapper
+function createComponent(propsData = {}) {
+  const stubs = {
+    NuxtLink: true,
+  }
+  wrapper = shallowMount(InformationModal, { propsData, stubs })
+}
+
 describe('InformationModal', () => {
   const propsData = {
     isOpen: true,
@@ -11,14 +19,13 @@ describe('InformationModal', () => {
   }
   describe('initial state', () => {
     test('should render given no props', () => {
-      const wrapper = shallowMount(InformationModal)
+      createComponent()
       expect(wrapper.find('.information-modal').exists()).toBeTruthy()
     })
 
     test('should render given props', () => {
-      const wrapper = shallowMount(InformationModal, {
-        propsData,
-      })
+      createComponent(propsData)
+
       const headline = wrapper.find('.information-modal__headline')
       const text = wrapper.findComponent(Richtext)
       const btn = wrapper.findComponent(Button)
