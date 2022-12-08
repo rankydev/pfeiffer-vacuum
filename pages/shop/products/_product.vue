@@ -41,10 +41,74 @@
             <div
               id="variantselection"
               class="tw-bg-pv-grey-88 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
-              :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-              style="height: 600px"
             >
-              Variant Selection
+              <div>
+                <h4>Legende:</h4>
+                <div>
+                  <button class="tw-p-2 tw-m-2 tw-border-2">Available</button>
+                  <button
+                    class="tw-p-2 tw-m-2 tw-border-2 tw-bg-pv-red-lighter tw-text-pv-white"
+                  >
+                    User Selection
+                  </button>
+                  <button
+                    class="tw-p-2 tw-m-2 tw-border-2 tw-bg-pv-yellow tw-text-pv-black"
+                  >
+                    Automatically
+                  </button>
+                  <button
+                    class="tw-p-2 tw-m-2 tw-border-2 tw-bg-pv-grey-32 tw-text-pv-white"
+                  >
+                    Disabled
+                  </button>
+                </div>
+              </div>
+              <div class="tw-py-6">
+                <div
+                  v-for="(attr, index) in (productStore.variationMatrix || {})
+                    .variationAttributes"
+                  :key="index"
+                  class="tw-border-b-2"
+                >
+                  <span>{{ attr.name }}</span>
+                  <ul>
+                    <li
+                      v-for="val in attr.variationValues"
+                      :key="val.displayName"
+                    >
+                      <button
+                        class="tw-p-2 tw-m-2 tw-border-2 tw-text-sm disabled:tw-bg-pv-grey-32 disabled:tw-text-pv-white"
+                        :class="{
+                          'tw-bg-pv-yellow tw-text-pv-black':
+                            val.selected &&
+                            !(attr.code in productStore.selectedAttributes),
+                          'tw-bg-pv-red tw-text-pv-white':
+                            val.selected &&
+                            attr.code in productStore.selectedAttributes,
+                        }"
+                        :disabled="!val.selectable"
+                        @click="
+                          productStore.toggleAttribute(attr.code, val.value)
+                        "
+                      >
+                        {{ val.displayValue }}
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <h5>Possible Variants:</h5>
+                <ul>
+                  <li
+                    v-for="variant in (productStore.variationMatrix || {})
+                      .variants"
+                    :key="variant.name"
+                  >
+                    {{ variant.name }}
+                  </li>
+                </ul>
+              </div>
             </div>
             <div v-if="recommendedAccessories.length" class="tw-w-full">
               <RecommendedAccessories
@@ -69,6 +133,7 @@ import {
   useRoute,
   defineComponent,
   onBeforeMount,
+  onBeforeUnmount,
   watch,
   onServerPrefetch,
   useContext,
@@ -111,12 +176,14 @@ export default defineComponent({
     const productStore = useProductStore()
     const { recommendedAccessories } = useProductStore()
     const loadProduct = () => {
+      productStore.loadVariationMatrix(route.value.params.product)
       productStore.getProductAccessories()
       redirectOnError(productStore.loadByPath)
     }
 
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)
+    onBeforeUnmount(productStore.clearMatrix)
     watch(route, loadProduct)
 
     const carouselEntries = computed(() => {

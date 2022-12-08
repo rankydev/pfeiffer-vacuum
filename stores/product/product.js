@@ -3,6 +3,7 @@ import {
   ssrRef,
   ref,
   useRoute,
+  useRouter,
   computed,
   useContext,
 } from '@nuxtjs/composition-api'
@@ -15,16 +16,20 @@ import { useCmsStore } from '~/stores/cms'
 
 export const useProductStore = defineStore('product', () => {
   const route = useRoute()
+  const router = useRouter()
   const cmsStore = useCmsStore()
   const { logger } = useLogger('productStore')
   const { axios } = useAxiosForHybris()
   const { localePath, i18n } = useContext()
 
   const product = ref(null)
+  const currentMasterId = ref(null)
+  const currentVariantId = ref(null)
   const reqId = ssrRef(null)
-  const variationMatrix = ref(null)
   const price = ref(null)
   const accessoriesGroups = ref(null)
+  const variationMatrix = ref(null)
+  const selectedAttributes = ref({})
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -57,6 +62,55 @@ export const useProductStore = defineStore('product', () => {
     twitterDescription: '',
     twitterImage: null,
   }))
+
+  /*
+   * VARIANT SELECTION START
+   */
+
+  const loadVariationMatrix = async (id) => {
+    const url = joinURL(
+      config.PRODUCTS_API,
+      currentVariantId.value || currentMasterId.value || id,
+      'variationmatrix'
+    )
+    variationMatrix.value = await axios.$get(url, {
+      params: { ...selectedAttributes.value, fields: 'FULL' },
+    })
+
+    // Redirect to variant page when only one variant is left
+    if (variationMatrix.value?.variants.length === 1)
+      router.push(
+        joinURL(
+          localePath('shop-products-product'),
+          variationMatrix.value.variants[0]?.code
+        )
+      )
+  }
+
+  const toggleAttribute = (key, val) =>
+    key in selectedAttributes.value && selectedAttributes.value[key] === val
+      ? deleteAttribute(key)
+      : addAttribute(key, val)
+
+  const addAttribute = async (key, val) => {
+    selectedAttributes.value[key] = val
+    await loadVariationMatrix()
+  }
+  const deleteAttribute = async (key) => {
+    delete selectedAttributes.value[key]
+    await loadVariationMatrix()
+  }
+
+  const clearMatrix = () => {
+    currentMasterId.value = null
+    currentVariantId.value = null
+    variationMatrix.value = null
+    selectedAttributes.value = {}
+  }
+
+  /*
+   * VARIANT SELECTION END
+   */
 
   const getProducts = async (ids) => {
     if (!Array.isArray(ids)) {
@@ -91,14 +145,13 @@ export const useProductStore = defineStore('product', () => {
       params: { fields: 'FULL' },
     })
     product.value = result
-  }
-
-  const loadVariationMatrix = async (id) => {
-    const url = joinURL(config.PRODUCTS_API, id, 'variationmatrix')
-    const result = await axios.$get(url, {
-      params: { fields: 'FULL' },
-    })
-    variationMatrix.value = result
+    // When product is type master or variant, save master id for matrix
+    if (['MASTERPRODUCT', 'VARIANTPRODUCT'].includes(result.productType)) {
+      currentMasterId.value =
+        result.productType === 'MASTERPRODUCT' ? result.code : result.master
+      currentVariantId.value =
+        result.productType === 'MASTERPRODUCT' ? null : result.code
+    }
   }
 
   const loadPrice = async (id) => {
@@ -177,19 +230,30 @@ export const useProductStore = defineStore('product', () => {
     // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
     product.value = null
 
-    await Promise.all([loadProduct(id), loadVariationMatrix(id), loadPrice(id)])
+    await Promise.all([loadProduct(id), loadPrice(id)])
   }
 
   return {
-    product,
-    variationMatrix,
-    price,
-    accessoriesGroups,
     breadcrumb,
     metaData,
+
+    // Product
+    product,
+    price,
+    accessoriesGroups,
+    recommendedAccessories,
     loadByPath,
     getProducts,
     getProductAccessories,
-    recommendedAccessories,
+
+    // Variant selection
+    variationMatrix,
+    currentMasterId,
+    selectedAttributes,
+    loadVariationMatrix,
+    addAttribute,
+    deleteAttribute,
+    toggleAttribute,
+    clearMatrix,
   }
 })
