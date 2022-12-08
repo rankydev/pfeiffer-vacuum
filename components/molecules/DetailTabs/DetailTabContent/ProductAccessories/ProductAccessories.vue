@@ -380,5 +380,9 @@ export default {
   &__carousel-element {
     @apply tw-mt-5;
   }
+
+  .vs__dropdown-menu {
+    @apply tw-w-max;
+  }
 }
 </style>
