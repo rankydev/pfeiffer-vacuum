@@ -55,17 +55,21 @@ export default defineComponent({
 
 <style lang="scss">
 .information-modal {
-  &__content {
-    @apply tw-flex;
-    @apply tw-flex-col;
-  }
+  .modal__box {
+    @apply tw-max-w-3xl;
 
-  &__headline {
-    @apply tw-mb-4;
-  }
+    &__content {
+      @apply tw-flex;
+      @apply tw-flex-col;
+    }
 
-  &__btn {
-    @apply tw-mt-4;
+    &__headline {
+      @apply tw-mb-4;
+    }
+
+    &__btn {
+      @apply tw-mt-4;
+    }
   }
 }
 </style>
