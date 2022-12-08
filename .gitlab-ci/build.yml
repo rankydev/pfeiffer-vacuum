@@ -72,7 +72,7 @@ lint:
 lint-js-report:
   extends: .lint-junit-report
   script:
-      - npm run lint:js-ci-junit
+    - npm run lint:js-ci-junit
 
 lint-style-report:
   extends: .lint-junit-report
@@ -184,6 +184,23 @@ sonar-qube:
       --build-arg KEYCLOAK_BASE_URL="${KEYCLOAK_BASE_URL}"
       --build-arg KEYCLOAK_REALM_NAME="${KEYCLOAK_REALM_NAME}"
       --build-arg KEYCLOAK_CLIENT_ID="${KEYCLOAK_CLIENT_ID}"
+      --build-arg GOOGLE_TAG_MANAGER_ID="${GOOGLE_TAG_MANAGER_ID}"
+      --build-arg EMPOLIS_TIMEOUT="${EMPOLIS_TIMEOUT}"
+      --build-arg EMPOLIS_STAGE="${EMPOLIS_STAGE}"
+      --build-arg EMPOLIS_PATH="${EMPOLIS_PATH}"
+      --build-arg EMPOLIS_GUEST_TOKEN_URL="${EMPOLIS_GUEST_TOKEN_URL}"
+      --build-arg EMPOLIS_SSO_PATH="${EMPOLIS_SSO_PATH}"
+      --build-arg EMPOLIS_AUTH_URL="${EMPOLIS_AUTH_URL}"
+      --build-arg EMPOLIS_USERNAME_CUSTOMER="${EMPOLIS_USERNAME_CUSTOMER}"
+      --build-arg EMPOLIS_PASSWORD_CUSTOMER="${EMPOLIS_PASSWORD_CUSTOMER}"
+      --build-arg EMPOLIS_USERNAME_INTERNAL_LEVEL_0="${EMPOLIS_USERNAME_INTERNAL_LEVEL_0}"
+      --build-arg EMPOLIS_PASSWORD_INTERNAL_LEVEL_0="${EMPOLIS_PASSWORD_INTERNAL_LEVEL_0}"
+      --build-arg EMPOLIS_USERNAME_INTERNAL_LEVEL_1="${EMPOLIS_USERNAME_INTERNAL_LEVEL_1}"
+      --build-arg EMPOLIS_PASSWORD_INTERNAL_LEVEL_1="${EMPOLIS_PASSWORD_INTERNAL_LEVEL_1}"
+      --build-arg EMPOLIS_USERNAME_INTERNAL_LEVEL_2="${EMPOLIS_USERNAME_INTERNAL_LEVEL_2}"
+      --build-arg EMPOLIS_PASSWORD_INTERNAL_LEVEL_2="${EMPOLIS_PASSWORD_INTERNAL_LEVEL_2}"
+      --build-arg EMPOLIS_CLIENT_ID="${EMPOLIS_CLIENT_ID}"
+      --build-arg EMPOLIS_CLIENT_SECRET="${EMPOLIS_CLIENT_SECRET}"
       -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image

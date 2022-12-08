@@ -4,7 +4,7 @@
       <Button
         class="filter-modal__open-button"
         variant="secondary"
-        :label="$t('category.sortAndFilter')"
+        :label="label"
         shape="outlined"
         icon="filter_list"
         @click="isOpen = true"
@@ -17,7 +17,7 @@
       >
         <div class="filter-modal__content">
           <h2 class="filter-modal__headline">
-            {{ $t('category.sortAndFilter') }}
+            {{ label }}
           </h2>
           <div class="filter-modal__slot">
             <slot />
@@ -50,6 +50,12 @@ export default defineComponent({
   components: {
     Button,
     GenericModal,
+  },
+  props: {
+    label: {
+      type: String,
+      required: true,
+    },
   },
   emits: ['closeModal'],
   setup() {
@@ -85,6 +91,7 @@ export default defineComponent({
     @include hide-scrollbar;
     @apply tw-overflow-hidden;
     @apply tw-overflow-y-auto;
+    @apply tw-h-full;
   }
 
   &__apply-button {

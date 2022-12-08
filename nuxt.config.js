@@ -1,4 +1,8 @@
-import { PATH_SHOP, PATH_SHOP_IMAGES } from './server/constants.js'
+import {
+  PATH_EMPOLIS,
+  PATH_SHOP,
+  PATH_SHOP_IMAGES,
+} from './server/constants.js'
 import {
   languageCodes,
   defaultLanguageCode,
@@ -14,6 +18,7 @@ export default {
   ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
+    __dangerouslyDisableSanitizers: ['script'],
     title: 'Pfeiffer Vacuum', // @todo make dynamic
     htmlAttrs: {
       lang: 'en-EN', // @todo make dynamic
@@ -27,7 +32,6 @@ export default {
       { hid: 'description', name: 'description', content: '' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    // @todo add link alternate href lang
     script: [
       {
         src: 'https://app.usercentrics.eu/browser-ui/latest/loader.js',
@@ -36,7 +40,21 @@ export default {
         'data-tcf-enabled': true,
         defer: true,
       },
+      {
+        type: 'text/plain',
+        'data-usercentrics': 'Google Tag Manager',
+        innerHTML:
+          "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n" +
+          "new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n" +
+          "j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n" +
+          "'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n" +
+          "})(window,document,'script','dataLayer','" +
+          process.env.GOOGLE_TAG_MANAGER_ID +
+          "');",
+      },
     ],
+
+    // @todo add link alternate href lang
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -69,6 +87,7 @@ export default {
     { src: '~/plugins/service/service.plugin', mode: 'client' },
     '~/plugins/zoomOnHover',
     '~/plugins/touchEvents',
+    { src: '~/plugins/analytics/datalayer', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -191,10 +210,34 @@ export default {
     DEFAULT_REGION_CODE: process.env.DEFAULT_REGION_CODE || 'global',
     CURRENT_REGION_CODE: process.env.CURRENT_REGION_CODE || 'global',
     USERCENTRICS_PRIVACY_PATH: process.env.USERCENTRICS_PRIVACY_PATH,
+    GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
     // keycloak
     KEYCLOAK_BASE_URL: process.env.KEYCLOAK_BASE_URL,
     KEYCLOAK_REALM_NAME: process.env.KEYCLOAK_REALM_NAME,
     KEYCLOAK_CLIENT_ID: process.env.KEYCLOAK_CLIENT_ID,
+    // empolis
+    EMPOLIS_TIMEOUT: process.env.EMPOLIS_TIMEOUT,
+    EMPOLIS_STAGE: process.env.EMPOLIS_STAGE,
+    EMPOLIS_PATH: process.env.EMPOLIS_PATH,
+    EMPOLIS_GUEST_TOKEN_URL: process.env.EMPOLIS_GUEST_TOKEN_URL,
+    EMPOLIS_SSO_PATH: process.env.EMPOLIS_SSO_PATH,
+    EMPOLIS_AUTH_URL: process.env.EMPOLIS_AUTH_URL,
+    EMPOLIS_USERNAME_CUSTOMER: process.env.EMPOLIS_USERNAME_CUSTOMER,
+    EMPOLIS_PASSWORD_CUSTOMER: process.env.EMPOLIS_PASSWORD_CUSTOMER,
+    EMPOLIS_USERNAME_INTERNAL_LEVEL_0:
+      process.env.EMPOLIS_USERNAME_INTERNAL_LEVEL_0,
+    EMPOLIS_PASSWORD_INTERNAL_LEVEL_0:
+      process.env.EMPOLIS_PASSWORD_INTERNAL_LEVEL_0,
+    EMPOLIS_USERNAME_INTERNAL_LEVEL_1:
+      process.env.EMPOLIS_USERNAME_INTERNAL_LEVEL_1,
+    EMPOLIS_PASSWORD_INTERNAL_LEVEL_1:
+      process.env.EMPOLIS_PASSWORD_INTERNAL_LEVEL_1,
+    EMPOLIS_USERNAME_INTERNAL_LEVEL_2:
+      process.env.EMPOLIS_USERNAME_INTERNAL_LEVEL_2,
+    EMPOLIS_PASSWORD_INTERNAL_LEVEL_2:
+      process.env.EMPOLIS_PASSWORD_INTERNAL_LEVEL_2,
+    EMPOLIS_CLIENT_ID: process.env.EMPOLIS_CLIENT_ID,
+    EMPOLIS_CLIENT_SECRET: process.env.EMPOLIS_CLIENT_SECRET,
   },
 
   env: {
@@ -241,5 +284,19 @@ export default {
       path: PATH_SHOP_IMAGES,
       handler: '~/server/middleware/shop-images.js',
     },
+    {
+      path: PATH_EMPOLIS,
+      handler: '~/server/middleware/empolis-authorization.js',
+    },
+    {
+      path: PATH_EMPOLIS,
+      handler: '~/server/middleware/empolis.js',
+    },
   ],
+  watchers: {
+    // Temporary fix: https://github.com/nuxt-community/tailwindcss-module/issues/359
+    webpack: {
+      ignored: ['**/.git/**'],
+    },
+  },
 }

@@ -69,6 +69,7 @@ export default {
     @apply tw-border-2 tw-border-pv-red;
     @apply tw-rounded;
     @apply tw-transition-colors tw-duration-100;
+    @apply tw-bg-pv-white;
 
     &:hover {
       @apply tw-cursor-pointer;

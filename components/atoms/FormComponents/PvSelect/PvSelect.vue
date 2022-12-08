@@ -14,7 +14,7 @@
       :selectable="(option) => option.disabled !== true"
       :components="{ Deselect }"
       deselect-from-dropdown
-      :close-on-select="!!!multiple"
+      :close-on-select="!multiple"
       @input="validation.validateInput()"
     >
       <template #search="{ attributes, events }">
@@ -24,7 +24,12 @@
             class="pv-select__icon-prepend"
             :icon="prependIcon"
           />
-          <input class="vs__search" v-bind="attributes" v-on="events" />
+          <input
+            class="vs__search"
+            :class="{ 'vs__search--multiple': multiple }"
+            v-bind="attributes"
+            v-on="events"
+          />
           <div class="pv-select__search-helper">
             {{ placeholder }}
           </div>
@@ -47,7 +52,7 @@
 
       <template #option="option">
         <Checkbox
-          v-if="!!multiple"
+          v-if="multiple"
           label=""
           :checked="
             !!(internalValue || []).filter(
@@ -64,7 +69,7 @@
         <span v-html="sanitizer.inline(option[optionLabel])" />
       </template>
 
-      <template v-if="!!multiple" #selected-option-container>
+      <template v-if="multiple" #selected-option-container>
         <div class="vs__selected">
           {{ placeholder || $t('form.select.placeholder') }}
         </div>
