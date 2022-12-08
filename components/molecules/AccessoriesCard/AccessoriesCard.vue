@@ -123,7 +123,7 @@ export default defineComponent({
       default: 'hybris',
     },
   },
-  emits: ['updateSort'],
+  emits: ['updateSort', 'iconClick'],
   setup(props) {
     const { i18n } = useContext()
     const context = useContext()
