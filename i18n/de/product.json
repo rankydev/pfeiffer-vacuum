@@ -1,6 +1,5 @@
 {
   "variantsAvailable": "keine verfügbare Variante | {count} verfügbare Variante | {count} verfügbare Varianten",
-  "placeholderImage": "missing_product_DE.jpg",
   "similarImage": "Abbildung ähnlich",
   "productInformation": "Produktinformationen",
   "technicalData": "Technische Daten",
@@ -22,8 +21,11 @@
     "language": "Sprache",
     "date": "Datum",
     "size": "Größe",
-    "category": "Kategorie"
+    "category": "Kategorie",
+    "results": "{count} von {total} Ergebnissen",
+    "filter": "Filtern"
   },
+  "download": "Download",
   "noDownloads": "Keine Downloads verfügbar",
   "searchInAccessories": "In Zubehör suchen...",
   "type": "Typ",
@@ -34,13 +36,15 @@
     "InfoOnline": "Onlinepreis",
     "InfoPersonal": "Ihr persönlicher Preis",
     "textInfoOnlineLine1": "Der hier angezeigte Online-Preis ist ein Referenzpreis, der keine Fracht, Zölle und Steuern enthält und nicht in allen Landeswährungen gepflegt wird.",
-    "textInfoOnlineLine2": "Um Ihr individuelles Angebot (in Ihrer Landeswährung) zu erhalte, senden Sie uns bitte Ihre Anfrag, so dass Ihnen Ihr lokales Pfeiffer Vacuum Unternehmen / Partnerunternehmen ein individuelles Angebot mit Ihren Preisen zur Verfügung stellen kann.",
+    "textInfoOnlineLine2": "Um Ihr individuelles Angebot (in Ihrer Landeswährung) zu erhalten, senden Sie uns bitte Ihre Anfrage, so dass Ihnen Ihr lokales Pfeiffer Vacuum Unternehmen / Partnerunternehmen ein individuelles Angebot mit Ihren Preisen zur Verfügung stellen kann.",
     "textInfoPersonal": "Dieser Preis ist Ihr persönlicher Preis. Er wird auf der Grundlage Ihrer individuellen Preise bzw. Rabattvereinbarungen berechnet. Die Möglichkei, Ihre persönlichen Preise innerhalb unseres E-Commerce-Systems beizubehalte, ist innerhalb der verschiedenen Regionen unseres Pfeiffer Vacuum Vertriebsnetzes unterschiedlich. Für weitere Fragen wenden Sie sich bitte an Ihren lokalen Vertriebskontakt."
   },
+  "priceOnRequest": "Preis auf Anfrage",
   "recommended": {
     "title": "Empfohlenes Zubehör für "
   },
   "showProductDetails": "Produktdetails anzeigen",
+  "help": "Brauchen Sie Hilfe?",
   "login": {
     "title": "Anmelden",
     "account": "Bereits registriert?",
@@ -97,5 +101,29 @@
     "createBenefitSub1": "Pflege von Einkaufslisten",
     "createBenefitSub2": "Pflege Ihrer Benutzerdaten",
     "createBenefitSub3": "Übersicht über Ihre Anfragen"
+  },
+  "userStatus": {
+    "lead": {
+      "priceInfo": {
+        "text": "Bitte {link} um Preise zu sehen",
+        "link": "Firmendaten hinzufügen"
+      },
+      "requestInfo": "Bitte Firmendaten hinzufügen um Anfragen zu senden",
+      "functionalityInfo": "Bitte Kundendaten hinzufügen um diese Funktionalität zu nutzen"
+    },
+    "open": {
+      "priceInfo": {
+        "text": "Bitte warten Sie bis ihr Profil akzeptiert wurde um Preise zu sehen"
+      },
+      "requestInfo": "Bitte warten Sie bis ihr Profil akzeptiert wurde um Anfragen zu senden",
+      "functionalityInfo": "Bitte warten Sie bis ihr Profil akzeptiert wurde um diese Funktion zu nutzen"
+    },
+    "rejected": {
+      "priceInfo": {
+        "text": "Sie dürfen keine Preise sehen"
+      },
+      "requestInfo": "Sie dürfen keine Anfragen senden",
+      "functionalityInfo": "Sie dürfen diese Funktion nicht nutzen"
+    }
   }
 }

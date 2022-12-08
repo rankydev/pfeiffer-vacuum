@@ -29,7 +29,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(row, i) in data" :key="'row-' + i" class="table-view__row">
+      <tr
+        v-for="(row, i) in sortedData"
+        :key="'row-' + i"
+        class="table-view__row"
+      >
         <td
           v-for="(cell, j) in row.entries"
           :key="`row${i}-${j}`"
@@ -56,7 +60,7 @@
 <script>
 import Button from '~/components/atoms/Button/Button'
 import Icon from '~/components/atoms/Icon/Icon'
-import { ref } from '@nuxtjs/composition-api'
+import { ref, toRefs, computed } from '@nuxtjs/composition-api'
 
 export default {
   components: { Button, Icon },
@@ -65,15 +69,17 @@ export default {
       type: Array,
       default: () => [],
     },
-    data: {
+    tableData: {
       type: Array,
       default: () => [],
     },
   },
   emits: ['sorting'],
-  setup(_, { emit }) {
+  setup(props) {
     const sortingStates = ['neutral', 'asc', 'desc']
     const sorting = ref({ id: null, state: 0 })
+
+    const { header, tableData } = toRefs(props)
 
     const changeSorting = (i) => {
       const next =
@@ -81,15 +87,34 @@ export default {
           ? (sorting.value.state + 1) % sortingStates.length
           : 1
       sorting.value = { id: next > 0 ? i : null, state: next }
-      emit('sorting', {
-        id: sorting.value.id,
-        state: sortingStates[sorting.value.state],
-      })
     }
 
-    const isSortable = (e) => !('sortable' in e && !e.sortable)
+    const sortedData = computed(() => {
+      return tableData.value.slice().sort((a, b) => {
+        if (sorting.value.id !== null) {
+          switch (sortingStates[sorting.value.state]) {
+            case 'neutral':
+              return 0
+            case 'asc':
+              return header.value[sorting.value.id].sort(
+                a.entries[sorting.value.id].text,
+                b.entries[sorting.value.id].text
+              )
+            case 'desc':
+              return header.value[sorting.value.id].sort(
+                b.entries[sorting.value.id].text,
+                a.entries[sorting.value.id].text
+              )
+          }
+        }
 
-    return { sorting, sortingStates, changeSorting, isSortable }
+        return 0
+      })
+    })
+
+    const isSortable = (e) => !!e.sort
+
+    return { sorting, sortingStates, changeSorting, isSortable, sortedData }
   },
 }
 </script>

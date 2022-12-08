@@ -1,6 +1,6 @@
 <template>
   <div class="tab-navigation">
-    <div class="tab-navigation__wrapper">
+    <div v-if="!isMobile" class="tab-navigation__wrapper">
       <div class="tab-navigation__desktop">
         <Button
           v-for="(tab, index) in tabs.filter((o) => o.active)"
@@ -24,6 +24,7 @@
       />
     </div>
     <GenericAccordion
+      v-else
       :accordion-entries="mobileAccordionItems"
       level="h3"
       use-tab-styles
@@ -79,7 +80,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { i18n } = useContext()
+    const { i18n, app } = useContext()
+    const { isMobile } = app.$breakpoints
 
     const {
       product,
@@ -198,6 +200,7 @@ export default defineComponent({
       selectTab,
       isDisabled,
       i18n,
+      isMobile,
     }
   },
 })
@@ -241,10 +244,6 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-justify-evenly;
     @apply tw-flex-col;
-
-    @screen md {
-      @apply tw-hidden;
-    }
 
     &__item {
       @apply tw-mt-2;

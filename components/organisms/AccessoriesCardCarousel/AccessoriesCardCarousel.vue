@@ -21,21 +21,43 @@
           >
             {{ entry.type ? entry.type.name : '' }}
           </h3>
-          <AccessoriesCard :product="entry.target" />
+          <AccessoriesCard
+            :product="entry.target"
+            @priceInfoModalIconClick="handlePriceInfoModalIconClick"
+          />
         </div>
       </template>
     </GenericCarousel>
+    <InformationModal
+      :is-open="infoModalVisible"
+      :headline="informationModalHeadline"
+      :text="informationModalText"
+      @closeModal="toggleModal"
+    />
   </div>
 </template>
 
 <script>
 import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import { defineComponent } from '@nuxtjs/composition-api'
+import InformationModal from '~/components/molecules/InformationModal/InformationModal'
+import AccessoriesCard from '~/components/molecules/AccessoriesCard/AccessoriesCard'
+
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'AccessoriesCardCarousel',
-  components: { GenericCarousel, ContentWrapper },
+  components: {
+    GenericCarousel,
+    ContentWrapper,
+    AccessoriesCard,
+    InformationModal,
+  },
   props: {
     /**
      * Headline of the carousel
@@ -59,6 +81,42 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+  },
+  setup() {
+    const { i18n } = useContext()
+    const infoModalVisible = ref(false)
+    const hasCustomerPrice = ref(false)
+    const toggleModal = () => (infoModalVisible.value = !infoModalVisible.value)
+
+    const informationModalHeadline = computed(() => {
+      if (hasCustomerPrice.value)
+        return i18n.t('product.priceInfo.InfoPersonal')
+
+      if (!hasCustomerPrice.value) return i18n.t('product.priceInfo.InfoOnline')
+    })
+
+    const informationModalText = computed(() => {
+      if (hasCustomerPrice.value)
+        return i18n.t('product.priceInfo.textInfoPersonal')
+
+      if (!hasCustomerPrice.value)
+        return `${i18n.t(
+          'product.priceInfo.textInfoOnlineLine1'
+        )}<br/><br/>${i18n.t('product.priceInfo.textInfoOnlineLine2')}`
+    })
+
+    const handlePriceInfoModalIconClick = (e) => {
+      hasCustomerPrice.value = e
+      toggleModal()
+    }
+
+    return {
+      infoModalVisible,
+      toggleModal,
+      informationModalText,
+      informationModalHeadline,
+      handlePriceInfoModalIconClick,
+    }
   },
 })
 </script>

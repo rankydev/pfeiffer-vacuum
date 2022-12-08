@@ -93,15 +93,20 @@
         />
       </div>
     </div>
-    <div v-if="filteredAccessories.length" class="product-accessories__content">
-      <AccessoriesCardCarousel
-        v-for="category in filteredAccessories"
-        :key="category.name + selectedCategory + selectedType + searchQuery"
-        :headline="category.name"
-        :entries="referencesForCategory(category)"
-        class="product-accessories__carousel-element"
-      />
-    </div>
+    <client-only>
+      <div
+        v-if="filteredAccessories.length"
+        class="product-accessories__content"
+      >
+        <AccessoriesCardCarousel
+          v-for="category in filteredAccessories"
+          :key="category.name + selectedCategory + selectedType + searchQuery"
+          :headline="category.name"
+          :entries="referencesForCategory(category)"
+          class="product-accessories__carousel-element"
+        />
+      </div>
+    </client-only>
   </div>
 </template>
 
@@ -288,7 +293,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .product-accessories {
   @apply tw-bg-pv-grey-96;
   @apply tw-w-full;
@@ -331,13 +336,17 @@ export default {
   &__category-filter,
   &__type-filter {
     @apply tw-w-full;
+    @apply tw-pb-2;
 
     @screen md {
       @apply tw-mr-2;
       @apply tw-w-1/3;
       max-width: 33%;
     }
-    @apply tw-pb-2;
+
+    .pv-select__search-helper {
+      @apply tw-h-0;
+    }
   }
 
   &__remove-filters {
@@ -370,6 +379,10 @@ export default {
 
   &__carousel-element {
     @apply tw-mt-5;
+  }
+
+  .vs__dropdown-menu {
+    @apply tw-w-max;
   }
 }
 </style>

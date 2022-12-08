@@ -18,7 +18,7 @@
     <ProductSpareParts v-if="lastTabSelected === 'spareparts'" />
     <!-- Service Tab should not be visible in MVP -->
     <div v-if="false">Service</div>
-    <div v-if="lastTabSelected === 'downloads'"></div>
+    <ProductFiles v-if="lastTabSelected === 'downloads'" />
   </div>
 </template>
 
@@ -29,6 +29,7 @@ import ProductInformation from './ProductInformation/ProductInformation'
 import ProductTechnicalData from './ProductTechnicalData/ProductTechnicalData'
 import Dimensions from './Dimensions/Dimensions'
 import getSortedFeatures from '../partials/getSortedFeatures'
+import ProductFiles from './ProductFiles/ProductFiles'
 import ProductAccessories from './ProductAccessories/ProductAccessories'
 import ProductConsumables from './ProductConsumables/ProductConsumables'
 import ProductSpareParts from './ProductSpareParts/ProductSpareParts'
@@ -38,6 +39,7 @@ export default defineComponent({
     ProductTechnicalData,
     ProductInformation,
     Dimensions,
+    ProductFiles,
     ProductAccessories,
     ProductConsumables,
     ProductSpareParts,

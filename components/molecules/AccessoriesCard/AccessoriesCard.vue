@@ -24,7 +24,7 @@
           <p
             v-if="isPriceVisible"
             class="accessories-card__price-info"
-            @click="infoModalVisible = true"
+            @click="$emit('priceInfoModalIconClick', hasCustomerPrice)"
           >
             {{
               hasCustomerPrice
@@ -39,16 +39,17 @@
       <div>
         <template v-if="loggedIn && !isApprovedUser">
           <i18n
-            :path="`userStatus.${userStatusType}.priceInfo.text`"
+            :path="`product.userStatus.${userStatusType}.priceInfo.text`"
             class="accessories-card__login-link"
             tag="div"
           >
             <template #link>
+              <!-- TODO: add correct route after my-account migration -->
               <nuxt-link
                 :to="localePath('shop-my-account-account-data')"
                 class="login-modal-link"
               >
-                {{ $t(`userStatus.${userStatusType}.priceInfo.link`) }}
+                {{ $t(`product.userStatus.${userStatusType}.priceInfo.link`) }}
               </nuxt-link>
             </template>
           </i18n>
@@ -86,27 +87,6 @@
           />
         </div>
       </div>
-
-      <InformationModal v-if="hasPrice" v-model="infoModalVisible">
-        <div v-if="hasCustomerPrice" class="tw-pb-3">
-          <h2>{{ $t('product.priceInfo.InfoPersonal') }}</h2>
-          <p>{{ $t('product.priceInfo.textInfoPersonal') }}</p>
-          <t-button
-            :to="localePath('shop-contact')"
-            variant="secondary"
-            class="tw-mt-3"
-          >
-            {{ $t('misc.help') }}
-          </t-button>
-        </div>
-        <div v-else class="tw-pb-3">
-          <h2>{{ $t('product.priceInfo.InfoOnline') }}</h2>
-          <p class="tw-pb-3">
-            {{ $t('product.priceInfo.textInfoOnlineLine1') }}
-          </p>
-          <p>{{ $t('product.priceInfo.textInfoOnlineLine2') }}</p>
-        </div>
-      </InformationModal>
     </template>
   </GenericCard>
 </template>
@@ -122,7 +102,6 @@ import { useUserStore } from '~/stores/user'
 import { useOciStore } from '~/stores/oci'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
-import InformationModal from '~/components/molecules/InformationModal/InformationModal'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
@@ -131,7 +110,6 @@ export default defineComponent({
   name: 'AccessoriesCard',
   components: {
     GenericCard,
-    InformationModal,
     Icon,
     PvInput,
   },
@@ -145,7 +123,7 @@ export default defineComponent({
       default: 'hybris',
     },
   },
-  emits: ['updateSort'],
+  emits: ['updateSort', 'priceInfoModalIconClick'],
   setup(props) {
     const { i18n } = useContext()
     const context = useContext()
@@ -156,7 +134,6 @@ export default defineComponent({
     const { imageUrl } = useImageHelper()
 
     const quantity = ref(1)
-    const infoModalVisible = ref(false)
 
     const hasAddToListButton = computed(() => {
       return userStore.isLoggedIn && !ociStore.isOciUser
@@ -212,7 +189,6 @@ export default defineComponent({
       context,
       imageUrl,
       quantity,
-      infoModalVisible,
       hasAddToListButton,
       hasPrice,
       isPriceVisible,

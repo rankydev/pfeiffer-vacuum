@@ -72,15 +72,12 @@ describe('Accordion', () => {
 
       const selector = '.accordion__button:not(.accordion__button--active)'
       const firstButton = wrapper.findAll(selector).at(0)
-      const contentId = `#${firstButton.attributes('aria-controls')}`
-      const content = wrapper.find(contentId)
 
       await firstButton.trigger('click')
 
       expect(firstButton.attributes('class')).toContain(
         'accordion__button--active'
       )
-      expect(content.attributes('style')).toBe('')
     })
 
     test('should close accordion when second user input was tiggered on same element', async () => {
