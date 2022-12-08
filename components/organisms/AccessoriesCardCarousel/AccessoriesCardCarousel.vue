@@ -39,17 +39,24 @@
 <script>
 import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import InformationModal from '~/components/molecules/InformationModal/InformationModal'
+import AccessoriesCard from '~/components/molecules/AccessoriesCard/AccessoriesCard'
+
 import {
   computed,
   defineComponent,
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
-import AccessoriesCard from '~/components/molecules/AccessoriesCard/AccessoriesCard'
 
 export default defineComponent({
   name: 'AccessoriesCardCarousel',
-  components: { GenericCarousel, ContentWrapper, AccessoriesCard },
+  components: {
+    GenericCarousel,
+    ContentWrapper,
+    AccessoriesCard,
+    InformationModal,
+  },
   props: {
     /**
      * Headline of the carousel
