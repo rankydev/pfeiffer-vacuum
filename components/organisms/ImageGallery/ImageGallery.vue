@@ -91,7 +91,12 @@ export default defineComponent({
     const currentImage = ref(0)
     const errorImageUrls = ref([])
     const showSimilarLabel = computed(() => {
-      return images.value[currentImage.value]?.type === 'PRIMARY'
+      return (
+        renderableImages.value[currentImage.value]?.type === 'PRIMARY' &&
+        !errorImageUrls.value.includes(
+          (renderableImages.value[currentImage.value] || {}).src
+        )
+      )
     })
 
     onMounted(async () => {
