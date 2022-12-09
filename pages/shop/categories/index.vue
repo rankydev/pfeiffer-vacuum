@@ -173,7 +173,7 @@ export default defineComponent({
 
   &__sticky-btn {
     @apply tw-flex;
-    background-color: white;
+    @apply tw-bg-pv-white;
 
     @screen md {
       @apply tw-hidden;
