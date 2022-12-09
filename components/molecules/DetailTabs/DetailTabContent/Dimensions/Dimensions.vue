@@ -38,7 +38,6 @@ import { defineComponent, computed } from '@nuxtjs/composition-api'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useProductStore } from '~/stores/product'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
-import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import getSortedFeatures from '../../partials/getSortedFeatures'
 
 export default defineComponent({
@@ -47,7 +46,6 @@ export default defineComponent({
   setup() {
     const { product } = useProductStore()
     const sanitizer = useSanitizer()
-    const { getShopMedia } = useImageHelper()
 
     const dimensions = computed(() => {
       return getSortedFeatures(product, 'Dimension')
@@ -70,7 +68,7 @@ export default defineComponent({
         return null
       }
 
-      return { ...product.dimensionImage, url: getShopMedia(image.url) }
+      return { ...product.dimensionImage }
     })
 
     return {

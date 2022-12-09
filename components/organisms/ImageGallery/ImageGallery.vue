@@ -1,13 +1,16 @@
 <template>
   <div class="image-gallery">
     <div
+      v-if="
+        !errorImageUrls.includes((renderableImages[currentImage] || {}).src)
+      "
       v-touch:swipe.left="nextImage"
       v-touch:swipe.right="prevImage"
       class="image-gallery__container"
     >
       <client-only>
         <zoom-on-hover
-          :img-normal="(images[currentImage] || {}).url"
+          :img-normal="(renderableImages[currentImage] || {}).src"
           :scale="2"
           :disabled="!isDesktop"
           @click.native="showLightBox = true"
@@ -21,6 +24,9 @@
         />
       </client-only>
     </div>
+    <div v-else class="image-gallery__container">
+      <ResponsiveImage aspect-ratio="3:2" fallback-image-icon-size="xxlarge" />
+    </div>
     <span
       class="image-gallery__similar-label"
       :class="{
@@ -30,13 +36,13 @@
     >
     <ImageThumbnails
       v-if="images.length > 1 || showSingleThumbnail"
-      :images="images"
+      :images="renderableImages"
       :current-image="currentImage"
       @update="currentImage = $event"
     />
     <ImageLightbox
       v-model="showLightBox"
-      :images="images"
+      :images="renderableImages"
       :current-image="currentImage"
       @increaseCurr="nextImage"
       @decreaseCurr="prevImage"
@@ -52,15 +58,19 @@ import {
   computed,
   useContext,
   toRefs,
+  onMounted,
 } from '@nuxtjs/composition-api'
 import ImageLightbox from '~/components/molecules/ImageLightbox/ImageLightbox'
 import ImageThumbnails from '~/components/molecules/ImageThumbnails/ImageThumbnails'
+import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 
 export default defineComponent({
   name: 'ImageGallery',
   components: {
     ImageLightbox,
     ImageThumbnails,
+    ResponsiveImage,
   },
   props: {
     images: {
@@ -75,14 +85,46 @@ export default defineComponent({
   setup(props) {
     const { images } = toRefs(props)
     const { app } = useContext()
+    const { getShopMedia } = useImageHelper()
     const isDesktop = app.$breakpoints.isDesktop
-
     const showLightBox = ref(false)
     const currentImage = ref(0)
-
+    const errorImageUrls = ref([])
     const showSimilarLabel = computed(() => {
       return images.value[currentImage.value]?.type === 'PRIMARY'
     })
+
+    onMounted(async () => {
+      // prefetch every image on mount. Put a possible broken image url into an error url array.
+      // this is needed because we want to display a fallback image on error.
+      // ZoomOnHover component cannot use the ResponsiveImage component which wozkd handle this itself
+      if (images.value.length) {
+        for (let index = 0; index < images.value.length; index++) {
+          const image = images.value[index]
+          const imageEl = new Image()
+          const absoluteUrl = getAbsoluteImageUrl(image.url)
+          imageEl.addEventListener('error', () => {
+            errorImageUrls.value.push(absoluteUrl)
+          })
+          imageEl.src = absoluteUrl
+        }
+      }
+    })
+
+    const renderableImages = computed(() => {
+      return images.value.map((item) => {
+        return {
+          ...item,
+          // introduce an already resolved image url as src for zoom on hover
+          // responsive image does not use this and builds its own src with the url property
+          src: getAbsoluteImageUrl(item.url),
+        }
+      })
+    })
+
+    const getAbsoluteImageUrl = (url) => {
+      return getShopMedia(url)
+    }
 
     const nextImage = () => {
       if (currentImage.value < images.value.length - 1) {
@@ -101,6 +143,9 @@ export default defineComponent({
       currentImage,
       showSimilarLabel,
       isDesktop,
+      errorImageUrls,
+      renderableImages,
+      getAbsoluteImageUrl,
       nextImage,
       prevImage,
     }
@@ -136,6 +181,11 @@ export default defineComponent({
     @apply tw-justify-center;
     @apply tw-items-center;
     @apply tw-relative;
+    @apply tw-mb-2;
+    height: 400px;
+  }
+
+  &__fallback-image {
     @apply tw-mb-2;
     height: 400px;
   }

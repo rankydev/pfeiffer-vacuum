@@ -50,6 +50,7 @@ import {
   computed,
   defineComponent,
   useContext,
+  toRefs,
   ref,
 } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon'
@@ -117,6 +118,7 @@ export default defineComponent({
   },
   setup(props) {
     const context = useContext()
+    const { image } = toRefs(props)
 
     const aspectRatioString = computed(() =>
       props.aspectRatio.replace(':', '-')
@@ -136,7 +138,7 @@ export default defineComponent({
 
     let buildImage
 
-    if (!props.image) {
+    if (!image.value) {
       buildImage = buildFallbackImage
     } else {
       switch (props.provider) {
@@ -151,10 +153,13 @@ export default defineComponent({
       }
     }
 
+    const fallbackSrc = image.value?.src || image.value?.url || ''
+
     return {
       aspectRatioString,
       imageLoadingError,
       handleImageError,
+      src: fallbackSrc,
       ...buildImage(props),
     }
   },

@@ -17,7 +17,7 @@
           v-touch:swipe.left="nextImage"
           v-touch:swipe.right="prevImage"
           class="image-lightbox__selected-image"
-          :src="images[currentImage].url"
+          :src="images[currentImage].src"
           :alt="images[currentImage].altText || 'Lightbox Image'"
         />
         <Button

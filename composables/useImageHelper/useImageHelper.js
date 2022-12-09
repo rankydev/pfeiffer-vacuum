@@ -20,6 +20,9 @@ export const useImageHelper = () => {
    * @returns string with media url
    */
   const getShopMedia = (image) => {
+    if (image.startsWith(PATH_SHOP_IMAGES)) {
+      return image
+    }
     return joinURL(PATH_SHOP_IMAGES, image)
   }
 
