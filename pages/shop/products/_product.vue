@@ -82,7 +82,7 @@
                           'tw-bg-pv-yellow tw-text-pv-black':
                             val.selected &&
                             !(attr.code in productStore.selectedAttributes),
-                          'tw-bg-pv-red tw-text-pv-white':
+                          'tw-bg-pv-red-lighter tw-text-pv-white':
                             val.selected &&
                             attr.code in productStore.selectedAttributes,
                         }"
