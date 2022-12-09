@@ -170,5 +170,14 @@ export default defineComponent({
   &__search-result {
     @apply tw-bg-pv-grey-96;
   }
+
+  &__sticky-btn {
+    @apply tw-flex;
+    background-color: white;
+
+    @screen md {
+      @apply tw-hidden;
+    }
+  }
 }
 </style>
