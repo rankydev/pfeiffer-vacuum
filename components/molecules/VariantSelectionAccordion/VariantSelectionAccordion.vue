@@ -1,28 +1,21 @@
 <template>
   <div class="variant-selection-accordion">
-    <div v-for="variant in variants" :key="variant.code">
-      <GenericAccordion
-        :accordion-entries="[
-          {
-            slotName: 'variants',
-            disabled: false,
-            label: variant.name,
-            isActive: false,
-            icon: icon,
-          },
-        ]"
-        expand-icon="edit"
-      >
-        <template #variants>
-          {{ variant.variationValues }}
-        </template>
-      </GenericAccordion>
-    </div>
+    <GenericAccordion :accordion-entries="variantTabItems">
+      <template v-for="item in variantTabItems" #[item.slotName]>
+        <!-- eslint-disable-next-line vue/no-v-for-template-key-on-child -->
+        <div :key="item.slotName">
+          Use this information to display the selection
+          <pre>
+            {{ item.variant }}
+          </pre>
+        </div>
+      </template>
+    </GenericAccordion>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
 import { useProductStore } from '~/stores/product'
 
@@ -35,6 +28,23 @@ export default defineComponent({
 
     const variants = ref(variationMatrix.variationAttributes)
 
+    const variantTabItems = computed(() => {
+      return variants.value.map((variant) => {
+        const hasSomeSelected = variant.variationValues.some(
+          (item) => item.selected
+        )
+
+        return {
+          slotName: variant.name,
+          label: variant.name,
+          disabled: variant.selectable,
+          icon: 'check_circle',
+          expandIcon: hasSomeSelected ? 'edit' : 'edit_off',
+          variant,
+        }
+      })
+    })
+
     const icon = ref('check_circle')
 
     // List of Icon names that have to be handled by the Variant Selection
@@ -43,7 +53,7 @@ export default defineComponent({
     // check_circle
 
     return {
-      variants,
+      variantTabItems,
       icon,
     }
   },

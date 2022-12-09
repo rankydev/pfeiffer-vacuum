@@ -179,7 +179,7 @@ export const variationMatrix = {
               {
                   displayValue: 'RS-485, Remote, Profibus',
                   selectable: true,
-                  selected: false,
+                  selected: true,
                   value: 'RS-485, Remote, Profibus'
               },
               {
