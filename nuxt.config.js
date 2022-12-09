@@ -189,6 +189,7 @@ export default {
       (process.env.STORYBLOK_EXCLUDE_ROUTES || '').split(','),
     linksTransformer: './resolver/linksTransformer',
     resolver: {
+      multilink: './resolver/linkResolver',
       asset: './resolver/assetResolver',
     },
   },
