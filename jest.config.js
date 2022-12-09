@@ -23,6 +23,7 @@ module.exports = {
     // '<rootDir>/pages/**/*.{vue,js}',
     '<rootDir>/plugins/**/*.{vue,js}',
     '<rootDir>/resolver/**/*.{vue,js}',
+    '<rootDir>/server/**/*.{vue,js}',
     '<rootDir>/stores/**/*.{vue,js}',
     '<rootDir>/providers/**/*.{vue,js}',
     '<rootDir>/utils/**/*.{vue,js}',
@@ -34,5 +35,6 @@ module.exports = {
     'schema.js',
     'schema.partial.js',
     'index.js',
+    'constants.js',
   ],
 }
