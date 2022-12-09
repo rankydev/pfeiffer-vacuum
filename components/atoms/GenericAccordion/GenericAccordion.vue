@@ -27,7 +27,13 @@
           <Icon
             class="accordion__icon"
             :size="level"
-            :icon="isActive(idx) ? 'expand_less' : expandIcon"
+            :icon="
+              isActive(idx)
+                ? 'expand_less'
+                : entry.expandIcon
+                ? entry.expandIcon
+                : 'expand_more'
+            "
           />
         </button>
       </component>
@@ -82,13 +88,6 @@ export default defineComponent({
     useTabStyles: {
       type: Boolean,
       default: false,
-    },
-    /**
-     * Icon for expanding the Accordion
-     */
-    expandIcon: {
-      type: String,
-      default: 'expand_more',
     },
   },
   setup(props) {
