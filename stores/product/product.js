@@ -30,6 +30,7 @@ export const useProductStore = defineStore('product', () => {
   //const productSparepartsPrices = ref(null)
   // TODO: add when adding consumables
   //const productConsumablesPrices = ref(null)
+  const productReferences = ref(null)
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -120,6 +121,13 @@ export const useProductStore = defineStore('product', () => {
       params: { fields: 'FULL' },
     })
     price.value = result
+  }
+
+  const getProductReferences = async (id) => {
+    const result = await axios.$get(`${config.PRODUCTS_API}/${id}/references`, {
+      params: { fields: 'FULL' },
+    })
+    productReferences.value = result.references
   }
 
   const getProductAccessories = async () => {
@@ -278,8 +286,8 @@ export const useProductStore = defineStore('product', () => {
   }
 
   const recommendedAccessories = computed(() => {
-    if (product.value && product.value.productReferences) {
-      return product.value.productReferences.filter(
+    if (productReferences.value) {
+      return productReferences.value.filter(
         (o) => o.referenceType === 'RECOMMENDEDACCESSORIES'
       )
     }
@@ -301,7 +309,12 @@ export const useProductStore = defineStore('product', () => {
     // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
     product.value = null
 
-    await Promise.all([loadProduct(id), loadVariationMatrix(id), loadPrice(id)])
+    await Promise.all([
+      loadProduct(id),
+      loadVariationMatrix(id),
+      loadPrice(id),
+      getProductReferences(id),
+    ])
   }
 
   return {
@@ -311,10 +324,11 @@ export const useProductStore = defineStore('product', () => {
     accessoriesGroups,
     breadcrumb,
     metaData,
+    recommendedAccessories,
+    productReferences,
     loadByPath,
     getProducts,
     getProductAccessories,
-    recommendedAccessories,
     getProductReferenceGroupPrices,
   }
 })
