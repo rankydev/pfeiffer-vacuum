@@ -65,6 +65,12 @@ const Template = (args) => ({
       <template #item_3>
         disabled slot
       </template>
+      <template #item_4>
+        Everything could be here
+      </template>
+      <template #item_5>
+        disabled slot
+      </template>
     </GenericAccordion>
   </div>
 `,
