@@ -19,8 +19,6 @@
           :image="images[currentImage]"
           provider="hybris"
           class="image-lightbox__selected-image"
-          :src="images[currentImage].src"
-          :alt="images[currentImage].altText || 'Lightbox Image'"
         />
         <Button
           icon="arrow_forward_ios"
