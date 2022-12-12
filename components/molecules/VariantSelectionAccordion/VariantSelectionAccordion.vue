@@ -37,8 +37,6 @@ export default defineComponent({
           (item) => item.selectable
         )
 
-        console.log(hasSomeSelectable)
-
         return {
           slotName: variant.name,
           label: variant.name,
