@@ -117,20 +117,13 @@ export default defineComponent({
       redirectOnError(productStore.loadByPath)
     }
 
-    // const isMaster = computed(() => {
-    //   return productStore.product?.productType !== 'PRODUCT'
-    // })
-
     const hasVariationMatrix = computed(() => {
       if (!productStore.variationMatrix) {
-        console.log('1')
         return false
       }
       if (!Object.keys(productStore.variationMatrix).length) {
-        console.log('2')
         return false
       }
-      console.log('3')
       return true
     })
 
@@ -204,7 +197,6 @@ export default defineComponent({
       sortedImages,
       recommendedAccessories,
       hasVariationMatrix,
-      // isMaster,
     }
   },
 })
