@@ -102,7 +102,7 @@ export default defineComponent({
     onMounted(async () => {
       // prefetch every image on mount. Put a possible broken image url into an error url array.
       // this is needed because we want to display a fallback image on error.
-      // ZoomOnHover component cannot use the ResponsiveImage component which wozkd handle this itself
+      // ZoomOnHover component cannot use the ResponsiveImage component which would handle this itself
       if (images.value.length) {
         for (let index = 0; index < images.value.length; index++) {
           const image = images.value[index]
