@@ -36,13 +36,13 @@
     >
     <ImageThumbnails
       v-if="images.length > 1 || showSingleThumbnail"
-      :images="renderableImages"
+      :images="images"
       :current-image="currentImage"
       @update="currentImage = $event"
     />
     <ImageLightbox
       v-model="showLightBox"
-      :images="renderableImages"
+      :images="images"
       :current-image="currentImage"
       @increaseCurr="nextImage"
       @decreaseCurr="prevImage"
