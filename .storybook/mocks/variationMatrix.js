@@ -154,13 +154,13 @@ export const variationMatrix = {
           variationValues: [
               {
                   displayValue: 'für TCP 350',
-                  selectable: true,
+                  selectable: false,
                   selected: false,
                   value: 'für TCP 350'
               },
               {
                   displayValue: 'mit TC 110',
-                  selectable: true,
+                  selectable: false,
                   selected: false,
                   value: 'mit TC 110'
               }
