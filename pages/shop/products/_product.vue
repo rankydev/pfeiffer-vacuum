@@ -39,12 +39,9 @@
               />
             </div>
             <div
-              id="variantselection"
-              class="tw-bg-pv-grey-88 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
-              :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-              style="height: 600px"
+              class="tw-bg-pv-grey-96 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
             >
-              Variant Selection
+              <VariantSelectionAccordion />
             </div>
             <div v-if="recommendedAccessories.length" class="tw-w-full">
               <RecommendedAccessories
@@ -85,6 +82,7 @@ import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import { storeToRefs } from 'pinia'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
+import VariantSelectionAccordion from '~/components/molecules/VariantSelectionAccordion/VariantSelectionAccordion'
 
 export default defineComponent({
   name: 'ProductShopPage',
@@ -93,6 +91,7 @@ export default defineComponent({
     DetailTabs,
     ImageGallery,
     RecommendedAccessories,
+    VariantSelectionAccordion,
   },
   setup() {
     const route = useRoute()
