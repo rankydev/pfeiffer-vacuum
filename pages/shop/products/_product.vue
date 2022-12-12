@@ -111,7 +111,7 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const productStore = useProductStore()
-    const { recommendedAccessories } = useProductStore()
+    const { recommendedAccessories } = storeToRefs(productStore)
     const loadProduct = () => {
       productStore.getProductAccessories()
       redirectOnError(productStore.loadByPath)
