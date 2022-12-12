@@ -124,10 +124,16 @@ export const useProductStore = defineStore('product', () => {
   }
 
   const getProductReferences = async (id) => {
+    //reset array before fetching new data
+    productReferences.value = null
+
     const result = await axios.$get(`${config.PRODUCTS_API}/${id}/references`, {
       params: { fields: 'FULL' },
     })
-    productReferences.value = result.references
+
+    if (result?.references?.length) {
+      productReferences.value = result.references
+    }
   }
 
   const getProductAccessories = async () => {
