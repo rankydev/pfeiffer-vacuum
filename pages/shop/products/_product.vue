@@ -39,6 +39,7 @@
               />
             </div>
             <div
+              v-if="hasVariationMatrix"
               class="tw-bg-pv-grey-96 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
             >
               <VariantSelectionAccordion />
@@ -116,6 +117,23 @@ export default defineComponent({
       redirectOnError(productStore.loadByPath)
     }
 
+    // const isMaster = computed(() => {
+    //   return productStore.product?.productType !== 'PRODUCT'
+    // })
+
+    const hasVariationMatrix = computed(() => {
+      if (!productStore.variationMatrix) {
+        console.log('1')
+        return false
+      }
+      if (!Object.keys(productStore.variationMatrix).length) {
+        console.log('2')
+        return false
+      }
+      console.log('3')
+      return true
+    })
+
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)
     watch(route, loadProduct)
@@ -185,6 +203,8 @@ export default defineComponent({
       carouselEntries,
       sortedImages,
       recommendedAccessories,
+      hasVariationMatrix,
+      // isMaster,
     }
   },
 })
