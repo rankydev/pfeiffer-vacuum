@@ -107,7 +107,7 @@ export default defineComponent({
         for (let index = 0; index < images.value.length; index++) {
           const image = images.value[index]
           const imageEl = new Image()
-          const absoluteUrl = getAbsoluteImageUrl(image.url)
+          const absoluteUrl = getShopMedia(image.url)
           imageEl.addEventListener('error', () => {
             errorImageUrls.value.push(absoluteUrl)
           })
@@ -122,14 +122,10 @@ export default defineComponent({
           ...item,
           // introduce an already resolved image url as src for zoom on hover
           // responsive image does not use this and builds its own src with the url property
-          src: getAbsoluteImageUrl(item.url),
+          src: getShopMedia(item.url),
         }
       })
     })
-
-    const getAbsoluteImageUrl = (url) => {
-      return getShopMedia(url)
-    }
 
     const nextImage = () => {
       if (currentImage.value < images.value.length - 1) {
@@ -150,7 +146,6 @@ export default defineComponent({
       isDesktop,
       errorImageUrls,
       renderableImages,
-      getAbsoluteImageUrl,
       nextImage,
       prevImage,
     }
