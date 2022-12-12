@@ -154,11 +154,9 @@ export default defineComponent({
       return product.value.price?.formattedValue || ''
     })
     const userStatusType = computed(() => {
-      return (
-        (userStore.isLeadUser && 'lead') ||
-        (userStore.isOpenUser && 'open') ||
-        (userStore.isRejectedUser && 'rejected')
-      )
+      if (userStore.isLeadUser) return 'lead'
+      if (userStore.isOpenUser) return 'open'
+      if (userStore.isRejectedUser) return 'rejected'
     })
 
     const productName = computed(() => {

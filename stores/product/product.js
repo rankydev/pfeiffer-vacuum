@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import {
   ssrRef,
   ref,
@@ -26,10 +26,8 @@ export const useProductStore = defineStore('product', () => {
   const price = ref(null)
   const accessoriesGroups = ref(null)
   const productAccessoriesPrices = ref(null)
-  // TODO: add whilst adding spareparts
-  //const productSparepartsPrices = ref(null)
-  // TODO: add when adding consumables
-  //const productConsumablesPrices = ref(null)
+  const productSparepartsPrices = ref(null)
+  const productConsumablesPrices = ref(null)
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -122,6 +120,64 @@ export const useProductStore = defineStore('product', () => {
     price.value = result
   }
 
+  const loadProductReferenceGroupsPrices = async () => {
+    const userStore = useUserStore()
+    const { isApprovedUser, isLoggedIn, isLoginProcess, currentUser } =
+      storeToRefs(userStore)
+
+    // TODO isApprovedUser returns false so logic beneath doesn't work
+    // don't load product prices if the user is not approved yet
+    if (!isApprovedUser.value) return
+
+    if (
+      !productReferencesSpareParts.value.length &&
+      !productReferencesConsumables.values.length
+    )
+      return
+
+    productConsumablesPrices.value = []
+    productSparepartsPrices.value = []
+
+    if (productReferencesConsumables.value.length) {
+      const resultConsumablesPrices = await getProductReferenceGroupPrices(
+        'CONSUMABLE'
+      )
+
+      if (resultConsumablesPrices.length && !resultConsumablesPrices.error) {
+        productConsumablesPrices.value = resultConsumablesPrices
+
+        addPricesToProductReferenceGroupItems(
+          productConsumablesPrices.value,
+          productReferencesConsumables.value
+        )
+      } else {
+        logger.error(
+          `Error when fetching product consumables. Returning empty array.`,
+          resultConsumablesPrices.error ? resultConsumablesPrices.error : ''
+        )
+      }
+    }
+
+    if (productReferencesSpareParts.value.length) {
+      const resultSparepartsPrices = await getProductReferenceGroupPrices(
+        'SPAREPART'
+      )
+
+      if (resultSparepartsPrices.length && !resultSparepartsPrices.error) {
+        productSparepartsPrices.value = resultSparepartsPrices
+        addPricesToProductReferenceGroupItems(
+          productSparepartsPrices.value,
+          productReferencesSpareParts.value
+        )
+      } else {
+        logger.error(
+          `Error when fetching product spareparts. Returning empty array.`,
+          resultSparepartsPrices.error ? resultSparepartsPrices.error : ''
+        )
+      }
+    }
+  }
+
   const hydrateProductAccessories = async () => {
     const id = route.value.params.product || ''
 
@@ -186,11 +242,10 @@ export const useProductStore = defineStore('product', () => {
   })
 
   /*
-   * TODO: uncomment when adding spareparts/ consumables
    * add prices to reference group products
    * can be used for the following reference groups:
-   * 'ACCESSORIES', 'CONSUMABLE', 'SPAREPART'
-
+   * 'CONSUMABLE', 'SPAREPART'
+   */
   const addPricesToProductReferenceGroupItems = (
     pricesArr,
     referenceGroupItems
@@ -203,12 +258,12 @@ export const useProductStore = defineStore('product', () => {
       })
     }
   }
-   */
 
   /**
    * Function to add prices to the items of the accessories groups items
    * IMPORTANT: this function works for the accessoriesGroups only!
    */
+
   const addPricesToAccessoriesGroupsItems = () => {
     if (
       productAccessoriesPrices.value.length &&
@@ -318,7 +373,12 @@ export const useProductStore = defineStore('product', () => {
     // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
     product.value = null
 
-    await Promise.all([loadProduct(id), loadVariationMatrix(id), loadPrice(id)])
+    await Promise.all([
+      loadProduct(id),
+      loadVariationMatrix(id),
+      loadPrice(id),
+      loadProductReferenceGroupsPrices(),
+    ])
   }
 
   return {
@@ -335,5 +395,7 @@ export const useProductStore = defineStore('product', () => {
     hydrateProductAccessories,
     productReferencesSpareParts,
     productReferencesConsumables,
+    productConsumablesPrices,
+    productSparepartsPrices,
   }
 })
