@@ -41,12 +41,6 @@
             <div
               class="tw-bg-pv-grey-96 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
             >
-              <!-- <div
-              id="variantselection"
-              class="tw-bg-pv-grey-88 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
-              :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-              style="height: 600px"
-            > -->
               <VariantSelectionAccordion />
             </div>
             <div v-if="recommendedAccessories.length" class="tw-w-full">
