@@ -33,24 +33,24 @@ export default defineComponent({
         const hasSomeSelected = variant.variationValues.some(
           (item) => item.selected
         )
+        const hasSomeSelectable = variant.variationValues.some(
+          (item) => item.selectable
+        )
+
+        console.log(hasSomeSelectable)
 
         return {
           slotName: variant.name,
           label: variant.name,
-          disabled: variant.selectable,
-          icon: 'check_circle',
-          expandIcon: hasSomeSelected ? 'edit' : 'edit_off',
+          disabled: !hasSomeSelectable,
+          icon: hasSomeSelected ? 'check_circle' : null,
+          expandIcon: hasSomeSelectable ? 'edit' : 'edit_off',
           variant,
         }
       })
     })
 
     const icon = ref('check_circle')
-
-    // List of Icon names that have to be handled by the Variant Selection
-    // edit
-    // edit_off
-    // check_circle
 
     return {
       variantTabItems,
