@@ -76,7 +76,6 @@ import {
   onServerPrefetch,
   useContext,
   computed,
-  ref,
 } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/product'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
@@ -120,8 +119,6 @@ export default defineComponent({
       productStore.getProductAccessories()
       redirectOnError(productStore.loadByPath)
     }
-
-    const productType = ref(productStore.product?.productType)
 
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)
@@ -185,7 +182,6 @@ export default defineComponent({
       carouselEntries,
       sortedImages,
       recommendedAccessories,
-      productType,
     }
   },
 })

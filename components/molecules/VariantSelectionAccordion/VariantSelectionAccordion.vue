@@ -48,11 +48,8 @@ export default defineComponent({
       })
     })
 
-    const icon = ref('check_circle')
-
     return {
       variantTabItems,
-      icon,
     }
   },
 })
