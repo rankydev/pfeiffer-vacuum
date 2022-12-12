@@ -59,8 +59,8 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .variant-selection-accordion {
-  margin-left: 16px;
-  margin-right: 16px;
+  @apply tw-ml-4;
+  @apply tw-mr-4;
   @apply tw-bg-pv-grey-96;
 }
 </style>
