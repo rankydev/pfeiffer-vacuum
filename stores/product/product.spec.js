@@ -251,7 +251,7 @@ describe('Product store', () => {
       await productStore.loadByPath()
       await productStore.loadByPath()
 
-      expect(mockGet).toBeCalledTimes(3)
+      expect(mockGet).toBeCalledTimes(4)
     })
   })
 })
