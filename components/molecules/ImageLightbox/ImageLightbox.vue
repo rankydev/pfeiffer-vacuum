@@ -13,9 +13,11 @@
           shape="filled"
           @click.native="prevImage"
         />
-        <img
+        <ResponsiveImage
           v-touch:swipe.left="nextImage"
           v-touch:swipe.right="prevImage"
+          :image="images[currentImage]"
+          provider="hybris"
           class="image-lightbox__selected-image"
           :src="images[currentImage].src"
           :alt="images[currentImage].altText || 'Lightbox Image'"
@@ -41,12 +43,14 @@
 import { defineComponent, toRefs } from '@nuxtjs/composition-api'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
 import ImageThumbnails from '~/components/molecules/ImageThumbnails/ImageThumbnails'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 
 export default defineComponent({
   name: 'ImageLightbox',
   components: {
     GenericModal,
     ImageThumbnails,
+    ResponsiveImage,
   },
   props: {
     value: {
@@ -111,7 +115,7 @@ export default defineComponent({
     }
   }
 
-  &__selected-image {
+  &__selected-image img {
     @apply tw-w-full;
     @apply tw-h-full;
     @apply tw-object-contain;
