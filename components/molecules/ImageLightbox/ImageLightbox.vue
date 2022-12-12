@@ -14,10 +14,12 @@
           @click.native="prevImage"
         />
         <ResponsiveImage
+          :key="currentImage"
           v-touch:swipe.left="nextImage"
           v-touch:swipe.right="prevImage"
           :image="images[currentImage]"
           provider="hybris"
+          fallback-image-icon-size="xxlarge"
           class="image-lightbox__selected-image"
         />
         <Button
