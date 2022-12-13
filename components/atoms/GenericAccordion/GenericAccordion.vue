@@ -20,17 +20,26 @@
           :disabled="entry.disabled"
           @click="toggleActive(idx)"
         >
-          <span class="accordion__label">{{ entry.label }}</span>
+          <div class="tw-flex">
+            <Icon v-if="entry.icon" class="tw-mr-2" :icon="entry.icon" />
+            <span class="accordion__label">{{ entry.label }}</span>
+          </div>
           <Icon
             class="accordion__icon"
             :size="level"
-            :icon="isActive(idx) ? 'expand_less' : 'expand_more'"
+            :icon="
+              isActive(idx)
+                ? 'expand_less'
+                : entry.expandIcon
+                ? entry.expandIcon
+                : 'expand_more'
+            "
           />
         </button>
       </component>
       <AnimatedCollapse speed="medium">
         <div
-          v-show="isActive(idx)"
+          v-if="isActive(idx)"
           :id="`accordion-${idx}`"
           class="accordion__content"
         >

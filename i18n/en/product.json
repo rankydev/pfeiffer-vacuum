@@ -1,6 +1,5 @@
 {
   "variantsAvailable": "no variants available | {count} variant available | {count} variants available",
-  "placeholderImage": "missing_product_EN.jpg",
   "similarImage": "Image similar",
   "productInformation": "Product Information",
   "technicalData": "Technical Data",
@@ -22,14 +21,18 @@
     "language": "Language",
     "date": "Date",
     "size": "Size",
-    "category": "Category"
+    "category": "Category",
+    "results": "{count} of {total} results",
+    "filter": "Filter"
   },
+  "download": "Download",
   "noDownloads": "No downloads available",
   "searchInAccessories": "Search in Accessories...",
   "type": "Type",
   "removeFilter": "Remove filters",
   "removeSelection": "Remove",
   "removeAll": "Remove all",
+  "priceOnRequest": "Price on request",
   "priceInfo": {
     "InfoOnline": "Online Price",
     "InfoPersonal": "Your personal price",
@@ -41,6 +44,7 @@
     "title": "Recommended Accessories for "
   },
   "showProductDetails": "Show product details",
+  "help": "Need any help?",
   "login": {
     "title": "Sign in",
     "account": "Already have an account?",
@@ -97,5 +101,29 @@
     "createBenefitSub1": "Create and maintain shopping lists",
     "createBenefitSub2": "Maintain your user data",
     "createBenefitSub3": "View the request history"
+  },
+  "userStatus": {
+    "lead": {
+      "priceInfo": {
+        "text": "Please add {link} to see prices",
+        "link": "company data"
+      },
+      "requestInfo": "Please add company data to send request",
+      "functionalityInfo": "Please add company data to use this functionality"
+    },
+    "open": {
+      "priceInfo": {
+        "text": "Please wait for approval to see prices"
+      },
+      "requestInfo": "Please wait for approval to send request",
+      "functionalityInfo": "Please wait for approval to use this functionality"
+    },
+    "rejected": {
+      "priceInfo": {
+        "text": "You are not permitted to see prices"
+      },
+      "requestInfo": "You are not permitted to send requests",
+      "functionalityInfo": "Sorry, you are not permitted to use this functionality"
+    }
   }
 }

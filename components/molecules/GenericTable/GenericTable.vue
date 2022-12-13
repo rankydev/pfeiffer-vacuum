@@ -2,17 +2,14 @@
   <div class="generic-table">
     <div v-if="isMobile" class="generic-table__card-wrapper">
       <TableCard
-        v-for="(row, i) in data"
+        v-for="(row, i) in tableData"
         :key="`row${i}`"
-        :data="row"
+        :table-data="row"
         v-bind="{ primary, secondary }"
       />
     </div>
     <template v-else>
-      <TableView
-        v-bind="{ header, data }"
-        @sorting="$emit('sortingChanged', $event)"
-      />
+      <TableView v-bind="{ header, tableData }" />
     </template>
   </div>
 </template>
@@ -28,7 +25,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    data: {
+    tableData: {
       type: Array,
       default: () => [],
     },
@@ -47,7 +44,6 @@ export default {
       }),
     },
   },
-  emits: ['sortingChanged'],
   setup() {
     const { app } = useContext()
     const { isMobile } = app.$breakpoints

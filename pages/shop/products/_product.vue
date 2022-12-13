@@ -31,7 +31,12 @@
             <div class="tw--my-4" style="width: 100%; height: 0px">&nbsp;</div>
 
             <div class="product-page__image-gallery">
-              <ImageGallery :images="sortedImages" />
+              <ImageGallery v-if="sortedImages.length" :images="sortedImages" />
+              <ResponsiveImage
+                v-else
+                aspect-ratio="3:2"
+                fallback-image-icon-size="xxlarge"
+              />
             </div>
             <VariantSelection class="tw-w-1/2" />
             <div v-if="carouselEntries.length" class="tw-w-full">
@@ -39,7 +44,6 @@
                 :headline="
                   $t('product.recommended.title') + productStore.product.name
                 "
-                :entries="carouselEntries"
               />
             </div>
             <DetailTabs
@@ -64,6 +68,7 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/product'
+import { useUserStore } from '~/stores/user'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
@@ -100,14 +105,32 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const productStore = useProductStore()
+    const { recommendedAccessories } = useProductStore()
     const loadProduct = () => {
       productStore.getProductAccessories()
       redirectOnError(productStore.loadByPath)
     }
 
+    const hasVariationMatrix = computed(() => {
+      if (!productStore.variationMatrix) {
+        return false
+      }
+      if (!Object.keys(productStore.variationMatrix).length) {
+        return false
+      }
+      return true
+    })
+
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)
     watch(route, loadProduct)
+
+    /**
+     * react to changing user login status
+     */
+    const userStore = useUserStore()
+    const { isLoggedIn } = storeToRefs(userStore)
+    watch(isLoggedIn, loadProduct)
 
     const carouselEntries = computed(() => {
       // TODO: return recommended accessories
@@ -121,7 +144,7 @@ export default defineComponent({
     const path = context.app.localePath('shop-products-product')
     const { slug, fallbackSlug, language } = buildSlugs(path)
 
-    const { getAssetImage, getShopMedia } = useImageHelper()
+    const { getShopMedia } = useImageHelper()
 
     const sortedImages = computed(() => {
       let images = []
@@ -154,10 +177,6 @@ export default defineComponent({
             altText: image.altText,
           })
         }
-      } else {
-        result.push({
-          url: getAssetImage(context.app.i18n.t('product.placeholderImage')),
-        })
       }
 
       return result
@@ -169,8 +188,9 @@ export default defineComponent({
       language,
       productStore,
       carouselEntries,
-
       sortedImages,
+      recommendedAccessories,
+      hasVariationMatrix,
     }
   },
 })

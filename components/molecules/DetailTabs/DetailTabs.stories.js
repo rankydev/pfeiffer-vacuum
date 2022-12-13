@@ -1,5 +1,5 @@
 import DetailTabs from './DetailTabs'
-import { product } from '~/components/molecules/DetailTabs/DetailTabs.stories.content'
+import { product } from '~/.storybook/mocks/product'
 import { useProductStore } from '~/stores/product'
 
 const argTypes = {
