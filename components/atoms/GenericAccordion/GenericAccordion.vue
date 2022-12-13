@@ -122,7 +122,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .accordion {
   $root: &;
 
@@ -192,16 +192,6 @@ export default defineComponent({
 
   &__content {
     @apply tw-overflow-hidden;
-
-    .paragraph-section,
-    .image-with-description,
-    .button {
-      @apply tw-mb-4;
-
-      @screen md {
-        @apply tw-mb-6;
-      }
-    }
   }
 
   &--tab-styles {

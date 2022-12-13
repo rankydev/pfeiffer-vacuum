@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid'
 const accordionEntry = (isActive = false) => ({
   _uid: nanoid(),
   label: 'Lorem Ipsum',
-  items: [richtext.content],
+  items: [richtext.content, richtext.content],
   isActive,
   _editable: '',
 })
@@ -13,7 +13,7 @@ const accordionEntry = (isActive = false) => ({
 const accordionEntryImage = (isActive = false) => ({
   _uid: nanoid(),
   label: 'Lorem Ipsum',
-  items: [imageWithDescriptionContent],
+  items: [imageWithDescriptionContent, richtext.content],
   isActive,
   _editable: '',
 })
