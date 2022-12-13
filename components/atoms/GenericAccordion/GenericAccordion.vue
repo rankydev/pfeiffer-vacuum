@@ -24,7 +24,9 @@
             <Icon v-if="entry.icon" class="tw-mr-2" :icon="entry.icon" />
             <span class="accordion__label">{{ entry.label }}</span>
           </div>
+          <LoadingSpinner v-if="loading" />
           <Icon
+            v-else
             class="accordion__icon"
             :size="level"
             :icon="
@@ -52,8 +54,12 @@
 
 <script>
 import { defineComponent, ref } from '@nuxtjs/composition-api'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 
 export default defineComponent({
+  components: {
+    LoadingSpinner,
+  },
   props: {
     /**
      * List of accordion elements
@@ -86,6 +92,10 @@ export default defineComponent({
      * Use the tab layout instead of the standard accordion layout
      */
     useTabStyles: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
       type: Boolean,
       default: false,
     },
