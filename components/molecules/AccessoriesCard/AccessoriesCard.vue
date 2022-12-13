@@ -99,7 +99,6 @@ import {
   toRefs,
 } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
-// import { useOciStore } from '~/stores/oci'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
@@ -128,7 +127,6 @@ export default defineComponent({
     const { i18n } = useContext()
     const context = useContext()
     const userStore = useUserStore()
-    // const ociStore = useOciStore()
     const sanitizer = useSanitizer()
     const { product } = toRefs(props)
     const { imageUrl } = useImageHelper()
