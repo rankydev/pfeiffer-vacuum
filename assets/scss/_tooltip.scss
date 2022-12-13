@@ -1,0 +1,114 @@
+// Base Styling from: https://floating-vue.starpad.dev/legacy/v2/#sass-less
+.tooltip {
+  display: block !important;
+  z-index: 10000;
+
+  .tooltip-inner {
+    @apply tw-bg-pv-red;
+    @apply tw-font-bold;
+    @apply tw-text-pv-white;
+    @apply tw-rounded-md;
+    @apply tw-max-w-xs;
+    @apply tw-px-3;
+    @apply tw-py-2;
+  }
+
+  $arrow-size: 10px;
+
+  .tooltip-arrow {
+    @apply tw-w-0;
+    @apply tw-h-0;
+    @apply tw-border-solid;
+    @apply tw-absolute;
+    @apply tw-border-pv-red;
+    @apply tw-z-10;
+    margin: calc($arrow-size / 2);
+  }
+
+  &[x-placement="top"] {
+    margin-bottom: $arrow-size;
+
+    .tooltip-arrow {
+      border-width: $arrow-size $arrow-size 0;
+      border-left-color: transparent !important;
+      border-right-color: transparent !important;
+      border-bottom-color: transparent !important;
+      bottom: -$arrow-size;
+      left: calc(50% - $arrow-size);
+      @apply tw-my-0;
+    }
+  }
+
+  &[x-placement="top-end"] {
+    margin-bottom: $arrow-size;
+
+    .tooltip-inner {
+      border-bottom-right-radius: 0;
+    }
+
+    .tooltip-arrow {
+      border-left-color: transparent !important;
+      border-top-color: transparent !important;
+      border-bottom-color: transparent !important;
+      border-width: 0 $arrow-size $arrow-size 0;
+      bottom: -$arrow-size;
+      left: auto !important;
+      right: calc($arrow-size / 2 * -1) !important;
+      @apply tw-my-0;
+    }
+  }
+
+  &[x-placement^="bottom"] {
+    margin-top: $arrow-size;
+
+    .tooltip-arrow {
+      border-width: 0 $arrow-size $arrow-size;
+      border-left-color: transparent !important;
+      border-right-color: transparent !important;
+      border-top-color: transparent !important;
+      top: -$arrow-size;
+      left: calc(50% - $arrow-size);
+      @apply tw-my-0;
+    }
+  }
+
+  &[x-placement^="right"] {
+    margin-left: $arrow-size;
+
+    .tooltip-arrow {
+      border-width: $arrow-size $arrow-size $arrow-size 0;
+      border-left-color: transparent !important;
+      border-top-color: transparent !important;
+      border-bottom-color: transparent !important;
+      left: -$arrow-size;
+      top: calc(50% - $arrow-size);
+      @apply tw-mx-0;
+    }
+  }
+
+  &[x-placement^="left"] {
+    margin-right: $arrow-size;
+
+    .tooltip-arrow {
+      border-width: $arrow-size 0 $arrow-size $arrow-size;
+      border-top-color: transparent !important;
+      border-right-color: transparent !important;
+      border-bottom-color: transparent !important;
+      right: -$arrow-size;
+      top: calc(50% - $arrow-size);
+      @apply tw-mx-0;
+    }
+  }
+
+  &[aria-hidden='true'] {
+    @apply tw-invisible;
+    @apply tw-opacity-0;
+    transition: opacity .15s, visibility .15s;
+  }
+
+  &[aria-hidden='false'] {
+    @apply tw-visible;
+    @apply tw-opacity-100;
+    transition: opacity .15s;
+  }
+}

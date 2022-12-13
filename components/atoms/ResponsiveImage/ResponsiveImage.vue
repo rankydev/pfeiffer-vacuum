@@ -1,55 +1,62 @@
 <template>
-  <div>
-    <picture
-      v-if="src"
-      class="responsive-image"
-      :class="{ 'responsive-image--corners-rounded': rounded }"
-    >
-      <source
-        v-for="webpSource in webpSources"
-        :key="'webp_' + webpSource.key"
-        :media="webpSource.media"
-        :srcset="webpSource.srcset"
-        type="image/webp"
-      />
-
-      <source
-        v-for="pngSource in pngSources"
-        :key="'png_' + pngSource.key"
-        :media="pngSource.media"
-        :srcset="pngSource.srcset"
-      />
-
-      <NuxtImg
-        :src="src"
-        :modifiers="modifiers"
-        :alt="alt"
-        :title="title"
-        :provider="provider"
-        :loading="lazy ? 'lazy' : undefined"
-        :class="`responsive-image__${aspectRatioString}`"
-      />
-      <div v-if="withGradient" class="responsive-image__gradient-overlay"></div>
-    </picture>
-
-    <img
-      v-else
-      :class="[
-        'responsive-image__placeholder',
-        `responsive-image__${aspectRatioString}`,
-      ]"
-      :src="fallbackImageUrl"
+  <picture
+    v-if="src && !imageLoadingError"
+    class="responsive-image"
+    :class="{ 'responsive-image--corners-rounded': rounded }"
+  >
+    <source
+      v-for="webpSource in webpSources"
+      :key="'webp_' + webpSource.key"
+      :media="webpSource.media"
+      :srcset="webpSource.srcset"
+      type="image/webp"
     />
+
+    <source
+      v-for="pngSource in pngSources"
+      :key="'png_' + pngSource.key"
+      :media="pngSource.media"
+      :srcset="pngSource.srcset"
+    />
+
+    <NuxtImg
+      :src="src"
+      :modifiers="modifiers"
+      :alt="alt"
+      :title="title"
+      :provider="provider"
+      :loading="lazy ? 'lazy' : undefined"
+      :class="`responsive-image__${aspectRatioString}`"
+      @error="handleImageError"
+    />
+    <div v-if="withGradient" class="responsive-image__gradient-overlay"></div>
+  </picture>
+
+  <div
+    v-else
+    :class="[
+      'responsive-image__placeholder',
+      `responsive-image__${aspectRatioString}`,
+    ]"
+  >
+    <Icon icon="image_not_supported" :size="fallbackImageIconSize" />
   </div>
 </template>
 
 <script>
 import { useHybrisProvider } from './provider/hybrisProvider'
 import { useStoryblokProvider } from './provider/storyblokProvider'
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
-import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
+import {
+  computed,
+  defineComponent,
+  useContext,
+  ref,
+  watch,
+} from '@nuxtjs/composition-api'
+import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
+  components: { Icon },
   props: {
     /**
      * Image object containing source and alt text of the image
@@ -103,6 +110,11 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    fallbackImageIconSize: {
+      type: String,
+      default: 'xlarge',
+      validator: (val) => ['xlarge', 'xxlarge'].includes(val),
+    },
   },
   setup(props) {
     const context = useContext()
@@ -110,21 +122,23 @@ export default defineComponent({
     const aspectRatioString = computed(() =>
       props.aspectRatio.replace(':', '-')
     )
-    const { getAssetImage } = useImageHelper()
-    const buildFallbackImageUrl = () => {
+
+    const buildFallbackImage = () => {
       return {
         src: null,
       }
     }
 
-    const fallbackImageUrl = getAssetImage(
-      context.app.i18n.t('product.placeholderImage')
-    )
+    const imageLoadingError = ref(false)
+
+    const handleImageError = () => {
+      imageLoadingError.value = true
+    }
 
     let buildImage
 
     if (!props.image) {
-      buildImage = buildFallbackImageUrl
+      buildImage = buildFallbackImage
     } else {
       switch (props.provider) {
         case 'storyblok':
@@ -138,9 +152,17 @@ export default defineComponent({
       }
     }
 
+    watch(
+      () => props.image,
+      () => {
+        imageLoadingError.value = false
+      }
+    )
+
     return {
       aspectRatioString,
-      fallbackImageUrl,
+      imageLoadingError,
+      handleImageError,
       ...buildImage(props),
     }
   },
@@ -209,10 +231,12 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-items-center;
     @apply tw-justify-center;
+    @apply tw-bg-pv-grey-96;
     @apply tw-max-w-full;
+    @apply tw-h-full;
 
     span {
-      @apply tw-text-pv-grey-64;
+      @apply tw-text-pv-grey-88;
     }
   }
 

@@ -10,12 +10,14 @@
         <Richtext class="information-modal__text" :richtext="text" />
       </div>
       <div>
-        <Button
-          class="information-modal__btn"
-          variant="secondary"
-          label="Need any help?"
-          shape="outlined"
-        ></Button>
+        <NuxtLink :to="localePath('/contact/')">
+          <Button
+            class="information-modal__btn"
+            variant="secondary"
+            :label="$t('product.help')"
+            shape="outlined"
+          ></Button
+        ></NuxtLink>
       </div>
     </div>
   </GenericModal>
@@ -53,6 +55,10 @@ export default defineComponent({
 
 <style lang="scss">
 .information-modal {
+  .modal__box {
+    @apply tw-max-w-3xl;
+  }
+
   &__content {
     @apply tw-flex;
     @apply tw-flex-col;

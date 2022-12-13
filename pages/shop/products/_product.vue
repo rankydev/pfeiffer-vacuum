@@ -31,22 +31,24 @@
             <div class="tw--my-4" style="width: 100%; height: 0px">&nbsp;</div>
 
             <div class="product-page__image-gallery">
-              <ImageGallery :images="sortedImages" />
+              <ImageGallery v-if="sortedImages.length" :images="sortedImages" />
+              <ResponsiveImage
+                v-else
+                aspect-ratio="3:2"
+                fallback-image-icon-size="xxlarge"
+              />
             </div>
             <div
-              id="variantselection"
-              class="tw-bg-pv-grey-88 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
-              :class="'tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-5xl tw-text-center'"
-              style="height: 600px"
+              v-if="hasVariationMatrix"
+              class="tw-bg-pv-grey-96 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
             >
-              Variant Selection
+              <VariantSelectionAccordion />
             </div>
-            <div v-if="carouselEntries.length" class="tw-w-full">
-              <AccessoriesCardCarousel
+            <div v-if="recommendedAccessories.length" class="tw-w-full">
+              <RecommendedAccessories
                 :headline="
                   $t('product.recommended.title') + productStore.product.name
                 "
-                :entries="carouselEntries"
               />
             </div>
             <DetailTabs
@@ -71,18 +73,26 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/product'
+import { useUserStore } from '~/stores/user'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import Page from '~/components/templates/Page/Page'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
-import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
-import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
+import { storeToRefs } from 'pinia'
+import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
+import VariantSelectionAccordion from '~/components/molecules/VariantSelectionAccordion/VariantSelectionAccordion'
 
 export default defineComponent({
   name: 'ProductShopPage',
-  components: { Page, DetailTabs, ImageGallery, AccessoriesCardCarousel },
+  components: {
+    Page,
+    DetailTabs,
+    ImageGallery,
+    RecommendedAccessories,
+    VariantSelectionAccordion,
+  },
   setup() {
     const route = useRoute()
     const context = useContext()
@@ -100,14 +110,32 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const productStore = useProductStore()
+    const { recommendedAccessories } = useProductStore()
     const loadProduct = () => {
       productStore.getProductAccessories()
       redirectOnError(productStore.loadByPath)
     }
 
+    const hasVariationMatrix = computed(() => {
+      if (!productStore.variationMatrix) {
+        return false
+      }
+      if (!Object.keys(productStore.variationMatrix).length) {
+        return false
+      }
+      return true
+    })
+
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)
     watch(route, loadProduct)
+
+    /**
+     * react to changing user login status
+     */
+    const userStore = useUserStore()
+    const { isLoggedIn } = storeToRefs(userStore)
+    watch(isLoggedIn, loadProduct)
 
     const carouselEntries = computed(() => {
       // TODO: return recommended accessories
@@ -120,8 +148,6 @@ export default defineComponent({
     const { buildSlugs } = useStoryblokSlugBuilder({ root: context })
     const path = context.app.localePath('shop-products-product')
     const { slug, fallbackSlug, language } = buildSlugs(path)
-
-    const { getAssetImage, getShopMedia } = useImageHelper()
 
     const sortedImages = computed(() => {
       let images = []
@@ -150,14 +176,10 @@ export default defineComponent({
         for (const image of images) {
           result.push({
             type: image.imageType,
-            url: getShopMedia(image.url),
+            url: image.url,
             altText: image.altText,
           })
         }
-      } else {
-        result.push({
-          url: getAssetImage(context.app.i18n.t('product.placeholderImage')),
-        })
       }
 
       return result
@@ -169,8 +191,9 @@ export default defineComponent({
       language,
       productStore,
       carouselEntries,
-
       sortedImages,
+      recommendedAccessories,
+      hasVariationMatrix,
     }
   },
 })
