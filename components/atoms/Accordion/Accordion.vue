@@ -3,6 +3,7 @@
     :accordion-entries="mappedAccordionEntries"
     :level="level"
     :multiple="multiple"
+    class="accordion-cms-content"
   >
     <template
       v-for="accordionItem in mappedAccordionEntries"
@@ -68,3 +69,17 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.accordion-cms-content {
+  .paragraph-section,
+  .image-with-description,
+  .button {
+    @apply tw-mb-4;
+
+    @screen md {
+      @apply tw-mb-6;
+    }
+  }
+}
+</style>

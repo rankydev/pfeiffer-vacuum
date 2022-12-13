@@ -10,9 +10,10 @@
         }"
         @click="$emit('update', index)"
       >
-        <img
-          :src="image.url"
-          :alt="image.altText || 'Slide Image'"
+        <ResponsiveImage
+          :image="image"
+          provider="hybris"
+          aspect-ratio="1:1"
           class="image-thumbnails__image"
         />
       </div>
@@ -22,9 +23,13 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 
 export default defineComponent({
   name: 'ImageThumbnail',
+  components: {
+    ResponsiveImage,
+  },
   props: {
     images: {
       type: Array,
@@ -87,6 +92,11 @@ export default defineComponent({
 
   &__image {
     @apply tw-invisible;
+
+    img {
+      @apply tw-object-contain;
+    }
+
     @screen md {
       @apply tw-visible;
       @apply tw-max-h-12;

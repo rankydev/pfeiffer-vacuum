@@ -300,6 +300,8 @@ export default {
 
   &__modal {
     @apply tw-block;
+    @apply tw-mb-4;
+
     @screen md {
       @apply tw-hidden;
     }

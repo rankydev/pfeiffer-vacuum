@@ -52,6 +52,7 @@ export default {
   @apply tw-gap-x-8;
   @apply tw-pt-6;
   @apply tw-list-none;
+  @apply tw-pb-4;
 
   @screen md {
     @apply tw-pt-8;
