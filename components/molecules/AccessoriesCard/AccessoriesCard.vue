@@ -136,9 +136,9 @@ export default defineComponent({
     const quantity = ref(1)
 
     const hasAddToListButton = computed(() => {
-      // TODO: this will not work yet. ociStore.isOciUser is a function and not a computed or static value
+      // TODO: Once OCI is implemented extend this computed again
       // return userStore.isLoggedIn && !ociStore.isOciUser
-      return true
+      return userStore.isLoggedIn
     })
     const hasPrice = computed(() => {
       return !!product.value.price
