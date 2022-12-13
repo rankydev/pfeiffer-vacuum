@@ -80,7 +80,6 @@ import { useErrorHandler } from '~/composables/useErrorHandler'
 import Page from '~/components/templates/Page/Page'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
-import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import { storeToRefs } from 'pinia'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
 import VariantSelectionAccordion from '~/components/molecules/VariantSelectionAccordion/VariantSelectionAccordion'
@@ -150,8 +149,6 @@ export default defineComponent({
     const path = context.app.localePath('shop-products-product')
     const { slug, fallbackSlug, language } = buildSlugs(path)
 
-    const { getShopMedia } = useImageHelper()
-
     const sortedImages = computed(() => {
       let images = []
       const imgArr = productStore.product?.images
@@ -179,7 +176,7 @@ export default defineComponent({
         for (const image of images) {
           result.push({
             type: image.imageType,
-            url: getShopMedia(image.url),
+            url: image.url,
             altText: image.altText,
           })
         }
