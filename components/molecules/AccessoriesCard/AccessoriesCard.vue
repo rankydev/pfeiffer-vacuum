@@ -1,5 +1,5 @@
 <template>
-  <GenericCard :has-link="false" image-size="contain" :href="''">
+  <GenericCard :has-link="true" image-size="contain" :href="productUrl">
     <template #image>
       <ResponsiveImage
         :image="imageUrl(product.images)"
@@ -76,14 +76,14 @@
       <div class="accessories-card__add-to-cart">
         <PvInput v-model="quantity" input-type="number" min="1" required />
         <div class="accessories-card__add-to-cart-buttons">
-          <Button icon="shopping_cart" @click.prevent="addToCart()" />
+          <Button icon="shopping_cart" @click="addToCart()" />
           <Button
             v-if="hasAddToListButton"
             class="accessories-card__add-to-cart-buttons__add-to-list"
             variant="secondary"
             shape="outlined"
             icon="assignment"
-            @click.prevent="addToList()"
+            @click="addToList()"
           />
         </div>
       </div>
@@ -99,7 +99,6 @@ import {
   toRefs,
 } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
-import { useOciStore } from '~/stores/oci'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
@@ -128,7 +127,6 @@ export default defineComponent({
     const { i18n } = useContext()
     const context = useContext()
     const userStore = useUserStore()
-    const ociStore = useOciStore()
     const sanitizer = useSanitizer()
     const { product } = toRefs(props)
     const { imageUrl } = useImageHelper()
@@ -136,7 +134,9 @@ export default defineComponent({
     const quantity = ref(1)
 
     const hasAddToListButton = computed(() => {
-      return userStore.isLoggedIn && !ociStore.isOciUser
+      // TODO: Once OCI is implemented extend this computed again
+      // return userStore.isLoggedIn && !ociStore.isOciUser
+      return userStore.isLoggedIn
     })
     const hasPrice = computed(() => {
       return !!product.value.price
@@ -164,6 +164,13 @@ export default defineComponent({
     const productName = computed(() => {
       return sanitizer.inline(product.value.name || product.value.id)
     })
+
+    const productUrl = computed(() =>
+      context.app.localePath({
+        name: 'shop-products-product',
+        params: { product: product.value?.code },
+      })
+    )
 
     const addToCart = () => {
       // ToDo:
@@ -193,9 +200,10 @@ export default defineComponent({
       hasPrice,
       isPriceVisible,
       hasCustomerPrice,
-      productPrice,
-      userStatusType,
       productName,
+      productPrice,
+      productUrl,
+      userStatusType,
       addToCart,
       addToList,
       login,
@@ -239,6 +247,10 @@ export default defineComponent({
 
   &__price {
     @apply tw-mb-2;
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-justify-end;
+    @apply tw-h-14;
 
     &-info {
       @apply tw-inline-flex;
@@ -285,7 +297,6 @@ export default defineComponent({
     input {
       @apply tw-pr-4;
       @apply tw-mr-2;
-      @apply tw-leading-8;
     }
 
     &-buttons {
