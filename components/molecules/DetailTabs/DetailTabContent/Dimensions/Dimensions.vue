@@ -68,7 +68,7 @@ export default defineComponent({
         return null
       }
 
-      return { ...product.dimensionImage }
+      return product.dimensionImage
     })
 
     return {
