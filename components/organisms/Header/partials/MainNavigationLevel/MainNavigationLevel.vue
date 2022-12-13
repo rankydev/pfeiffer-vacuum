@@ -57,7 +57,11 @@
 
       <template v-if="level > 0 && isMobile && !hasActiveElement">
         <li>
-          <Link :href="currentEntry.href" :class="[`${prefix}__link`]">
+          <Link
+            :href="currentEntry.href"
+            :class="[`${prefix}__link`]"
+            @click.native="closeMenu"
+          >
             <span :class="`${prefix}__label`">{{
               $t('navigation.button.articleOverview.label') +
               ' ' +
@@ -75,6 +79,7 @@
             size="small"
             :label="$t('navigation.button.shop.label')"
             :href="currentEntry.shopLink"
+            @click.native="closeMenu"
           />
         </li>
       </template>
@@ -94,6 +99,7 @@
             size="small"
             :label="$t('navigation.button.overview.label')"
             :href="currentEntry.href"
+            @click.native="closeMenu"
           />
 
           <Button
@@ -101,6 +107,7 @@
             size="small"
             :label="$t('navigation.button.shop.label')"
             :href="currentEntry.shopLink"
+            @click.native="closeMenu"
           />
         </li>
       </template>
