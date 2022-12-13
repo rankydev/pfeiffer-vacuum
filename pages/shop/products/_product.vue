@@ -39,8 +39,8 @@
               />
             </div>
             <VariantSelection class="tw-w-1/2" />
-            <div v-if="carouselEntries.length" class="tw-w-full">
-              <AccessoriesCardCarousel
+            <div v-if="recommendedAccessories.length" class="tw-w-full">
+              <RecommendedAccessories
                 :headline="
                   $t('product.recommended.title') + productStore.product.name
                 "
@@ -76,7 +76,8 @@ import Page from '~/components/templates/Page/Page'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
-import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
+import { storeToRefs } from 'pinia'
+import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
 import VariantSelection from '../../../components/molecules/VariantSelection/VariantSelection'
 
 export default defineComponent({
@@ -85,7 +86,7 @@ export default defineComponent({
     Page,
     DetailTabs,
     ImageGallery,
-    AccessoriesCardCarousel,
+    RecommendedAccessories,
     VariantSelection,
   },
   setup() {
