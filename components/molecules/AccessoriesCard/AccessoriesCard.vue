@@ -285,7 +285,6 @@ export default defineComponent({
     input {
       @apply tw-pr-4;
       @apply tw-mr-2;
-      @apply tw-leading-8;
     }
 
     &-buttons {
