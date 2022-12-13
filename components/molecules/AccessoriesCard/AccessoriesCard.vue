@@ -249,6 +249,10 @@ export default defineComponent({
 
   &__price {
     @apply tw-mb-2;
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-justify-end;
+    @apply tw-h-14;
 
     &-info {
       @apply tw-inline-flex;
