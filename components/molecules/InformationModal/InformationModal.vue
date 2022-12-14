@@ -57,19 +57,19 @@ export default defineComponent({
 .information-modal {
   .modal__box {
     @apply tw-max-w-3xl;
+  }
 
-    &__content {
-      @apply tw-flex;
-      @apply tw-flex-col;
-    }
+  &__content {
+    @apply tw-flex;
+    @apply tw-flex-col;
+  }
 
-    &__headline {
-      @apply tw-mb-4;
-    }
+  &__headline {
+    @apply tw-mb-4;
+  }
 
-    &__btn {
-      @apply tw-mt-4;
-    }
+  &__btn {
+    @apply tw-mt-4;
   }
 }
 </style>

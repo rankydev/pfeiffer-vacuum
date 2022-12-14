@@ -1,3 +1,6 @@
+import { useLogger } from '../../../composables/useLogger'
+
+const { logger } = useLogger('JSON-Transform')
 /**
  * Short parse function for jwt
  * Use this instead of a new jwt dependency
@@ -11,14 +14,11 @@ export const parseJwt = (token) => {
   }
   const base64Url = token.split('.')[1]
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-  const encodedToken = Buffer.from(base64, 'base64').toString('utf-8')
-  const jsonPayload = decodeURIComponent(
-    encodedToken
-      .split('')
-      .map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-      })
-      .join('')
-  )
-  return JSON.parse(jsonPayload) || {}
+  const decodedToken = Buffer.from(base64, 'base64').toString('utf-8')
+  try {
+    return JSON.parse(decodedToken)
+  } catch (e) {
+    logger.warn('Decoded Token could not be parsed. ', decodedToken)
+    return {}
+  }
 }
