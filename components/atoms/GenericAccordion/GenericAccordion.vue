@@ -24,7 +24,12 @@
             <Icon v-if="entry.icon" class="tw-mr-2" :icon="entry.icon" />
             <span class="accordion__label">{{ entry.label }}</span>
           </div>
-          <LoadingSpinner v-if="loading" />
+          <LoadingSpinner
+            v-if="loading"
+            color="red"
+            size="small"
+            class="accordion__loading-spinner"
+          />
           <Icon
             v-else
             class="accordion__icon"
@@ -242,6 +247,10 @@ export default defineComponent({
     .accordion__content {
       @apply tw-px-5;
     }
+  }
+
+  &__loading-spinner {
+    width: 32px;
   }
 }
 </style>
