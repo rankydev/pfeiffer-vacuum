@@ -38,7 +38,12 @@
                 fallback-image-icon-size="xxlarge"
               />
             </div>
-            <VariantSelection class="tw-w-1/2" />
+            <div
+              v-if="hasVariationMatrix"
+              class="tw-bg-pv-grey-96 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
+            >
+              <VariantSelection />
+            </div>
             <div v-if="recommendedAccessories.length" class="tw-w-full">
               <RecommendedAccessories
                 :headline="
@@ -77,7 +82,7 @@ import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { storeToRefs } from 'pinia'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
-import VariantSelection from '../../../components/molecules/VariantSelection/VariantSelection'
+import VariantSelection from '~/components/molecules/VariantSelection/VariantSelection'
 
 export default defineComponent({
   name: 'ProductShopPage',
