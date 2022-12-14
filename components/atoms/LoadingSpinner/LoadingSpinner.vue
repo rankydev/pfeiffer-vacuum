@@ -50,10 +50,12 @@ export default defineComponent({
   &__placeholder {
     &--normal {
       @apply tw-h-8;
+      @apply tw-w-8;
     }
 
     &--small {
       @apply tw-h-6;
+      @apply tw-w-6;
     }
   }
 
