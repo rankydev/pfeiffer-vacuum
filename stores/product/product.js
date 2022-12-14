@@ -80,13 +80,10 @@ export const useProductStore = defineStore('product', () => {
   const loadVariationMatrix = async (id) => {
     // Return when old matrix is still valid and no new matrix is needed
     if (matrixStillValid.value) {
-      console.error('*** Still Valid ***')
-
       matrixStillValid.value = false
       return
     }
 
-    console.info('*** Start Loading ***')
     loadingMatrix.value = true
 
     // Check if variant specific matrix should be loaded
@@ -94,15 +91,15 @@ export const useProductStore = defineStore('product', () => {
       !hasOnlyOneVariantLeft(variationMatrix.value) &&
       currentVariantId.value &&
       !currentMasterId.value
-    ) {
-      console.info('*** Load Specific Variant Matrix ***')
-
+    )
       shouldLoadVariantMatrix.value = true
-    }
 
     const productCode = shouldLoadVariantMatrix.value
       ? currentVariantId.value
       : currentMasterId.value || id
+
+    // Write route query data to store on first load
+    if (!variationMatrix.value) selectedAttributes.value = route.value.query
 
     // Get variation matrix from hybris
     let result
@@ -111,33 +108,26 @@ export const useProductStore = defineStore('product', () => {
       params: { ...selectedAttributes.value, fields: 'FULL' },
     })
 
-    console.info('*** Retrieved Result ***', result)
+    // Set selected attributes as user selection for first variant loading
+    if (result.allSelected && !Object.keys(selectedAttributes.value).length)
+      setHybrisSelectionAsUserInput(result)
 
     // Check if redirect is needed
     if (
       hasOnlyOneVariantLeft(result) &&
       hasDifferentVariant(variationMatrix.value, result)
     ) {
-      console.info('*** Redirect to VARIANT ***')
-
       // Redirect to variant page when only one variant is left
       redirectToId(result.variants?.[0]?.code)
     } else if (
       hasOnlyOneVariantLeft(variationMatrix.value) &&
       !hasOnlyOneVariantLeft(result)
     ) {
-      console.info('*** Redirect to MASTER ***')
-
       // Redirect to master page when more than one variant is available after selection update
-      redirectToId(currentMasterId.value || product.value.master)
-    }
+      redirectToId(currentMasterId.value || product.value.master, true)
+    } else if (variationMatrix.value && !hasOnlyOneVariantLeft(result))
+      pushCurrentSelectionInQuery()
 
-    // Set selected attributes as user selection for first variant loading
-    if (result.allSelected && !Object.keys(selectedAttributes.value).length) {
-      console.info('*** Set Hybris Data As User Input ***')
-
-      setHybrisSelectionAsUserInput(result)
-    }
     shouldLoadVariantMatrix.value = false
 
     // Write result into store
@@ -161,9 +151,6 @@ export const useProductStore = defineStore('product', () => {
    */
   const addAttribute = async (key, val) => {
     selectedAttributes.value[key] = val
-
-    console.info('*** Add Attribute ***', selectedAttributes.value)
-
     await loadVariationMatrix()
   }
 
@@ -172,9 +159,6 @@ export const useProductStore = defineStore('product', () => {
    */
   const deleteAttribute = async (key) => {
     delete selectedAttributes.value[key]
-
-    console.info('*** Remove Attribute ***', selectedAttributes.value)
-
     await loadVariationMatrix()
   }
 
@@ -185,8 +169,6 @@ export const useProductStore = defineStore('product', () => {
   const clearMatrix = () => {
     // Do not clear when matrix should be still valid
     if (matrixStillValid.value) return
-
-    console.error('*** Clear Matrix ***')
 
     matrixStillValid.value = false
     currentMasterId.value = null
@@ -200,7 +182,6 @@ export const useProductStore = defineStore('product', () => {
    * selected attributes are given in selectedAttributes object
    */
   const setHybrisSelectionAsUserInput = (matrix) => {
-    console.info('*** Set Hybris Selection As User Input ***')
     matrix.variationAttributes?.forEach((el) => {
       selectedAttributes.value[el.code] = el.variationValues.find(
         (e) => e.selected
@@ -224,10 +205,16 @@ export const useProductStore = defineStore('product', () => {
    * When product state in frontend application should switch from master to variant and vice versa the application
    * has to redirect the user to get the correct URL and breadcrumb
    */
-  const redirectToId = (id) => {
-    router.push(joinURL(localePath('shop-products-product'), id))
+  const redirectToId = (id, withQuery = false) => {
+    router.push({
+      path: joinURL(localePath('shop-products-product'), id),
+      query: withQuery ? selectedAttributes.value : null,
+    })
     matrixStillValid.value = true
   }
+
+  const pushCurrentSelectionInQuery = () =>
+    router.push({ path: route.path, query: selectedAttributes.value })
 
   /*
    * VARIANT SELECTION END
