@@ -1,17 +1,25 @@
 <template>
-  <div class="attribute-buttons">
-    <Button
-      v-for="item in values"
-      :key="item.value"
-      :label="item.displayValue"
-      :variant="item.selected ? 'secondary' : 'secondary'"
-      :shape="item.selected ? 'filled' : 'outlined'"
-      :disabled="!item.selectable"
-    />
+  <div class="wrapper">
+    <div v-for="(group, index) of [items]" :key="index">
+      <div
+        class="attribute-buttons"
+        :class="{ 'attribute-buttons--two-cols': group.length <= 2 }"
+      >
+        <Button
+          v-for="item in group"
+          :key="item.value"
+          :label="item.displayValue"
+          :variant="item.selected ? 'secondary' : 'secondary'"
+          :shape="item.selected ? 'filled' : 'outlined'"
+          :disabled="!item.selectable"
+          @click.native="itemClicked(item)"
+        />
+      </div>
+    </div>
   </div>
 </template>
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
@@ -19,38 +27,42 @@ export default defineComponent({
     Button,
   },
   props: {
-    values: {
+    items: {
       type: Array,
       required: true,
     },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    initialValue: {
-      type: undefined,
-      default: '',
-    },
   },
-  emits: ['update'],
+  emits: ['item-clicked'],
   setup(props, { emit }) {
-    let internalValue = ref(props.initialValue)
-
-    const setActive = (val) => {
-      internalValue.value = val
-      emit('update', val)
+    const itemClicked = (val) => {
+      emit('item-clicked', val)
     }
 
-    return { internalValue, setActive }
+    const { items } = toRefs(props)
+
+    const selectableValues = items.value.filter((item) => {
+      return item.selectable
+    })
+
+    const notSelectableValues = items.value.filter((item) => {
+      return !item.selectable
+    })
+
+    return { itemClicked, selectableValues, notSelectableValues }
   },
 })
 </script>
-<style lang="scss">
-.attribute-buttons {
-  $root: &;
 
-  @apply tw-grid tw-grid-cols-3;
+<style lang="scss" scoped>
+.attribute-buttons {
+  @apply tw-grid;
+  @apply tw-grid-cols-3;
+  grid-auto-rows: 1fr;
   @apply tw-gap-2;
   @apply tw-overflow-hidden;
+
+  &--two-cols {
+    @apply tw-grid-cols-2;
+  }
 }
 </style>

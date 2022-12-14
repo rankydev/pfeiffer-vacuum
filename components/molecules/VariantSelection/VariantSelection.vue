@@ -4,7 +4,10 @@
       <template v-for="item in variantTabItems" #[item.slotName]>
         <!-- eslint-disable-next-line vue/no-v-for-template-key-on-child -->
         <div :key="item.slotName">
-          <AttributeButtons :values="item.variant.variationValues" />
+          <AttributeButtons
+            :items="item.variant.variationValues"
+            @item-clicked="handleClick($event, item.variant)"
+          />
         </div>
       </template>
     </GenericAccordion>
@@ -48,8 +51,13 @@ export default defineComponent({
       })
     })
 
+    const handleClick = (clickedItem, variant) => {
+      console.log('TODO: Handle clicked item', clickedItem, variant)
+    }
+
     return {
       variantTabItems,
+      handleClick,
     }
   },
 })
