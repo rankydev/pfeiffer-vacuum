@@ -135,7 +135,7 @@ export default defineComponent({
      */
     const userStore = useUserStore()
     const { isLoggedIn } = storeToRefs(userStore)
-    watch(isLoggedIn, loadProduct)
+    watch(isLoggedIn.value, loadProduct)
 
     const carouselEntries = computed(() => {
       // TODO: return recommended accessories

@@ -5,6 +5,7 @@ import {
   useRoute,
   computed,
   useContext,
+  watch,
 } from '@nuxtjs/composition-api'
 import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
@@ -26,8 +27,22 @@ export const useProductStore = defineStore('product', () => {
   const price = ref(null)
   const accessoriesGroups = ref(null)
   const productAccessoriesPrices = ref(null)
+  const productRecommendedAccessoriesPrices = ref(null)
   const productSparepartsPrices = ref(null)
   const productConsumablesPrices = ref(null)
+
+  const userStore = useUserStore()
+  const { isApprovedUser, currentUser } = storeToRefs(userStore)
+
+  watch(
+    () => product.value,
+    async () => {
+      if (product.value) {
+        //await Promise.all(loadProductReferenceGroupsPrices())
+        await loadProductReferenceGroupsPrices()
+      }
+    }
+  )
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -105,14 +120,12 @@ export const useProductStore = defineStore('product', () => {
   }
 
   const loadPrice = async (id) => {
-    const userStore = useUserStore()
-
     // don't load product prices if the user is not approved yet
-    if (!userStore.isApprovedUser) {
+    if (!isApprovedUser.value) {
       return
     }
 
-    const { uid } = userStore.currentUser
+    const { uid } = currentUser.value
     const url = joinURL(config.PRODUCTS_API, id, uid, 'price')
     const result = await axios.$get(url, {
       params: { fields: 'FULL' },
@@ -120,60 +133,63 @@ export const useProductStore = defineStore('product', () => {
     price.value = result
   }
 
-  const loadProductReferenceGroupsPrices = async () => {
-    const userStore = useUserStore()
-    const { isApprovedUser, isLoggedIn, isLoginProcess, currentUser } =
-      storeToRefs(userStore)
+  const productReferenceGroupsSwitch = (referenceGroup) =>
+    ({
+      consumables: {
+        items: productReferencesConsumables.value,
+        prices: productConsumablesPrices,
+        requestReferenceGroup: 'CONSUMABLE',
+      },
+      spareParts: {
+        items: productReferencesSpareParts.value,
+        prices: productSparepartsPrices,
+        requestReferenceGroup: 'SPAREPART',
+      },
+      recommendedAccessories: {
+        items: product.value.productReferences,
+        prices: productRecommendedAccessoriesPrices,
+        requestReferenceGroup: 'RECOMMENDEDACCESSORIES',
+      },
+    }[referenceGroup])
 
-    // TODO isApprovedUser returns false so logic beneath doesn't work
-    // don't load product prices if the user is not approved yet
+  const loadProductReferenceGroupsPrices = async () => {
+    // don't load prices if the user is not approved yet
     if (!isApprovedUser.value) return
 
+    // don't load prices if the product hasn't consumables, or spare parts
     if (
       !productReferencesSpareParts.value.length &&
-      !productReferencesConsumables.values.length
+      !productReferencesConsumables.value.length
     )
       return
 
     productConsumablesPrices.value = []
     productSparepartsPrices.value = []
 
-    if (productReferencesConsumables.value.length) {
-      const resultConsumablesPrices = await getProductReferenceGroupPrices(
-        'CONSUMABLE'
-      )
+    const referenceGroupsToLoad = [
+      'consumables',
+      'spareParts',
+      'recommendedAccessories',
+    ]
 
-      if (resultConsumablesPrices.length && !resultConsumablesPrices.error) {
-        productConsumablesPrices.value = resultConsumablesPrices
+    for (const referenceGroup of referenceGroupsToLoad) {
+      const group = productReferenceGroupsSwitch(referenceGroup)
 
-        addPricesToProductReferenceGroupItems(
-          productConsumablesPrices.value,
-          productReferencesConsumables.value
+      if (group.items.length) {
+        const resultPrices = await getProductReferenceGroupPrices(
+          group.requestReferenceGroup
         )
-      } else {
-        logger.error(
-          `Error when fetching product consumables. Returning empty array.`,
-          resultConsumablesPrices.error ? resultConsumablesPrices.error : ''
-        )
-      }
-    }
 
-    if (productReferencesSpareParts.value.length) {
-      const resultSparepartsPrices = await getProductReferenceGroupPrices(
-        'SPAREPART'
-      )
+        if (resultPrices.length && !resultPrices.error) {
+          group.prices.value = resultPrices
 
-      if (resultSparepartsPrices.length && !resultSparepartsPrices.error) {
-        productSparepartsPrices.value = resultSparepartsPrices
-        addPricesToProductReferenceGroupItems(
-          productSparepartsPrices.value,
-          productReferencesSpareParts.value
-        )
-      } else {
-        logger.error(
-          `Error when fetching product spareparts. Returning empty array.`,
-          resultSparepartsPrices.error ? resultSparepartsPrices.error : ''
-        )
+          addPricesToProductReferenceGroupItems(group.prices.value, group.items)
+        } else {
+          logger.error(
+            `Error when fetching product consumables. Returning empty array.`,
+            resultPrices.error ? resultPrices.error : ''
+          )
+        }
       }
     }
   }
@@ -244,7 +260,7 @@ export const useProductStore = defineStore('product', () => {
   /*
    * add prices to reference group products
    * can be used for the following reference groups:
-   * 'CONSUMABLE', 'SPAREPART'
+   * 'CONSUMABLE', 'SPAREPART', 'RECOMMENDEDACCESSORIES'
    */
   const addPricesToProductReferenceGroupItems = (
     pricesArr,
@@ -308,13 +324,11 @@ export const useProductStore = defineStore('product', () => {
       throw new Error('No valid id given in route object.')
     }
 
-    const userStore = useUserStore()
-
     // don't load product prices if the user is not approved yet
-    if (!userStore.isApprovedUser) {
+    if (!isApprovedUser.value) {
       return []
     }
-    const { uid } = userStore.currentUser
+    const { uid } = currentUser.value
 
     if (!uid) {
       logger.error('No customer id given.')
@@ -373,12 +387,7 @@ export const useProductStore = defineStore('product', () => {
     // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
     product.value = null
 
-    await Promise.all([
-      loadProduct(id),
-      loadVariationMatrix(id),
-      loadPrice(id),
-      loadProductReferenceGroupsPrices(),
-    ])
+    await Promise.all([loadProduct(id), loadVariationMatrix(id), loadPrice(id)])
   }
 
   return {
