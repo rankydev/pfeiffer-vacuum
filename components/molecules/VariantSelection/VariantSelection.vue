@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { storeToRefs } from 'pinia'
 import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
 import { useProductStore } from '~/stores/product'
 import AttributeButtons from './partials/AttributeButtons'
@@ -23,12 +24,11 @@ export default defineComponent({
     AttributeButtons,
   },
   setup() {
-    const { variationMatrix } = useProductStore()
-
-    const variants = ref(variationMatrix.variationAttributes)
+    const productStore = useProductStore()
+    const { variationMatrix } = storeToRefs(productStore)
 
     const variantTabItems = computed(() => {
-      return variants.value.map((variant) => {
+      return variationMatrix.value.variationAttributes.map((variant) => {
         const hasSomeSelected = variant.variationValues.some(
           (item) => item.selected
         )
