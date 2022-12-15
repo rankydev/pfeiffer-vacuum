@@ -38,7 +38,6 @@ export const useProductStore = defineStore('product', () => {
     () => product.value,
     async () => {
       if (product.value) {
-        //await Promise.all(loadProductReferenceGroupsPrices())
         await loadProductReferenceGroupsPrices()
       }
     }
@@ -137,17 +136,17 @@ export const useProductStore = defineStore('product', () => {
     ({
       consumables: {
         items: productReferencesConsumables.value,
-        prices: productConsumablesPrices,
+        prices: productConsumablesPrices.value,
         requestReferenceGroup: 'CONSUMABLE',
       },
       spareParts: {
         items: productReferencesSpareParts.value,
-        prices: productSparepartsPrices,
+        prices: productSparepartsPrices.value,
         requestReferenceGroup: 'SPAREPART',
       },
       recommendedAccessories: {
         items: product.value.productReferences,
-        prices: productRecommendedAccessoriesPrices,
+        prices: productRecommendedAccessoriesPrices.value,
         requestReferenceGroup: 'RECOMMENDEDACCESSORIES',
       },
     }[referenceGroup])
@@ -181,9 +180,9 @@ export const useProductStore = defineStore('product', () => {
         )
 
         if (resultPrices.length && !resultPrices.error) {
-          group.prices.value = resultPrices
+          group.prices = resultPrices
 
-          addPricesToProductReferenceGroupItems(group.prices.value, group.items)
+          addPricesToProductReferenceGroupItems(group.prices, group.items)
         } else {
           logger.error(
             `Error when fetching product consumables. Returning empty array.`,
@@ -400,7 +399,6 @@ export const useProductStore = defineStore('product', () => {
     loadByPath,
     getProducts,
     recommendedAccessories,
-    getProductReferenceGroupPrices,
     hydrateProductAccessories,
     productReferencesSpareParts,
     productReferencesConsumables,
