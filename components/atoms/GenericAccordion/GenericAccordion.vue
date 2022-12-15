@@ -20,11 +20,20 @@
           :disabled="entry.disabled"
           @click="toggleActive(idx)"
         >
-          <span class="accordion__label">{{ entry.label }}</span>
+          <div class="tw-flex">
+            <Icon v-if="entry.icon" class="tw-mr-2" :icon="entry.icon" />
+            <span class="accordion__label">{{ entry.label }}</span>
+          </div>
           <Icon
             class="accordion__icon"
             :size="level"
-            :icon="isActive(idx) ? 'expand_less' : 'expand_more'"
+            :icon="
+              isActive(idx)
+                ? 'expand_less'
+                : entry.expandIcon
+                ? entry.expandIcon
+                : 'expand_more'
+            "
           />
         </button>
       </component>
@@ -113,7 +122,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .accordion {
   $root: &;
 
@@ -183,16 +192,6 @@ export default defineComponent({
 
   &__content {
     @apply tw-overflow-hidden;
-
-    .paragraph-section,
-    .image-with-description,
-    .button {
-      @apply tw-mb-4;
-
-      @screen md {
-        @apply tw-mb-6;
-      }
-    }
   }
 
   &--tab-styles {

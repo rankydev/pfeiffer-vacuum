@@ -51,6 +51,7 @@ import {
   defineComponent,
   useContext,
   ref,
+  watch,
 } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon'
 
@@ -150,6 +151,13 @@ export default defineComponent({
           buildImage = () => ({})
       }
     }
+
+    watch(
+      () => props.image,
+      () => {
+        imageLoadingError.value = false
+      }
+    )
 
     return {
       aspectRatioString,

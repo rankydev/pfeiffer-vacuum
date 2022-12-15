@@ -92,6 +92,7 @@ export default {
     { src: '~/plugins/service/service.plugin', mode: 'client' },
     '~/plugins/zoomOnHover',
     '~/plugins/touchEvents',
+    '~/plugins/tooltip',
     { src: '~/plugins/analytics/datalayer', mode: 'client' },
   ],
 

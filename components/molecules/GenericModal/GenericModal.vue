@@ -78,7 +78,7 @@ export default defineComponent({
 .modal {
   z-index: 110;
   @apply tw-top-0;
-  @apply tw-right-0;
+  @apply tw-left-0;
   @apply tw-h-screen;
   @apply tw-w-screen;
   @apply tw-fixed;

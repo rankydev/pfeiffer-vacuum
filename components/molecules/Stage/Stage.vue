@@ -86,7 +86,7 @@ export default {
       @apply tw-object-cover;
     }
 
-    .responsive-image {
+    &.responsive-image {
       img {
         @apply tw-w-full;
         @apply tw-rounded-none;

@@ -34,6 +34,12 @@ export default {
   <template #item_3>
     disabled slot
   </template>
+  <template #item_4>
+    Everything could be here
+  </template>
+  <template #item_5>
+  disabled slot
+  </template>
 </GenericAccordion>
 `,
       },
@@ -57,6 +63,12 @@ const Template = (args) => ({
         Everything could be here
       </template>
       <template #item_3>
+        disabled slot
+      </template>
+      <template #item_4>
+        Everything could be here
+      </template>
+      <template #item_5>
         disabled slot
       </template>
     </GenericAccordion>

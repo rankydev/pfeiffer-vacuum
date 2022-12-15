@@ -149,15 +149,17 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { useProductStore, useVariationmatrixStore } from '~/stores/product'
+import { useUserStore } from '~/stores/user'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import Page from '~/components/templates/Page/Page'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
-import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
+import { storeToRefs } from 'pinia'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
+import VariantSelectionAccordion from '~/components/molecules/VariantSelectionAccordion/VariantSelectionAccordion'
 
 export default defineComponent({
   name: 'ProductShopPage',
@@ -167,6 +169,7 @@ export default defineComponent({
     ImageGallery,
     RecommendedAccessories,
     LoadingSpinner,
+    VariantSelectionAccordion,
   },
   setup() {
     const route = useRoute()
@@ -198,6 +201,13 @@ export default defineComponent({
     onBeforeUnmount(variationmatrixStore.clearMatrix)
     watch(route, loadProduct)
 
+    /**
+     * react to changing user login status
+     */
+    const userStore = useUserStore()
+    const { isLoggedIn } = storeToRefs(userStore)
+    watch(isLoggedIn, loadProduct)
+
     const carouselEntries = computed(() => {
       // TODO: return recommended accessories
       return []
@@ -209,8 +219,6 @@ export default defineComponent({
     const { buildSlugs } = useStoryblokSlugBuilder({ root: context })
     const path = context.app.localePath('shop-products-product')
     const { slug, fallbackSlug, language } = buildSlugs(path)
-
-    const { getShopMedia } = useImageHelper()
 
     const sortedImages = computed(() => {
       let images = []
@@ -239,7 +247,7 @@ export default defineComponent({
         for (const image of images) {
           result.push({
             type: image.imageType,
-            url: getShopMedia(image.url),
+            url: image.url,
             altText: image.altText,
           })
         }

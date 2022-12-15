@@ -26,6 +26,11 @@ export const useProductStore = defineStore('product', () => {
   const reqId = ssrRef(null)
   const price = ref(null)
   const accessoriesGroups = ref(null)
+  const productAccessoriesPrices = ref(null)
+  // TODO: add whilst adding spareparts
+  //const productSparepartsPrices = ref(null)
+  // TODO: add when adding consumables
+  //const productConsumablesPrices = ref(null)
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -93,8 +98,6 @@ export const useProductStore = defineStore('product', () => {
     })
     product.value = result
 
-    console.info('### MATRIX ###', variationmatrixStore)
-
     // When product is type master or variant, save master id for matrix
     if (['MASTERPRODUCT', 'VARIANTPRODUCT'].includes(result.productType)) {
       variationmatrixStore.currentMasterId =
@@ -136,6 +139,15 @@ export const useProductStore = defineStore('product', () => {
     )
 
     if (typeof result === 'object' && !result.error) {
+      //reset array before fetching new data
+      productAccessoriesPrices.value = []
+
+      const resultAccessoriesPrices = await getProductReferenceGroupPrices(
+        'ACCESSORIES'
+      )
+
+      productAccessoriesPrices.value = resultAccessoriesPrices
+
       if (!Array.isArray(result.groups)) {
         result.groups = []
       }
@@ -148,12 +160,122 @@ export const useProductStore = defineStore('product', () => {
       }
 
       accessoriesGroups.value = result.groups
+      addPricesToAccessoriesGroupsItems()
     } else {
       logger.error(
         `Error when fetching product references for '${id}'. Returning empty array.`,
         result.error ? result.error : ''
       )
     }
+  }
+
+  /*
+   * TODO: uncomment when adding spareparts/ consumables
+   * add prices to reference group products
+   * can be used for the following reference groups:
+   * 'ACCESSORIES', 'CONSUMABLE', 'SPAREPART'
+
+  const addPricesToProductReferenceGroupItems = (
+    pricesArr,
+    referenceGroupItems
+  ) => {
+    if (pricesArr.length && referenceGroupItems.length) {
+      pricesArr.forEach((productReferenceGroupPrice) => {
+        for (const referenceGroupItem of referenceGroupItems) {
+          addPriceToObject(referenceGroupItem, productReferenceGroupPrice)
+        }
+      })
+    }
+  }
+   */
+
+  /**
+   * Function to add prices to the items of the accessories groups items
+   * IMPORTANT: this function works for the accessoriesGroups only!
+   */
+  const addPricesToAccessoriesGroupsItems = () => {
+    if (
+      productAccessoriesPrices.value.length &&
+      accessoriesGroups.value.length
+    ) {
+      productAccessoriesPrices.value.forEach((productAccessoriesPrice) => {
+        // accessories groups
+        for (const accessoriesGroupGroups of accessoriesGroups.value) {
+          if (accessoriesGroupGroups.groups) {
+            for (const accessoriesGroup of accessoriesGroupGroups.groups) {
+              for (const accessoryItem of accessoriesGroup.references) {
+                addPriceToObject(accessoryItem, productAccessoriesPrice)
+              }
+            }
+          }
+
+          // other accessories
+          if (
+            !accessoriesGroupGroups.groups &&
+            accessoriesGroupGroups?.references.length
+          ) {
+            for (const accessoriesGroup of accessoriesGroupGroups.references) {
+              addPriceToObject(accessoriesGroup, productAccessoriesPrice)
+            }
+          }
+        }
+      })
+    }
+  }
+
+  const addPriceToObject = (item, priceItem) => {
+    if (item.target?.code === priceItem?.code) {
+      item.target.price = priceItem.price
+      return
+    }
+  }
+
+  const getProductReferenceGroupPrices = async (referenceGroup) => {
+    const productId = route.value.params.product || ''
+
+    if (!productId) {
+      throw new Error('No valid id given in route object.')
+    }
+
+    const userStore = useUserStore()
+
+    // don't load product prices if the user is not approved yet
+    if (!userStore.isApprovedUser) {
+      return []
+    }
+    const { uid } = userStore.currentUser
+
+    if (!uid) {
+      logger.error('No customer id given.')
+      return []
+    }
+
+    const referenceGroups = [
+      'ACCESSORIES',
+      'CONSUMABLE',
+      'SPAREPART',
+      'RECOMMENDEDACCESSORIES',
+    ]
+
+    if (!referenceGroups.includes(referenceGroup)) {
+      logger.error(
+        `Cannot get ${referenceGroup} prices. Referencegroup '${referenceGroup}' not valid.`
+      )
+      return []
+    }
+
+    const result = await axios.$get(
+      `${config.PRODUCTS_API}/${productId}/${uid}/referenceGroups/${referenceGroup}/prices`
+    )
+
+    if (result.productPrices?.length) {
+      return result.productPrices
+    }
+
+    logger.error(
+      `Error while getting ${referenceGroup} prices for: ${productId}`
+    )
+    return []
   }
 
   const recommendedAccessories = computed(() => {
@@ -191,9 +313,10 @@ export const useProductStore = defineStore('product', () => {
     product,
     price,
     accessoriesGroups,
-    recommendedAccessories,
     loadByPath,
     getProducts,
     getProductAccessories,
+    recommendedAccessories,
+    getProductReferenceGroupPrices,
   }
 })
