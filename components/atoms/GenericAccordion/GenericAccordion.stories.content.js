@@ -32,6 +32,13 @@ export const accordionEntries = [
     slotName: 'item_5',
     expandIcon: 'edit_off',
   },
+  {
+    label: 'loading Accordion',
+    isActive: false,
+    disabled: false,
+    slotName: 'item_6',
+    loading: true,
+  },
 ]
 
 export const levels = ['h3', 'paragraph']

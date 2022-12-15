@@ -1,6 +1,21 @@
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import { ref } from '@nuxtjs/composition-api'
 
+const argTypes = {
+  show: {
+    control: { type: 'boolean' },
+    defaultValue: true,
+  },
+  color: {
+    options: ['green', 'red'],
+    control: { type: 'inline-radio' },
+  },
+  size: {
+    options: ['small', 'normal'],
+    control: { type: 'inline-radio' },
+  },
+}
+
 export default {
   title: 'Technical Components/Loading Spinner',
   component: LoadingSpinner,
@@ -12,18 +27,22 @@ export default {
       },
     },
   },
+  argTypes,
 }
 
-const Template = () => ({
+const Template = (args) => ({
   components: { LoadingSpinner },
+  setup() {
+    return { args }
+  },
   template: `
   <div class="documentation-preview">
-    <LoadingSpinner />
+    <LoadingSpinner v-bind="args" />
   </div>
 `,
 })
 
-const Template2 = () => ({
+const Template2 = (args) => ({
   components: { LoadingSpinner },
   setup() {
     const loading = ref(false)
@@ -35,11 +54,11 @@ const Template2 = () => ({
       }, 2000)
     }
 
-    return { loading, showLoading }
+    return { loading, showLoading, args }
   },
   template: `
   <div class="documentation-preview">
-  <LoadingSpinner :show="loading">
+  <LoadingSpinner v-bind="args" :show="loading">
     <Button label="Klick hier für den Loading Spinner in Action"
             @click.native="showLoading()"/>
   </LoadingSpinner>
