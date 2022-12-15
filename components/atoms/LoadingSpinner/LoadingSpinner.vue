@@ -1,10 +1,21 @@
 <template>
   <div class="loading-spinner">
     <slot>
-      <div class="loading-spinner__placeholder">&nbsp;</div>
+      <div
+        class="loading-spinner__placeholder"
+        :class="`loading-spinner__placeholder--${size}`"
+      >
+        &nbsp;
+      </div>
     </slot>
     <div v-if="show" class="loading-spinner__overlay">
-      <span class="loading-spinner__spinner"></span>
+      <span
+        class="loading-spinner__spinner"
+        :class="[
+          `loading-spinner__spinner--${color}`,
+          `loading-spinner__spinner--${size}`,
+        ]"
+      ></span>
     </div>
   </div>
 </template>
@@ -18,6 +29,16 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    color: {
+      type: String,
+      default: 'green',
+      validator: (val) => ['green', 'red'].includes(val),
+    },
+    size: {
+      type: String,
+      default: 'normal',
+      validator: (val) => ['small', 'normal'].includes(val),
+    },
   },
 })
 </script>
@@ -27,7 +48,15 @@ export default defineComponent({
   @apply tw-relative;
 
   &__placeholder {
-    @apply tw-h-8;
+    &--normal {
+      @apply tw-h-8;
+      @apply tw-w-8;
+    }
+
+    &--small {
+      @apply tw-h-6;
+      @apply tw-w-6;
+    }
   }
 
   &__overlay {
@@ -39,11 +68,29 @@ export default defineComponent({
   }
 
   &__spinner {
-    @apply tw-w-8 tw-h-8;
-    @apply tw-border-4 tw-border-solid tw-border-pv-green;
+    @apply tw-border-solid;
     @apply tw-animate-spin;
-    border-left-color: transparent;
     border-radius: 50%;
+
+    &--normal {
+      @apply tw-w-8 tw-h-8;
+      @apply tw-border-4;
+    }
+
+    &--small {
+      @apply tw-w-6 tw-h-6;
+      @apply tw-border-2;
+    }
+
+    &--green {
+      @apply tw-border-pv-green;
+      border-left-color: transparent;
+    }
+
+    &--red {
+      @apply tw-border-pv-red;
+      border-left-color: transparent;
+    }
   }
 }
 </style>

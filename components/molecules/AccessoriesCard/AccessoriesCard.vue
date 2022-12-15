@@ -36,7 +36,11 @@
                 ? $t('product.priceInfo.InfoPersonal')
                 : $t('product.priceInfo.InfoOnline')
             }}
-            <Icon icon="info" />
+            <Icon
+              icon="info"
+              size="xsmall"
+              class="accessories-card__price-info-icon"
+            />
           </p>
           <span class="accessories-card__price-value">{{ productPrice }}</span>
         </template>
@@ -243,10 +247,11 @@ export default defineComponent({
   }
 
   &__price {
-    @apply tw-mb-2;
+    @apply tw-mb-1;
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-justify-end;
+    @apply tw-items-end;
     @apply tw-h-14;
 
     &-info {
@@ -254,18 +259,18 @@ export default defineComponent({
       @apply tw-items-center;
       @apply tw-cursor-pointer;
       @apply tw-text-pv-grey-32;
+      @apply tw-text-xs;
+    }
 
-      .Icons {
-        @apply tw-ml-1;
-        @apply tw-text-base;
-      }
+    &-info-icon {
+      @apply tw-ml-1;
     }
 
     &-value {
       @apply tw-block;
       @apply tw-text-pv-black tw-font-bold;
       @apply tw-mt-1 tw-mb-3;
-      @apply tw-text-xl;
+      @apply tw-text-lg;
     }
   }
 

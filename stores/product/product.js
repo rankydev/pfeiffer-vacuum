@@ -13,9 +13,11 @@ import config from '~/config/hybris.config'
 import { joinURL } from 'ufo'
 import { useUserStore } from '~/stores/user'
 import { useCmsStore } from '~/stores/cms'
+import { useVariationmatrixStore } from './variationmatrix'
 
 export const useProductStore = defineStore('product', () => {
   const route = useRoute()
+  const variationmatrixStore = useVariationmatrixStore()
   const cmsStore = useCmsStore()
   const { logger } = useLogger('productStore')
   const { axios } = useAxiosForHybris()
@@ -23,7 +25,6 @@ export const useProductStore = defineStore('product', () => {
 
   const product = ref(null)
   const reqId = ssrRef(null)
-  const variationMatrix = ref(null)
   const price = ref(null)
   const accessoriesGroups = ref(null)
   const productAccessoriesPrices = ref(null)
@@ -108,14 +109,14 @@ export const useProductStore = defineStore('product', () => {
       params: { fields: 'FULL' },
     })
     product.value = result
-  }
 
-  const loadVariationMatrix = async (id) => {
-    const url = joinURL(config.PRODUCTS_API, id, 'variationmatrix')
-    const result = await axios.$get(url, {
-      params: { fields: 'FULL' },
-    })
-    variationMatrix.value = result
+    // When product is type master or variant, save master id for matrix
+    if (['MASTERPRODUCT', 'VARIANTPRODUCT'].includes(result.productType)) {
+      variationmatrixStore.currentMasterId =
+        result.productType === 'MASTERPRODUCT' ? result.code : result.master
+      variationmatrixStore.currentVariantId =
+        result.productType === 'MASTERPRODUCT' ? null : result.code
+    }
   }
 
   const loadPrice = async (id) => {
@@ -386,16 +387,17 @@ export const useProductStore = defineStore('product', () => {
     // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
     product.value = null
 
-    await Promise.all([loadProduct(id), loadVariationMatrix(id), loadPrice(id)])
+    await Promise.all([loadProduct(id), loadPrice(id)])
   }
 
   return {
-    product,
-    variationMatrix,
-    price,
-    accessoriesGroups,
     breadcrumb,
     metaData,
+
+    // Product
+    product,
+    price,
+    accessoriesGroups,
     loadByPath,
     getProducts,
     recommendedAccessories,
