@@ -137,5 +137,10 @@ export default defineComponent({
     @apply tw-px-4;
     @apply tw-text-pv-black;
   }
+
+  .button--small {
+    @apply tw-px-0;
+    @apply tw-pb-0;
+  }
 }
 </style>

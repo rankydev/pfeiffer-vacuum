@@ -16,7 +16,7 @@
                 .length
             "
           >
-            <p>Not selectable anymore</p>
+            <p class="tw-mt-4 tw-mb-2">Not selectable anymore</p>
             <AttributeButtons
               :items="
                 item.variant.variationValues.filter((item) => !item.selectable)
@@ -32,8 +32,8 @@
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
+import { useVariationmatrixStore } from '~/stores/product'
 import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
-import { useProductStore } from '~/stores/product'
 import AttributeButtons from './partials/AttributeButtons'
 
 export default defineComponent({
@@ -42,34 +42,39 @@ export default defineComponent({
     AttributeButtons,
   },
   setup() {
-    const productStore = useProductStore()
-    const { variationMatrix } = storeToRefs(productStore)
+    const variationmatrixStore = useVariationmatrixStore()
+    const { variationMatrix } = storeToRefs(variationmatrixStore)
 
     const variantTabItems = computed(() => {
-      return variationMatrix.value.variationAttributes.map((variant) => {
-        const hasSomeSelected = variant.variationValues.find(
-          (item) => item.selected
-        )
-        const hasSomeSelectable = variant.variationValues.some(
-          (item) => item.selectable
-        )
+      if (!variationMatrix.value) {
+        return []
+      }
+      return (variationMatrix.value || {}).variationAttributes.map(
+        (variant) => {
+          const hasSomeSelected = variant.variationValues.find(
+            (item) => item.selected
+          )
+          const hasSomeSelectable = variant.variationValues.some(
+            (item) => item.selectable
+          )
 
-        return {
-          slotName: variant.name,
-          label: hasSomeSelected
-            ? `${variant.name}: ${hasSomeSelected.displayValue}`
-            : variant.name,
-          disabled: !hasSomeSelectable,
-          icon: hasSomeSelected ? 'check_circle' : null,
-          expandIcon: hasSomeSelectable ? 'edit' : 'edit_off',
-          variant,
-          isActive: true, // TODO: remove later, just for testing
+          return {
+            slotName: variant.name,
+            label: hasSomeSelected
+              ? `${variant.name}: ${hasSomeSelected.displayValue}`
+              : variant.name,
+            disabled: !hasSomeSelectable,
+            icon: hasSomeSelected ? 'check_circle' : null,
+            expandIcon: hasSomeSelectable ? 'edit' : 'edit_off',
+            variant,
+            isActive: true, // TODO: remove later, just for testing
+          }
         }
-      })
+      )
     })
 
     const handleClick = (clickedItem, variant) => {
-      console.log('TODO: Handle clicked item', clickedItem, variant)
+      variationmatrixStore.toggleAttribute(variant.code, clickedItem.value)
     }
 
     return {

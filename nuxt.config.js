@@ -60,6 +60,11 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/scss/style.scss'],
 
+  pageTransition: {
+    name: 'page',
+    mode: 'out-in',
+  },
+
   ...(!isStorybook && {
     router: {
       base: `/${
