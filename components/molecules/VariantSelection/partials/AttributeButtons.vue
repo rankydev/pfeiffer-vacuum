@@ -48,6 +48,10 @@ export default defineComponent({
     const isItemPreselected = (item) => {
       if (!item.selected) return false
 
+      if (!variationmatrixStore.selectedAttributes[props.attributeCode]) {
+        return true
+      }
+
       return (
         !variationmatrixStore.selectedAttributes[props.attributeCode] ===
         item.value
