@@ -22,6 +22,7 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
+import { useVariationmatrixStore } from '~/stores/product'
 
 export default defineComponent({
   components: {
@@ -32,16 +33,29 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+    attributeCode: {
+      type: String,
+      required: true,
+    },
   },
-  emits: ['item-clicked'],
-  setup(props, { emit }) {
-    const itemClicked = (val) => {
-      emit('item-clicked', val)
+  setup(props) {
+    const variationmatrixStore = useVariationmatrixStore()
+
+    const itemClicked = (item) => {
+      variationmatrixStore.toggleAttribute(props.attributeCode, item.value)
     }
 
-    const isItemPreselected = () => {
-      // TODO: check if this item is in the user selected items
-      return false
+    const isItemPreselected = (item) => {
+      if (!item.selected) {
+        return false
+      }
+      if (
+        variationmatrixStore.selectedAttributes[props.attributeCode] ===
+        item.value
+      ) {
+        return false
+      }
+      return true
     }
 
     return { itemClicked, isItemPreselected }

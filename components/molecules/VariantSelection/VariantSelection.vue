@@ -8,7 +8,7 @@
             :items="
               item.variant.variationValues.filter((item) => item.selectable)
             "
-            @item-clicked="handleClick($event, item.variant)"
+            :attribute-code="item.variant.code"
           />
           <div
             v-if="
@@ -21,6 +21,7 @@
               :items="
                 item.variant.variationValues.filter((item) => !item.selectable)
               "
+              :attribute-code="item.variant.code"
             />
           </div>
         </div>
@@ -73,13 +74,8 @@ export default defineComponent({
       )
     })
 
-    const handleClick = (clickedItem, variant) => {
-      variationmatrixStore.toggleAttribute(variant.code, clickedItem.value)
-    }
-
     return {
       variantTabItems,
-      handleClick,
     }
   },
 })
