@@ -112,7 +112,7 @@ export default defineComponent({
     const productStore = useProductStore()
     const { recommendedAccessories } = useProductStore()
     const loadProduct = () => {
-      productStore.hydrateProductAccessories()
+      productStore.loadProductAccessories()
       redirectOnError(productStore.loadByPath)
     }
 

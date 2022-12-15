@@ -193,7 +193,7 @@ export const useProductStore = defineStore('product', () => {
     }
   }
 
-  const hydrateProductAccessories = async () => {
+  const loadProductAccessories = async () => {
     const id = route.value.params.product || ''
 
     if (!id) {
@@ -399,7 +399,7 @@ export const useProductStore = defineStore('product', () => {
     loadByPath,
     getProducts,
     recommendedAccessories,
-    hydrateProductAccessories,
+    loadProductAccessories,
     productReferencesSpareParts,
     productReferencesConsumables,
     productConsumablesPrices,
