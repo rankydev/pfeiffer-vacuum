@@ -39,10 +39,85 @@
               />
             </div>
             <div
-              v-if="hasVariationMatrix"
-              class="tw-bg-pv-grey-96 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
+              id="variantselection"
+              class="tw-p-2 tw-bg-pv-grey-88 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
             >
-              <VariantSelectionAccordion />
+              <LoadingSpinner :show="variationmatrixStore.loadingMatrix">
+                <div>
+                  <h4>Legende:</h4>
+                  <div>
+                    <button class="tw-p-2 tw-m-2 tw-border-2">Available</button>
+                    <button
+                      class="tw-p-2 tw-m-2 tw-border-2 tw-bg-pv-red tw-text-pv-white"
+                    >
+                      User Selection
+                    </button>
+                    <button class="tw-p-2 tw-m-2 tw-border-2 tw-border-pv-red">
+                      Automatically
+                    </button>
+                    <button
+                      class="tw-p-2 tw-m-2 tw-border-2 tw-bg-pv-grey-32 tw-text-pv-white"
+                    >
+                      Disabled
+                    </button>
+                  </div>
+                </div>
+                <div class="tw-py-6">
+                  <div
+                    v-for="(attr, index) in (
+                      variationmatrixStore.variationMatrix || {}
+                    ).variationAttributes"
+                    :key="index"
+                    class="tw-border-b-2"
+                  >
+                    <span>{{ attr.name }}</span>
+                    <ul>
+                      <li
+                        v-for="val in attr.variationValues"
+                        :key="val.displayName"
+                      >
+                        <button
+                          class="tw-p-2 tw-m-2 tw-border-2 tw-text-sm disabled:tw-bg-pv-grey-32 disabled:tw-text-pv-white disabled:tw-border-pv-white hover:tw-border-pv-red-lighter hover:tw-bg-pv-red-lighter hover:tw-text-pv-white"
+                          :class="{
+                            'tw-border-2 tw-border-pv-red':
+                              val.selected &&
+                              !(
+                                attr.code in
+                                variationmatrixStore.selectedAttributes
+                              ),
+                            'tw-bg-pv-red tw-text-pv-white':
+                              val.selected &&
+                              attr.code in
+                                variationmatrixStore.selectedAttributes,
+                          }"
+                          :disabled="!val.selectable"
+                          @click="
+                            variationmatrixStore.toggleAttribute(
+                              attr.code,
+                              val.value
+                            )
+                          "
+                        >
+                          {{ val.displayValue }}
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div>
+                  <h5>Possible Variants:</h5>
+                  <ul>
+                    <li
+                      v-for="variant in (
+                        variationmatrixStore.variationMatrix || {}
+                      ).variants"
+                      :key="variant.name"
+                    >
+                      {{ variant.name }}
+                    </li>
+                  </ul>
+                </div>
+              </LoadingSpinner>
             </div>
             <div v-if="recommendedAccessories.length" class="tw-w-full">
               <RecommendedAccessories
@@ -67,12 +142,13 @@ import {
   useRoute,
   defineComponent,
   onBeforeMount,
+  onBeforeUnmount,
   watch,
   onServerPrefetch,
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
-import { useProductStore } from '~/stores/product'
+import { useProductStore, useVariationmatrixStore } from '~/stores/product'
 import { useUserStore } from '~/stores/user'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
@@ -82,7 +158,7 @@ import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { storeToRefs } from 'pinia'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
-import VariantSelectionAccordion from '~/components/molecules/VariantSelectionAccordion/VariantSelectionAccordion'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 
 export default defineComponent({
   name: 'ProductShopPage',
@@ -91,7 +167,7 @@ export default defineComponent({
     DetailTabs,
     ImageGallery,
     RecommendedAccessories,
-    VariantSelectionAccordion,
+    LoadingSpinner,
   },
   setup() {
     const route = useRoute()
@@ -110,24 +186,17 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const productStore = useProductStore()
+    const variationmatrixStore = useVariationmatrixStore()
     const { recommendedAccessories } = useProductStore()
     const loadProduct = () => {
+      variationmatrixStore.loadVariationMatrix(route.value.params.product)
       productStore.getProductAccessories()
       redirectOnError(productStore.loadByPath)
     }
 
-    const hasVariationMatrix = computed(() => {
-      if (!productStore.variationMatrix) {
-        return false
-      }
-      if (!Object.keys(productStore.variationMatrix).length) {
-        return false
-      }
-      return true
-    })
-
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)
+    onBeforeUnmount(variationmatrixStore.clearMatrix)
     watch(route, loadProduct)
 
     /**
@@ -190,10 +259,10 @@ export default defineComponent({
       fallbackSlug,
       language,
       productStore,
+      variationmatrixStore,
       carouselEntries,
       sortedImages,
       recommendedAccessories,
-      hasVariationMatrix,
     }
   },
 })
