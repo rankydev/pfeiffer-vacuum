@@ -3,7 +3,6 @@ import {
   ssrRef,
   ref,
   useRoute,
-  useRouter,
   computed,
   useContext,
 } from '@nuxtjs/composition-api'
@@ -13,10 +12,11 @@ import config from '~/config/hybris.config'
 import { joinURL } from 'ufo'
 import { useUserStore } from '~/stores/user'
 import { useCmsStore } from '~/stores/cms'
+import { useVariationmatrixStore } from './variationmatrix'
 
 export const useProductStore = defineStore('product', () => {
   const route = useRoute()
-  const router = useRouter()
+  const variationmatrixStore = useVariationmatrixStore()
   const cmsStore = useCmsStore()
   const { logger } = useLogger('productStore')
   const { axios } = useAxiosForHybris()
@@ -26,17 +26,6 @@ export const useProductStore = defineStore('product', () => {
   const reqId = ssrRef(null)
   const price = ref(null)
   const accessoriesGroups = ref(null)
-
-  /*
-   * Variationmatrix specific constants
-   */
-  const variationMatrix = ref(null)
-  const selectedAttributes = ref({})
-  const currentMasterId = ref(null)
-  const currentVariantId = ref(null)
-  const matrixStillValid = ref(false)
-  const shouldLoadVariantMatrix = ref(false)
-  const loadingMatrix = ref(false)
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -69,156 +58,6 @@ export const useProductStore = defineStore('product', () => {
     twitterDescription: '',
     twitterImage: null,
   }))
-
-  /*
-   * VARIANT SELECTION START
-   */
-
-  /*
-   * Retrieve variation matrix object from hybris given a product id and selected attributes
-   */
-  const loadVariationMatrix = async (id) => {
-    // Return when old matrix is still valid and no new matrix is needed
-    if (matrixStillValid.value) {
-      matrixStillValid.value = false
-      return
-    }
-
-    loadingMatrix.value = true
-
-    // Check if variant specific matrix should be loaded
-    if (
-      !hasOnlyOneVariantLeft(variationMatrix.value) &&
-      currentVariantId.value &&
-      !currentMasterId.value
-    )
-      shouldLoadVariantMatrix.value = true
-
-    const productCode = shouldLoadVariantMatrix.value
-      ? currentVariantId.value
-      : currentMasterId.value || id
-
-    // Write route query data to store on first load
-    if (!variationMatrix.value) selectedAttributes.value = route.value.query
-
-    // Get variation matrix from hybris
-    let result
-    const url = joinURL(config.PRODUCTS_API, productCode, 'variationmatrix')
-    result = await axios.$get(url, {
-      params: { ...selectedAttributes.value, fields: 'FULL' },
-    })
-
-    // Set selected attributes as user selection for first variant loading
-    if (result.allSelected && !Object.keys(selectedAttributes.value).length)
-      setHybrisSelectionAsUserInput(result)
-
-    // Check if redirect is needed
-    if (
-      hasOnlyOneVariantLeft(result) &&
-      hasDifferentVariant(variationMatrix.value, result)
-    ) {
-      // Redirect to variant page when only one variant is left
-      redirectToId(result.variants?.[0]?.code)
-    } else if (
-      hasOnlyOneVariantLeft(variationMatrix.value) &&
-      !hasOnlyOneVariantLeft(result)
-    ) {
-      // Redirect to master page when more than one variant is available after selection update
-      redirectToId(currentMasterId.value || product.value.master, true)
-    } else if (variationMatrix.value && !hasOnlyOneVariantLeft(result))
-      pushCurrentSelectionInQuery()
-
-    shouldLoadVariantMatrix.value = false
-
-    // Write result into store
-    variationMatrix.value = result
-
-    loadingMatrix.value = false
-  }
-
-  /*
-   * Is called when an attributed was clicked
-   * Decide whether attribute should be added or removed from user selection
-   */
-  const toggleAttribute = (key, val) => {
-    key in selectedAttributes.value && selectedAttributes.value[key] === val
-      ? deleteAttribute(key)
-      : addAttribute(key, val)
-  }
-
-  /*
-   * Adds an attribute to user selection
-   */
-  const addAttribute = async (key, val) => {
-    selectedAttributes.value[key] = val
-    await loadVariationMatrix()
-  }
-
-  /*
-   * Removes an attribute from user selection
-   */
-  const deleteAttribute = async (key) => {
-    delete selectedAttributes.value[key]
-    await loadVariationMatrix()
-  }
-
-  /*
-   * Clear necessary matrix parameters from store when product is switched
-   * ( only when old matrix is not valid anymore )
-   */
-  const clearMatrix = () => {
-    // Do not clear when matrix should be still valid
-    if (matrixStillValid.value) return
-
-    matrixStillValid.value = false
-    currentMasterId.value = null
-    currentVariantId.value = null
-    variationMatrix.value = null
-    selectedAttributes.value = {}
-  }
-
-  /*
-   * Sets automatically selected attributes by hybris as user input when no user
-   * selected attributes are given in selectedAttributes object
-   */
-  const setHybrisSelectionAsUserInput = (matrix) => {
-    matrix.variationAttributes?.forEach((el) => {
-      selectedAttributes.value[el.code] = el.variationValues.find(
-        (e) => e.selected
-      ).value
-    })
-  }
-
-  /*
-   * Matrix object can be given to determine whether there is only one variant left or more
-   */
-  const hasOnlyOneVariantLeft = (matrix) => matrix?.variants?.length === 1
-
-  /*
-   * Old and new matrix object can be given to determine whether there are two different variants left for redirection
-   */
-  const hasDifferentVariant = (oldMatrix, newMatrix) =>
-    oldMatrix?.variants?.length > 1 ||
-    oldMatrix?.variants?.[0]?.code !== newMatrix?.variants?.[0]?.code
-
-  /*
-   * When product state in frontend application should switch from master to variant and vice versa the application
-   * has to redirect the user to get the correct URL and breadcrumb
-   */
-  const redirectToId = (id, withQuery = false) => {
-    router.push({
-      path: joinURL(localePath('shop-products-product'), id),
-      query: withQuery ? selectedAttributes.value : null,
-    })
-    matrixStillValid.value = true
-  }
-
-  const pushCurrentSelectionInQuery = () =>
-    router.push({ path: route.path, query: selectedAttributes.value })
-
-  /*
-   * VARIANT SELECTION END
-   */
 
   const getProducts = async (ids) => {
     if (!Array.isArray(ids)) {
@@ -254,11 +93,13 @@ export const useProductStore = defineStore('product', () => {
     })
     product.value = result
 
+    console.info('### MATRIX ###', variationmatrixStore)
+
     // When product is type master or variant, save master id for matrix
     if (['MASTERPRODUCT', 'VARIANTPRODUCT'].includes(result.productType)) {
-      currentMasterId.value =
+      variationmatrixStore.currentMasterId =
         result.productType === 'MASTERPRODUCT' ? result.code : result.master
-      currentVariantId.value =
+      variationmatrixStore.currentVariantId =
         result.productType === 'MASTERPRODUCT' ? null : result.code
     }
   }
@@ -354,17 +195,5 @@ export const useProductStore = defineStore('product', () => {
     loadByPath,
     getProducts,
     getProductAccessories,
-
-    // Variant selection
-    variationMatrix,
-    currentMasterId,
-    currentVariantId,
-    selectedAttributes,
-    loadingMatrix,
-    loadVariationMatrix,
-    addAttribute,
-    deleteAttribute,
-    toggleAttribute,
-    clearMatrix,
   }
 })

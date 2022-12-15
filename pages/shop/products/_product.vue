@@ -42,7 +42,7 @@
               id="variantselection"
               class="tw-p-2 tw-bg-pv-grey-88 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
             >
-              <LoadingSpinner :show="productStore.loadingMatrix">
+              <LoadingSpinner :show="variationmatrixStore.loadingMatrix">
                 <div>
                   <h4>Legende:</h4>
                   <div>
@@ -64,8 +64,9 @@
                 </div>
                 <div class="tw-py-6">
                   <div
-                    v-for="(attr, index) in (productStore.variationMatrix || {})
-                      .variationAttributes"
+                    v-for="(attr, index) in (
+                      variationmatrixStore.variationMatrix || {}
+                    ).variationAttributes"
                     :key="index"
                     class="tw-border-b-2"
                   >
@@ -80,14 +81,21 @@
                           :class="{
                             'tw-border-2 tw-border-pv-red':
                               val.selected &&
-                              !(attr.code in productStore.selectedAttributes),
+                              !(
+                                attr.code in
+                                variationmatrixStore.selectedAttributes
+                              ),
                             'tw-bg-pv-red tw-text-pv-white':
                               val.selected &&
-                              attr.code in productStore.selectedAttributes,
+                              attr.code in
+                                variationmatrixStore.selectedAttributes,
                           }"
                           :disabled="!val.selectable"
                           @click="
-                            productStore.toggleAttribute(attr.code, val.value)
+                            variationmatrixStore.toggleAttribute(
+                              attr.code,
+                              val.value
+                            )
                           "
                         >
                           {{ val.displayValue }}
@@ -100,8 +108,9 @@
                   <h5>Possible Variants:</h5>
                   <ul>
                     <li
-                      v-for="variant in (productStore.variationMatrix || {})
-                        .variants"
+                      v-for="variant in (
+                        variationmatrixStore.variationMatrix || {}
+                      ).variants"
                       :key="variant.name"
                     >
                       {{ variant.name }}
@@ -139,7 +148,7 @@ import {
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
-import { useProductStore } from '~/stores/product'
+import { useProductStore, useVariationmatrixStore } from '~/stores/product'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
@@ -176,16 +185,17 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const productStore = useProductStore()
+    const variationmatrixStore = useVariationmatrixStore()
     const { recommendedAccessories } = useProductStore()
     const loadProduct = () => {
-      productStore.loadVariationMatrix(route.value.params.product)
+      variationmatrixStore.loadVariationMatrix(route.value.params.product)
       productStore.getProductAccessories()
       redirectOnError(productStore.loadByPath)
     }
 
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)
-    onBeforeUnmount(productStore.clearMatrix)
+    onBeforeUnmount(variationmatrixStore.clearMatrix)
     watch(route, loadProduct)
 
     const carouselEntries = computed(() => {
@@ -243,6 +253,7 @@ export default defineComponent({
       fallbackSlug,
       language,
       productStore,
+      variationmatrixStore,
       carouselEntries,
       sortedImages,
       recommendedAccessories,
