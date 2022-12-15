@@ -7,7 +7,9 @@
       v-for="item in items"
       :key="item.value"
       :label="item.displayValue"
-      variant="variant-selection"
+      :variant="
+        item.preselected ? 'variant-selection-preselected' : 'variant-selection'
+      "
       :shape="item.selected || !item.selectable ? 'filled' : 'outlined'"
       :disabled="!item.selectable"
       allow-label-line-break

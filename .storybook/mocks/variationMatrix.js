@@ -120,6 +120,7 @@ export const variationMatrix = {
                   displayValue: 'Für alle Standardprozesse',
                   selectable: true,
                   selected: true,
+                  preselected: true,
                   value: 'Für alle Standardprozesse'
               }
           ]

@@ -82,7 +82,13 @@ export default defineComponent({
       type: String,
       default: 'primary',
       validator: (val) =>
-        ['primary', 'secondary', 'variant-selection', 'inverted'].includes(val),
+        [
+          'primary',
+          'secondary',
+          'variant-selection',
+          'variant-selection-preselected',
+          'inverted',
+        ].includes(val),
     },
     /**
      * Defines the button shape
@@ -241,14 +247,25 @@ export default defineComponent({
       }
     }
 
+    &.button--variant-selection-preselected,
     &.button--variant-selection {
       @apply tw-bg-pv-red;
       @apply tw-text-pv-white;
       @apply tw-shadow-button;
 
-      &:hover,
-      &:focus {
+      &:hover {
         @apply tw-bg-pv-red-lighter;
+      }
+    }
+
+    &.button--variant-selection-preselected {
+      @apply tw-shadow-border-red;
+      @apply tw-bg-pv-white;
+      @apply tw-text-pv-black;
+
+      &:hover {
+        @apply tw-shadow-border-red-lighter;
+        @apply tw-text-pv-white;
       }
     }
 
@@ -293,12 +310,12 @@ export default defineComponent({
       }
     }
 
+    &.button--variant-selection-preselected,
     &.button--variant-selection {
       @apply tw-shadow-border-grey-80;
       @apply tw-bg-pv-white;
 
-      &:hover,
-      &:focus {
+      &:hover {
         @apply tw-shadow-border-red-lighter;
         @apply tw-bg-pv-red-lighter;
         @apply tw-text-pv-white;
