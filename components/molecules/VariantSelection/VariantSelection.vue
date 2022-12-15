@@ -5,9 +5,24 @@
         <!-- eslint-disable-next-line vue/no-v-for-template-key-on-child -->
         <div :key="item.slotName">
           <AttributeButtons
-            :items="item.variant.variationValues"
+            :items="
+              item.variant.variationValues.filter((item) => item.selectable)
+            "
             @item-clicked="handleClick($event, item.variant)"
           />
+          <div
+            v-if="
+              item.variant.variationValues.filter((item) => !item.selectable)
+                .length
+            "
+          >
+            <p>Not selectable anymore</p>
+            <AttributeButtons
+              :items="
+                item.variant.variationValues.filter((item) => !item.selectable)
+              "
+            />
+          </div>
         </div>
       </template>
     </GenericAccordion>
@@ -32,7 +47,7 @@ export default defineComponent({
 
     const variantTabItems = computed(() => {
       return variationMatrix.value.variationAttributes.map((variant) => {
-        const hasSomeSelected = variant.variationValues.some(
+        const hasSomeSelected = variant.variationValues.find(
           (item) => item.selected
         )
         const hasSomeSelectable = variant.variationValues.some(
@@ -41,12 +56,14 @@ export default defineComponent({
 
         return {
           slotName: variant.name,
-          label: variant.name,
+          label: hasSomeSelected
+            ? `${variant.name}: ${hasSomeSelected.displayValue}`
+            : variant.name,
           disabled: !hasSomeSelectable,
           icon: hasSomeSelected ? 'check_circle' : null,
           expandIcon: hasSomeSelectable ? 'edit' : 'edit_off',
           variant,
-          isActive: true,
+          isActive: true, // TODO: remove later, just for testing
         }
       })
     })
