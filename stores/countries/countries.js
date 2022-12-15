@@ -3,17 +3,17 @@ import {
   onServerPrefetch,
   onBeforeMount,
   ssrRef,
-  useContext,
 } from '@nuxtjs/composition-api'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
 import { joinURL } from 'ufo'
 import { useLogger } from '~/composables/useLogger'
+import { useLanguageSwitch } from '~/composables/useLanguageSwitch'
 
 export const useCountriesStore = defineStore('countries', () => {
   const { axios } = useAxiosForHybris()
   const { logger } = useLogger('countriesStore')
-  const { i18n } = useContext()
+  const { onLanguageSwitched } = useLanguageSwitch()
 
   const countries = ssrRef([])
   const regions = ssrRef({})
@@ -63,10 +63,10 @@ export const useCountriesStore = defineStore('countries', () => {
   }
 
   /* istanbul ignore next  */
-  i18n.onLanguageSwitched = async () => {
+  onLanguageSwitched(async () => {
     /* istanbul ignore next  */
     await loadCountries()
-  }
+  })
 
   return { countries, regions, loadRegions }
 })
