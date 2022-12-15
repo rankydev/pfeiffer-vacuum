@@ -1,14 +1,16 @@
 <template>
   <div
     class="attribute-buttons"
-    :class="{ 'attribute-buttons--three-cols': items.length > 2 }"
+    :class="{ 'attribute-buttons--three-cols': items.length > 4 }"
   >
     <Button
       v-for="item in items"
       :key="item.value"
       :label="item.displayValue"
       :variant="
-        item.preselected ? 'variant-selection-preselected' : 'variant-selection'
+        isItemPreselected(item)
+          ? 'variant-selection-preselected'
+          : 'variant-selection'
       "
       :shape="item.selected || !item.selectable ? 'filled' : 'outlined'"
       :disabled="!item.selectable"
@@ -37,7 +39,12 @@ export default defineComponent({
       emit('item-clicked', val)
     }
 
-    return { itemClicked }
+    const isItemPreselected = () => {
+      // TODO: check if this item is in the user selected items
+      return false
+    }
+
+    return { itemClicked, isItemPreselected }
   },
 })
 </script>
