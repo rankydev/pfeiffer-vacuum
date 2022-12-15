@@ -63,10 +63,7 @@ export const useCountriesStore = defineStore('countries', () => {
   }
 
   /* istanbul ignore next  */
-  onLanguageSwitched(async () => {
-    /* istanbul ignore next  */
-    await loadCountries()
-  })
+  onLanguageSwitched(loadCountries)
 
   return { countries, regions, loadRegions }
 })

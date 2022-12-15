@@ -36,7 +36,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
     return productDownloads.value.get(orderNumber)
   }
 
-  onLanguageSwitched(async () => {
+  onLanguageSwitched(() => {
     productDownloads.value = new Map()
   })
 
