@@ -329,7 +329,6 @@ export default defineComponent({
     @apply tw-flex-col;
 
     @screen md {
-      @apply tw-mb-6;
       @apply tw-flex-row;
     }
 
@@ -345,12 +344,13 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-flex-wrap;
     @apply tw-gap-2;
-    @apply tw-mb-6;
+    @apply tw-mt-6;
   }
 
   &__result {
     @apply tw-text-pv-grey-48;
     @apply tw-text-xs;
+    @apply tw-mt-6;
   }
 
   &__downloads-icon {
