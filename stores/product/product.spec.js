@@ -60,6 +60,15 @@ jest.mock('~/stores/cms', () => {
   }
 })
 
+jest.mock('pinia', () => {
+  const originalModule = jest.requireActual('pinia')
+
+  return {
+    ...originalModule,
+    storeToRefs: (store) => ({ ...store }),
+  }
+})
+
 const mockLocalePath = 'localePath'
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
@@ -209,7 +218,7 @@ describe('Product store', () => {
       await productStore.loadByPath()
       expect(productStore.product).toStrictEqual(mockProduct)
       expect(productStore.variationMatrix).toStrictEqual({})
-      expect(productStore.price).toStrictEqual({})
+      expect(productStore.price).toStrictEqual(null)
     })
 
     test('should create breadcrumb given a product', async () => {
@@ -251,7 +260,7 @@ describe('Product store', () => {
       await productStore.loadByPath()
       await productStore.loadByPath()
 
-      expect(mockGet).toBeCalledTimes(3)
+      expect(mockGet).toBeCalledTimes(2)
     })
   })
 })
