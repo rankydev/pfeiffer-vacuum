@@ -79,7 +79,7 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .variant-selection-accordion {
   @apply tw-ml-4;
   @apply tw-mr-4;
