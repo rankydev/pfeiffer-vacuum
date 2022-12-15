@@ -1,6 +1,6 @@
 <template>
   <div class="variant-selection-accordion">
-    <GenericAccordion :accordion-entries="variantTabItems">
+    <GenericAccordion :accordion-entries="variantTabItems" v-bind="{ loading }">
       <template v-for="item in variantTabItems" #[item.slotName]>
         <!-- eslint-disable-next-line vue/no-v-for-template-key-on-child -->
         <div :key="item.slotName">
@@ -22,6 +22,12 @@ import { useProductStore } from '~/stores/product'
 export default defineComponent({
   components: {
     GenericAccordion,
+  },
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup() {
     const { variationMatrix } = useProductStore()
