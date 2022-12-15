@@ -159,7 +159,6 @@ import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { storeToRefs } from 'pinia'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
-import VariantSelectionAccordion from '~/components/molecules/VariantSelectionAccordion/VariantSelectionAccordion'
 
 export default defineComponent({
   name: 'ProductShopPage',
@@ -169,7 +168,6 @@ export default defineComponent({
     ImageGallery,
     RecommendedAccessories,
     LoadingSpinner,
-    VariantSelectionAccordion,
   },
   setup() {
     const route = useRoute()
