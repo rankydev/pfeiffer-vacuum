@@ -51,7 +51,7 @@ export default defineComponent({
   @apply tw-overflow-hidden;
 
   &--three-cols {
-    @screen md {
+    @screen lg {
       @apply tw-grid-cols-3;
     }
   }
