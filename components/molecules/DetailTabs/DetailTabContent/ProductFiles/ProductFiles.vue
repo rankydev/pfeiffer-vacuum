@@ -256,6 +256,17 @@ export default defineComponent({
 
         const actions = [
           {
+            desktop: true,
+            mobile: false,
+            icon: 'file_download',
+            variant: 'secondary',
+            shape: 'outlined',
+            href: `${PATH_EMPOLIS}/${file.downloadLink}`,
+            target: '_blank',
+          },
+          {
+            desktop: false,
+            mobile: true,
             label: i18n.t('product.download'),
             icon: 'file_download',
             variant: 'secondary',
