@@ -413,7 +413,7 @@ export const useProductStore = defineStore('product', () => {
     accessoriesGroups,
     getProducts,
     loadProductReferenceGroupsPrices,
-    productReferences,
+    productReferences, // please note: this NEEDS to be exported, even though it is not used outside. Dependent computeds below will not work if removed. This may be a pinia bug.
     productReferencesSpareParts,
     productReferencesConsumables,
     productConsumablesPrices,
