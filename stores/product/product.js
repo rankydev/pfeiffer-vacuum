@@ -127,18 +127,18 @@ export const useProductStore = defineStore('product', () => {
   const productReferenceGroupsSwitch = (referenceGroup) =>
     ({
       consumables: {
-        items: productReferencesConsumables.value,
-        prices: productConsumablesPrices.value,
+        items: productReferences,
+        prices: productConsumablesPrices,
         requestReferenceGroup: 'CONSUMABLE',
       },
       spareParts: {
-        items: productReferencesSpareParts.value,
-        prices: productSparepartsPrices.value,
+        items: productReferences,
+        prices: productSparepartsPrices,
         requestReferenceGroup: 'SPAREPART',
       },
       recommendedAccessories: {
-        items: productReferencesRecommendedAccessories.value,
-        prices: productRecommendedAccessoriesPrices.value,
+        items: productReferences,
+        prices: productRecommendedAccessoriesPrices,
         requestReferenceGroup: 'RECOMMENDEDACCESSORIES',
       },
     }[referenceGroup])
@@ -156,6 +156,7 @@ export const useProductStore = defineStore('product', () => {
 
     productConsumablesPrices.value = []
     productSparepartsPrices.value = []
+    productRecommendedAccessoriesPrices.value = []
 
     const referenceGroupsToLoad = [
       'consumables',
@@ -166,15 +167,18 @@ export const useProductStore = defineStore('product', () => {
     for (const referenceGroup of referenceGroupsToLoad) {
       const group = productReferenceGroupsSwitch(referenceGroup)
 
-      if (group.items.length) {
+      if (group.items.value.length) {
         const resultPrices = await getProductReferenceGroupPrices(
           group.requestReferenceGroup
         )
 
         if (resultPrices.length && !resultPrices.error) {
-          group.prices = resultPrices
+          group.prices.value = resultPrices
 
-          addPricesToProductReferenceGroupItems(group.prices, group.items)
+          const newItems = [...group.items.value]
+          addPricesToProductReferenceGroupItems(group.prices.value, newItems)
+          // TODO: Mutating objects is a bad practices and causes unwanted side effects and breaks reactivty
+          group.items.value = JSON.parse(JSON.stringify(newItems))
         } else {
           logger.error(
             `Error when fetching product consumables. Returning empty array.`,
