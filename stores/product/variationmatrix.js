@@ -97,10 +97,13 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    * Is called when an attributed was clicked
    * Decide whether attribute should be added or removed from user selection
    */
-  const toggleAttribute = (key, val) =>
+  const toggleAttribute = (key, val) => {
+    if (loadingMatrix.value) return
+
     key in selectedAttributes.value && selectedAttributes.value[key] === val
       ? deleteAttribute(key)
       : addAttribute(key, val)
+  }
 
   /*
    * Adds an attribute to user selection

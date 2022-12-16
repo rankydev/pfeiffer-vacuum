@@ -206,9 +206,7 @@ export default defineComponent({
 
   &--tab-styles {
     @apply tw-border-b-0;
-
-    // negative values lead to compiling errors
-    margin: 0 -1.25rem;
+    @apply tw-my-0 tw--mx-5;
 
     .accordion__heading {
       @apply tw-border-t-0;

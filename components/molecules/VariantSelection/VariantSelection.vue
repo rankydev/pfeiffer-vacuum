@@ -1,36 +1,9 @@
 <template>
-  <div class="variant-selection-accordion">
-    <GenericAccordion
-      :accordion-entries="variantTabItems"
-      multiple
-      v-bind="{ loading }"
-    >
-      <template v-for="item in variantTabItems" #[item.slotName]>
-        <!-- eslint-disable-next-line vue/no-v-for-template-key-on-child -->
-        <div :key="item.slotName">
-          <AttributeButtons
-            :items="
-              item.variant.variationValues.filter((item) => item.selectable)
-            "
-            :attribute-code="item.variant.code"
-          />
-          <div
-            v-if="
-              item.variant.variationValues.filter((item) => !item.selectable)
-                .length
-            "
-          >
-            <p class="tw-mt-4 tw-mb-2">Not selectable anymore</p>
-            <AttributeButtons
-              :items="
-                item.variant.variationValues.filter((item) => !item.selectable)
-              "
-              :attribute-code="item.variant.code"
-            />
-          </div>
-        </div>
-      </template>
-    </GenericAccordion>
+  <div class="variant-selection">
+    <AttributeAccordion
+      :loading="loadingMatrix"
+      :accordion-entries="variationAttributeEntries"
+    />
   </div>
 </template>
 
@@ -38,13 +11,11 @@
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import { useVariationmatrixStore } from '~/stores/product'
-import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
-import AttributeButtons from './partials/AttributeButtons'
+import AttributeAccordion from './partials/AttributeAccordion'
 
 export default defineComponent({
   components: {
-    GenericAccordion,
-    AttributeButtons,
+    AttributeAccordion,
   },
   props: {
     loading: {
@@ -54,46 +25,56 @@ export default defineComponent({
   },
   setup() {
     const variationmatrixStore = useVariationmatrixStore()
-    const { variationMatrix } = storeToRefs(variationmatrixStore)
+    const { variationMatrix, loadingMatrix } = storeToRefs(variationmatrixStore)
 
-    const variantTabItems = computed(() => {
+    const variationAttributeEntries = computed(() => {
       if (!variationMatrix.value) {
         return []
       }
       return (variationMatrix.value || {}).variationAttributes.map(
-        (variant) => {
+        (variant, index) => {
           const hasSomeSelected = variant.variationValues.find(
             (item) => item.selected
           )
           const hasSomeSelectable = variant.variationValues.some(
             (item) => item.selectable
           )
+          const hasMoreThanOneSelectable =
+            variant.variationValues.filter((item) => item.selectable).length > 1
+
+          const isFirstNotSelected = computed(
+            () =>
+              variationMatrix.value.variationAttributes.findIndex(
+                (item) => !item.variationValues.some((el) => el.selected)
+              ) === index
+          )
 
           return {
             slotName: variant.name,
             label: hasSomeSelected
-              ? `${variant.name}: ${hasSomeSelected.displayValue}`
+              ? `${variant.name}: <b>${hasSomeSelected.displayValue}<b />`
               : variant.name,
             disabled: !hasSomeSelectable,
             icon: hasSomeSelected ? 'check_circle' : null,
-            expandIcon: hasSomeSelectable ? 'edit' : 'edit_off',
+            expandIcon: hasMoreThanOneSelectable ? 'edit' : 'edit_off',
             variant,
-            isActive: true, // TODO: remove later, just for testing
+            isActive: isFirstNotSelected.value,
           }
         }
       )
     })
 
     return {
-      variantTabItems,
+      variationAttributeEntries,
+      loadingMatrix,
     }
   },
 })
 </script>
-<style lang="scss" scoped>
-.variant-selection-accordion {
-  @apply tw-ml-4;
-  @apply tw-mr-4;
+<style lang="scss">
+.variant-selection {
+  @apply tw-p-6;
   @apply tw-bg-pv-grey-96;
+  @apply tw-rounded-lg;
 }
 </style>
