@@ -175,10 +175,13 @@ export const useProductStore = defineStore('product', () => {
         if (resultPrices.length && !resultPrices.error) {
           group.prices.value = resultPrices
 
-          const newItems = [...group.items.value]
+          // Mutating objects is a bad practices and causes unwanted side effects and breaks reactivty
+          // This is a way to create a deep clone of our object
+          const newItems = JSON.parse(JSON.stringify(group.items.value))
+
           addPricesToProductReferenceGroupItems(group.prices.value, newItems)
-          // TODO: Mutating objects is a bad practices and causes unwanted side effects and breaks reactivty
-          group.items.value = JSON.parse(JSON.stringify(newItems))
+
+          group.items.value = newItems
         } else {
           logger.error(
             `Error when fetching product consumables. Returning empty array.`,
