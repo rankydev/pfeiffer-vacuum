@@ -119,7 +119,10 @@
                 </div>
               </LoadingSpinner>
             </div>
-            <div v-if="recommendedAccessories.length" class="tw-w-full">
+            <div
+              v-if="productReferencesRecommendedAccessories.length"
+              class="tw-w-full"
+            >
               <RecommendedAccessories
                 :headline="
                   $t('product.recommended.title') + productStore.product.name
@@ -187,7 +190,8 @@ export default defineComponent({
      */
     const productStore = useProductStore()
     const variationmatrixStore = useVariationmatrixStore()
-    const { recommendedAccessories } = useProductStore()
+    const { productReferencesRecommendedAccessories } =
+      storeToRefs(productStore)
     const loadProduct = () => {
       variationmatrixStore.loadVariationMatrix(route.value.params.product)
       productStore.loadProductAccessories()
@@ -263,7 +267,7 @@ export default defineComponent({
       variationmatrixStore,
       carouselEntries,
       sortedImages,
-      recommendedAccessories,
+      productReferencesRecommendedAccessories,
     }
   },
 })

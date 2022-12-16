@@ -30,6 +30,7 @@ export const useProductStore = defineStore('product', () => {
   const productRecommendedAccessoriesPrices = ref(null)
   const productSparepartsPrices = ref(null)
   const productConsumablesPrices = ref(null)
+  const productReferences = ref(null)
 
   const userStore = useUserStore()
   const { isApprovedUser, currentUser } = storeToRefs(userStore)
@@ -136,7 +137,7 @@ export const useProductStore = defineStore('product', () => {
         requestReferenceGroup: 'SPAREPART',
       },
       recommendedAccessories: {
-        items: product.value.productReferences,
+        items: productReferencesRecommendedAccessories.value,
         prices: productRecommendedAccessoriesPrices.value,
         requestReferenceGroup: 'RECOMMENDEDACCESSORIES',
       },
@@ -181,6 +182,19 @@ export const useProductStore = defineStore('product', () => {
           )
         }
       }
+    }
+  }
+
+  const loadProductReferences = async (id) => {
+    //reset array before fetching new data
+    productReferences.value = null
+
+    const result = await axios.$get(`${config.PRODUCTS_API}/${id}/references`, {
+      params: { fields: 'FULL' },
+    })
+
+    if (result?.references?.length) {
+      productReferences.value = result.references
     }
   }
 
@@ -230,8 +244,8 @@ export const useProductStore = defineStore('product', () => {
   }
 
   const productReferencesSpareParts = computed(() => {
-    if (product.value && product.value.productReferences) {
-      return product.value.productReferences.filter(
+    if (productReferences.value) {
+      return productReferences.value.filter(
         (o) => o.referenceType === 'SPAREPART'
       )
     }
@@ -239,9 +253,18 @@ export const useProductStore = defineStore('product', () => {
   })
 
   const productReferencesConsumables = computed(() => {
-    if (product.value && product.value.productReferences) {
-      return product.value.productReferences.filter(
+    if (productReferences.value) {
+      return productReferences.value.filter(
         (o) => o.referenceType === 'CONSUMABLE'
+      )
+    }
+    return []
+  })
+
+  const productReferencesRecommendedAccessories = computed(() => {
+    if (productReferences.value) {
+      return productReferences.value.filter(
+        (o) => o.referenceType === 'RECOMMENDEDACCESSORIES'
       )
     }
     return []
@@ -353,15 +376,6 @@ export const useProductStore = defineStore('product', () => {
     return []
   }
 
-  const recommendedAccessories = computed(() => {
-    if (product.value && product.value.productReferences) {
-      return product.value.productReferences.filter(
-        (o) => o.referenceType === 'RECOMMENDEDACCESSORIES'
-      )
-    }
-    return []
-  })
-
   const loadByPath = async () => {
     const id = route.value.params.product || ''
 
@@ -377,7 +391,12 @@ export const useProductStore = defineStore('product', () => {
     // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
     product.value = null
 
-    await Promise.all([loadProduct(id), loadPrice(id)])
+    await Promise.all([
+      loadProduct(id),
+      variationmatrixStore.loadVariationMatrix(id),
+      loadPrice(id),
+      loadProductReferences(id),
+    ])
   }
 
   return {
@@ -388,14 +407,16 @@ export const useProductStore = defineStore('product', () => {
     product,
     price,
     accessoriesGroups,
-    loadByPath,
     getProducts,
     loadProductReferenceGroupsPrices,
-    loadProductAccessories,
-    recommendedAccessories,
+    productReferences,
     productReferencesSpareParts,
     productReferencesConsumables,
     productConsumablesPrices,
     productSparepartsPrices,
+    productReferencesRecommendedAccessories,
+    loadByPath,
+    loadProductAccessories,
+    getProductReferenceGroupPrices,
   }
 })
