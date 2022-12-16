@@ -189,8 +189,9 @@ export default defineComponent({
     const variationmatrixStore = useVariationmatrixStore()
     const { recommendedAccessories } = useProductStore()
     const loadProduct = () => {
-      productStore.loadProductAccessories()
       variationmatrixStore.loadVariationMatrix(route.value.params.product)
+      productStore.loadProductAccessories()
+      productStore.loadProductReferenceGroupsPrices()
       redirectOnError(productStore.loadByPath)
     }
 
@@ -204,7 +205,7 @@ export default defineComponent({
      */
     const userStore = useUserStore()
     const { isLoggedIn } = storeToRefs(userStore)
-    watch(isLoggedIn.value, loadProduct)
+    watch(isLoggedIn, loadProduct)
 
     const carouselEntries = computed(() => {
       // TODO: return recommended accessories

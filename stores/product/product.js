@@ -5,7 +5,6 @@ import {
   useRoute,
   computed,
   useContext,
-  watch,
 } from '@nuxtjs/composition-api'
 import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
@@ -34,15 +33,6 @@ export const useProductStore = defineStore('product', () => {
 
   const userStore = useUserStore()
   const { isApprovedUser, currentUser } = storeToRefs(userStore)
-
-  watch(
-    () => product.value,
-    async () => {
-      if (product.value) {
-        await loadProductReferenceGroupsPrices()
-      }
-    }
-  )
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -400,8 +390,9 @@ export const useProductStore = defineStore('product', () => {
     accessoriesGroups,
     loadByPath,
     getProducts,
-    recommendedAccessories,
+    loadProductReferenceGroupsPrices,
     loadProductAccessories,
+    recommendedAccessories,
     productReferencesSpareParts,
     productReferencesConsumables,
     productConsumablesPrices,
