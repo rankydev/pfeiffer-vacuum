@@ -39,10 +39,12 @@
               />
             </div>
             <div
-              v-if="hasVariationMatrix"
+              id="variantselection"
               class="tw-bg-pv-grey-96 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
             >
-              <VariantSelectionAccordion />
+              <LoadingSpinner :show="variationmatrixStore.loadingMatrix">
+                <VariantSelection />
+              </LoadingSpinner>
             </div>
             <div v-if="recommendedAccessories.length" class="tw-w-full">
               <RecommendedAccessories
@@ -67,12 +69,13 @@ import {
   useRoute,
   defineComponent,
   onBeforeMount,
+  onBeforeUnmount,
   watch,
   onServerPrefetch,
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
-import { useProductStore } from '~/stores/product'
+import { useProductStore, useVariationmatrixStore } from '~/stores/product'
 import { useUserStore } from '~/stores/user'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
@@ -82,7 +85,8 @@ import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { storeToRefs } from 'pinia'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
-import VariantSelectionAccordion from '~/components/molecules/VariantSelectionAccordion/VariantSelectionAccordion'
+import VariantSelection from '~/components/molecules/VariantSelection/VariantSelection'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 
 export default defineComponent({
   name: 'ProductShopPage',
@@ -91,7 +95,8 @@ export default defineComponent({
     DetailTabs,
     ImageGallery,
     RecommendedAccessories,
-    VariantSelectionAccordion,
+    VariantSelection,
+    LoadingSpinner,
   },
   setup() {
     const route = useRoute()
@@ -110,24 +115,17 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const productStore = useProductStore()
+    const variationmatrixStore = useVariationmatrixStore()
     const { recommendedAccessories } = useProductStore()
     const loadProduct = () => {
+      variationmatrixStore.loadVariationMatrix(route.value.params.product)
       productStore.getProductAccessories()
       redirectOnError(productStore.loadByPath)
     }
 
-    const hasVariationMatrix = computed(() => {
-      if (!productStore.variationMatrix) {
-        return false
-      }
-      if (!Object.keys(productStore.variationMatrix).length) {
-        return false
-      }
-      return true
-    })
-
     onServerPrefetch(loadProduct)
     onBeforeMount(loadProduct)
+    onBeforeUnmount(variationmatrixStore.clearMatrix)
     watch(route, loadProduct)
 
     /**
@@ -190,10 +188,10 @@ export default defineComponent({
       fallbackSlug,
       language,
       productStore,
+      variationmatrixStore,
       carouselEntries,
       sortedImages,
       recommendedAccessories,
-      hasVariationMatrix,
     }
   },
 })

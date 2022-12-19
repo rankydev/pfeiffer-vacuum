@@ -11,6 +11,7 @@
       {
         'button--disabled': disabled,
         'button--icon-only': !label,
+        'button--no-linebreaks': !allowLabelLineBreak,
       },
       `button--gap-${gap}`,
     ]"
@@ -80,7 +81,14 @@ export default defineComponent({
     variant: {
       type: String,
       default: 'primary',
-      validator: (val) => ['primary', 'secondary', 'inverted'].includes(val),
+      validator: (val) =>
+        [
+          'primary',
+          'secondary',
+          'variant-selection',
+          'variant-selection-preselected',
+          'inverted',
+        ].includes(val),
     },
     /**
      * Defines the button shape
@@ -139,6 +147,14 @@ export default defineComponent({
       default: '_self',
       validator: (val) => ['_self', '_blank'].includes(val),
     },
+    /**
+     * Target can be defined for button link
+     * @values _self, _blank
+     */
+    allowLabelLineBreak: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['click'],
   setup(props) {
@@ -165,11 +181,13 @@ export default defineComponent({
   @apply tw-items-center;
   @apply tw-cursor-pointer;
   @apply tw-font-bold;
-  @apply tw-justify-between;
+  @apply tw-justify-center;
   @apply tw-text-left;
 
-  @screen md {
-    @apply tw-whitespace-nowrap;
+  &--no-linebreaks {
+    @screen md {
+      @apply tw-whitespace-nowrap;
+    }
   }
 
   &--disabled {
@@ -229,6 +247,28 @@ export default defineComponent({
       }
     }
 
+    &.button--variant-selection-preselected,
+    &.button--variant-selection {
+      @apply tw-bg-pv-red;
+      @apply tw-text-pv-white;
+      @apply tw-shadow-button;
+
+      &:hover {
+        @apply tw-bg-pv-red-lighter;
+      }
+    }
+
+    &.button--variant-selection-preselected {
+      @apply tw-shadow-border-red;
+      @apply tw-bg-pv-white;
+      @apply tw-text-pv-black;
+
+      &:hover {
+        @apply tw-shadow-border-red-lighter;
+        @apply tw-text-pv-white;
+      }
+    }
+
     &.button--inverted {
       @apply tw-bg-pv-white;
       @apply tw-text-pv-black;
@@ -267,6 +307,18 @@ export default defineComponent({
         @apply tw-text-pv-red-lighter;
         @apply tw-bg-pv-red-lighter;
         @apply tw-bg-opacity-10;
+      }
+    }
+
+    &.button--variant-selection-preselected,
+    &.button--variant-selection {
+      @apply tw-shadow-border-grey-80;
+      @apply tw-bg-pv-white;
+
+      &:hover {
+        @apply tw-shadow-border-red-lighter;
+        @apply tw-bg-pv-red-lighter;
+        @apply tw-text-pv-white;
       }
     }
 
@@ -366,6 +418,10 @@ export default defineComponent({
     }
   }
 
+  // TODO: comment in if we want label text centered, too (multiline)
+  // &__label {
+  //   @apply tw-text-center;
+  // }
   &__icon {
     &--prepend {
       @apply tw-order-first;

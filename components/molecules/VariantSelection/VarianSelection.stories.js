@@ -1,4 +1,4 @@
-import VariantSelectionAccordion from './VariantSelectionAccordion.vue'
+import VariantSelection from './VariantSelection.vue'
 import { variationMatrix } from '~/.storybook/mocks/variationMatrix'
 import { useProductStore } from '~/stores/product'
 
@@ -10,8 +10,8 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/m_132 Variant Selection Accordion',
-  component: VariantSelectionAccordion,
+  title: 'Molecules/m_132 Variant Selection',
+  component: VariantSelection,
   parameters: {
     docs: {
       description: {
@@ -19,7 +19,7 @@ export default {
           'The Recommended Accessories consists of an Accordion holding a Carousel of recommended Products for the displayed Product.',
       },
       source: {
-        code: '<variant-selection-accordion v-bind="args" />',
+        code: '<variant-selection v-bind="args" />',
       },
     },
   },
@@ -28,7 +28,7 @@ export default {
 
 const Template = (args) => ({
   components: {
-    VariantSelectionAccordion,
+    VariantSelection,
   },
   setup() {
     const productStore = useProductStore()
@@ -37,7 +37,7 @@ const Template = (args) => ({
   },
   template: `
   <div class="documentation-preview">
-    <variant-selection-accordion v-bind="args" />
+    <variant-selection v-bind="args" />
   </div>
 `,
 })

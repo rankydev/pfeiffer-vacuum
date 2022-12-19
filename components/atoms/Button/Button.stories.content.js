@@ -1,4 +1,10 @@
-export const variants = ['primary', 'secondary', 'inverted']
+export const variants = [
+  'primary',
+  'secondary',
+  'inverted',
+  'variant-selection',
+  'variant-selection-preselected',
+]
 export const shapes = ['filled', 'outlined', 'plain']
 export const sizes = ['xsmall', 'small', 'normal']
 export const icon = 'arrow_forward'
@@ -29,6 +35,11 @@ export const buttonVariants = [
   ...generateContent(variants[0], [shapes[0]]),
   ...generateContent(variants[1], shapes),
   ...generateContent(variants[2], shapes),
+]
+
+export const buttonVariantsVariantSelection = [
+  ...generateContent(variants[3], shapes.slice(0, 2)),
+  ...generateContent(variants[4], shapes.slice(0, 1)),
 ]
 
 export const buttonOutlinedSecondary = {

@@ -11,6 +11,10 @@ const argTypes = {
     options: levels,
     control: { type: 'inline-radio' },
   },
+  loading: {
+    control: { type: 'boolean' },
+    defaultValue: false,
+  },
 }
 
 export default {
@@ -28,18 +32,6 @@ export default {
   <template #item_1>
     <Button label="Use whatever Component you like" />
   </template>
-  <template #item_2>
-    Everything could be here
-  </template>
-  <template #item_3>
-    disabled slot
-  </template>
-  <template #item_4>
-    Everything could be here
-  </template>
-  <template #item_5>
-  disabled slot
-  </template>
 </GenericAccordion>
 `,
       },
@@ -49,6 +41,22 @@ export default {
 }
 
 const Template = (args) => ({
+  components: { GenericAccordion, Button },
+  setup() {
+    return { args }
+  },
+  template: `
+  <div class="documentation-preview">
+    <GenericAccordion v-bind="args">
+      <template #item_1>
+        <Button label="Use whatever Component you like" />
+      </template>
+    </GenericAccordion>
+  </div>
+`,
+})
+
+const OverviewTemplate = (args) => ({
   components: { GenericAccordion, Button },
   setup() {
     return { args }
@@ -77,9 +85,13 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = {
+  accordionEntries: [accordionEntries[0]],
+}
 
-export const TabStyles = Template.bind({})
+export const Overview = OverviewTemplate.bind({})
+
+export const TabStyles = OverviewTemplate.bind({})
 TabStyles.args = {
   useTabStyles: true,
 }
