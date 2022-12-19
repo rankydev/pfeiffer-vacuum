@@ -15,6 +15,7 @@
 import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
 import Infobox from '~/components/molecules/Infobox/Infobox'
 import { useProductStore } from '~/stores/product'
+import { storeToRefs } from 'pinia'
 
 export default {
   name: 'ProductAccessories',
@@ -23,7 +24,8 @@ export default {
     AccessoriesCardCarousel,
   },
   setup() {
-    const { productReferencesSpareParts } = useProductStore()
+    const productStore = useProductStore()
+    const { productReferencesSpareParts } = storeToRefs(productStore)
 
     return {
       productReferencesSpareParts,

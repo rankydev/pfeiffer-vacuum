@@ -5,7 +5,6 @@ import {
   useRoute,
   computed,
   useContext,
-  watch,
 } from '@nuxtjs/composition-api'
 import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
@@ -31,18 +30,10 @@ export const useProductStore = defineStore('product', () => {
   const productRecommendedAccessoriesPrices = ref(null)
   const productSparepartsPrices = ref(null)
   const productConsumablesPrices = ref(null)
+  const productReferences = ref(null)
 
   const userStore = useUserStore()
   const { isApprovedUser, currentUser } = storeToRefs(userStore)
-
-  watch(
-    () => product.value,
-    async () => {
-      if (product.value) {
-        await loadProductReferenceGroupsPrices()
-      }
-    }
-  )
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -136,18 +127,18 @@ export const useProductStore = defineStore('product', () => {
   const productReferenceGroupsSwitch = (referenceGroup) =>
     ({
       consumables: {
-        items: productReferencesConsumables.value,
-        prices: productConsumablesPrices.value,
+        items: productReferences,
+        prices: productConsumablesPrices,
         requestReferenceGroup: 'CONSUMABLE',
       },
       spareParts: {
-        items: productReferencesSpareParts.value,
-        prices: productSparepartsPrices.value,
+        items: productReferences,
+        prices: productSparepartsPrices,
         requestReferenceGroup: 'SPAREPART',
       },
       recommendedAccessories: {
-        items: product.value.productReferences,
-        prices: productRecommendedAccessoriesPrices.value,
+        items: productReferences,
+        prices: productRecommendedAccessoriesPrices,
         requestReferenceGroup: 'RECOMMENDEDACCESSORIES',
       },
     }[referenceGroup])
@@ -165,6 +156,7 @@ export const useProductStore = defineStore('product', () => {
 
     productConsumablesPrices.value = []
     productSparepartsPrices.value = []
+    productRecommendedAccessoriesPrices.value = []
 
     const referenceGroupsToLoad = [
       'consumables',
@@ -175,15 +167,21 @@ export const useProductStore = defineStore('product', () => {
     for (const referenceGroup of referenceGroupsToLoad) {
       const group = productReferenceGroupsSwitch(referenceGroup)
 
-      if (group.items.length) {
+      if (group.items.value.length) {
         const resultPrices = await getProductReferenceGroupPrices(
           group.requestReferenceGroup
         )
 
         if (resultPrices.length && !resultPrices.error) {
-          group.prices = resultPrices
+          group.prices.value = resultPrices
 
-          addPricesToProductReferenceGroupItems(group.prices, group.items)
+          // Mutating objects is a bad practices and causes unwanted side effects and breaks reactivty
+          // This is a way to create a deep clone of our object
+          const newItems = JSON.parse(JSON.stringify(group.items.value))
+
+          addPricesToProductReferenceGroupItems(group.prices.value, newItems)
+
+          group.items.value = newItems
         } else {
           logger.error(
             `Error when fetching product consumables. Returning empty array.`,
@@ -191,6 +189,19 @@ export const useProductStore = defineStore('product', () => {
           )
         }
       }
+    }
+  }
+
+  const loadProductReferences = async (id) => {
+    //reset array before fetching new data
+    productReferences.value = null
+
+    const result = await axios.$get(`${config.PRODUCTS_API}/${id}/references`, {
+      params: { fields: 'FULL' },
+    })
+
+    if (result?.references?.length) {
+      productReferences.value = result.references
     }
   }
 
@@ -240,8 +251,8 @@ export const useProductStore = defineStore('product', () => {
   }
 
   const productReferencesSpareParts = computed(() => {
-    if (product.value && product.value.productReferences) {
-      return product.value.productReferences.filter(
+    if (productReferences.value) {
+      return productReferences.value.filter(
         (o) => o.referenceType === 'SPAREPART'
       )
     }
@@ -249,9 +260,18 @@ export const useProductStore = defineStore('product', () => {
   })
 
   const productReferencesConsumables = computed(() => {
-    if (product.value && product.value.productReferences) {
-      return product.value.productReferences.filter(
+    if (productReferences.value) {
+      return productReferences.value.filter(
         (o) => o.referenceType === 'CONSUMABLE'
+      )
+    }
+    return []
+  })
+
+  const productReferencesRecommendedAccessories = computed(() => {
+    if (productReferences.value) {
+      return productReferences.value.filter(
+        (o) => o.referenceType === 'RECOMMENDEDACCESSORIES'
       )
     }
     return []
@@ -363,15 +383,6 @@ export const useProductStore = defineStore('product', () => {
     return []
   }
 
-  const recommendedAccessories = computed(() => {
-    if (product.value && product.value.productReferences) {
-      return product.value.productReferences.filter(
-        (o) => o.referenceType === 'RECOMMENDEDACCESSORIES'
-      )
-    }
-    return []
-  })
-
   const loadByPath = async () => {
     const id = route.value.params.product || ''
 
@@ -387,7 +398,12 @@ export const useProductStore = defineStore('product', () => {
     // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
     product.value = null
 
-    await Promise.all([loadProduct(id), loadPrice(id)])
+    await Promise.all([
+      loadProduct(id),
+      variationmatrixStore.loadVariationMatrix(id),
+      loadPrice(id),
+      loadProductReferences(id),
+    ])
   }
 
   return {
@@ -398,13 +414,16 @@ export const useProductStore = defineStore('product', () => {
     product,
     price,
     accessoriesGroups,
-    loadByPath,
     getProducts,
-    recommendedAccessories,
-    loadProductAccessories,
+    loadProductReferenceGroupsPrices,
+    productReferences, // please note: this NEEDS to be exported, even though it is not used outside. Dependent computeds below will not work if removed. This may be a pinia bug.
     productReferencesSpareParts,
     productReferencesConsumables,
     productConsumablesPrices,
     productSparepartsPrices,
+    productReferencesRecommendedAccessories,
+    loadByPath,
+    loadProductAccessories,
+    getProductReferenceGroupPrices,
   }
 })

@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { storeToRefs } from 'pinia'
 import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
 import { useProductStore } from '~/stores/product'
 
@@ -20,7 +21,8 @@ export default {
     AccessoriesCardCarousel,
   },
   setup() {
-    const { productReferencesConsumables } = useProductStore()
+    const productStore = useProductStore()
+    const { productReferencesConsumables } = storeToRefs(productStore)
 
     return {
       productReferencesConsumables,

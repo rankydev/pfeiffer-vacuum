@@ -50,6 +50,7 @@ import Button from '~/components/atoms/Button/Button'
 import DetailTabContent from './DetailTabContent/DetailTabContent'
 import getSortedFeatures from './partials/getSortedFeatures'
 import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
@@ -83,11 +84,13 @@ export default defineComponent({
     const { i18n, app } = useContext()
     const { isMobile } = app.$breakpoints
 
+    const productStore = useProductStore()
     const {
       product,
       productReferencesSpareParts,
       productReferencesConsumables,
-    } = useProductStore()
+      accessoriesGroups,
+    } = storeToRefs(productStore)
 
     let lastTabSelected = ref('productInfo')
     const tabs = ref([
@@ -154,15 +157,6 @@ export default defineComponent({
       return props.references.filter((o) => o.referenceType === 'CONSUMABLE')
     })
 
-    const hasAccessories = computed(() => {
-      if (product && product.productReferences) {
-        return product.productReferences.filter(
-          (o) => o.referenceType === 'ACCESSORIES'
-        )
-      }
-      return []
-    })
-
     const selectTab = (code) => {
       lastTabSelected.value = code
     }
@@ -170,19 +164,19 @@ export default defineComponent({
     const isDisabled = (code) => {
       switch (code) {
         case 'technicalData':
-          return getSortedFeatures(product, 'TechnicalData')?.length === 0
+          return getSortedFeatures(product.value, 'TechnicalData')?.length === 0
         case 'dimensions':
           return (
-            !product ||
-            (!product.dimensionImage &&
+            !product.value ||
+            (!product.value.dimensionImage &&
               getSortedFeatures(product, 'Dimension')?.length === 0)
           )
         case 'accessories':
-          return !hasAccessories.value?.length
+          return !accessoriesGroups.value?.length
         case 'consumables':
-          return !productReferencesConsumables.length
+          return !productReferencesConsumables.value?.length
         case 'spareparts':
-          return !productReferencesSpareParts.length
+          return !productReferencesSpareParts.value?.length
         case 'service':
           return true
         default:
@@ -196,7 +190,6 @@ export default defineComponent({
       mobileAccordionItems,
       spareParts,
       consumables,
-      hasAccessories,
       selectTab,
       isDisabled,
       i18n,
