@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, useContext } from '@nuxtjs/composition-api'
 import { useAxiosForEmpolis } from '~/composables/useAxiosForEmpolis'
+import { useLanguageSwitch } from '~/composables/useLanguageSwitch'
 
 const PDP_DOCUMENT_LIMIT = 500
 
@@ -9,6 +10,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
 
   const { axios } = useAxiosForEmpolis()
   const { i18n } = useContext()
+  const { onLanguageSwitched } = useLanguageSwitch()
 
   const getProductDownloads = async (orderNumber) => {
     if (!productDownloads.value.has(orderNumber)) {
@@ -18,7 +20,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
           ProductID: [orderNumber],
         },
         limit: PDP_DOCUMENT_LIMIT,
-        language: i18n.locale,
+        language: i18n.locale === 'de' ? 'de' : 'en',
       })
 
       if (files && Array.isArray(files.results) && !files.error) {
@@ -33,6 +35,10 @@ export const useEmpolisStore = defineStore('empolis', () => {
     }
     return productDownloads.value.get(orderNumber)
   }
+
+  onLanguageSwitched(() => {
+    productDownloads.value = new Map()
+  })
 
   return {
     productDownloads,
