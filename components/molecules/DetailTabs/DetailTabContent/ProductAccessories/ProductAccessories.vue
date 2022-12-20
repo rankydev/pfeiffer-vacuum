@@ -138,7 +138,7 @@ export default {
 
     const productStore = useProductStore()
     const accessories = computed(() => {
-      return productStore.accessoriesGroups || []
+      return productStore.productAccessoriesGroups || []
     })
 
     const filteredAccessories = computed(() => {

@@ -89,7 +89,7 @@ export default defineComponent({
       product,
       productReferencesSpareParts,
       productReferencesConsumables,
-      accessoriesGroups,
+      productAccessoriesGroups,
     } = storeToRefs(productStore)
 
     let lastTabSelected = ref('productInfo')
@@ -172,7 +172,7 @@ export default defineComponent({
               getSortedFeatures(product, 'Dimension')?.length === 0)
           )
         case 'accessories':
-          return !accessoriesGroups.value?.length
+          return !productAccessoriesGroups.value?.length
         case 'consumables':
           return !productReferencesConsumables.value?.length
         case 'spareparts':
