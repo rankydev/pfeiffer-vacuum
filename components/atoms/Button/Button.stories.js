@@ -7,6 +7,7 @@ import {
   icon,
   label,
 } from '~/components/atoms/Button/Button.stories.content'
+import { buttonVariantsVariantSelection } from './Button.stories.content'
 
 export default {
   title: 'Atoms/a_100 Button',
@@ -34,6 +35,7 @@ export default {
     },
     prependIcon: { control: { type: 'boolean' } },
     disabled: { control: { type: 'boolean' } },
+    allowLabelLineBreak: { control: { type: 'boolean' } },
   },
 }
 
@@ -60,16 +62,16 @@ Default.args = {
   label: label,
 }
 
-const OverviewTemplate = () => ({
+const OverviewTemplate = (args) => ({
   components: { Button },
   setup() {
-    return { buttonVariants }
+    return { args }
   },
   template: `
   <div class="documentation-preview">
     <div style="display: flex;">
       <div
-        v-for="(col, index) in buttonVariants"
+        v-for="(col, index) in args"
         :key="index"
         :style="col[0].variant === 'inverted' && 'background-color: #000;'"
       >
@@ -88,3 +90,7 @@ const OverviewTemplate = () => ({
 })
 
 export const Overview = OverviewTemplate.bind({})
+Overview.args = buttonVariants
+
+export const VariantSelectionButtons = OverviewTemplate.bind({})
+VariantSelectionButtons.args = buttonVariantsVariantSelection
