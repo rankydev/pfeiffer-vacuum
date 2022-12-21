@@ -4,6 +4,7 @@
   "productInformation": "제품 정보",
   "technicalData": "기술 데이터",
   "spareParts": "예비 부품",
+  "previousVersionsSpareParts": "이는 현재 당사 버전에 대한 예비 부품만 제공합니다. 구형 제품의 경우 파이퍼 베큠 서비스에 문의하십시오. 다운로드 섹션의 운영 매뉴얼을 확인하여 요구 사항에 맞는 예비 부품을 식별하거나 파이퍼 베큠에 직접 문의하십시오.",
   "service": "서비스",
   "selectVariant": "변형을 선택하십시오",
   "file": {
