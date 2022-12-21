@@ -139,7 +139,8 @@ export default defineComponent({
      * react to changing user login status
      */
     const userStore = useUserStore()
-    const { isApprovedUser } = storeToRefs(userStore)
+    const { isLoggedIn, isApprovedUser } = storeToRefs(userStore)
+    watch(isLoggedIn, loadProduct)
     watch(isApprovedUser, loadProduct)
 
     const carouselEntries = computed(() => {

@@ -46,7 +46,7 @@
         </template>
       </div>
       <div>
-        <template v-if="loggedIn && !isApprovedUser">
+        <template v-if="isLoggedIn && !isApprovedUser">
           <i18n
             :path="`product.userStatus.${userStatusType}.priceInfo.text`"
             class="accessories-card__login-link"
@@ -63,7 +63,7 @@
             </template>
           </i18n>
         </template>
-        <template v-else-if="!loggedIn">
+        <template v-else-if="!isLoggedIn">
           <p class="accessories-card__login-link">
             {{ $t('product.login.loginToSeePrices.part1') }}
             <!-- eslint-disable vue/no-v-html -->
@@ -113,6 +113,7 @@ import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'AccessoriesCard',
@@ -141,26 +142,34 @@ export default defineComponent({
     const { imageUrl } = useImageHelper()
 
     const quantity = ref(1)
+    const {
+      isLoggedIn,
+      isApprovedUser,
+      isLeadUser,
+      isOpenUser,
+      isRejectedUser,
+    } = storeToRefs(userStore)
 
     const hasAddToListButton = computed(() => {
       // TODO: Once OCI is implemented extend this computed again
       // return userStore.isLoggedIn && !ociStore.isOciUser
-      return userStore.isLoggedIn
+      return isLoggedIn.value
     })
     const isPriceVisible = computed(() => {
-      return product.value?.price?.value && userStore.isApprovedUser
+      return product.value?.price?.value && isApprovedUser.value
     })
     const hasCustomerPrice = computed(() => {
       return !!product.value.price?.customerPrice
     })
     const productPrice = computed(() => {
-      if (product.value.price) return product.value?.price?.formattedValue || ''
+      if (product.value.price && product.value.price.value)
+        return product.value?.price?.formattedValue || ''
       return i18n.t('product.priceOnRequest')
     })
     const userStatusType = computed(() => {
-      if (userStore.isLeadUser) return 'lead'
-      if (userStore.isOpenUser) return 'open'
-      if (userStore.isRejectedUser) return 'rejected'
+      if (isLeadUser.value) return 'lead'
+      if (isOpenUser.value) return 'open'
+      if (isRejectedUser.value) return 'rejected'
     })
 
     const productName = computed(() => {
@@ -186,14 +195,6 @@ export default defineComponent({
       await userStore.login()
     }
 
-    const loggedIn = computed(() => {
-      return userStore.isLoggedIn
-    })
-
-    const isApprovedUser = computed(() => {
-      return userStore.isApprovedUser
-    })
-
     return {
       context,
       imageUrl,
@@ -208,7 +209,7 @@ export default defineComponent({
       addToCart,
       addToList,
       login,
-      loggedIn,
+      isLoggedIn,
       isApprovedUser,
       sanitizer,
       i18n,

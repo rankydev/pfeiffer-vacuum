@@ -101,7 +101,6 @@ export const useProductStore = defineStore('product', () => {
       const recommendedAccs = productReferences.value.filter(
         (o) => o.referenceType === 'RECOMMENDEDACCESSORIES'
       )
-
       mapPricesToProductReferenceGroupItems(
         productRecommendedAccessoriesPrices,
         recommendedAccs
@@ -115,9 +114,32 @@ export const useProductStore = defineStore('product', () => {
   const productAccessoriesGroups = computed(() => {
     if (productAccessoriesPrices.value && accessoriesGroups.value) {
       return accessoriesGroups.value.map((accessoriesGroup) => {
-        if (!accessoriesGroup.groups) return
-        const groupsArr = accessoriesGroup.groups.map((group) => {
-          const itemsArr = group.references.map((accessoryItem) => {
+        if (!accessoriesGroup.groups && !accessoriesGroup.references) return
+        if (accessoriesGroup.groups) {
+          const groupsArr = accessoriesGroup.groups.map((group) => {
+            const itemsArr = group.references.map((accessoryItem) => {
+              const priceArr = productAccessoriesPrices.value.filter(
+                (priceObj) => accessoryItem.target?.code === priceObj?.code
+              )
+
+              if (priceArr.length)
+                accessoryItem.target.price = priceArr[0].price
+
+              return accessoryItem
+            })
+            return {
+              name: group?.name ? group?.name : '',
+              references: itemsArr,
+            }
+          })
+          return {
+            name: accessoriesGroup?.name ? accessoriesGroup?.name : '',
+            groups: groupsArr,
+          }
+        }
+
+        if (accessoriesGroup.references) {
+          const itemsArr = accessoriesGroup.references.map((accessoryItem) => {
             const priceArr = productAccessoriesPrices.value.filter(
               (priceObj) => accessoryItem.target?.code === priceObj?.code
             )
@@ -126,9 +148,11 @@ export const useProductStore = defineStore('product', () => {
 
             return accessoryItem
           })
-          return { name: group.name, references: itemsArr }
-        })
-        return { name: accessoriesGroup.name, groups: groupsArr }
+          return {
+            name: accessoriesGroup?.name ? accessoriesGroup?.name : '',
+            references: itemsArr,
+          }
+        }
       })
     }
 
@@ -218,7 +242,8 @@ export const useProductStore = defineStore('product', () => {
     // don't load prices if the product hasn't consumables, or spare parts
     if (
       !productReferencesSpareParts.value.length &&
-      !productReferencesConsumables.value.length
+      !productReferencesConsumables.value.length &&
+      !productReferencesRecommendedAccessories.value.length
     )
       return
 
@@ -319,7 +344,7 @@ export const useProductStore = defineStore('product', () => {
     referenceGroupItems
   ) => {
     if (pricesArr.value) {
-      referenceGroupItems.map((item) => {
+      return referenceGroupItems.map((item) => {
         const priceArr = pricesArr.value.filter(
           (priceObj) => item.target?.code === priceObj?.code
         )
@@ -327,6 +352,7 @@ export const useProductStore = defineStore('product', () => {
         if (priceArr.length) return (item.target.price = priceArr[0].price)
       })
     }
+    return referenceGroupItems
   }
 
   const getProductReferenceGroupPrices = async (referenceGroup) => {
