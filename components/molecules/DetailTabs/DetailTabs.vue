@@ -50,6 +50,7 @@ import Button from '~/components/atoms/Button/Button'
 import DetailTabContent from './DetailTabContent/DetailTabContent'
 import getSortedFeatures from './partials/getSortedFeatures'
 import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
@@ -83,7 +84,13 @@ export default defineComponent({
     const { i18n, app } = useContext()
     const { isMobile } = app.$breakpoints
 
-    const { product } = useProductStore()
+    const productStore = useProductStore()
+    const {
+      product,
+      productReferencesSpareParts,
+      productReferencesConsumables,
+      productAccessoriesGroups,
+    } = storeToRefs(productStore)
 
     let lastTabSelected = ref('productInfo')
     const tabs = ref([
@@ -150,33 +157,6 @@ export default defineComponent({
       return props.references.filter((o) => o.referenceType === 'CONSUMABLE')
     })
 
-    const hasConsumables = computed(() => {
-      if (product && product.productReferences) {
-        return product.productReferences.filter(
-          (o) => o.referenceType === 'CONSUMABLE'
-        )
-      }
-      return []
-    })
-
-    const hasSpareParts = computed(() => {
-      if (product && product.productReferences) {
-        return product.productReferences.filter(
-          (o) => o.referenceType === 'SPAREPART'
-        )
-      }
-      return []
-    })
-
-    const hasAccessories = computed(() => {
-      if (product && product.productReferences) {
-        return product.productReferences.filter(
-          (o) => o.referenceType === 'ACCESSORIES'
-        )
-      }
-      return []
-    })
-
     const selectTab = (code) => {
       lastTabSelected.value = code
     }
@@ -184,19 +164,19 @@ export default defineComponent({
     const isDisabled = (code) => {
       switch (code) {
         case 'technicalData':
-          return getSortedFeatures(product, 'TechnicalData')?.length === 0
+          return getSortedFeatures(product.value, 'TechnicalData')?.length === 0
         case 'dimensions':
           return (
-            !product ||
-            (!product.dimensionImage &&
+            !product.value ||
+            (!product.value.dimensionImage &&
               getSortedFeatures(product, 'Dimension')?.length === 0)
           )
         case 'accessories':
-          return !hasAccessories.value?.length
+          return !productAccessoriesGroups.value?.length
         case 'consumables':
-          return !hasConsumables.value?.length
+          return !productReferencesConsumables.value?.length
         case 'spareparts':
-          return !hasSpareParts.value?.length
+          return !productReferencesSpareParts.value?.length
         case 'service':
           return true
         default:
@@ -210,9 +190,6 @@ export default defineComponent({
       mobileAccordionItems,
       spareParts,
       consumables,
-      hasConsumables,
-      hasSpareParts,
-      hasAccessories,
       selectTab,
       isDisabled,
       i18n,

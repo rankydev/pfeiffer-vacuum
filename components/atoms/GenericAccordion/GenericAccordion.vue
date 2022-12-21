@@ -150,7 +150,8 @@ export default defineComponent({
 
   &__label {
     @apply tw-block;
-    @apply tw-truncate;
+    @apply tw-whitespace-normal;
+    @apply tw-text-left;
   }
 
   &__icon {

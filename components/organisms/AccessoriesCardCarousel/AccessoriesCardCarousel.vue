@@ -15,6 +15,7 @@
           class="accessories-card-carousel__card"
         >
           <h3
+            v-if="useSubHeadlines"
             class="accessories-card-carousel__card-headline"
             :title="entry.type ? entry.type.name : ''"
           >
@@ -72,6 +73,13 @@ export default defineComponent({
       required: true,
       type: Array,
       default: () => [],
+    },
+    /**
+     * Decide if there should be subheadlines above AccessoriesCards
+     */
+    useSubHeadlines: {
+      type: Boolean,
+      default: true,
     },
   },
   setup() {

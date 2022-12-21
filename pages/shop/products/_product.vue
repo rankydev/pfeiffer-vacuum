@@ -38,8 +38,13 @@
                 fallback-image-icon-size="xxlarge"
               />
             </div>
-            <VariantSelection />
-            <div v-if="recommendedAccessories.length" class="tw-w-full">
+            <div id="variantselection">
+              <VariantSelection />
+            </div>
+            <div
+              v-if="productReferencesRecommendedAccessories.length"
+              class="tw-w-full"
+            >
               <RecommendedAccessories
                 :headline="
                   $t('product.recommended.title') + productStore.product.name
@@ -107,10 +112,14 @@ export default defineComponent({
      */
     const productStore = useProductStore()
     const variationmatrixStore = useVariationmatrixStore()
-    const { recommendedAccessories } = useProductStore()
+    const { productReferencesRecommendedAccessories } =
+      storeToRefs(productStore)
+
+    // TODO: think about debouncing this since it could be called multiple times by the watchers
     const loadProduct = () => {
       variationmatrixStore.loadVariationMatrix(route.value.params.product)
-      productStore.getProductAccessories()
+      productStore.loadProductAccessories()
+      productStore.loadProductReferenceGroupsPrices()
       redirectOnError(productStore.loadByPath)
     }
 
@@ -123,8 +132,8 @@ export default defineComponent({
      * react to changing user login status
      */
     const userStore = useUserStore()
-    const { isLoggedIn } = storeToRefs(userStore)
-    watch(isLoggedIn, loadProduct)
+    const { isApprovedUser } = storeToRefs(userStore)
+    watch(isApprovedUser, loadProduct)
 
     const carouselEntries = computed(() => {
       // TODO: return recommended accessories
@@ -182,7 +191,7 @@ export default defineComponent({
       variationmatrixStore,
       carouselEntries,
       sortedImages,
-      recommendedAccessories,
+      productReferencesRecommendedAccessories,
     }
   },
 })

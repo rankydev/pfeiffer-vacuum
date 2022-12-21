@@ -87,6 +87,7 @@ export default {
 
   &__primary {
     @apply tw-text-sm;
+    @apply tw-font-bold;
     @apply tw-text-pv-grey-16;
   }
 

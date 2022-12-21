@@ -256,6 +256,17 @@ export default defineComponent({
 
         const actions = [
           {
+            desktop: true,
+            mobile: false,
+            icon: 'file_download',
+            variant: 'secondary',
+            shape: 'outlined',
+            href: `${PATH_EMPOLIS}/${file.downloadLink}`,
+            target: '_blank',
+          },
+          {
+            desktop: false,
+            mobile: true,
             label: i18n.t('product.download'),
             icon: 'file_download',
             variant: 'secondary',
@@ -318,7 +329,6 @@ export default defineComponent({
     @apply tw-flex-col;
 
     @screen md {
-      @apply tw-mb-6;
       @apply tw-flex-row;
     }
 
@@ -334,12 +344,13 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-flex-wrap;
     @apply tw-gap-2;
-    @apply tw-mb-6;
+    @apply tw-mt-6;
   }
 
   &__result {
     @apply tw-text-pv-grey-48;
     @apply tw-text-xs;
+    @apply tw-mt-6;
   }
 
   &__downloads-icon {
