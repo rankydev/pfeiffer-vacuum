@@ -4,6 +4,7 @@
   "productInformation": "Product Information",
   "technicalData": "Technical Data",
   "spareParts": "Spare parts",
+  "previousVersionsSpareParts": "This will only provide spare parts for our current version. For older products please contact the Pfeiffer Vacuum Service. Please check the operating manual in the downloads section to identify the right spare part for your requirements or contact Pfeiffer Vacuum directly.",
   "service": "Service",
   "selectVariant": "Please select variant",
   "downloads": "Downloads",

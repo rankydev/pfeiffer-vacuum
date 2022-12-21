@@ -14,8 +14,8 @@
     />
 
     <ProductAccessories v-if="lastTabSelected === 'accessories'" />
-    <div v-if="lastTabSelected === 'consumables'"></div>
-    <div v-if="lastTabSelected === 'spareparts'"></div>
+    <ProductConsumables v-if="lastTabSelected === 'consumables'" />
+    <ProductSpareParts v-if="lastTabSelected === 'spareparts'" />
     <!-- Service Tab should not be visible in MVP -->
     <div v-if="false">Service</div>
     <ProductFiles v-if="lastTabSelected === 'downloads'" />
@@ -31,6 +31,8 @@ import Dimensions from './Dimensions/Dimensions'
 import getSortedFeatures from '../partials/getSortedFeatures'
 import ProductFiles from './ProductFiles/ProductFiles'
 import ProductAccessories from './ProductAccessories/ProductAccessories'
+import ProductConsumables from './ProductConsumables/ProductConsumables'
+import ProductSpareParts from './ProductSpareParts/ProductSpareParts'
 
 export default defineComponent({
   components: {
@@ -39,6 +41,8 @@ export default defineComponent({
     Dimensions,
     ProductFiles,
     ProductAccessories,
+    ProductConsumables,
+    ProductSpareParts,
   },
   props: {
     lastTabSelected: {
