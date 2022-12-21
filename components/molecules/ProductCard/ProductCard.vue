@@ -17,7 +17,7 @@
     </template>
     <template #heading>
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-html="sanitizer.clear(name) || ''" />
+      <span v-html="sanitizer.inline(name) || ''" />
     </template>
     <template #description>
       <!-- eslint-disable-next-line vue/no-v-html -->
@@ -84,6 +84,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.search-results-highlight {
+  @apply tw-text-pv-red;
+  @apply tw-not-italic;
+  @apply tw-text-lg;
+  @apply tw-font-bold;
+}
+
 .product-card {
   &--master {
     @apply tw-border-2;
