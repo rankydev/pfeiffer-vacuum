@@ -183,7 +183,6 @@ describe('useCategoryStore', () => {
 
       expect(categoryStore.breadcrumb).toStrictEqual([
         entries[0],
-        rootCat,
         ...mockRootCategory.categoryPath.map(({ name, id }) => ({
           name,
           href: `${mockLocalePath}/${id}`,
