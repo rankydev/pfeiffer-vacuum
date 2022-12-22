@@ -25,10 +25,9 @@ export const useProductStore = defineStore('product', () => {
   const product = ref(null)
   const reqId = ssrRef(null)
   const price = ref(null)
-  const accessoriesGroups = ref(null)
-  const productAccessoriesPrices = ref(null)
-  const productReferences = ref(null)
-  const productReferencesPrices = ref(null)
+  const accessoriesGroups = ref([])
+  const productReferences = ref([])
+  const productReferencesPrices = ref([])
 
   const userStore = useUserStore()
   const { isApprovedUser, currentUser } = storeToRefs(userStore)
@@ -102,13 +101,13 @@ export const useProductStore = defineStore('product', () => {
   })
 
   const productAccessoriesGroups = computed(() => {
-    if (productAccessoriesPrices.value && accessoriesGroups.value) {
+    if (productReferencesPrices.value && accessoriesGroups.value) {
       return accessoriesGroups.value.map((accessoriesGroup) => {
         if (!accessoriesGroup.groups && !accessoriesGroup.references) return
         if (accessoriesGroup.groups) {
           const groupsArr = accessoriesGroup.groups.map((group) => {
             const itemsArr = group.references.map((accessoryItem) => {
-              const priceArr = productAccessoriesPrices.value.filter(
+              const priceArr = productReferencesPrices.value.filter(
                 (priceObj) => accessoryItem.target?.code === priceObj?.code
               )
 
@@ -130,7 +129,7 @@ export const useProductStore = defineStore('product', () => {
 
         if (accessoriesGroup.references) {
           const itemsArr = accessoriesGroup.references.map((accessoryItem) => {
-            const priceArr = productAccessoriesPrices.value.filter(
+            const priceArr = productReferencesPrices.value.filter(
               (priceObj) => accessoryItem.target?.code === priceObj?.code
             )
 
@@ -256,16 +255,6 @@ export const useProductStore = defineStore('product', () => {
     )
 
     if (typeof result === 'object' && !result.error) {
-      //reset array before fetching new data
-      productAccessoriesPrices.value = []
-
-      // TODO: dont do that here. Do it together with all others
-      const resultAccessoriesPrices = await getProductReferenceGroupPrices(
-        'ACCESSORIES'
-      )
-
-      productAccessoriesPrices.value = resultAccessoriesPrices
-
       if (!Array.isArray(result.groups)) {
         result.groups = []
       }
@@ -353,6 +342,8 @@ export const useProductStore = defineStore('product', () => {
       variationmatrixStore.loadVariationMatrix(id),
       loadPrice(id),
       loadProductReferences(id),
+      loadProductAccessories(),
+      loadProductReferenceGroupsPrices(),
     ])
   }
 

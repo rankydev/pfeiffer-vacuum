@@ -124,9 +124,7 @@ export default defineComponent({
 
     // TODO: think about debouncing this since it could be called multiple times by the watchers
     const loadProduct = () => {
-      variationmatrixStore.loadVariationMatrix(route.value.params.product)
-      productStore.loadProductAccessories()
-      productStore.loadProductReferenceGroupsPrices()
+      variationmatrixStore.loadVariationMatrix(route.value.params.product) // TODO: should be in store
       redirectOnError(productStore.loadByPath)
     }
 
@@ -140,8 +138,8 @@ export default defineComponent({
      */
     const userStore = useUserStore()
     const { isLoggedIn, isApprovedUser } = storeToRefs(userStore)
-    watch(isLoggedIn, loadProduct)
-    watch(isApprovedUser, loadProduct)
+    watch(isLoggedIn, productStore.loadProductReferenceGroupsPrices)
+    watch(isApprovedUser, productStore.loadProductReferenceGroupsPrices)
 
     const carouselEntries = computed(() => {
       // TODO: return recommended accessories
