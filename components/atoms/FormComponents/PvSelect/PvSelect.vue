@@ -15,7 +15,10 @@
       :components="{ Deselect }"
       deselect-from-dropdown
       :close-on-select="!multiple"
-      @input="validation.validateInput()"
+      @blur="
+        $emit('focus', false)
+        validation.validateInput()
+      "
     >
       <template #search="{ attributes, events }">
         <div class="pv-select__search-wrapper">
@@ -119,7 +122,22 @@ export default defineComponent({
     Checkbox,
   },
   props: propsData,
-  emits: ['input'],
+  emits: [
+    /**
+     * Fired on keystroke.
+     *
+     * @event change
+     * @property {string} value
+     */
+    'input',
+    /**
+     * Fired on focus and blur.
+     *
+     * @event focus
+     * @property {boolean} isFocused
+     */
+    'focus',
+  ],
   setup(props, { emit }) {
     const internalValue = computed({
       get: () => props.value,

@@ -56,7 +56,9 @@ export default {
     const normalValues = computed(() =>
       props.tableData.entries.filter(
         (val, i) =>
-          ![props.primary.position, props.secondary.position].includes(i)
+          ![props.primary.position, props.secondary.position].includes(i) &&
+          ((val && !val.hasOwnProperty('text')) ||
+            (val.hasOwnProperty('text') && val.text))
       )
     )
 
