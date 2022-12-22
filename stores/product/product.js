@@ -61,88 +61,82 @@ export const useProductStore = defineStore('product', () => {
     twitterImage: null,
   }))
 
-  const getReferenceGroupWithPrices = (type) => {
-    if (!productReferences.value) {
-      return []
-    }
-
-    return productReferences.value
-      .filter((o) => o.referenceType === type)
-      .map((item) => {
-        const foundPrice = productReferencesPrices.value?.find((priceItem) => {
-          return priceItem.code === item.target.code
-        })
-        if (foundPrice) {
-          return {
-            ...item,
-            target: {
-              ...item.target,
-              price: foundPrice.price,
-            },
-          }
-        }
-        return item
-      })
-  }
-
   const productReferencesSpareParts = computed(() => {
-    return getReferenceGroupWithPrices('SPAREPART')
+    return getReferenceGroupWithPrices(productReferences.value, 'SPAREPART')
   })
 
   const productReferencesConsumables = computed(() => {
-    return getReferenceGroupWithPrices('CONSUMABLE')
+    return getReferenceGroupWithPrices(productReferences.value, 'CONSUMABLE')
   })
 
   const productReferencesRecommendedAccessories = computed(() => {
-    return getReferenceGroupWithPrices('RECOMMENDEDACCESSORIES')
+    return getReferenceGroupWithPrices(
+      productReferences.value,
+      'RECOMMENDEDACCESSORIES'
+    )
   })
 
-  const productAccessoriesGroups = computed(() => {
-    if (productReferencesPrices.value && accessoriesGroups.value) {
-      return accessoriesGroups.value.map((accessoriesGroup) => {
-        if (!accessoriesGroup.groups && !accessoriesGroup.references) return
-        if (accessoriesGroup.groups) {
-          const groupsArr = accessoriesGroup.groups.map((group) => {
-            const itemsArr = group.references.map((accessoryItem) => {
-              const priceArr = productReferencesPrices.value.filter(
-                (priceObj) => accessoryItem.target?.code === priceObj?.code
-              )
-
-              if (priceArr.length)
-                accessoryItem.target.price = priceArr[0].price
-
-              return accessoryItem
-            })
-            return {
-              name: group?.name ? group?.name : '',
-              references: itemsArr,
-            }
-          })
-          return {
-            name: accessoriesGroup?.name ? accessoriesGroup?.name : '',
-            groups: groupsArr,
-          }
-        }
-
-        if (accessoriesGroup.references) {
-          const itemsArr = accessoriesGroup.references.map((accessoryItem) => {
-            const priceArr = productReferencesPrices.value.filter(
-              (priceObj) => accessoryItem.target?.code === priceObj?.code
-            )
-
-            if (priceArr.length) accessoryItem.target.price = priceArr[0].price
-
-            return accessoryItem
-          })
-          return {
-            name: accessoriesGroup?.name ? accessoriesGroup?.name : '',
-            references: itemsArr,
-          }
-        }
-      })
+  const getReferenceGroupWithPrices = (group, type = 'ACCESSORIES') => {
+    if (!group) {
+      return []
     }
 
-    return []
+    return getReferencesWithMappedPrices(
+      group.filter((o) => o.referenceType === type)
+    )
+  }
+
+  const getReferencesWithMappedPrices = (rererences) => {
+    if (!rererences) {
+      return []
+    }
+
+    return rererences.map((item) => {
+      const foundPrice = productReferencesPrices.value?.find((priceItem) => {
+        return priceItem.code === item.target.code
+      })
+      if (foundPrice) {
+        return {
+          ...item,
+          target: {
+            ...item.target,
+            price: foundPrice.price,
+          },
+        }
+      }
+      return item
+    })
+  }
+
+  const productAccessoriesGroups = computed(() => {
+    if (!productReferencesPrices.value || !accessoriesGroups.value) {
+      return []
+    }
+
+    return accessoriesGroups.value.map((accessoriesGroup) => {
+      if (!accessoriesGroup.groups && !accessoriesGroup.references) return
+      if (accessoriesGroup.groups) {
+        const groupsArr = accessoriesGroup.groups.map((group) => {
+          return {
+            name: group?.name ? group?.name : '',
+            references: getReferencesWithMappedPrices(group.references),
+          }
+        })
+        return {
+          name: accessoriesGroup?.name ? accessoriesGroup?.name : '',
+          groups: groupsArr,
+        }
+      }
+
+      if (accessoriesGroup.references) {
+        return {
+          name: accessoriesGroup?.name ? accessoriesGroup?.name : '',
+          references: getReferencesWithMappedPrices(
+            accessoriesGroup.references
+          ),
+        }
+      }
+    })
   })
 
   const getProducts = async (ids) => {
