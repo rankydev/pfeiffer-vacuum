@@ -12,7 +12,7 @@
     <template #accessories-carousel>
       <AccessoriesCardCarousel
         class="accessories-carousel__bg-grey"
-        :entries="recommendedAccessories"
+        :entries="productReferencesRecommendedAccessories"
       />
     </template>
   </GenericAccordion>
@@ -20,6 +20,7 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import { storeToRefs } from 'pinia'
 import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
 import AccessoriesCardCarousel from '~/components/organisms/AccessoriesCardCarousel/AccessoriesCardCarousel'
 import { useProductStore } from '~/stores/product'
@@ -39,10 +40,12 @@ export default defineComponent({
     },
   },
   setup() {
-    const { recommendedAccessories } = useProductStore()
+    const productStore = useProductStore()
+    const { productReferencesRecommendedAccessories } =
+      storeToRefs(productStore)
 
     return {
-      recommendedAccessories,
+      productReferencesRecommendedAccessories,
     }
   },
 })
