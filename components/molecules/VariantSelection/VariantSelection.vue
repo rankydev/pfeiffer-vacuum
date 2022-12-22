@@ -52,11 +52,20 @@ export default defineComponent({
           return {
             slotName: variant.name,
             label: hasSomeSelected
-              ? `${variant.name}: <b>${hasSomeSelected.displayValue}<b />`
+              ? `<span class="variant-selection__accordion-header">${variant.name}: <span class="variant-selection__accordion-header--bold">${hasSomeSelected.displayValue}<span/></span>`
               : variant.name,
             disabled: !hasSomeSelectable,
             icon: hasSomeSelected ? 'check_circle' : null,
-            expandIcon: hasMoreThanOneSelectable ? 'edit' : 'edit_off',
+            expandIcon: hasSomeSelected
+              ? hasMoreThanOneSelectable
+                ? 'edit'
+                : 'edit_off'
+              : null,
+            expandIconClass: hasSomeSelected
+              ? hasMoreThanOneSelectable
+                ? 'variant-selection__expand-icon--on'
+                : 'variant-selection__expand-icon--off'
+              : null,
             variant,
             isActive: isFirstNotSelected.value,
           }
@@ -76,5 +85,24 @@ export default defineComponent({
   @apply tw-p-6;
   @apply tw-bg-pv-grey-96;
   @apply tw-rounded-lg;
+  width: 550px;
+
+  &__accordion-header {
+    @apply tw-font-normal;
+
+    &--bold {
+      @apply tw-font-bold;
+    }
+  }
+
+  &__expand-icon {
+    &--on {
+      @apply tw-text-pv-red;
+    }
+
+    &--off {
+      @apply tw-text-pv-grey-80;
+    }
+  }
 }
 </style>
