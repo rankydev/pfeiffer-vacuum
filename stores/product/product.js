@@ -210,37 +210,22 @@ export const useProductStore = defineStore('product', () => {
     // don't load prices if the user is not approved yet
     if (!isApprovedUser.value) return
 
-    // don't load prices if the product hasn't consumables, or spare parts
-    if (
-      !productReferencesSpareParts.value.length &&
-      !productReferencesConsumables.value.length &&
-      !productReferencesRecommendedAccessories.value.length
-    )
-      return
-
     productReferencesPrices.value = []
 
     const referenceGroupsToLoad = [
+      'ACCESSORIES',
       'CONSUMABLE',
       'SPAREPART',
       'RECOMMENDEDACCESSORIES',
     ]
 
-    for (const referenceGroup of referenceGroupsToLoad) {
-      const resultPrices = await getProductReferenceGroupPrices(referenceGroup)
+    const loadedPrices = referenceGroupsToLoad.map(async (referenceGroup) => {
+      const res = await getProductReferenceGroupPrices(referenceGroup)
+      return res
+    })
 
-      if (resultPrices.length && !resultPrices.error) {
-        productReferencesPrices.value = [
-          ...productReferencesPrices.value,
-          ...resultPrices,
-        ]
-      } else {
-        logger.error(
-          `Error when fetching product consumables. Returning empty array.`,
-          resultPrices.error ? resultPrices.error : ''
-        )
-      }
-    }
+    const results = await Promise.all(loadedPrices)
+    productReferencesPrices.value = results.flat()
   }
 
   const loadProductReferences = async (id) => {
@@ -274,6 +259,7 @@ export const useProductStore = defineStore('product', () => {
       //reset array before fetching new data
       productAccessoriesPrices.value = []
 
+      // TODO: dont do that here. Do it together with all others
       const resultAccessoriesPrices = await getProductReferenceGroupPrices(
         'ACCESSORIES'
       )
@@ -332,18 +318,19 @@ export const useProductStore = defineStore('product', () => {
       return []
     }
 
-    const result = await axios.$get(
-      `${config.PRODUCTS_API}/${productId}/${uid}/referenceGroups/${referenceGroup}/prices`
-    )
+    try {
+      const result = await axios.$get(
+        `${config.PRODUCTS_API}/${productId}/${uid}/referenceGroups/${referenceGroup}/prices`
+      )
 
-    if (result.productPrices?.length) {
-      return result.productPrices
+      if (result.productPrices?.length) {
+        return result.productPrices
+      }
+
+      return []
+    } catch (error) {
+      logger.error(`Error getting ${referenceGroup} prices`)
     }
-
-    logger.error(
-      `Error while getting ${referenceGroup} prices for: ${productId}`
-    )
-    return []
   }
 
   const loadByPath = async () => {
