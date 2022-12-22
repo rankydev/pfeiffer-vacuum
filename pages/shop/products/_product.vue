@@ -16,7 +16,10 @@
           <div
             class="tw-flex tw-flex-wrap tw-items-start sm:tw-gap-4 md:tw-gap-6 lg:tw-gap-8"
           >
-            <h1 class="tw-leading-10 tw-min-w-full md:tw-min-w-0 tw-flex-1">
+            <h1
+              v-tooltip="buttonTooltip"
+              class="tw-leading-10 tw-min-w-full md:tw-min-w-0 tw-flex-1"
+            >
               {{ (productStore.product || {}).name }}
             </h1>
 
@@ -81,6 +84,7 @@ import {
 import { useProductStore, useVariationmatrixStore } from '~/stores/product'
 import { useUserStore } from '~/stores/user'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
+import { useTooltip } from '~/composables/useTooltip'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import Page from '~/components/templates/Page/Page'
@@ -147,6 +151,9 @@ export default defineComponent({
       return []
     })
 
+    const { getTooltip } = useTooltip()
+    const buttonTooltip = getTooltip({ content: 'foobar' })
+
     /**
      * build the cms slug
      */
@@ -199,6 +206,7 @@ export default defineComponent({
       carouselEntries,
       sortedImages,
       productReferencesRecommendedAccessories,
+      buttonTooltip,
     }
   },
 })
