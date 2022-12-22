@@ -28,21 +28,19 @@ export const useCategoryStore = defineStore('category', () => {
     const rootUrl = localePath('shop-categories')
     const rootCat = { name: i18n.t('category.rootCategory'), href: rootUrl }
 
-    const breadcrumbArr = [
-      ...cmsPrefix,
-      rootCat,
-      ...categoryPath.map(({ name, id }) => ({
-        name,
-        href: joinURL(rootUrl, id),
-      })),
-    ]
-
-    if (searchTerm.value) {
+    if (!searchTerm.value) {
+      return [
+        ...cmsPrefix,
+        rootCat,
+        ...categoryPath.map(({ name, id }) => ({
+          name,
+          href: joinURL(rootUrl, id),
+        })),
+      ]
+    } else {
       const term = `${i18n.t('category.searchResult')} "${searchTerm.value}"`
-      breadcrumbArr.push({ href: '', name: term })
+      return [...cmsPrefix, { href: '', name: term }]
     }
-
-    return breadcrumbArr
   })
 
   const categoryName = computed(() => breadcrumb.value.at(-1)?.name || '')
