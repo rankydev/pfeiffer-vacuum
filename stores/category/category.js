@@ -40,7 +40,19 @@ export const useCategoryStore = defineStore('category', () => {
     }
 
     const term = `${i18n.t('category.searchResult')} "${searchTerm.value}"`
-    return [...cmsPrefix, { href: '', name: term }]
+    const searchObj = { href: '', name: term }
+
+    /*
+     * maintain categories, deeper than rootCat when search is active
+     */
+    return [
+      ...cmsPrefix,
+      ...categoryPath.map(({ name, id }) => ({
+        name,
+        href: joinURL(rootUrl, id),
+      })),
+      searchObj,
+    ]
   })
 
   const categoryName = computed(() => breadcrumb.value.at(-1)?.name || '')
