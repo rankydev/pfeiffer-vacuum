@@ -166,6 +166,13 @@ $card-image-height: 200px;
     @apply tw-text-lg;
     @apply tw-font-bold;
     @apply tw-mb-2;
+
+    .search-results-highlight {
+      @apply tw-text-pv-red;
+      @apply tw-not-italic;
+      @apply tw-text-lg;
+      @apply tw-font-bold;
+    }
   }
 
   &__tags {
@@ -188,6 +195,11 @@ $card-image-height: 200px;
     @apply tw-text-pv-grey-48;
     @apply tw-text-xs;
     @apply tw-mt-auto;
+
+    .search-results-highlight {
+      @apply tw-text-pv-red;
+      @apply tw-not-italic;
+    }
   }
 
   &__content {

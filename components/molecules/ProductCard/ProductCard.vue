@@ -26,7 +26,7 @@
     <template #additionalInfo>
       <template v-if="product.orderNumber">
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-html="sanitizer.clear(product.orderNumber)"></span>
+        <span v-html="sanitizer.inline(product.orderNumber)"></span>
       </template>
 
       <template v-else-if="product.numberOfVariants">
@@ -84,13 +84,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.search-results-highlight {
-  @apply tw-text-pv-red;
-  @apply tw-not-italic;
-  @apply tw-text-lg;
-  @apply tw-font-bold;
-}
-
 .product-card {
   &--master {
     @apply tw-border-2;
