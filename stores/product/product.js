@@ -62,51 +62,16 @@ export const useProductStore = defineStore('product', () => {
   }))
 
   const productReferencesSpareParts = computed(() => {
-    return getReferenceGroupWithPrices(productReferences.value, 'SPAREPART')
+    return getReferenceGroupWithPrices('SPAREPART')
   })
 
   const productReferencesConsumables = computed(() => {
-    return getReferenceGroupWithPrices(productReferences.value, 'CONSUMABLE')
+    return getReferenceGroupWithPrices('CONSUMABLE')
   })
 
   const productReferencesRecommendedAccessories = computed(() => {
-    return getReferenceGroupWithPrices(
-      productReferences.value,
-      'RECOMMENDEDACCESSORIES'
-    )
+    return getReferenceGroupWithPrices('RECOMMENDEDACCESSORIES')
   })
-
-  const getReferenceGroupWithPrices = (group, type = 'ACCESSORIES') => {
-    if (!group) {
-      return []
-    }
-
-    return getReferencesWithMappedPrices(
-      group.filter((o) => o.referenceType === type)
-    )
-  }
-
-  const getReferencesWithMappedPrices = (rererences) => {
-    if (!rererences) {
-      return []
-    }
-
-    return rererences.map((item) => {
-      const foundPrice = productReferencesPrices.value?.find((priceItem) => {
-        return priceItem.code === item.target.code
-      })
-      if (foundPrice) {
-        return {
-          ...item,
-          target: {
-            ...item.target,
-            price: foundPrice.price,
-          },
-        }
-      }
-      return item
-    })
-  }
 
   const productAccessoriesGroups = computed(() => {
     if (!productReferencesPrices.value || !accessoriesGroups.value) {
@@ -138,6 +103,38 @@ export const useProductStore = defineStore('product', () => {
       }
     })
   })
+
+  const getReferenceGroupWithPrices = (type = 'ACCESSORIES') => {
+    if (!productReferences.value) {
+      return []
+    }
+
+    return getReferencesWithMappedPrices(
+      productReferences.value.filter((o) => o.referenceType === type)
+    )
+  }
+
+  const getReferencesWithMappedPrices = (rererences) => {
+    if (!rererences) {
+      return []
+    }
+
+    return rererences.map((item) => {
+      const foundPrice = productReferencesPrices.value?.find((priceItem) => {
+        return priceItem.code === item.target.code
+      })
+      if (foundPrice) {
+        return {
+          ...item,
+          target: {
+            ...item.target,
+            price: foundPrice.price,
+          },
+        }
+      }
+      return item
+    })
+  }
 
   const getProducts = async (ids) => {
     if (!Array.isArray(ids)) {
