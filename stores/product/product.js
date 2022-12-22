@@ -27,10 +27,8 @@ export const useProductStore = defineStore('product', () => {
   const price = ref(null)
   const accessoriesGroups = ref(null)
   const productAccessoriesPrices = ref(null)
-  const productRecommendedAccessoriesPrices = ref(null)
-  const productSparepartsPrices = ref(null)
-  const productConsumablesPrices = ref(null)
   const productReferences = ref(null)
+  const productReferencesPrices = ref(null)
 
   const userStore = useUserStore()
   const { isApprovedUser, currentUser } = storeToRefs(userStore)
@@ -67,48 +65,41 @@ export const useProductStore = defineStore('product', () => {
     twitterImage: null,
   }))
 
-  const productReferencesSpareParts = computed(() => {
+  const getReferenceGroupWithPrices = (type) => {
     if (productReferences.value) {
-      const spareParts = productReferences.value.filter(
-        (o) => o.referenceType === 'SPAREPART'
-      )
-
-      mapPricesToProductReferenceGroupItems(productSparepartsPrices, spareParts)
-
-      return spareParts
+      return productReferences.value
+        .filter((o) => o.referenceType === type)
+        .map((item) => {
+          const foundPrice = productReferencesPrices.value?.find(
+            (priceItem) => {
+              return priceItem.code === item.target.code
+            }
+          )
+          if (foundPrice) {
+            return {
+              ...item,
+              target: {
+                ...item.target,
+                price: foundPrice.price,
+              },
+            }
+          }
+          return item
+        })
     }
     return []
+  }
+
+  const productReferencesSpareParts = computed(() => {
+    return getReferenceGroupWithPrices('SPAREPART')
   })
 
   const productReferencesConsumables = computed(() => {
-    if (productReferences.value) {
-      const consumables = productReferences.value.filter(
-        (o) => o.referenceType === 'CONSUMABLE'
-      )
-
-      mapPricesToProductReferenceGroupItems(
-        productConsumablesPrices,
-        consumables
-      )
-
-      return consumables
-    }
-    return []
+    return getReferenceGroupWithPrices('CONSUMABLE')
   })
 
   const productReferencesRecommendedAccessories = computed(() => {
-    if (productReferences.value) {
-      const recommendedAccs = productReferences.value.filter(
-        (o) => o.referenceType === 'RECOMMENDEDACCESSORIES'
-      )
-      mapPricesToProductReferenceGroupItems(
-        productRecommendedAccessoriesPrices,
-        recommendedAccs
-      )
-
-      return recommendedAccs
-    }
-    return []
+    return getReferenceGroupWithPrices('RECOMMENDEDACCESSORIES')
   })
 
   const productAccessoriesGroups = computed(() => {
@@ -216,25 +207,6 @@ export const useProductStore = defineStore('product', () => {
     price.value = result
   }
 
-  const productReferenceGroupsSwitch = (referenceGroup) =>
-    ({
-      consumables: {
-        items: productReferences,
-        prices: productConsumablesPrices,
-        requestReferenceGroup: 'CONSUMABLE',
-      },
-      spareParts: {
-        items: productReferences,
-        prices: productSparepartsPrices,
-        requestReferenceGroup: 'SPAREPART',
-      },
-      recommendedAccessories: {
-        items: productReferences,
-        prices: productRecommendedAccessoriesPrices,
-        requestReferenceGroup: 'RECOMMENDEDACCESSORIES',
-      },
-    }[referenceGroup])
-
   const loadProductReferenceGroupsPrices = async () => {
     // don't load prices if the user is not approved yet
     if (!isApprovedUser.value) return
@@ -247,32 +219,27 @@ export const useProductStore = defineStore('product', () => {
     )
       return
 
-    productConsumablesPrices.value = []
-    productSparepartsPrices.value = []
-    productRecommendedAccessoriesPrices.value = []
+    productReferencesPrices.value = []
 
     const referenceGroupsToLoad = [
-      'consumables',
-      'spareParts',
-      'recommendedAccessories',
+      'CONSUMABLE',
+      'SPAREPART',
+      'RECOMMENDEDACCESSORIES',
     ]
 
     for (const referenceGroup of referenceGroupsToLoad) {
-      const group = productReferenceGroupsSwitch(referenceGroup)
+      const resultPrices = await getProductReferenceGroupPrices(referenceGroup)
 
-      if (group.items.value.length) {
-        const resultPrices = await getProductReferenceGroupPrices(
-          group.requestReferenceGroup
+      if (resultPrices.length && !resultPrices.error) {
+        productReferencesPrices.value = [
+          ...productReferencesPrices.value,
+          ...resultPrices,
+        ]
+      } else {
+        logger.error(
+          `Error when fetching product consumables. Returning empty array.`,
+          resultPrices.error ? resultPrices.error : ''
         )
-
-        if (resultPrices.length && !resultPrices.error) {
-          group.prices.value = resultPrices
-        } else {
-          logger.error(
-            `Error when fetching product consumables. Returning empty array.`,
-            resultPrices.error ? resultPrices.error : ''
-          )
-        }
       }
     }
   }
@@ -332,27 +299,6 @@ export const useProductStore = defineStore('product', () => {
         result.error ? result.error : ''
       )
     }
-  }
-
-  /*
-   * map prices array to reference group products
-   * can be used for the following reference groups:
-   * 'CONSUMABLE', 'SPAREPART', 'RECOMMENDEDACCESSORIES'
-   */
-  const mapPricesToProductReferenceGroupItems = (
-    pricesArr,
-    referenceGroupItems
-  ) => {
-    if (pricesArr.value) {
-      return referenceGroupItems.map((item) => {
-        const priceArr = pricesArr.value.filter(
-          (priceObj) => item.target?.code === priceObj?.code
-        )
-
-        if (priceArr.length) return (item.target.price = priceArr[0].price)
-      })
-    }
-    return referenceGroupItems
   }
 
   const getProductReferenceGroupPrices = async (referenceGroup) => {
@@ -436,10 +382,9 @@ export const useProductStore = defineStore('product', () => {
     getProducts,
     loadProductReferenceGroupsPrices,
     productReferences, // please note: this NEEDS to be exported, even though it is not used outside. Dependent computeds below will not work if removed. This may be a pinia bug.
+    productReferencesPrices,
     productReferencesSpareParts,
     productReferencesConsumables,
-    productConsumablesPrices,
-    productSparepartsPrices,
     productReferencesRecommendedAccessories,
     loadByPath,
     loadProductAccessories,
