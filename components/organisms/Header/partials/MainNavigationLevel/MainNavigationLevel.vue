@@ -32,7 +32,7 @@
         >
           <span :class="`${prefix}__label`">{{ entry.label }}</span>
           <Icon
-            v-if="hasSubmenu(entry)"
+            v-if="isMobile && hasSubmenu(entry)"
             :class="`${prefix}__icon`"
             :icon="activeElement === idx ? 'expand_less' : 'expand_more'"
           />
