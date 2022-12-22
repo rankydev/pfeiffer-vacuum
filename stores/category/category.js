@@ -37,10 +37,10 @@ export const useCategoryStore = defineStore('category', () => {
           href: joinURL(rootUrl, id),
         })),
       ]
-    } else {
-      const term = `${i18n.t('category.searchResult')} "${searchTerm.value}"`
-      return [...cmsPrefix, { href: '', name: term }]
     }
+
+    const term = `${i18n.t('category.searchResult')} "${searchTerm.value}"`
+    return [...cmsPrefix, { href: '', name: term }]
   })
 
   const categoryName = computed(() => breadcrumb.value.at(-1)?.name || '')
