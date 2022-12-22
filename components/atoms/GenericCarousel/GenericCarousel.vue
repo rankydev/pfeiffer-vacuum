@@ -340,8 +340,23 @@ export default defineComponent({
       }
     }
 
+    .slick-slide {
+      // this is important to make all items same size (flex behaviour)
+      width: 0 !important;
+      @apply tw-flex-1;
+
+      // this is here for the gaps between the cards
+      margin: 0 10px;
+    }
+
+    .slick-list {
+      // this handles the additional whitespace left and right from first and last item through margin
+      margin: 0 -10px;
+    }
+
     .slick-track {
-      @apply tw-gap-4;
+      // the gap causes all the trouble for slick. slick has issues calculating correct equal widths when this is set
+      @apply tw-gap-0;
     }
 
     &--homeStage {
@@ -349,40 +364,6 @@ export default defineComponent({
 
       .slick-track {
         @apply tw-gap-0;
-      }
-    }
-
-    &--accessoriesCardCarousel {
-      .slick-slide {
-        // this is important to make all items same size (flex behaviour)
-        width: 0 !important;
-        @apply tw-flex-1;
-
-        // this is here for the gaps between the cards
-        margin: 0 10px;
-      }
-
-      .slick-track {
-        // the gap causes all the trouble for slick. slick has issues calculating correct equal widths when this is set
-        @apply tw-gap-0;
-      }
-
-      .slick-list {
-        // this handles the additional whitespace left and right from first and last item through margin
-        margin: 0 -10px;
-      }
-
-      // place the icons to the edges of the container
-      .carousel {
-        &__arrow {
-          &-prev {
-            left: -20px;
-          }
-
-          &-next {
-            right: -20px;
-          }
-        }
       }
     }
   }
