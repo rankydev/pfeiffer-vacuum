@@ -66,28 +66,27 @@ export const useProductStore = defineStore('product', () => {
   }))
 
   const getReferenceGroupWithPrices = (type) => {
-    if (productReferences.value) {
-      return productReferences.value
-        .filter((o) => o.referenceType === type)
-        .map((item) => {
-          const foundPrice = productReferencesPrices.value?.find(
-            (priceItem) => {
-              return priceItem.code === item.target.code
-            }
-          )
-          if (foundPrice) {
-            return {
-              ...item,
-              target: {
-                ...item.target,
-                price: foundPrice.price,
-              },
-            }
-          }
-          return item
-        })
+    if (!productReferences.value) {
+      return []
     }
-    return []
+
+    return productReferences.value
+      .filter((o) => o.referenceType === type)
+      .map((item) => {
+        const foundPrice = productReferencesPrices.value?.find((priceItem) => {
+          return priceItem.code === item.target.code
+        })
+        if (foundPrice) {
+          return {
+            ...item,
+            target: {
+              ...item.target,
+              price: foundPrice.price,
+            },
+          }
+        }
+        return item
+      })
   }
 
   const productReferencesSpareParts = computed(() => {
