@@ -125,6 +125,7 @@ export default defineComponent({
     // TODO: think about debouncing this since it could be called multiple times by the watchers
     const loadProduct = () => {
       variationmatrixStore.loadVariationMatrix(route.value.params.product) // TODO: should be in store
+      productStore.loadProductReferenceGroupsPrices()
       redirectOnError(productStore.loadByPath)
     }
 

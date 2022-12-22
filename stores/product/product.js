@@ -10,9 +10,9 @@ import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
 import { joinURL } from 'ufo'
-import { useUserStore } from '~/stores/user'
 import { useCmsStore } from '~/stores/cms'
 import { useVariationmatrixStore } from './variationmatrix'
+import { usePricesStore } from './prices'
 
 export const useProductStore = defineStore('product', () => {
   const route = useRoute()
@@ -21,16 +21,13 @@ export const useProductStore = defineStore('product', () => {
   const { logger } = useLogger('productStore')
   const { axios } = useAxiosForHybris()
   const { localePath, i18n } = useContext()
+  const pricesStore = usePricesStore()
+  const { price, productReferencesPrices } = storeToRefs(pricesStore)
 
   const product = ref(null)
   const reqId = ssrRef(null)
-  const price = ref(null)
   const accessoriesGroups = ref([])
   const productReferences = ref([])
-  const productReferencesPrices = ref([])
-
-  const userStore = useUserStore()
-  const { isApprovedUser, currentUser } = storeToRefs(userStore)
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -191,42 +188,6 @@ export const useProductStore = defineStore('product', () => {
     }
   }
 
-  const loadPrice = async (id) => {
-    // don't load product prices if the user is not approved yet
-    if (!isApprovedUser.value) {
-      return
-    }
-
-    const { uid } = currentUser.value
-    const url = joinURL(config.PRODUCTS_API, id, uid, 'price')
-    const result = await axios.$get(url, {
-      params: { fields: 'FULL' },
-    })
-    price.value = result
-  }
-
-  const loadProductReferenceGroupsPrices = async () => {
-    // don't load prices if the user is not approved yet
-    if (!isApprovedUser.value) return
-
-    productReferencesPrices.value = []
-
-    const referenceGroupsToLoad = [
-      'ACCESSORIES',
-      'CONSUMABLE',
-      'SPAREPART',
-      'RECOMMENDEDACCESSORIES',
-    ]
-
-    const loadedPrices = referenceGroupsToLoad.map(async (referenceGroup) => {
-      const res = await getProductReferenceGroupPrices(referenceGroup)
-      return res
-    })
-
-    const results = await Promise.all(loadedPrices)
-    productReferencesPrices.value = results.flat()
-  }
-
   const loadProductReferences = async (id) => {
     //reset array before fetching new data
     productReferences.value = null
@@ -275,53 +236,6 @@ export const useProductStore = defineStore('product', () => {
     }
   }
 
-  const getProductReferenceGroupPrices = async (referenceGroup) => {
-    const productId = route.value.params.product || ''
-
-    if (!productId) {
-      throw new Error('No valid id given in route object.')
-    }
-
-    // don't load product prices if the user is not approved yet
-    if (!isApprovedUser.value) {
-      return []
-    }
-    const { uid } = currentUser.value
-
-    if (!uid) {
-      logger.error('No customer id given.')
-      return []
-    }
-
-    const referenceGroups = [
-      'ACCESSORIES',
-      'CONSUMABLE',
-      'SPAREPART',
-      'RECOMMENDEDACCESSORIES',
-    ]
-
-    if (!referenceGroups.includes(referenceGroup)) {
-      logger.error(
-        `Cannot get ${referenceGroup} prices. Referencegroup '${referenceGroup}' not valid.`
-      )
-      return []
-    }
-
-    try {
-      const result = await axios.$get(
-        `${config.PRODUCTS_API}/${productId}/${uid}/referenceGroups/${referenceGroup}/prices`
-      )
-
-      if (result.productPrices?.length) {
-        return result.productPrices
-      }
-
-      return []
-    } catch (error) {
-      logger.error(`Error getting ${referenceGroup} prices`)
-    }
-  }
-
   const loadByPath = async () => {
     const id = route.value.params.product || ''
 
@@ -340,10 +254,10 @@ export const useProductStore = defineStore('product', () => {
     await Promise.all([
       loadProduct(id),
       variationmatrixStore.loadVariationMatrix(id),
-      loadPrice(id),
       loadProductReferences(id),
       loadProductAccessories(),
-      loadProductReferenceGroupsPrices(),
+      pricesStore.loadPrice(id),
+      pricesStore.loadProductReferenceGroupsPrices(),
     ])
   }
 
@@ -357,7 +271,8 @@ export const useProductStore = defineStore('product', () => {
     accessoriesGroups,
     productAccessoriesGroups,
     getProducts,
-    loadProductReferenceGroupsPrices,
+    loadProductReferenceGroupsPrices:
+      pricesStore.loadProductReferenceGroupsPrices,
     productReferences, // please note: this NEEDS to be exported, even though it is not used outside. Dependent computeds below will not work if removed. This may be a pinia bug.
     productReferencesPrices,
     productReferencesSpareParts,
@@ -365,6 +280,5 @@ export const useProductStore = defineStore('product', () => {
     productReferencesRecommendedAccessories,
     loadByPath,
     loadProductAccessories,
-    getProductReferenceGroupPrices,
   }
 })
