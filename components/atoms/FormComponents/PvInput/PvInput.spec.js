@@ -59,6 +59,7 @@ describe('Input', () => {
 
       const input = wrapper.find('input')
       input.setValue('test')
+      input.trigger('blur')
       await wrapper.vm.$nextTick()
 
       expect(input.classes()).toContain('pv-input__element--error')
@@ -74,6 +75,7 @@ describe('Input', () => {
 
       const input = wrapper.find('input')
       input.setValue('')
+      input.trigger('blur')
       await wrapper.vm.$nextTick()
 
       expect(wrapper.vm.validation.getError()).toBe('Value is required')
@@ -90,6 +92,7 @@ describe('Input', () => {
 
       const input = wrapper.find('input')
       input.setValue('test')
+      input.trigger('blur')
       await wrapper.vm.$nextTick()
 
       expect(wrapper.vm.validation.getError()).toBe(
@@ -124,8 +127,12 @@ describe('Input', () => {
         const wrapper = shallowMount(Input, { propsData })
         const input = wrapper.find('input')
 
-        input.trigger('input')
+        input.setValue('test')
+        input.trigger('blur')
         await wrapper.vm.$nextTick()
+
+        expect(wrapper.emitted().focus.length).toBe(1)
+        expect(wrapper.emitted().focus[0]).toEqual([false])
 
         const errorIcon = wrapper.find('.pv-input__icon--error')
         expect(errorIcon.exists()).toBeTruthy()

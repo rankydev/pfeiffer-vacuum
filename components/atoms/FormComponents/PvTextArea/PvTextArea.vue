@@ -9,8 +9,10 @@
         class="pv-textarea__input"
         :class="{ 'pv-textarea__input--error': !!validation.getError() }"
         @focus="$emit('focus', true)"
-        @blur="$emit('focus', false)"
-        @input="validation.validateInput()"
+        @blur="
+          $emit('focus', false)
+          validation.validateInput()
+        "
       />
       <Icon
         v-if="!!validation.getError()"

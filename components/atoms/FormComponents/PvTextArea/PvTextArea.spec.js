@@ -98,6 +98,7 @@ describe('TextArea', () => {
         const input = wrapper.find('textarea')
 
         input.setValue('')
+        input.trigger('blur')
 
         expect(wrapper.vm.validation.getError()).toBe('Value is required')
       })
