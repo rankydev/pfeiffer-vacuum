@@ -15,8 +15,10 @@
         :placeholder="placeholder"
         @keypress.enter="$emit('submit', internalValue)"
         @focus="$emit('focus', true)"
-        @blur="$emit('focus', false)"
-        @input="validation.validateInput()"
+        @blur="
+          $emit('focus', false)
+          validation.validateInput()
+        "
       />
       <Icon
         v-if="icon || validation.getError()"

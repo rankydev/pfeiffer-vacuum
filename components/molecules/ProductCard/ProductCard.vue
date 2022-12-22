@@ -17,7 +17,7 @@
     </template>
     <template #heading>
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <span v-html="sanitizer.clear(name) || ''" />
+      <span v-html="sanitizer.inline(name) || ''" />
     </template>
     <template #description>
       <!-- eslint-disable-next-line vue/no-v-html -->
@@ -26,7 +26,7 @@
     <template #additionalInfo>
       <template v-if="product.orderNumber">
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-html="sanitizer.clear(product.orderNumber)"></span>
+        <span v-html="sanitizer.inline(product.orderNumber)"></span>
       </template>
 
       <template v-else-if="product.numberOfVariants">

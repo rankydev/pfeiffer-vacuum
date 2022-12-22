@@ -1,5 +1,10 @@
 <template>
-  <GenericCard :has-link="true" image-size="contain" :href="productUrl">
+  <GenericCard
+    v-if="product"
+    :has-link="true"
+    image-size="contain"
+    :href="productUrl"
+  >
     <template #image>
       <ResponsiveImage
         :image="imageUrl(product.images)"
@@ -19,7 +24,7 @@
     </template>
 
     <template #additionalInfo>
-      <div v-if="hasPrice" class="accessories-card__price">
+      <div v-if="product.price" class="accessories-card__price">
         <template v-if="isApprovedUser">
           <p
             v-if="isPriceVisible"
@@ -142,9 +147,6 @@ export default defineComponent({
       // return userStore.isLoggedIn && !ociStore.isOciUser
       return userStore.isLoggedIn
     })
-    const hasPrice = computed(() => {
-      return !!product.value.price
-    })
     const isPriceVisible = computed(() => {
       return product.value?.price?.value && userStore.isApprovedUser
     })
@@ -152,17 +154,13 @@ export default defineComponent({
       return !!product.value.price?.customerPrice
     })
     const productPrice = computed(() => {
-      if (!product.value.price?.value) {
-        return i18n.t('product.priceOnRequest')
-      }
-      return product.value.price?.formattedValue || ''
+      if (product.value.price) return product.value?.price?.formattedValue || ''
+      return i18n.t('product.priceOnRequest')
     })
     const userStatusType = computed(() => {
-      return (
-        (userStore.isLeadUser && 'lead') ||
-        (userStore.isOpenUser && 'open') ||
-        (userStore.isRejectedUser && 'rejected')
-      )
+      if (userStore.isLeadUser) return 'lead'
+      if (userStore.isOpenUser) return 'open'
+      if (userStore.isRejectedUser) return 'rejected'
     })
 
     const productName = computed(() => {
@@ -201,7 +199,6 @@ export default defineComponent({
       imageUrl,
       quantity,
       hasAddToListButton,
-      hasPrice,
       isPriceVisible,
       hasCustomerPrice,
       productName,
