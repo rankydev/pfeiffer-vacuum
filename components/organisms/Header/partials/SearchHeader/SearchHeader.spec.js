@@ -1,6 +1,23 @@
 import { shallowMount } from '@vue/test-utils'
 import SearchHeader from './SearchHeader.vue'
 
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  return {
+    __esModule: true,
+    ...originalModule,
+    useContext: () => {
+      return {
+        app: {
+          $breakpoints: {
+            isDesktop: { value: jest.fn() },
+          },
+        },
+      }
+    },
+  }
+})
+
 describe('SearchHeader', () => {
   describe('initial state', () => {
     it('should set opacity class when hasOpacity true', () => {
