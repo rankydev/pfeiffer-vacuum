@@ -1,5 +1,11 @@
 import { defineStore } from 'pinia'
-import { ref, useContext, useRouter, useRoute } from '@nuxtjs/composition-api'
+import {
+  ref,
+  useContext,
+  useRouter,
+  useRoute,
+  computed,
+} from '@nuxtjs/composition-api'
 import { joinURL } from 'ufo'
 import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
@@ -137,6 +143,14 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
   }
 
   /*
+   * Clear only the selected attributes to start the selection from scratch
+   */
+  const clearSelection = async () => {
+    selectedAttributes.value = {}
+    await loadVariationMatrix()
+  }
+
+  /*
    * Sets automatically selected attributes by hybris as user input when no user
    * selected attributes are given in selectedAttributes object
    */
@@ -152,6 +166,13 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    * Matrix object can be given to determine whether there is only one variant left or more
    */
   const hasOnlyOneVariantLeft = (matrix) => matrix?.variants?.length === 1
+
+  /*
+   * Computed property to indicate if the current variation matrix has just one variant left and therefore the selection is completed
+   */
+  const isSelectionCompleted = computed(() => {
+    return hasOnlyOneVariantLeft(variationMatrix.value)
+  })
 
   /*
    * Old and new matrix object can be given to determine whether there are two different variants left for redirection
@@ -186,5 +207,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
     deleteAttribute,
     toggleAttribute,
     clearMatrix,
+    clearSelection,
+    isSelectionCompleted,
   }
 })

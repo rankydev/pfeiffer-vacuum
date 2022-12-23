@@ -2,9 +2,8 @@
   <div class="variant-selection-accordion">
     <GenericAccordion
       v-bind="{ accordionEntries, loading, variant: 'variationmatrix' }"
-      multiple
     >
-      <template v-for="item in accordionEntries" #[item.slotName]>
+      <template v-for="item in accordionEntries" #[item.slotName]="slotScope">
         <!-- eslint-disable-next-line vue/no-v-for-template-key-on-child -->
         <div :key="item.slotName">
           <AttributeButtons
@@ -12,15 +11,18 @@
               item.variant.variationValues.filter((item) => item.selectable)
             "
             :attribute-code="item.variant.code"
+            class="variant-selection-accordion__attributes"
+            @selected="slotScope.next"
           />
           <div
             v-if="
               item.variant.variationValues.filter((item) => !item.selectable)
                 .length
             "
+            class="variant-selection-accordion__not-selectable-wrapper"
           >
             <Button
-              class="tw-mt-4 tw-mb-2"
+              class="variant-selection-accordion__not-selectable-button"
               shape="plain"
               variant="secondary"
               :label="
@@ -87,4 +89,19 @@ export default {
   },
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+.variant-selection-accordion {
+  &__attributes {
+    @apply tw-mt-2;
+    @apply tw-mb-5;
+  }
+
+  &__not-selectable-wrapper {
+    @apply tw-mb-5;
+  }
+
+  &__not-selectable-button {
+    @apply tw-mb-2;
+  }
+}
+</style>

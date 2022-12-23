@@ -1,5 +1,20 @@
 <template>
   <div class="variant-selection">
+    <div class="variant-selection__headline">
+      <h3>Select Variant</h3>
+      <Button
+        v-if="Object.keys(selectedAttributes).length > 0"
+        :label="
+          isSelectionCompleted ? 'Start new selection' : 'Reset selection'
+        "
+        variant="secondary"
+        shape="plain"
+        :icon="isSelectionCompleted ? 'arrow_back' : null"
+        prepend-icon
+        class="variant-selection__reset-button"
+        @click="clearSelection"
+      />
+    </div>
     <AttributeAccordion
       :loading="loadingMatrix"
       :accordion-entries="variationAttributeEntries"
@@ -25,7 +40,13 @@ export default defineComponent({
   },
   setup() {
     const variationmatrixStore = useVariationmatrixStore()
-    const { variationMatrix, loadingMatrix } = storeToRefs(variationmatrixStore)
+    const {
+      variationMatrix,
+      loadingMatrix,
+      clearSelection,
+      isSelectionCompleted,
+      selectedAttributes,
+    } = storeToRefs(variationmatrixStore)
 
     const variationAttributeEntries = computed(() => {
       if (!variationMatrix.value) {
@@ -76,6 +97,9 @@ export default defineComponent({
     return {
       variationAttributeEntries,
       loadingMatrix,
+      clearSelection,
+      selectedAttributes,
+      isSelectionCompleted,
     }
   },
 })
@@ -86,6 +110,15 @@ export default defineComponent({
   @apply tw-bg-pv-grey-96;
   @apply tw-rounded-lg;
   width: 550px;
+
+  &__headline {
+    @apply tw-flex;
+    @apply tw-mb-5;
+  }
+
+  &__reset-button {
+    @apply tw-ml-auto;
+  }
 
   &__accordion-header {
     @apply tw-font-normal;

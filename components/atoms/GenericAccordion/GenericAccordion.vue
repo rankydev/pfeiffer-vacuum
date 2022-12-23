@@ -55,7 +55,7 @@
           :id="`accordion-${idx}`"
           class="accordion__content"
         >
-          <slot :name="entry.slotName" />
+          <slot :name="entry.slotName" :next="openNext" />
         </div>
       </AnimatedCollapse>
     </div>
@@ -129,6 +129,7 @@ export default defineComponent({
       return {
         toggleActive: (idx) => (hasIdx(idx) ? removeIdx(idx) : addIdx(idx)),
         isActive: hasIdx,
+        openNext: () => (active.value += 1),
         sanitizer,
       }
     } else {
@@ -141,6 +142,7 @@ export default defineComponent({
       return {
         toggleActive: (idx) => (active.value = hasIdx(idx) ? null : idx),
         isActive: (idx) => idx === active.value,
+        openNext: () => (active.value += 1),
         sanitizer,
       }
     }
@@ -254,8 +256,6 @@ export default defineComponent({
       @apply tw-border-t-0;
       @apply tw-border-b-2;
       @apply tw-border-pv-grey-88;
-      @apply tw-duration-500;
-      @apply tw-ease-linear;
 
       &--active {
         @apply tw-border-0;

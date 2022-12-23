@@ -38,11 +38,15 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  emits: ['selected'],
+  setup(props, { emit }) {
     const variationmatrixStore = useVariationmatrixStore()
 
     const itemClicked = (item) => {
       variationmatrixStore.toggleAttribute(props.attributeCode, item.value)
+      if (!item.selected) {
+        emit('selected')
+      }
     }
 
     const isItemPreselected = (item) => {
