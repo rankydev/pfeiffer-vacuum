@@ -10,14 +10,14 @@ export default {
       },
       source: {
         code: `
-          const { getTooltip } = useTooltip()
-          const buttonTooltip1 = getTooltip({
-            content: 'default content',
-            trigger: 'hover',
-             placement: 'top-end',
-          })
+const { getTooltip } = useTooltip()
+const buttonTooltip1 = getTooltip({
+  content: 'default content',
+  trigger: 'hover',
+  placement: 'top-end',
+})
 
-        <p v-tooltip="buttonToolTip1">Align top-end, short text</p>`,
+<p v-tooltip="buttonToolTip1">Align top-end, short text</p>`,
       },
     },
   },
