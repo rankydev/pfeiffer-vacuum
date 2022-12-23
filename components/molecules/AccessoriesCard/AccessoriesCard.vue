@@ -152,7 +152,7 @@ export default defineComponent({
 
     const hasAddToListButton = computed(() => {
       // TODO: Once OCI is implemented extend this computed again
-      // return userStore.isLoggedIn && !ociStore.isOciUser
+      // return isLoggedIn.value && !ociStore.isOciUser
       return isLoggedIn.value
     })
     const isPriceVisible = computed(() => {
