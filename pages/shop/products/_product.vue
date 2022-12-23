@@ -142,11 +142,6 @@ export default defineComponent({
     watch(isLoggedIn, productStore.loadProductReferenceGroupsPrices)
     watch(isApprovedUser, productStore.loadProductReferenceGroupsPrices)
 
-    const carouselEntries = computed(() => {
-      // TODO: return recommended accessories
-      return []
-    })
-
     /**
      * build the cms slug
      */
@@ -196,7 +191,6 @@ export default defineComponent({
       language,
       productStore,
       variationmatrixStore,
-      carouselEntries,
       sortedImages,
       productReferencesRecommendedAccessories,
     }
