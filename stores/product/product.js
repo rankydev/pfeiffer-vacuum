@@ -13,6 +13,7 @@ import { joinURL } from 'ufo'
 import { useCmsStore } from '~/stores/cms'
 import { useVariationmatrixStore } from './variationmatrix'
 import { usePricesStore } from './prices'
+import { REFERENCE_GROUPS } from './config'
 
 export const useProductStore = defineStore('product', () => {
   const route = useRoute()
@@ -62,15 +63,15 @@ export const useProductStore = defineStore('product', () => {
   }))
 
   const productReferencesSpareParts = computed(() => {
-    return getReferenceGroupWithPrices('SPAREPART')
+    return getReferenceGroupWithPrices(REFERENCE_GROUPS.SPAREPART)
   })
 
   const productReferencesConsumables = computed(() => {
-    return getReferenceGroupWithPrices('CONSUMABLE')
+    return getReferenceGroupWithPrices(REFERENCE_GROUPS.CONSUMABLE)
   })
 
   const productReferencesRecommendedAccessories = computed(() => {
-    return getReferenceGroupWithPrices('RECOMMENDEDACCESSORIES')
+    return getReferenceGroupWithPrices(REFERENCE_GROUPS.RECOMMENDEDACCESSORIES)
   })
 
   const productAccessoriesGroups = computed(() => {
@@ -104,8 +105,8 @@ export const useProductStore = defineStore('product', () => {
     })
   })
 
-  const getReferenceGroupWithPrices = (type = 'ACCESSORIES') => {
-    if (!productReferences.value) {
+  const getReferenceGroupWithPrices = (type) => {
+    if (!productReferences.value || !type) {
       return []
     }
 
@@ -202,7 +203,7 @@ export const useProductStore = defineStore('product', () => {
     accessoriesGroups.value = null
 
     const result = await axios.$get(
-      `${config.PRODUCTS_API}/${id}/referenceGroups/ACCESSORIES`,
+      `${config.PRODUCTS_API}/${id}/referenceGroups/${REFERENCE_GROUPS.ACCESSORIES}`,
       { params: { fields: 'FULL' } }
     )
 

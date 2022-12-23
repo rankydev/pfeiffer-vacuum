@@ -5,6 +5,7 @@ import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
 import { joinURL } from 'ufo'
 import { useUserStore } from '~/stores/user'
+import { REFERENCE_GROUPS_LIST } from './config'
 
 export const usePricesStore = defineStore('prices', () => {
   const route = useRoute()
@@ -37,14 +38,7 @@ export const usePricesStore = defineStore('prices', () => {
 
     productReferencesPrices.value = []
 
-    const referenceGroupsToLoad = [
-      'ACCESSORIES',
-      'CONSUMABLE',
-      'SPAREPART',
-      'RECOMMENDEDACCESSORIES',
-    ]
-
-    const loadedPrices = referenceGroupsToLoad.map(async (referenceGroup) => {
+    const loadedPrices = REFERENCE_GROUPS_LIST.map(async (referenceGroup) => {
       const res = await getProductReferenceGroupPrices(referenceGroup)
       return res
     })
@@ -71,14 +65,7 @@ export const usePricesStore = defineStore('prices', () => {
       return []
     }
 
-    const referenceGroups = [
-      'ACCESSORIES',
-      'CONSUMABLE',
-      'SPAREPART',
-      'RECOMMENDEDACCESSORIES',
-    ]
-
-    if (!referenceGroups.includes(referenceGroup)) {
+    if (!REFERENCE_GROUPS_LIST.includes(referenceGroup)) {
       logger.error(
         `Cannot get ${referenceGroup} prices. Referencegroup '${referenceGroup}' not valid.`
       )
