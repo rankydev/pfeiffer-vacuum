@@ -1,12 +1,12 @@
 <template>
   <div class="search-header" :class="{ 'search-header--opacity': hasOpacity }">
-    <Icon icon="search" class="search-header__trigger" />
+    <Icon v-show="!isDesktop" icon="search" class="search-header__trigger" />
     <SearchInput class="search-header__field" />
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
@@ -21,6 +21,14 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+  },
+  setup() {
+    const { app } = useContext()
+    const isDesktop = app.$breakpoints.isDesktop
+
+    return {
+      isDesktop,
+    }
   },
 })
 </script>
