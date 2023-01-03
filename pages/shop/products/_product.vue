@@ -115,16 +115,15 @@ export default defineComponent({
     const { productReferencesRecommendedAccessories } =
       storeToRefs(productStore)
 
-    // TODO: think about debouncing this since it could be called multiple times by the watchers
-    const loadProduct = () => {
+    const loadProduct = async () => {
       productStore.loadProductReferenceGroupsPrices()
-      redirectOnError(productStore.loadByPath)
+      await redirectOnError(productStore.loadByPath)
     }
 
-    onServerPrefetch(loadProduct)
-    onBeforeMount(loadProduct)
+    onServerPrefetch(async () => await loadProduct())
+    onBeforeMount(async () => await loadProduct())
+    watch(route, async () => await loadProduct())
     onBeforeUnmount(variationmatrixStore.clearMatrix)
-    watch(route, loadProduct)
 
     /**
      * react to changing user login status
