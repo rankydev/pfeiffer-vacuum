@@ -10,9 +10,10 @@ import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
 import { joinURL } from 'ufo'
-import { useUserStore } from '~/stores/user'
 import { useCmsStore } from '~/stores/cms'
 import { useVariationmatrixStore } from './variationmatrix'
+import { usePricesStore } from './prices'
+import { REFERENCE_GROUPS } from './config'
 
 export const useProductStore = defineStore('product', () => {
   const route = useRoute()
@@ -21,19 +22,13 @@ export const useProductStore = defineStore('product', () => {
   const { logger } = useLogger('productStore')
   const { axios } = useAxiosForHybris()
   const { localePath, i18n } = useContext()
+  const pricesStore = usePricesStore()
+  const { price, productReferencesPrices } = storeToRefs(pricesStore)
 
   const product = ref(null)
   const reqId = ssrRef(null)
-  const price = ref(null)
-  const accessoriesGroups = ref(null)
-  const productAccessoriesPrices = ref(null)
-  const productRecommendedAccessoriesPrices = ref(null)
-  const productSparepartsPrices = ref(null)
-  const productConsumablesPrices = ref(null)
-  const productReferences = ref(null)
-
-  const userStore = useUserStore()
-  const { isApprovedUser, currentUser } = storeToRefs(userStore)
+  const accessoriesGroups = ref([])
+  const productReferences = ref([])
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -68,72 +63,79 @@ export const useProductStore = defineStore('product', () => {
   }))
 
   const productReferencesSpareParts = computed(() => {
-    if (productReferences.value) {
-      const spareParts = productReferences.value.filter(
-        (o) => o.referenceType === 'SPAREPART'
-      )
-
-      mapPricesToProductReferenceGroupItems(productSparepartsPrices, spareParts)
-
-      return spareParts
-    }
-    return []
+    return getReferenceGroupWithPrices(REFERENCE_GROUPS.SPAREPART)
   })
 
   const productReferencesConsumables = computed(() => {
-    if (productReferences.value) {
-      const consumables = productReferences.value.filter(
-        (o) => o.referenceType === 'CONSUMABLE'
-      )
-
-      mapPricesToProductReferenceGroupItems(
-        productConsumablesPrices,
-        consumables
-      )
-
-      return consumables
-    }
-    return []
+    return getReferenceGroupWithPrices(REFERENCE_GROUPS.CONSUMABLE)
   })
 
   const productReferencesRecommendedAccessories = computed(() => {
-    if (productReferences.value) {
-      const recommendedAccs = productReferences.value.filter(
-        (o) => o.referenceType === 'RECOMMENDEDACCESSORIES'
-      )
-
-      mapPricesToProductReferenceGroupItems(
-        productRecommendedAccessoriesPrices,
-        recommendedAccs
-      )
-
-      return recommendedAccs
-    }
-    return []
+    return getReferenceGroupWithPrices(REFERENCE_GROUPS.RECOMMENDEDACCESSORIES)
   })
 
   const productAccessoriesGroups = computed(() => {
-    if (productAccessoriesPrices.value && accessoriesGroups.value) {
-      return accessoriesGroups.value.map((accessoriesGroup) => {
-        if (!accessoriesGroup.groups) return
-        const groupsArr = accessoriesGroup.groups.map((group) => {
-          const itemsArr = group.references.map((accessoryItem) => {
-            const priceArr = productAccessoriesPrices.value.filter(
-              (priceObj) => accessoryItem.target?.code === priceObj?.code
-            )
-
-            if (priceArr.length) accessoryItem.target.price = priceArr[0].price
-
-            return accessoryItem
-          })
-          return { name: group.name, references: itemsArr }
-        })
-        return { name: accessoriesGroup.name, groups: groupsArr }
-      })
+    if (!productReferencesPrices.value || !accessoriesGroups.value) {
+      return []
     }
 
-    return []
+    return accessoriesGroups.value.map((accessoriesGroup) => {
+      if (!accessoriesGroup.groups && !accessoriesGroup.references) return
+      if (accessoriesGroup.groups) {
+        const groupsArr = accessoriesGroup.groups.map((group) => {
+          return {
+            name: group?.name ? group?.name : '',
+            references: getReferencesWithMappedPrices(group.references),
+          }
+        })
+        return {
+          name: accessoriesGroup?.name ? accessoriesGroup?.name : '',
+          groups: groupsArr,
+        }
+      }
+
+      if (accessoriesGroup.references) {
+        return {
+          name: accessoriesGroup?.name ? accessoriesGroup?.name : '',
+          references: getReferencesWithMappedPrices(
+            accessoriesGroup.references
+          ),
+        }
+      }
+    })
   })
+
+  const getReferenceGroupWithPrices = (type) => {
+    if (!productReferences.value || !type) {
+      return []
+    }
+
+    return getReferencesWithMappedPrices(
+      productReferences.value.filter((o) => o.referenceType === type)
+    )
+  }
+
+  const getReferencesWithMappedPrices = (rererences) => {
+    if (!rererences) {
+      return []
+    }
+
+    return rererences.map((item) => {
+      const foundPrice = productReferencesPrices.value?.find((priceItem) => {
+        return priceItem.code === item.target.code
+      })
+      if (foundPrice) {
+        return {
+          ...item,
+          target: {
+            ...item.target,
+            price: foundPrice.price,
+          },
+        }
+      }
+      return item
+    })
+  }
 
   const getProducts = async (ids) => {
     if (!Array.isArray(ids)) {
@@ -178,80 +180,6 @@ export const useProductStore = defineStore('product', () => {
     }
   }
 
-  const loadPrice = async (id) => {
-    // don't load product prices if the user is not approved yet
-    if (!isApprovedUser.value) {
-      return
-    }
-
-    const { uid } = currentUser.value
-    const url = joinURL(config.PRODUCTS_API, id, uid, 'price')
-    const result = await axios.$get(url, {
-      params: { fields: 'FULL' },
-    })
-    price.value = result
-  }
-
-  const productReferenceGroupsSwitch = (referenceGroup) =>
-    ({
-      consumables: {
-        items: productReferences,
-        prices: productConsumablesPrices,
-        requestReferenceGroup: 'CONSUMABLE',
-      },
-      spareParts: {
-        items: productReferences,
-        prices: productSparepartsPrices,
-        requestReferenceGroup: 'SPAREPART',
-      },
-      recommendedAccessories: {
-        items: productReferences,
-        prices: productRecommendedAccessoriesPrices,
-        requestReferenceGroup: 'RECOMMENDEDACCESSORIES',
-      },
-    }[referenceGroup])
-
-  const loadProductReferenceGroupsPrices = async () => {
-    // don't load prices if the user is not approved yet
-    if (!isApprovedUser.value) return
-
-    // don't load prices if the product hasn't consumables, or spare parts
-    if (
-      !productReferencesSpareParts.value.length &&
-      !productReferencesConsumables.value.length
-    )
-      return
-
-    productConsumablesPrices.value = []
-    productSparepartsPrices.value = []
-    productRecommendedAccessoriesPrices.value = []
-
-    const referenceGroupsToLoad = [
-      'consumables',
-      'spareParts',
-      'recommendedAccessories',
-    ]
-
-    for (const referenceGroup of referenceGroupsToLoad) {
-      const group = productReferenceGroupsSwitch(referenceGroup)
-
-      if (group.items.value.length) {
-        const resultPrices = await getProductReferenceGroupPrices(
-          group.requestReferenceGroup
-        )
-
-        if (resultPrices.length && !resultPrices.error) {
-          group.prices.value = resultPrices
-        } else {
-          logger.error(
-            `Error when fetching product consumables. Returning empty array.`,
-            resultPrices.error ? resultPrices.error : ''
-          )
-        }
-      }
-    }
-  }
-
   const loadProductReferences = async (id) => {
     //reset array before fetching new data
     productReferences.value = null
@@ -275,20 +203,11 @@ export const useProductStore = defineStore('product', () => {
     accessoriesGroups.value = null
 
     const result = await axios.$get(
-      `${config.PRODUCTS_API}/${id}/referenceGroups/ACCESSORIES`,
+      `${config.PRODUCTS_API}/${id}/referenceGroups/${REFERENCE_GROUPS.ACCESSORIES}`,
       { params: { fields: 'FULL' } }
     )
 
     if (typeof result === 'object' && !result.error) {
-      //reset array before fetching new data
-      productAccessoriesPrices.value = []
-
-      const resultAccessoriesPrices = await getProductReferenceGroupPrices(
-        'ACCESSORIES'
-      )
-
-      productAccessoriesPrices.value = resultAccessoriesPrices
-
       if (!Array.isArray(result.groups)) {
         result.groups = []
       }
@@ -309,72 +228,6 @@ export const useProductStore = defineStore('product', () => {
     }
   }
 
-  /*
-   * map prices array to reference group products
-   * can be used for the following reference groups:
-   * 'CONSUMABLE', 'SPAREPART', 'RECOMMENDEDACCESSORIES'
-   */
-  const mapPricesToProductReferenceGroupItems = (
-    pricesArr,
-    referenceGroupItems
-  ) => {
-    if (pricesArr.value) {
-      referenceGroupItems.map((item) => {
-        const priceArr = pricesArr.value.filter(
-          (priceObj) => item.target?.code === priceObj?.code
-        )
-
-        if (priceArr.length) return (item.target.price = priceArr[0].price)
-      })
-    }
-  }
-
-  const getProductReferenceGroupPrices = async (referenceGroup) => {
-    const productId = route.value.params.product || ''
-
-    if (!productId) {
-      throw new Error('No valid id given in route object.')
-    }
-
-    // don't load product prices if the user is not approved yet
-    if (!isApprovedUser.value) {
-      return []
-    }
-    const { uid } = currentUser.value
-
-    if (!uid) {
-      logger.error('No customer id given.')
-      return []
-    }
-
-    const referenceGroups = [
-      'ACCESSORIES',
-      'CONSUMABLE',
-      'SPAREPART',
-      'RECOMMENDEDACCESSORIES',
-    ]
-
-    if (!referenceGroups.includes(referenceGroup)) {
-      logger.error(
-        `Cannot get ${referenceGroup} prices. Referencegroup '${referenceGroup}' not valid.`
-      )
-      return []
-    }
-
-    const result = await axios.$get(
-      `${config.PRODUCTS_API}/${productId}/${uid}/referenceGroups/${referenceGroup}/prices`
-    )
-
-    if (result.productPrices?.length) {
-      return result.productPrices
-    }
-
-    logger.error(
-      `Error while getting ${referenceGroup} prices for: ${productId}`
-    )
-    return []
-  }
-
   const loadByPath = async () => {
     const id = route.value.params.product || ''
 
@@ -393,8 +246,10 @@ export const useProductStore = defineStore('product', () => {
     await Promise.all([
       loadProduct(id),
       variationmatrixStore.loadVariationMatrix(id),
-      loadPrice(id),
       loadProductReferences(id),
+      loadProductAccessories(),
+      pricesStore.loadPrice(id),
+      pricesStore.loadProductReferenceGroupsPrices(),
     ])
   }
 
@@ -408,15 +263,14 @@ export const useProductStore = defineStore('product', () => {
     accessoriesGroups,
     productAccessoriesGroups,
     getProducts,
-    loadProductReferenceGroupsPrices,
+    loadProductReferenceGroupsPrices:
+      pricesStore.loadProductReferenceGroupsPrices,
     productReferences, // please note: this NEEDS to be exported, even though it is not used outside. Dependent computeds below will not work if removed. This may be a pinia bug.
+    productReferencesPrices,
     productReferencesSpareParts,
     productReferencesConsumables,
-    productConsumablesPrices,
-    productSparepartsPrices,
     productReferencesRecommendedAccessories,
     loadByPath,
     loadProductAccessories,
-    getProductReferenceGroupPrices,
   }
 })
