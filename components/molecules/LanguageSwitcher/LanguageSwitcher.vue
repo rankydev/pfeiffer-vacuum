@@ -1,6 +1,10 @@
 <template>
   <div ref="activator" class="language-switcher">
-    <div v-if="!isStoryblokPreview" class="language-switcher__wrapper">
+    <div
+      v-if="!isStoryblokPreview"
+      class="language-switcher__wrapper"
+      @click="toggleLanguageSwitcher"
+    >
       <div v-if="isActive" class="language-switcher__content">
         <ul>
           <NuxtLink
@@ -21,7 +25,6 @@
         icon="language"
         :prepend-icon="true"
         class="language-switcher__button"
-        @click="toggleLanguageSwitcher"
       />
     </div>
   </div>

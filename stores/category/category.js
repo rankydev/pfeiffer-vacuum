@@ -28,21 +28,31 @@ export const useCategoryStore = defineStore('category', () => {
     const rootUrl = localePath('shop-categories')
     const rootCat = { name: i18n.t('category.rootCategory'), href: rootUrl }
 
-    const breadcrumbArr = [
+    if (!searchTerm.value) {
+      return [
+        ...cmsPrefix,
+        rootCat,
+        ...categoryPath.map(({ name, id }) => ({
+          name,
+          href: joinURL(rootUrl, id),
+        })),
+      ]
+    }
+
+    const term = `${i18n.t('category.searchResult')} "${searchTerm.value}"`
+    const searchObj = { href: '', name: term }
+
+    /*
+     * maintain categories, deeper than rootCat when search is active
+     */
+    return [
       ...cmsPrefix,
-      rootCat,
       ...categoryPath.map(({ name, id }) => ({
         name,
         href: joinURL(rootUrl, id),
       })),
+      searchObj,
     ]
-
-    if (searchTerm.value) {
-      const term = `${i18n.t('category.searchResult')} "${searchTerm.value}"`
-      breadcrumbArr.push({ href: '', name: term })
-    }
-
-    return breadcrumbArr
   })
 
   const categoryName = computed(() => breadcrumb.value.at(-1)?.name || '')

@@ -204,6 +204,10 @@ export default defineComponent({
       return bytes.toFixed(precision) + ' ' + units[u]
     }
 
+    const isStepFile = (file) => {
+      return file.informationType?.value?.includes('Step-File')
+    }
+
     const tableHeader = computed(() => [
       {
         title: i18n.t('product.file.description'),
@@ -263,6 +267,7 @@ export default defineComponent({
             shape: 'outlined',
             href: `${PATH_EMPOLIS}/${file.downloadLink}`,
             target: '_blank',
+            download: isStepFile(file) ? `${file.title}.stp` : null,
           },
           {
             desktop: false,
@@ -273,6 +278,7 @@ export default defineComponent({
             shape: 'outlined',
             href: `${PATH_EMPOLIS}/${file.downloadLink}`,
             target: '_blank',
+            download: isStepFile(file) ? `${file.title}.stp` : null,
           },
         ]
 

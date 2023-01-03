@@ -1,7 +1,9 @@
 <template>
   <div
     class="attribute-buttons"
-    :class="{ 'attribute-buttons--three-cols': items.length > 4 }"
+    :class="{
+      'attribute-buttons--three-cols': items.length > 4 || items.length === 3,
+    }"
   >
     <Button
       v-for="item in items"

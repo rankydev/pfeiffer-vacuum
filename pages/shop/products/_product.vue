@@ -117,8 +117,6 @@ export default defineComponent({
 
     // TODO: think about debouncing this since it could be called multiple times by the watchers
     const loadProduct = () => {
-      variationmatrixStore.loadVariationMatrix(route.value.params.product)
-      productStore.loadProductAccessories()
       productStore.loadProductReferenceGroupsPrices()
       redirectOnError(productStore.loadByPath)
     }
@@ -132,13 +130,9 @@ export default defineComponent({
      * react to changing user login status
      */
     const userStore = useUserStore()
-    const { isApprovedUser } = storeToRefs(userStore)
-    watch(isApprovedUser, loadProduct)
-
-    const carouselEntries = computed(() => {
-      // TODO: return recommended accessories
-      return []
-    })
+    const { isLoggedIn, isApprovedUser } = storeToRefs(userStore)
+    watch(isLoggedIn, productStore.loadProductReferenceGroupsPrices)
+    watch(isApprovedUser, productStore.loadProductReferenceGroupsPrices)
 
     /**
      * build the cms slug
@@ -189,7 +183,6 @@ export default defineComponent({
       language,
       productStore,
       variationmatrixStore,
-      carouselEntries,
       sortedImages,
       productReferencesRecommendedAccessories,
     }
