@@ -23,6 +23,7 @@ export default defineComponent({
   components: {
     PvInput,
   },
+  emits: ['submit'],
   setup() {
     const router = useRouter()
     const route = useRoute()
@@ -34,6 +35,7 @@ export default defineComponent({
         path: app.localePath('shop-categories'),
         query: { searchTerm: e.length ? e : undefined },
       })
+      emit('submit')
     }
     return { pushSearchTerm, searchTerm }
   },
