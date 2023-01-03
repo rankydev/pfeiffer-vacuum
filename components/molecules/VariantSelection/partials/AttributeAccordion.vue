@@ -7,17 +7,14 @@
         <!-- eslint-disable-next-line vue/no-v-for-template-key-on-child -->
         <div :key="item.slotName">
           <AttributeButtons
-            :items="
-              item.variant.variationValues.filter((item) => item.selectable)
-            "
+            :items="item.variant.variationValues.filter((el) => el.selectable)"
             :attribute-code="item.variant.code"
             class="variant-selection-accordion__attributes"
-            @selected="slotScope.next"
+            @selected="slotScope.next(firstNotSelectedIndex)"
           />
           <div
             v-if="
-              item.variant.variationValues.filter((item) => !item.selectable)
-                .length
+              item.variant.variationValues.filter((el) => !el.selectable).length
             "
             class="variant-selection-accordion__not-selectable-wrapper"
           >
@@ -39,9 +36,7 @@
               <AttributeButtons
                 v-if="hasOpenNotSelectable(item.slotName)"
                 :items="
-                  item.variant.variationValues.filter(
-                    (item) => !item.selectable
-                  )
+                  item.variant.variationValues.filter((el) => !el.selectable)
                 "
                 :attribute-code="item.variant.code"
               />
@@ -56,6 +51,8 @@
 import { ref } from '@nuxtjs/composition-api'
 import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
 import AttributeButtons from './AttributeButtons'
+import { storeToRefs } from 'pinia'
+import { useVariationmatrixStore } from '~/stores/product'
 
 export default {
   name: 'AttributeAccordion',
@@ -71,6 +68,9 @@ export default {
     },
   },
   setup() {
+    const variationmatrixStore = useVariationmatrixStore()
+    const { firstNotSelectedIndex } = storeToRefs(variationmatrixStore)
+
     const openedSlots = ref([])
 
     const hasOpenNotSelectable = (slotName) => {
@@ -85,7 +85,7 @@ export default {
       }
     }
 
-    return { toggleNotSelectable, hasOpenNotSelectable }
+    return { toggleNotSelectable, hasOpenNotSelectable, firstNotSelectedIndex }
   },
 }
 </script>

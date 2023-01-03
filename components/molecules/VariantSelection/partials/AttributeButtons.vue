@@ -48,8 +48,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const variationmatrixStore = useVariationmatrixStore()
 
-    const itemClicked = (item) => {
-      variationmatrixStore.toggleAttribute(props.attributeCode, item.value)
+    const itemClicked = async (item) => {
+      await variationmatrixStore.toggleAttribute(
+        props.attributeCode,
+        item.value
+      )
       if (!item.selected) {
         emit('selected')
       }

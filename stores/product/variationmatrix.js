@@ -103,12 +103,12 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    * Is called when an attributed was clicked
    * Decide whether attribute should be added or removed from user selection
    */
-  const toggleAttribute = (key, val) => {
+  const toggleAttribute = async (key, val) => {
     if (loadingMatrix.value) return
 
     key in selectedAttributes.value && selectedAttributes.value[key] === val
-      ? deleteAttribute(key)
-      : addAttribute(key, val)
+      ? await deleteAttribute(key)
+      : await addAttribute(key, val)
   }
 
   /*
@@ -174,6 +174,18 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
     return hasOnlyOneVariantLeft(variationMatrix.value)
   })
 
+  /**
+   * Returns index of first attribute where no value is selected
+   */
+  const firstNotSelectedIndex = computed(() =>
+    variationMatrix.value.variationAttributes.findIndex(
+      (item) =>
+        !item.variationValues.some(
+          (el) => el.selected || el.automaticallySelected
+        )
+    )
+  )
+
   /*
    * Old and new matrix object can be given to determine whether there are two different variants left for redirection
    */
@@ -202,12 +214,13 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
     currentVariantId,
     selectedAttributes,
     loadingMatrix,
+    isSelectionCompleted,
+    firstNotSelectedIndex,
     loadVariationMatrix,
     addAttribute,
     deleteAttribute,
     toggleAttribute,
     clearMatrix,
     clearSelection,
-    isSelectionCompleted,
   }
 })

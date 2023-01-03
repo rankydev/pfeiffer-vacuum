@@ -47,6 +47,7 @@ export default defineComponent({
       loadingMatrix,
       clearSelection,
       isSelectionCompleted,
+      firstNotSelectedIndex,
       selectedAttributes,
     } = storeToRefs(variationmatrixStore)
 
@@ -64,16 +65,6 @@ export default defineComponent({
           )
           const hasMoreThanOneSelectable =
             variant.variationValues.filter((item) => item.selectable).length > 1
-
-          const isFirstNotSelected = computed(
-            () =>
-              variationMatrix.value.variationAttributes.findIndex(
-                (item) =>
-                  !item.variationValues.some(
-                    (el) => el.selected || el.automaticallySelected
-                  )
-              ) === index
-          )
 
           return {
             slotName: variant.name,
@@ -93,7 +84,7 @@ export default defineComponent({
                 : 'variant-selection__expand-icon--off'
               : null,
             variant,
-            isActive: isFirstNotSelected,
+            isActive: index === firstNotSelectedIndex.value,
           }
         }
       )
