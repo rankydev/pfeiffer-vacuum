@@ -1,4 +1,8 @@
 {
+  "startNew": "Start new",
+  "resetSelection": "Reset selection",
+  "hideNotSelectable": "Hide not selectable",
+  "showNotSelectable": "Show not selectable",
   "variantsAvailable": "no variants available | {count} variant available | {count} variants available",
   "similarImage": "Image similar",
   "productInformation": "Product Information",

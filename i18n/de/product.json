@@ -1,4 +1,8 @@
 {
+  "startNew": "Neu beginnen",
+  "resetSelection": "Auswahl zurücksetzen",
+  "hideNotSelectable": "Nicht auswählbar verbergen",
+  "showNotSelectable": "Nicht auswählbar anzeigen",
   "variantsAvailable": "keine verfügbare Variante | {count} verfügbare Variante | {count} verfügbare Varianten",
   "similarImage": "Abbildung ähnlich",
   "productInformation": "Produktinformationen",

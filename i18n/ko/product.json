@@ -1,4 +1,8 @@
 {
+  "startNew": "새로 시작",
+  "resetSelection": "선택 재설정",
+  "hideNotSelectable": "선택할 수 없는 숨기기",
+  "showNotSelectable": "선택할 수 없음 표시",
   "variantsAvailable": "사용 가능한 변형 없음 | {count}개의 변형 사용 가능 | {count}개의 변형 사용 가능",
   "similarImage": "유사한 그림",
   "productInformation": "제품 정보",

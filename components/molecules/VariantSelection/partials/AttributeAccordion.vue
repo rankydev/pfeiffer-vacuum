@@ -27,8 +27,8 @@
               variant="secondary"
               :label="
                 hasOpenNotSelectable(item.slotName)
-                  ? 'Hide not selectable'
-                  : 'Show not selectable anymore'
+                  ? $t('product.hideNotSelectable')
+                  : $t('product.showNotSelectable')
               "
               :icon="
                 hasOpenNotSelectable(item.slotName) ? 'arrow_upward' : null

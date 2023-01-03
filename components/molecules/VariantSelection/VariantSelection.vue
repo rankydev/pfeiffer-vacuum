@@ -1,11 +1,13 @@
 <template>
   <div class="variant-selection">
     <div class="variant-selection__headline">
-      <h3>Select Variant</h3>
+      <h3>{{ $t('product.selectVariant') }}</h3>
       <Button
         v-if="Object.keys(selectedAttributes).length > 0"
         :label="
-          isSelectionCompleted ? 'Start new selection' : 'Reset selection'
+          isSelectionCompleted
+            ? $t('product.startNew')
+            : $t('product.resetSelection')
         "
         variant="secondary"
         shape="plain"
@@ -49,13 +51,13 @@ export default defineComponent({
     } = storeToRefs(variationmatrixStore)
 
     const variationAttributeEntries = computed(() => {
-      if (!variationMatrix.value) {
+      if (!variationMatrix.value?.variationAttributes) {
         return []
       }
       return (variationMatrix.value || {}).variationAttributes.map(
         (variant, index) => {
           const hasSomeSelected = variant.variationValues.find(
-            (item) => item.selected
+            (item) => item.selected || item.automaticallySelected
           )
           const hasSomeSelectable = variant.variationValues.some(
             (item) => item.selectable
@@ -66,7 +68,10 @@ export default defineComponent({
           const isFirstNotSelected = computed(
             () =>
               variationMatrix.value.variationAttributes.findIndex(
-                (item) => !item.variationValues.some((el) => el.selected)
+                (item) =>
+                  !item.variationValues.some(
+                    (el) => el.selected || el.automaticallySelected
+                  )
               ) === index
           )
 
@@ -88,7 +93,7 @@ export default defineComponent({
                 : 'variant-selection__expand-icon--off'
               : null,
             variant,
-            isActive: isFirstNotSelected.value,
+            isActive: isFirstNotSelected,
           }
         }
       )
@@ -109,10 +114,10 @@ export default defineComponent({
   @apply tw-p-6;
   @apply tw-bg-pv-grey-96;
   @apply tw-rounded-lg;
-  width: 550px;
 
   &__headline {
     @apply tw-flex;
+    @apply tw-items-center;
     @apply tw-mb-5;
   }
 

@@ -30,17 +30,26 @@
 
             <div class="tw--my-4" style="width: 100%; height: 0px">&nbsp;</div>
 
-            <div class="product-page__image-gallery">
-              <ImageGallery v-if="sortedImages.length" :images="sortedImages" />
-              <ResponsiveImage
-                v-else
-                aspect-ratio="3:2"
-                fallback-image-icon-size="xxlarge"
-              />
+            <div class="product-page__upper-section">
+              <div class="product-page__image-gallery">
+                <ImageGallery
+                  v-if="sortedImages.length"
+                  :images="sortedImages"
+                />
+                <ResponsiveImage
+                  v-else
+                  aspect-ratio="3:2"
+                  fallback-image-icon-size="xxlarge"
+                />
+              </div>
+              <div
+                id="variantselection"
+                class="product-page__variant-selection"
+              >
+                <VariantSelection />
+              </div>
             </div>
-            <div id="variantselection">
-              <VariantSelection />
-            </div>
+
             <div
               v-if="productReferencesRecommendedAccessories.length"
               class="tw-w-full"
@@ -190,10 +199,33 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .product-page {
+  &__upper-section {
+    @apply tw-flex tw-justify-between;
+    @apply tw-flex-col;
+    @apply tw-w-full;
+    @apply tw-gap-6;
+
+    @screen md {
+      @apply tw-flex-row;
+    }
+
+    @screen lg {
+      @apply tw-gap-16;
+    }
+  }
+
+  &__variant-selection {
+    @apply tw-w-full;
+
+    @screen md {
+      @apply tw-w-1/2;
+      max-width: 550px;
+    }
+  }
+
   &__image-gallery {
-    @apply tw-min-w-full;
-    @apply tw-flex-1;
     @apply tw-flex;
+    @apply tw-flex-1;
 
     @screen md {
       @apply tw-min-w-0;
