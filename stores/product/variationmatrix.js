@@ -7,7 +7,6 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { joinURL } from 'ufo'
-import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useProductStore } from './product'
 import config from '~/config/hybris.config'
@@ -16,7 +15,6 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
   const productStore = useProductStore()
   const router = useRouter()
   const route = useRoute()
-  const { logger } = useLogger('productStore')
   const { axios } = useAxiosForHybris()
   const { localePath } = useContext()
 
@@ -34,7 +32,9 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
   /*
    * Retrieve variation matrix object from hybris given a product id and selected attributes
    */
-  const loadVariationMatrix = async (id) => {
+  const loadVariationMatrix = async () => {
+    const id = route.value.params.product || ''
+
     // Return when old matrix is still valid and no new matrix is needed
     if (matrixStillValid.value) {
       matrixStillValid.value = false
@@ -61,42 +61,42 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
     // Get variation matrix from hybris
     let result
     const url = joinURL(config.PRODUCTS_API, productCode, 'variationmatrix')
-    result = await axios
-      .$get(url, {
+    try {
+      result = await axios.$get(url, {
         params: { ...selectedAttributes.value, fields: 'FULL' },
       })
-      .catch((error) => {
-        logger.error(error)
-      })
-    // Set selected attributes as user selection for first variant loading
-    if (result.allSelected && !Object.keys(selectedAttributes.value).length)
-      setHybrisSelectionAsUserInput(result)
+      // Set selected attributes as user selection for first variant loading
+      if (result.allSelected && !Object.keys(selectedAttributes.value).length)
+        setHybrisSelectionAsUserInput(result)
 
-    // Check if redirect is needed
-    if (
-      hasOnlyOneVariantLeft(result) &&
-      hasDifferentVariant(variationMatrix.value, result)
-    ) {
-      // Redirect to variant page when only one variant is left
-      redirectToId(result.variants?.[0]?.code)
-    } else if (
-      hasOnlyOneVariantLeft(variationMatrix.value) &&
-      !hasOnlyOneVariantLeft(result)
-    ) {
-      // Redirect to master page when more than one variant is available after selection update
-      redirectToId(
-        currentMasterId.value || productStore.product.value.master,
-        true
-      )
-    } else if (variationMatrix.value && !hasOnlyOneVariantLeft(result))
-      pushCurrentSelectionInQuery()
+      // Check if redirect is needed
+      if (
+        hasOnlyOneVariantLeft(result) &&
+        hasDifferentVariant(variationMatrix.value, result)
+      ) {
+        // Redirect to variant page when only one variant is left
+        redirectToId(result.variants?.[0]?.code)
+      } else if (
+        hasOnlyOneVariantLeft(variationMatrix.value) &&
+        !hasOnlyOneVariantLeft(result)
+      ) {
+        // Redirect to master page when more than one variant is available after selection update
+        redirectToId(
+          currentMasterId.value || productStore.product.value.master,
+          true
+        )
+      } else if (variationMatrix.value && !hasOnlyOneVariantLeft(result))
+        pushCurrentSelectionInQuery()
 
-    shouldLoadVariantMatrix.value = false
+      shouldLoadVariantMatrix.value = false
 
-    // Write result into store
-    variationMatrix.value = result
-
-    loadingMatrix.value = false
+      // Write result into store
+      variationMatrix.value = result
+    } catch (error) {
+      console.error(error)
+    } finally {
+      loadingMatrix.value = false
+    }
   }
 
   /*
@@ -177,13 +177,14 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
   /**
    * Returns index of first attribute where no value is selected
    */
-  const firstNotSelectedIndex = computed(() =>
-    variationMatrix.value.variationAttributes.findIndex(
-      (item) =>
-        !item.variationValues.some(
-          (el) => el.selected || el.automaticallySelected
-        )
-    )
+  const firstNotSelectedIndex = computed(
+    () =>
+      variationMatrix.value?.variationAttributes.findIndex(
+        (item) =>
+          !item.variationValues.some(
+            (el) => el.selected || el.automaticallySelected
+          )
+      ) || 0
   )
 
   /*

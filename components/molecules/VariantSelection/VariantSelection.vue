@@ -55,39 +55,37 @@ export default defineComponent({
       if (!variationMatrix.value?.variationAttributes) {
         return []
       }
-      return (variationMatrix.value || {}).variationAttributes.map(
-        (variant, index) => {
-          const hasSomeSelected = variant.variationValues.find(
-            (item) => item.selected || item.automaticallySelected
-          )
-          const hasSomeSelectable = variant.variationValues.some(
-            (item) => item.selectable
-          )
-          const hasMoreThanOneSelectable =
-            variant.variationValues.filter((item) => item.selectable).length > 1
+      return variationMatrix.value.variationAttributes.map((variant, index) => {
+        const hasSomeSelected = variant.variationValues.find(
+          (item) => item.selected || item.automaticallySelected
+        )
+        const hasSomeSelectable = variant.variationValues.some(
+          (item) => item.selectable
+        )
+        const hasMoreThanOneSelectable =
+          variant.variationValues.filter((item) => item.selectable).length > 1
 
-          return {
-            slotName: variant.name,
-            label: hasSomeSelected
-              ? `<span class="variant-selection__accordion-header">${variant.name}: <span class="variant-selection__accordion-header--bold">${hasSomeSelected.displayValue}<span/></span>`
-              : variant.name,
-            disabled: !hasSomeSelectable,
-            icon: hasSomeSelected ? 'check_circle' : null,
-            expandIcon: hasSomeSelected
-              ? hasMoreThanOneSelectable
-                ? 'edit'
-                : 'edit_off'
-              : null,
-            expandIconClass: hasSomeSelected
-              ? hasMoreThanOneSelectable
-                ? 'variant-selection__expand-icon--on'
-                : 'variant-selection__expand-icon--off'
-              : null,
-            variant,
-            isActive: index === firstNotSelectedIndex.value,
-          }
+        return {
+          slotName: variant.name,
+          label: hasSomeSelected
+            ? `<span class="variant-selection__accordion-header">${variant.name}: <span class="variant-selection__accordion-header--bold">${hasSomeSelected.displayValue}<span/></span>`
+            : variant.name,
+          disabled: !hasSomeSelectable,
+          icon: hasSomeSelected ? 'check_circle' : null,
+          expandIcon: hasSomeSelected
+            ? hasMoreThanOneSelectable
+              ? 'edit'
+              : 'edit_off'
+            : null,
+          expandIconClass: hasSomeSelected
+            ? hasMoreThanOneSelectable
+              ? 'variant-selection__expand-icon--on'
+              : 'variant-selection__expand-icon--off'
+            : null,
+          variant,
+          isActive: index === firstNotSelectedIndex.value,
         }
-      )
+      })
     })
 
     return {

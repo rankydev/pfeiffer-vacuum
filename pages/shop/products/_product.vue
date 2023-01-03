@@ -125,13 +125,15 @@ export default defineComponent({
       storeToRefs(productStore)
 
     const loadProduct = async () => {
-      productStore.loadProductReferenceGroupsPrices()
       await redirectOnError(productStore.loadByPath)
     }
 
     onServerPrefetch(async () => await loadProduct())
     onBeforeMount(async () => await loadProduct())
-    watch(route, async () => await loadProduct())
+    watch(
+      computed(() => route.value.path),
+      async () => await loadProduct()
+    )
     onBeforeUnmount(variationmatrixStore.clearMatrix)
 
     /**
