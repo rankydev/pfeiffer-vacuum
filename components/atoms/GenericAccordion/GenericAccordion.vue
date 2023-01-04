@@ -256,9 +256,10 @@ export default defineComponent({
       @apply tw-border-t-0;
       @apply tw-border-b-2;
       @apply tw-border-pv-grey-88;
+      @apply tw-transition-colors;
 
       &--active {
-        @apply tw-border-0;
+        @apply tw-border-pv-transparent;
       }
     }
   }

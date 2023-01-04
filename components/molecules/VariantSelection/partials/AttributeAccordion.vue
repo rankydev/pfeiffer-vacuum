@@ -6,6 +6,13 @@
       <template v-for="item in accordionEntries" #[item.slotName]="slotScope">
         <!-- eslint-disable-next-line vue/no-v-for-template-key-on-child -->
         <div :key="item.slotName">
+          <div
+            v-if="item.info"
+            class="variant-selection-accordion__information-text"
+          >
+            <Icon icon="info_outline" />
+            <span>{{ item.info }}</span>
+          </div>
           <AttributeButtons
             :items="item.variant.variationValues.filter((el) => el.selectable)"
             :attribute-code="item.variant.code"
@@ -102,6 +109,15 @@ export default {
 
   &__not-selectable-button {
     @apply tw-mb-2;
+  }
+
+  &__information-text {
+    @apply tw-flex;
+    @apply tw-items-center tw-justify-start;
+    @apply tw-gap-2;
+    @apply tw-mb-4 tw-mt-1;
+    @apply tw-text-pv-grey-48;
+    @apply tw-text-sm;
   }
 }
 </style>

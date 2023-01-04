@@ -1,5 +1,9 @@
 <template>
-  <div class="variant-selection">
+  <LoadingSpinner
+    class="variant-selection"
+    :show="loadingMatrix && !variationAttributeEntries.length"
+    color="red"
+  >
     <div class="variant-selection__headline">
       <h3>{{ $t('product.selectVariant') }}</h3>
       <Button
@@ -21,18 +25,20 @@
       :loading="loadingMatrix"
       :accordion-entries="variationAttributeEntries"
     />
-  </div>
+  </LoadingSpinner>
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import { useVariationmatrixStore } from '~/stores/product'
 import AttributeAccordion from './partials/AttributeAccordion'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 
 export default defineComponent({
   components: {
     AttributeAccordion,
+    LoadingSpinner,
   },
   props: {
     loading: {
@@ -50,6 +56,7 @@ export default defineComponent({
       firstNotSelectedIndex,
       selectedAttributes,
     } = storeToRefs(variationmatrixStore)
+    const { i18n } = useContext()
 
     const variationAttributeEntries = computed(() => {
       if (!variationMatrix.value?.variationAttributes) {
@@ -59,6 +66,9 @@ export default defineComponent({
         const hasSomeSelected = variant.variationValues.find(
           (item) => item.selected || item.automaticallySelected
         )
+        const hasAutomaticallySelected = variant.variationValues.some(
+          (item) => item.automaticallySelected
+        )
         const hasSomeSelectable = variant.variationValues.some(
           (item) => item.selectable
         )
@@ -67,6 +77,9 @@ export default defineComponent({
 
         return {
           slotName: variant.name,
+          info: hasAutomaticallySelected
+            ? i18n.t('product.automaticallySelectedInfo')
+            : null,
           label: hasSomeSelected
             ? `<span class="variant-selection__accordion-header">${variant.name}: <span class="variant-selection__accordion-header--bold">${hasSomeSelected.displayValue}<span/></span>`
             : variant.name,
@@ -103,6 +116,7 @@ export default defineComponent({
   @apply tw-p-6;
   @apply tw-bg-pv-grey-96;
   @apply tw-rounded-lg;
+  min-height: 400px;
 
   &__headline {
     @apply tw-flex;

@@ -3,6 +3,7 @@
     class="attribute-buttons"
     :class="{
       'attribute-buttons--three-cols': items.length > 4 || items.length === 3,
+      'attribute-buttons--one-col': items.length === 1,
     }"
   >
     <Button
@@ -73,6 +74,10 @@ export default defineComponent({
   grid-auto-rows: 1fr;
   @apply tw-gap-2;
   @apply tw-overflow-hidden;
+
+  &--one-col {
+    @apply tw-grid-cols-1;
+  }
 
   &--three-cols {
     @screen lg {
