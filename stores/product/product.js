@@ -249,13 +249,12 @@ export const useProductStore = defineStore('product', () => {
         loadProductAccessories(),
         pricesStore.loadPrice(id),
       ])
+
+      await variationmatrixStore.loadVariationMatrix()
     }
 
     // always call those
-    await Promise.all([
-      pricesStore.loadProductReferenceGroupsPrices(),
-      variationmatrixStore.loadVariationMatrix(),
-    ])
+    await Promise.all([pricesStore.loadProductReferenceGroupsPrices()])
   }
 
   return {

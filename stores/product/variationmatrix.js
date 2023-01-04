@@ -51,9 +51,11 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
     )
       shouldLoadVariantMatrix.value = true
 
-    const productCode = shouldLoadVariantMatrix.value
+    let productCode = shouldLoadVariantMatrix.value
       ? currentVariantId.value
       : currentMasterId.value || id
+
+    if (!variationMatrix.value) productCode = id
 
     // Write route query data to store on first load
     if (!variationMatrix.value) selectedAttributes.value = route.value.query
@@ -191,8 +193,9 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    * Old and new matrix object can be given to determine whether there are two different variants left for redirection
    */
   const hasDifferentVariant = (oldMatrix, newMatrix) =>
-    oldMatrix?.variants?.length > 1 ||
-    oldMatrix?.variants?.[0]?.code !== newMatrix?.variants?.[0]?.code
+    oldMatrix &&
+    (oldMatrix?.variants?.length > 1 ||
+      oldMatrix?.variants?.[0]?.code !== newMatrix?.variants?.[0]?.code)
 
   /*
    * When product state in frontend application should switch from master to variant and vice versa the application
