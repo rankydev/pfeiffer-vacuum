@@ -68,6 +68,16 @@ jest.mock('~/composables/useToast', () => {
   }
 })
 
+jest.mock('~/stores/datasources/datasources', () => {
+  return {
+    loadFilesFromDatasource: () => {
+      return {
+        privacyPersonal: '',
+      }
+    },
+  }
+})
+
 describe('RegistrationPage', () => {
   beforeEach(() => {
     setActivePinia(createPinia())

@@ -5,7 +5,7 @@
       :richtext="$t('registration.registrationPage.conditionsDescription')"
     />
     <Link
-      href="https://webportal.pfeiffer-vacuum.com/api/cms/assets/f/76453/x/8376ad0b93/data_protection_de.pdf"
+      :href="files['privacyPersonal'] || ''"
       target="_blank"
       variant="inline"
     >
@@ -15,13 +15,25 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, onBeforeMount, ref } from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext'
 import Link from '~/components/atoms/Link/Link'
+import { useDatasourcesStore } from '~/stores/datasources/datasources'
 
 export default defineComponent({
   name: 'RegistrationPageDataProtection',
   components: { Richtext, Link },
+  setup() {
+    const datasourcesStore = useDatasourcesStore()
+    const files = ref({})
+    const getPrivacyLink = async () => {
+      files.value = await datasourcesStore.loadFilesFromDatasource()
+    }
+    onBeforeMount(getPrivacyLink)
+    return {
+      files,
+    }
+  },
 })
 </script>
 
