@@ -22,8 +22,8 @@
               <span
                 v-if="j < getAllUnitVariants(feature, el).length - 1"
                 class="technical-data__unit-seperator"
-                v-html="'|'"
-              />
+                >|</span
+              >
             </span>
           </span>
           <span
