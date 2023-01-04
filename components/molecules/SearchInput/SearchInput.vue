@@ -5,6 +5,7 @@
     :placeholder="$t('form.input.search.placeholder')"
     @submit="pushSearchTerm"
     @click:icon="pushSearchTerm"
+    @input="loadSuggestions"
   />
 </template>
 
@@ -18,6 +19,7 @@ import {
 } from '@nuxtjs/composition-api'
 
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
+import { useCategoryStore } from '~/stores/category/category'
 
 export default defineComponent({
   components: {
@@ -28,6 +30,10 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const { app } = useContext()
+    const categoryStore = useCategoryStore()
+
+    const { loadSuggestions, blurSuggestions } = categoryStore
+
     const searchTerm = ref(route.value.query.searchTerm || '')
 
     const pushSearchTerm = (e) => {
@@ -37,7 +43,7 @@ export default defineComponent({
         query: { searchTerm: e.length ? e : undefined },
       })
     }
-    return { pushSearchTerm, searchTerm }
+    return { pushSearchTerm, searchTerm, loadSuggestions, blurSuggestions }
   },
 })
 </script>

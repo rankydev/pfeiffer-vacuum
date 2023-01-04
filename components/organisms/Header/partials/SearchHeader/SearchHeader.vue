@@ -15,6 +15,17 @@
       <div class="search-header__modal-content tw-flex tw-w-full">
         <h2 class="search-header__headline">Suche</h2>
         <SearchInput @submit="colseSearchfield" />
+        <div>
+          {{ currentSuggestions }}
+          <div v-for="item in currentSuggestions" :key="item.value">
+            {{ item.value }}
+          </div>
+          <SuggestionItem
+            v-for="item in currentSuggestions"
+            :key="item.value"
+            :title="item.value"
+          />
+        </div>
       </div>
     </GenericModal>
     <SearchInput class="search-header__field" />
@@ -27,12 +38,16 @@ import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
+import SuggestionItem from '~/components/molecules/SuggestionItem/SuggestionItem'
+import { useCategoryStore } from '~/stores/category/category'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
     SearchInput,
     Icon,
     GenericModal,
+    SuggestionItem,
   },
   props: {
     hasOpacity: {
@@ -42,8 +57,11 @@ export default defineComponent({
   },
   setup() {
     const { app } = useContext()
+    const categoryStore = useCategoryStore()
     const isDesktop = app.$breakpoints.isDesktop
     const isOpen = ref(false)
+
+    const { currentSuggestions } = storeToRefs(categoryStore)
 
     const toggleSearchfield = () => {
       isOpen.value = !isOpen.value
@@ -58,6 +76,7 @@ export default defineComponent({
       toggleSearchfield,
       colseSearchfield,
       isOpen,
+      currentSuggestions,
     }
   },
 })
