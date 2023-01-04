@@ -1,6 +1,7 @@
 import ButtonGroup from './ButtonGroup'
 import values from './ButtonGroup.stories.content'
 import { examples } from './ButtonGroup.stories.content'
+import { ref } from '@nuxtjs/composition-api'
 
 const argTypes = {
   values,
@@ -27,11 +28,15 @@ const Template = (args, { argTypes: types }) => ({
   components: { ButtonGroup },
   props: Object.keys(types),
   setup() {
-    return { args }
+    const selectedVal = ref(undefined)
+
+    const updateSelection = (val) => (selectedVal.value = val)
+
+    return { args, updateSelection, selectedVal }
   },
   template: `
     <div class="documentation-preview" style="max-width:500px;">
-      <ButtonGroup v-bind="args" />
+      <ButtonGroup v-bind="args" :initial-value="selectedVal" @update="updateSelection"/>
     </div>
   `,
 })

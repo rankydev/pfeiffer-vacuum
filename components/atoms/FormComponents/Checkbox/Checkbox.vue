@@ -73,13 +73,15 @@ export default {
 
     &:hover {
       @apply tw-cursor-pointer;
+      @apply tw-border-pv-red-lighter;
     }
 
     &:focus {
-      @apply tw-border tw-border-pv-red-lighter;
+      @apply tw-border-2 tw-border-pv-grey-16;
       @apply tw-ring-0;
       @apply tw-text-pv-red-lighter;
-      @apply tw-shadow-border-red-lighter;
+
+      // @apply tw-shadow-border-red-lighter;
 
       // safari fix to prevent focus outline
       outline: 0;
