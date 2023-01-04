@@ -18,13 +18,12 @@
               v-for="(alternative, j) in getAllUnitVariants(feature, el)"
               :key="j"
             >
-              <span v-html="alternative" />
+              <span v-html="sanitizer.inline(alternative)" />
               <span
                 v-if="j < getAllUnitVariants(feature, el).length - 1"
-                class="technical-data__child--unit-seperator"
-                v-html="sanitizer.inline('|')"
+                class="technical-data__unit-seperator"
+                v-html="'|'"
               />
-              >
             </span>
           </span>
           <span
@@ -57,15 +56,14 @@ export default {
     }
 
     const getAllUnitVariants = (feature, el) => {
-      const allValues = [getFeatureText(feature, el)]
-      feature.alternativeUnits.forEach((alternativeFeature) => {
-        allValues.push(
-          ` ${alternativeFeature.featureValues[0].value} ${
+      const readableAlternativeUnits = feature.alternativeUnits.map(
+        (alternativeFeature) => {
+          return ` ${alternativeFeature.featureValues[0].value} ${
             alternativeFeature.featureUnit?.name || ''
           }`
-        )
-      })
-      return allValues
+        }
+      )
+      return [getFeatureText(feature, el), ...readableAlternativeUnits]
     }
 
     return { sanitizer, getFeatureText, getAllUnitVariants }
@@ -128,11 +126,11 @@ export default {
     @screen lg {
       @apply tw-col-span-6;
     }
+  }
 
-    &--unit-seperator {
-      @apply tw-text-pv-red;
-      @apply tw-font-bold;
-    }
+  &__unit-seperator {
+    @apply tw-text-pv-red;
+    @apply tw-font-bold;
   }
 }
 </style>
