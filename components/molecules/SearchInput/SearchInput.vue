@@ -24,18 +24,18 @@ export default defineComponent({
     PvInput,
   },
   emits: ['submit'],
-  setup() {
+  setup(props, { emit }) {
     const router = useRouter()
     const route = useRoute()
     const { app } = useContext()
     const searchTerm = ref(route.value.query.searchTerm || '')
 
     const pushSearchTerm = (e) => {
+      emit('submit')
       router.push({
         path: app.localePath('shop-categories'),
         query: { searchTerm: e.length ? e : undefined },
       })
-      emit('submit')
     }
     return { pushSearchTerm, searchTerm }
   },

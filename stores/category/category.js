@@ -113,6 +113,8 @@ export const useCategoryStore = defineStore('category', () => {
     await Promise.all([loadProducts(), loadCategory()])
   }
 
+  // HIER SUGGESTIONS VON API ABFRAGEN
+
   return {
     // state
     category,

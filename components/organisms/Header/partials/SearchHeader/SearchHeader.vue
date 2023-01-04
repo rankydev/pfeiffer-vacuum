@@ -4,21 +4,17 @@
       v-show="!isDesktop"
       icon="search"
       class="search-header__trigger"
-      @click="toggleSearchfield()"
+      @click="toggleSearchfield"
     />
-    <!-- <SearchInput
-      v-if="!isDesktop"
-      :class="[isOpen ? 'search-header__field' : 'search-header__field--none']"
-    /> -->
     <GenericModal
       class="search-header__modal"
       :is-open="isOpen"
       :fill-viewport="true"
-      @closeModal="toggleSearchfield()"
+      @closeModal="colseSearchfield"
     >
       <div class="search-header__modal-content tw-flex tw-w-full">
         <h2 class="search-header__headline">Suche</h2>
-        <SearchInput @submit="toggleSearchfield()" />
+        <SearchInput @submit="colseSearchfield" />
       </div>
     </GenericModal>
     <SearchInput class="search-header__field" />
@@ -30,11 +26,13 @@ import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 
 import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import GenericModal from '~/components/molecules/GenericModal/GenericModal'
 
 export default defineComponent({
   components: {
     SearchInput,
     Icon,
+    GenericModal,
   },
   props: {
     hasOpacity: {
@@ -48,13 +46,17 @@ export default defineComponent({
     const isOpen = ref(false)
 
     const toggleSearchfield = () => {
-      console.log('entered')
       isOpen.value = !isOpen.value
+    }
+
+    const colseSearchfield = () => {
+      isOpen.value = false
     }
 
     return {
       isDesktop,
       toggleSearchfield,
+      colseSearchfield,
       isOpen,
     }
   },
