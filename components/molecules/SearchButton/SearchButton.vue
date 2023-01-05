@@ -1,6 +1,6 @@
 <template>
   <div class="searchbutton">
-    <button class="searchbutton__btn">
+    <button class="searchbutton__btn" @click="pushSearchTerm(title)">
       <p class="searchbutton__title">{{ title }}</p>
       <Icon class="searchbutton__icon" icon="arrow_forward" />
     </button>
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useRouter, useContext } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
@@ -23,8 +23,17 @@ export default defineComponent({
     },
   },
   emits: ['click'],
-  setup(props) {
-    return {}
+  setup(props, { emit }) {
+    const router = useRouter()
+    const { app } = useContext()
+
+    const pushSearchTerm = (e) => {
+      router.push({
+        path: app.localePath('shop-categories'),
+        query: { searchTerm: e.length ? e : undefined },
+      })
+    }
+    return { pushSearchTerm }
   },
 })
 </script>
