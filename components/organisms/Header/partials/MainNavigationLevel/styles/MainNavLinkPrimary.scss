@@ -54,6 +54,10 @@
     @apply tw--translate-y-1/2;
   }
 
+  &__login-button {
+    @apply tw-m-4;
+  }
+
   @screen md {
     @apply tw-flex-row;
 

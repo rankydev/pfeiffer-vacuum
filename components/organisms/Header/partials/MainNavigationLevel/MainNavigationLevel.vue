@@ -113,6 +113,28 @@
           />
         </li>
       </template>
+      <li v-if="level === 0 && isMobile">
+        <Button
+          v-if="userStore.isLoggedIn || userStore.isLoginProcess"
+          variant="secondary"
+          shape="outlined"
+          icon="logout"
+          :label="$t('navigation.button.logout.mobileLabel')"
+          @click="logout"
+        />
+        <Button
+          v-else
+          variant="secondary"
+          shape="outlined"
+          icon="person"
+          :label="myAccountLabel"
+          :class="`${prefix}__login-button`"
+          @click="
+            handleMyAccount()
+            closeMenu
+          "
+        />
+      </li>
     </ul>
   </div>
 </template>
@@ -132,7 +154,10 @@ import Link from '~/components/atoms/Link/Link.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
 import Button from '~/components/atoms/Button/Button.vue'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
+
 import { useMenuStore } from '~/stores/menu'
+import { useUserStore } from '~/stores/user'
 
 export default defineComponent({
   name: 'MainNavigationLevel',
@@ -141,6 +166,7 @@ export default defineComponent({
     Link,
     AnimatedCollapse,
     Button,
+    LoadingSpinner,
   },
   props: {
     currentEntry: {
@@ -210,6 +236,23 @@ export default defineComponent({
 
     const hasSubmenu = (entry) => entry?.navigationEntries?.length > 0
 
+    const userStore = useUserStore()
+    const { i18n } = useContext()
+
+    const myAccountLabel = computed(() => {
+      if (userStore.isLoginProcess) return ''
+
+      return userStore.isLoggedIn
+        ? userStore.currentUser?.name
+        : i18n.t('navigation.button.signIn.label')
+    })
+
+    const handleMyAccount = () => {
+      if (userStore.isLoggedIn) return
+
+      userStore.login()
+    }
+
     return {
       prefix,
       toggleActive,
@@ -222,6 +265,10 @@ export default defineComponent({
       hasSubmenu,
       selectedPrimaryLink,
       closeMenu,
+      myAccountLabel,
+      userStore,
+      handleMyAccount,
+      logout: userStore.logout,
     }
   },
 })
