@@ -250,11 +250,12 @@ export const useProductStore = defineStore('product', () => {
         pricesStore.loadPrice(id),
       ])
 
+      // we need to wait until loadProduct is done before we can load the matrix
       await variationmatrixStore.loadVariationMatrix()
     }
 
-    // always call those
-    await Promise.all([pricesStore.loadProductReferenceGroupsPrices()])
+    // needs to be called even if product data was already loaded (SSR) because prices can only be loaded client side
+    await pricesStore.loadProductReferenceGroupsPrices()
   }
 
   return {
