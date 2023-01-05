@@ -113,6 +113,26 @@
           />
         </li>
       </template>
+
+      <li v-if="level === 0 && isMobile">
+        <Link
+          v-for="item in flyoutLinks"
+          :key="item._uid"
+          v-bind="item"
+          :class="[`${prefix}__flyout-entry`, `${prefix}__link`]"
+        >
+          <Icon :icon="item.icon" />
+          <span>{{ item.label }}</span>
+        </Link>
+        <div
+          v-if="userStore.isLoggedIn || userStore.isLoginProcess"
+          :class="[`${prefix}__flyout-entry`, `${prefix}__link`]"
+        >
+          <Icon icon="person" />
+          <span>{{ myAccountLabel }}</span>
+        </div>
+      </li>
+
       <li v-if="level === 0 && isMobile">
         <Button
           v-if="userStore.isLoggedIn || userStore.isLoginProcess"
@@ -120,6 +140,7 @@
           shape="outlined"
           icon="logout"
           :label="$t('navigation.button.logout.mobileLabel')"
+          :class="`${prefix}__login-button`"
           @click="logout"
         />
         <Button
@@ -180,6 +201,13 @@ export default defineComponent({
     level: {
       type: Number,
       default: 0,
+    },
+    /**
+     * A list of flyout links for the top navigation
+     */
+    flyoutLinks: {
+      type: Array,
+      default: /* istanbul ignore next */ () => [],
     },
   },
   setup(props, { refs }) {

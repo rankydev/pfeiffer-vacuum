@@ -14,6 +14,7 @@
         <MainNavigation
           class="header__main-navigation"
           :navigation-entries="navigationEntries"
+          :flyout-links="flyoutLinks"
         />
       </div>
     </ContentWrapper>

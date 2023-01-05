@@ -108,4 +108,11 @@
       @apply tw-mr-8;
     }
   }
+
+  &__flyout-entry {
+    @apply tw-flex;
+    @apply tw-text-xs;
+    @apply tw-gap-x-2.5;
+    @apply tw-text-pv-grey-48;
+  }
 }
