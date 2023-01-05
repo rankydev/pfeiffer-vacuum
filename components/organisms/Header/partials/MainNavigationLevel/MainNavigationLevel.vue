@@ -214,8 +214,9 @@ export default defineComponent({
     },
   },
   setup(props, { refs }) {
-    const { app } = useContext()
+    const { app, i18n } = useContext()
 
+    const userStore = useUserStore()
     const menu = useMenuStore()
 
     const prefix = computed(() => `primary-nav-${props.level}`)
@@ -266,9 +267,6 @@ export default defineComponent({
     }
 
     const hasSubmenu = (entry) => entry?.navigationEntries?.length > 0
-
-    const userStore = useUserStore()
-    const { i18n } = useContext()
 
     const myAccountLabel = computed(() => {
       if (userStore.isLoginProcess) return ''
