@@ -1,6 +1,9 @@
 <template>
   <div class="shop-navigation">
-    <LoadingSpinner :show="userStore.isLoginProcess || !myAccountLabel">
+    <LoadingSpinner
+      class="shop-navigation__account-wrapper"
+      :show="userStore.isLoginProcess || !myAccountLabel"
+    >
       <Button
         shape="plain"
         variant="secondary"
@@ -85,13 +88,16 @@ export default defineComponent({
     @apply tw-pb-6;
   }
 
-  &__account {
+  &__account-wrapper {
     @apply tw-hidden;
-    @apply tw--my-2;
 
     @screen md {
-      @apply tw-flex;
+      @apply tw-block;
     }
+  }
+
+  &__account {
+    @apply tw--my-2;
   }
 
   &__logout {

@@ -54,8 +54,13 @@
     @apply tw--translate-y-1/2;
   }
 
+  &__login-button-wrapper {
+    @apply tw-p-4;
+    @apply tw-flex;
+  }
+
   &__login-button {
-    @apply tw-m-4;
+    @apply tw-grow;
   }
 
   @screen md {

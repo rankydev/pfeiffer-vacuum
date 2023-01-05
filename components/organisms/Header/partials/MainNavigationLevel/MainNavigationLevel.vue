@@ -133,7 +133,10 @@
         </div>
       </li>
 
-      <li v-if="level === 0 && isMobile">
+      <li
+        v-if="level === 0 && isMobile"
+        :class="`${prefix}__login-button-wrapper`"
+      >
         <Button
           v-if="userStore.isLoggedIn || userStore.isLoginProcess"
           variant="secondary"
