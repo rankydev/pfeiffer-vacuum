@@ -129,6 +129,7 @@ export default defineComponent({
       return {
         toggleActive: (idx) => (hasIdx(idx) ? removeIdx(idx) : addIdx(idx)),
         isActive: hasIdx,
+        openNext: null,
         sanitizer,
       }
     } else {
