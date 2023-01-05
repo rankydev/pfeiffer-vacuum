@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs, useContext } from '@nuxtjs/composition-api'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 
 export default defineComponent({
@@ -27,11 +27,14 @@ export default defineComponent({
     },
   },
   setup(props, context) {
+    const { app } = useContext()
+    const locale = app?.i18n.locale
+
     const { error } = toRefs(props)
     const statusCode = error?.value?.statusCode || 404
     let path = '/errors/error'
     if (statusCode === 404) {
-      path = `/errors/404`
+      path = `${locale}/errors/404`
     }
     const { buildSlugs } = useStoryblokSlugBuilder(context)
     const { slug, fallbackSlug, language } = buildSlugs(path)
