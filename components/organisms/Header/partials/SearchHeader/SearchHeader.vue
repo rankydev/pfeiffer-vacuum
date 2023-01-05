@@ -12,17 +12,22 @@
       :fill-viewport="true"
       @closeModal="colseSearchfield"
     >
-      <div class="search-header__modal-content tw-flex tw-w-full">
-        <h2 class="search-header__headline">Suche</h2>
+      <div class="search-header__modal-content">
+        <h2 class="search-header__headline">
+          {{ $t('category.search') }}
+        </h2>
         <SearchInput @submit="colseSearchfield" />
-        <div>
-          {{ currentSuggestions }}
-          <div v-for="item in currentSuggestions" :key="item.value">
-            {{ item.value }}
-          </div>
-          <SuggestionItem
+        <div
+          v-if="currentSuggestions.length"
+          class="search-header__suggestions"
+        >
+          <h2 class="search-header__suggestions--headline">
+            {{ `${$t('category.suggestions')}:` }}
+          </h2>
+          <SearchButton
             v-for="item in currentSuggestions"
             :key="item.value"
+            class="search-header__suggestions--result"
             :title="item.value"
           />
         </div>
@@ -38,7 +43,7 @@ import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
-import SuggestionItem from '~/components/molecules/SuggestionItem/SuggestionItem'
+import SearchButton from '~/components/molecules/SearchButton/SearchButton'
 import { useCategoryStore } from '~/stores/category/category'
 import { storeToRefs } from 'pinia'
 
@@ -47,7 +52,7 @@ export default defineComponent({
     SearchInput,
     Icon,
     GenericModal,
-    SuggestionItem,
+    SearchButton,
   },
   props: {
     hasOpacity: {
@@ -61,6 +66,8 @@ export default defineComponent({
     const isDesktop = app.$breakpoints.isDesktop
     const isOpen = ref(false)
 
+    const { blurSuggestions } = categoryStore
+
     const { currentSuggestions } = storeToRefs(categoryStore)
 
     const toggleSearchfield = () => {
@@ -68,6 +75,7 @@ export default defineComponent({
     }
 
     const colseSearchfield = () => {
+      blurSuggestions(false)
       isOpen.value = false
     }
 
@@ -77,6 +85,7 @@ export default defineComponent({
       colseSearchfield,
       isOpen,
       currentSuggestions,
+      blurSuggestions,
     }
   },
 })
@@ -99,6 +108,17 @@ export default defineComponent({
 
     @screen md {
       @apply tw-hidden;
+    }
+  }
+
+  &__headline {
+    @apply tw-mb-4;
+  }
+
+  &__suggestions {
+    &--headline {
+      @apply tw-mt-12;
+      @apply tw-mb-5;
     }
   }
 
