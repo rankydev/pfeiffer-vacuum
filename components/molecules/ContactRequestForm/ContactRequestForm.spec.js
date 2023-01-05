@@ -4,6 +4,7 @@ import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/G
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 import Button from '~/components/atoms/Button/Button'
 import { setActivePinia, createPinia } from 'pinia'
+import { reactive } from '@nuxtjs/composition-api'
 
 jest.mock('~/stores/contact', () => {
   return {
@@ -11,6 +12,19 @@ jest.mock('~/stores/contact', () => {
     useContactStore: () => {
       return {
         submit: jest.fn(),
+      }
+    },
+  }
+})
+
+const mockedLinks = reactive({})
+jest.mock('~/stores/datasources', () => {
+  return {
+    useDatasourcesStore: () => {
+      return {
+        loadLinksFromDatasource: () => {
+          return (mockedLinks['personalPrivacyLink'] = 'testLink')
+        },
       }
     },
   }

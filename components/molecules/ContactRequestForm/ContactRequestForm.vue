@@ -11,6 +11,15 @@
         :type="contactRequestType"
         @update="requestData = $event"
       />
+      <div class="contact-request-form__link">
+        <Link
+          :href="files['personalPrivacyLink']"
+          target="_blank"
+          variant="inline"
+        >
+          {{ $t('form.contactRequest.dataPrivacy') }}
+        </Link>
+      </div>
       <Button
         :label="$t('form.contactRequest.submit')"
         variant="secondary"
@@ -25,7 +34,12 @@
 </template>
 
 <script>
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  onBeforeMount,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
 import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 import Button from '~/components/atoms/Button/Button.vue'
@@ -33,6 +47,7 @@ import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue
 import useVuelidate from '@vuelidate/core'
 import { useToast } from '~/composables/useToast'
 import { useContactStore } from '~/stores/contact'
+import { useDatasourcesStore } from '~/stores/datasources'
 
 export default defineComponent({
   components: {
@@ -62,10 +77,17 @@ export default defineComponent({
     const loading = ref(false)
     const { i18n } = useContext()
     const contactStore = useContactStore()
+    const datasourcesStore = useDatasourcesStore()
     const toast = useToast()
     // this will collect all nested component’s validation results
     const v = useVuelidate()
     const requestData = ref({})
+    const files = ref({})
+    const loadLinksFromDatasource = async () => {
+      files.value = await datasourcesStore.loadLinksFromDatasource()
+    }
+
+    onBeforeMount(loadLinksFromDatasource)
 
     const submit = async () => {
       v.value.$validate()
@@ -94,7 +116,7 @@ export default defineComponent({
       }
     }
 
-    return { v, submit, requestData, loading }
+    return { v, submit, requestData, loading, files }
   },
 })
 </script>
@@ -102,6 +124,10 @@ export default defineComponent({
 <style lang="scss">
 .contact-request-form {
   &__button {
+    @apply tw-mt-6;
+  }
+
+  &__link {
     @apply tw-mt-6;
   }
 }

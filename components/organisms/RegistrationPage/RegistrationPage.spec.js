@@ -2,7 +2,7 @@ import RegistrationPage from './RegistrationPage'
 import { shallowMount } from '@vue/test-utils'
 import { setActivePinia, createPinia } from 'pinia'
 import HintModal from '~/components/organisms/RegistrationPage/HintModal/HintModal'
-import { ref, useRoute } from '@nuxtjs/composition-api'
+import { reactive, ref, useRoute } from '@nuxtjs/composition-api'
 
 const requestData = {
   personalData: {
@@ -68,11 +68,14 @@ jest.mock('~/composables/useToast', () => {
   }
 })
 
-jest.mock('~/stores/datasources/datasources', () => {
+const mockedLinks = reactive({})
+jest.mock('~/stores/datasources', () => {
   return {
-    loadFilesFromDatasource: () => {
+    useDatasourcesStore: () => {
       return {
-        privacyPersonal: '',
+        loadLinksFromDatasource: () => {
+          return (mockedLinks['personalPrivacyLink'] = 'testLink')
+        },
       }
     },
   }

@@ -5,7 +5,7 @@
       :richtext="$t('registration.registrationPage.conditionsDescription')"
     />
     <Link
-      :href="files['privacyPersonal'] || ''"
+      :href="files['personalPrivacyLink'] || ''"
       target="_blank"
       variant="inline"
     >
@@ -18,7 +18,7 @@
 import { defineComponent, onBeforeMount, ref } from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext'
 import Link from '~/components/atoms/Link/Link'
-import { useDatasourcesStore } from '~/stores/datasources/datasources'
+import { useDatasourcesStore } from '~/stores/datasources'
 
 export default defineComponent({
   name: 'RegistrationPageDataProtection',
@@ -26,10 +26,10 @@ export default defineComponent({
   setup() {
     const datasourcesStore = useDatasourcesStore()
     const files = ref({})
-    const getPrivacyLink = async () => {
-      files.value = await datasourcesStore.loadFilesFromDatasource()
+    const loadLinksFromDatasource = async () => {
+      files.value = await datasourcesStore.loadLinksFromDatasource()
     }
-    onBeforeMount(getPrivacyLink)
+    onBeforeMount(loadLinksFromDatasource)
     return {
       files,
     }

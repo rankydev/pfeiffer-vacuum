@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia'
 import { useContext } from '@nuxtjs/composition-api'
-import { useAxiosForDatasources } from '@/composables/useAxiosForDatasources'
+import { useAxiosForDatasources } from '~/composables/useAxiosForDatasources'
 
 export const useDatasourcesStore = defineStore('datasources', () => {
   const { axios } = useAxiosForDatasources()
   const { i18n } = useContext()
 
-  const loadFilesFromDatasource = async () => {
+  const loadLinksFromDatasource = async () => {
     const lang = i18n.locale || ''
     const result = await axios
       .$get('/datasource_entries', {
@@ -20,27 +20,18 @@ export const useDatasourcesStore = defineStore('datasources', () => {
       .catch((error) => {
         console.error('Error when fetching datasources.', error)
       })
-    const privacyGeneral =
-      result.datasource_entries.find(
-        (e) => e.name === 'general data privacy'
-      ) || {}
-    const privacyPersonal =
+    const personalPrivacyLink =
       result.datasource_entries.find(
         (e) => e.name === 'personal data privacy'
       ) || {}
-    const imprint =
-      result.datasource_entries.find((e) => e.name === 'imprint') || {}
 
     return {
-      privacyGeneral:
-        privacyGeneral.dimension_value || privacyGeneral.value || '',
-      privacyPersonal:
-        privacyPersonal.dimension_value || privacyPersonal.value || '',
-      imprint: imprint.dimension_value || imprint.value || '',
+      personalPrivacyLink:
+        personalPrivacyLink.dimension_value || personalPrivacyLink.value || '',
     }
   }
 
   return {
-    loadFilesFromDatasource,
+    loadLinksFromDatasource,
   }
 })
