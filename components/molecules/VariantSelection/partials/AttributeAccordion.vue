@@ -96,7 +96,7 @@ export default {
   },
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .variant-selection-accordion {
   &__attributes {
     @apply tw-mt-2;

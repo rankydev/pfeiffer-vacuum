@@ -66,9 +66,10 @@ export default defineComponent({
         const hasSomeSelected = variant.variationValues.find(
           (item) => item.selected || item.automaticallySelected
         )
-        const hasAutomaticallySelected = variant.variationValues.some(
-          (item) => item.automaticallySelected
-        )
+        const hasAutomaticallySelected =
+          variant.variationValues.some((item) => item.automaticallySelected) &&
+          !variant.variationValues.some((item) => item.selected)
+
         const hasSomeSelectable = variant.variationValues.some(
           (item) => item.selectable
         )
@@ -81,7 +82,7 @@ export default defineComponent({
             ? i18n.t('product.automaticallySelectedInfo')
             : null,
           label: hasSomeSelected
-            ? `<span class="variant-selection__accordion-header">${variant.name}: <span class="variant-selection__accordion-header--bold">${hasSomeSelected.displayValue}<span/></span>`
+            ? `<span class="tw-font-normal">${variant.name}: <b>${hasSomeSelected.displayValue}</b></span>`
             : variant.name,
           disabled: !hasSomeSelectable,
           icon: hasSomeSelected ? 'check_circle' : null,
@@ -111,7 +112,7 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .variant-selection {
   @apply tw-p-6;
   @apply tw-bg-pv-grey-96;
@@ -126,14 +127,6 @@ export default defineComponent({
 
   &__reset-button {
     @apply tw-ml-auto;
-  }
-
-  &__accordion-header {
-    @apply tw-font-normal;
-
-    &--bold {
-      @apply tw-font-bold;
-    }
   }
 
   &__expand-icon {

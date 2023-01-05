@@ -181,12 +181,12 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    */
   const firstNotSelectedIndex = computed(
     () =>
-      variationMatrix.value?.variationAttributes.findIndex(
+      variationMatrix.value?.variationAttributes?.findIndex(
         (item) =>
           !item.variationValues.some(
             (el) => el.selected || el.automaticallySelected
           )
-      ) || 0
+      ) || -1
   )
 
   /*
