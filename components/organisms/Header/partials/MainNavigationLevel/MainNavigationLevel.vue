@@ -125,7 +125,7 @@
           <span>{{ item.label }}</span>
         </Link>
         <div
-          v-if="userStore.isLoggedIn || userStore.isLoginProcess"
+          v-if="loggedInOrInLoginProcess"
           :class="[`${prefix}__flyout-entry`, `${prefix}__link`]"
         >
           <Icon icon="person" />
@@ -138,24 +138,17 @@
         :class="`${prefix}__login-button-wrapper`"
       >
         <Button
-          v-if="userStore.isLoggedIn || userStore.isLoginProcess"
           variant="secondary"
           shape="outlined"
-          icon="logout"
-          :label="$t('navigation.button.logout.mobileLabel')"
-          :class="`${prefix}__login-button`"
-          @click.native="logout"
-        />
-        <Button
-          v-else
-          variant="secondary"
-          shape="outlined"
-          icon="person"
-          :label="myAccountLabel"
+          :icon="loggedInOrInLoginProcess ? 'logout' : 'person'"
+          :label="
+            loggedInOrInLoginProcess
+              ? $t('navigation.button.logout.mobileLabel')
+              : myAccountLabel
+          "
           :class="`${prefix}__login-button`"
           @click.native="
-            handleMyAccount()
-            closeMenu
+            loggedInOrInLoginProcess ? logout() : (handleMyAccount(), closeMenu)
           "
         />
       </li>
@@ -295,6 +288,8 @@ export default defineComponent({
       myAccountLabel,
       userStore,
       handleMyAccount,
+      loggedInOrInLoginProcess:
+        userStore.isLoggedIn || userStore.isLoginProcess,
       logout: userStore.logout,
     }
   },

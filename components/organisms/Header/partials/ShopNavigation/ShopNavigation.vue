@@ -25,6 +25,7 @@
       @click="logout"
     />
 
+    <!-- TODO: Insert correct link when MyAccount area is ready -->
     <Link
       v-if="userStore.isLoggedIn || userStore.isLoginProcess"
       href="#"
