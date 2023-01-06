@@ -148,7 +148,7 @@
           "
           :class="`${prefix}__login-button`"
           @click.native="
-            loggedInOrInLoginProcess ? logout() : (handleMyAccount(), closeMenu)
+            loggedInOrInLoginProcess ? logout() : handleMyAccount()
           "
         />
       </li>
