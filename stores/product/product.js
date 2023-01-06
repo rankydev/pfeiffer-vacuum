@@ -235,22 +235,27 @@ export const useProductStore = defineStore('product', () => {
       throw new Error('No valid id given in route object.')
     }
 
-    // if we already loaded the path we just return
+    // if we not already loaded the path we pull all required data
     // using path instead of fullpath to allow page caching for same product page but with anchor tags f.e. for "#variantselection"
-    if (route.value.path === reqId.value) return
-    reqId.value = route.value.path
+    if (route.value.path !== reqId.value) {
+      reqId.value = route.value.path
 
-    // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
-    product.value = null
+      // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
+      product.value = null
 
-    await Promise.all([
-      loadProduct(id),
-      variationmatrixStore.loadVariationMatrix(id),
-      loadProductReferences(id),
-      loadProductAccessories(),
-      pricesStore.loadPrice(id),
-      pricesStore.loadProductReferenceGroupsPrices(),
-    ])
+      await Promise.all([
+        loadProduct(id),
+        loadProductReferences(id),
+        loadProductAccessories(),
+        pricesStore.loadPrice(id),
+      ])
+
+      // we need to wait until loadProduct is done before we can load the matrix
+      await variationmatrixStore.loadVariationMatrix()
+    }
+
+    // needs to be called even if product data was already loaded (SSR) because prices can only be loaded client side
+    await pricesStore.loadProductReferenceGroupsPrices()
   }
 
   return {

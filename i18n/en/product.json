@@ -1,4 +1,9 @@
 {
+  "automaticallySelectedInfo": "This attribute was selected automatically",
+  "startNew": "Start new",
+  "resetSelection": "Reset selection",
+  "hideNotSelectable": "Hide not selectable",
+  "showNotSelectable": "Show not selectable",
   "variantsAvailable": "no variants available | {count} variant available | {count} variants available",
   "similarImage": "Image similar",
   "productInformation": "Product Information",
@@ -6,7 +11,7 @@
   "spareParts": "Spare parts",
   "previousVersionsSpareParts": "This will only provide spare parts for our current version. For older products please contact the Pfeiffer Vacuum Service. Please check the operating manual in the downloads section to identify the right spare part for your requirements or contact Pfeiffer Vacuum directly.",
   "service": "Service",
-  "selectVariant": "Please select variant",
+  "selectVariant": "Select variant",
   "downloads": "Downloads",
   "accessories": "Accessories",
   "otherAccessories": "Others",
