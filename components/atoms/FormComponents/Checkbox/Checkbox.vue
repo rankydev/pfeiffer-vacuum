@@ -81,8 +81,6 @@ export default {
       @apply tw-ring-0;
       @apply tw-text-pv-red-lighter;
 
-      // @apply tw-shadow-border-red-lighter;
-
       // safari fix to prevent focus outline
       outline: 0;
     }
