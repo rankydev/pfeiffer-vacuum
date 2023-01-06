@@ -36,7 +36,7 @@ const Template = (args, { argTypes: types }) => ({
   },
   template: `
     <div class="documentation-preview" style="max-width:500px;">
-      <ButtonGroup v-bind="args" :initial-value="selectedVal" @update="updateSelection"/>
+      <ButtonGroup v-bind="args" :selected-value="selectedVal" @update="updateSelection"/>
     </div>
   `,
 })

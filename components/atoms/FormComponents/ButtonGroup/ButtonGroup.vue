@@ -4,12 +4,15 @@
       v-for="(item, index) in values"
       :key="index"
       class="button-group__label"
-      :class="{ 'button-group__label--checked': item.value === initialValue }"
+      :class="{
+        'button-group__label--checked': item.value === selectedValue,
+        'button-group__label--disabled': disabled,
+      }"
     >
       <!-- if checked, the value is initially selected -->
       <input
         v-bind="{ ...item, disabled }"
-        :checked="item.value === initialValue"
+        :checked="item.value === selectedValue"
         type="radio"
         name="radio"
         class="button-group__input"
@@ -39,7 +42,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    initialValue: {
+    selectedValue: {
       type: undefined,
       default: '',
     },
@@ -90,6 +93,10 @@ export default {
       .button-group__text {
         @apply tw-text-pv-white;
       }
+    }
+
+    &--disabled {
+      cursor: not-allowed !important;
     }
   }
 

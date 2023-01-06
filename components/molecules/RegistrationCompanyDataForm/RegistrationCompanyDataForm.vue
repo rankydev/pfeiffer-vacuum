@@ -37,7 +37,7 @@
                 checked: true,
               },
             ]"
-            :initial-value="requestData.companyData.companyAlreadyCustomer"
+            :selected-value="requestData.companyData.companyAlreadyCustomer"
             @update="
               requestData.companyData.companyAlreadyCustomer = $event
               $emit('update:data', requestData)
