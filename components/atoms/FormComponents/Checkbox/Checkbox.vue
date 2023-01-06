@@ -46,6 +46,7 @@ export default {
 
   &--disabled {
     @apply tw-text-pv-grey-48;
+    cursor: not-allowed !important;
   }
 
   &:hover {
