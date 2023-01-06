@@ -27,7 +27,7 @@
       v-else
       :accordion-entries="mobileAccordionItems"
       level="h3"
-      use-tab-styles
+      variant="tab"
       class="tab-navigation__mobile"
     >
       <template v-for="item in mobileAccordionItems" #[item.slotName]>

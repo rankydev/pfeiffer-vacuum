@@ -1,4 +1,9 @@
 {
+  "automaticallySelectedInfo": "Diese Eigenschaft wurde automatisch gesetzt",
+  "startNew": "Neu beginnen",
+  "resetSelection": "Zurücksetzen",
+  "hideNotSelectable": "Nicht auswählbar verbergen",
+  "showNotSelectable": "Nicht auswählbar anzeigen",
   "variantsAvailable": "keine verfügbare Variante | {count} verfügbare Variante | {count} verfügbare Varianten",
   "similarImage": "Abbildung ähnlich",
   "productInformation": "Produktinformationen",

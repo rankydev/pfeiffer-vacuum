@@ -1,4 +1,9 @@
 {
+  "automaticallySelectedInfo": "此属性是自动选择的",
+  "startNew": "开始新的",
+  "resetSelection": "重置选择",
+  "hideNotSelectable": "隐藏不可选择",
+  "showNotSelectable": "显示不可选择",
   "variantsAvailable": "没有可用的变型 | {count}  个可用变体 | {count}  种可用变型",
   "similarImage": "类似的插图",
   "productInformation": "产品信息",
