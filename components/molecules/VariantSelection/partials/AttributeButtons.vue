@@ -3,6 +3,7 @@
     class="attribute-buttons"
     :class="{
       'attribute-buttons--three-cols': items.length > 4 || items.length === 3,
+      'attribute-buttons--one-col': items.length === 1,
     }"
   >
     <Button
@@ -14,7 +15,11 @@
           ? 'variant-selection-preselected'
           : 'variant-selection'
       "
-      :shape="item.selected || !item.selectable ? 'filled' : 'outlined'"
+      :shape="
+        item.automaticallySelected || item.selected || !item.selectable
+          ? 'filled'
+          : 'outlined'
+      "
       :disabled="!item.selectable"
       allow-label-line-break
       @click.native="itemClicked(item)"
@@ -40,25 +45,22 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  emits: ['selected'],
+  setup(props, { emit }) {
     const variationmatrixStore = useVariationmatrixStore()
 
-    const itemClicked = (item) => {
-      variationmatrixStore.toggleAttribute(props.attributeCode, item.value)
-    }
-
-    const isItemPreselected = (item) => {
-      if (!item.selected) return false
-
-      if (!variationmatrixStore.selectedAttributes[props.attributeCode]) {
-        return true
-      }
-
-      return (
-        !variationmatrixStore.selectedAttributes[props.attributeCode] ===
+    const itemClicked = async (item) => {
+      await variationmatrixStore.toggleAttribute(
+        props.attributeCode,
         item.value
       )
+      if (!item.selected) {
+        emit('selected')
+      }
     }
+
+    const isItemPreselected = (item) =>
+      item.automaticallySelected && !item.selected
 
     return { itemClicked, isItemPreselected }
   },
@@ -72,6 +74,10 @@ export default defineComponent({
   grid-auto-rows: 1fr;
   @apply tw-gap-2;
   @apply tw-overflow-hidden;
+
+  &--one-col {
+    @apply tw-grid-cols-1;
+  }
 
   &--three-cols {
     @screen lg {
