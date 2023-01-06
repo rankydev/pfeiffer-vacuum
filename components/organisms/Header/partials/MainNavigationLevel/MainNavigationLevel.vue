@@ -144,7 +144,7 @@
           icon="logout"
           :label="$t('navigation.button.logout.mobileLabel')"
           :class="`${prefix}__login-button`"
-          @click="logout"
+          @click.native="logout"
         />
         <Button
           v-else
@@ -153,7 +153,7 @@
           icon="person"
           :label="myAccountLabel"
           :class="`${prefix}__login-button`"
-          @click="
+          @click.native="
             handleMyAccount()
             closeMenu
           "

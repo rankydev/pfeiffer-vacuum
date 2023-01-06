@@ -24,6 +24,14 @@
       icon="logout"
       @click="logout"
     />
+
+    <Link
+      v-if="userStore.isLoggedIn || userStore.isLoginProcess"
+      href="#"
+      class="shop-navigation__account-icon"
+    >
+      <Icon class="shop-navigation__icon" icon="person" />
+    </Link>
     <Link href="#" class="shop-navigation__shopping-list">
       <Icon class="shop-navigation__icon" icon="assignment" />
     </Link>
@@ -96,6 +104,14 @@ export default defineComponent({
     }
   }
 
+  &__account-icon {
+    @apply tw-block;
+
+    @screen md {
+      @apply tw-hidden;
+    }
+  }
+
   &__account {
     @apply tw--my-2;
   }
@@ -135,7 +151,8 @@ export default defineComponent({
 
   &__comparhension,
   &__shopping-list,
-  &__shopping-cart {
+  &__shopping-cart,
+  &__account-icon {
     @apply tw-ml-3;
 
     @screen md {
@@ -150,7 +167,8 @@ export default defineComponent({
   &__account,
   &__comparhension,
   &__shopping-list,
-  &__shopping-cart {
+  &__shopping-cart,
+  &__account-icon {
     @apply tw-text-pv-red;
     @apply tw-transition-colors;
     @apply tw-ease-in-out;

@@ -67,7 +67,7 @@ describe('ShopNavigation', () => {
       const wrapper = shallowMount(ShopNavigation)
       const navLinks = wrapper.findAllComponents(Link)
 
-      expect(navLinks.length).toBe(2)
+      expect(navLinks.length).toBe(3)
 
       navLinks.wrappers.forEach((eleWrapper) => {
         const icon = eleWrapper.findComponent(Icon)

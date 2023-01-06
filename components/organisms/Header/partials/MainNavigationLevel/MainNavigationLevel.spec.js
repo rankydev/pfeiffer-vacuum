@@ -209,14 +209,13 @@ describe('MainNavigationLevel', () => {
         it('should set active element to null when same icon was clicked again', () => {
           createComponent({ navigationEntries }, { isMobile: true })
 
-          const icons = wrapper.findAllComponents(Icon)
-          icons.at(-1)
+          const icons = wrapper.findAll('primary-nav-0__icon')
 
           icons.wrappers.forEach((icon) => {
             icon.trigger('click')
             icon.trigger('click')
             expect(wrapper.vm.activeElement).toBe(null)
-            // expect(icon.vm.icon).toBe('expand_more')
+            expect(icon.vm.icon).toBe('expand_more')
           })
         })
       })
