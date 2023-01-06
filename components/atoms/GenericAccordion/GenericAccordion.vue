@@ -1,11 +1,15 @@
 <template>
-  <div class="accordion" :class="{ 'accordion--tab-styles': useTabStyles }">
+  <div class="accordion" :class="`accordion--${variant}-styles`">
     <div
       v-for="(entry, idx) in accordionEntries"
       :key="idx"
       :class="{ 'tw-scroll-pb-6': isActive(idx) }"
     >
-      <component :is="level === 'h3' ? level : 'p'" class="accordion__heading">
+      <component
+        :is="level === 'h3' ? level : 'p'"
+        class="accordion__heading"
+        :class="{ 'accordion__heading--active': isActive(idx) }"
+      >
         <button
           class="accordion__button"
           :class="[
@@ -22,7 +26,12 @@
         >
           <div class="tw-flex">
             <Icon v-if="entry.icon" class="tw-mr-2" :icon="entry.icon" />
-            <span class="accordion__label">{{ entry.label }}</span>
+            <!-- eslint-disable vue/no-v-html -->
+            <span
+              class="accordion__label"
+              v-html="sanitizer.inline(entry.label)"
+            />
+            <!-- eslint-enable vue/no-v-html -->
           </div>
           <LoadingSpinner v-if="loading" color="red" size="small" />
           <Icon
@@ -36,6 +45,7 @@
                 ? entry.expandIcon
                 : 'expand_more'
             "
+            :class="isActive(idx) ? '' : entry.expandIconClass"
           />
         </button>
       </component>
@@ -45,7 +55,7 @@
           :id="`accordion-${idx}`"
           class="accordion__content"
         >
-          <slot :name="entry.slotName" />
+          <slot :name="entry.slotName" :next="openNext" />
         </div>
       </AnimatedCollapse>
     </div>
@@ -55,6 +65,7 @@
 <script>
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({
   components: {
@@ -89,11 +100,12 @@ export default defineComponent({
       default: false,
     },
     /**
-     * Use the tab layout instead of the standard accordion layout
+     * Use different layout styles if needed
      */
-    useTabStyles: {
-      type: Boolean,
-      default: false,
+    variant: {
+      type: String,
+      default: 'standard',
+      validator: (val) => ['standard', 'tab', 'variationmatrix'].includes(val),
     },
     loading: {
       type: Boolean,
@@ -101,6 +113,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const sanitizer = useSanitizer()
+
     if (props.multiple) {
       const filterActives = (memo, ele, idx) =>
         ele.isActive === true ? [...memo, idx] : memo
@@ -115,6 +129,8 @@ export default defineComponent({
       return {
         toggleActive: (idx) => (hasIdx(idx) ? removeIdx(idx) : addIdx(idx)),
         isActive: hasIdx,
+        openNext: null,
+        sanitizer,
       }
     } else {
       const findIdx = (ele) => ele.isActive === true
@@ -126,6 +142,8 @@ export default defineComponent({
       return {
         toggleActive: (idx) => (active.value = hasIdx(idx) ? null : idx),
         isActive: (idx) => idx === active.value,
+        openNext: (id) => (id ? (active.value = id) : (active.value += 1)),
+        sanitizer,
       }
     }
   },
@@ -207,9 +225,7 @@ export default defineComponent({
 
   &--tab-styles {
     @apply tw-border-b-0;
-
-    // negative values lead to compiling errors
-    margin: 0 -1.25rem;
+    @apply tw-my-0 tw--mx-5;
 
     .accordion__heading {
       @apply tw-border-t-0;
@@ -232,6 +248,19 @@ export default defineComponent({
 
     .accordion__content {
       @apply tw-px-5;
+    }
+  }
+
+  &--variationmatrix-styles {
+    .accordion__heading {
+      @apply tw-border-t-0;
+      @apply tw-border-b-2;
+      @apply tw-border-pv-grey-88;
+      @apply tw-transition-colors;
+
+      &--active {
+        @apply tw-border-pv-transparent;
+      }
     }
   }
 }
