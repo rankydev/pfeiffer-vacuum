@@ -4,34 +4,35 @@
     <Richtext
       :richtext="$t('registration.registrationPage.conditionsDescription')"
     />
-    <Link
-      :href="files['personalPrivacyLink'] || ''"
-      target="_blank"
-      variant="inline"
-    >
+    <Link :href="personalPrivacyLink" target="_blank" variant="inline">
       {{ $t('registration.registrationPage.linkDataProtection') }}
     </Link>
   </div>
 </template>
 
 <script>
-import { defineComponent, onBeforeMount, ref } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  onBeforeMount,
+} from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext'
 import Link from '~/components/atoms/Link/Link'
 import { useDatasourcesStore } from '~/stores/datasources'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'RegistrationPageDataProtection',
   components: { Richtext, Link },
   setup() {
     const datasourcesStore = useDatasourcesStore()
-    const files = ref({})
-    const loadLinksFromDatasource = async () => {
-      files.value = await datasourcesStore.loadLinksFromDatasource()
-    }
-    onBeforeMount(loadLinksFromDatasource)
+    const { files } = storeToRefs(datasourcesStore)
+    onBeforeMount(datasourcesStore.loadLinksFromDatasource)
+    const personalPrivacyLink = computed(() => {
+      return files.value['personalPrivacyLink'] || ''
+    })
     return {
-      files,
+      personalPrivacyLink,
     }
   },
 })

@@ -12,11 +12,7 @@
         @update="requestData = $event"
       />
       <div class="contact-request-form__link">
-        <Link
-          :href="files['personalPrivacyLink']"
-          target="_blank"
-          variant="inline"
-        >
+        <Link :href="personalPrivacyLink" target="_blank" variant="inline">
           {{ $t('form.contactRequest.dataPrivacy') }}
         </Link>
       </div>
@@ -35,6 +31,7 @@
 
 <script>
 import {
+  computed,
   defineComponent,
   onBeforeMount,
   ref,
@@ -48,6 +45,7 @@ import useVuelidate from '@vuelidate/core'
 import { useToast } from '~/composables/useToast'
 import { useContactStore } from '~/stores/contact'
 import { useDatasourcesStore } from '~/stores/datasources'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
@@ -78,16 +76,15 @@ export default defineComponent({
     const { i18n } = useContext()
     const contactStore = useContactStore()
     const datasourcesStore = useDatasourcesStore()
+    const { files } = storeToRefs(datasourcesStore)
     const toast = useToast()
     // this will collect all nested component’s validation results
     const v = useVuelidate()
     const requestData = ref({})
-    const files = ref({})
-    const loadLinksFromDatasource = async () => {
-      files.value = await datasourcesStore.loadLinksFromDatasource()
-    }
-
-    onBeforeMount(loadLinksFromDatasource)
+    const personalPrivacyLink = computed(() => {
+      return files.value['personalPrivacyLink'] || ''
+    })
+    onBeforeMount(datasourcesStore.loadLinksFromDatasource)
 
     const submit = async () => {
       v.value.$validate()
@@ -116,7 +113,7 @@ export default defineComponent({
       }
     }
 
-    return { v, submit, requestData, loading, files }
+    return { v, submit, requestData, loading, personalPrivacyLink }
   },
 })
 </script>
