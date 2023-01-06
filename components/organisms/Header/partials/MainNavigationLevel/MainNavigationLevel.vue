@@ -178,7 +178,6 @@ import Link from '~/components/atoms/Link/Link.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
 import Button from '~/components/atoms/Button/Button.vue'
-import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 import { useMenuStore } from '~/stores/menu'
 import { useUserStore } from '~/stores/user'
@@ -190,7 +189,6 @@ export default defineComponent({
     Link,
     AnimatedCollapse,
     Button,
-    LoadingSpinner,
   },
   props: {
     currentEntry: {
