@@ -25,15 +25,14 @@
       :loading="loadingMatrix"
       :accordion-entries="variationAttributeEntries"
     />
-    <div v-if="dropdownItems.length">
-      <PvSelect
-        :options="dropdownItems"
-        :placeholder="$t('product.pleaseSelectVariant')"
-        :value="selectedVariantLabel"
-        class="variant-selection__dropdown"
-        @input="manualVariantSelected"
-      />
-    </div>
+    <PvSelect
+      v-if="dropdownItems.length"
+      :options="dropdownItems"
+      :placeholder="$t('product.pleaseSelectVariant')"
+      :value="selectedVariantLabel"
+      class="variant-selection__dropdown"
+      @input="manualVariantSelected"
+    />
   </LoadingSpinner>
 </template>
 
