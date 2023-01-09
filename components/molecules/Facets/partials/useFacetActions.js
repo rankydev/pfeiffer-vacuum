@@ -55,3 +55,5 @@ export const useFacetActions = (selectedFacets, emit) => {
 
   return { updateFacets, removeFacet }
 }
+
+export default {}
