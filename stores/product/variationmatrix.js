@@ -26,7 +26,6 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
   const currentMasterId = ref(null)
   const currentVariantId = ref(null)
   const matrixStillValid = ref(false)
-  const shouldLoadVariantMatrix = ref(false)
   const loadingMatrix = ref(false)
 
   /*
@@ -44,14 +43,15 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
     loadingMatrix.value = true
 
     // Check if variant specific matrix should be loaded
+    let shouldLoadVariantMatrix = false
     if (
       !hasOnlyOneVariantLeft(variationMatrix.value) &&
       currentVariantId.value &&
       !currentMasterId.value
     )
-      shouldLoadVariantMatrix.value = true
+      shouldLoadVariantMatrix = true
 
-    let productCode = shouldLoadVariantMatrix.value
+    let productCode = shouldLoadVariantMatrix
       ? currentVariantId.value
       : currentMasterId.value || id
 
@@ -89,8 +89,6 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
         )
       } else if (variationMatrix.value && !hasOnlyOneVariantLeft(result))
         pushCurrentSelectionInQuery()
-
-      shouldLoadVariantMatrix.value = false
 
       // Write result into store
       variationMatrix.value = result
