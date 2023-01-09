@@ -204,4 +204,4 @@ export const data = [
   },
 ]
 
-export default { header, data }
+export default {}
