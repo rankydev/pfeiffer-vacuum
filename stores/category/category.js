@@ -124,7 +124,6 @@ export const useCategoryStore = defineStore('category', () => {
   }
 
   const loadSuggestions = async (text) => {
-    console.log(text)
     const validText = getCleanedText(text)
     // this.suggestions.items = await searchApi.suggestions(validText, 6)
 
@@ -132,7 +131,6 @@ export const useCategoryStore = defineStore('category', () => {
       const res = await axios.$get(config.SUGGESTIONS_API, {
         params: { term: validText, fields: 'FULL', max: 3 },
       })
-      console.log(res)
       searchSuggestions.value = res.suggestions || []
     } catch (error) {
       logger.error(error)

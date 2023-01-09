@@ -1,5 +1,8 @@
 <template>
-  <div class="search-header" :class="{ 'search-header--opacity': hasOpacity }">
+  <div
+    class="tw-relative search-header"
+    :class="{ 'search-header--opacity': hasOpacity }"
+  >
     <Icon
       v-show="!isDesktop"
       icon="search"
@@ -34,6 +37,20 @@
       </div>
     </GenericModal>
     <SearchInput class="search-header__field" />
+    <div
+      v-if="currentSuggestions.length"
+      class="tw-px-4 tw-absolute tw-bg-pv-white tw-w-full tw-mt-14 tw-z-10"
+    >
+      <h2 class="search-header__suggestions--headline">
+        {{ `${$t('category.suggestions')}:` }}
+      </h2>
+      <SearchButton
+        v-for="item in currentSuggestions"
+        :key="item.value"
+        class="search-header__suggestions--result"
+        :title="item.value"
+      />
+    </div>
   </div>
 </template>
 

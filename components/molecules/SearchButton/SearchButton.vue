@@ -36,7 +36,6 @@ export default defineComponent({
     const categoryStore = useCategoryStore()
     const { app } = useContext()
     const searchTerm = ref(route.value.query.searchTerm || '')
-    console.log(searchTerm.value)
 
     const { blurSuggestions } = categoryStore
 
@@ -65,16 +64,22 @@ export default defineComponent({
     &:hover,
     &:focus {
       @apply tw-bg-pv-grey-96;
+      @apply tw-border-pv-white;
+
+      .searchbutton__icon {
+        @apply tw-flex;
+      }
     }
   }
 
   &__icon {
     @apply tw-hidden;
+  }
 
-    &:hover,
-    &:focus {
-      @apply tw-flex;
-    }
+  &__title {
+    @apply tw-text-sm;
+    @apply tw-leading-6;
+    @apply tw-font-normal;
   }
 }
 </style>
