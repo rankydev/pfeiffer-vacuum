@@ -31,7 +31,8 @@
     "houseNumber": "门牌号码",
     "postCode": "邮政编码",
     "city": "城市",
-    "submit": "提交"
+    "submit": "提交",
+    "dataPrivacy": "数据隐私"
   },
   "validationErrorMessages": {
     "required": "值是必需的",
@@ -47,6 +48,6 @@
         "发生技术错误。 请联系普发真空支持。",
       "customerInconsistentError":
         "出现了与您帐户有关的问题。 请联系我们的客服。"
-    } 
+    }
   }
 }

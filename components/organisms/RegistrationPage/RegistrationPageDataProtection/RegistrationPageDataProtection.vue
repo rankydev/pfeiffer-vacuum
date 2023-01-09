@@ -4,24 +4,37 @@
     <Richtext
       :richtext="$t('registration.registrationPage.conditionsDescription')"
     />
-    <Link
-      href="https://webportal.pfeiffer-vacuum.com/api/cms/assets/f/76453/x/8376ad0b93/data_protection_de.pdf"
-      target="_blank"
-      variant="inline"
-    >
+    <Link :href="personalPrivacyLink" target="_blank" variant="inline">
       {{ $t('registration.registrationPage.linkDataProtection') }}
     </Link>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  onBeforeMount,
+} from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext'
 import Link from '~/components/atoms/Link/Link'
+import { useDatasourcesStore } from '~/stores/datasources'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'RegistrationPageDataProtection',
   components: { Richtext, Link },
+  setup() {
+    const datasourcesStore = useDatasourcesStore()
+    const { files } = storeToRefs(datasourcesStore)
+    onBeforeMount(datasourcesStore.loadLinksFromDatasource)
+    const personalPrivacyLink = computed(() => {
+      return files.value['personalPrivacyLink'] || ''
+    })
+    return {
+      personalPrivacyLink,
+    }
+  },
 })
 </script>
 
