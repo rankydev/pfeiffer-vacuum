@@ -352,12 +352,12 @@ export default defineComponent({
         @apply tw-flex-1;
 
         // this is here for the gaps between the cards
-        margin: 0 10px;
+        @apply tw-mx-2;
       }
 
       .slick-list {
         // this handles the additional whitespace left and right from first and last item through margin
-        margin: 0 -10px;
+        margin: 0 -8px;
       }
     }
 
