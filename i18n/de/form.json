@@ -30,7 +30,8 @@
     "houseNumber": "Nummer",
     "postCode": "PLZ",
     "city": "Stadt",
-    "submit": "Absenden"
+    "submit": "Absenden",
+    "dataPrivacy": "Datenschutz"
   },
   "validationErrorMessages": {
     "required": "Wert ist erforderlich",
@@ -47,6 +48,6 @@
       "customerInconsistentError":
         "Es gibt ein Problem mit Ihrem Account. Bitte wenden Sie sich direkt an den Kundenservice."
 
-    } 
+    }
   }
 }
