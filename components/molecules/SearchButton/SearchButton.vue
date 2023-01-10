@@ -1,6 +1,9 @@
 <template>
   <div class="searchbutton">
-    <button class="searchbutton__btn" @click="pushSearchTerm(title)">
+    <button
+      class="searchbutton__btn"
+      @click="$emit('closeModal', true), pushSearchTerm(title)"
+    >
       <p class="searchbutton__title">{{ title }}</p>
       <Icon class="searchbutton__icon" icon="arrow_forward" />
     </button>
@@ -29,7 +32,7 @@ export default defineComponent({
       default: null,
     },
   },
-  emits: ['click'],
+  emits: ['click', 'closeModal'],
   setup(props, { emit }) {
     const router = useRouter()
     const route = useRoute()

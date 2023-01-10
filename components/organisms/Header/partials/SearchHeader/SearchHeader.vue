@@ -32,6 +32,7 @@
             :key="item.value"
             class="search-header__suggestions--result"
             :title="item.value"
+            @closeModal="colseSearchfield"
           />
         </div>
       </div>
@@ -46,6 +47,7 @@
         :key="item.value"
         class="search-header__suggestions--result"
         :title="item.value"
+        @closeModal="colseSearchfield"
       />
     </div>
   </div>
