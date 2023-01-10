@@ -39,11 +39,8 @@
     <SearchInput class="search-header__field" />
     <div
       v-if="currentSuggestions.length"
-      class="tw-px-4 tw-absolute tw-bg-pv-white tw-w-full tw-mt-14 tw-z-10"
+      class="search-header__suggestions--desktop"
     >
-      <h2 class="search-header__suggestions--headline">
-        {{ `${$t('category.suggestions')}:` }}
-      </h2>
       <SearchButton
         v-for="item in currentSuggestions"
         :key="item.value"
@@ -137,6 +134,18 @@ export default defineComponent({
       @apply tw-mt-12;
       @apply tw-mb-5;
     }
+  }
+
+  &__suggestions--desktop {
+    box-shadow: 1px 5px 5px #a3a3a3;
+    @apply tw-rounded-b-md;
+    @apply tw-px-4;
+    @apply tw-py-4;
+    @apply tw-absolute;
+    @apply tw-bg-pv-white;
+    @apply tw-w-full;
+    @apply tw-mt-14;
+    @apply tw-z-10;
   }
 
   &__field {

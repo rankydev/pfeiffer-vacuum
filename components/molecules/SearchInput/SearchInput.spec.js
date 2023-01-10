@@ -5,6 +5,13 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 const mockSearchTerm = 'hipace'
 const mockRouterPush = jest.fn()
 
+jest.mock('~/stores/category/category', () => {
+  const useCategoryStore = () => {
+    return { loadSuggestions: jest.fn(), blurSuggestions: jest.fn() }
+  }
+  return { useCategoryStore }
+})
+
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   return {

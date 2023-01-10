@@ -58,7 +58,7 @@ export default defineComponent({
     @apply tw-w-full;
     @apply tw-items-center;
     @apply tw-justify-between;
-    @apply tw-mb-6 tw-p-3;
+    @apply tw-p-3;
     @apply tw-rounded-md;
 
     &:hover,
