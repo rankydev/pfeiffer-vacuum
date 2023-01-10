@@ -9,13 +9,14 @@
       ref="carousel"
       v-bind="settings"
       :infinite="infinite"
-      :autoplay="autoplay"
+      :autoplay="false"
       :wait-for-animate="false"
       :autoplay-speed="autoplaySpeedMilliseconds"
       :class="[
         'carousel__slider',
         `carousel__slider--${variant}`,
         { 'carousel__slider--wide': isBreakout },
+        { 'carousel__slider--gaps': settings.slidesToShow > 1 },
       ]"
     >
       <!-- @slot carousel slides -->
@@ -340,30 +341,38 @@ export default defineComponent({
       }
     }
 
-    .slick-slide {
-      // this is important to make all items same size (flex behaviour)
-      width: 0 !important;
-      @apply tw-flex-1;
-
-      // this is here for the gaps between the cards
-      margin: 0 10px;
-    }
-
-    .slick-list {
-      // this handles the additional whitespace left and right from first and last item through margin
-      margin: 0 -10px;
-    }
-
-    .slick-track {
-      // the gap causes all the trouble for slick. slick has issues calculating correct equal widths when this is set
-      @apply tw-gap-0;
-    }
-
     &--homeStage {
       @apply tw-p-0;
+    }
 
-      .slick-track {
-        @apply tw-gap-0;
+    &--gaps {
+      .slick-slide {
+        // this is important to make all items same size (flex behaviour)
+        width: 0 !important;
+        @apply tw-flex-1;
+
+        // this is here for the gaps between the cards
+        margin: 0 10px;
+      }
+
+      .slick-list {
+        // this handles the additional whitespace left and right from first and last item through margin
+        margin: 0 -10px;
+      }
+    }
+
+    &--accessoriesCardCarousel {
+      // place the icons to the edges of the container (inside tabs on pdp or recommended slider accordion)
+      .carousel {
+        &__arrow {
+          &-prev {
+            left: -20px;
+          }
+
+          &-next {
+            right: -20px;
+          }
+        }
       }
     }
   }
