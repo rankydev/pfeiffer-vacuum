@@ -9,7 +9,7 @@
       ref="carousel"
       v-bind="settings"
       :infinite="infinite"
-      :autoplay="false"
+      :autoplay="autoplay"
       :wait-for-animate="false"
       :autoplay-speed="autoplaySpeedMilliseconds"
       :class="[
