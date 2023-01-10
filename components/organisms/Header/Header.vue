@@ -70,6 +70,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 @mixin border-bottom-mixin {
   @apply tw-border-b-2;
   @apply tw-border-pv-grey-96;
@@ -77,7 +79,7 @@ export default defineComponent({
 
 .header {
   @apply tw-relative;
-  @apply tw-z-20;
+  z-index: $header;
 
   &::before {
     @apply tw-absolute;

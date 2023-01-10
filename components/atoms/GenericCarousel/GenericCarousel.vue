@@ -288,13 +288,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 .carousel {
   &__arrow {
     &-prev,
     &-next {
       @apply tw-absolute;
       @apply tw-top-1/2;
-      @apply tw-z-20;
+      z-index: $generic-carousel-arrow;
       @apply tw--translate-y-1/2;
 
       &--hide {
