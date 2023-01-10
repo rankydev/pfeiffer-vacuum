@@ -1,103 +1,109 @@
 <template>
-  <GenericCard
-    v-if="product"
-    :has-link="true"
-    image-size="contain"
-    :href="productUrl"
-  >
-    <template #image>
-      <ResponsiveImage
-        :image="imageUrl(product.images)"
-        aspect-ratio="16:9"
-        :provider="provider"
-      />
-    </template>
+  <client-only>
+    <GenericCard
+      v-if="product"
+      :has-link="true"
+      image-size="contain"
+      :href="productUrl"
+    >
+      <template #image>
+        <ResponsiveImage
+          :image="imageUrl(product.images)"
+          aspect-ratio="16:9"
+          :provider="provider"
+        />
+      </template>
 
-    <template #heading>
-      <div class="accessories-card__heading">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <h5 class="accessories-card__product-name" v-html="productName" />
-        <p class="accessories-card__product-number">
-          {{ product.orderNumber }}
-        </p>
-      </div>
-    </template>
-
-    <template #additionalInfo>
-      <div v-if="product.price" class="accessories-card__price">
-        <template v-if="isApprovedUser">
-          <p
-            v-if="isPriceVisible"
-            class="accessories-card__price-info"
-            @click="$emit('priceInfoModalIconClick', hasCustomerPrice)"
-          >
-            {{
-              hasCustomerPrice
-                ? $t('product.priceInfo.InfoPersonal')
-                : $t('product.priceInfo.InfoOnline')
-            }}
-            <Icon
-              icon="info"
-              size="xsmall"
-              class="accessories-card__price-info-icon"
-            />
+      <template #heading>
+        <div class="accessories-card__heading">
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <h5 class="accessories-card__product-name" v-html="productName" />
+          <p class="accessories-card__product-number">
+            {{ product.orderNumber }}
           </p>
-          <span class="accessories-card__price-value">{{ productPrice }}</span>
-        </template>
-      </div>
-      <div>
-        <template v-if="isLoggedIn && !isApprovedUser">
-          <i18n
-            :path="`product.userStatus.${userStatusType}.priceInfo.text`"
-            class="accessories-card__login-link"
-            tag="div"
-          >
-            <template #link>
-              <!-- TODO: add correct route after my-account migration -->
-              <nuxt-link
-                :to="localePath('shop-my-account-account-data')"
-                class="login-modal-link"
-              >
-                {{ $t(`product.userStatus.${userStatusType}.priceInfo.link`) }}
-              </nuxt-link>
-            </template>
-          </i18n>
-        </template>
-        <template v-else-if="!isLoggedIn">
-          <p class="accessories-card__login-link">
-            {{ $t('product.login.loginToSeePrices.part1') }}
-            <!-- eslint-disable vue/no-v-html -->
-            <span
-              class="login-modal-link"
-              @click="login()"
-              v-html="
-                sanitizer.clear($t('product.login.loginToSeePrices.part2'))
-              "
-            ></span>
-            <!-- eslint-enable vue/no-v-html -->
-            {{ $t('product.login.loginToSeePrices.part3') }}
-          </p>
-        </template>
-      </div>
-    </template>
-
-    <template #actionItems>
-      <div class="accessories-card__add-to-cart">
-        <PvInput v-model="quantity" input-type="number" min="1" required />
-        <div class="accessories-card__add-to-cart-buttons">
-          <Button icon="shopping_cart" @click="addToCart()" />
-          <Button
-            v-if="hasAddToListButton"
-            class="accessories-card__add-to-cart-buttons__add-to-list"
-            variant="secondary"
-            shape="outlined"
-            icon="assignment"
-            @click="addToList()"
-          />
         </div>
-      </div>
-    </template>
-  </GenericCard>
+      </template>
+
+      <template #additionalInfo>
+        <div v-if="product.price" class="accessories-card__price">
+          <template v-if="isApprovedUser">
+            <p
+              v-if="isPriceVisible"
+              class="accessories-card__price-info"
+              @click="$emit('priceInfoModalIconClick', hasCustomerPrice)"
+            >
+              {{
+                hasCustomerPrice
+                  ? $t('product.priceInfo.InfoPersonal')
+                  : $t('product.priceInfo.InfoOnline')
+              }}
+              <Icon
+                icon="info"
+                size="xsmall"
+                class="accessories-card__price-info-icon"
+              />
+            </p>
+            <span class="accessories-card__price-value">{{
+              productPrice
+            }}</span>
+          </template>
+        </div>
+        <div>
+          <template v-if="isLoggedIn && !isApprovedUser">
+            <i18n
+              :path="`product.userStatus.${userStatusType}.priceInfo.text`"
+              class="accessories-card__login-link"
+              tag="div"
+            >
+              <template #link>
+                <!-- TODO: add correct route after my-account migration -->
+                <nuxt-link
+                  :to="localePath('shop-my-account-account-data')"
+                  class="login-modal-link"
+                >
+                  {{
+                    $t(`product.userStatus.${userStatusType}.priceInfo.link`)
+                  }}
+                </nuxt-link>
+              </template>
+            </i18n>
+          </template>
+          <template v-else-if="!isLoggedIn">
+            <p class="accessories-card__login-link">
+              {{ $t('product.login.loginToSeePrices.part1') }}
+              <!-- eslint-disable vue/no-v-html -->
+              <span
+                class="login-modal-link"
+                @click="login()"
+                v-html="
+                  sanitizer.clear($t('product.login.loginToSeePrices.part2'))
+                "
+              ></span>
+              <!-- eslint-enable vue/no-v-html -->
+              {{ $t('product.login.loginToSeePrices.part3') }}
+            </p>
+          </template>
+        </div>
+      </template>
+
+      <template #actionItems>
+        <div class="accessories-card__add-to-cart">
+          <PvInput v-model="quantity" input-type="number" min="1" required />
+          <div class="accessories-card__add-to-cart-buttons">
+            <Button icon="shopping_cart" @click="addToCart()" />
+            <Button
+              v-if="hasAddToListButton"
+              class="accessories-card__add-to-cart-buttons__add-to-list"
+              variant="secondary"
+              shape="outlined"
+              icon="assignment"
+              @click="addToList()"
+            />
+          </div>
+        </div>
+      </template>
+    </GenericCard>
+  </client-only>
 </template>
 <script>
 import {
