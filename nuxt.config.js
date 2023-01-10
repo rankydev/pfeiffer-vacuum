@@ -2,6 +2,7 @@ import {
   PATH_EMPOLIS,
   PATH_SHOP,
   PATH_SHOP_IMAGES,
+  PATH_DATASOURCES,
 } from './server/constants.js'
 import {
   languageCodes,
@@ -297,6 +298,10 @@ export default {
     {
       path: PATH_EMPOLIS,
       handler: '~/server/middleware/empolis.js',
+    },
+    {
+      path: PATH_DATASOURCES,
+      handler: '~/server/middleware/datasources.js',
     },
   ],
   watchers: {
