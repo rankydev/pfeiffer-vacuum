@@ -24,9 +24,9 @@
           v-if="currentSuggestions.length"
           class="search-header__suggestions"
         >
-          <h2 class="search-header__suggestions--headline">
+          <h4 class="search-header__suggestions--headline">
             {{ `${$t('category.suggestions')}:` }}
-          </h2>
+          </h4>
           <SearchButton
             v-for="item in currentSuggestions"
             :key="item.value"
@@ -134,7 +134,7 @@ export default defineComponent({
   &__suggestions {
     &--headline {
       @apply tw-mt-12;
-      @apply tw-mb-5;
+      @apply tw-mb-2;
     }
   }
 
