@@ -11,13 +11,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  useRouter,
-  useContext,
-  useRoute,
-  ref,
-} from '@nuxtjs/composition-api'
+import { defineComponent, useRouter, useContext } from '@nuxtjs/composition-api'
 import { useCategoryStore } from '~/stores/category/category'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
@@ -33,12 +27,10 @@ export default defineComponent({
     },
   },
   emits: ['click', 'closeModal'],
-  setup(props, { emit }) {
+  setup() {
     const router = useRouter()
-    const route = useRoute()
     const categoryStore = useCategoryStore()
     const { app } = useContext()
-    const searchTerm = ref(route.value.query.searchTerm || '')
 
     const { blurSuggestions } = categoryStore
 
