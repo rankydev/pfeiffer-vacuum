@@ -81,7 +81,6 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
       } else if (
         currentVariantId.value &&
         !hasOnlyOneVariantLeft(result) &&
-        // NOTE: once hybris delivers correct values this one will be correctly respected when deslecting automaticallySelected values
         !result.allSelected
       ) {
         // Redirect to master page when more than one variant is available after selection update
