@@ -82,7 +82,7 @@ export default defineComponent({
             ? i18n.t('product.automaticallySelectedInfo')
             : null,
           label: hasSomeSelected
-            ? `<span class="tw-font-normal">${variant.name}: <b>${hasSomeSelected.displayValue}</b></span>`
+            ? `${variant.name}: <span class="tw-font-normal">${hasSomeSelected.displayValue}</span>`
             : variant.name,
           disabled: !hasSomeSelectable,
           icon: hasSomeSelected ? 'check_circle' : null,
@@ -112,7 +112,7 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .variant-selection {
   @apply tw-p-6;
   @apply tw-bg-pv-grey-96;
