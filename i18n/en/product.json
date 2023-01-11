@@ -21,6 +21,7 @@
   "department": "Department",
   "selectVariantExplained": "Please select the appropriate product variant for your individual requirements to see the corresponding product details.",
   "scrollToVariantSelection": "Select variant",
+  "pleaseSelectVariant": "Please select variant",
   "addToCart": "Add to cart",
   "addToList": "Add to list",
   "addToInstalledBase": "Add to installed base",

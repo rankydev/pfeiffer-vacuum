@@ -23,6 +23,7 @@
   "addToCart": "Zum Warenkorb hinzufügen",
   "addToList": "Zu Liste hinzufügen",
   "addToInstalledBase": "Zu Installed Base hinzufügen",
+  "pleaseSelectVariant": "Bitte Variante auswählen",
   "file": {
     "description": "Beschreibung",
     "type": "Typ",

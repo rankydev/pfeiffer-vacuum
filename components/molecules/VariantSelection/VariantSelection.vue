@@ -11,13 +11,13 @@
       <Button
         v-if="Object.keys(selectedAttributes).length > 0"
         :label="
-          isSelectionCompleted
+          currentVariantId
             ? $t('product.startNew')
             : $t('product.resetSelection')
         "
         variant="secondary"
         shape="plain"
-        :icon="isSelectionCompleted ? 'arrow_back' : null"
+        :icon="currentVariantId ? 'arrow_back' : null"
         prepend-icon
         class="variant-selection__reset-button"
         @click="clearSelection"
@@ -28,6 +28,14 @@
       :loading="loadingMatrix"
       :accordion-entries="variationAttributeEntries"
     />
+    <PvSelect
+      v-if="dropdownItems.length"
+      :options="dropdownItems"
+      :placeholder="$t('product.pleaseSelectVariant')"
+      :value="selectedVariantLabel"
+      class="variant-selection__dropdown"
+      @input="manualVariantSelected"
+    />
     <ProductActions />
   </LoadingSpinner>
 </template>
@@ -37,6 +45,7 @@ import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import { useVariationmatrixStore, useProductStore } from '~/stores/product'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
+import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import AttributeAccordion from './partials/AttributeAccordion'
 import ProductActions from './partials/ProductActions'
 
@@ -45,6 +54,7 @@ export default defineComponent({
     AttributeAccordion,
     ProductActions,
     LoadingSpinner,
+    PvSelect,
   },
   props: {
     loading: {
@@ -59,9 +69,10 @@ export default defineComponent({
       variationMatrix,
       loadingMatrix,
       clearSelection,
-      isSelectionCompleted,
       firstNotSelectedIndex,
       selectedAttributes,
+      manualVariantSelectionOptions,
+      currentVariantId,
     } = storeToRefs(variationmatrixStore)
     const { productType } = storeToRefs(productStore)
     const { i18n } = useContext()
@@ -94,7 +105,7 @@ export default defineComponent({
             ? i18n.t('product.automaticallySelectedInfo')
             : null,
           label: hasSomeSelected
-            ? `<span class="tw-font-normal">${variant.name}: <b>${hasSomeSelected.displayValue}</b></span>`
+            ? `${variant.name}: <span class="tw-font-normal">${hasSomeSelected.displayValue}</span>`
             : variant.name,
           disabled: !hasSomeSelectable,
           icon: hasSomeSelected ? 'check_circle' : null,
@@ -114,6 +125,27 @@ export default defineComponent({
       })
     })
 
+    const dropdownItems = computed(() => {
+      return manualVariantSelectionOptions.value.map((item) => {
+        return {
+          value: item.code,
+          label: item.name,
+          disabled: item.code === currentVariantId.value,
+        }
+      })
+    })
+
+    const selectedVariantLabel = computed(() => {
+      const variant = manualVariantSelectionOptions.value.find((item) => {
+        return item.code === currentVariantId.value
+      })
+      return variant?.name || ''
+    })
+
+    const manualVariantSelected = (selectItem) => {
+      variationmatrixStore.redirectToId(selectItem.value)
+    }
+
     return {
       variationAttributeEntries,
       loadingMatrix,
@@ -121,11 +153,15 @@ export default defineComponent({
       selectedAttributes,
       isSelectionCompleted,
       showVariantSelection,
+      currentVariantId,
+      dropdownItems,
+      selectedVariantLabel,
+      manualVariantSelected,
     }
   },
 })
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .variant-selection {
   @apply tw-p-6;
   @apply tw-bg-pv-grey-96;
@@ -149,6 +185,15 @@ export default defineComponent({
 
     &--off {
       @apply tw-text-pv-grey-80;
+    }
+  }
+
+  &__dropdown {
+    @apply tw-mt-3;
+
+    // TODO: why its needed to fix this here and its not correct in the component? copied this fix from ProductAccessories.vue
+    .pv-select__search-helper {
+      @apply tw-h-0;
     }
   }
 }

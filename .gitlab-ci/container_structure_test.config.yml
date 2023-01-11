@@ -104,6 +104,8 @@ metadataTest:
       value: "${EMPOLIS_CLIENT_SECRET}"
     - key: GOOGLE_TAG_MANAGER_ID
       value: "${GOOGLE_TAG_MANAGER_ID}"
+    - key: STORYBLOK_API_BASE_URL
+      value: "${STORYBLOK_API_BASE_URL}"
 
   exposedPorts: ["3000"]
   cmd: ["npm", "start"]

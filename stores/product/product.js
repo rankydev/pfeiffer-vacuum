@@ -172,14 +172,6 @@ export const useProductStore = defineStore('product', () => {
       params: { fields: 'FULL' },
     })
     product.value = result
-
-    // When product is type master or variant, save master id for matrix
-    if (['MASTERPRODUCT', 'VARIANTPRODUCT'].includes(result.productType)) {
-      variationmatrixStore.currentMasterId =
-        result.productType === 'MASTERPRODUCT' ? result.code : result.master
-      variationmatrixStore.currentVariantId =
-        result.productType === 'MASTERPRODUCT' ? null : result.code
-    }
   }
 
   const loadProductReferences = async (id) => {
@@ -230,6 +222,24 @@ export const useProductStore = defineStore('product', () => {
     }
   }
 
+  const hydrateVariationMatrix = async () => {
+    // When product is type master or variant, save master id for matrix
+    if (
+      ['MASTERPRODUCT', 'VARIANTPRODUCT'].includes(product.value?.productType)
+    ) {
+      variationmatrixStore.currentMasterId =
+        product.value.productType === 'MASTERPRODUCT'
+          ? product.value.code
+          : product.value.master
+      variationmatrixStore.currentVariantId =
+        product.value.productType === 'MASTERPRODUCT'
+          ? null
+          : product.value.code
+    }
+
+    await variationmatrixStore.loadVariationMatrix()
+  }
+
   const loadByPath = async () => {
     const id = route.value.params.product || ''
 
@@ -253,12 +263,13 @@ export const useProductStore = defineStore('product', () => {
 
       await pricesStore.loadPrice(id)
 
-      // we need to wait until loadProduct is done before we can load the matrix
-      await variationmatrixStore.loadVariationMatrix()
-    }
-
-    // needs to be called even if product data was already loaded (SSR) because prices can only be loaded client side
-    await pricesStore.loadProductReferenceGroupsPrices()
+      await Promise.all([
+        // we need to wait until loadProduct is done before we can load the matrix
+        // load every time even if product is cached. Because matrix gets cleared after each product page leave
+        hydrateVariationMatrix(),
+        // needs to be called even if product data was already loaded (SSR) because prices can only be loaded client side
+        pricesStore.loadProductReferenceGroupsPrices(),
+      ])
   }
 
   return {
