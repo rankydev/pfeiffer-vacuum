@@ -12,11 +12,25 @@
       </div>
       <div class="technical-data__child">
         <!-- eslint-disable vue/no-v-html -->
-        <span
-          v-for="(el, i) in feature.featureValues"
-          :key="i"
-          v-html="sanitizer.block(getFeatureText(feature, el))"
-        />
+        <span v-for="(el, i) in feature.featureValues" :key="i">
+          <span v-if="feature.alternativeUnits">
+            <span
+              v-for="(alternative, j) in getAllUnitVariants(feature, el)"
+              :key="j"
+            >
+              <span v-html="sanitizer.inline(alternative)" />
+              <span
+                v-if="j < getAllUnitVariants(feature, el).length - 1"
+                class="technical-data__unit-seperator"
+                >|</span
+              >
+            </span>
+          </span>
+          <span
+            v-else
+            v-html="sanitizer.block(getFeatureText(feature, el))"
+          ></span>
+        </span>
         <!-- eslint-enable vue/no-v-html -->
       </div>
     </li>
@@ -41,7 +55,18 @@ export default {
       return el.value ? `${el.value} ${feature.featureUnit?.name || ''}` : ''
     }
 
-    return { sanitizer, getFeatureText }
+    const getAllUnitVariants = (feature, el) => {
+      const readableAlternativeUnits = feature.alternativeUnits.map(
+        (alternativeFeature) => {
+          return ` ${alternativeFeature.featureValues[0].value} ${
+            alternativeFeature.featureUnit?.name || ''
+          }`
+        }
+      )
+      return [getFeatureText(feature, el), ...readableAlternativeUnits]
+    }
+
+    return { sanitizer, getFeatureText, getAllUnitVariants }
   },
 }
 </script>
@@ -101,10 +126,11 @@ export default {
     @screen lg {
       @apply tw-col-span-6;
     }
+  }
 
-    span {
-      @apply tw-block;
-    }
+  &__unit-seperator {
+    @apply tw-text-pv-red;
+    @apply tw-font-bold;
   }
 }
 </style>

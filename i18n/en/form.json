@@ -31,7 +31,8 @@
     "houseNumber": "No.",
     "postCode": "ZIP Code",
     "city": "City",
-    "submit": "Submit"
+    "submit": "Submit",
+    "dataPrivacy": "Data privacy"
   },
   "validationErrorMessages": {
     "required": "Value is required",
@@ -47,6 +48,6 @@
         "A technical error occurred. Please contact the Pfeiffer Vacuum support.",
       "customerInconsistentError":
         "There is a problem with your account. Please contact our customer service."
-    } 
+    }
   }
 }
