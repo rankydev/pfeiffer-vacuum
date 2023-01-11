@@ -13,13 +13,13 @@
       class="search-header__modal"
       :is-open="isOpen"
       :fill-viewport="true"
-      @closeModal="colseSearchfield"
+      @closeModal="closeSearchfield"
     >
       <div class="search-header__modal-content">
         <h2 class="search-header__headline">
           {{ $t('category.search') }}
         </h2>
-        <SearchInput @submit="colseSearchfield" />
+        <SearchInput @submit="closeSearchfield" />
         <div
           v-if="currentSuggestions.length"
           class="search-header__suggestions"
@@ -32,7 +32,7 @@
             :key="item.value"
             class="search-header__suggestions--result"
             :title="item.value"
-            @closeModal="colseSearchfield"
+            @closeModal="closeSearchfield"
           />
         </div>
       </div>
@@ -47,7 +47,7 @@
         :key="item.value"
         class="search-header__suggestions--result"
         :title="item.value"
-        @closeModal="colseSearchfield"
+        @closeModal="closeSearchfield"
       />
     </div>
   </div>
@@ -82,15 +82,15 @@ export default defineComponent({
     const isDesktop = app.$breakpoints.isDesktop
     const isOpen = ref(false)
 
-    const { blurSuggestions } = categoryStore
-
     const { currentSuggestions } = storeToRefs(categoryStore)
+
+    const { blurSuggestions } = categoryStore
 
     const toggleSearchfield = () => {
       isOpen.value = !isOpen.value
     }
 
-    const colseSearchfield = () => {
+    const closeSearchfield = () => {
       blurSuggestions(false)
       isOpen.value = false
     }
@@ -98,10 +98,9 @@ export default defineComponent({
     return {
       isDesktop,
       toggleSearchfield,
-      colseSearchfield,
+      closeSearchfield,
       isOpen,
       currentSuggestions,
-      blurSuggestions,
     }
   },
 })

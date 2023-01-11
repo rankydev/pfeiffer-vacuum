@@ -41,7 +41,7 @@ export default defineComponent({
         query: { searchTerm: e.length ? e : undefined },
       })
     }
-    return { pushSearchTerm, blurSuggestions }
+    return { pushSearchTerm }
   },
 })
 </script>

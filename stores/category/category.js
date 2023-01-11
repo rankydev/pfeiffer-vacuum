@@ -118,14 +118,12 @@ export const useCategoryStore = defineStore('category', () => {
     await Promise.all([loadProducts(), loadCategory()])
   }
 
-  // HIER SUGGESTIONS VON API ABFRAGEN
   const getCleanedText = (text) => {
     return text.trim().replace(/\s+/g, ' ')
   }
 
   const loadSuggestions = async (text) => {
     const validText = getCleanedText(text)
-    // this.suggestions.items = await searchApi.suggestions(validText, 6)
 
     try {
       const res = await axios.$get(config.SUGGESTIONS_API, {
