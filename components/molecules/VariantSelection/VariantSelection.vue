@@ -1,50 +1,44 @@
 <template>
-  <div class="variant-selection-accordion">
-    <GenericAccordion
-      :accordion-entries="variantTabItems"
-      multiple
-      v-bind="{ loading }"
-    >
-      <template v-for="item in variantTabItems" #[item.slotName]>
-        <!-- eslint-disable-next-line vue/no-v-for-template-key-on-child -->
-        <div :key="item.slotName">
-          <AttributeButtons
-            :items="
-              item.variant.variationValues.filter((item) => item.selectable)
-            "
-            :attribute-code="item.variant.code"
-          />
-          <div
-            v-if="
-              item.variant.variationValues.filter((item) => !item.selectable)
-                .length
-            "
-          >
-            <p class="tw-mt-4 tw-mb-2">Not selectable anymore</p>
-            <AttributeButtons
-              :items="
-                item.variant.variationValues.filter((item) => !item.selectable)
-              "
-              :attribute-code="item.variant.code"
-            />
-          </div>
-        </div>
-      </template>
-    </GenericAccordion>
-  </div>
+  <LoadingSpinner
+    class="variant-selection"
+    :show="loadingMatrix && !variationAttributeEntries.length"
+    color="red"
+  >
+    <div class="variant-selection__headline">
+      <h3>{{ $t('product.selectVariant') }}</h3>
+      <Button
+        v-if="Object.keys(selectedAttributes).length > 0"
+        :label="
+          isSelectionCompleted
+            ? $t('product.startNew')
+            : $t('product.resetSelection')
+        "
+        variant="secondary"
+        shape="plain"
+        :icon="isSelectionCompleted ? 'arrow_back' : null"
+        prepend-icon
+        class="variant-selection__reset-button"
+        @click="clearSelection"
+      />
+    </div>
+    <AttributeAccordion
+      :loading="loadingMatrix"
+      :accordion-entries="variationAttributeEntries"
+    />
+  </LoadingSpinner>
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import { useVariationmatrixStore } from '~/stores/product'
-import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
-import AttributeButtons from './partials/AttributeButtons'
+import AttributeAccordion from './partials/AttributeAccordion'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 
 export default defineComponent({
   components: {
-    GenericAccordion,
-    AttributeButtons,
+    AttributeAccordion,
+    LoadingSpinner,
   },
   props: {
     loading: {
@@ -54,46 +48,95 @@ export default defineComponent({
   },
   setup() {
     const variationmatrixStore = useVariationmatrixStore()
-    const { variationMatrix } = storeToRefs(variationmatrixStore)
+    const {
+      variationMatrix,
+      loadingMatrix,
+      clearSelection,
+      isSelectionCompleted,
+      firstNotSelectedIndex,
+      selectedAttributes,
+    } = storeToRefs(variationmatrixStore)
+    const { i18n } = useContext()
 
-    const variantTabItems = computed(() => {
-      if (!variationMatrix.value) {
+    const variationAttributeEntries = computed(() => {
+      if (!variationMatrix.value?.variationAttributes) {
         return []
       }
-      return (variationMatrix.value || {}).variationAttributes.map(
-        (variant) => {
-          const hasSomeSelected = variant.variationValues.find(
-            (item) => item.selected
-          )
-          const hasSomeSelectable = variant.variationValues.some(
-            (item) => item.selectable
-          )
+      return variationMatrix.value.variationAttributes.map((variant, index) => {
+        const hasSomeSelected = variant.variationValues.find(
+          (item) => item.selected || item.automaticallySelected
+        )
+        const hasAutomaticallySelected =
+          variant.variationValues.some((item) => item.automaticallySelected) &&
+          !variant.variationValues.some((item) => item.selected)
 
-          return {
-            slotName: variant.name,
-            label: hasSomeSelected
-              ? `${variant.name}: ${hasSomeSelected.displayValue}`
-              : variant.name,
-            disabled: !hasSomeSelectable,
-            icon: hasSomeSelected ? 'check_circle' : null,
-            expandIcon: hasSomeSelectable ? 'edit' : 'edit_off',
-            variant,
-            isActive: true, // TODO: remove later, just for testing
-          }
+        const hasSomeSelectable = variant.variationValues.some(
+          (item) => item.selectable
+        )
+        const hasMoreThanOneSelectable =
+          variant.variationValues.filter((item) => item.selectable).length > 1
+
+        return {
+          slotName: variant.name,
+          info: hasAutomaticallySelected
+            ? i18n.t('product.automaticallySelectedInfo')
+            : null,
+          label: hasSomeSelected
+            ? `${variant.name}: <span class="tw-font-normal">${hasSomeSelected.displayValue}</span>`
+            : variant.name,
+          disabled: !hasSomeSelectable,
+          icon: hasSomeSelected ? 'check_circle' : null,
+          expandIcon: hasSomeSelected
+            ? hasMoreThanOneSelectable
+              ? 'edit'
+              : 'edit_off'
+            : null,
+          expandIconClass: hasSomeSelected
+            ? hasMoreThanOneSelectable
+              ? 'variant-selection__expand-icon--on'
+              : 'variant-selection__expand-icon--off'
+            : null,
+          variant,
+          isActive: index === firstNotSelectedIndex.value,
         }
-      )
+      })
     })
 
     return {
-      variantTabItems,
+      variationAttributeEntries,
+      loadingMatrix,
+      clearSelection,
+      selectedAttributes,
+      isSelectionCompleted,
     }
   },
 })
 </script>
-<style lang="scss" scoped>
-.variant-selection-accordion {
-  @apply tw-ml-4;
-  @apply tw-mr-4;
+<style lang="scss">
+.variant-selection {
+  @apply tw-p-6;
   @apply tw-bg-pv-grey-96;
+  @apply tw-rounded-lg;
+  min-height: 400px;
+
+  &__headline {
+    @apply tw-flex;
+    @apply tw-items-center;
+    @apply tw-mb-5;
+  }
+
+  &__reset-button {
+    @apply tw-ml-auto;
+  }
+
+  &__expand-icon {
+    &--on {
+      @apply tw-text-pv-red;
+    }
+
+    &--off {
+      @apply tw-text-pv-grey-80;
+    }
+  }
 }
 </style>

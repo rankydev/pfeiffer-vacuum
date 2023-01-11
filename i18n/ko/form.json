@@ -31,7 +31,8 @@
     "houseNumber": "숫자",
     "postCode": "우편번호",
     "city": "도시",
-    "submit": "제출하다"
+    "submit": "제출하다",
+    "dataPrivacy": "개인정보 취급방침"
   },
   "validationErrorMessages": {
     "required": "값은 필수 항목입니다",
@@ -47,6 +48,6 @@
         "기술적인 오류가 발생했습니다. 파이퍼 베큠 지원 팀에 문의하십시오.",
       "customerInconsistentError":
         "계정에 문제가 있습니다. 당사 고객 서비스에 문의하십시오."
-    } 
+    }
   }
 }

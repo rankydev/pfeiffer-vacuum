@@ -30,22 +30,26 @@
 
             <div class="tw--my-4" style="width: 100%; height: 0px">&nbsp;</div>
 
-            <div class="product-page__image-gallery">
-              <ImageGallery v-if="sortedImages.length" :images="sortedImages" />
-              <ResponsiveImage
-                v-else
-                aspect-ratio="3:2"
-                fallback-image-icon-size="xxlarge"
-              />
-            </div>
-            <div
-              id="variantselection"
-              class="tw-bg-pv-grey-96 tw-w-full md:tw-w-1/2 lg:tw-w-5/12 tw-rounded-lg"
-            >
-              <LoadingSpinner :show="variationmatrixStore.loadingMatrix">
+            <div class="product-page__upper-section">
+              <div class="product-page__image-gallery">
+                <ImageGallery
+                  v-if="sortedImages.length"
+                  :images="sortedImages"
+                />
+                <ResponsiveImage
+                  v-else
+                  aspect-ratio="3:2"
+                  fallback-image-icon-size="xxlarge"
+                />
+              </div>
+              <div
+                id="variantselection"
+                class="product-page__variant-selection"
+              >
                 <VariantSelection />
-              </LoadingSpinner>
+              </div>
             </div>
+
             <div
               v-if="productReferencesRecommendedAccessories.length"
               class="tw-w-full"
@@ -89,7 +93,6 @@ import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import { storeToRefs } from 'pinia'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
 import VariantSelection from '~/components/molecules/VariantSelection/VariantSelection'
-import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 
 export default defineComponent({
   name: 'ProductShopPage',
@@ -99,7 +102,6 @@ export default defineComponent({
     ImageGallery,
     RecommendedAccessories,
     VariantSelection,
-    LoadingSpinner,
   },
   setup() {
     const route = useRoute()
@@ -122,30 +124,25 @@ export default defineComponent({
     const { productReferencesRecommendedAccessories } =
       storeToRefs(productStore)
 
-    // TODO: think about debouncing this since it could be called multiple times by the watchers
-    const loadProduct = () => {
-      variationmatrixStore.loadVariationMatrix(route.value.params.product)
-      productStore.loadProductAccessories()
-      productStore.loadProductReferenceGroupsPrices()
-      redirectOnError(productStore.loadByPath)
+    const loadProduct = async () => {
+      await redirectOnError(productStore.loadByPath)
     }
 
-    onServerPrefetch(loadProduct)
-    onBeforeMount(loadProduct)
+    onServerPrefetch(async () => await loadProduct())
+    onBeforeMount(async () => await loadProduct())
+    watch(
+      computed(() => route.value.path),
+      async () => await loadProduct()
+    )
     onBeforeUnmount(variationmatrixStore.clearMatrix)
-    watch(route, loadProduct)
 
     /**
      * react to changing user login status
      */
     const userStore = useUserStore()
-    const { isApprovedUser } = storeToRefs(userStore)
-    watch(isApprovedUser, loadProduct)
-
-    const carouselEntries = computed(() => {
-      // TODO: return recommended accessories
-      return []
-    })
+    const { isLoggedIn, isApprovedUser } = storeToRefs(userStore)
+    watch(isLoggedIn, productStore.loadProductReferenceGroupsPrices)
+    watch(isApprovedUser, productStore.loadProductReferenceGroupsPrices)
 
     /**
      * build the cms slug
@@ -196,7 +193,6 @@ export default defineComponent({
       language,
       productStore,
       variationmatrixStore,
-      carouselEntries,
       sortedImages,
       productReferencesRecommendedAccessories,
     }
@@ -205,10 +201,33 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .product-page {
+  &__upper-section {
+    @apply tw-flex tw-justify-between;
+    @apply tw-flex-col;
+    @apply tw-w-full;
+    @apply tw-gap-6;
+
+    @screen md {
+      @apply tw-flex-row;
+    }
+
+    @screen lg {
+      @apply tw-gap-16;
+    }
+  }
+
+  &__variant-selection {
+    @apply tw-w-full;
+
+    @screen md {
+      @apply tw-w-1/2;
+      max-width: 550px;
+    }
+  }
+
   &__image-gallery {
-    @apply tw-min-w-full;
-    @apply tw-flex-1;
     @apply tw-flex;
+    @apply tw-flex-1;
 
     @screen md {
       @apply tw-min-w-0;
