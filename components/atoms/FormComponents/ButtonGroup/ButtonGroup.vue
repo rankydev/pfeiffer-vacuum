@@ -116,7 +116,8 @@ export default {
   }
 
   &__input {
-    @apply tw-hidden;
+    @apply tw-absolute;
+    @apply tw-opacity-0;
   }
 }
 </style>
