@@ -142,7 +142,10 @@ export default defineComponent({
       return {
         toggleActive: (idx) => (active.value = hasIdx(idx) ? null : idx),
         isActive: (idx) => idx === active.value,
-        openNext: (id) => (id ? (active.value = id) : (active.value += 1)),
+        openNext: (id) =>
+          Number.isInteger(Number(id))
+            ? (active.value = id)
+            : (active.value += 1),
         sanitizer,
       }
     }

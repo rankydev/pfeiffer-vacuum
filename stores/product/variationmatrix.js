@@ -79,8 +79,9 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
         // Redirect to variant page when only one variant is left
         redirectToId(result.variants?.[0]?.code)
       } else if (
-        hasOnlyOneVariantLeft(variationMatrix.value) &&
-        !hasOnlyOneVariantLeft(result)
+        currentVariantId.value &&
+        !hasOnlyOneVariantLeft(result) &&
+        !result.allSelected
       ) {
         // Redirect to master page when more than one variant is available after selection update
         redirectToId(
@@ -167,13 +168,6 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    */
   const hasOnlyOneVariantLeft = (matrix) => matrix?.variants?.length === 1
 
-  /*
-   * Computed property to indicate if the current variation matrix has just one variant left and therefore the selection is completed
-   */
-  const isSelectionCompleted = computed(() => {
-    return hasOnlyOneVariantLeft(variationMatrix.value)
-  })
-
   /**
    * Returns index of first attribute where no value is selected
    */
@@ -185,6 +179,29 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
         )
     )
   )
+
+  /**
+   * provides information about whether there is an open choice in the matrix for the user
+   * This will also be true if there are automaticallySelected values involved
+   */
+  const isSelectionCompleted = computed(() => {
+    return variationMatrix.value?.allSelected
+  })
+
+  /**
+   * Those options are left even if user selected all values
+   * This is an edge case and can happen if multiple variants are left after selection
+   * If it happens manual selection by the user is required
+   */
+  const manualVariantSelectionOptions = computed(() => {
+    if (
+      isSelectionCompleted.value &&
+      variationMatrix.value?.variants?.length > 1
+    ) {
+      return variationMatrix.value.variants
+    }
+    return []
+  })
 
   /*
    * Old and new matrix object can be given to determine whether there are two different variants left for redirection
@@ -217,11 +234,13 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
     loadingMatrix,
     isSelectionCompleted,
     firstNotSelectedIndex,
+    manualVariantSelectionOptions,
     loadVariationMatrix,
     addAttribute,
     deleteAttribute,
     toggleAttribute,
     clearMatrix,
     clearSelection,
+    redirectToId,
   }
 })
