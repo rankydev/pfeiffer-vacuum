@@ -186,10 +186,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    * This will also be true if there are automaticallySelected values involved
    */
   const isSelectionCompleted = computed(() => {
-    // TODO: once hybris is updated we can just use variationMatrix.value.allSelected
-    return (
-      firstNotSelectedIndex.value === -1 || variationMatrix.value?.allSelected
-    )
+    return variationMatrix.value?.allSelected
   })
 
   /**
