@@ -38,7 +38,9 @@
           </span>
           <span class="product-actions__price-value">{{ productPrice }}</span>
         </template>
-        <template v-else>{{ priceInformationType }}</template>
+        <template v-else>
+          <span>{{ noPriceReason }}</span>
+        </template>
       </div>
     </div>
     <div class="product-actions__action-wrapper">
@@ -108,7 +110,7 @@ export default {
 
     const orderNumber = computed(() => product?.value?.orderNumber || '')
 
-    const priceInformationType = computed(() => {
+    const noPriceReason = computed(() => {
       const path = 'product.login.loginToSeePrices.'
       if (isLeadUser) return i18n.t(path + 'lead')
       if (isOpenUser) return i18n.t(path + 'open')
@@ -155,7 +157,7 @@ export default {
       isPriceVisible,
       price,
       hasCustomerPrice,
-      priceInformationType,
+      noPriceReason,
       infoModalVisible,
       informationModalHeadline,
       informationModalText,
