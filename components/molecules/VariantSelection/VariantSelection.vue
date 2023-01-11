@@ -4,8 +4,10 @@
     :show="loadingMatrix && !variationAttributeEntries.length"
     color="red"
   >
-    <div class="variant-selection__headline">
-      <h3>{{ $t('product.selectVariant') }}</h3>
+    <div v-if="showVariantSelection" class="variant-selection__headline">
+      <h3>
+        {{ $t('product.selectVariant') }}
+      </h3>
       <Button
         v-if="Object.keys(selectedAttributes).length > 0"
         :label="
@@ -22,22 +24,26 @@
       />
     </div>
     <AttributeAccordion
+      v-if="showVariantSelection"
       :loading="loadingMatrix"
       :accordion-entries="variationAttributeEntries"
     />
+    <ProductActions />
   </LoadingSpinner>
 </template>
 
 <script>
 import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
-import { useVariationmatrixStore } from '~/stores/product'
-import AttributeAccordion from './partials/AttributeAccordion'
+import { useVariationmatrixStore, useProductStore } from '~/stores/product'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
+import AttributeAccordion from './partials/AttributeAccordion'
+import ProductActions from './partials/ProductActions'
 
 export default defineComponent({
   components: {
     AttributeAccordion,
+    ProductActions,
     LoadingSpinner,
   },
   props: {
@@ -47,6 +53,7 @@ export default defineComponent({
     },
   },
   setup() {
+    const productStore = useProductStore()
     const variationmatrixStore = useVariationmatrixStore()
     const {
       variationMatrix,
@@ -56,7 +63,12 @@ export default defineComponent({
       firstNotSelectedIndex,
       selectedAttributes,
     } = storeToRefs(variationmatrixStore)
+    const { productType } = storeToRefs(productStore)
     const { i18n } = useContext()
+
+    const showVariantSelection = computed(() =>
+      ['MASTERPRODUCT', 'VARIANTPRODUCT'].includes(productType.value)
+    )
 
     const variationAttributeEntries = computed(() => {
       if (!variationMatrix.value?.variationAttributes) {
@@ -108,6 +120,7 @@ export default defineComponent({
       clearSelection,
       selectedAttributes,
       isSelectionCompleted,
+      showVariantSelection,
     }
   },
 })

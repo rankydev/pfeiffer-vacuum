@@ -20,6 +20,9 @@
   "furtherDetails": "Weitere Produktdetails",
   "selectVariantExplained": "Bitte wählen Sie eine Variante basierend auf Ihren individuellen Anforderungen um weitere Details einzusehen.",
   "scrollToVariantSelection": "Variante auswählen",
+  "addToCart": "Zum Warenkorb hinzufügen",
+  "addToList": "Zu Liste hinzufügen",
+  "addToInstalledBase": "Zu Installed Base hinzufügen",
   "file": {
     "description": "Beschreibung",
     "type": "Typ",
@@ -50,6 +53,8 @@
   },
   "showProductDetails": "Produktdetails anzeigen",
   "help": "Brauchen Sie Hilfe?",
+  "articleNumber": "Artikelnummer",
+  "noPriceAvailable": "Kein Preis verfügbar",
   "login": {
     "title": "Anmelden",
     "account": "Bereits registriert?",

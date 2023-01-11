@@ -105,6 +105,8 @@ export const useProductStore = defineStore('product', () => {
     })
   })
 
+  const productType = computed(() => product.value?.productType || '')
+
   const getReferenceGroupWithPrices = (type) => {
     if (!productReferences.value || !type) {
       return []
@@ -115,12 +117,12 @@ export const useProductStore = defineStore('product', () => {
     )
   }
 
-  const getReferencesWithMappedPrices = (rererences) => {
-    if (!rererences) {
+  const getReferencesWithMappedPrices = (references) => {
+    if (!references) {
       return []
     }
 
-    return rererences.map((item) => {
+    return references.map((item) => {
       const foundPrice = productReferencesPrices.value?.find((priceItem) => {
         return priceItem.code === item.target.code
       })
@@ -247,8 +249,9 @@ export const useProductStore = defineStore('product', () => {
         loadProduct(id),
         loadProductReferences(id),
         loadProductAccessories(),
-        pricesStore.loadPrice(id),
       ])
+
+      await pricesStore.loadPrice(id)
 
       // we need to wait until loadProduct is done before we can load the matrix
       await variationmatrixStore.loadVariationMatrix()
@@ -264,10 +267,10 @@ export const useProductStore = defineStore('product', () => {
 
     // Product
     product,
+    productType,
     price,
     accessoriesGroups,
     productAccessoriesGroups,
-    getProducts,
     loadProductReferenceGroupsPrices:
       pricesStore.loadProductReferenceGroupsPrices,
     productReferences, // please note: this NEEDS to be exported, even though it is not used outside. Dependent computeds below will not work if removed. This may be a pinia bug.
@@ -275,6 +278,7 @@ export const useProductStore = defineStore('product', () => {
     productReferencesSpareParts,
     productReferencesConsumables,
     productReferencesRecommendedAccessories,
+    getProducts,
     loadByPath,
     loadProductAccessories,
   }

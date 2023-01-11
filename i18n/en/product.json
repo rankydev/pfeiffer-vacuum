@@ -21,6 +21,9 @@
   "department": "Department",
   "selectVariantExplained": "Please select the appropriate product variant for your individual requirements to see the corresponding product details.",
   "scrollToVariantSelection": "Select variant",
+  "addToCart": "Add to cart",
+  "addToList": "Add to list",
+  "addToInstalledBase": "Add to installed base",
   "file": {
     "description": "Description",
     "type": "Type",
@@ -51,6 +54,8 @@
   },
   "showProductDetails": "Show product details",
   "help": "Need any help?",
+  "articleNumber": "Order number",
+  "noPriceAvailable": "No price available",
   "login": {
     "title": "Sign in",
     "account": "Already have an account?",
