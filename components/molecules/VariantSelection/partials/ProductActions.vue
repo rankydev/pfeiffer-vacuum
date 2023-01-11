@@ -1,6 +1,6 @@
 <template>
   <div class="product-actions">
-    <div v-if="productType !== 'MASTERPRODUCT'" class="product-actions__info">
+    <div v-if="!isMaster" class="product-actions__info">
       <div class="product-actions__order-number">
         <span class="product-actions__order-number-headline">
           {{ $t('product.articleNumber') }}
@@ -54,7 +54,7 @@
         class="product-actions__add-to-cart"
         icon="shopping_cart"
         :label="$t('product.addToCart')"
-        :disabled="productType === 'MASTERPRODUCT'"
+        :disabled="isMaster"
       />
       <template v-if="isLoggedIn">
         <Button
@@ -63,7 +63,7 @@
           :label="$t('product.addToList')"
           variant="secondary"
           shape="outlined"
-          :disabled="productType === 'MASTERPRODUCT'"
+          :disabled="isMaster"
         />
         <Button
           class="product-actions__shopping-list"
@@ -71,7 +71,7 @@
           icon="assignment"
           variant="secondary"
           shape="outlined"
-          :disabled="productType === 'MASTERPRODUCT'"
+          :disabled="isMaster"
         />
       </template>
     </div>
@@ -128,6 +128,8 @@ export default {
 
     const isPriceVisible = computed(() => price.value && isApprovedUser.value)
 
+    const isMaster = computed(() => productType.value === 'MASTERPRODUCT')
+
     const toggleModal = () => (infoModalVisible.value = !infoModalVisible.value)
 
     const informationModalHeadline = computed(() => {
@@ -152,9 +154,9 @@ export default {
       isLoggedIn,
       isApprovedUser,
       orderNumber,
-      productType,
       productPrice,
       isPriceVisible,
+      isMaster,
       price,
       hasCustomerPrice,
       noPriceReason,
