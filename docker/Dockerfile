@@ -84,6 +84,8 @@ ARG USERCENTRICS_ID
 # google tag manager
 ARG GOOGLE_TAG_MANAGER_ID
 
+ARG STORYBLOK_API_BASE_URL
+
 RUN \
   apk update \
   && apk add gettext
@@ -181,6 +183,8 @@ ARG USERCENTRICS_ID
 # google tag manager
 ARG GOOGLE_TAG_MANAGER_ID
 
+ARG STORYBLOK_API_BASE_URL
+
 # !!! IMPORTANT NOTE !!!
 # ENV variables will be set by either
 #   - pipeline
@@ -261,6 +265,8 @@ ENV USERCENTRICS_ID="${USERCENTRICS_ID}"
 
 # google tag manager
 ENV GOOGLE_TAG_MANAGER_ID="${GOOGLE_TAG_MANAGER_ID}"
+
+ENV STORYBLOK_API_BASE_URL="${STORYBLOK_API_BASE_URL}"
 
 # Create app directory
 WORKDIR /opt/pvac-frontend
