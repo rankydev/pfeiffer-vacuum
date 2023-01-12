@@ -1,7 +1,9 @@
+@import 'z-index';
+
 // Base Styling from: https://floating-vue.starpad.dev/legacy/v2/#sass-less
 .tooltip {
   display: block !important;
-  z-index: 10000;
+  z-index: $tooltip;
 
   .tooltip-inner {
     @apply tw-bg-pv-red;
@@ -21,7 +23,7 @@
     @apply tw-border-solid;
     @apply tw-absolute;
     @apply tw-border-pv-red;
-    @apply tw-z-10;
+    z-index: $tooltip-arrow;
     margin: calc($arrow-size / 2);
   }
 
