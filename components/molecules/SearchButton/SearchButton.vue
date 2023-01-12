@@ -56,13 +56,15 @@ export default defineComponent({
     @apply tw-p-3;
     @apply tw-rounded-md;
 
-    &:hover,
-    &:focus {
-      @apply tw-bg-pv-grey-96;
-      @apply tw-border-pv-white;
+    @screen lg {
+      &:hover,
+      &:focus {
+        @apply tw-bg-pv-grey-96;
+        @apply tw-border-pv-white;
 
-      .searchbutton__icon {
-        @apply tw-flex;
+        .searchbutton__icon {
+          @apply tw-flex;
+        }
       }
     }
   }
