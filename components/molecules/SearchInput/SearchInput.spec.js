@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import SearchInput from './SearchInput.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 
@@ -37,7 +37,7 @@ describe('SearchInput', () => {
   describe('initial state', () => {
     describe('given an icon', () => {
       it('should render', () => {
-        const wrapper = shallowMount(SearchInput)
+        const wrapper = mount(SearchInput)
 
         const inputField = wrapper.findComponent(PvInput)
 
@@ -49,7 +49,7 @@ describe('SearchInput', () => {
 
   describe('during interaction', () => {
     it('should push searchTerm when event is triggered', async () => {
-      const wrapper = shallowMount(SearchInput)
+      const wrapper = mount(SearchInput)
       const input = wrapper.findComponent(PvInput)
       await input.vm.$emit('submit', mockSearchTerm)
 
