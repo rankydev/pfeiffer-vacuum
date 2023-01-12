@@ -87,6 +87,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 .image-lightbox {
   @apply tw-w-full;
   @apply tw-h-full;
@@ -126,7 +128,7 @@ export default defineComponent({
     @apply tw-absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 10000;
+    z-index: $image-lightbox;
 
     @screen md {
       @apply tw-inline-flex;

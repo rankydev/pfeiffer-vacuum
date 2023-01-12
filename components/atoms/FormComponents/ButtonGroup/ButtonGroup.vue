@@ -4,11 +4,15 @@
       v-for="(item, index) in values"
       :key="index"
       class="button-group__label"
+      :class="{
+        'button-group__label--checked': item.value === selectedValue,
+        'button-group__label--disabled': disabled,
+      }"
     >
       <!-- if checked, the value is initially selected -->
       <input
         v-bind="{ ...item, disabled }"
-        :checked="item.value === initialValue"
+        :checked="item.value === selectedValue"
         type="radio"
         name="radio"
         class="button-group__input"
@@ -38,7 +42,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    initialValue: {
+    selectedValue: {
       type: undefined,
       default: '',
     },
@@ -50,22 +54,49 @@ export default {
 .button-group {
   @apply tw-flex;
   @apply tw-h-12;
-  @apply tw-border-pv-grey-80;
-  @apply tw-border-2;
   @apply tw-rounded-md;
   @apply tw-overflow-hidden;
 
   &__label {
     @apply tw-grow;
-    @apply tw-border-r-pv-grey-80;
-    @apply tw-border-r-2;
+    @apply tw-border-2;
+    @apply tw-border-pv-grey-80;
+
+    &:not(:last-child) {
+      @apply tw-border-r-0;
+    }
+
+    &:first-child {
+      @apply tw-rounded-l-md;
+    }
 
     &:hover {
       @apply tw-cursor-pointer;
     }
 
     &:last-of-type {
-      @apply tw-border-r-0;
+      @apply tw-rounded-r-md;
+    }
+
+    &:focus {
+      @apply tw-border-pv-grey-16;
+      @apply tw-border-r-2;
+
+      + .button-group__label {
+        @apply tw-border-l-0;
+      }
+    }
+
+    &--checked {
+      @apply tw-bg-pv-red;
+
+      .button-group__text {
+        @apply tw-text-pv-white;
+      }
+    }
+
+    &--disabled {
+      cursor: not-allowed !important;
     }
   }
 
@@ -85,14 +116,8 @@ export default {
   }
 
   &__input {
-    @apply tw-hidden;
-
-    &:checked {
-      + span {
-        @apply tw-text-pv-white;
-        @apply tw-bg-pv-red;
-      }
-    }
+    @apply tw-absolute;
+    @apply tw-opacity-0;
   }
 }
 </style>
