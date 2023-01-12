@@ -115,9 +115,9 @@
   }
 
   &__flyout-entry {
-    @apply tw-flex;
+    @apply tw-grid;
+    grid-template-columns: 32px 1fr;
     @apply tw-text-xs;
-    @apply tw-gap-x-2.5;
     @apply tw-text-pv-grey-48;
   }
 }
