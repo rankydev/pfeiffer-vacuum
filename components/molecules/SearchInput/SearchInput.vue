@@ -1,9 +1,9 @@
 <template>
   <PvInput
+    ref="pvInput"
     v-model="searchTerm"
     icon="search"
     :placeholder="$t('form.input.search.placeholder')"
-    :autofocused="true"
     @submit="pushSearchTerm"
     @click:icon="pushSearchTerm"
     @input="loadSuggestions"
@@ -16,6 +16,7 @@ import {
   useRouter,
   useRoute,
   useContext,
+  onMounted,
   ref,
 } from '@nuxtjs/composition-api'
 
@@ -33,6 +34,8 @@ export default defineComponent({
     const { app } = useContext()
     const categoryStore = useCategoryStore()
 
+    const pvInput = ref(null)
+
     const { loadSuggestions, blurSuggestions } = categoryStore
 
     const searchTerm = ref(route.value.query.searchTerm || '')
@@ -44,7 +47,18 @@ export default defineComponent({
         query: { searchTerm: e.length ? e : undefined },
       })
     }
-    return { pushSearchTerm, searchTerm, loadSuggestions, blurSuggestions }
+
+    onMounted(() => {
+      pvInput.value.$refs.input.focus()
+    })
+
+    return {
+      pushSearchTerm,
+      searchTerm,
+      loadSuggestions,
+      blurSuggestions,
+      pvInput,
+    }
   },
 })
 </script>

@@ -3,9 +3,9 @@
     <PvLabel :optional="!required" :label="label" />
     <div class="pv-input__wrapper">
       <input
-        v-model="internalValue"
         v-bind="{ placeholder, disabled, ...$attrs }"
-        :autofocus="autofocused"
+        ref="input"
+        v-model="internalValue"
         :required="required"
         :type="inputType"
         class="pv-input__element"
@@ -108,13 +108,6 @@ export default defineComponent({
     rules: {
       type: Object,
       default: () => ({}),
-    },
-    /**
-     * boolean that indicates if input is autofocused
-     */
-    autofocused: {
-      type: Boolean,
-      default: false,
     },
   },
   emits: [
