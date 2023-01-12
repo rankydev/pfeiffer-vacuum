@@ -134,6 +134,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 .popup {
   &__activator {
     @apply tw-inline-flex;
@@ -148,7 +150,7 @@ export default defineComponent({
     @apply tw-rounded;
     @apply tw-overflow-x-auto;
     @apply tw-overflow-y-hidden;
-    @apply tw-z-30;
+    z-index: $popup;
     max-width: calc(100vw - 4px);
   }
 }

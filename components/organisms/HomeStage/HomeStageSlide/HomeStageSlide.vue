@@ -82,6 +82,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 $home-stage-width: 100vw;
 $home-stage-height-xs: 512px;
 $home-stage-height-md: 768px;
@@ -126,7 +128,7 @@ $home-stage-interlay-spacing-xs: calc(
   }
 
   &__content-block {
-    @apply tw-z-10;
+    z-index: $home-stage-slider;
   }
 
   &__placeholder {

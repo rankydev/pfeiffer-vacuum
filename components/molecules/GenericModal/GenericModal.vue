@@ -75,8 +75,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 .modal {
-  z-index: 110;
+  z-index: $generic-modal;
   @apply tw-top-0;
   @apply tw-left-0;
   @apply tw-h-screen;

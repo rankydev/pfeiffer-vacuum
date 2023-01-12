@@ -72,6 +72,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 $home-stage-width: 100%;
 $home-stage-height-xs: 512px;
 $home-stage-height-md: 768px;
@@ -110,7 +112,7 @@ $home-stage-interlay-spacing-xs: calc(
   }
 
   &__content-block {
-    @apply tw-z-10;
+    z-index: $error-image-stage;
     @apply tw-col-span-12 md:tw-col-span-6 lg:tw-col-span-6 lg:tw-col-start-1;
   }
 

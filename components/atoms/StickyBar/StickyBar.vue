@@ -64,6 +64,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 .sticky-bar {
   @apply tw-relative;
   @apply tw-flex;
@@ -76,7 +78,7 @@ export default defineComponent({
     @apply tw-gap-4;
     @apply tw-mr-4;
     bottom: 0;
-    z-index: 100;
+    z-index: $sticky-bar;
 
     @screen md {
       @apply tw-mr-6;
