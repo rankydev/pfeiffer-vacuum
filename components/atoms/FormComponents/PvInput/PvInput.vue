@@ -5,6 +5,7 @@
       <input
         v-model="internalValue"
         v-bind="{ placeholder, disabled, ...$attrs }"
+        :autofocus="autofocused"
         :required="required"
         :type="inputType"
         class="pv-input__element"
@@ -107,6 +108,13 @@ export default defineComponent({
     rules: {
       type: Object,
       default: () => ({}),
+    },
+    /**
+     * boolean that indicates if input is autofocused
+     */
+    autofocused: {
+      type: Boolean,
+      default: false,
     },
   },
   emits: [

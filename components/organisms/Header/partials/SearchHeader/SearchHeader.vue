@@ -19,7 +19,7 @@
         <h2 class="search-header__headline">
           {{ $t('category.search') }}
         </h2>
-        <SearchInput @submit="closeSearchfield" />
+        <SearchInput autofocus @submit="closeSearchfield" />
         <div
           v-if="currentSuggestions.length"
           class="search-header__suggestions"

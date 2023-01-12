@@ -3,6 +3,7 @@
     v-model="searchTerm"
     icon="search"
     :placeholder="$t('form.input.search.placeholder')"
+    :autofocused="true"
     @submit="pushSearchTerm"
     @click:icon="pushSearchTerm"
     @input="loadSuggestions"
