@@ -29,7 +29,6 @@ export default defineComponent({
     const { internalVariant, active } = toRefs(props)
 
     const classList = computed(() => {
-      console.log('######', active)
       if (!active.value) return `internal-btn-wrapper__${internalVariant.value}`
       return `internal-btn-wrapper__${internalVariant.value} internal-btn-wrapper__${internalVariant.value}--active`
     })
