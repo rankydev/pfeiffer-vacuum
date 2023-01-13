@@ -1,9 +1,10 @@
 <template>
+  <!-- NOTE: we could use :key="slugs.slug" on CmsQuery to force CmsQuery to re-evaluate. this way we could get subpage meta page information (f.e. page title) -->
   <CmsQuery
     :handle-preview-events="true"
-    :slug="slug"
-    :fallback-slug="fallbackSlug"
-    :language="language"
+    :slug="slugs.slug"
+    :fallback-slug="slugs.fallbackSlug"
+    :language="slugs.language"
   >
     <template #default="{ result: { data } }">
       <Page v-if="data" v-bind="data">
@@ -28,11 +29,11 @@
 <script>
 import {
   defineComponent,
-  ref,
   useRoute,
   useRouter,
   useContext,
   onBeforeMount,
+  computed,
 } from '@nuxtjs/composition-api'
 
 import Page from '~/components/templates/Page/Page'
@@ -58,12 +59,14 @@ export default defineComponent({
     const context = useContext()
     const userStore = useUserStore()
     const { isLoggedIn } = storeToRefs(userStore)
+
     /**
      * build the cms slug
      */
     const { buildSlugs } = useStoryblokSlugBuilder({ root: context })
-    const currentPath = ref(route.value.path)
-    const { slug, fallbackSlug, language } = buildSlugs(currentPath.value)
+    const slugs = computed(() => {
+      return buildSlugs(route.value.path)
+    })
 
     // This is required for initial page load.
     // Doing the check in the middleware (on SSR) is not possible because SSR does not have the information if user is logged in
@@ -77,9 +80,7 @@ export default defineComponent({
     })
 
     return {
-      slug,
-      fallbackSlug,
-      language,
+      slugs,
     }
   },
 })
