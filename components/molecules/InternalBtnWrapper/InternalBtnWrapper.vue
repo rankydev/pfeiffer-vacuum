@@ -18,7 +18,7 @@ export default defineComponent({
     internalVariant: {
       type: String,
       default: 'facets',
-      validator: (val) => ['facets'].includes(val),
+      validator: (val) => ['facets', 'language-switcher'].includes(val),
     },
     active: {
       type: Boolean,
@@ -65,6 +65,27 @@ export default defineComponent({
     &--active.button--outlined.button--secondary {
       @apply tw-text-pv-grey-16;
     }
+  }
+
+  &__language-switcher {
+    color: #fff !important;
+    @apply tw-p-0;
+    @apply tw-align-middle;
+    box-shadow: none !important;
+    font-size: 0.75rem !important;
+
+    @screen lg {
+      color: #7a7a7a !important;
+    }
+
+    &:hover {
+      background-color: unset !important;
+    }
+  }
+
+  &__language-switcher.button--small {
+    @apply tw-px-0;
+    @apply tw-pb-0;
   }
 }
 </style>
