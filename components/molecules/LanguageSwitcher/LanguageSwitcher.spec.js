@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils'
 import LanguageSwitcher from './LanguageSwitcher.vue'
-import Button from '~/components/atoms/Button/Button.vue'
+import InternalBtnWrapper from '~/components/molecules/InternalBtnWrapper/InternalBtnWrapper.vue'
 
 const mockIsStoryblok = jest.fn()
 
@@ -37,7 +37,7 @@ describe('LanguageSwitcher', () => {
       const languageSwitcherContent = wrapper.find(
         '.language-switcher__content'
       )
-      const button = wrapper.findComponent(Button)
+      const button = wrapper.findComponent(InternalBtnWrapper)
 
       expect(languageSwitcher.exists()).toBeTruthy()
       expect(languageSwitcherWrapper.exists()).toBeTruthy()
@@ -55,7 +55,7 @@ describe('LanguageSwitcher', () => {
       const languageSwitcherContent = wrapper.find(
         '.language-switcher__content'
       )
-      const button = wrapper.findComponent(Button)
+      const button = wrapper.findComponent(InternalBtnWrapper)
 
       expect(languageSwitcher.exists()).toBeTruthy()
       expect(languageSwitcherWrapper.exists()).toBeFalsy()
