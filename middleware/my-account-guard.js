@@ -1,7 +1,7 @@
 import Cookie from 'cookie'
 import JsCookie from 'js-cookie'
 
-export default ({ req, redirect, from }) => {
+export default ({ app, req, redirect }) => {
   const getCookie = (cookieKey, defaultValue) => {
     if (process.client) {
       return JsCookie.get(cookieKey) || defaultValue
@@ -17,6 +17,6 @@ export default ({ req, redirect, from }) => {
   // So we need to check the access_token directly instead of using the handy getter "isLoggedIn"
   const accessToken = getCookie('auth.accessToken', '')
   if (!accessToken) {
-    return redirect(from?.path || '/')
+    return redirect(app.localePath('/'))
   }
 }
