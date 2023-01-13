@@ -11,5 +11,7 @@
   "noMatchingProducts": "No matching products found",
   "checkSearchCriteria": "Please check the selected search criteria.",
   "vacuumRange": "Vacuum Range",
-  "suctionSpeed": "Pumping Speed"
+  "suctionSpeed": "Pumping Speed",
+  "search": "Search",
+  "suggestions": "suggestions"
 }
