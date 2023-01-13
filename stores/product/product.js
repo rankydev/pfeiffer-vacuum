@@ -271,27 +271,27 @@ export const useProductStore = defineStore('product', () => {
         pricesStore.loadProductReferenceGroupsPrices(),
       ])
     }
+  }
 
-    return {
-      breadcrumb,
-      metaData,
+  return {
+    breadcrumb,
+    metaData,
 
-      // Product
-      product,
-      productType,
-      price,
-      accessoriesGroups,
-      productAccessoriesGroups,
-      loadProductReferenceGroupsPrices:
-        pricesStore.loadProductReferenceGroupsPrices,
-      productReferences, // please note: this NEEDS to be exported, even though it is not used outside. Dependent computeds below will not work if removed. This may be a pinia bug.
-      productReferencesPrices,
-      productReferencesSpareParts,
-      productReferencesConsumables,
-      productReferencesRecommendedAccessories,
-      getProducts,
-      loadByPath,
-      loadProductAccessories,
-    }
+    // Product
+    product,
+    productType,
+    price,
+    accessoriesGroups,
+    productAccessoriesGroups,
+    loadProductReferenceGroupsPrices:
+      pricesStore.loadProductReferenceGroupsPrices,
+    productReferences, // please note: this NEEDS to be exported, even though it is not used outside. Dependent computeds below will not work if removed. This may be a pinia bug.
+    productReferencesPrices,
+    productReferencesSpareParts,
+    productReferencesConsumables,
+    productReferencesRecommendedAccessories,
+    getProducts,
+    loadByPath,
+    loadProductAccessories,
   }
 })
