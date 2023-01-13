@@ -1,13 +1,22 @@
-export default (ctx) => {
-  // on server side we cannot check if user is logged in so let user pass and onBeforeMount will check user is logged in initally
-  if (!process.client) {
-    return true
+import Cookie from 'cookie'
+import JsCookie from 'js-cookie'
+
+export default ({ req, redirect, from }) => {
+  const getCookie = (cookieKey, defaultValue) => {
+    if (process.client) {
+      return JsCookie.get(cookieKey) || defaultValue
+    } else if (req && req.headers?.cookie) {
+      const cookies = Cookie.parse(req.headers.cookie)
+      const value = cookies[cookieKey]
+      if (value) return value
+    }
+    return defaultValue
   }
-  // while navigating onpage this check will be done every time a user wants to reach this route
+
   // unfortunately pinia (user) store does not work properly with getters in here right now. (nuxt bridge)
   // So we need to check the access_token directly instead of using the handy getter "isLoggedIn"
-  const accessToken = ctx.app.pinia.state.value?.user?.auth?.access_token
+  const accessToken = getCookie('auth.accessToken', '')
   if (!accessToken) {
-    return ctx.redirect(ctx.from?.path || '/')
+    return redirect(from?.path || '/')
   }
 }
