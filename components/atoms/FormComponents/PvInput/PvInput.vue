@@ -3,8 +3,9 @@
     <PvLabel :optional="!required" :label="label" />
     <div class="pv-input__wrapper">
       <input
-        v-model="internalValue"
         v-bind="{ placeholder, disabled, ...$attrs }"
+        ref="input"
+        v-model="internalValue"
         :required="required"
         :type="inputType"
         class="pv-input__element"
