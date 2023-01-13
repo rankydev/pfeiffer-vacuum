@@ -12,7 +12,6 @@ export default defineComponent({
   components: {
     Button,
   },
-  emits: ['click'],
   props: {
     ...propsData,
     internalVariant: {
@@ -25,6 +24,7 @@ export default defineComponent({
       default: false,
     },
   },
+  emits: ['click'],
   setup(props) {
     const { internalVariant, active } = toRefs(props)
 
