@@ -33,7 +33,6 @@ import {
   useRouter,
   useContext,
   onBeforeMount,
-  onBeforeUpdate,
 } from '@nuxtjs/composition-api'
 
 import Page from '~/components/templates/Page/Page'
@@ -52,7 +51,7 @@ export default defineComponent({
     MyAccountSidebar,
     MyAccountManager,
   },
-  // middleware: 'my-account-guard',
+  middleware: 'my-account-guard',
   setup() {
     const router = useRouter()
     const route = useRoute()
@@ -66,31 +65,15 @@ export default defineComponent({
     const currentPath = ref(route.value.path)
     const { slug, fallbackSlug, language } = buildSlugs(currentPath.value)
 
-    const guardRoute = () => {
-      if (!isLoggedIn.value) {
-        if (process.client) {
-          // TODO: this is broken right now?
-          // userStore.login()
-        } else {
-          router.replace({
-            path: app.localePath('/'),
-          })
-        }
-      }
-    }
-
-    // TODO: this is not really a good route guard / middleware.
-    // it redirects back to last page when user is not logged in but does not really prevent the initial navigation
-    // it is not possible right now because nuxt (2) middlewares cannot use pinia bc. it needs to be initialized in an setup function
+    // This is required for initial page load.
+    // Doing the check in the middleware (on SSR) is not possible because SSR does not have the information if user is logged in
+    // when navigating onpage "my-account-guard" middleware will protect the route
     onBeforeMount(() => {
       if (!isLoggedIn.value) {
-        guardRoute()
+        router.replace({
+          path: context.app.localePath('/'),
+        })
       }
-    })
-
-    onBeforeUpdate(() => {
-      // guardRoute()
-      console.log('updated')
     })
 
     return {
