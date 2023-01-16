@@ -72,6 +72,7 @@ import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
 import StickyBar from '~/components/atoms/StickyBar/StickyBar.vue'
+import { useMyAccountStore } from '~/stores/myaccount'
 
 export default defineComponent({
   name: 'Page',
@@ -101,6 +102,9 @@ export default defineComponent({
       defaultFullSlug,
       translatedSlugs
     )
+
+    const myAccountStore = useMyAccountStore()
+    myAccountStore.hydrateMenuItems(header)
 
     return {
       top,

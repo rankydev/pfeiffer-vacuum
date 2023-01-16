@@ -1,33 +1,64 @@
 <template>
   <div class="myaccount-sidebar">
-    <div
-      class="tw-flex tw-flex-col tw-bg-pv-grey-88 tw-rounded-md tw-items-center tw-justify-center tw-text-center"
-      style="height: 500px"
+    <NuxtLink
+      v-for="(item, index) in menuItems"
+      :key="item.href"
+      :to="item.href"
+      class="myaccount-sidebar__item"
+      :class="{ 'myaccount-sidebar__item--heading': index === 0 }"
     >
-      <div class="tw-font-bold tw-text-pv-white tw-text-2xl">Sidebar</div>
-      <NuxtLink :to="localePath('shop-my-account')"> Dashboard </NuxtLink>
-      <NuxtLink :to="localePath('shop-my-account-account-data')">
-        Account Data
-      </NuxtLink>
-      <NuxtLink :to="localePath('shop-my-account-address-data')">
-        Address Data
-      </NuxtLink>
-    </div>
+      <Icon
+        v-if="item.icon"
+        :icon="item.icon"
+        class="myaccount-sidebar__icon"
+      />
+      {{ item.label }}
+    </NuxtLink>
   </div>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import { storeToRefs } from 'pinia'
+import { useMyAccountStore } from '~/stores/myaccount'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
-  components: {},
+  components: {
+    Icon,
+  },
+  setup() {
+    const myAccountStore = useMyAccountStore()
+    const { menuItems } = storeToRefs(myAccountStore)
+
+    return {
+      menuItems,
+    }
+  },
 })
 </script>
 
 <style lang="scss" scoped>
 .myaccount-sidebar {
-  a.nuxt-link-exact-active {
-    @apply tw-underline;
+  @apply tw-flex;
+  @apply tw-flex-col;
+
+  &__icon {
+    @apply tw-mr-2;
+  }
+
+  &__item {
+    @apply tw-py-3.5;
+    @apply tw-flex;
+
+    &--heading {
+      @apply tw-font-bold;
+      @apply tw-text-xl;
+    }
+
+    &.nuxt-link-exact-active {
+      @apply tw-text-pv-red;
+    }
   }
 }
 </style>
