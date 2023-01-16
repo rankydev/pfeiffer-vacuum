@@ -262,15 +262,15 @@ export const useProductStore = defineStore('product', () => {
       ])
 
       await pricesStore.loadPrice(id)
-
-      await Promise.all([
-        // we need to wait until loadProduct is done before we can load the matrix
-        // load every time even if product is cached. Because matrix gets cleared after each product page leave
-        hydrateVariationMatrix(),
-        // needs to be called even if product data was already loaded (SSR) because prices can only be loaded client side
-        pricesStore.loadProductReferenceGroupsPrices(),
-      ])
     }
+
+    await Promise.all([
+      // we need to wait until loadProduct is done before we can load the matrix
+      // load every time even if product is cached. Because matrix gets cleared after each product page leave
+      hydrateVariationMatrix(),
+      // needs to be called even if product data was already loaded (SSR) because prices can only be loaded client side
+      pricesStore.loadProductReferenceGroupsPrices(),
+    ])
   }
 
   return {
