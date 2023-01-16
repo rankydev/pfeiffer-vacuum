@@ -5,7 +5,7 @@ export default ({ app, req, redirect }) => {
   const getCookie = (cookieKey, defaultValue) => {
     if (process.client) {
       return JsCookie.get(cookieKey) || defaultValue
-    } else if (req && req.headers?.cookie) {
+    } else if (req?.headers?.cookie) {
       const cookies = Cookie.parse(req.headers.cookie)
       const value = cookies[cookieKey]
       if (value) return value

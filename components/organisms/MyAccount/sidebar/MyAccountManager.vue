@@ -14,10 +14,5 @@ import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   components: {},
-  data() {
-    return {
-      isActive: false,
-    }
-  },
 })
 </script>

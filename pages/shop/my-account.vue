@@ -70,7 +70,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .myaccount-page {
-  display: grid;
+  @apply tw-grid;
   grid-gap: 20px;
   grid-template:
     'nav'
