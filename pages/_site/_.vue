@@ -17,6 +17,7 @@ import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
 
 export default defineComponent({
+  name: 'Default',
   layout: 'default',
   setup(_, context) {
     const pageStore = usePageStore()
