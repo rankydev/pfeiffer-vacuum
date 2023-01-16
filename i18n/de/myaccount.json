@@ -1,0 +1,21 @@
+{
+  "address": "Adresse",
+  "billingAddress": "Rechnungsadresse",
+  "billingAddressMissing":
+    "Es wurde keine Rechnungsadresse gefunden. Bitte kontaktieren Sie den Pfeiffer Vacuum Kundenservice.",
+  "deliveryAddress": "Lieferadresse",
+  "company": "Firma",
+  "firstName": "Vorname",
+  "lastName": "Nachname",
+  "street": "Straße",
+  "houseNumber": "Nummer",
+  "zip": "PLZ",
+  "town": "Stadt",
+  "country": "Land",
+  "region": "Region",
+  "editDeliveryAddress": "Bearbeiten",
+  "saveAddress": "Adresse speichern",
+  "contactDetails": "Kontaktdetails",
+  "deleteDeliveryAddress": "Löschen",
+  "setDefaultAddress": "Als Standard benutzen"
+}

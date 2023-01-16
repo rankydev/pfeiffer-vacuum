@@ -1,0 +1,21 @@
+{
+  "address": "Adress",
+  "billingAddress": "Billing address",
+  "billingAddressMissing":
+    "No billing address was found for your user. Please contact the Pfeiffer Vacuum Service.",
+  "deliveryAddress": "Delivery address",
+  "company": "Company",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "street": "Street",
+  "houseNumber": "Number",
+  "zip": "Zip",
+  "town": "City",
+  "country": "Country/Location",
+  "region": "Region",
+  "editDeliveryAddress": "Edit Adress",
+  "saveAddress": "Save Address",
+  "contactDetails": "Contact Details",
+  "deleteDeliveryAddress": "Delete",
+  "setDefaultAddress": "Set as default"
+}
