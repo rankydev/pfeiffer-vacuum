@@ -50,6 +50,7 @@ import AttributeAccordion from './partials/AttributeAccordion'
 import ProductActions from './partials/ProductActions'
 
 export default defineComponent({
+  name: 'VariantSelection',
   components: {
     AttributeAccordion,
     ProductActions,
@@ -151,7 +152,6 @@ export default defineComponent({
       loadingMatrix,
       clearSelection,
       selectedAttributes,
-      isSelectionCompleted,
       showVariantSelection,
       currentVariantId,
       dropdownItems,
