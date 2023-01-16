@@ -17,5 +17,6 @@
   "saveAddress": "保存地址",
   "contactDetails": "联系方式",
   "deleteDeliveryAddress": "删除",
-  "setDefaultAddress": "设为默认"
+  "setDefaultAddress": "设为默认",
+  "defaultDelivery": "默认的配送地址"
 }

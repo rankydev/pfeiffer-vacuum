@@ -1,4 +1,4 @@
-import AdressDataItem from './AdressDataItem'
+import AddressCard from './AddressCard'
 import Button from '~/components/atoms/Button/Button.vue'
 
 const addressData = {
@@ -16,6 +16,7 @@ const addressData = {
   phone: '+49123456789',
   printer: '+49123456789',
   email: 'unterdruck@mail.com',
+  defaultShippingAddress: false,
 }
 
 const argTypes = {
@@ -35,8 +36,8 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/m_134 AdressDataItem',
-  component: AdressDataItem,
+  title: 'Molecules/m_134 AddressCard',
+  component: AddressCard,
   parameters: {
     docs: {
       description: {
@@ -49,13 +50,13 @@ export default {
 }
 
 const Template = (args) => ({
-  components: { AdressDataItem, Button },
+  components: { AddressCard, Button },
   setup() {
     return { args }
   },
   template: `
   <div>
-    <AdressDataItem v-bind="args" />
+    <AddressCard v-bind="args" />
   </div>`,
 })
 

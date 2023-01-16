@@ -30,22 +30,29 @@
     </p>
     <p v-if="address.country" class="address-data-item__country">
       {{ address.country.isocode }}
-      <!-- {{ getCountryName(address.country.isocode) }} -->
+      <!-- ToDo: implement Coutryname when data is available -->
+      <!-- {{ getCountry(address.country.isocode) }} -->
     </p>
-    <div class="address-data-item__contacts">
+    <div
+      v-if="address.phone || address.printer || address.email"
+      class="address-data-item__contacts"
+    >
       <div
+        v-if="address.phone"
         class="address-data-item__contacts--item address-data-item__contacts--phone"
       >
         <Icon icon="call" />
         <p>{{ address.phone }}</p>
       </div>
       <div
+        v-if="address.printer"
         class="address-data-item__contacts--item address-data-item__contacts--printer"
       >
         <Icon icon="print" />
         <p>{{ address.printer }}</p>
       </div>
       <div
+        v-if="address.email"
         class="address-data-item__contacts--item address-data-item__contacts--email"
       >
         <Icon icon="mail" />
@@ -68,12 +75,8 @@
             icon="delete"
             variant="secondary"
             shape="plain"
+            @click="deleteAddress"
           />
-          <!-- {{
-          address.defaultShippingAddress
-            ? $t('myaccount.defaultDelivery')
-            : $t('myaccount.setDefaultAddress')
-        }} -->
         </div>
       </div>
       <div
@@ -81,10 +84,15 @@
         class="address-data-item__address-controls--setDefault"
       >
         <Button
-          :label="$t('myaccount.setDefaultAddress')"
+          :label="
+            address.defaultShippingAddress
+              ? $t('myaccount.defaultDelivery')
+              : $t('myaccount.setDefaultAddress')
+          "
           icon="check"
           variant="secondary"
           shape="plain"
+          @click="setAsDefault"
         />
       </div>
     </div>
@@ -95,6 +103,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import { useCountriesStore } from '~/stores/countries'
 
 export default defineComponent({
   name: 'AdressDataItem',
@@ -122,93 +131,31 @@ export default defineComponent({
     },
   },
   emits: ['updateAddresses'],
-  setup() {
-    // const countriesStore = useCountriesStore()
-    // const isoCode = computed(() => address.country.isocode)
-    // const country = computed(() => {
-    //   countriesStore.loadRegions(address.country.isocode)
-    // })
-    // const regions = ref([])
-    // const countries = toRef(countriesStore, 'countries')
+  setup(props, { emit }) {
+    const countriesStore = useCountriesStore()
 
-    // const editAddressUrl = computed(() => {
-    //   return this.localePath({
-    //     name: 'shop-my-account-address-data-edit',
-    //     params: {
-    //       edit: this.address.id,
-    //     },
-    //   })
-    // })
+    // ToDo: Please test function when data is implemented
+    const getCountry = async (isocode) => {
+      await countriesStore.getCountryName(isocode)
+    }
 
-    // const getCountryName = (code) => {
-    //   if (this.countries && this.countries.length > 0) {
-    //     const country = this.countries.find((o) => o.isocode === code)
-    //     if (country) {
-    //       return country.name
-    //     }
-    //   }
+    const setAsDefault = async () => {
+      // ToDo: add logic here when data is implemented
+      emit('updateAddresses')
+    }
 
-    //   return ''
-    // }
-
-    // const setAsDefault = async (id) => {
-    //   await this.$hybrisApi.userApi.setDefaultDeliveryAddress(id)
-    //   this.$emit('updateAddresses')
-    // }
-
-    // const deleteAddress = async (id) => {
-    //   await this.$hybrisApi.userApi.deleteDeliveryAddress(id)
-    //   this.$emit('updateAddresses')
-    // }
+    const deleteAddress = async () => {
+      // ToDo: add logic here when data is implemented
+      emit('updateAddresses')
+    }
 
     return {
-      // editAddressUrl,
-      // getCountryName,
-      // setAsDefault,
-      // deleteAddress,
+      getCountry,
+      setAsDefault,
+      deleteAddress,
     }
   },
 })
-
-// computed: {
-//   ...mapGetters(['countries']),
-//   editAddressUrl() {
-//     return this.localePath({
-//       name: 'shop-my-account-address-data-edit',
-//       params: {
-//         edit: this.address.id,
-//       },
-//     })
-//   },
-//   fullName() {
-//     const { firstName, lastName } = this.address
-
-//     return [
-//       ...(firstName ? [firstName] : []),
-//       ...(lastName ? [lastName] : []),
-//     ].join(' ')
-//   },
-// },
-// methods: {
-//   getCountryName(code) {
-//     if (this.countries && this.countries.length > 0) {
-//       const country = this.countries.find((o) => o.isocode === code)
-//       if (country) {
-//         return country.name
-//       }
-//     }
-
-//     return ''
-//   },
-//   async setAsDefault(id) {
-//     await this.$hybrisApi.userApi.setDefaultDeliveryAddress(id)
-//     this.$emit('updateAddresses')
-//   },
-//   async deleteAddress(id) {
-//     await this.$hybrisApi.userApi.deleteDeliveryAddress(id)
-//     this.$emit('updateAddresses')
-//   },
-// },
 </script>
 
 <style lang="scss" scoped>

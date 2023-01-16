@@ -10,13 +10,6 @@
         @updateSort="pushSortToQuery"
         @updateFacets="pushFacetsToQuery"
       />
-      <AdressDataItem
-        icon="mail"
-        headline="Headline"
-        :address="addressData"
-        :is-billing-address="false"
-        :editable="true"
-      />
       <ProductCardGrid v-if="products.length > 0" :products="products" />
       <div v-else>
         <h2>{{ $t('category.noMatchingProducts') }}</h2>
@@ -119,29 +112,11 @@ export default defineComponent({
       })
     }
 
-    const addressData = {
-      companyName: 'Company',
-      firstName: 'Uwe',
-      lastName: 'Unterdruck',
-      line1: 'Hochdruckstraße',
-      line2: '80',
-      remarks: 'remarks',
-      postalCode: '81541',
-      town: 'München',
-      country: {
-        isocode: 'DEU',
-      },
-      phone: '+49123456789',
-      printer: '+49123456789',
-      email: 'unterdruck@mail.com',
-    }
-
     return {
       updatePageSize,
       pushSortToQuery,
       pushFacetsToQuery,
       pageSize,
-      addressData,
     }
   },
 })

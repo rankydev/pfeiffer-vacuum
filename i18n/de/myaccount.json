@@ -17,5 +17,6 @@
   "saveAddress": "Adresse speichern",
   "contactDetails": "Kontaktdetails",
   "deleteDeliveryAddress": "Löschen",
-  "setDefaultAddress": "Als Standard benutzen"
+  "setDefaultAddress": "Als Standard benutzen",
+  "defaultDelivery": "Standard Lieferungsadresse"
 }

@@ -17,5 +17,6 @@
   "saveAddress": "Save Address",
   "contactDetails": "Contact Details",
   "deleteDeliveryAddress": "Delete",
-  "setDefaultAddress": "Set as default"
+  "setDefaultAddress": "Set as default",
+  "defaultDelivery": "Default delivery address"
 }

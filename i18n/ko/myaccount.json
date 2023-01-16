@@ -17,5 +17,6 @@
   "saveAddress": "주소 저장",
   "contactDetails": "연락처 세부 정보s",
   "deleteDeliveryAddress": "삭제",
-  "setDefaultAddress": "기본값으로 설정"
+  "setDefaultAddress": "기본값으로 설정",
+  "defaultDelivery": "기본 배송 주소"
 }
