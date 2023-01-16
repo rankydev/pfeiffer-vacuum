@@ -49,6 +49,7 @@ export default defineComponent({
 
   &__item {
     @apply tw-py-3.5;
+    @apply tw-px-3.5;
     @apply tw-flex;
 
     &--heading {
@@ -56,8 +57,17 @@ export default defineComponent({
       @apply tw-text-xl;
     }
 
+    &:hover {
+      @apply tw-bg-pv-red-lighter;
+      @apply tw-text-pv-white;
+    }
+
     &.nuxt-link-exact-active {
       @apply tw-text-pv-red;
+
+      &:hover {
+        @apply tw-bg-pv-white;
+      }
     }
   }
 }
