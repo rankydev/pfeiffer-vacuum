@@ -365,6 +365,10 @@ export default {
 
   &__filter-tags {
     @apply tw-mb-4;
+
+    button {
+      @apply tw-mb-2;
+    }
   }
 
   &__search {

@@ -5,22 +5,27 @@ import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
 import { useCmsStore } from '~/stores/cms'
 import _pick from 'lodash/pick'
+import { useLogger } from '~/composables/useLogger'
 
 export const useCategoryStore = defineStore('category', () => {
   const route = useRoute()
   const cmsStore = useCmsStore()
   const { axios } = useAxiosForHybris()
   const { i18n, localePath } = useContext()
+  const { logger } = useLogger('categoryStore')
 
   let searchTerm = ref('')
 
   const category = ref(null)
   const result = ref(null)
   const reqId = ref(null)
+  const searchSuggestions = ref([])
 
   const defaultSort = computed(() => {
     return searchTerm.value.length > 0 ? 'relevance' : 'name-asc'
   })
+
+  const currentSuggestions = computed(() => searchSuggestions)
 
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
@@ -113,19 +118,45 @@ export const useCategoryStore = defineStore('category', () => {
     await Promise.all([loadProducts(), loadCategory()])
   }
 
+  const getCleanedText = (text) => {
+    return text.trim().replace(/\s+/g, ' ')
+  }
+
+  const loadSuggestions = async (text) => {
+    const validText = getCleanedText(text)
+
+    try {
+      const res = await axios.$get(config.SUGGESTIONS_API, {
+        params: { term: validText, fields: 'FULL', max: 3 },
+      })
+      searchSuggestions.value = res.suggestions || []
+    } catch (error) {
+      logger.error(error)
+      searchSuggestions.value = []
+    }
+  }
+
+  const blurSuggestions = (val) => {
+    if (!val) searchSuggestions.value = []
+  }
+
   return {
     // state
     category,
     result,
     searchTerm,
+    searchSuggestions,
 
     // getters
     breadcrumb,
     metaData,
     categoryName,
     parentCategoryPath,
+    currentSuggestions,
 
     // actions
     loadByPath,
+    loadSuggestions,
+    blurSuggestions,
   }
 })

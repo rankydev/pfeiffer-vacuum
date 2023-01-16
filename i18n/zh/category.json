@@ -11,5 +11,7 @@
   "noMatchingProducts": "未找到匹配的产品",
   "checkSearchCriteria": "请检查所选的搜索条件",
   "vacuumRange": "真空范围",
-  "suctionSpeed": "抽速"
+  "suctionSpeed": "抽速",
+  "search": "Search",
+  "suggestions": "suggestions"
 }
