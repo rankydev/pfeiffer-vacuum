@@ -11,5 +11,7 @@
   "noMatchingProducts": "Keine passenden Produkte gefunden",
   "checkSearchCriteria": "Bitte prüfen Sie die ausgewählten Suchkriterien.",
   "vacuumRange": "Vakuumbereich",
-  "suctionSpeed": "Saugvermögen"
+  "suctionSpeed": "Saugvermögen",
+  "search": "Suche",
+  "suggestions": "Vorschläge"
 }

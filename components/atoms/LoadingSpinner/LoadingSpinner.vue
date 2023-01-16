@@ -44,6 +44,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 .loading-spinner {
   @apply tw-relative;
 
@@ -63,7 +65,7 @@ export default defineComponent({
     @apply tw-absolute;
     @apply tw-inset-0;
     @apply tw-flex tw-justify-center tw-items-center;
-    @apply tw-z-10;
+    z-index: $loading-spinner-overlay;
     backdrop-filter: blur(1px);
   }
 

@@ -1,3 +1,5 @@
+@import '/assets/scss/z-index';
+
 /* component style */
 .vue-slider-disabled {
   @apply tw-opacity-50;
@@ -15,7 +17,7 @@
 .vue-slider-process {
   @apply tw-bg-pv-red;
   @apply tw-rounded-2xl;
-  @apply tw-z-10;
+  z-index: $vacuum-range-slider-process;
 }
 
 /* mark style */
@@ -64,7 +66,7 @@
 
 /* dot style */
 .vue-slider-dot {
-  @apply tw-z-20;
+  z-index: $vacuum-range-slider-dot;
 
   &-handle {
     @apply tw-cursor-pointer;
