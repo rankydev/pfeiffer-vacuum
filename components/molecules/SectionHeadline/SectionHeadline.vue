@@ -35,10 +35,8 @@ export default {
 </script>
 <style lang="scss">
 .section-headline {
-  @apply tw-flex;
+  @apply tw-flex tw-justify-between tw-items-center;
   @apply tw-w-full;
-  @apply tw-justify-between;
-  @apply tw-items-center;
 
   &__buttons {
     @apply tw-flex;

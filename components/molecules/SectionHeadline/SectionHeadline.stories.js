@@ -12,7 +12,7 @@ export default {
     docs: {
       description: {
         component:
-          'The Section Headline is used to device the my account dashboard sections. It can have buttons on the right side and a mobile link which is use for the arrow button on mobile devices instead of the desktop buttons.',
+          'The Section Headline is used to device the my account dashboard sections. It can have buttons on the right side and a mobile link which is used for the arrow button on mobile devices instead of the desktop buttons.',
       },
       source: {
         code: '<SectionHeadline v-bind="{ buttons, mobileLink }"> Headline </SectionHeadline>',
