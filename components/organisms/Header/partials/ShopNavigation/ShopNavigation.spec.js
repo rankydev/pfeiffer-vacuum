@@ -5,6 +5,7 @@ import Link from '~/components/atoms/Link/Link.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import { createPinia, setActivePinia } from 'pinia'
 
+const mockedRouterNavigation = jest.fn()
 jest.mock('@nuxtjs/composition-api', () => {
   const originalModule = jest.requireActual('@nuxtjs/composition-api')
   return {
@@ -14,6 +15,14 @@ jest.mock('@nuxtjs/composition-api', () => {
         i18n: {
           t: (key) => key,
         },
+        app: {
+          localePath: (key) => key,
+        },
+      }
+    }),
+    useRouter: jest.fn(() => {
+      return {
+        push: mockedRouterNavigation,
       }
     }),
   }
@@ -95,13 +104,15 @@ describe('ShopNavigation', () => {
       expect(mockedLogin).toBeCalledTimes(1)
     })
 
-    it('should not login on click if already logged in', () => {
+    it('should not login on click if already logged in but redirect to my account area', () => {
       mockedIsLoggedIn.mockReturnValue(true)
       const wrapper = shallowMount(ShopNavigation)
       const loginButton = wrapper.findComponent(Button)
 
       loginButton.vm.$emit('click')
 
+      expect(mockedRouterNavigation).toBeCalledTimes(1)
+      expect(mockedRouterNavigation).toBeCalledWith({ path: 'shop-my-account' })
       expect(mockedLogin).toBeCalledTimes(0)
     })
 
