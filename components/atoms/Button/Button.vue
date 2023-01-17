@@ -71,8 +71,13 @@ export default defineComponent({
   @apply tw-items-center;
   @apply tw-cursor-pointer;
   @apply tw-font-bold;
-  @apply tw-justify-center;
+  @apply tw-basis-full;
+  @apply tw-justify-between;
   @apply tw-text-left;
+
+  @screen md {
+    @apply tw-justify-center;
+  }
 
   &--no-linebreaks {
     @screen md {
