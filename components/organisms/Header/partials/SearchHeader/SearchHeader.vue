@@ -37,7 +37,7 @@
         </div>
       </div>
     </GenericModal>
-    <SearchInput class="search-header__field" />
+    <SearchInput class="search-header__field" @submit="closeSearchfield" />
     <div
       v-if="currentSuggestions.length"
       class="search-header__suggestions--desktop"
