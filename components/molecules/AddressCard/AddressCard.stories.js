@@ -1,23 +1,6 @@
 import AddressCard from './AddressCard'
 import Button from '~/components/atoms/Button/Button.vue'
-
-const addressData = {
-  companyName: 'Company',
-  firstName: 'Uwe',
-  lastName: 'Unterdruck',
-  line1: 'Hochdruckstraße',
-  line2: '80',
-  remarks: '',
-  postalCode: '81541',
-  town: 'München',
-  country: {
-    isocode: 'DE',
-  },
-  phone: '+49123456789',
-  printer: '+49123456789',
-  email: 'unterdruck@mail.com',
-  defaultShippingAddress: false,
-}
+import { addressData } from './AddressCard.stories.content'
 
 const argTypes = {
   icon: {
@@ -36,13 +19,13 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/m_134 AddressCard',
+  title: 'Molecules/m_140 AddressCard',
   component: AddressCard,
   parameters: {
     docs: {
       description: {
         component:
-          'General popup component, to show additional data to a defined activator.',
+          'Address Card displays information about the customer address, contact details and has buttons to edit and delete the adress or set address as a default address.',
       },
     },
   },
