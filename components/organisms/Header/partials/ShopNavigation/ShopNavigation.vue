@@ -32,7 +32,12 @@
 </template>
 
 <script>
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  useContext,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
@@ -48,9 +53,9 @@ export default defineComponent({
     LoadingSpinner,
   },
   setup() {
-    const { i18n } = useContext()
-
+    const { i18n, app } = useContext()
     const userStore = useUserStore()
+    const router = useRouter()
 
     const myAccountLabel = computed(() => {
       if (userStore.isLoginProcess) return ''
@@ -61,9 +66,13 @@ export default defineComponent({
     })
 
     const handleMyAccount = () => {
-      if (userStore.isLoggedIn) return
-
-      userStore.login()
+      if (userStore.isLoggedIn) {
+        router.push({
+          path: app.localePath('shop-my-account'),
+        })
+      } else {
+        userStore.login()
+      }
     }
 
     return {
