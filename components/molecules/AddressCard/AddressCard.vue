@@ -3,32 +3,41 @@
     <h4 v-if="headline" class="address-data-item__headline">
       {{ headline }}
     </h4>
-    <p v-if="address.companyName" class="address-data-item__companyName">
+    <p
+      v-if="address.companyName"
+      class="address-data-item__entry address-data-item__companyName"
+    >
       {{ address.companyName }}
     </p>
     <p
       v-if="address.firstName || address.lastName"
-      class="address-data-item__name"
+      class="address-data-item__entry address-data-item__name"
     >
       {{ address.firstName }}
       {{ address.lastName }}
     </p>
     <p
       v-if="address.line1 || address.line2"
-      class="address-data-item__addressLine"
+      class="address-data-item__entry address-data-item__addressLine"
     >
       {{ address.line1 }} {{ address.line2 }}
     </p>
-    <p v-if="address.remarks" class="address-data-item__addressRemarks">
+    <p
+      v-if="address.remarks"
+      class="address-data-item__entry address-data-item__addressRemarks"
+    >
       {{ address.remarks }}
     </p>
     <p
       v-if="address.postalCode || address.town"
-      class="address-data-item__town"
+      class="address-data-item__entry address-data-item__town"
     >
       {{ address.postalCode }} {{ address.town }}
     </p>
-    <p v-if="address.country" class="address-data-item__country">
+    <p
+      v-if="address.country"
+      class="address-data-item__entry address-data-item__country"
+    >
       {{ address.country.isocode }}
       <!-- ToDo: implement Coutryname when data is available -->
       <!-- {{ getCountry(address.country.isocode) }} -->
@@ -175,7 +184,7 @@ export default defineComponent({
     @apply tw-font-bold;
   }
 
-  p {
+  &__entry {
     @apply tw-text-base;
     @apply tw-mb-2;
   }
