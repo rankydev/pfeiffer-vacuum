@@ -112,7 +112,12 @@ export default defineComponent({
       })
     }
 
-    return { updatePageSize, pushSortToQuery, pushFacetsToQuery, pageSize }
+    return {
+      updatePageSize,
+      pushSortToQuery,
+      pushFacetsToQuery,
+      pageSize,
+    }
   },
 })
 </script>
