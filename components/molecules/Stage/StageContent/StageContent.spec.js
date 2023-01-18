@@ -24,7 +24,7 @@ describe('StageContent', () => {
 
         expect(domHeadline.text()).toBe(headline)
         expect(domSubline.text()).toBe(subline)
-        expect(domDescription.text()).toBe(teaserText)
+        expect(domDescription.attributes('richtext')).toBe(teaserText)
         expect(domButtonWrapper.exists()).toBeFalsy()
         expect(domButtons.length).toBe(0)
       })
