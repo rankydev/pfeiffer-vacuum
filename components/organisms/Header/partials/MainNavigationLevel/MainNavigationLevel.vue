@@ -129,7 +129,7 @@
           :class="[`${prefix}__flyout-entry`, `${prefix}__link`]"
         >
           <Icon icon="person" />
-          <span>{{ myAccountLabel }}</span>
+          <span v-if="currentUser">{{ currentUser.name }}</span>
         </div>
       </li>
 
@@ -142,9 +142,11 @@
           shape="outlined"
           :icon="loggedInOrInLoginProcess ? 'logout' : 'person'"
           :label="
-            loggedInOrInLoginProcess
-              ? $t('navigation.button.logout.mobileLabel')
-              : myAccountLabel
+            $t(
+              loggedInOrInLoginProcess
+                ? 'navigation.button.logout.mobileLabel'
+                : 'navigation.button.signIn.label'
+            )
           "
           :class="`${prefix}__login-button`"
           @click.native="
@@ -174,6 +176,7 @@ import Button from '~/components/atoms/Button/Button.vue'
 
 import { useMenuStore } from '~/stores/menu'
 import { useUserStore } from '~/stores/user'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'MainNavigationLevel',
@@ -205,18 +208,24 @@ export default defineComponent({
     },
   },
   setup(props, { refs }) {
-    const { app, i18n } = useContext()
+    const { app } = useContext()
 
     const userStore = useUserStore()
-    const menu = useMenuStore()
+    const menuStore = useMenuStore()
+
+    const { currentUser, isLoggedIn, isLoginProcess, logout } =
+      storeToRefs(userStore)
+    const { isActive } = storeToRefs(menuStore)
+
+    const loggedInOrInLoginProcess = computed(() => {
+      return isLoggedIn.value || isLoginProcess.value
+    })
 
     const prefix = computed(() => `primary-nav-${props.level}`)
 
     const activeElement = ref(null)
     const hasActiveElement = computed(() => activeElement.value !== null)
-    const isMobile = app.$breakpoints.isMobile
-    const isTablet = app.$breakpoints.isTablet
-    const isDesktop = app.$breakpoints.isDesktop
+    const { isMobile, isTablet, isDesktop } = app.$breakpoints
     const isHovered = ref(false)
 
     const route = useRoute()
@@ -234,18 +243,18 @@ export default defineComponent({
       return null
     })
 
-    watch(menu.isActive, (isActive) => {
-      if (!isActive) activeElement.value = null
+    watch(isActive, (newIsActive) => {
+      if (!newIsActive) activeElement.value = null
     })
 
     const toggleActive = function (idx) {
       if (props.level >= 2) return false
 
       if (activeElement.value === idx) {
-        if (!isMobile.value && props.level === 0) menu.close('toggle')
+        if (!isMobile.value && props.level === 0) menuStore.close('toggle')
         activeElement.value = null
       } else {
-        if (!isMobile.value && props.level === 0) menu.open(refs.menu)
+        if (!isMobile.value && props.level === 0) menuStore.open(refs.menu)
         activeElement.value = idx
       }
 
@@ -254,21 +263,13 @@ export default defineComponent({
 
     const closeMenu = () => {
       activeElement.value = null
-      menu.close('close')
+      menuStore.close('close')
     }
 
     const hasSubmenu = (entry) => entry?.navigationEntries?.length > 0
 
-    const myAccountLabel = computed(() => {
-      if (userStore.isLoginProcess) return ''
-
-      return userStore.isLoggedIn
-        ? userStore.currentUser?.name
-        : i18n.t('navigation.button.signIn.label')
-    })
-
     const handleMyAccount = () => {
-      if (userStore.isLoggedIn) return
+      if (isLoggedIn.value) return
 
       userStore.login()
     }
@@ -285,12 +286,11 @@ export default defineComponent({
       hasSubmenu,
       selectedPrimaryLink,
       closeMenu,
-      myAccountLabel,
+      currentUser,
       userStore,
       handleMyAccount,
-      loggedInOrInLoginProcess:
-        userStore.isLoggedIn || userStore.isLoginProcess,
-      logout: userStore.logout,
+      loggedInOrInLoginProcess,
+      logout,
     }
   },
 })
