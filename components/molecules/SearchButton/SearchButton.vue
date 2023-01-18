@@ -1,9 +1,6 @@
 <template>
   <div class="searchbutton">
-    <button
-      class="searchbutton__btn"
-      @click="$emit('closeModal', true), pushSearchTerm(title)"
-    >
+    <button class="searchbutton__btn" @click="handleClickEvent">
       <p class="searchbutton__title">{{ title }}</p>
       <Icon class="searchbutton__icon" icon="arrow_forward" />
     </button>
@@ -27,7 +24,7 @@ export default defineComponent({
     },
   },
   emits: ['click', 'closeModal'],
-  setup() {
+  setup(props, { emit }) {
     const router = useRouter()
     const categoryStore = useCategoryStore()
     const { app } = useContext()
@@ -41,7 +38,13 @@ export default defineComponent({
         query: { searchTerm: e.length ? e : undefined },
       })
     }
-    return { pushSearchTerm }
+
+    const handleClickEvent = () => {
+      emit('closeModal', true)
+      pushSearchTerm(props.title)
+    }
+
+    return { handleClickEvent }
   },
 })
 </script>
