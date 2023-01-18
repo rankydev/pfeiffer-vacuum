@@ -48,7 +48,7 @@ export default {
       default: '',
     },
     /**
-     * Teaster test of the stage
+     * Teaser test of the stage
      */
     teaserText: {
       type: String,
