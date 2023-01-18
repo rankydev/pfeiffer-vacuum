@@ -37,15 +37,19 @@
         </div>
       </div>
     </GenericModal>
-    <SearchInput class="search-header__field" @submit="closeSearchfield" />
+    <SearchInput
+      class="search-header__field"
+      @focus="toggleSuggestionsOnFocus"
+      @submit="closeSearchfield"
+    />
     <div
-      v-if="currentSuggestions.length"
+      v-if="currentSuggestions.length && isFocused"
       class="search-header__suggestions--desktop"
     >
       <SearchButton
         v-for="item in currentSuggestions"
         :key="item.value"
-        class="search-header__suggestions--result"
+        class="search-header__field--suggestions search-header__suggestions--result"
         :title="item.value"
         @closeModal="closeSearchfield"
       />
@@ -81,6 +85,7 @@ export default defineComponent({
     const categoryStore = useCategoryStore()
     const isDesktop = app.$breakpoints.isDesktop
     const isOpen = ref(false)
+    const isFocused = ref(true)
 
     const { currentSuggestions } = storeToRefs(categoryStore)
 
@@ -95,11 +100,23 @@ export default defineComponent({
       isOpen.value = false
     }
 
+    const toggleSuggestionsOnFocus = async (val) => {
+      // await nextTick()
+      await new Promise((resolve) => setTimeout(resolve, 100))
+      console.log(currentSuggestions.value)
+      isFocused.value = val
+      // if (!val) {
+      //   isFocused.value = false
+      // }
+    }
+
     return {
       isDesktop,
       toggleSearchfield,
       closeSearchfield,
+      toggleSuggestionsOnFocus,
       isOpen,
+      isFocused,
       currentSuggestions,
     }
   },
@@ -155,6 +172,10 @@ export default defineComponent({
     @screen md {
       @apply tw-grow;
       @apply tw-block;
+
+      &:focus {
+        @apply tw-bg-pv-red;
+      }
     }
   }
 
