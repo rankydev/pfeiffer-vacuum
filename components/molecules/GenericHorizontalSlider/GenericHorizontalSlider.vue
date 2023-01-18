@@ -1,5 +1,5 @@
 <template>
-  <div class="myaccount-sidebar">
+  <div class="generic-horizontal-slider">
     <div
       class="myaccount-sidebar__list"
       :class="{
@@ -60,11 +60,7 @@ export default defineComponent({
 .myaccount-sidebar {
   @apply tw-relative;
   @apply tw-bg-pv-grey-96;
-  margin: 0 -1.25rem;
-
-  @screen md {
-    margin: 0 -1.5rem;
-  }
+  margin: 0 -16px;
 
   @screen lg {
     @apply tw-flex-col;
@@ -84,12 +80,10 @@ export default defineComponent({
   &__list {
     @apply tw-flex tw-flex-row;
     @apply tw-overflow-y-scroll;
-    @apply tw-px-4;
 
     @screen lg {
       @apply tw-flex-col;
       @apply tw-overflow-y-auto;
-      @apply tw-px-0;
     }
 
     &::-webkit-scrollbar {
@@ -120,10 +114,6 @@ export default defineComponent({
       @apply tw-hidden;
     }
 
-    &.nuxt-link-exact-active {
-      @apply tw-text-pv-red;
-    }
-
     @screen lg {
       @apply tw-whitespace-normal;
 
@@ -137,12 +127,13 @@ export default defineComponent({
         @apply tw-text-xl;
         @apply tw-block;
       }
+    }
 
-      &.nuxt-link-exact-active {
-        &:hover {
-          @apply tw-text-pv-red;
-          @apply tw-bg-pv-white;
-        }
+    &.nuxt-link-exact-active {
+      @apply tw-text-pv-red;
+
+      &:hover {
+        @apply tw-bg-pv-white;
       }
     }
   }
