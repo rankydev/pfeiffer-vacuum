@@ -13,6 +13,7 @@ import { defineComponent, useRouter } from '@nuxtjs/composition-api'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({
+  name: 'Richtext',
   props: {
     /**
      * Prerendered HTML from storyblok richtext field
