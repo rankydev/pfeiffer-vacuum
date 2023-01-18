@@ -14,6 +14,7 @@
         :to="item.href"
         class="myaccount-sidebar__list-item"
         :class="{ 'myaccount-sidebar__list-item--heading': index === 0 }"
+        @click.native="linkClicked"
       >
         <Icon
           v-if="item.icon"
@@ -37,7 +38,8 @@ export default defineComponent({
   components: {
     Icon,
   },
-  setup() {
+  emits: ['entry-clicked'],
+  setup(_, { emit }) {
     const myAccountStore = useMyAccountStore()
     const { menuItems } = storeToRefs(myAccountStore)
 
@@ -47,10 +49,15 @@ export default defineComponent({
       showScrollbar.value = bool
     }
 
+    const linkClicked = () => {
+      emit('entry-clicked')
+    }
+
     return {
       menuItems,
       toggleScrollbarClass,
       showScrollbar,
+      linkClicked,
     }
   },
 })

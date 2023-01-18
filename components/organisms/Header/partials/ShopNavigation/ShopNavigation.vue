@@ -1,17 +1,39 @@
 <template>
   <div class="shop-navigation">
-    <LoadingSpinner :show="userStore.isLoginProcess || !myAccountLabel">
-      <Button
-        shape="plain"
-        variant="secondary"
-        class="shop-navigation__account"
-        :label="myAccountLabel"
-        icon="person"
-        :prepend-icon="true"
-        gap="narrow"
-        @click="handleMyAccount()"
-      />
-    </LoadingSpinner>
+    <Popup>
+      <template #activator="{ togglePopup }">
+        <LoadingSpinner :show="userStore.isLoginProcess || !myAccountLabel">
+          <Button
+            shape="plain"
+            variant="secondary"
+            class="shop-navigation__account"
+            :label="myAccountLabel"
+            icon="person"
+            :prepend-icon="true"
+            gap="narrow"
+            @click="handleMyAccount(togglePopup)"
+          />
+        </LoadingSpinner>
+      </template>
+
+      <template #default="{ closePopup }">
+        <div>
+          <MyAccountSidebar
+            class="shop-navigation__myaccount-popup"
+            @entry-clicked="closePopup"
+          />
+          <Button
+            v-if="userStore.isLoggedIn || userStore.isLoginProcess"
+            shape="outlined"
+            variant="secondary"
+            class="shop-navigation__popup-logout"
+            icon="logout"
+            label="Logout"
+            @click="closePopup(), logout()"
+          />
+        </div>
+      </template>
+    </Popup>
 
     <Button
       v-if="userStore.isLoggedIn || userStore.isLoginProcess"
@@ -32,18 +54,14 @@
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  useContext,
-  useRouter,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
+import MyAccountSidebar from '~/components/organisms/MyAccount/sidebar/MyAccountSidebar'
 
 export default defineComponent({
   components: {
@@ -51,11 +69,11 @@ export default defineComponent({
     Link,
     Button,
     LoadingSpinner,
+    MyAccountSidebar,
   },
   setup() {
-    const { i18n, app } = useContext()
+    const { i18n } = useContext()
     const userStore = useUserStore()
-    const router = useRouter()
 
     const myAccountLabel = computed(() => {
       if (userStore.isLoginProcess) return ''
@@ -65,11 +83,9 @@ export default defineComponent({
         : i18n.t('navigation.button.signIn.label')
     })
 
-    const handleMyAccount = () => {
+    const handleMyAccount = (openPopupCallback) => {
       if (userStore.isLoggedIn) {
-        router.push({
-          path: app.localePath('shop-my-account'),
-        })
+        openPopupCallback()
       } else {
         userStore.login()
       }
@@ -162,6 +178,17 @@ export default defineComponent({
     &:hover {
       @apply tw-text-pv-red-lighter;
     }
+  }
+
+  &__myaccount-popup {
+    min-width: 200px;
+  }
+
+  &__popup-logout {
+    @apply tw-w-full;
+    @apply tw-my-4 tw-mx-4;
+    @apply tw-box-border;
+    width: calc(100% - 2rem);
   }
 }
 </style>
