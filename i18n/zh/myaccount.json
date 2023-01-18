@@ -1,0 +1,22 @@
+{
+  "address": "地址",
+  "billingAddress": "账单地址",
+  "billingAddressMissing":
+    "未找到您的用户帐单地址。 请联系普发真空服务。",
+  "deliveryAddress": "配送地址",
+  "company": "公司",
+  "firstName": "名",
+  "lastName": "姓",
+  "street": "街道",
+  "houseNumber": "编号",
+  "zip": "邮政编码",
+  "town": "城市",
+  "country": "国家/位置",
+  "region": "地区",
+  "editDeliveryAddress": "编辑地址",
+  "saveAddress": "保存地址",
+  "contactDetails": "联系方式",
+  "deleteDeliveryAddress": "删除",
+  "setDefaultAddress": "设为默认",
+  "defaultDelivery": "默认的配送地址"
+}
