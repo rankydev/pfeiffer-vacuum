@@ -43,8 +43,10 @@
       @submit="closeSearchfield"
     />
     <div
-      v-if="currentSuggestions.length && isFocused"
+      v-if="currentSuggestions.length && (isFocused || suggestionHover)"
       class="search-header__suggestions--desktop"
+      @mouseover="suggestionHover = true"
+      @mouseleave="suggestionHover = false"
     >
       <SearchButton
         v-for="item in currentSuggestions"
@@ -86,6 +88,7 @@ export default defineComponent({
     const isDesktop = app.$breakpoints.isDesktop
     const isOpen = ref(false)
     const isFocused = ref(true)
+    const suggestionHover = ref(false)
 
     const { currentSuggestions } = storeToRefs(categoryStore)
 
@@ -105,9 +108,6 @@ export default defineComponent({
       await new Promise((resolve) => setTimeout(resolve, 100))
       console.log(currentSuggestions.value)
       isFocused.value = val
-      // if (!val) {
-      //   isFocused.value = false
-      // }
     }
 
     return {
@@ -118,6 +118,7 @@ export default defineComponent({
       isOpen,
       isFocused,
       currentSuggestions,
+      suggestionHover,
     }
   },
 })
