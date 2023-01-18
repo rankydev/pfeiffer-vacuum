@@ -35,6 +35,7 @@
       </div>
 
       <Button
+        class="suction-speed-selection__forward-button"
         icon="arrow_forward"
         variant="secondary"
         @click.native="
@@ -272,6 +273,10 @@ export default defineComponent({
       @apply tw-rounded-r-md;
       @apply tw--ml-2;
     }
+  }
+
+  &__forward-button {
+    flex-basis: auto;
   }
 }
 </style>

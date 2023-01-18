@@ -162,6 +162,7 @@ export default defineComponent({
 
   &__reset-button {
     @apply tw-ml-auto;
+    flex-basis: content;
   }
 
   &__expand-icon {

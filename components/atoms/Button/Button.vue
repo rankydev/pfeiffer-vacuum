@@ -76,6 +76,7 @@ export default defineComponent({
   @apply tw-text-left;
 
   @screen md {
+    flex-basis: auto;
     @apply tw-justify-center;
   }
 
