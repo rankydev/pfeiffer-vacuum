@@ -51,7 +51,7 @@
       <SearchButton
         v-for="item in currentSuggestions"
         :key="item.value"
-        class="search-header__field--suggestions search-header__suggestions--result"
+        class="search-header__suggestions--result"
         :title="item.value"
         @closeModal="closeSearchfield"
       />
@@ -170,10 +170,6 @@ export default defineComponent({
     @screen md {
       @apply tw-grow;
       @apply tw-block;
-
-      &:focus {
-        @apply tw-bg-pv-red;
-      }
     }
   }
 
