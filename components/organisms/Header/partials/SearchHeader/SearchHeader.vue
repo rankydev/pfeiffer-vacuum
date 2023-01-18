@@ -104,9 +104,6 @@ export default defineComponent({
     }
 
     const toggleSuggestionsOnFocus = async (val) => {
-      // await nextTick()
-      await new Promise((resolve) => setTimeout(resolve, 100))
-      console.log(currentSuggestions.value)
       isFocused.value = val
     }
 
