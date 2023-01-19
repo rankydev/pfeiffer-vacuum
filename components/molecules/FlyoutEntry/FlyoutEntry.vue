@@ -1,6 +1,6 @@
 <template>
   <Link class="flyout-entry" v-bind="$attrs">
-    <Icon class="flyout-entry__icon" :icon="icon" />
+    <Icon :icon="icon" />
     <AnimatedCollapse direction="horizontal" speed="fast">
       <div v-show="active" class="flyout-entry__label">{{ label }}</div>
     </AnimatedCollapse>

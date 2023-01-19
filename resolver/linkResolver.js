@@ -61,6 +61,16 @@ export const render = ({ node: link, $storyblok, links, lang }) => {
       logger.warn(
         `Couldn't find link for id '${link.id}', using cached_url '${link.cached_url}' to build href '${href}'`
       )
+
+      /*
+       * prevent doubling of "global/en/" in path by removing default region and language from cached_url
+       * cached_url structure, if another language than the default lang is selected:
+       * {CURRENT_LANGUAGE}/{DEFAULT_REGION}/{DEFAULT_LANGUAGE}/path
+       */
+      href = link.cached_url.replace(
+        `${process.env.DEFAULT_REGION_CODE}/${process.env.DEFAULT_LANGUAGE_CODE}/`,
+        ''
+      )
     }
 
     return cleanDoubleSlashes(href)

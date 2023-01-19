@@ -120,24 +120,20 @@ export default defineComponent({
     @apply tw--my-2;
   }
 
+  &__account-icon {
+    @apply tw-block;
+
+    @screen md {
+      @apply tw-hidden;
+    }
+  }
+
   &__logout {
     @apply tw-hidden;
 
     @screen md {
       @apply tw-flex;
       padding-right: 0 !important;
-    }
-  }
-
-  &__account-name {
-    @apply tw-hidden;
-    @apply tw-ml-2;
-    @apply tw-font-bold;
-    @apply tw-leading-6;
-    @apply tw-whitespace-nowrap;
-
-    @screen lg {
-      @apply tw-block;
     }
   }
 

@@ -3,6 +3,9 @@
     "signIn": {
       "label": "Sign In"
     },
+    "logout": {
+      "mobileLabel": "Logout"
+    },
     "overview": {
       "label": "Overview"
     },
