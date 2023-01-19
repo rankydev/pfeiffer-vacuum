@@ -7,6 +7,7 @@
         :key="index"
         class="section-headline__buttons--desktop"
         v-bind="{ ...btn }"
+        @click="$emit('btnClick', index)"
       />
       <Button
         v-if="mobileLink"
@@ -31,6 +32,7 @@ export default {
       default: '',
     },
   },
+  emits: ['btnClick'],
 }
 </script>
 <style lang="scss">
@@ -40,7 +42,7 @@ export default {
 
   &__buttons {
     @apply tw-flex;
-    @apply tw-gap-8;
+    @apply tw-gap-4;
 
     &--desktop {
       @apply tw-hidden;

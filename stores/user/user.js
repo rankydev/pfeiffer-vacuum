@@ -44,6 +44,11 @@ export const useUserStore = defineStore('user', () => {
     return currentUser.value?.registrationStatus?.code === 'APPROVED'
   })
 
+  const userBillingAddress = computed(
+    () =>
+      currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
+  )
+
   watch(auth, async (newAuth) => {
     //load currentUser data if currentUser obj is empty
     if (newAuth && !currentUser.value) {
@@ -126,6 +131,7 @@ export const useUserStore = defineStore('user', () => {
     isOpenUser,
     isRejectedUser,
     isLoggedIn,
+    userBillingAddress,
 
     // actions
     loadCurrentUser,
