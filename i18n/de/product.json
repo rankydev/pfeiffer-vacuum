@@ -20,7 +20,7 @@
   "furtherDetails": "Weitere Produktdetails",
   "selectVariantExplained": "Bitte wählen Sie eine Variante basierend auf Ihren individuellen Anforderungen um weitere Details einzusehen.",
   "scrollToVariantSelection": "Variante auswählen",
-  "addToCart": "Zum Warenkorb hinzufügen",
+  "addToCart": "In den Warenkorb",
   "addToList": "Zu Liste hinzufügen",
   "addToInstalledBase": "Zu Installed Base hinzufügen",
   "pleaseSelectVariant": "Bitte Variante auswählen",
@@ -89,7 +89,7 @@
       "part2": "anmelden",
       "part3": "um Preise zu sehen",
       "lead": "Bitte fügen Sie Unternehmensdaten hinzu, um Preise zu sehen",
-      "open": "Bitte warten Sie auf die Freischaltung, um die Preise zu sehen",
+      "open": "Bitte warten Sie bis Ihr Profil akzeptiert wurde um die Preise zu sehen",
       "rejected": "Sie dürfen keine Preise sehen"
     },
     "unapproved": "Ihr Account wurde noch nicht genehmigt",

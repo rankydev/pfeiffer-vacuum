@@ -126,7 +126,9 @@ export default {
         : i18n.t('product.priceOnRequest')
     )
 
-    const isPriceVisible = computed(() => price.value && isApprovedUser.value)
+    const isPriceVisible = computed(
+      () => !!(price.value && isApprovedUser.value)
+    )
 
     const isMaster = computed(() => productType.value === 'MASTERPRODUCT')
 
