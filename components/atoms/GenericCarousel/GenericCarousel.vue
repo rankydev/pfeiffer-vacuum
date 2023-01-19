@@ -16,6 +16,7 @@
         'carousel__slider',
         `carousel__slider--${variant}`,
         { 'carousel__slider--wide': isBreakout },
+        { 'carousel__slider--gaps': settings.slidesToShow > 1 },
       ]"
     >
       <!-- @slot carousel slides -->
@@ -288,13 +289,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 .carousel {
   &__arrow {
     &-prev,
     &-next {
       @apply tw-absolute;
       @apply tw-top-1/2;
-      @apply tw-z-20;
+      z-index: $generic-carousel-arrow;
       @apply tw--translate-y-1/2;
 
       &--hide {
@@ -340,39 +343,28 @@ export default defineComponent({
       }
     }
 
-    .slick-track {
-      @apply tw-gap-4;
-    }
-
     &--homeStage {
       @apply tw-p-0;
-
-      .slick-track {
-        @apply tw-gap-0;
-      }
     }
 
-    &--accessoriesCardCarousel {
+    &--gaps {
       .slick-slide {
         // this is important to make all items same size (flex behaviour)
         width: 0 !important;
         @apply tw-flex-1;
 
         // this is here for the gaps between the cards
-        margin: 0 10px;
-      }
-
-      .slick-track {
-        // the gap causes all the trouble for slick. slick has issues calculating correct equal widths when this is set
-        @apply tw-gap-0;
+        @apply tw-mx-2;
       }
 
       .slick-list {
         // this handles the additional whitespace left and right from first and last item through margin
-        margin: 0 -10px;
+        margin: 0 -8px;
       }
+    }
 
-      // place the icons to the edges of the container
+    &--accessoriesCardCarousel {
+      // place the icons to the edges of the container (inside tabs on pdp or recommended slider accordion)
       .carousel {
         &__arrow {
           &-prev {

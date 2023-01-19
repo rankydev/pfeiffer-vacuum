@@ -81,6 +81,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 .language-switcher {
   &__wrapper {
     @apply tw-relative;
@@ -100,7 +102,7 @@ export default defineComponent({
     @apply tw-rounded-md;
     @apply tw-bg-pv-white;
     @apply tw-relative;
-    @apply tw-z-10;
+    z-index: $language-switcher;
     bottom: 14.75rem;
     @apply tw-border-2;
     @apply tw-border-pv-grey-80;
