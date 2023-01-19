@@ -58,6 +58,7 @@ import Link from '~/components/atoms/Link/Link.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import MyAccountNavigation from '~/components/organisms/MyAccount/partials/MyAccountNavigation.vue'
+import Popup from '~/components/atoms/Popup/Popup.vue'
 
 export default defineComponent({
   components: {
@@ -66,6 +67,7 @@ export default defineComponent({
     Button,
     LoadingSpinner,
     MyAccountNavigation,
+    Popup,
   },
   setup() {
     const router = useRouter()
