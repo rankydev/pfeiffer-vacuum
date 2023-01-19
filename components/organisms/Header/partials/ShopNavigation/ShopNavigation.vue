@@ -2,7 +2,7 @@
   <div class="shop-navigation">
     <Popup>
       <template #activator="{ togglePopup }">
-        <LoadingSpinner :show="userStore.isLoginProcess || !myAccountLabel">
+        <LoadingSpinner :show="userStore.isLoginProcess">
           <Button
             shape="plain"
             variant="secondary"
@@ -36,18 +36,6 @@
       </template>
     </Popup>
 
-    <Button
-      v-if="userStore.isLoggedIn || userStore.isLoginProcess"
-      shape="plain"
-      variant="secondary"
-      class="shop-navigation__logout"
-      icon="logout"
-      @click="logout"
-    />
-    <Link href="#" class="shop-navigation__shopping-list">
-      <Icon class="shop-navigation__icon" icon="assignment" />
-    </Link>
-
     <Link href="#" class="shop-navigation__shopping-cart">
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
     </Link>
@@ -55,7 +43,12 @@
 </template>
 
 <script>
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  useContext,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
@@ -73,11 +66,13 @@ export default defineComponent({
     MyAccountNavigation,
   },
   setup() {
-    const { i18n } = useContext()
+    const router = useRouter()
+    const { i18n, app } = useContext()
     const userStore = useUserStore()
+    const isMobile = app.$breakpoints.isMobile
 
     const myAccountLabel = computed(() => {
-      if (userStore.isLoginProcess) return ''
+      if (userStore.isLoginProcess || isMobile.value) return ''
 
       return userStore.isLoggedIn
         ? userStore.currentUser?.name
@@ -86,7 +81,13 @@ export default defineComponent({
 
     const handleMyAccount = (openPopupCallback) => {
       if (userStore.isLoggedIn) {
-        openPopupCallback()
+        if (isMobile.value) {
+          router.push({
+            path: app.localePath('shop-my-account'),
+          })
+        } else {
+          openPopupCallback()
+        }
       } else {
         userStore.login()
       }
@@ -112,12 +113,7 @@ export default defineComponent({
   }
 
   &__account {
-    @apply tw-hidden;
     @apply tw--my-2;
-
-    @screen md {
-      @apply tw-flex;
-    }
   }
 
   &__logout {
@@ -141,22 +137,12 @@ export default defineComponent({
     }
   }
 
-  &__comparhension {
-    @apply tw-hidden;
-
-    @screen md {
-      @apply tw-block;
-    }
-  }
-
   &__icon {
     @apply tw-block;
   }
 
-  &__comparhension,
-  &__shopping-list,
   &__shopping-cart {
-    @apply tw-ml-3;
+    @apply tw-ml-0;
 
     @screen md {
       @apply tw-ml-4;
@@ -168,8 +154,6 @@ export default defineComponent({
   }
 
   &__account,
-  &__comparhension,
-  &__shopping-list,
   &__shopping-cart {
     @apply tw-text-pv-red;
     @apply tw-transition-colors;
