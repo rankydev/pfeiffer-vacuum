@@ -18,8 +18,9 @@
 
       <template #default="{ closePopup }">
         <div>
-          <MyAccountSidebar
+          <MyAccountNavigation
             class="shop-navigation__myaccount-popup"
+            variant="sidebar"
             @entry-clicked="closePopup"
           />
           <Button
@@ -61,7 +62,7 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
-import MyAccountSidebar from '~/components/organisms/MyAccount/sidebar/MyAccountSidebar'
+import MyAccountNavigation from '~/components/organisms/MyAccount/partials/MyAccountNavigation.vue'
 
 export default defineComponent({
   components: {
@@ -69,7 +70,7 @@ export default defineComponent({
     Link,
     Button,
     LoadingSpinner,
-    MyAccountSidebar,
+    MyAccountNavigation,
   },
   setup() {
     const { i18n } = useContext()
