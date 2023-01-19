@@ -14,5 +14,22 @@ export const useUserApi = () => {
     return axios.$post(path, customer)
   }
 
-  return { getUserData, register }
+  const getUserBillingAddress = async () => {
+    return await axios.$get(`${config.USER_API}/billingaddress`, {
+      params: { fields: 'FULL' },
+    })
+  }
+
+  const getUserDeliveryAddresses = async () => {
+    return await axios.$get(`${config.USER_API}/deliveryaddresses`, {
+      params: { fields: 'FULL' },
+    })
+  }
+
+  return {
+    getUserData,
+    register,
+    getUserBillingAddress,
+    getUserDeliveryAddresses,
+  }
 }

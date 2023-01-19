@@ -30,6 +30,8 @@ export const useUserStore = defineStore('user', () => {
   } = useKeycloak()
 
   const currentUser = ssrRef(null)
+  const billingAddress = ssrRef(null)
+  const deliveryAddresses = ssrRef(null)
 
   const isOpenUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'OPEN'
@@ -67,6 +69,34 @@ export const useUserStore = defineStore('user', () => {
     } catch (e) {
       logger.error('user not found', e)
     }
+  }
+
+  const loadBillingAddress = async () => {
+    try {
+      const result = await userApi.getUserBillingAddress()
+      billingAddress.value = result
+    } catch (e) {
+      logger.error(
+        `Error when fetching billing address for user. Returning empty object.`,
+        e
+      )
+    }
+  }
+
+  const loadDeliveryAddresses = async () => {
+    try {
+      const result = await userApi.getUserDeliveryAddresses()
+      deliveryAddresses.value = result
+    } catch (e) {
+      logger.error(
+        `Error when fetching billing address for user. Returning empty object.`,
+        e
+      )
+    }
+  }
+
+  const loadAddressData = async () => {
+    await Promise.all([loadBillingAddress(), loadDeliveryAddresses()])
   }
 
   const login = async () => {
@@ -119,6 +149,8 @@ export const useUserStore = defineStore('user', () => {
     isLoginProcess,
     currentUser,
     auth,
+    billingAddress,
+    deliveryAddresses,
 
     // getters
     isApprovedUser,
@@ -131,6 +163,9 @@ export const useUserStore = defineStore('user', () => {
     loadCurrentUser,
     login,
     logout,
+    loadBillingAddress,
+    loadDeliveryAddresses,
+    loadAddressData,
     register: userApi.register,
   }
 })

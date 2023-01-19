@@ -38,7 +38,7 @@
       v-if="address.country"
       class="address-data-item__entry address-data-item__country"
     >
-      {{ address.country.isocode }}
+      {{ address.country.name }}
       <!-- ToDo: implement Coutryname when data is available -->
       <!-- {{ getCountry(address.country.isocode) }} -->
     </p>
@@ -91,6 +91,10 @@
       <div
         v-if="!isBillingAddress"
         class="address-data-item__address-controls--setDefault"
+        :class="{
+          'address-data-item__address-controls--is-default':
+            address.defaultShippingAddress,
+        }"
       >
         <Button
           :label="
@@ -220,8 +224,9 @@ export default defineComponent({
     }
 
     &--editables {
-      @apply tw-flex tw-justify-between tw-items-center;
+      @apply tw-flex tw-items-center;
       @apply tw-w-full;
+      @apply tw-gap-x-8;
 
       @screen md {
         @apply tw-w-1/2;
@@ -235,6 +240,12 @@ export default defineComponent({
       @screen md {
         @apply tw-w-1/2;
         @apply tw-justify-end;
+      }
+    }
+
+    &--is-default {
+      button {
+        @apply tw-text-pv-grey-16;
       }
     }
   }
