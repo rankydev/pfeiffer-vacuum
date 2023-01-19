@@ -31,6 +31,7 @@ import ShopNavigation from './partials/ShopNavigation/ShopNavigation.vue'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper.vue'
 
 import { useMenuStore } from '~/stores/menu'
+import { useMyAccountStore } from '~/stores/myaccount'
 
 export default defineComponent({
   components: {
@@ -56,10 +57,20 @@ export default defineComponent({
       type: Array,
       default: /* istanbul ignore next */ () => [],
     },
+    /**
+     * A list of shop navigation links for myaccount
+     */
+    shopNavigationLinks: {
+      type: Array,
+      default: /* istanbul ignore next */ () => [],
+    },
   },
-  setup() {
+  setup(props) {
     const menu = useMenuStore()
     const active = ref(false)
+
+    const myAccountStore = useMyAccountStore()
+    myAccountStore.hydrateMenuItems(props.shopNavigationLinks)
 
     return {
       active,

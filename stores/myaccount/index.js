@@ -4,9 +4,8 @@ import { ref } from '@nuxtjs/composition-api'
 export const useMyAccountStore = defineStore('myaccount', () => {
   const menuItems = ref([])
 
-  const hydrateMenuItems = (pageHeader) => {
-    const links = pageHeader?.value?.[0]?.shopNavigationLinks
-    if (links) {
+  const hydrateMenuItems = (links) => {
+    if (links?.length) {
       menuItems.value = links.map((item) => {
         return {
           label: item.label,
