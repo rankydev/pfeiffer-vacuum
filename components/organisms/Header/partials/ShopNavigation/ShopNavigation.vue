@@ -1,40 +1,42 @@
 <template>
   <div class="shop-navigation">
-    <Popup>
-      <template #activator="{ togglePopup }">
-        <LoadingSpinner :show="userStore.isLoginProcess">
-          <Button
-            shape="plain"
-            variant="secondary"
-            class="shop-navigation__account"
-            :label="myAccountLabel"
-            icon="person"
-            :prepend-icon="true"
-            gap="narrow"
-            @click="handleMyAccount(togglePopup)"
-          />
-        </LoadingSpinner>
-      </template>
+    <client-only>
+      <Popup>
+        <template #activator="{ togglePopup }">
+          <LoadingSpinner :show="userStore.isLoginProcess">
+            <Button
+              shape="plain"
+              variant="secondary"
+              class="shop-navigation__account"
+              :label="myAccountLabel"
+              icon="person"
+              :prepend-icon="true"
+              gap="narrow"
+              @click="handleMyAccount(togglePopup)"
+            />
+          </LoadingSpinner>
+        </template>
 
-      <template #default="{ closePopup }">
-        <div>
-          <MyAccountNavigation
-            class="shop-navigation__myaccount-popup"
-            variant="sidebar"
-            @entry-clicked="closePopup"
-          />
-          <Button
-            v-if="userStore.isLoggedIn || userStore.isLoginProcess"
-            shape="outlined"
-            variant="secondary"
-            class="shop-navigation__popup-logout"
-            icon="logout"
-            label="Logout"
-            @click="closePopup(), logout()"
-          />
-        </div>
-      </template>
-    </Popup>
+        <template #default="{ closePopup }">
+          <div>
+            <MyAccountNavigation
+              class="shop-navigation__myaccount-popup"
+              variant="sidebar"
+              @entry-clicked="closePopup"
+            />
+            <Button
+              v-if="userStore.isLoggedIn || userStore.isLoginProcess"
+              shape="outlined"
+              variant="secondary"
+              class="shop-navigation__popup-logout"
+              icon="logout"
+              label="Logout"
+              @click="closePopup(), logout()"
+            />
+          </div>
+        </template>
+      </Popup>
+    </client-only>
 
     <Link href="#" class="shop-navigation__shopping-cart">
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
