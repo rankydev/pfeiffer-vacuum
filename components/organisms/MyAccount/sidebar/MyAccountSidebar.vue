@@ -5,7 +5,10 @@
     </div>
     <div class="myaccount-sidebar__mobile">
       <GenericHorizontalSlider>
-        <MyAccountNavigation variant="horizontal" />
+        <MyAccountNavigation
+          variant="horizontal"
+          @entry-clicked="handleEntrySelected"
+        />
       </GenericHorizontalSlider>
     </div>
   </div>
@@ -21,6 +24,19 @@ export default defineComponent({
     GenericHorizontalSlider,
     MyAccountNavigation,
   },
+  setup() {
+    const handleEntrySelected = ($el) => {
+      $el?.target?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center',
+      })
+    }
+
+    return {
+      handleEntrySelected,
+    }
+  },
 })
 </script>
 
@@ -35,7 +51,7 @@ export default defineComponent({
   }
 
   &__mobile {
-    margin: 0 -1.25rem;
+    margin: 0 -1rem;
 
     @screen md {
       margin: 0 -1.5rem;

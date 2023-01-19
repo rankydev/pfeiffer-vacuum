@@ -48,8 +48,8 @@ export default defineComponent({
     const myAccountStore = useMyAccountStore()
     const { menuItems } = storeToRefs(myAccountStore)
 
-    const linkClicked = () => {
-      emit('entry-clicked')
+    const linkClicked = ($el) => {
+      emit('entry-clicked', $el)
     }
 
     return {
