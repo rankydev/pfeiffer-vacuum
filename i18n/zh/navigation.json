@@ -3,6 +3,9 @@
     "signIn": {
       "label": "登入"
     },
+    "logout": {
+      "mobileLabel": "登出"
+    },
     "overview": {
       "label": "概述"
     },
