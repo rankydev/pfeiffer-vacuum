@@ -45,10 +45,10 @@
     </div>
     <div class="product-actions__action-wrapper">
       <PvInput
-        v-model="userSelectedOrderQuantity"
+        v-model.number="userSelectedOrderQuantity"
         class="product-actions__quantity"
         input-type="number"
-        min="1"
+        :min="1"
       />
       <Button
         class="product-actions__add-to-cart"
