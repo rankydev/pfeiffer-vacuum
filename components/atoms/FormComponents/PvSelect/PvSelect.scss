@@ -23,7 +23,7 @@
     @apply tw-hidden;
     @apply tw-w-full;
 
-    &:first-of-type{
+    &:first-of-type {
       @apply tw-mr-0;
       @apply tw-block;
       @apply tw-text-ellipsis;
@@ -86,13 +86,15 @@
   }
 
   &--single {
-    &.vs--open .vs__selected {
-      @apply tw-absolute;
+    &.vs--open .vs__selected,
+    &.vs--loading .vs__selected {
+      @apply tw-relative;
     }
 
     &.vs--searching {
       .vs__selected {
         @apply tw-block;
+        @apply tw-absolute;
         @apply tw-opacity-0;
         @apply tw-invisible;
       }
@@ -187,7 +189,6 @@
     }
   }
 }
-
 
 /* Custom component class stylings */
 .pv-select {
