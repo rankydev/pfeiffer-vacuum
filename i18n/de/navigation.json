@@ -3,6 +3,9 @@
     "signIn": {
       "label": "Anmelden"
     },
+    "logout": {
+      "mobileLabel": "Logout"
+    },
     "overview": {
       "label": "Übersicht"
     },

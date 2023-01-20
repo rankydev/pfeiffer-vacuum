@@ -181,7 +181,7 @@ export default defineComponent({
   @apply tw-items-center;
   @apply tw-cursor-pointer;
   @apply tw-font-bold;
-  @apply tw-justify-center;
+  @apply tw-justify-between;
   @apply tw-text-left;
 
   &--no-linebreaks {
