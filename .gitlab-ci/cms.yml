@@ -16,13 +16,14 @@ cms-sync-dev-space-automatically-for-develop:
   needs: ["deploy-develop-to-dev-automatically"]
   environment:
     name: dev2
-  except:
-    - main
-    - tags
+  only:
+    - develop
 
 cms-sync-dev-space-for-develop-after-manual-deployment:
-  extends: cms-sync-dev-space-automatically-for-develop
+  extends: .cms-sync
   needs: ["deploy-develop-to-dev-manually"]
+  environment:
+    name: dev2
   except:
     - main
     - tags
