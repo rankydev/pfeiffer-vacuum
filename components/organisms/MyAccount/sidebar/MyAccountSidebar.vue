@@ -17,7 +17,7 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import GenericHorizontalSlider from '~/components/molecules/GenericHorizontalSlider/GenericHorizontalSlider.vue'
-import MyAccountNavigation from '../partials/MyAccountNavigation.vue'
+import MyAccountNavigation from '../partials/MyAccountNavigation/MyAccountNavigation.vue'
 
 export default defineComponent({
   components: {
