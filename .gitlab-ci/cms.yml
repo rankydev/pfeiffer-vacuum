@@ -13,7 +13,7 @@
 
 cms-sync-dev-space-automatically-for-develop:
   extends: .cms-sync
-  needs: [ "deploy-develop-to-dev-automatically" ]
+  needs: ["deploy-develop-to-dev-automatically"]
   environment:
     name: dev2
   only:
@@ -21,13 +21,14 @@ cms-sync-dev-space-automatically-for-develop:
 
 cms-sync-dev-space-for-develop-after-manual-deployment:
   extends: cms-sync-dev-space-automatically-for-develop
-  needs: [ "deploy-develop-to-dev-manually" ]
-  only:
-    - develop
+  needs: ["deploy-develop-to-dev-manually"]
+  except:
+    - main
+    - tags
 
 cms-sync-uat-space-automatically-for-main:
   extends: .cms-sync
-  needs: [ "deploy-main-to-uat-automatically" ]
+  needs: ["deploy-main-to-uat-automatically"]
   environment:
     name: uat2
   only:
@@ -35,7 +36,7 @@ cms-sync-uat-space-automatically-for-main:
 
 cms-sync-uat-space-for-main-and-tags-after-manual-deployment:
   extends: .cms-sync
-  needs: [ "deploy-main-or-tag-to-uat-manually" ]
+  needs: ["deploy-main-or-tag-to-uat-manually"]
   environment:
     name: uat2
   only:
@@ -44,7 +45,7 @@ cms-sync-uat-space-for-main-and-tags-after-manual-deployment:
 
 cms-sync-production-space-after-manual-deploymen:
   extends: .cms-sync
-  needs: [ "deploy-tag-to-prd-manually" ]
+  needs: ["deploy-tag-to-prd-manually"]
   environment:
     name: prd
   only:
