@@ -3,24 +3,24 @@
     <transition name="fast-fade">
       <div
         v-if="isOpen"
-        class="sidebar-backdrop"
+        class="sidebar__backdrop"
         @click="$emit('closeSidebar')"
       />
     </transition>
     <transition :name="`sidebar-slide-${position}`">
       <div
         v-if="isOpen"
-        class="sidebar-panel"
-        :class="`sidebar-panel--${position}`"
+        class="sidebar__panel"
+        :class="`sidebar__panel--${position}`"
       >
         <Button
           icon="close"
           variant="secondary"
           shape="plain"
-          class="sidebar-panel--btn"
+          class="sidebar__panel__btn"
           @click="$emit('closeSidebar')"
         />
-        <div class="sidebar-panel--content">
+        <div class="sidebar__panel__content">
           <slot />
         </div>
       </div>
@@ -71,47 +71,49 @@ export default defineComponent({
 <style lang="scss">
 @import '/assets/scss/z-index';
 
-.sidebar-backdrop {
-  z-index: $generic-modal;
-  @apply tw-bg-pv-grey-32-opacity;
-  @apply tw-top-0;
-  @apply tw-left-0;
-  @apply tw-h-screen;
-  @apply tw-w-screen;
-  @apply tw-fixed;
-}
-
-.sidebar-panel {
-  @apply tw-overflow-y-auto;
-  @apply tw-fixed;
-  @apply tw-bg-pv-white;
-  @apply tw-top-0;
-  @apply tw-h-screen;
-  @apply tw-w-11/12;
-  z-index: $generic-modal;
-
-  @screen md {
-    @apply tw-w-3/5;
-  }
-  @screen lg {
-    @apply tw-w-2/5;
-  }
-
-  &--right {
-    @apply tw-right-0;
-  }
-
-  &--left {
+.sidebar {
+  &__backdrop {
+    z-index: $generic-modal;
+    @apply tw-bg-pv-grey-32-opacity;
+    @apply tw-top-0;
     @apply tw-left-0;
+    @apply tw-h-screen;
+    @apply tw-w-screen;
+    @apply tw-fixed;
   }
 
-  &--btn {
-    @apply tw-absolute;
-    @apply tw-right-0;
-  }
+  &__panel {
+    @apply tw-overflow-y-auto;
+    @apply tw-fixed;
+    @apply tw-bg-pv-white;
+    @apply tw-top-0;
+    @apply tw-h-screen;
+    @apply tw-w-11/12;
+    z-index: $generic-modal;
 
-  &--content {
-    @apply tw-p-4;
+    @screen md {
+      @apply tw-w-3/5;
+    }
+    @screen lg {
+      @apply tw-w-2/5;
+    }
+
+    &--right {
+      @apply tw-right-0;
+    }
+
+    &--left {
+      @apply tw-left-0;
+    }
+
+    &__btn {
+      @apply tw-absolute;
+      @apply tw-right-0;
+    }
+
+    &__content {
+      @apply tw-p-4;
+    }
   }
 }
 </style>
