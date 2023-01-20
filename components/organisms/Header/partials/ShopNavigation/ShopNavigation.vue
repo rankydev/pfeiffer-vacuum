@@ -28,6 +28,7 @@
     <Link href="#" class="shop-navigation__shopping-cart">
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
     </Link>
+    <Button icon="shopping_cart" @click="$emit('openCart')" />
   </div>
 </template>
 
@@ -52,6 +53,7 @@ export default defineComponent({
     Button,
     LoadingSpinner,
   },
+  emits: ['openCart'],
   setup() {
     const { i18n, app } = useContext()
     const userStore = useUserStore()

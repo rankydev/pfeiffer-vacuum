@@ -9,13 +9,19 @@
           :flyout-links="flyoutLinks"
           class="header__top-navigation"
         />
-        <ShopNavigation class="header__shop-navigation" />
+        <ShopNavigation
+          class="header__shop-navigation"
+          @openCart="openSidebar"
+        />
         <div class="header__break-column" />
         <MainNavigation
           class="header__main-navigation"
           :navigation-entries="navigationEntries"
         />
       </div>
+      <GenericSidebar :state="state" @close="closeSidebar">
+        <h1>Salami</h1>
+      </GenericSidebar>
     </ContentWrapper>
   </header>
 </template>
@@ -29,6 +35,7 @@ import TopNavigation from './partials/TopNavigation/TopNavigation.vue'
 import MainNavigation from './partials/MainNavigation/MainNavigation.vue'
 import ShopNavigation from './partials/ShopNavigation/ShopNavigation.vue'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper.vue'
+import GenericSidebar from '~/components/molecules/GenericSidebar/GenericSidebar.vue'
 
 import { useMenuStore } from '~/stores/menu'
 
@@ -40,6 +47,7 @@ export default defineComponent({
     MainNavigation,
     ShopNavigation,
     ContentWrapper,
+    GenericSidebar,
   },
   props: {
     /**
@@ -61,9 +69,23 @@ export default defineComponent({
     const menu = useMenuStore()
     const active = ref(false)
 
+    const state = ref(true)
+
+    const closeSidebar = () => {
+      state.value = false
+      console.log('close')
+    }
+    const openSidebar = () => {
+      state.value = true
+      console.log('open')
+    }
+
     return {
       active,
       menuIsActive: menu.isActive,
+      state,
+      closeSidebar,
+      openSidebar,
     }
   },
 })
