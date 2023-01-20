@@ -10,11 +10,8 @@
     <transition :name="`sidebar-slide-${position}`">
       <div
         v-if="isOpen"
-        class="sidebar-panel tw-w-11/12 md:tw-w-3/5 lg:tw-w-2/5"
-        :class="{
-          'tw-left-0': position === 'left',
-          'tw-right-0': position !== 'left',
-        }"
+        class="sidebar-panel"
+        :class="`sidebar-panel--${position}`"
       >
         <Button
           icon="close"
@@ -52,9 +49,7 @@ export default defineComponent({
   emits: ['closeSidebar'],
   setup(props, { emit }) {
     const toggleSidebar = (ev) => {
-      console.log(ev, 'called toggleSidebar')
       if (ev.keyCode === 27) {
-        console.log(ev.keyCode)
         emit('closeSidebar')
       }
     }
@@ -92,7 +87,23 @@ export default defineComponent({
   @apply tw-bg-pv-white;
   @apply tw-top-0;
   @apply tw-h-screen;
+  @apply tw-w-11/12;
   z-index: $generic-modal;
+
+  @screen md {
+    @apply tw-w-3/5;
+  }
+  @screen lg {
+    @apply tw-w-2/5;
+  }
+
+  &--right {
+    @apply tw-right-0;
+  }
+
+  &--left {
+    @apply tw-left-0;
+  }
 
   &--btn {
     @apply tw-absolute;
