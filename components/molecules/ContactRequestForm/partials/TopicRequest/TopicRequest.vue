@@ -3,7 +3,7 @@
     <PvInput
       v-model="requestData.contact.firstName"
       :label="$t('form.contactRequest.firstname')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.contactRequest.firstname')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
@@ -16,7 +16,7 @@
     <PvInput
       v-model="requestData.contact.lastName"
       :label="$t('form.contactRequest.surname')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.contactRequest.surname')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
@@ -29,7 +29,7 @@
     <PvInput
       v-model="requestData.contact.address.companyName"
       :label="$t('form.contactRequest.company')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.contactRequest.company')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
@@ -53,7 +53,7 @@
         v-model="requestData.contact.address.line1"
         class="topic-request__address--street"
         :label="$t('form.contactRequest.street')"
-        placeholder="Placeholder"
+        :placeholder="$t('form.contactRequest.street')"
         :required="true"
         :rules="{
           required: helpers.withMessage(
@@ -67,7 +67,7 @@
         v-model="requestData.contact.address.line2"
         class="topic-request__address--number"
         :label="$t('form.contactRequest.houseNumber')"
-        placeholder="Placeholder"
+        :placeholder="$t('form.contactRequest.houseNumber')"
         :required="true"
         :rules="{
           required: helpers.withMessage(
@@ -83,7 +83,7 @@
         v-model="requestData.contact.address.postalCode"
         class="topic-request__address--postcode"
         :label="$t('form.contactRequest.postCode')"
-        placeholder="Placeholder"
+        :placeholder="$t('form.contactRequest.postCode')"
         :required="true"
         :rules="{
           required: helpers.withMessage(
@@ -97,7 +97,7 @@
         v-model="requestData.contact.address.town"
         class="topic-request__address--city"
         :label="$t('form.contactRequest.city')"
-        placeholder="Placeholder"
+        :placeholder="$t('form.contactRequest.city')"
         :required="true"
         :rules="{
           required: helpers.withMessage(
@@ -111,7 +111,7 @@
     <PvInput
       v-model="requestData.contact.email"
       :label="$t('form.contactRequest.mail')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.contactRequest.mail')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
@@ -128,7 +128,7 @@
     <PvTextArea
       v-model="requestData.message"
       :label="$t('form.contactRequest.message')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.contactRequest.message')"
       :required="true"
       :rules="{
         required: helpers.withMessage(

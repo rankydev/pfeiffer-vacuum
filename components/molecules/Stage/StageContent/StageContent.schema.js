@@ -1,3 +1,5 @@
+import Richtext from '~/components/atoms/Richtext/Richtext.schema'
+
 export default {
   name: 'StageContent',
   display_name: 'StageContent',
@@ -18,8 +20,7 @@ export default {
       pos: 2,
     },
     teaserText: {
-      type: 'textarea',
-      translatable: true,
+      ...Richtext.schema.richtext,
       display_name: 'Teaser Text',
       max_length: '250',
       pos: 3,
