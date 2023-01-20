@@ -74,6 +74,15 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const updateCurrentUser = async (data) => {
+    try {
+      await userApi.updateUserData(data)
+      await loadCurrentUser()
+    } catch (e) {
+      logger.error('cannot patch user data', e)
+    }
+  }
+
   const login = async () => {
     logger.debug('login')
     const { i18n, app } = ctx
@@ -135,6 +144,7 @@ export const useUserStore = defineStore('user', () => {
 
     // actions
     loadCurrentUser,
+    updateCurrentUser,
     login,
     logout,
     register: userApi.register,

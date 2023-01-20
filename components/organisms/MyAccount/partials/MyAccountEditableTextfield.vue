@@ -5,7 +5,12 @@
       { 'editable-textfield--editable': editable },
     ]"
   >
-    <PvInput v-if="editable" v-bind="{ value, label }" />
+    <PvInput
+      v-if="editable"
+      v-model="inputValue"
+      v-bind="{ label, disabled }"
+      @input="$emit('changed', $event)"
+    />
     <div v-else class="editable-textfield__static">
       <div class="editable-textfield__text">
         <label v-if="label" class="editable-textfield__label">
@@ -19,6 +24,7 @@
 </template>
 <script>
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
+import { ref } from '@nuxtjs/composition-api'
 
 export default {
   components: { PvInput },
@@ -35,10 +41,20 @@ export default {
       type: String,
       required: true,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     button: {
       type: Object,
       default: null,
     },
+  },
+  emits: ['changed'],
+  setup(props) {
+    const inputValue = ref(props.value)
+
+    return { inputValue }
   },
 }
 </script>

@@ -16,8 +16,10 @@
         :class="'account-data__' + entry.id"
         :value="entry.value"
         :label="entry.label"
+        :disabled="entry.disabled"
         :editable="entry.editable && isEditMode"
         :button="entry.button || null"
+        @changed="dataChanged(entry.id, $event)"
       />
     </div>
     <SectionHeadline>Company Data</SectionHeadline>
@@ -51,6 +53,7 @@ export default defineComponent({
   setup() {
     const userStore = useUserStore()
     const { currentUser, userBillingAddress } = storeToRefs(userStore)
+    const { updateCurrentUser } = userStore
 
     const userCountry = computed(() => userBillingAddress.value.country?.name)
 
@@ -59,18 +62,20 @@ export default defineComponent({
         `${userBillingAddress.value.line1} ${userBillingAddress.value.line2}, ${userBillingAddress.value.postalCode} ${userBillingAddress.value.town}, ${userCountry.value}`
     )
 
-    const accountData = [
+    const accountData = computed(() => [
       {
         id: 'company',
         label: 'Company / University',
         value: currentUser?.value.orgUnit?.name || '-',
         editable: true,
+        disabled: true,
       },
       {
         id: 'country',
         label: 'Country / Location',
         value: userCountry.value,
         editable: true,
+        disabled: true,
       },
       {
         id: 'name',
@@ -80,14 +85,14 @@ export default defineComponent({
         onlyDisplay: true,
       },
       {
-        id: 'firstname',
+        id: 'firstName',
         label: 'Firstname',
         value: currentUser?.value.firstName,
         editable: true,
         onlyEdit: true,
       },
       {
-        id: 'lastname',
+        id: 'lastName',
         label: 'Lastname',
         value: currentUser?.value.lastName,
         editable: true,
@@ -98,6 +103,7 @@ export default defineComponent({
         label: 'Email',
         value: currentUser?.value.displayUid,
         editable: true,
+        disabled: true,
       },
       {
         id: 'password',
@@ -110,9 +116,9 @@ export default defineComponent({
           icon: 'lock',
         },
       },
-    ]
+    ])
 
-    const companyData = [
+    const companyData = computed(() => [
       {
         id: 'company-further-details',
         label: 'Futher company details',
@@ -148,14 +154,14 @@ export default defineComponent({
         label: 'Address',
         value: formattedAddress.value,
       },
-    ]
+    ])
 
     const isEditMode = ref(false)
 
     const accountDataFields = computed(() =>
       isEditMode.value
-        ? accountData.filter((e) => !e.onlyDisplay)
-        : accountData.filter((e) => !e.onlyEdit)
+        ? accountData.value.filter((e) => !e.onlyDisplay)
+        : accountData.value.filter((e) => !e.onlyEdit)
     )
 
     const accountDataButtons = computed(() =>
@@ -176,14 +182,18 @@ export default defineComponent({
         : [{ icon: 'edit', variant: 'secondary', shape: 'plain' }]
     )
 
-    const toggleEdit = (i) => {
-      if (isEditMode.value) {
-        // Discard or save changes
-        // i = 0 -> discard
-        // i = 1 -> save
-        alert(i > 0 ? 'SAVE' : 'DISCARD')
+    const updatedData = ref({})
+
+    const toggleEdit = async (i) => {
+      if (isEditMode.value && i > 0) {
+        await updateCurrentUser({ ...currentUser.value, ...updatedData.value })
       }
       isEditMode.value = !isEditMode.value
+    }
+
+    const dataChanged = (field, value) => {
+      updatedData.value[field] = value
+      console.log(updatedData.value)
     }
 
     return {
@@ -193,6 +203,7 @@ export default defineComponent({
       accountDataFields,
       userBillingAddress,
       toggleEdit,
+      dataChanged,
     }
   },
 })
@@ -227,8 +238,8 @@ export default defineComponent({
   &__vat,
   &__phone,
   &__fax,
-  &__firstname,
-  &__lastname {
+  &__firstName,
+  &__lastName {
     @apply tw-col-span-6;
   }
 
