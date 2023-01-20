@@ -37,7 +37,7 @@
 
 <script>
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
-import AddressDataForm from '~/pages/shop/my-account/AddressDataForm'
+import AddressDataForm from '~/components/molecules/AddressDataForm/AddressDataForm'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import Button from '~/components/atoms/Button/Button'
 

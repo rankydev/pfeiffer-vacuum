@@ -10,7 +10,7 @@
         v-model="requestData.firstName"
         class="address-data-form__row-container--half"
         :label="$t('form.contactRequest.firstname')"
-        placeholder=""
+        :placeholder="$t('form.contactRequest.firstname')"
         required
         @input="$emit('update:data', requestData)"
       />
@@ -18,7 +18,7 @@
         v-model="requestData.lastName"
         class="address-data-form__row-container--half"
         :label="$t('form.contactRequest.surname')"
-        placeholder=""
+        :placeholder="$t('form.contactRequest.surname')"
         required
         @input="$emit('update:data', requestData)"
       />
@@ -26,14 +26,14 @@
     <PvInput
       v-model="requestData.companyName"
       :label="$t('form.contactRequest.company')"
-      placeholder=""
+      :placeholder="$t('form.contactRequest.company')"
       required
       @input="$emit('update:data', requestData)"
     />
     <PvInput
       v-model="requestData.department"
       :label="$t('form.contactRequest.department')"
-      placeholder=""
+      :placeholder="$t('form.contactRequest.department')"
       @input="$emit('update:data', requestData)"
     />
     <div class="address-data-form__row-container">
@@ -41,7 +41,7 @@
         v-model="requestData.line1"
         class="address-data-form__row-container--three-quarters"
         :label="$t('form.contactRequest.street')"
-        placeholder=""
+        :placeholder="$t('form.contactRequest.street')"
         required
         @input="$emit('update:data', requestData)"
       />
@@ -49,7 +49,7 @@
         v-model="requestData.line2"
         class="address-data-form__row-container--one-quarter"
         :label="$t('form.contactRequest.houseNumber')"
-        placeholder=""
+        :placeholder="$t('form.contactRequest.houseNumber')"
         required
         @input="$emit('update:data', requestData)"
       />
@@ -57,7 +57,7 @@
     <PvInput
       v-model="requestData.remarks"
       :label="$t('form.contactRequest.supplement')"
-      placeholder=""
+      :placeholder="$t('form.contactRequest.supplement')"
       @input="$emit('update:data', requestData)"
     />
     <div class="address-data-form__row-container">
@@ -65,7 +65,7 @@
         v-model="requestData.postalCode"
         class="address-data-form__row-container--one-quarter"
         :label="$t('form.contactRequest.postCode')"
-        placeholder=""
+        :placeholder="$t('form.contactRequest.postCode')"
         required
         @input="$emit('update:data', requestData)"
       />
@@ -73,7 +73,7 @@
         v-model="requestData.town"
         class="address-data-form__row-container--three-quarters"
         :label="$t('form.contactRequest.city')"
-        placeholder=""
+        :placeholder="$t('form.contactRequest.city')"
         required
         @input="$emit('update:data', requestData)"
       />
@@ -83,8 +83,8 @@
 
 <script>
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
+import PvInput from '@/components/atoms/FormComponents/PvInput/PvInput'
+import FormCountrySelection from '@/components/molecules/FormCountrySelection/FormCountrySelection'
 import { helpers, required, requiredIf } from '@vuelidate/validators'
 
 export default defineComponent({
@@ -94,10 +94,6 @@ export default defineComponent({
     FormCountrySelection,
   },
   props: {
-    isOpen: {
-      type: Boolean,
-      default: false,
-    },
     selectedCountry: {
       type: Object,
       default: () => undefined,
