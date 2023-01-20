@@ -11,7 +11,7 @@
         />
         <ShopNavigation
           class="header__shop-navigation"
-          @openCart="openSidebar"
+          @openCart="isOpen = true"
         />
         <div class="header__break-column" />
         <MainNavigation
@@ -19,7 +19,7 @@
           :navigation-entries="navigationEntries"
         />
       </div>
-      <GenericSidebar :state="state" @close="closeSidebar">
+      <GenericSidebar :is-open="isOpen" @closeSidebar="isOpen = false">
         <h1>Salami</h1>
       </GenericSidebar>
     </ContentWrapper>
@@ -69,23 +69,12 @@ export default defineComponent({
     const menu = useMenuStore()
     const active = ref(false)
 
-    const state = ref(true)
-
-    const closeSidebar = () => {
-      state.value = false
-      console.log('close')
-    }
-    const openSidebar = () => {
-      state.value = true
-      console.log('open')
-    }
+    const isOpen = ref(false)
 
     return {
       active,
       menuIsActive: menu.isActive,
-      state,
-      closeSidebar,
-      openSidebar,
+      isOpen,
     }
   },
 })

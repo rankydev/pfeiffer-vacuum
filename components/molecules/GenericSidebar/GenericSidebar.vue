@@ -1,11 +1,15 @@
 <template>
   <div class="sidebar">
     <transition name="fast-fade">
-      <div v-if="state" class="sidebar-backdrop" @click="$emit('close')" />
+      <div
+        v-if="isOpen"
+        class="sidebar-backdrop"
+        @click="$emit('closeSidebar')"
+      />
     </transition>
     <transition :name="`sidebar-slide-${position}`">
       <div
-        v-if="state"
+        v-if="isOpen"
         class="sidebar-panel tw-w-11/12 md:tw-w-3/5 lg:tw-w-2/5"
         :class="{
           'tw-left-0': position === 'left',
@@ -17,10 +21,10 @@
           variant="secondary"
           shape="plain"
           class="sidebar-panel--btn"
-          @click="$emit('close')"
+          @click="$emit('closeSidebar')"
         />
         <div class="sidebar-panel--content">
-          <slot></slot>
+          <slot />
         </div>
       </div>
     </transition>
@@ -28,14 +32,14 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, watch } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
   name: 'GenericSidebar',
   components: { Button },
   props: {
-    state: {
+    isOpen: {
       type: Boolean,
       default: false,
     },
@@ -45,9 +49,26 @@ export default defineComponent({
       validator: (val) => ['right', 'left'].includes(val),
     },
   },
-  emits: ['close'],
-  setup() {
-    return {}
+  emits: ['closeSidebar'],
+  setup(props, { emit }) {
+    const toggleSidebar = (ev) => {
+      console.log(ev, 'called toggleSidebar')
+      if (ev.keyCode === 27) {
+        console.log(ev.keyCode)
+        emit('closeSidebar')
+      }
+    }
+
+    watch(
+      () => props.isOpen,
+      (val) => {
+        if (val) {
+          window.addEventListener('keyup', toggleSidebar)
+        } else {
+          window.removeEventListener('keyup', toggleSidebar)
+        }
+      }
+    )
   },
 })
 </script>
