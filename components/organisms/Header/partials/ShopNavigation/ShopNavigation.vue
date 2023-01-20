@@ -21,7 +21,7 @@
           <div>
             <MyAccountNavigation
               class="shop-navigation__myaccount-popup"
-              variant="sidebar"
+              variant="flyout"
               @entry-clicked="closePopup"
             />
             <Button

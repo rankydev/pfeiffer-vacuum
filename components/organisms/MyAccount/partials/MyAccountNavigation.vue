@@ -40,7 +40,7 @@ export default defineComponent({
     variant: {
       type: String,
       default: 'sidebar',
-      validator: (val) => ['sidebar', 'horizontal'].includes(val),
+      validator: (val) => ['flyout', 'sidebar', 'horizontal'].includes(val),
     },
   },
   emits: ['entry-clicked'],
@@ -93,6 +93,7 @@ export default defineComponent({
   }
 }
 
+.myaccount-navigation-flyout,
 .myaccount-navigation-sidebar {
   .myaccount-navigation {
     @apply tw-flex-col;
@@ -131,6 +132,17 @@ export default defineComponent({
           @apply tw-text-pv-red;
           @apply tw-bg-pv-white;
         }
+      }
+    }
+  }
+}
+
+.myaccount-navigation-flyout {
+  .myaccount-navigation {
+    &__list-item {
+      &--heading {
+        @apply tw-text-base;
+        @apply tw-mt-3;
       }
     }
   }
