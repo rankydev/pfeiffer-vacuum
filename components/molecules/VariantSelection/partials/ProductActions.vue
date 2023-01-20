@@ -71,7 +71,7 @@
           icon="assignment"
           variant="secondary"
           shape="outlined"
-          :disabled="isMaster"
+          :disabled="addToBaseButtonDisabled"
         />
       </template>
     </div>
@@ -112,9 +112,9 @@ export default {
 
     const noPriceReason = computed(() => {
       const path = 'product.login.loginToSeePrices.'
-      if (isLeadUser) return i18n.t(path + 'lead')
-      if (isOpenUser) return i18n.t(path + 'open')
-      if (isRejectedUser) return i18n.t(path + 'rejected')
+      if (isLeadUser.value) return i18n.t(path + 'lead')
+      if (isOpenUser.value) return i18n.t(path + 'open')
+      if (isRejectedUser.value) return i18n.t(path + 'rejected')
       return i18n.t('product.noPriceAvailable')
     })
 
@@ -131,6 +131,15 @@ export default {
     )
 
     const isMaster = computed(() => productType.value === 'MASTERPRODUCT')
+
+    const addToBaseButtonDisabled = computed(() => {
+      return (
+        isMaster.value ||
+        isLeadUser.value ||
+        isOpenUser.value ||
+        isRejectedUser.value
+      )
+    })
 
     const toggleModal = () => (infoModalVisible.value = !infoModalVisible.value)
 
@@ -158,6 +167,7 @@ export default {
       orderNumber,
       productPrice,
       isPriceVisible,
+      addToBaseButtonDisabled,
       isMaster,
       price,
       hasCustomerPrice,
