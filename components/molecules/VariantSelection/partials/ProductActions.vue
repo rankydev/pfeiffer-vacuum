@@ -45,10 +45,10 @@
     </div>
     <div class="product-actions__action-wrapper">
       <PvInput
+        v-model="userSelectedOrderQuantity"
         class="product-actions__quantity"
         input-type="number"
         min="1"
-        value="1"
       />
       <Button
         class="product-actions__add-to-cart"
@@ -106,6 +106,9 @@ export default {
       isRejectedUser,
       isLoggedIn,
     } = storeToRefs(userStore)
+
+    const userSelectedOrderQuantity = ref(1)
+
     const infoModalVisible = ref(false)
 
     const orderNumber = computed(() => product?.value?.orderNumber || '')
@@ -175,6 +178,7 @@ export default {
       infoModalVisible,
       informationModalHeadline,
       informationModalText,
+      userSelectedOrderQuantity,
       toggleModal,
     }
   },
