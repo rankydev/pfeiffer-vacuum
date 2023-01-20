@@ -5,12 +5,6 @@ export default {
   display_name: 'Content Text Block',
   schema: {
     text: Richtext.schema.richtext,
-    button: {
-      type: 'bloks',
-      maximum: 1,
-      restrict_components: true,
-      component_whitelist: ['Button'],
-    },
   },
   image: null,
   preview_field: null,
