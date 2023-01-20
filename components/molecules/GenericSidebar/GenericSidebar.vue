@@ -17,10 +17,10 @@
           icon="close"
           variant="secondary"
           shape="plain"
-          class="sidebar__panel__btn"
+          class="sidebar__panel-btn"
           @click="$emit('closeSidebar')"
         />
-        <div class="sidebar__panel__content">
+        <div class="sidebar__panel-content">
           <slot />
         </div>
       </div>
@@ -105,15 +105,15 @@ export default defineComponent({
     &--left {
       @apply tw-left-0;
     }
+  }
 
-    &__btn {
-      @apply tw-absolute;
-      @apply tw-right-0;
-    }
+  &__panel-btn {
+    @apply tw-absolute;
+    @apply tw-right-0;
+  }
 
-    &__content {
-      @apply tw-p-4;
-    }
+  &__panel-content {
+    @apply tw-p-4;
   }
 }
 </style>
