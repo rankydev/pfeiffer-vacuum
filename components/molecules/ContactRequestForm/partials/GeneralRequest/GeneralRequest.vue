@@ -3,7 +3,7 @@
     <PvInput
       v-model="requestData.contact.firstName"
       :label="$t('form.contactRequest.firstname')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.contactRequest.firstname')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
@@ -16,7 +16,7 @@
     <PvInput
       v-model="requestData.contact.lastName"
       :label="$t('form.contactRequest.surname')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.contactRequest.surname')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
@@ -29,7 +29,7 @@
     <PvInput
       v-model="requestData.contact.email"
       :label="$t('form.contactRequest.mail')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.contactRequest.mail')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
@@ -55,7 +55,7 @@
     <PvTextArea
       v-model="requestData.message"
       :label="$t('form.contactRequest.message')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.contactRequest.message')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
