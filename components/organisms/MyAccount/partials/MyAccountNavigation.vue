@@ -35,7 +35,7 @@ export default defineComponent({
   props: {
     /**
      * The navigation variant
-     * @values sidebar, horizontal
+     * @values flyout, sidebar, horizontal
      */
     variant: {
       type: String,
