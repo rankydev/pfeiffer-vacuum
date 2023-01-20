@@ -54,6 +54,15 @@
     @apply tw--translate-y-1/2;
   }
 
+  &__login-button-wrapper {
+    @apply tw-p-4;
+    @apply tw-flex;
+  }
+
+  &__login-button {
+    @apply tw-grow;
+  }
+
   @screen md {
     @apply tw-flex-row;
 
@@ -103,5 +112,12 @@
       @apply tw-overflow-visible;
       @apply tw-mr-8;
     }
+  }
+
+  &__flyout-entry {
+    @apply tw-grid;
+    grid-template-columns: 32px 1fr;
+    @apply tw-text-xs;
+    @apply tw-text-pv-grey-48;
   }
 }

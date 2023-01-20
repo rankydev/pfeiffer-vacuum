@@ -37,10 +37,16 @@
         </div>
       </div>
     </GenericModal>
-    <SearchInput class="search-header__field" />
+    <SearchInput
+      class="search-header__field"
+      @focus="toggleSuggestionsOnFocus"
+      @submit="closeSearchfield"
+    />
     <div
-      v-if="currentSuggestions.length"
+      v-if="currentSuggestions.length && (isFocused || suggestionHover)"
       class="search-header__suggestions--desktop"
+      @mouseover="suggestionHover = true"
+      @mouseleave="suggestionHover = false"
     >
       <SearchButton
         v-for="item in currentSuggestions"
@@ -81,6 +87,8 @@ export default defineComponent({
     const categoryStore = useCategoryStore()
     const isDesktop = app.$breakpoints.isDesktop
     const isOpen = ref(false)
+    const isFocused = ref(true)
+    const suggestionHover = ref(false)
 
     const { currentSuggestions } = storeToRefs(categoryStore)
 
@@ -95,12 +103,19 @@ export default defineComponent({
       isOpen.value = false
     }
 
+    const toggleSuggestionsOnFocus = async (val) => {
+      isFocused.value = val
+    }
+
     return {
       isDesktop,
       toggleSearchfield,
       closeSearchfield,
+      toggleSuggestionsOnFocus,
       isOpen,
+      isFocused,
       currentSuggestions,
+      suggestionHover,
     }
   },
 })
