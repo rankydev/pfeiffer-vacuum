@@ -1,6 +1,9 @@
 <template>
   <div class="shop-navigation">
-    <LoadingSpinner :show="userStore.isLoginProcess || !myAccountLabel">
+    <LoadingSpinner
+      class="shop-navigation__account-wrapper"
+      :show="userStore.isLoginProcess || !myAccountLabel"
+    >
       <Button
         shape="plain"
         variant="secondary"
@@ -21,6 +24,15 @@
       icon="logout"
       @click="logout"
     />
+
+    <!-- TODO: Insert correct link when MyAccount area is ready -->
+    <Link
+      v-if="userStore.isLoggedIn || userStore.isLoginProcess"
+      href="#"
+      class="shop-navigation__account-icon"
+    >
+      <Icon class="shop-navigation__icon" icon="person" />
+    </Link>
     <Link href="#" class="shop-navigation__shopping-list">
       <Icon class="shop-navigation__icon" icon="assignment" />
     </Link>
@@ -32,7 +44,12 @@
 </template>
 
 <script>
-import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  useContext,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
@@ -48,9 +65,9 @@ export default defineComponent({
     LoadingSpinner,
   },
   setup() {
-    const { i18n } = useContext()
-
+    const { i18n, app } = useContext()
     const userStore = useUserStore()
+    const router = useRouter()
 
     const myAccountLabel = computed(() => {
       if (userStore.isLoginProcess) return ''
@@ -61,9 +78,13 @@ export default defineComponent({
     })
 
     const handleMyAccount = () => {
-      if (userStore.isLoggedIn) return
-
-      userStore.login()
+      if (userStore.isLoggedIn) {
+        router.push({
+          path: app.localePath('shop-my-account'),
+        })
+      } else {
+        userStore.login()
+      }
     }
 
     return {
@@ -85,13 +106,24 @@ export default defineComponent({
     @apply tw-pb-6;
   }
 
-  &__account {
+  &__account-wrapper {
     @apply tw-hidden;
-    @apply tw--my-2;
 
     @screen md {
-      @apply tw-flex;
+      @apply tw-block;
     }
+  }
+
+  &__account-icon {
+    @apply tw-block;
+
+    @screen md {
+      @apply tw-hidden;
+    }
+  }
+
+  &__account {
+    @apply tw--my-2;
   }
 
   &__logout {
@@ -129,7 +161,8 @@ export default defineComponent({
 
   &__comparhension,
   &__shopping-list,
-  &__shopping-cart {
+  &__shopping-cart,
+  &__account-icon {
     @apply tw-ml-3;
 
     @screen md {
@@ -144,7 +177,8 @@ export default defineComponent({
   &__account,
   &__comparhension,
   &__shopping-list,
-  &__shopping-cart {
+  &__shopping-cart,
+  &__account-icon {
     @apply tw-text-pv-red;
     @apply tw-transition-colors;
     @apply tw-ease-in-out;

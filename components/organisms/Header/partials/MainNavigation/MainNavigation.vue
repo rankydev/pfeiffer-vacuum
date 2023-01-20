@@ -14,7 +14,10 @@
       class="main-navigation__items"
       :class="{ 'main-navigation__items--active': isActive }"
     >
-      <MainNavigationLevel :navigation-entries="navigationEntries" />
+      <MainNavigationLevel
+        :navigation-entries="navigationEntries"
+        :flyout-links="flyoutLinks"
+      />
       <!-- flyout -->
       <!-- sign in -->
     </div>
@@ -34,6 +37,13 @@ export default defineComponent({
   },
   props: {
     navigationEntries: {
+      type: Array,
+      default: /* istanbul ignore next */ () => [],
+    },
+    /**
+     * A list of flyout links for the top navigation
+     */
+    flyoutLinks: {
       type: Array,
       default: /* istanbul ignore next */ () => [],
     },

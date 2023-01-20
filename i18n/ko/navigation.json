@@ -3,6 +3,9 @@
     "signIn": {
       "label": "로그인"
     },
+    "logout": {
+      "mobileLabel": "로그 아웃"
+    },
     "overview": {
       "label": "개요"
     },
