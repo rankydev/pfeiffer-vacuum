@@ -79,7 +79,7 @@ export const usePricesStore = defineStore('prices', () => {
     if (!isLoggedIn.value) return
 
     if (!isApprovedUser.value) {
-      logger.error('User is not approved yet. Prices can not be loaded')
+      logger.info('User is not approved yet. Prices can not be loaded')
       return
     }
 
