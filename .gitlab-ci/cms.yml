@@ -20,11 +20,18 @@ cms-sync-dev-space-automatically-for-develop:
     - develop
 
 cms-sync-dev-space-for-develop-after-manual-deployment:
-  extends: .cms-sync
+  extends: cms-sync-dev-space-automatically-for-develop
   needs: ["deploy-develop-to-dev-manually"]
+  only:
+    - develop
+
+cms-sync-dev-space-for-branch-after-manual-deployment:
+  extends: .cms-sync
+  needs: ["deploy-branch-to-dev-manually"]
   environment:
     name: dev2
   except:
+    - develop
     - main
     - tags
 
