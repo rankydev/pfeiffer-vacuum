@@ -7,6 +7,7 @@
     @submit="pushSearchTerm"
     @click:icon="pushSearchTerm"
     @input="loadSuggestions"
+    @focus="emitFocus"
   />
 </template>
 
@@ -27,7 +28,7 @@ export default defineComponent({
   components: {
     PvInput,
   },
-  emits: ['submit'],
+  emits: ['submit', 'focus'],
   setup(props, { emit }) {
     const router = useRouter()
     const route = useRoute()
@@ -48,6 +49,10 @@ export default defineComponent({
       })
     }
 
+    const emitFocus = (val) => {
+      emit('focus', val)
+    }
+
     onMounted(() => {
       pvInput.value.$refs.input.focus()
     })
@@ -58,6 +63,7 @@ export default defineComponent({
       loadSuggestions,
       blurSuggestions,
       pvInput,
+      emitFocus,
     }
   },
 })
