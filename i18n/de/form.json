@@ -30,6 +30,8 @@
     "houseNumber": "Nummer",
     "postCode": "PLZ",
     "city": "Stadt",
+    "supplement": "Adresszusatz",
+    "department": "Abteilung",
     "submit": "Absenden",
     "dataPrivacy": "Datenschutz"
   },

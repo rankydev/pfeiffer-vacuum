@@ -1,8 +1,13 @@
 <template>
   <div class="address-data">
-    <ResultHeadline :headline="$t('myaccount.addressData')" link="/" />
+    <ResultHeadline
+      :headline="$t('myaccount.addressData')"
+      :link="localePath('shop-my-account')"
+    />
     <template v-if="billingAddress">
-      <SectionHeadline class="address-data__section-headline">
+      <SectionHeadline
+        class="address-data__section-headline address-data__section-headline--billing-address"
+      >
         {{ $t('myaccount.billingAddress') }}
       </SectionHeadline>
       <AddressCard
@@ -16,12 +21,14 @@
       :text="$t('myaccount.billingAddressMissing')"
     />
 
-    <SectionHeadline class="address-data__section-headline">
+    <SectionHeadline
+      class="address-data__section-headline address-data__section-headline--delivery-address"
+    >
       {{ $t('myaccount.deliveryAddress') }}
     </SectionHeadline>
     <div class="address-data__delivery-addresses">
       <div class="address-data__add-delivery-address">
-        <NuxtLink :to="localePath('shop-my-account')">
+        <NuxtLink :to="localePath('shop-my-account-address-data-add')">
           {{ $t('myaccount.addDeliveryAddress') }}
           <Icon icon="add" />
         </NuxtLink>
@@ -94,17 +101,29 @@ export default defineComponent({
   &__section-headline {
     @apply tw-mb-6;
 
-    &:first-child {
+    &--billing-address {
       @apply tw-mt-2;
     }
 
-    &:last-child {
+    &--delivery-address {
       @apply tw-mt-8;
     }
   }
 
+  &__billing-address {
+    @apply tw-w-full;
+
+    @screen md {
+      @apply tw-w-6/12;
+    }
+  }
+
   &__delivery-addresses {
-    @apply tw-grid tw-grid-cols-2 tw-gap-x-8 tw-gap-y-6;
+    @apply tw-grid tw-grid-cols-1 tw-gap-x-8 tw-gap-y-6;
+
+    @screen md {
+      @apply tw-grid-cols-2;
+    }
   }
 
   &__add-delivery-address {
@@ -122,6 +141,7 @@ export default defineComponent({
       @apply tw-flex;
       @apply tw-items-center;
       @apply tw-gap-x-5;
+      @apply tw-p-8;
     }
   }
 }

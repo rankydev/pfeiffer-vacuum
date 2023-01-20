@@ -26,10 +26,15 @@ export const useUserApi = () => {
     })
   }
 
+  const createUserDeliveryAddress = async (address) => {
+    return await axios.$post(`${config.USER_API}/deliveryaddresses`, address)
+  }
+
   return {
     getUserData,
     register,
     getUserBillingAddress,
     getUserDeliveryAddresses,
+    createUserDeliveryAddress,
   }
 }

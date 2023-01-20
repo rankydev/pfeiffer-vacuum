@@ -31,6 +31,8 @@
     "houseNumber": "숫자",
     "postCode": "우편번호",
     "city": "도시",
+    "supplement": "주소 추가",
+    "department": "부서",
     "submit": "제출하다",
     "dataPrivacy": "개인정보 취급방침"
   },

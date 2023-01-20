@@ -14,8 +14,7 @@
   },
   "password": {
     "minLength": "Consists of at least 8 letters",
-    "capitalLetter":
-    "Contains at least 1 capital letter and 1 lower case",
+    "capitalLetter": "Contains at least 1 capital letter and 1 lower case",
     "digit": "Contains at least 1 digit",
     "tooLong": "Your password may be too long (max. 128 characters)"
   },
@@ -29,6 +28,8 @@
     "message": "Your message",
     "street": "Street",
     "houseNumber": "No.",
+    "supplement": "Address supplement",
+    "department": "Department",
     "postCode": "ZIP Code",
     "city": "City",
     "submit": "Submit",
@@ -42,12 +43,9 @@
     "success": "Your request was sent successfully!",
     "error": {
       "defaultError": "Could not send your request.",
-      "customerAlreadyExists":
-        "You already have a Pfeiffer Vacuum account and your password remains unchanged.",
-      "technicalError":
-        "A technical error occurred. Please contact the Pfeiffer Vacuum support.",
-      "customerInconsistentError":
-        "There is a problem with your account. Please contact our customer service."
+      "customerAlreadyExists": "You already have a Pfeiffer Vacuum account and your password remains unchanged.",
+      "technicalError": "A technical error occurred. Please contact the Pfeiffer Vacuum support.",
+      "customerInconsistentError": "There is a problem with your account. Please contact our customer service."
     }
   }
 }

@@ -19,5 +19,10 @@
   "setDefaultAddress": "Set as default",
   "defaultDelivery": "Default delivery address",
   "addressData": "Address data",
-  "addDeliveryAddress": "Add delivery address"
+  "addDeliveryAddress": "Add delivery address",
+  "addressDataAddPage": "Add address data",
+  "addressDataAddPageDescription": "Here you can add a new delivery address. Please fill in all the mandatory fields. ",
+  "addressDataAddPageSubmitBtn": "Save and go back",
+  "addressDataAddPageLinkBtn": "Back to overview",
+  "addDeliveryAddressError": "Could not save delivery address."
 }

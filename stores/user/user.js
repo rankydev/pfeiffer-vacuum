@@ -99,6 +99,15 @@ export const useUserStore = defineStore('user', () => {
     await Promise.all([loadBillingAddress(), loadDeliveryAddresses()])
   }
 
+  const createDeliveryAddress = async (address) => {
+    try {
+      await userApi.createUserDeliveryAddress(address)
+    } catch (e) {
+      logger.error(`Error when creating delivery addresses. Returning null.`, e)
+      return null
+    }
+  }
+
   const login = async () => {
     logger.debug('login')
     const { i18n, app } = ctx
@@ -165,6 +174,7 @@ export const useUserStore = defineStore('user', () => {
     logout,
     loadBillingAddress,
     loadDeliveryAddresses,
+    createDeliveryAddress,
     loadAddressData,
     register: userApi.register,
   }
