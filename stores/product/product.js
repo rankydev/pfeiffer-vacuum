@@ -260,8 +260,6 @@ export const useProductStore = defineStore('product', () => {
         loadProductReferences(id),
         loadProductAccessories(),
       ])
-
-      await pricesStore.loadPrice(id)
     }
 
     await Promise.all([
@@ -269,24 +267,26 @@ export const useProductStore = defineStore('product', () => {
       // load every time even if product is cached. Because matrix gets cleared after each product page leave
       hydrateVariationMatrix(),
       // needs to be called even if product data was already loaded (SSR) because prices can only be loaded client side
-      pricesStore.loadProductReferenceGroupsPrices(),
+      pricesStore.loadAllPrices(),
     ])
   }
 
   return {
+    // meta
     breadcrumb,
     metaData,
+
+    // prices
+    price,
+    productReferencesPrices,
+    loadAllPrices: pricesStore.loadAllPrices,
 
     // Product
     product,
     productType,
-    price,
     accessoriesGroups,
     productAccessoriesGroups,
-    loadProductReferenceGroupsPrices:
-      pricesStore.loadProductReferenceGroupsPrices,
     productReferences, // please note: this NEEDS to be exported, even though it is not used outside. Dependent computeds below will not work if removed. This may be a pinia bug.
-    productReferencesPrices,
     productReferencesSpareParts,
     productReferencesConsumables,
     productReferencesRecommendedAccessories,

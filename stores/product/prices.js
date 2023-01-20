@@ -16,30 +16,26 @@ export const usePricesStore = defineStore('prices', () => {
   const productReferencesPrices = ref([])
 
   const userStore = useUserStore()
-  const { isApprovedUser, currentUser } = storeToRefs(userStore)
+  const { isApprovedUser, currentUser, isLoggedIn } = storeToRefs(userStore)
 
-  const loadPrice = async (id) => {
-    // don't load product prices if the user is not approved yet
-    if (!isApprovedUser.value) {
-      return
-    }
-
-    const { uid } = currentUser.value
-    const url = joinURL(config.PRODUCTS_API, id, uid, 'price')
+  const loadPrice = async (productId, uid) => {
+    const url = joinURL(config.PRODUCTS_API, productId, uid, 'price')
     const result = await axios.$get(url, {
       params: { fields: 'FULL' },
     })
+
     price.value = result
   }
 
-  const loadProductReferenceGroupsPrices = async () => {
-    // don't load prices if the user is not approved yet
-    if (!isApprovedUser.value) return
-
+  const loadProductReferenceGroupsPrices = async (productId, uid) => {
     productReferencesPrices.value = []
 
     const loadedPrices = REFERENCE_GROUPS_LIST.map(async (referenceGroup) => {
-      const res = await getProductReferenceGroupPrices(referenceGroup)
+      const res = await getProductReferenceGroupPrices(
+        productId,
+        uid,
+        referenceGroup
+      )
       return res
     })
 
@@ -47,24 +43,11 @@ export const usePricesStore = defineStore('prices', () => {
     productReferencesPrices.value = results.flat()
   }
 
-  const getProductReferenceGroupPrices = async (referenceGroup) => {
-    const productId = route.value.params.product || ''
-
-    if (!productId) {
-      throw new Error('No valid id given in route object.')
-    }
-
-    // don't load product prices if the user is not approved yet
-    if (!isApprovedUser.value) {
-      return []
-    }
-    const { uid } = currentUser.value
-
-    if (!uid) {
-      logger.error('No customer id given.')
-      return []
-    }
-
+  const getProductReferenceGroupPrices = async (
+    productId,
+    uid,
+    referenceGroup
+  ) => {
     if (!REFERENCE_GROUPS_LIST.includes(referenceGroup)) {
       logger.error(
         `Cannot get ${referenceGroup} prices. Referencegroup '${referenceGroup}' not valid.`
@@ -87,11 +70,34 @@ export const usePricesStore = defineStore('prices', () => {
     }
   }
 
+  const loadAllPrices = async () => {
+    const productId = route.value.params.product || ''
+    if (!productId) {
+      throw new Error('No valid id given in route object.')
+    }
+
+    if (!isLoggedIn.value) return
+
+    if (!isApprovedUser.value) {
+      logger.error('User is not approved yet. Prices can not be loaded')
+      return
+    }
+
+    const { uid } = currentUser.value
+    if (!uid) {
+      logger.error('No customer id given.')
+      return
+    }
+
+    await Promise.all([
+      loadPrice(productId, uid),
+      loadProductReferenceGroupsPrices(productId, uid),
+    ])
+  }
+
   return {
     price,
     productReferencesPrices,
-    loadPrice,
-    loadProductReferenceGroupsPrices,
-    getProductReferenceGroupPrices,
+    loadAllPrices,
   }
 })

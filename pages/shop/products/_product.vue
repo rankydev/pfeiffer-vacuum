@@ -77,15 +77,18 @@ import {
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
+
+import { storeToRefs } from 'pinia'
 import { useProductStore, useVariationmatrixStore } from '~/stores/product'
 import { useUserStore } from '~/stores/user'
-import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
+
 import { useErrorHandler } from '~/composables/useErrorHandler'
+import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
+
 import Page from '~/components/templates/Page/Page'
-import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
+import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
-import { storeToRefs } from 'pinia'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
 import VariantSelection from '~/components/molecules/VariantSelection/VariantSelection'
 
@@ -136,8 +139,8 @@ export default defineComponent({
      */
     const userStore = useUserStore()
     const { isLoggedIn, isApprovedUser } = storeToRefs(userStore)
-    watch(isLoggedIn, productStore.loadProductReferenceGroupsPrices)
-    watch(isApprovedUser, productStore.loadProductReferenceGroupsPrices)
+    watch(isLoggedIn, productStore.loadAllPrices)
+    watch(isApprovedUser, productStore.loadAllPrices)
 
     /**
      * build the cms slug
