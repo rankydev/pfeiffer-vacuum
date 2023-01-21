@@ -22,5 +22,7 @@
   "addressDataAddPageDescription": "Hier können Sie eine neue Lieferadresse hinzufügen. Bitte füllen Sie alle Pflichtfelder aus. ",
   "addressDataAddPageSubmitBtn": "Speichern und zurückgehen",
   "addressDataAddPageLinkBtn": "Zurück zur Übersicht",
-  "addDeliveryAddressError": "Lieferadresse konnte nicht gespeichert werden."
+  "addDeliveryAddressError": "Lieferadresse konnte nicht gespeichert werden.",
+  "deleteDeliveryAddressSuccess": "Lieferadresse wurde erfolgreich gelöscht.",
+  "setDefaultDeliveryAddressSuccess": "Lieferadresse wurde erfolgreich als Standard-Lieferadresse gespeichert."
 }

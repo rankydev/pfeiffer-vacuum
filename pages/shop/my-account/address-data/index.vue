@@ -61,6 +61,7 @@ import {
   defineComponent,
   onBeforeMount,
   onServerPrefetch,
+  useContext,
 } from '@nuxtjs/composition-api'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
@@ -70,6 +71,7 @@ import { useUserStore } from '~/stores/user'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import { storeToRefs } from 'pinia'
 import Icon from '~/components/atoms/Icon/Icon'
+import { useToast } from '~/composables/useToast'
 
 export default defineComponent({
   name: 'AddressData',
@@ -83,8 +85,9 @@ export default defineComponent({
   setup() {
     const userStore = useUserStore()
     const { billingAddress, deliveryAddresses } = storeToRefs(userStore)
-
+    const { i18n } = useContext()
     const { redirectOnError } = useErrorHandler()
+    const toast = useToast()
 
     const loadAddressData = async () => {
       await redirectOnError(userStore.loadAddressData)
@@ -92,10 +95,26 @@ export default defineComponent({
 
     const handleDelete = async (e) => {
       await userStore.deleteDeliveryAddress(e)
+      toast.success(
+        {
+          description: i18n.t('myaccount.deleteDeliveryAddressSuccess'),
+        },
+        {
+          timeout: 8000,
+        }
+      )
     }
 
     const handleSetDefault = async (e) => {
       await userStore.setDefaultDeliveryAddress(e)
+      toast.success(
+        {
+          description: i18n.t('myaccount.setDefaultDeliveryAddressSuccess'),
+        },
+        {
+          timeout: 8000,
+        }
+      )
     }
 
     onServerPrefetch(async () => await loadAddressData())

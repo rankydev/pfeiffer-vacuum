@@ -76,6 +76,7 @@
             icon="edit"
             variant="secondary"
             shape="plain"
+            :href="editAddressUrl"
           />
         </div>
         <div v-if="!isBillingAddress" class="default-switch">
@@ -113,7 +114,12 @@
 </template>
 
 <script>
-import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  toRefs,
+  useContext,
+} from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import { useCountriesStore } from '~/stores/countries'
@@ -146,8 +152,17 @@ export default defineComponent({
   emits: ['setDefault', 'delete'],
   setup(props, { emit }) {
     const countriesStore = useCountriesStore()
-
+    const { localePath } = useContext()
     const { address } = toRefs(props)
+
+    const editAddressUrl = computed(() => {
+      return localePath({
+        name: 'shop-my-account-address-data-edit',
+        params: {
+          edit: address.value.id,
+        },
+      })
+    })
 
     // ToDo: Please test function when data is implemented
     const getCountry = async (isocode) => {
@@ -166,6 +181,7 @@ export default defineComponent({
       getCountry,
       setAsDefault,
       deleteAddress,
+      editAddressUrl,
     }
   },
 })

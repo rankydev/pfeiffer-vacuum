@@ -24,5 +24,7 @@
   "addressDataAddPageDescription": "Here you can add a new delivery address. Please fill in all the mandatory fields. ",
   "addressDataAddPageSubmitBtn": "Save and go back",
   "addressDataAddPageLinkBtn": "Back to overview",
-  "addDeliveryAddressError": "Could not save delivery address."
+  "addDeliveryAddressError": "Could not save delivery address.",
+  "deleteDeliveryAddressSuccess": "Delivery address was deleted successfully.",
+  "setDefaultDeliveryAddressSuccess": "Successfully saved delivery address as default delivery address."
 }
