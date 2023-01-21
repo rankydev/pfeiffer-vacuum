@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import { useCountriesStore } from '~/stores/countries'
@@ -143,9 +143,11 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ['updateAddresses'],
+  emits: ['setDefault', 'delete'],
   setup(props, { emit }) {
     const countriesStore = useCountriesStore()
+
+    const { address } = toRefs(props)
 
     // ToDo: Please test function when data is implemented
     const getCountry = async (isocode) => {
@@ -153,13 +155,11 @@ export default defineComponent({
     }
 
     const setAsDefault = async () => {
-      // ToDo: add logic here when data is implemented
-      emit('updateAddresses')
+      emit('setDefault', address.value.id)
     }
 
     const deleteAddress = async () => {
-      // ToDo: add logic here when data is implemented
-      emit('updateAddresses')
+      emit('delete', address.value.id)
     }
 
     return {

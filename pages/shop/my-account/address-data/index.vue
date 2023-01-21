@@ -39,6 +39,8 @@
           :key="deliveryAddress.id"
           :address="deliveryAddress"
           editable
+          @delete="handleDelete"
+          @setDefault="handleSetDefault"
         />
       </template>
     </div>
@@ -88,10 +90,18 @@ export default defineComponent({
       await redirectOnError(userStore.loadAddressData)
     }
 
+    const handleDelete = async (e) => {
+      await userStore.deleteDeliveryAddress(e)
+    }
+
+    const handleSetDefault = async (e) => {
+      await userStore.setDefaultDeliveryAddress(e)
+    }
+
     onServerPrefetch(async () => await loadAddressData())
     onBeforeMount(async () => await loadAddressData())
 
-    return { billingAddress, deliveryAddresses }
+    return { billingAddress, deliveryAddresses, handleDelete, handleSetDefault }
   },
 })
 </script>

@@ -108,6 +108,28 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const deleteDeliveryAddress = async (id) => {
+    try {
+      await userApi.deleteUserDeliveryAddress(id)
+      // refetch delivery addresses
+      loadDeliveryAddresses()
+    } catch (e) {
+      logger.error(`Error when deleting delivery address. Returning null.`, e)
+      return null
+    }
+  }
+
+  const setDefaultDeliveryAddress = async (id) => {
+    try {
+      await userApi.setUserDefaultDeliveryAddress(id)
+      // refetch delivery addresses
+      loadDeliveryAddresses()
+    } catch (e) {
+      logger.error(`Error when setting default delivery address.`, e)
+      return null
+    }
+  }
+
   const login = async () => {
     logger.debug('login')
     const { i18n, app } = ctx
@@ -175,6 +197,8 @@ export const useUserStore = defineStore('user', () => {
     loadBillingAddress,
     loadDeliveryAddresses,
     createDeliveryAddress,
+    deleteDeliveryAddress,
+    setDefaultDeliveryAddress,
     loadAddressData,
     register: userApi.register,
   }
