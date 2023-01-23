@@ -20,6 +20,7 @@
           ? 'filled'
           : 'outlined'
       "
+      :text-center="true"
       :disabled="!item.selectable"
       allow-label-line-break
       @click.native="itemClicked(item)"

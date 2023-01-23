@@ -12,6 +12,9 @@
   "previousVersionsSpareParts": "这仅为我们当前的版本提供备件。 对于旧产品，请联系普发真空服务。 请查看下载区的操作手册，以确定适合您要求的备件，或直接联系普发真空。",
   "service": "服务",
   "selectVariant": "请选择型号",
+  "addToCart": "添加到购物车",
+  "addToList": "添加到清单",
+  "addToInstalledBase": "添加到已安装的基础",
   "file": {
     "description": "描述",
     "type": "类型",
@@ -31,7 +34,9 @@
   "selectVariantExplained": "请根据您的个性化需求选择合适的产品变体，以查看相应的产品详情。",
   "scrollToVariantSelection": "选择变体",
   "priceOnRequest": "价格可垂询",
+  "noPriceAvailable": "没有可用的价格",
   "help": "需要帮助吗？",
+  "articleNumber": "订单号",
   "userStatus": {
     "lead": {
       "priceInfo": {
