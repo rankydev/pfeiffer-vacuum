@@ -262,6 +262,15 @@ export default defineComponent({
     &--is-default {
       button {
         @apply tw-text-pv-grey-16;
+
+        &:hover {
+          @apply tw-text-pv-grey-16;
+          @apply tw-cursor-not-allowed;
+        }
+
+        &:focus {
+          @apply tw-text-pv-grey-16;
+        }
       }
     }
   }

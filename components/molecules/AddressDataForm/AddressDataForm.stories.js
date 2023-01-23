@@ -9,6 +9,10 @@ const argTypes = {
     type: Object,
     default: () => undefined,
   },
+  addressData: {
+    type: Object,
+    default: () => undefined,
+  },
 }
 
 export default {
