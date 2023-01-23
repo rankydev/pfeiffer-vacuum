@@ -1,5 +1,4 @@
 <template>
-  <!-- NOTE: we could use :key="slugs.slug" on CmsQuery to force CmsQuery to re-evaluate. this way we could get subpage meta page information (f.e. page title) -->
   <CmsQuery
     :handle-preview-events="true"
     :slug="slugs.slug"
@@ -12,7 +11,7 @@
           <ContentWrapper>
             <div class="cart-page">
               <!-- ToDo: remove Placehoder text and insert Cart data -->
-              <h1>Card Template</h1>
+              <h1>Cart Template</h1>
             </div>
           </ContentWrapper>
         </template>
@@ -57,36 +56,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss" scoped>
-.cart-page {
-  @apply tw-grid;
-  grid-gap: 20px;
-  grid-template:
-    'nav'
-    'content'
-    'widget'
-    / 100%;
-
-  @screen lg {
-    @apply tw-mt-10 tw-m-0;
-    grid-template:
-      'nav content'
-      'widget content'
-      'spacer content'
-      / 20% auto;
-
-    &__sidebar {
-      grid-area: nav;
-    }
-
-    &__content {
-      grid-area: content;
-    }
-
-    &__account-manager {
-      grid-area: widget;
-    }
-  }
-}
-</style>
