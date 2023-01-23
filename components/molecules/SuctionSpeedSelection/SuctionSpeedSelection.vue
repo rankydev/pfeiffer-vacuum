@@ -2,7 +2,7 @@
   <div class="suction-speed-selection">
     <ButtonGroup
       class="suction-speed-selection__button-group"
-      selected-value="meters"
+      :selected-value="selectedValue"
       :values="buttonGroupOptions"
       @update="
         unitChanged($event)
@@ -17,6 +17,7 @@
             placeholder="0"
             input-type="number"
             :required="true"
+            class="suction-speed-selection__minimum-input"
           />
         </div>
 
@@ -76,6 +77,7 @@ export default defineComponent({
     const unit = ref('m³/h')
     const limitMeters = '10.000'
     const limitLiters = '2778'
+    const selectedValue = ref('meters')
     const buttonGroupOptions = [
       {
         label: 'm³/h',
@@ -146,7 +148,8 @@ export default defineComponent({
     }
 
     // when the unit changes, f.ex from liters to meters, the displayed value and unit are supposed to change
-    const unitChanged = () => {
+    const unitChanged = (ev) => {
+      selectedValue.value = ev
       const tempLower =
         Number(upperBound.value) >= Number(lowerBound.value)
           ? Number(lowerBound.value)
@@ -217,6 +220,7 @@ export default defineComponent({
     }
 
     return {
+      selectedValue,
       lowerBound,
       upperBound,
       unit,
