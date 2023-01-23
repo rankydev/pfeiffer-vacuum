@@ -108,6 +108,18 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const updateDeliveryAddress = async (id, address) => {
+    try {
+      await userApi.updateUserDeliveryAddress(id, address)
+    } catch (e) {
+      logger.error(
+        `Error when updating delivery address with id '${id}'. Returning null.`,
+        e
+      )
+      return null
+    }
+  }
+
   const deleteDeliveryAddress = async (id) => {
     try {
       await userApi.deleteUserDeliveryAddress(id)
@@ -128,6 +140,13 @@ export const useUserStore = defineStore('user', () => {
       logger.error(`Error when setting default delivery address.`, e)
       return null
     }
+  }
+
+  const getDeliveryAddressByID = (id) => {
+    if (!deliveryAddresses.value.addresses.length) return undefined
+    return deliveryAddresses.value.addresses.find(
+      (deliveryAddress) => deliveryAddress.id === id
+    )
   }
 
   const login = async () => {
@@ -197,8 +216,10 @@ export const useUserStore = defineStore('user', () => {
     loadBillingAddress,
     loadDeliveryAddresses,
     createDeliveryAddress,
+    updateDeliveryAddress,
     deleteDeliveryAddress,
     setDefaultDeliveryAddress,
+    getDeliveryAddressByID,
     loadAddressData,
     register: userApi.register,
   }

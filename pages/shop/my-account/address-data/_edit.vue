@@ -1,11 +1,15 @@
 <template>
-  <div>edit</div>
+  <address-data-form-section is-edit-mode />
 </template>
 
 <script>
-export default {
-  name: '_edit',
-}
-</script>
+import AddressDataFormSection from '~/components/organisms/AddressDataFormSection/AddressDataFormSection'
 
-<style scoped></style>
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  components: {
+    AddressDataFormSection,
+  },
+})
+</script>

@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
 import PvInput from '@/components/atoms/FormComponents/PvInput/PvInput'
 import FormCountrySelection from '@/components/molecules/FormCountrySelection/FormCountrySelection'
 import { helpers, required, requiredIf } from '@vuelidate/validators'
@@ -102,6 +102,10 @@ export default defineComponent({
       type: Object,
       default: () => undefined,
     },
+    addressData: {
+      type: Object,
+      default: () => undefined,
+    },
   },
   emits: [
     /**
@@ -112,7 +116,9 @@ export default defineComponent({
     'update:data',
     'update:isOpen',
   ],
-  setup(_, { emit }) {
+  setup(props, { emit }) {
+    const { addressData } = toRefs(props)
+    const hasAddressData = computed(() => Object.keys(addressData).length)
     const addressDataObject = {
       firstName: '',
       lastName: '',
@@ -125,7 +131,9 @@ export default defineComponent({
       town: '',
     }
 
-    const requestData = ref(addressDataObject)
+    const requestData = ref(
+      hasAddressData.value ? addressData : addressDataObject
+    )
 
     const resetForm = () => {
       emit('update:isOpen', false)

@@ -30,6 +30,13 @@ export const useUserApi = () => {
     return await axios.$post(`${config.USER_API}/deliveryaddresses`, address)
   }
 
+  const updateUserDeliveryAddress = async (id, address) => {
+    return await axios.$put(
+      `${config.USER_API}/deliveryaddresses/${id}`,
+      address
+    )
+  }
+
   const deleteUserDeliveryAddress = async (id) => {
     return await axios.$delete(`${config.USER_API}/deliveryaddresses/${id}`)
   }
@@ -46,6 +53,7 @@ export const useUserApi = () => {
     getUserBillingAddress,
     getUserDeliveryAddresses,
     createUserDeliveryAddress,
+    updateUserDeliveryAddress,
     deleteUserDeliveryAddress,
     setUserDefaultDeliveryAddress,
   }

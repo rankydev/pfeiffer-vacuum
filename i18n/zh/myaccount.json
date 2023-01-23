@@ -18,11 +18,15 @@
   "deleteDeliveryAddress": "删除",
   "setDefaultAddress": "设为默认",
   "defaultDelivery": "默认的配送地址",
+  "addressDataEditPage": "編輯地址數據",
   "addressDataAddPage": "添加地址數據",
+  "addressDataEditPageDescription": "在這裡編輯選擇的送貨地址。",
   "addressDataAddPageDescription": "在這裡您可以添加新的送貨地址。請填寫所有必填字段。",
+  "addressDataEditPageSubmitBtn": "保存更改",
   "addressDataAddPageSubmitBtn": "保存並返回",
   "addressDataAddPageLinkBtn": "返回概覽",
+  "updateDeliveryAddressError": "無法保存更改。",
   "addDeliveryAddressError": "無法保存送貨地址。",
   "deleteDeliveryAddressSuccess": "收貨地址刪除成功。",
-  "setDefault Delivery Address Success": "成功將收貨地址保存為默認收貨地址。"
+  "setDefaultDeliveryAddressSuccess": "成功將收貨地址保存為默認收貨地址。"
 }
