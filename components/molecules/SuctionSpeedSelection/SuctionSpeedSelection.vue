@@ -10,27 +10,30 @@
       "
     />
     <div class="suction-speed-selection__inputs">
-      <PvInput
-        v-model="lowerBound"
-        class="suction-speed-selection__minimum"
-        placeholder="0"
-        input-type="number"
-        :required="true"
-      />
+      <div class="suction-speed-selection__input-wrapper">
+        <div class="suction-speed-selection__minimum">
+          <PvInput
+            v-model="lowerBound"
+            placeholder="0"
+            input-type="number"
+            :required="true"
+          />
+        </div>
 
-      <hr class="suction-speed-selection__divider-line" />
+        <hr class="suction-speed-selection__divider-line" />
 
-      <div class="suction-speed-selection__maximum">
-        <PvInput
-          v-model="upperBound"
-          :placeholder="meters ? limitMeters : limitLiters"
-          input-type="number"
-          class="suction-speed-selection__maximum--selected-value"
-          :required="true"
-        />
+        <div class="suction-speed-selection__maximum">
+          <PvInput
+            v-model="upperBound"
+            :placeholder="meters ? limitMeters : limitLiters"
+            input-type="number"
+            class="suction-speed-selection__maximum--selected-value"
+            :required="true"
+          />
 
-        <div class="suction-speed-selection__maximum--selected-unit">
-          {{ unit }}
+          <div class="suction-speed-selection__maximum--selected-unit">
+            {{ unit }}
+          </div>
         </div>
       </div>
 
@@ -247,6 +250,14 @@ export default defineComponent({
     @apply tw-relative;
     @apply tw-text-pv-grey-16;
     @apply tw-bg-pv-black;
+    @apply tw-ml-4;
+    @apply tw-mr-4;
+  }
+
+  &__input-wrapper {
+    @apply tw-flex;
+    @apply tw-w-full;
+    @apply tw-justify-between;
   }
 
   &__minimum {
