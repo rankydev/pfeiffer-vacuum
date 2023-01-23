@@ -157,18 +157,20 @@ export default defineComponent({
   @apply tw-gap-4;
 
   &__row-container {
+    @apply tw-flex tw-flex-wrap;
+    @apply tw-gap-4;
+
     @screen md {
       @apply tw-flex tw-flex-row;
-      @apply tw-gap-4;
 
       &--three-quarters {
         flex-grow: 3;
-        @apply tw-w-auto;
+        width: auto !important;
       }
 
       &--one-quarter {
         @apply tw-grow;
-        @apply tw-w-auto;
+        width: auto !important;
       }
 
       &--half {
