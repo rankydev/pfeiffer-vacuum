@@ -51,3 +51,18 @@
   transform: translateX(100%);
   transition: all .3s ease-in 0s
 }
+
+
+.transform-position-item {
+  transition: all 1s;
+}
+
+.transform-position-enter,
+.transform-position-leave-to {
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+.transform-position-leave-active {
+  position: absolute;
+}

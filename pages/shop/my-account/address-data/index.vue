@@ -26,8 +26,15 @@
     >
       {{ $t('myaccount.deliveryAddress') }}
     </SectionHeadline>
-    <div class="address-data__delivery-addresses">
-      <div class="address-data__add-delivery-address">
+    <transition-group
+      name="transform-position"
+      class="address-data__delivery-addresses"
+      tag="div"
+    >
+      <div
+        :key="0"
+        class="address-data__add-delivery-address transform-position-item"
+      >
         <NuxtLink :to="localePath('shop-my-account-address-data-add')">
           {{ $t('myaccount.addDeliveryAddress') }}
           <Icon icon="add" />
@@ -39,11 +46,12 @@
           :key="deliveryAddress.id"
           :address="deliveryAddress"
           editable
+          class="transform-position-item"
           @delete="handleDelete"
           @setDefault="handleSetDefault"
         />
       </template>
-    </div>
+    </transition-group>
 
     <!--      <t-button
         class="address-data-content__add-address tw-col-span-12 md:tw-col-span-6"
@@ -125,7 +133,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .address-data {
   &__section-headline {
     @apply tw-mb-6;

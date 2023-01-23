@@ -86,7 +86,16 @@ export const useUserStore = defineStore('user', () => {
   const loadDeliveryAddresses = async () => {
     try {
       const result = await userApi.getUserDeliveryAddresses()
-      deliveryAddresses.value = result
+      deliveryAddresses.value = {
+        addresses: result.addresses
+          .map((item) => {
+            return {
+              ...item,
+              defaultShippingAddress: item.defaultShippingAddress || false,
+            }
+          })
+          .sort((a, b) => b.defaultShippingAddress - a.defaultShippingAddress),
+      }
     } catch (e) {
       logger.error(
         `Error when fetching billing address for user. Returning empty object.`,
