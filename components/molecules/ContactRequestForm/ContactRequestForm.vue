@@ -2,13 +2,13 @@
   <div class="contact-request-form">
     <LoadingSpinner :show="loading">
       <GeneralRequest
-        v-if="contactRequestType === 'GENERAL_QUERY'"
+        v-if="contactRequestType.type === 'GENERAL_QUERY'"
         :type="contactRequestType"
         @update="requestData = $event"
       />
       <TopicRequest
         v-else
-        :type="contactRequestType"
+        :type="contactRequestType.type"
         @update="requestData = $event"
       />
       <div class="contact-request-form__link">
@@ -56,18 +56,11 @@ export default defineComponent({
   },
   props: {
     /**
-     * defines which input fields are included in the form. There are two types: GeneralRequest and TopicRequest
+     * Defines which input fields are included in the form. Object is passed from Storyblok and contains a field 'type' that will be used for our components.
      */
     contactRequestType: {
-      type: String,
+      type: Object,
       required: true,
-      validator: (val) =>
-        [
-          'QUOTE',
-          'SERVICE_REQUEST',
-          'PRODUCT_INFORMATION',
-          'GENERAL_QUERY',
-        ].includes(val),
     },
   },
   emits: ['close'],

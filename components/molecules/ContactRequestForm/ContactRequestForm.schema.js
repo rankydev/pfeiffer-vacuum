@@ -12,7 +12,7 @@ export default {
   image: null,
   preview_field: null,
   is_root: false,
-  preview_tmpl: null,
+  preview_tmpl: '<div>{{ contactRequestType.type }}</div>',
   is_nestable: true,
   all_presets: [],
   preset_id: null,
