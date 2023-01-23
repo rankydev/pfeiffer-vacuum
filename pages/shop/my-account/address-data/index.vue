@@ -175,7 +175,10 @@ export default defineComponent({
     a {
       @apply tw-flex;
       @apply tw-items-center;
+      @apply tw-justify-center;
       @apply tw-gap-x-5;
+      @apply tw-w-full;
+      @apply tw-h-full;
       @apply tw-p-8;
     }
   }
