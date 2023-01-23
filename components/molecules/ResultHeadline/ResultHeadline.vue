@@ -8,7 +8,12 @@
     }"
   >
     <nuxt-link v-if="link" class="result-headline__link" :to="url">
-      <Icon v-if="link" class="result-headline__icon" icon="arrow_back_ios" />
+      <Icon
+        v-if="link"
+        class="result-headline__icon"
+        icon="arrow_back_ios"
+        size="large"
+      />
     </nuxt-link>
     <div class="result-headline__content">
       <h1 v-if="searchTerm || headline" class="result-headline__headline">
