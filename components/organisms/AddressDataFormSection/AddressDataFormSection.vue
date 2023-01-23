@@ -17,10 +17,10 @@
         }}
       </div>
       <AddressDataForm
-        @update:data="addressDataObject = $event"
         :selected-country="country"
         :selected-region="region"
-        :addressData="addressDataObject"
+        :address-data="addressDataObject"
+        @update:data="addressDataObject = $event"
       />
       <div class="address-data-add__interactions">
         <Button

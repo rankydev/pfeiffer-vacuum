@@ -3,7 +3,7 @@ import AddressDataForm from './AddressDataForm'
 const argTypes = {
   selectedCountry: {
     type: Object,
-    default: () => {},
+    default: () => ({}),
   },
   selectedRegion: {
     type: Object,
