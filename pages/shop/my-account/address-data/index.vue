@@ -10,11 +10,13 @@
       >
         {{ $t('myaccount.billingAddress') }}
       </SectionHeadline>
-      <AddressCard
-        class="address-data__billing-address"
-        :address="billingAddress"
-        :is-billing-address="true"
-      />
+      <div class="address-data__grid-wrapper">
+        <AddressCard
+          class="address-data__billing-address"
+          :address="billingAddress"
+          :is-billing-address="true"
+        />
+      </div>
     </template>
     <Infobox
       v-if="!billingAddress"
@@ -28,7 +30,7 @@
     </SectionHeadline>
     <transition-group
       name="transform-position"
-      class="address-data__delivery-addresses"
+      class="address-data__grid-wrapper"
       tag="div"
     >
       <div
@@ -149,13 +151,9 @@ export default defineComponent({
 
   &__billing-address {
     @apply tw-w-full;
-
-    @screen md {
-      @apply tw-w-6/12;
-    }
   }
 
-  &__delivery-addresses {
+  &__grid-wrapper {
     @apply tw-grid tw-grid-cols-1 tw-gap-x-8 tw-gap-y-6;
 
     @screen md {
