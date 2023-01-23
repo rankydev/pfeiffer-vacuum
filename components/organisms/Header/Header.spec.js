@@ -6,6 +6,18 @@ import TopNavigation from './partials/TopNavigation/TopNavigation.vue'
 import MainNavigation from './partials/MainNavigation/MainNavigation.vue'
 import ShopNavigation from './partials/ShopNavigation/ShopNavigation.vue'
 
+const mockedHydrateMenuItems = jest.fn()
+jest.mock('~/stores/myaccount', () => {
+  return {
+    __esModule: true,
+    useMyAccountStore: () => {
+      return {
+        hydrateMenuItems: mockedHydrateMenuItems,
+      }
+    },
+  }
+})
+
 describe('Header', () => {
   describe('initial state', () => {
     it('should render all partials', () => {

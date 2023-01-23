@@ -39,6 +39,7 @@ import MyAccountSidebar from '~/components/organisms/MyAccount/sidebar/MyAccount
 import MyAccountManager from '~/components/organisms/MyAccount/sidebar/MyAccountManager'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
+import { usePageStore, CMS_PAGE } from '~/stores/page'
 
 export default defineComponent({
   name: 'MyAccount',
@@ -52,6 +53,9 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const context = useContext()
+
+    const pageStore = usePageStore()
+    pageStore.setPageType(CMS_PAGE)
 
     /**
      * build the cms slug

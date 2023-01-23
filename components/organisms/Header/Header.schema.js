@@ -17,6 +17,13 @@ export default {
       maximum: 4,
       description: 'Links on the upper right',
     },
+    shopNavigationLinks: {
+      type: 'bloks',
+      restrict_components: true,
+      component_whitelist: ['ShopNavigationEntry'],
+      pos: 3,
+      description: 'Shop Navigation Entries',
+    },
   },
   image: null,
   preview_field: null,
