@@ -151,7 +151,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .address-data-form {
   @apply tw-flex tw-flex-col;
   @apply tw-gap-4;
