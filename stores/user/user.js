@@ -109,24 +109,11 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const createDeliveryAddress = async (address) => {
-    try {
-      await userApi.createUserDeliveryAddress(address)
-    } catch (e) {
-      logger.error(`Error when creating delivery addresses. Returning null.`, e)
-      return null
-    }
+    await userApi.createUserDeliveryAddress(address)
   }
 
   const updateDeliveryAddress = async (id, address) => {
-    try {
-      await userApi.updateUserDeliveryAddress(id, address)
-    } catch (e) {
-      logger.error(
-        `Error when updating delivery address with id '${id}'. Returning null.`,
-        e
-      )
-      return null
-    }
+    await userApi.updateUserDeliveryAddress(id, address)
   }
 
   const deleteDeliveryAddress = async (id) => {

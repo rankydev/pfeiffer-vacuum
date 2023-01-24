@@ -18,6 +18,8 @@
   "deleteDeliveryAddress": "Löschen",
   "setDefaultAddress": "Als Standard benutzen",
   "defaultDelivery": "Standard Lieferungsadresse",
+  "addressData": "Address Daten",
+  "addDeliveryAddress": "Lieferadresse hinzufügen",
   "addressDataEditPage": "Adressdaten bearbeiten",
   "addressDataAddPage": "Adressdaten hinzufügen",
   "addressDataEditPageDescription": "Bearbeiten Sie hier die ausgewählte Lieferadresse.",

@@ -90,7 +90,7 @@ export default defineComponent({
     const v = useVuelidate()
     const userStore = useUserStore()
 
-    let addressDataObject = ref({})
+    const addressDataObject = ref({})
     const loading = ref(false)
     const { billingAddress } = storeToRefs(userStore)
     const { isEditMode } = toRefs(props)
@@ -98,8 +98,8 @@ export default defineComponent({
 
     const country = computed(() => {
       if (
-        billingAddress.value.country &&
-        Object.keys(billingAddress.value.country).length
+        billingAddress.value?.country &&
+        Object.keys(billingAddress.value?.country).length
       )
         return billingAddress.value.country
 
@@ -108,8 +108,8 @@ export default defineComponent({
 
     const region = computed(() => {
       if (
-        billingAddress.value.region &&
-        Object.keys(billingAddress.value.region).length
+        billingAddress.value?.region &&
+        Object.keys(billingAddress.value?.region).length
       )
         return billingAddress.value.region
 
@@ -129,7 +129,10 @@ export default defineComponent({
     onMounted(() => {
       if (!isEditMode.value && !addressID) return
 
-      addressDataObject.value = userStore.getDeliveryAddressByID(addressID)
+      // create a copy of the entry to not mutate the store directly at this point
+      addressDataObject.value = {
+        ...userStore.getDeliveryAddressByID(addressID),
+      }
     })
 
     const submit = async () => {

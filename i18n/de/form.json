@@ -37,19 +37,16 @@
   },
   "validationErrorMessages": {
     "required": "Wert ist erforderlich",
+    "requiredNameOrCompany": "Firmenname oder Vor- und Nachname erforderlich",
     "email": "Der Wert ist keine gültige E-Mail-Adresse"
   },
   "message": {
     "success": "Ihre Anfrage wurde erfolgreich gesendet",
     "error": {
       "defaultError": "Anfrage konnte nicht gesendet werden",
-      "customerAlreadyExists":
-        "Sie haben bereits ein Konto bei Pfeiffer Vacuum und Ihr Passwort bleibt unverändert.",
-      "technicalError":
-        "Ein technischer Fehler ist aufgetreten. Bitte kontaktieren Sie den Pfeiffer Vacuum Support.",
-      "customerInconsistentError":
-        "Es gibt ein Problem mit Ihrem Account. Bitte wenden Sie sich direkt an den Kundenservice."
-
+      "customerAlreadyExists": "Sie haben bereits ein Konto bei Pfeiffer Vacuum und Ihr Passwort bleibt unverändert.",
+      "technicalError": "Ein technischer Fehler ist aufgetreten. Bitte kontaktieren Sie den Pfeiffer Vacuum Support.",
+      "customerInconsistentError": "Es gibt ein Problem mit Ihrem Account. Bitte wenden Sie sich direkt an den Kundenservice."
     }
   }
 }

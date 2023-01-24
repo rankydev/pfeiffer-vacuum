@@ -12,7 +12,7 @@
         :label="$t('form.contactRequest.firstname')"
         :placeholder="$t('form.contactRequest.firstname')"
         required
-        @input="$emit('update:data', requestData)"
+        :rules="{ requiredIfNoCompany }"
       />
       <PvInput
         v-model="requestData.lastName"
@@ -20,7 +20,7 @@
         :label="$t('form.contactRequest.surname')"
         :placeholder="$t('form.contactRequest.surname')"
         required
-        @input="$emit('update:data', requestData)"
+        :rules="{ requiredIfNoCompany }"
       />
     </div>
     <PvInput
@@ -28,13 +28,12 @@
       :label="$t('form.contactRequest.company')"
       :placeholder="$t('form.contactRequest.company')"
       required
-      @input="$emit('update:data', requestData)"
+      :rules="{ requiredIfNoNameInformation }"
     />
     <PvInput
       v-model="requestData.department"
       :label="$t('form.contactRequest.department')"
       :placeholder="$t('form.contactRequest.department')"
-      @input="$emit('update:data', requestData)"
     />
     <div class="address-data-form__row-container">
       <PvInput
@@ -43,22 +42,19 @@
         :label="$t('form.contactRequest.street')"
         :placeholder="$t('form.contactRequest.street')"
         required
-        @input="$emit('update:data', requestData)"
+        :rules="{ ...requiredWithMessage, maxLength: maxLength(255) }"
       />
       <PvInput
         v-model="requestData.line2"
         class="address-data-form__row-container--one-quarter"
         :label="$t('form.contactRequest.houseNumber')"
         :placeholder="$t('form.contactRequest.houseNumber')"
-        required
-        @input="$emit('update:data', requestData)"
       />
     </div>
     <PvInput
       v-model="requestData.remarks"
       :label="$t('form.contactRequest.supplement')"
       :placeholder="$t('form.contactRequest.supplement')"
-      @input="$emit('update:data', requestData)"
     />
     <div class="address-data-form__row-container">
       <PvInput
@@ -67,7 +63,7 @@
         :label="$t('form.contactRequest.postCode')"
         :placeholder="$t('form.contactRequest.postCode')"
         required
-        @input="$emit('update:data', requestData)"
+        :rules="{ ...requiredWithMessage, maxLength: maxLength(10) }"
       />
       <PvInput
         v-model="requestData.town"
@@ -75,17 +71,28 @@
         :label="$t('form.contactRequest.city')"
         :placeholder="$t('form.contactRequest.city')"
         required
-        @input="$emit('update:data', requestData)"
+        :rules="{ ...requiredWithMessage, maxLength: maxLength(255) }"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { computed, defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+  toRefs,
+} from '@nuxtjs/composition-api'
 import PvInput from '@/components/atoms/FormComponents/PvInput/PvInput'
 import FormCountrySelection from '@/components/molecules/FormCountrySelection/FormCountrySelection'
-import { helpers, required, requiredIf } from '@vuelidate/validators'
+import {
+  helpers,
+  required,
+  requiredUnless,
+  maxLength,
+} from '@vuelidate/validators'
 
 export default defineComponent({
   name: 'AddressDataForm',
@@ -107,45 +114,42 @@ export default defineComponent({
       default: () => undefined,
     },
   },
-  emits: [
-    /**
-     * Fired on keystroke.
-     * @event change
-     * @property {string} value
-     */
-    'update:data',
-    'update:isOpen',
-  ],
-  setup(props, { emit }) {
+  setup(props) {
+    // please note: request data === addressData since objects are parsed by reference (even as props)
+    // so every v-model in the template will instantly mutate the parent addressData object
     const { addressData } = toRefs(props)
-    const hasAddressData = computed(() => Object.keys(addressData).length)
-    const addressDataObject = {
-      firstName: '',
-      lastName: '',
-      companyName: '',
-      department: '',
-      line1: '',
-      line2: '',
-      remarks: '',
-      postalCode: '',
-      town: '',
+    const requestData = ref(addressData)
+
+    const { i18n } = useContext()
+
+    const requiredWithMessage = {
+      required: helpers.withMessage(
+        i18n.t('form.validationErrorMessages.required'),
+        required
+      ),
     }
 
-    const requestData = ref(
-      hasAddressData.value ? addressData : addressDataObject
+    const requiredIfNoCompany = helpers.withMessage(
+      i18n.t('form.validationErrorMessages.requiredNameOrCompany'),
+      requiredUnless(computed(() => !!requestData.value.companyName))
     )
 
-    const resetForm = () => {
-      emit('update:isOpen', false)
-      emit('update:data', requestData)
-    }
+    const requiredIfNoNameInformation = helpers.withMessage(
+      i18n.t('form.validationErrorMessages.requiredNameOrCompany'),
+      requiredUnless(
+        computed(
+          () => !!requestData.value.firstName && !!requestData.value.lastName
+        )
+      )
+    )
 
     return {
       helpers,
-      required,
-      requiredIf,
+      requiredWithMessage,
+      requiredIfNoCompany,
+      requiredIfNoNameInformation,
+      maxLength,
       requestData,
-      resetForm,
     }
   },
 })

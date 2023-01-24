@@ -37,6 +37,7 @@
   },
   "validationErrorMessages": {
     "required": "Value is required",
+    "requiredNameOrCompany": "Company or first and last name required",
     "email": "Value is not a valid email address"
   },
   "message": {
