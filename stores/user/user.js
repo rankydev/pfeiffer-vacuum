@@ -5,6 +5,7 @@ import {
   onBeforeMount,
   onServerPrefetch,
   ssrRef,
+  ref,
 } from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
 import { useKeycloak } from './partials/useKeycloak'
@@ -28,6 +29,7 @@ export const useUserStore = defineStore('user', () => {
     createKeycloakInstance,
     removeCookiesAndDeleteAuthData,
   } = useKeycloak()
+  const isLoading = ref(false)
 
   const currentUser = ssrRef(null)
 
@@ -49,6 +51,15 @@ export const useUserStore = defineStore('user', () => {
       currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
   )
 
+  const userCountry = computed(() => userBillingAddress.value.country || {})
+
+  const changePasswordLink = computed(() => {
+    const keycloakBaseUrl = ctx.$config.KEYCLOAK_BASE_URL + 'realms/'
+    const keycloackRealm = ctx.$config.KEYCLOAK_REALM_NAME
+    const language = `kc_locale=${ctx.i18n.locale}`
+    return `${keycloakBaseUrl}${keycloackRealm}/account/password?${language}`
+  })
+
   watch(auth, async (newAuth) => {
     //load currentUser data if currentUser obj is empty
     if (newAuth && !currentUser.value) {
@@ -66,21 +77,42 @@ export const useUserStore = defineStore('user', () => {
       return
     }
 
+    isLoading.value = true
+
     try {
       const user = await userApi.getUserData()
       currentUser.value = user
     } catch (e) {
       logger.error('user not found', e)
+    } finally {
+      isLoading.value = false
     }
   }
 
   const updateCurrentUser = async (data) => {
+    isLoading.value = true
     try {
       await userApi.updateUserData(data)
       await loadCurrentUser()
     } catch (e) {
       logger.error('cannot patch user data', e)
+    } finally {
+      isLoading.value = false
     }
+  }
+
+  const addCompanyData = async (data) => {
+    isLoading.value = true
+    let res
+    try {
+      res = await userApi.addCompanyData(data)
+      await loadCurrentUser()
+    } catch (e) {
+      logger.error('cannot add company data', e)
+    } finally {
+      isLoading.value = false
+    }
+    return res
   }
 
   const login = async () => {
@@ -102,6 +134,8 @@ export const useUserStore = defineStore('user', () => {
   const logout = async () => {
     logger.debug('logout')
 
+    isLoading.value = true
+
     // remove internal data
     removeCookiesAndDeleteAuthData()
 
@@ -114,6 +148,8 @@ export const useUserStore = defineStore('user', () => {
       const { router, localePath } = app
       return router.push(localePath('/'))
     }
+
+    isLoading.value = false
   }
 
   /* istanbul ignore else  */
@@ -140,11 +176,15 @@ export const useUserStore = defineStore('user', () => {
     isOpenUser,
     isRejectedUser,
     isLoggedIn,
+    isLoading,
     userBillingAddress,
+    userCountry,
+    changePasswordLink,
 
     // actions
     loadCurrentUser,
     updateCurrentUser,
+    addCompanyData,
     login,
     logout,
     register: userApi.register,

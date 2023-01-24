@@ -5,16 +5,15 @@
       <Button
         v-for="(btn, index) in buttons"
         :key="index"
-        class="section-headline__buttons--desktop"
-        v-bind="{ ...btn }"
+        :class="[
+          'section-headline__buttons',
+          {
+            'section-headline__buttons--desktop': btn.desktopOnly,
+            'section-headline__buttons--mobile': btn.mobileOnly,
+          },
+        ]"
+        v-bind="btn"
         @click="$emit('btnClick', index)"
-      />
-      <Button
-        v-if="mobileLink"
-        icon="arrow_forward"
-        variant="secondary"
-        shape="plain"
-        class="section-headline__buttons--mobile"
       />
     </div>
   </div>
@@ -26,10 +25,6 @@ export default {
     buttons: {
       type: Array,
       default: () => [],
-    },
-    mobileLink: {
-      type: String,
-      default: '',
     },
   },
   emits: ['btnClick'],

@@ -51,6 +51,10 @@ export default {
       default: 'success',
       validator: (val) => ['success', 'warning', 'error'].includes(val),
     },
+    preventIconChange: {
+      type: Boolean,
+      default: false,
+    },
     headline: {
       type: String,
       default: '',
@@ -87,14 +91,16 @@ export default {
       }
     })
 
-    // Change icon after two seconds
-    setTimeout(() => {
-      icon.value.visible = false
+    if (!props.preventIconChange) {
+      // Change icon after two seconds
       setTimeout(() => {
-        icon.value.name = 'close'
-        icon.value.visible = true
-      }, 300)
-    }, 2000)
+        icon.value.visible = false
+        setTimeout(() => {
+          icon.value.name = 'close'
+          icon.value.visible = true
+        }, 300)
+      }, 2000)
+    }
 
     return { icon, isSlim }
   },

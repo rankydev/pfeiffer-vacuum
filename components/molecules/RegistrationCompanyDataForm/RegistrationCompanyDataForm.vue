@@ -1,6 +1,6 @@
 <template>
   <div class="registration-company-data-form">
-    <div class="registration-company-data-form__header">
+    <div v-if="!noHeader" class="registration-company-data-form__header">
       <h2>{{ $t('registration.formCompanyData.title') }}</h2>
       <Button
         v-if="isOpen"
@@ -207,6 +207,10 @@ export default defineComponent({
     PvLabel,
   },
   props: {
+    noHeader: {
+      type: Boolean,
+      default: false,
+    },
     isOpen: {
       type: Boolean,
       default: false,

@@ -1,188 +1,157 @@
 <template>
   <div class="account-data">
-    <MyAccountHeading />
-    <SectionHeadline :buttons="accountDataButtons" @btnClick="toggleEdit">
-      Account Data
-    </SectionHeadline>
-    <div
-      :class="[
-        'account-data__account-specific',
-        { 'account-data__account-specific--edit-mode': isEditMode },
-      ]"
-    >
-      <MyAccountEditableTextfield
-        v-for="entry in accountDataFields"
-        :key="entry.id"
-        :class="'account-data__' + entry.id"
-        :value="entry.value"
-        :label="entry.label"
-        :disabled="entry.disabled"
-        :editable="entry.editable && isEditMode"
-        :button="entry.button || null"
-        @changed="dataChanged(entry.id, $event)"
+    <LoadingSpinner :show="isLoading">
+      <ResultHeadline
+        headline="Account Data"
+        :link="localePath('shop-my-account')"
       />
-    </div>
-    <SectionHeadline>Company Data</SectionHeadline>
-    <div class="account-data__company-specific">
-      <MyAccountEditableTextfield
-        v-for="entry in companyData"
-        :key="entry.id"
-        :class="'account-data__' + entry.id"
-        :value="entry.value"
-        :label="entry.label"
+      <SectionHeadline :buttons="accountDataButtons" @btnClick="toggleEdit">
+        Account Data
+      </SectionHeadline>
+      <div
+        :class="[
+          'account-data__account-specific',
+          { 'account-data__account-specific--edit-mode': isEditMode },
+        ]"
+      >
+        <MyAccountEditableTextfield
+          v-for="entry in accountDataFields"
+          :key="entry.id"
+          :class="'account-data__' + entry.id"
+          :value="entry.value"
+          :label="entry.label"
+          :disabled="entry.disabled"
+          :editable="entry.editable && isEditMode"
+          :button="entry.button || null"
+          @changed="dataChanged(entry.id, $event)"
+        />
+        <template v-if="isEditMode">
+          <Button
+            v-for="(btn, index) in saveAccountDataButtons"
+            v-bind="btn"
+            :key="index"
+            class="account-data__save-account-data-mobile"
+            @click="toggleEdit(index)"
+          />
+        </template>
+      </div>
+      <SectionHeadline>Company Data</SectionHeadline>
+      <GlobalMessage
+        v-if="infoMessage"
+        v-bind="infoMessage"
+        :prevent-icon-change="true"
+        class="account-data__info-message"
       />
-    </div>
+      <div v-if="isLeadUser">
+        <RegistrationCompanyDataForm
+          :no-header="true"
+          :is-open="isAddCompanyMode"
+          :selected-country="userCountry"
+          @update:isOpen="toggleAddCompany"
+          @update:data="setCompanyData"
+        />
+        <div
+          v-if="isAddCompanyMode"
+          class="account-data__add-company-additional"
+        >
+          <RegistrationPageDataProtection />
+          <div class="account-data__add-company-buttons">
+            <Button
+              label="Save company data"
+              icon="save"
+              variant="secondary"
+              @click="saveCompanyData"
+            />
+            <Button
+              label="Discard"
+              icon="close"
+              variant="secondary"
+              shape="outlined"
+              @click="toggleAddCompany(false)"
+            />
+          </div>
+        </div>
+      </div>
+      <div v-else class="account-data__company-specific">
+        <MyAccountEditableTextfield
+          v-for="entry in companyDataPattern"
+          :key="entry.id"
+          :class="'account-data__' + entry.id"
+          :value="entry.value"
+          :label="entry.label"
+        />
+      </div>
+    </LoadingSpinner>
   </div>
 </template>
 
 <script>
+import { storeToRefs } from 'pinia'
 import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
-import MyAccountHeading from '~/components/organisms/MyAccount/partials/MyAccountHeading'
+import { useUserStore } from '~/stores/user'
+import { useAccountDataStore } from '~/stores/myaccount'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import MyAccountEditableTextfield from '~/components/organisms/MyAccount/partials/MyAccountEditableTextfield'
-import { useUserStore } from '~/stores/user'
-import { storeToRefs } from 'pinia'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
+import RegistrationCompanyDataForm from '~/components/molecules/RegistrationCompanyDataForm/RegistrationCompanyDataForm'
+import RegistrationPageDataProtection from '~/components/organisms/RegistrationPage/RegistrationPageDataProtection/RegistrationPageDataProtection'
+import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
+import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 
 export default defineComponent({
   name: 'AccountData',
   components: {
-    MyAccountHeading,
     SectionHeadline,
     MyAccountEditableTextfield,
+    LoadingSpinner,
+    RegistrationCompanyDataForm,
+    RegistrationPageDataProtection,
+    GlobalMessage,
+    ResultHeadline,
   },
   setup() {
+    // Get data from userStore
     const userStore = useUserStore()
-    const { currentUser, userBillingAddress } = storeToRefs(userStore)
+    const {
+      currentUser,
+      userCountry,
+      isLoading,
+      isLeadUser,
+      isOpenUser,
+      isRejectedUser,
+    } = storeToRefs(userStore)
     const { updateCurrentUser } = userStore
 
-    const userCountry = computed(() => userBillingAddress.value.country?.name)
+    // Get data from accountDataStore
+    const accountDataStore = useAccountDataStore()
+    const {
+      isEditMode,
+      accountDataPattern,
+      companyDataPattern,
+      infoMessagePatterns,
+      accountDataButtons,
+      saveAccountDataButtons,
+      saveCompanyData,
+      addedCompanyData,
+      showCompanySuccess,
+    } = storeToRefs(accountDataStore)
 
-    const formattedAddress = computed(
-      () =>
-        `${userBillingAddress.value.line1} ${userBillingAddress.value.line2}, ${userBillingAddress.value.postalCode} ${userBillingAddress.value.town}, ${userCountry.value}`
-    )
+    const isAddCompanyMode = ref(false)
+    const updatedData = ref({})
 
-    const accountData = computed(() => [
-      {
-        id: 'company',
-        label: 'Company / University',
-        value: currentUser?.value.orgUnit?.name || '-',
-        editable: true,
-        disabled: true,
-      },
-      {
-        id: 'country',
-        label: 'Country / Location',
-        value: userCountry.value,
-        editable: true,
-        disabled: true,
-      },
-      {
-        id: 'name',
-        label: 'Name',
-        value: currentUser?.value.name,
-        editable: true,
-        onlyDisplay: true,
-      },
-      {
-        id: 'firstName',
-        label: 'Firstname',
-        value: currentUser?.value.firstName,
-        editable: true,
-        onlyEdit: true,
-      },
-      {
-        id: 'lastName',
-        label: 'Lastname',
-        value: currentUser?.value.lastName,
-        editable: true,
-        onlyEdit: true,
-      },
-      {
-        id: 'email',
-        label: 'Email',
-        value: currentUser?.value.displayUid,
-        editable: true,
-        disabled: true,
-      },
-      {
-        id: 'password',
-        label: 'Password',
-        value: '**********',
-        button: {
-          label: 'Change password',
-          variant: 'secondary',
-          shape: 'plain',
-          icon: 'lock',
-        },
-      },
-    ])
-
-    const companyData = computed(() => [
-      {
-        id: 'company-further-details',
-        label: 'Futher company details',
-        value: currentUser?.value.orgUnit?.furtherDetails,
-      },
-      {
-        id: 'customer-number',
-        label: 'Customer Number',
-        value: currentUser?.value.customerId,
-      },
-      {
-        id: 'department',
-        label: 'Department / Institute',
-        value: currentUser?.value.department,
-      },
-      {
-        id: 'vat',
-        label: 'VAT Number',
-        value: currentUser?.value.orgUnit?.vatID,
-      },
-      {
-        id: 'phone',
-        label: 'Phone',
-        value: currentUser?.value.phone,
-      },
-      {
-        id: 'fax',
-        label: 'Fax',
-        value: currentUser?.value.fax,
-      },
-      {
-        id: 'address',
-        label: 'Address',
-        value: formattedAddress.value,
-      },
-    ])
-
-    const isEditMode = ref(false)
+    const infoMessage = computed(() => {
+      if (showCompanySuccess.value)
+        return infoMessagePatterns.value.companyDataSuccess
+      if (isOpenUser.value) return infoMessagePatterns.value.open
+      if (isRejectedUser.value) return infoMessagePatterns.value.rejected
+      return null
+    })
 
     const accountDataFields = computed(() =>
       isEditMode.value
-        ? accountData.value.filter((e) => !e.onlyDisplay)
-        : accountData.value.filter((e) => !e.onlyEdit)
+        ? accountDataPattern.value.filter((e) => !e.onlyDisplay)
+        : accountDataPattern.value.filter((e) => !e.onlyEdit)
     )
-
-    const accountDataButtons = computed(() =>
-      isEditMode.value
-        ? [
-            {
-              label: 'Discard',
-              icon: 'close',
-              variant: 'secondary',
-              shape: 'outlined',
-            },
-            {
-              label: 'Save changes',
-              icon: 'save',
-              variant: 'secondary',
-            },
-          ]
-        : [{ icon: 'edit', variant: 'secondary', shape: 'plain' }]
-    )
-
-    const updatedData = ref({})
 
     const toggleEdit = async (i) => {
       if (isEditMode.value && i > 0) {
@@ -191,19 +160,30 @@ export default defineComponent({
       isEditMode.value = !isEditMode.value
     }
 
-    const dataChanged = (field, value) => {
-      updatedData.value[field] = value
-      console.log(updatedData.value)
-    }
+    const toggleAddCompany = (val) => (isAddCompanyMode.value = val)
+
+    const dataChanged = (field, value) => (updatedData.value[field] = value)
+
+    const setCompanyData = (val) => (addedCompanyData.value = val?.companyData)
 
     return {
-      isEditMode,
-      companyData,
+      userCountry,
+      companyDataPattern,
       accountDataButtons,
       accountDataFields,
-      userBillingAddress,
+      infoMessage,
+      saveAccountDataButtons,
+      isLeadUser,
+      isLoading,
+      isEditMode,
+      isAddCompanyMode,
+
+      // Actions
+      saveCompanyData,
       toggleEdit,
+      toggleAddCompany,
       dataChanged,
+      setCompanyData,
     }
   },
 })
@@ -240,12 +220,50 @@ export default defineComponent({
   &__fax,
   &__firstName,
   &__lastName {
-    @apply tw-col-span-6;
+    @apply tw-col-span-12;
+
+    @screen md {
+      @apply tw-col-span-6;
+    }
   }
 
   &__account-specific--edit-mode {
     #{$root}__email {
       @apply tw-col-span-12;
+    }
+  }
+
+  &__add-company {
+    &-additional {
+      @apply tw-flex tw-flex-col;
+      @apply tw-mt-6;
+      @apply tw-gap-6;
+    }
+
+    &-buttons {
+      @apply tw-flex tw-flex-col;
+      @apply tw-gap-6;
+
+      @screen md {
+        @apply tw-flex-row;
+      }
+    }
+  }
+
+  &__info-message {
+    @apply tw-my-4;
+  }
+
+  &__save-account-data-mobile {
+    @apply tw-flex;
+    @apply tw-col-span-12;
+
+    &:first-of-type {
+      @apply tw-my-4;
+    }
+
+    @screen md {
+      @apply tw-hidden;
     }
   }
 }
