@@ -12,6 +12,7 @@
         'button--disabled': disabled,
         'button--icon-only': !label,
         'button--no-linebreaks': !allowLabelLineBreak,
+        'button--text-center': textCenter,
       },
       `button--gap-${gap}`,
     ]"
@@ -109,6 +110,13 @@ export default defineComponent({
       validator: (val) => ['xsmall', 'small', 'normal'].includes(val),
     },
     /**
+     * Set if the text should be centered
+     */
+    textCenter: {
+      type: Boolean,
+      default: false,
+    },
+    /**
      * Set if the button is clickable
      */
     disabled: {
@@ -183,6 +191,10 @@ export default defineComponent({
   @apply tw-font-bold;
   @apply tw-justify-between;
   @apply tw-text-left;
+
+  &--text-center {
+    @apply tw-justify-center;
+  }
 
   &--no-linebreaks {
     @screen md {

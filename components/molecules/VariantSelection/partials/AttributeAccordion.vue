@@ -29,6 +29,7 @@
               class="variant-selection-accordion__not-selectable-button"
               shape="plain"
               variant="secondary"
+              :text-center="true"
               :label="
                 hasOpenNotSelectable(item.slotName)
                   ? $t('product.hideNotSelectable')
@@ -98,6 +99,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .variant-selection-accordion {
+  @apply tw-mb-9;
+
   &__attributes {
     @apply tw-mt-2;
     @apply tw-mb-5;
