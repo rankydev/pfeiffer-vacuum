@@ -109,4 +109,11 @@ export default {
     type: Boolean,
     default: false,
   },
+  /**
+   * Set if the text should be centered
+   */
+  textCenter: {
+    type: Boolean,
+    default: false,
+  },
 }
