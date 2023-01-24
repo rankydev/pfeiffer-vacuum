@@ -105,6 +105,8 @@ export const useProductStore = defineStore('product', () => {
     })
   })
 
+  const productType = computed(() => product.value?.productType || '')
+
   const getReferenceGroupWithPrices = (type) => {
     if (!productReferences.value || !type) {
       return []
@@ -115,12 +117,12 @@ export const useProductStore = defineStore('product', () => {
     )
   }
 
-  const getReferencesWithMappedPrices = (rererences) => {
-    if (!rererences) {
+  const getReferencesWithMappedPrices = (references) => {
+    if (!references) {
       return []
     }
 
-    return rererences.map((item) => {
+    return references.map((item) => {
       const foundPrice = productReferencesPrices.value?.find((priceItem) => {
         return priceItem.code === item.target.code
       })
@@ -257,7 +259,6 @@ export const useProductStore = defineStore('product', () => {
         loadProduct(id),
         loadProductReferences(id),
         loadProductAccessories(),
-        pricesStore.loadPrice(id),
       ])
     }
 
@@ -266,27 +267,30 @@ export const useProductStore = defineStore('product', () => {
       // load every time even if product is cached. Because matrix gets cleared after each product page leave
       hydrateVariationMatrix(),
       // needs to be called even if product data was already loaded (SSR) because prices can only be loaded client side
-      pricesStore.loadProductReferenceGroupsPrices(),
+      pricesStore.loadAllPrices(),
     ])
   }
 
   return {
+    // meta
     breadcrumb,
     metaData,
 
+    // prices
+    price,
+    productReferencesPrices,
+    loadAllPrices: pricesStore.loadAllPrices,
+
     // Product
     product,
-    price,
+    productType,
     accessoriesGroups,
     productAccessoriesGroups,
-    getProducts,
-    loadProductReferenceGroupsPrices:
-      pricesStore.loadProductReferenceGroupsPrices,
     productReferences, // please note: this NEEDS to be exported, even though it is not used outside. Dependent computeds below will not work if removed. This may be a pinia bug.
-    productReferencesPrices,
     productReferencesSpareParts,
     productReferencesConsumables,
     productReferencesRecommendedAccessories,
+    getProducts,
     loadByPath,
     loadProductAccessories,
   }

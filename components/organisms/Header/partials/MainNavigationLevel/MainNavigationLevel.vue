@@ -127,6 +127,7 @@
         <div
           v-if="loggedInOrInLoginProcess"
           :class="[`${prefix}__flyout-entry`, `${prefix}__link`]"
+          @click="navigateToMyAccount"
         >
           <Icon icon="person" />
           <span v-if="currentUser">{{ currentUser.name }}</span>
@@ -167,6 +168,7 @@ import {
   computed,
   watch,
   toRefs,
+  useRouter,
 } from '@nuxtjs/composition-api'
 
 import Link from '~/components/atoms/Link/Link.vue'
@@ -209,7 +211,7 @@ export default defineComponent({
   },
   setup(props, { refs }) {
     const { app } = useContext()
-
+    const router = useRouter()
     const userStore = useUserStore()
     const menuStore = useMenuStore()
 
@@ -274,6 +276,13 @@ export default defineComponent({
       userStore.login()
     }
 
+    const navigateToMyAccount = () => {
+      router.push({
+        path: app.localePath('shop-my-account'),
+      })
+      closeMenu()
+    }
+
     return {
       prefix,
       toggleActive,
@@ -289,6 +298,7 @@ export default defineComponent({
       currentUser,
       userStore,
       handleMyAccount,
+      navigateToMyAccount,
       loggedInOrInLoginProcess,
       logout,
     }

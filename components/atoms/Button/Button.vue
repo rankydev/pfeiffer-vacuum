@@ -12,6 +12,7 @@
         'button--disabled': disabled,
         'button--icon-only': !label,
         'button--no-linebreaks': !allowLabelLineBreak,
+        'button--text-center': textCenter,
       },
       `button--gap-${gap}`,
     ]"
@@ -77,6 +78,9 @@ export default defineComponent({
 
   @screen md {
     flex-basis: auto;
+  }
+
+  &--text-center {
     @apply tw-justify-center;
   }
 

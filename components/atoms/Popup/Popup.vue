@@ -8,7 +8,7 @@
       class="popup__content"
       :style="`left: ${left}; top: ${top};`"
     >
-      <slot />
+      <slot :closePopup="closePopup" />
     </div>
   </div>
 </template>
@@ -128,6 +128,7 @@ export default defineComponent({
       left,
       top,
       togglePopup,
+      closePopup,
     }
   },
 })
