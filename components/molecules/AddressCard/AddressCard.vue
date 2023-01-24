@@ -106,6 +106,7 @@
           icon="check"
           variant="secondary"
           shape="plain"
+          :disabled="address.defaultShippingAddress"
           @click="setAsDefault"
         />
       </div>
