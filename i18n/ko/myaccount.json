@@ -1,0 +1,22 @@
+{
+  "address": "주소",
+  "billingAddress": "청구 주소",
+  "billingAddressMissing":
+    "사용자의 청구 주소를 찾을 수 없습니다. 파이퍼 베큠 서비스에 문의하십시오.",
+  "deliveryAddress": "배송 주소",
+  "company": "회사",
+  "firstName": "이름",
+  "lastName": "성",
+  "street": "도로명",
+  "houseNumber": "수",
+  "zip": "우편번호",
+  "town": "도시",
+  "country": "장소",
+  "region": "지역",
+  "editDeliveryAddress": "주소 편집",
+  "saveAddress": "주소 저장",
+  "contactDetails": "연락처 세부 정보s",
+  "deleteDeliveryAddress": "삭제",
+  "setDefaultAddress": "기본값으로 설정",
+  "defaultDelivery": "기본 배송 주소"
+}

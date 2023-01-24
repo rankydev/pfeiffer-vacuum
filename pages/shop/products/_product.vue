@@ -12,23 +12,18 @@
         :meta-data="productStore.metaData"
       >
         <ContentWrapper>
-          <!-- placeholder start -->
-          <div
-            class="tw-flex tw-flex-wrap tw-items-start sm:tw-gap-4 md:tw-gap-6 lg:tw-gap-8"
-          >
-            <h1 class="tw-leading-10 tw-min-w-full md:tw-min-w-0 tw-flex-1">
-              {{ (productStore.product || {}).name }}
-            </h1>
-
-            <div
-              class="tw-hidden tw-bg-pv-grey-88 tw-rounded-md"
-              :class="'md:tw-flex tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-2xl tw-text-center'"
-              style="height: 48px; width: 200px"
-            >
-              Button
+          <div class="product-page">
+            <div class="product-page__headline-wrapper">
+              <h1 class="product-page__headline">
+                {{ (productStore.product || {}).name }}
+              </h1>
+              <Button
+                label="Hilfe zum Produkt"
+                variant="secondary"
+                shape="outlined"
+                icon="help"
+              />
             </div>
-
-            <div class="tw--my-4" style="width: 100%; height: 0px">&nbsp;</div>
 
             <div class="product-page__upper-section">
               <div class="product-page__image-gallery">
@@ -82,15 +77,18 @@ import {
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
+
+import { storeToRefs } from 'pinia'
 import { useProductStore, useVariationmatrixStore } from '~/stores/product'
 import { useUserStore } from '~/stores/user'
-import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
+
 import { useErrorHandler } from '~/composables/useErrorHandler'
+import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
+
 import Page from '~/components/templates/Page/Page'
-import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs.vue'
+import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
-import { storeToRefs } from 'pinia'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
 import VariantSelection from '~/components/molecules/VariantSelection/VariantSelection'
 
@@ -141,8 +139,8 @@ export default defineComponent({
      */
     const userStore = useUserStore()
     const { isLoggedIn, isApprovedUser } = storeToRefs(userStore)
-    watch(isLoggedIn, productStore.loadProductReferenceGroupsPrices)
-    watch(isApprovedUser, productStore.loadProductReferenceGroupsPrices)
+    watch(isLoggedIn, productStore.loadAllPrices)
+    watch(isApprovedUser, productStore.loadAllPrices)
 
     /**
      * build the cms slug
@@ -201,6 +199,34 @@ export default defineComponent({
 </script>
 <style lang="scss">
 .product-page {
+  @apply tw-flex;
+  @apply tw-flex-wrap tw-items-start;
+  @apply tw-gap-4;
+
+  @screen md {
+    @apply tw-gap-6;
+  }
+
+  @screen lg {
+    @apply tw-gap-8;
+  }
+
+  &__headline-wrapper {
+    @apply tw-flex;
+    @apply tw-w-full;
+    @apply tw-justify-between tw-items-center;
+  }
+
+  &__headline {
+    @apply tw-leading-10;
+    @apply tw-min-w-full;
+    @apply tw-flex-1;
+
+    @screen md {
+      @apply tw-min-w-0;
+    }
+  }
+
   &__upper-section {
     @apply tw-flex tw-justify-between;
     @apply tw-flex-col;

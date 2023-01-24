@@ -11,9 +11,11 @@
       {{ subline }}
     </p>
 
-    <p v-if="teaserText" class="stage-content__description">
-      {{ teaserText }}
-    </p>
+    <Richtext
+      v-if="teaserText"
+      :richtext="teaserText"
+      class="stage-content__description"
+    />
 
     <div v-if="buttons.length" class="stage-content__buttons">
       <Button
@@ -28,10 +30,11 @@
 
 <script>
 import Button from '~/components/atoms/Button/Button.vue'
+import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 
 export default {
   name: 'StageContent',
-  components: { Button },
+  components: { Button, Richtext },
   props: {
     /**
      * The headline of the stage
@@ -48,7 +51,7 @@ export default {
       default: '',
     },
     /**
-     * Teaster test of the stage
+     * Teaser test of the stage
      */
     teaserText: {
       type: String,

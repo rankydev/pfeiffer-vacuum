@@ -113,6 +113,48 @@
           />
         </li>
       </template>
+
+      <li v-if="level === 0 && isMobile">
+        <Link
+          v-for="item in flyoutLinks"
+          :key="item._uid"
+          v-bind="item"
+          :class="[`${prefix}__flyout-entry`, `${prefix}__link`]"
+        >
+          <Icon :icon="item.icon" />
+          <span>{{ item.label }}</span>
+        </Link>
+        <div
+          v-if="loggedInOrInLoginProcess"
+          :class="[`${prefix}__flyout-entry`, `${prefix}__link`]"
+          @click="navigateToMyAccount"
+        >
+          <Icon icon="person" />
+          <span v-if="currentUser">{{ currentUser.name }}</span>
+        </div>
+      </li>
+
+      <li
+        v-if="level === 0 && isMobile"
+        :class="`${prefix}__login-button-wrapper`"
+      >
+        <Button
+          variant="secondary"
+          shape="outlined"
+          :icon="loggedInOrInLoginProcess ? 'logout' : 'person'"
+          :label="
+            $t(
+              loggedInOrInLoginProcess
+                ? 'navigation.button.logout.mobileLabel'
+                : 'navigation.button.signIn.label'
+            )
+          "
+          :class="`${prefix}__login-button`"
+          @click.native="
+            loggedInOrInLoginProcess ? logout() : handleMyAccount()
+          "
+        />
+      </li>
     </ul>
   </div>
 </template>
@@ -126,13 +168,17 @@ import {
   computed,
   watch,
   toRefs,
+  useRouter,
 } from '@nuxtjs/composition-api'
 
 import Link from '~/components/atoms/Link/Link.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
 import Button from '~/components/atoms/Button/Button.vue'
+
 import { useMenuStore } from '~/stores/menu'
+import { useUserStore } from '~/stores/user'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'MainNavigationLevel',
@@ -155,19 +201,33 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
+    /**
+     * A list of flyout links for the top navigation
+     */
+    flyoutLinks: {
+      type: Array,
+      default: /* istanbul ignore next */ () => [],
+    },
   },
   setup(props, { refs }) {
     const { app } = useContext()
+    const router = useRouter()
+    const userStore = useUserStore()
+    const menuStore = useMenuStore()
 
-    const menu = useMenuStore()
+    const { currentUser, isLoggedIn, isLoginProcess, logout } =
+      storeToRefs(userStore)
+    const { isActive } = storeToRefs(menuStore)
+
+    const loggedInOrInLoginProcess = computed(() => {
+      return isLoggedIn.value || isLoginProcess.value
+    })
 
     const prefix = computed(() => `primary-nav-${props.level}`)
 
     const activeElement = ref(null)
     const hasActiveElement = computed(() => activeElement.value !== null)
-    const isMobile = app.$breakpoints.isMobile
-    const isTablet = app.$breakpoints.isTablet
-    const isDesktop = app.$breakpoints.isDesktop
+    const { isMobile, isTablet, isDesktop } = app.$breakpoints
     const isHovered = ref(false)
 
     const route = useRoute()
@@ -185,18 +245,18 @@ export default defineComponent({
       return null
     })
 
-    watch(menu.isActive, (isActive) => {
-      if (!isActive) activeElement.value = null
+    watch(isActive, (newIsActive) => {
+      if (!newIsActive) activeElement.value = null
     })
 
     const toggleActive = function (idx) {
       if (props.level >= 2) return false
 
       if (activeElement.value === idx) {
-        if (!isMobile.value && props.level === 0) menu.close('toggle')
+        if (!isMobile.value && props.level === 0) menuStore.close('toggle')
         activeElement.value = null
       } else {
-        if (!isMobile.value && props.level === 0) menu.open(refs.menu)
+        if (!isMobile.value && props.level === 0) menuStore.open(refs.menu)
         activeElement.value = idx
       }
 
@@ -205,10 +265,23 @@ export default defineComponent({
 
     const closeMenu = () => {
       activeElement.value = null
-      menu.close('close')
+      menuStore.close('close')
     }
 
     const hasSubmenu = (entry) => entry?.navigationEntries?.length > 0
+
+    const handleMyAccount = () => {
+      if (isLoggedIn.value) return
+
+      userStore.login()
+    }
+
+    const navigateToMyAccount = () => {
+      router.push({
+        path: app.localePath('shop-my-account'),
+      })
+      closeMenu()
+    }
 
     return {
       prefix,
@@ -222,6 +295,12 @@ export default defineComponent({
       hasSubmenu,
       selectedPrimaryLink,
       closeMenu,
+      currentUser,
+      userStore,
+      handleMyAccount,
+      navigateToMyAccount,
+      loggedInOrInLoginProcess,
+      logout,
     }
   },
 })

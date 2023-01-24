@@ -1,29 +1,42 @@
 <template>
   <div class="shop-navigation">
-    <LoadingSpinner :show="userStore.isLoginProcess || !myAccountLabel">
-      <Button
-        shape="plain"
-        variant="secondary"
-        class="shop-navigation__account"
-        :label="myAccountLabel"
-        icon="person"
-        :prepend-icon="true"
-        gap="narrow"
-        @click="handleMyAccount()"
-      />
-    </LoadingSpinner>
+    <client-only>
+      <Popup>
+        <template #activator="{ togglePopup }">
+          <LoadingSpinner :show="userStore.isLoginProcess">
+            <Button
+              shape="plain"
+              variant="secondary"
+              class="shop-navigation__account"
+              :label="myAccountLabel"
+              icon="person"
+              :prepend-icon="true"
+              gap="narrow"
+              @click="handleMyAccount(togglePopup)"
+            />
+          </LoadingSpinner>
+        </template>
 
-    <Button
-      v-if="userStore.isLoggedIn || userStore.isLoginProcess"
-      shape="plain"
-      variant="secondary"
-      class="shop-navigation__logout"
-      icon="logout"
-      @click="logout"
-    />
-    <Link href="#" class="shop-navigation__shopping-list">
-      <Icon class="shop-navigation__icon" icon="assignment" />
-    </Link>
+        <template #default="{ closePopup }">
+          <div>
+            <MyAccountNavigation
+              class="shop-navigation__myaccount-popup"
+              variant="flyout"
+              @entry-clicked="closePopup"
+            />
+            <Button
+              v-if="userStore.isLoggedIn || userStore.isLoginProcess"
+              shape="outlined"
+              variant="secondary"
+              class="shop-navigation__popup-logout"
+              icon="logout"
+              label="Logout"
+              @click="closePopup(), logout()"
+            />
+          </div>
+        </template>
+      </Popup>
+    </client-only>
 
     <Link href="#" class="shop-navigation__shopping-cart">
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
@@ -44,6 +57,8 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
+import MyAccountNavigation from '~/components/organisms/MyAccount/partials/MyAccountNavigation/MyAccountNavigation.vue'
+import Popup from '~/components/atoms/Popup/Popup.vue'
 
 export default defineComponent({
   components: {
@@ -51,25 +66,32 @@ export default defineComponent({
     Link,
     Button,
     LoadingSpinner,
+    MyAccountNavigation,
+    Popup,
   },
   setup() {
+    const router = useRouter()
     const { i18n, app } = useContext()
     const userStore = useUserStore()
-    const router = useRouter()
+    const isMobile = app.$breakpoints.isMobile
 
     const myAccountLabel = computed(() => {
-      if (userStore.isLoginProcess) return ''
+      if (userStore.isLoginProcess || isMobile.value) return ''
 
       return userStore.isLoggedIn
         ? userStore.currentUser?.name
         : i18n.t('navigation.button.signIn.label')
     })
 
-    const handleMyAccount = () => {
+    const handleMyAccount = (openPopupCallback) => {
       if (userStore.isLoggedIn) {
-        router.push({
-          path: app.localePath('shop-my-account'),
-        })
+        if (isMobile.value) {
+          router.push({
+            path: app.localePath('shop-my-account'),
+          })
+        } else {
+          openPopupCallback()
+        }
       } else {
         userStore.login()
       }
@@ -95,11 +117,14 @@ export default defineComponent({
   }
 
   &__account {
-    @apply tw-hidden;
     @apply tw--my-2;
+  }
+
+  &__account-icon {
+    @apply tw-block;
 
     @screen md {
-      @apply tw-flex;
+      @apply tw-hidden;
     }
   }
 
@@ -112,34 +137,12 @@ export default defineComponent({
     }
   }
 
-  &__account-name {
-    @apply tw-hidden;
-    @apply tw-ml-2;
-    @apply tw-font-bold;
-    @apply tw-leading-6;
-    @apply tw-whitespace-nowrap;
-
-    @screen lg {
-      @apply tw-block;
-    }
-  }
-
-  &__comparhension {
-    @apply tw-hidden;
-
-    @screen md {
-      @apply tw-block;
-    }
-  }
-
   &__icon {
     @apply tw-block;
   }
 
-  &__comparhension,
-  &__shopping-list,
   &__shopping-cart {
-    @apply tw-ml-3;
+    @apply tw-ml-0;
 
     @screen md {
       @apply tw-ml-4;
@@ -151,8 +154,6 @@ export default defineComponent({
   }
 
   &__account,
-  &__comparhension,
-  &__shopping-list,
   &__shopping-cart {
     @apply tw-text-pv-red;
     @apply tw-transition-colors;
@@ -162,6 +163,17 @@ export default defineComponent({
     &:hover {
       @apply tw-text-pv-red-lighter;
     }
+  }
+
+  &__myaccount-popup {
+    min-width: 200px;
+  }
+
+  &__popup-logout {
+    @apply tw-w-full;
+    @apply tw-my-4 tw-mx-4;
+    @apply tw-box-border;
+    width: calc(100% - 2rem);
   }
 }
 </style>

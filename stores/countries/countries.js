@@ -18,6 +18,16 @@ export const useCountriesStore = defineStore('countries', () => {
   const countries = ssrRef([])
   const regions = ssrRef({})
 
+  const getCountryName = (code) => {
+    if (countries?.length) {
+      const country = countries.find((o) => o.isocode === code)
+      if (country) {
+        return country.name
+      }
+    }
+    return ''
+  }
+
   const loadCountries = async () => {
     const result = await axios.$get(config.COUNTRIES_API, {}).catch((error) => {
       logger.error(
@@ -65,5 +75,5 @@ export const useCountriesStore = defineStore('countries', () => {
   /* istanbul ignore next  */
   onLanguageSwitched(loadCountries)
 
-  return { countries, regions, loadRegions }
+  return { countries, regions, loadRegions, getCountryName }
 })
