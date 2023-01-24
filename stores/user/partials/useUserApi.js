@@ -4,6 +4,9 @@ import { joinURL } from 'ufo'
 
 export const useUserApi = () => {
   const { axios } = useAxiosForHybris()
+
+  const DELIVERY_ADDRESSES_BASE = `${config.USER_API}/deliveryaddresses`
+
   const getUserData = async () => {
     return await axios.$get(config.USER_API, {})
   }
@@ -21,30 +24,25 @@ export const useUserApi = () => {
   }
 
   const getUserDeliveryAddresses = async () => {
-    return await axios.$get(`${config.USER_API}/deliveryaddresses`, {
+    return await axios.$get(DELIVERY_ADDRESSES_BASE, {
       params: { fields: 'FULL' },
     })
   }
 
   const createUserDeliveryAddress = async (address) => {
-    return await axios.$post(`${config.USER_API}/deliveryaddresses`, address)
+    return await axios.$post(DELIVERY_ADDRESSES_BASE, address)
   }
 
   const updateUserDeliveryAddress = async (id, address) => {
-    return await axios.$put(
-      `${config.USER_API}/deliveryaddresses/${id}`,
-      address
-    )
+    return await axios.$put(`${DELIVERY_ADDRESSES_BASE}/${id}`, address)
   }
 
   const deleteUserDeliveryAddress = async (id) => {
-    return await axios.$delete(`${config.USER_API}/deliveryaddresses/${id}`)
+    return await axios.$delete(`${DELIVERY_ADDRESSES_BASE}/${id}`)
   }
 
   const setUserDefaultDeliveryAddress = async (id) => {
-    return await axios.$post(
-      `${config.USER_API}/deliveryaddresses/${id}/default`
-    )
+    return await axios.$post(`${DELIVERY_ADDRESSES_BASE}/${id}/default`)
   }
 
   return {

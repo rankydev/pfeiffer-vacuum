@@ -22,9 +22,9 @@
         :address-data="addressDataObject"
         @update:data="addressDataObject = $event"
       />
-      <div class="address-data-add__interactions">
+      <div class="address-data-add__interactions-wrapper">
         <Button
-          class="address-data-add__interactions--link"
+          class="address-data-add__interactions-link"
           :label="$t('myaccount.addressDataAddPageLinkBtn')"
           variant="secondary"
           shape="plain"
@@ -33,7 +33,7 @@
           :href="localePath('shop-my-account-address-data')"
         />
         <Button
-          class="address-data-add__interactions--submit"
+          class="address-data-add__interactions-submit"
           :label="
             isEditMode
               ? $t('myaccount.addressDataEditPageSubmitBtn')
@@ -141,38 +141,32 @@ export default defineComponent({
       }
 
       if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
+        loading.value = true
+
         if (!isEditMode.value) {
-          loading.value = true
-
-          await userStore
-            .createDeliveryAddress(addressData)
-            .then(() => {
-              loading.value = false
-              router.push(localePath('shop-my-account-address-data'))
+          try {
+            await userStore.createDeliveryAddress(addressData)
+            router.push(localePath('shop-my-account-address-data'))
+          } catch (error) {
+            toast.error({
+              description: i18n.t('myaccount.addDeliveryAddressError'),
             })
-            .catch(() => {
-              toast.error({
-                description: i18n.t('myaccount.addDeliveryAddressError'),
-              })
-
-              loading.value = false
-            })
+            console.error(i18n.t('myaccount.addDeliveryAddressError'), error)
+          } finally {
+            loading.value = false
+          }
         } else {
-          loading.value = true
-
-          await userStore
-            .updateDeliveryAddress(addressID, addressData)
-            .then(() => {
-              loading.value = false
-              router.push(localePath('shop-my-account-address-data'))
+          try {
+            await userStore.updateDeliveryAddress(addressID, addressData)
+            router.push(localePath('shop-my-account-address-data'))
+          } catch (error) {
+            toast.error({
+              description: i18n.t('myaccount.updateDeliveryAddressError'),
             })
-            .catch(() => {
-              toast.error({
-                description: i18n.t('myaccount.updateDeliveryAddressError'),
-              })
-
-              loading.value = false
-            })
+            console.error(i18n.t('myaccount.updateDeliveryAddressError'), error)
+          } finally {
+            loading.value = false
+          }
         }
       }
     }
@@ -196,16 +190,18 @@ export default defineComponent({
   }
 
   &__interactions {
-    @apply tw-flex tw-justify-between;
-    @apply tw-flex-wrap;
-    @apply tw-mt-4;
+    &-wrapper {
+      @apply tw-flex tw-justify-between;
+      @apply tw-flex-wrap;
+      @apply tw-mt-4;
 
-    @screen md {
-      @apply tw-mt-10;
+      @screen md {
+        @apply tw-mt-10;
+      }
     }
 
-    &--link,
-    &--submit {
+    &-link,
+    &-submit {
       @apply tw-basis-full;
 
       @screen md {
@@ -213,7 +209,7 @@ export default defineComponent({
       }
     }
 
-    &--link {
+    &-link {
       order: 9999;
 
       @screen md {
