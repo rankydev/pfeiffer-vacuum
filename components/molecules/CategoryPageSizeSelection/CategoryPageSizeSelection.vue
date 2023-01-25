@@ -69,6 +69,7 @@ export default defineComponent({
     @apply tw-border-2 tw-border-pv-transparent;
     @apply tw-rounded;
     @apply tw-text-pv-grey-48;
+    flex-basis: auto;
 
     &:hover {
       @apply tw-border-2 tw-border-pv-red-lighter;
