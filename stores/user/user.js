@@ -122,8 +122,8 @@ export const useUserStore = defineStore('user', () => {
       // refetch delivery addresses
       loadDeliveryAddresses()
     } catch (e) {
-      logger.error(`Error when deleting delivery address. Returning null.`, e)
-      return null
+      logger.error(`Error when deleting delivery address.`, e)
+      throw e
     }
   }
 
@@ -134,7 +134,7 @@ export const useUserStore = defineStore('user', () => {
       loadDeliveryAddresses()
     } catch (e) {
       logger.error(`Error when setting default delivery address.`, e)
-      return null
+      throw e
     }
   }
 

@@ -84,7 +84,6 @@ import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadl
 import AddressCard from '~/components/molecules/AddressCard/AddressCard'
 import Infobox from '~/components/molecules/Infobox/Infobox'
 import { useUserStore } from '~/stores/user'
-import { useErrorHandler } from '~/composables/useErrorHandler'
 import { storeToRefs } from 'pinia'
 import Icon from '~/components/atoms/Icon/Icon'
 import { useToast } from '~/composables/useToast'
@@ -102,40 +101,46 @@ export default defineComponent({
     const userStore = useUserStore()
     const { billingAddress, deliveryAddresses } = storeToRefs(userStore)
     const { i18n } = useContext()
-    const { redirectOnError } = useErrorHandler()
     const toast = useToast()
 
-    const loadAddressData = async () => {
-      await redirectOnError(userStore.loadAddressData)
-    }
-
     const handleDelete = async (e) => {
-      await userStore.deleteDeliveryAddress(e)
-      toast.success(
-        {
-          description: i18n.t('myaccount.deleteDeliveryAddressSuccess'),
-        },
-        {
-          timeout: 8000,
-        }
-      )
+      try {
+        await userStore.deleteDeliveryAddress(e)
+        toast.success(
+          {
+            description: i18n.t('myaccount.deleteDeliveryAddressSuccess'),
+          },
+          {
+            timeout: 8000,
+          }
+        )
+      } catch {
+        toast.error({
+          description: i18n.t('myaccount.updateDeliveryAddressError'),
+        })
+      }
     }
 
     const handleSetDefault = async (e) => {
-      await userStore.setDefaultDeliveryAddress(e)
-      // TODO::... continue here to fix stuff
-      toast.success(
-        {
-          description: i18n.t('myaccount.setDefaultDeliveryAddressSuccess'),
-        },
-        {
-          timeout: 8000,
-        }
-      )
+      try {
+        await userStore.setDefaultDeliveryAddress(e)
+        toast.success(
+          {
+            description: i18n.t('myaccount.setDefaultDeliveryAddressSuccess'),
+          },
+          {
+            timeout: 8000,
+          }
+        )
+      } catch (error) {
+        toast.error({
+          description: i18n.t('myaccount.updateDeliveryAddressError'),
+        })
+      }
     }
 
-    onServerPrefetch(async () => await loadAddressData())
-    onBeforeMount(async () => await loadAddressData())
+    onServerPrefetch(async () => await userStore.loadAddressData())
+    onBeforeMount(async () => await userStore.loadAddressData())
 
     return { billingAddress, deliveryAddresses, handleDelete, handleSetDefault }
   },
