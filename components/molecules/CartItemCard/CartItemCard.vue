@@ -4,22 +4,18 @@
       <div
         class="tw-col-span-3 md:tw-col-span-2 tw-pr-3 tw-inline-flex tw-justify-center tw-items-center"
       >
-        <!-- <Link :href="getProductUrl(entry.product.code)">
+        <Link :href="getUrl">
           <ResponsiveImage
             class="product-image"
-            :image="getProductThumbnail(entry.product)"
+            :image="entry.product.images[0]"
+            provider="hybris"
+            aspect-ratio="1:1"
           />
-        </Link> -->
-        <Link href="#">
-          <ResponsiveImage class="product-image" image="" />
         </Link>
       </div>
       <div class="product-code tw-col-span-7 md:tw-col-span-8 tw-pl-3">
         <h6>
-          <!-- <Link :href="getProductUrl(entry.product.code)">
-            {{ entry.product.name }}
-          </Link> -->
-          <Link href="#">
+          <Link :href="getUrl">
             {{ entry.product.name }}
           </Link>
         </h6>
@@ -27,14 +23,15 @@
           {{ entry.product.orderNumber }}
         </p>
       </div>
-      <div class="tw-col-span-2 delete-button">
-        <Button v-if="!readOnly" variant="secondary" icon="close" @click="''" />
+      <div class="tw-col-span-2">
+        <Button variant="secondary" icon="delete" />
       </div>
     </div>
     <div class="promotions">
       <div v-for="(promo, x) in promotions" :key="x">
         {{ promo.description }}
       </div>
+      <!-- Muss noch gebaut werden -->
       <!-- <promotion-label v-for="(promo, x) in promotions" :key="x">
         {{ promo.description }}
       </promotion-label> -->
@@ -107,7 +104,6 @@
       </div>
     </div>
     <div v-if="showAttributes" class="variation-attributes-wrapper">
-      <p>Test</p>
       <!-- <template
         v-for="(attribute, attributeIndex) in (
           entry.product.variationMatrix || {}
@@ -139,9 +135,15 @@
 </template>
 
 <script>
-import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
 export default defineComponent({
@@ -150,6 +152,7 @@ export default defineComponent({
     Button,
     Link,
     ResponsiveImage,
+    PvInput,
   },
   props: {
     entry: {
@@ -171,6 +174,7 @@ export default defineComponent({
   },
   // emits: ['input'],
   setup(props, { emit }) {
+    const context = useContext()
     // ...mapGetters([
     //   'currentUser',
     //   'loggedIn',
@@ -182,6 +186,21 @@ export default defineComponent({
     // ]),
     const cartEntry = ref(props.entry)
     const quantity = ref(props.entry.quantity)
+    const image = computed(() => props.entry.product.images[0])
+
+    const url = computed(() =>
+      context.app.localePath({
+        name: 'shop-categories',
+        params: { product: props.entry.product.code },
+      })
+    )
+
+    const getUrl = () => {
+      context.app.localePath({
+        name: 'shop-categories',
+        params: { product: props.entry.product.code },
+      })
+    }
 
     const userStatusType = computed(() => {
       return (
@@ -241,6 +260,9 @@ export default defineComponent({
     return {
       cartEntry,
       quantity,
+      image,
+      url,
+      getUrl,
       userStatusType,
       isInactive,
       isPriceAvailable,

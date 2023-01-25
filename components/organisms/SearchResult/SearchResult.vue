@@ -14,6 +14,9 @@
         v-for="entry in cart.deliveryOrderGroups[0].entries"
         :key="entry.entryNumber"
         :entry="entry"
+        :promotions="cart.appliedOrderPromotions"
+        :shop-attributes="true"
+        :read-only="false"
       />
       <ProductCardGrid v-if="products.length > 0" :products="products" />
       <div v-else>
