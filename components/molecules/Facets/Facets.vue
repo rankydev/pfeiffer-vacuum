@@ -29,11 +29,9 @@
         />
         <Popup v-if="isVacuumRangePresent">
           <template #activator="{ togglePopup }">
-            <Button
-              :class="[
-                'facets__slider-buttons',
-                { 'facets__slider-buttons--active': isVacuumRangeActive },
-              ]"
+            <InternalBtnWrapper
+              class="facets__slider-buttons"
+              :active="isVacuumRangeActive"
               :label="$t('category.vacuumRange')"
               variant="secondary"
               shape="outlined"
@@ -52,11 +50,9 @@
 
         <Popup v-if="isSuctionSpeedPresent">
           <template #activator="{ togglePopup }">
-            <Button
-              :class="[
-                'facets__slider-buttons',
-                { 'facets__slider-buttons--active': isSuctionSpeedActive },
-              ]"
+            <InternalBtnWrapper
+              class="facets__slider-buttons"
+              :active="isSuctionSpeedActive"
               :label="$t('category.suctionSpeed')"
               variant="secondary"
               shape="outlined"

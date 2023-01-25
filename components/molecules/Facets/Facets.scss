@@ -78,35 +78,12 @@
     }
   }
 
-  /* TODO: Button overwritings must happen here due to missing button variant -> PVWEB-809 */
   &__slider-buttons {
     @apply tw-w-full;
     @apply tw-bg-pv-white;
 
     @screen md {
       @apply tw-w-auto;
-    }
-
-    &.button--outlined.button--secondary {
-      @apply tw-p-2;
-      @apply tw-text-xs;
-      @apply tw-font-normal;
-      @apply tw-text-pv-grey-64;
-      @apply tw-shadow-border-grey-80;
-
-      &:hover,
-      &:focus {
-        @apply tw-bg-pv-white;
-        @apply tw-outline-pv-transparent;
-      }
-
-      &:focus {
-        @apply tw-shadow-border-grey-16;
-      }
-    }
-
-    &--active.button--outlined.button--secondary {
-      @apply tw-text-pv-grey-16;
     }
   }
 
