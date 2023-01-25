@@ -4,16 +4,22 @@
       <div
         class="tw-col-span-3 md:tw-col-span-2 tw-pr-3 tw-inline-flex tw-justify-center tw-items-center"
       >
-        <Link :href="getProductUrl(entry.product.code)">
+        <!-- <Link :href="getProductUrl(entry.product.code)">
           <ResponsiveImage
             class="product-image"
             :image="getProductThumbnail(entry.product)"
           />
+        </Link> -->
+        <Link href="#">
+          <ResponsiveImage class="product-image" image="" />
         </Link>
       </div>
       <div class="product-code tw-col-span-7 md:tw-col-span-8 tw-pl-3">
         <h6>
-          <Link :href="getProductUrl(entry.product.code)">
+          <!-- <Link :href="getProductUrl(entry.product.code)">
+            {{ entry.product.name }}
+          </Link> -->
+          <Link href="#">
             {{ entry.product.name }}
           </Link>
         </h6>
@@ -22,12 +28,7 @@
         </p>
       </div>
       <div class="tw-col-span-2 delete-button">
-        <Button
-          v-if="!readOnly"
-          variant="secondary"
-          icon="close"
-          @click="$hybrisApi.cartApi.deleteEntry(entry.entryNumber)"
-        />
+        <Button v-if="!readOnly" variant="secondary" icon="close" @click="''" />
       </div>
     </div>
     <div class="promotions">
@@ -233,9 +234,9 @@ export default defineComponent({
       // await this.$authApi.login()
     }
 
-    watch(async (newEntry) => {
-      quantity = newEntry.quantity
-    })
+    // watch(async (newEntry) => {
+    //   quantity = newEntry.quantity
+    // })
 
     return {
       cartEntry,
