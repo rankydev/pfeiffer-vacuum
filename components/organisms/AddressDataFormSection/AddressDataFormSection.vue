@@ -126,12 +126,22 @@ export default defineComponent({
       return undefined
     })
 
-    onMounted(() => {
+    onMounted(async () => {
       if (!isEditMode.value && !addressID) return
 
-      // create a copy of the entry to not mutate the store directly at this point
-      addressDataObject.value = {
-        ...userStore.getDeliveryAddressByID(addressID),
+      // get delivery address from store, if its not there, load all addresses and try again
+      // this will happen when accessing the page directly (page reload) without visiting address data page before
+      let exisingDeliveryAddress = userStore.getDeliveryAddressByID(addressID)
+      if (!exisingDeliveryAddress) {
+        await userStore.loadDeliveryAddresses()
+      }
+      exisingDeliveryAddress = userStore.getDeliveryAddressByID(addressID)
+
+      if (exisingDeliveryAddress) {
+        // create a copy of the entry to not mutate the store directly at this point
+        addressDataObject.value = {
+          ...userStore.getDeliveryAddressByID(addressID),
+        }
       }
     })
 

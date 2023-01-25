@@ -139,7 +139,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const getDeliveryAddressByID = (id) => {
-    if (!deliveryAddresses.value.addresses.length) return undefined
+    if (!deliveryAddresses.value?.addresses?.length) return null
     return deliveryAddresses.value.addresses.find(
       (deliveryAddress) => deliveryAddress.id === id
     )
