@@ -60,7 +60,7 @@
 .transform-position-enter,
 .transform-position-leave-to {
   opacity: 0;
-  transform: translateY(15px);
+  transform: scale(0.8);
 }
 
 .transform-position-leave-active {
