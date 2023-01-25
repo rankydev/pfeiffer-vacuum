@@ -36,8 +36,14 @@
       <div
         :key="0"
         class="address-data__add-delivery-address transform-position-item"
+        :class="{
+          'address-data__add-delivery-address--forbidden': !billingAddress,
+        }"
       >
-        <NuxtLink :to="localePath('shop-my-account-address-data-add')">
+        <NuxtLink
+          :to="localePath('shop-my-account-address-data-add')"
+          :event="!billingAddress ? '' : 'click'"
+        >
           {{ $t('myaccount.addDeliveryAddress') }}
           <Icon icon="add" />
         </NuxtLink>
@@ -117,6 +123,7 @@ export default defineComponent({
 
     const handleSetDefault = async (e) => {
       await userStore.setDefaultDeliveryAddress(e)
+      // TODO::... continue here to fix stuff
       toast.success(
         {
           description: i18n.t('myaccount.setDefaultDeliveryAddressSuccess'),
@@ -180,6 +187,12 @@ export default defineComponent({
       @apply tw-w-full;
       @apply tw-h-full;
       @apply tw-p-8;
+    }
+
+    &--forbidden {
+      a {
+        @apply tw-cursor-not-allowed;
+      }
     }
   }
 }
