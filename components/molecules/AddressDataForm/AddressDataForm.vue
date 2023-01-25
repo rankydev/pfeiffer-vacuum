@@ -42,7 +42,7 @@
         :label="$t('form.contactRequest.street')"
         :placeholder="$t('form.contactRequest.street')"
         required
-        :rules="{ ...requiredWithMessage, maxLength: maxLength(255) }"
+        :rules="{ requiredWithMessage, maxLength: maxLength(255) }"
       />
       <PvInput
         v-model="requestData.line2"
@@ -63,7 +63,7 @@
         :label="$t('form.contactRequest.postCode')"
         :placeholder="$t('form.contactRequest.postCode')"
         required
-        :rules="{ ...requiredWithMessage, maxLength: maxLength(10) }"
+        :rules="{ requiredWithMessage, maxLength: maxLength(10) }"
       />
       <PvInput
         v-model="requestData.town"
@@ -71,7 +71,7 @@
         :label="$t('form.contactRequest.city')"
         :placeholder="$t('form.contactRequest.city')"
         required
-        :rules="{ ...requiredWithMessage, maxLength: maxLength(255) }"
+        :rules="{ requiredWithMessage, maxLength: maxLength(255) }"
       />
     </div>
   </div>
@@ -122,12 +122,10 @@ export default defineComponent({
 
     const { i18n } = useContext()
 
-    const requiredWithMessage = {
-      required: helpers.withMessage(
-        i18n.t('form.validationErrorMessages.required'),
-        required
-      ),
-    }
+    const requiredWithMessage = helpers.withMessage(
+      i18n.t('form.validationErrorMessages.required'),
+      required
+    )
 
     const requiredIfNoCompany = helpers.withMessage(
       i18n.t('form.validationErrorMessages.requiredNameOrCompany'),
