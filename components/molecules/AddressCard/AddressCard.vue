@@ -1,75 +1,77 @@
 <template>
-  <div v-if="address" class="address-data-item">
-    <h4 v-if="headline" class="address-data-item__headline">
-      {{ headline }}
-    </h4>
-    <p
-      v-if="address.companyName"
-      class="address-data-item__entry address-data-item__companyName"
-    >
-      {{ address.companyName }}
-    </p>
-    <p
-      v-if="address.firstName || address.lastName"
-      class="address-data-item__entry address-data-item__name"
-    >
-      {{ address.firstName }}
-      {{ address.lastName }}
-    </p>
-    <p
-      v-if="address.line1 || address.line2"
-      class="address-data-item__entry address-data-item__addressLine"
-    >
-      {{ address.line1 }} {{ address.line2 }}
-    </p>
-    <p
-      v-if="address.remarks"
-      class="address-data-item__entry address-data-item__addressRemarks"
-    >
-      {{ address.remarks }}
-    </p>
-    <p
-      v-if="address.postalCode || address.town"
-      class="address-data-item__entry address-data-item__town"
-    >
-      {{ address.postalCode }} {{ address.town }}
-    </p>
-    <p
-      v-if="address.country"
-      class="address-data-item__entry address-data-item__country"
-    >
-      {{ address.country.name }}
-      <!-- ToDo: implement Coutryname when data is available -->
-      <!-- {{ getCountry(address.country.isocode) }} -->
-    </p>
-    <div
-      v-if="address.phone || address.printer || address.email"
-      class="address-data-item__contacts"
-    >
-      <div
-        v-if="address.phone"
-        class="address-data-item__contacts--item address-data-item__contacts--phone"
+  <div v-if="address" class="address-card">
+    <div class="address-card__info">
+      <h4 v-if="headline" class="address-card__headline">
+        {{ headline }}
+      </h4>
+      <p
+        v-if="address.companyName"
+        class="address-card__entry address-card__companyName"
       >
-        <Icon icon="call" />
-        <p>{{ address.phone }}</p>
-      </div>
-      <div
-        v-if="address.printer"
-        class="address-data-item__contacts--item address-data-item__contacts--printer"
+        {{ address.companyName }}
+      </p>
+      <p
+        v-if="address.firstName || address.lastName"
+        class="address-card__entry address-card__name"
       >
-        <Icon icon="print" />
-        <p>{{ address.printer }}</p>
-      </div>
-      <div
-        v-if="address.email"
-        class="address-data-item__contacts--item address-data-item__contacts--email"
+        {{ address.firstName }}
+        {{ address.lastName }}
+      </p>
+      <p
+        v-if="address.line1 || address.line2"
+        class="address-card__entry address-card__addressLine"
       >
-        <Icon icon="mail" />
-        <p>{{ address.email }}</p>
+        {{ address.line1 }} {{ address.line2 }}
+      </p>
+      <p
+        v-if="address.remarks"
+        class="address-card__entry address-card__addressRemarks"
+      >
+        {{ address.remarks }}
+      </p>
+      <p
+        v-if="address.postalCode || address.town"
+        class="address-card__entry address-card__town"
+      >
+        {{ address.postalCode }} {{ address.town }}
+      </p>
+      <p
+        v-if="address.country"
+        class="address-card__entry address-card__country"
+      >
+        {{ address.country.name }}
+        <!-- ToDo: implement Coutryname when data is available -->
+        <!-- {{ getCountry(address.country.isocode) }} -->
+      </p>
+      <div
+        v-if="address.phone || address.printer || address.email"
+        class="address-card__contacts"
+      >
+        <div
+          v-if="address.phone"
+          class="address-card__contacts--item address-card__contacts--phone"
+        >
+          <Icon icon="call" />
+          <p>{{ address.phone }}</p>
+        </div>
+        <div
+          v-if="address.printer"
+          class="address-card__contacts--item address-card__contacts--printer"
+        >
+          <Icon icon="print" />
+          <p>{{ address.printer }}</p>
+        </div>
+        <div
+          v-if="address.email"
+          class="address-card__contacts--item address-card__contacts--email"
+        >
+          <Icon icon="mail" />
+          <p>{{ address.email }}</p>
+        </div>
       </div>
     </div>
-    <div v-if="editable" class="address-data-item__address-controls">
-      <div class="address-data-item__address-controls--editables">
+    <div v-if="editable" class="address-card__address-controls">
+      <div class="address-card__address-controls--editables">
         <div>
           <Button
             :label="$t('myaccount.editDeliveryAddress')"
@@ -91,9 +93,9 @@
       </div>
       <div
         v-if="!isBillingAddress"
-        class="address-data-item__address-controls--setDefault"
+        class="address-card__address-controls--setDefault"
         :class="{
-          'address-data-item__address-controls--is-default':
+          'address-card__address-controls--is-default':
             address.defaultShippingAddress,
         }"
       >
@@ -106,6 +108,7 @@
           icon="check"
           variant="secondary"
           shape="plain"
+          allow-label-line-break
           :disabled="address.defaultShippingAddress"
           @click="setAsDefault"
         />
@@ -189,10 +192,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.address-data-item {
+.address-card {
   @apply tw-bg-pv-grey-96;
   @apply tw-rounded-md;
   @apply tw-p-4;
+  @apply tw-flex;
+  @apply tw-flex-col;
+  @apply tw-justify-between;
 
   &__headline {
     @apply tw-text-2xl;
@@ -243,7 +249,8 @@ export default defineComponent({
     &--editables {
       @apply tw-flex tw-items-center;
       @apply tw-w-full;
-      @apply tw-gap-x-8;
+      @apply tw-gap-x-6;
+      @apply tw-flex-wrap;
 
       @screen md {
         @apply tw-w-1/2;
