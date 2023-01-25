@@ -5,7 +5,10 @@
         headline="Account Data"
         :link="localePath('shop-my-account')"
       />
-      <SectionHeadline :buttons="accountDataButtons" @btnClick="toggleEdit">
+      <SectionHeadline
+        :buttons="accountDataButtons"
+        @btnClick="submitAccountData"
+      >
         Account Data
       </SectionHeadline>
       <div
@@ -19,6 +22,7 @@
           :key="entry.id"
           :class="'account-data__' + entry.id"
           :value="entry.value"
+          :validation="entry.validation"
           :label="entry.label"
           :disabled="entry.disabled"
           :editable="entry.editable && isEditMode"
@@ -31,7 +35,7 @@
             v-bind="btn"
             :key="index"
             class="account-data__save-account-data-mobile"
-            @click="toggleEdit(index)"
+            @click="submitAccountData(index)"
           />
         </template>
       </div>
@@ -60,7 +64,7 @@
               label="Save company data"
               icon="save"
               variant="secondary"
-              @click="saveCompanyData"
+              @click="submitCompanyData"
             />
             <Button
               label="Discard"
@@ -90,6 +94,7 @@ import { storeToRefs } from 'pinia'
 import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 import { useAccountDataStore } from '~/stores/myaccount'
+import { useVuelidate } from '@vuelidate/core'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import MyAccountEditableTextfield from '~/components/organisms/MyAccount/partials/MyAccountEditableTextfield'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
@@ -110,6 +115,8 @@ export default defineComponent({
     ResultHeadline,
   },
   setup() {
+    const v = useVuelidate()
+
     // Get data from userStore
     const userStore = useUserStore()
     const {
@@ -131,10 +138,10 @@ export default defineComponent({
       infoMessagePatterns,
       accountDataButtons,
       saveAccountDataButtons,
-      saveCompanyData,
       addedCompanyData,
       showCompanySuccess,
     } = storeToRefs(accountDataStore)
+    const { saveCompanyData } = accountDataStore
 
     const isAddCompanyMode = ref(false)
     const updatedData = ref({})
@@ -153,18 +160,35 @@ export default defineComponent({
         : accountDataPattern.value.filter((e) => !e.onlyEdit)
     )
 
-    const toggleEdit = async (i) => {
-      if (isEditMode.value && i > 0) {
-        await updateCurrentUser({ ...currentUser.value, ...updatedData.value })
-      }
-      isEditMode.value = !isEditMode.value
-    }
-
     const toggleAddCompany = (val) => (isAddCompanyMode.value = val)
 
     const dataChanged = (field, value) => (updatedData.value[field] = value)
 
     const setCompanyData = (val) => (addedCompanyData.value = val?.companyData)
+
+    const submitCompanyData = () => {
+      v.value.$validate()
+
+      if (!v.value.$errors.length && !v.value.$silentErrors.length) {
+        saveCompanyData()
+      }
+    }
+
+    const submitAccountData = async (i) => {
+      if (isEditMode.value && i > 0) {
+        v.value.$validate()
+
+        if (!v.value.$errors.length && !v.value.$silentErrors.length) {
+          await updateCurrentUser({
+            ...currentUser.value,
+            ...updatedData.value,
+          })
+          isEditMode.value = !isEditMode.value
+        }
+      } else {
+        isEditMode.value = !isEditMode.value
+      }
+    }
 
     return {
       userCountry,
@@ -178,9 +202,8 @@ export default defineComponent({
       isEditMode,
       isAddCompanyMode,
 
-      // Actions
-      saveCompanyData,
-      toggleEdit,
+      submitCompanyData,
+      submitAccountData,
       toggleAddCompany,
       dataChanged,
       setCompanyData,
@@ -188,7 +211,7 @@ export default defineComponent({
   },
 })
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .account-data {
   $root: &;
 

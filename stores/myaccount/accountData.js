@@ -1,9 +1,11 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { computed, ref } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 import { useToast } from '~/composables/useToast'
+import { minLength, required, helpers } from '@vuelidate/validators'
 
 export const useAccountDataStore = defineStore('accountData', () => {
+  const { i18n } = useContext()
   const toast = useToast()
   const userStore = useUserStore()
   const { currentUser, userCountry, userBillingAddress, changePasswordLink } =
@@ -49,6 +51,16 @@ export const useAccountDataStore = defineStore('accountData', () => {
       value: currentUser.value?.firstName,
       editable: true,
       onlyEdit: true,
+      validation: {
+        required: true,
+        rules: {
+          minLength: minLength(2),
+          required: helpers.withMessage(
+            i18n.t('form.validationErrorMessages.required'),
+            required
+          ),
+        },
+      },
     },
     {
       id: 'lastName',
@@ -56,6 +68,16 @@ export const useAccountDataStore = defineStore('accountData', () => {
       value: currentUser.value?.lastName,
       editable: true,
       onlyEdit: true,
+      validation: {
+        required: true,
+        rules: {
+          minLength: minLength(2),
+          required: helpers.withMessage(
+            i18n.t('form.validationErrorMessages.required'),
+            required
+          ),
+        },
+      },
     },
     {
       id: 'email',

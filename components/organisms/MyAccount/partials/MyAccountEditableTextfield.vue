@@ -8,7 +8,7 @@
     <PvInput
       v-if="editable"
       v-model="inputValue"
-      v-bind="{ label, disabled }"
+      v-bind="{ label, disabled, ...validation }"
       @input="$emit('changed', $event)"
     />
     <div v-else class="editable-textfield__static">
@@ -48,6 +48,10 @@ export default {
     button: {
       type: Object,
       default: null,
+    },
+    validation: {
+      type: Object,
+      default: () => ({}),
     },
   },
   emits: ['changed'],
