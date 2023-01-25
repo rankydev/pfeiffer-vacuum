@@ -20,7 +20,7 @@ describe('SuctionSpeedSelection', () => {
 
     test('should render placeholder correctly if meters is selected', () => {
       const wrapper = shallowMount(SuctionSpeedSelection)
-      const min = wrapper.find('.suction-speed-selection__minimum')
+      const min = wrapper.find('.suction-speed-selection__minimum-input')
       const max = wrapper.find(
         '.suction-speed-selection__maximum--selected-value'
       )
@@ -33,7 +33,7 @@ describe('SuctionSpeedSelection', () => {
       const wrapper = shallowMount(SuctionSpeedSelection)
       await wrapper.vm.unitChanged('liters')
       await wrapper.vm.$nextTick()
-      const min = wrapper.find('.suction-speed-selection__minimum')
+      const min = wrapper.find('.suction-speed-selection__minimum-input')
       const max = wrapper.find(
         '.suction-speed-selection__maximum--selected-value'
       )
