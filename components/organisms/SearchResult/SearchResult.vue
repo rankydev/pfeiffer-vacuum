@@ -10,6 +10,7 @@
         @updateSort="pushSortToQuery"
         @updateFacets="pushFacetsToQuery"
       />
+      <CartItemCard />
       <ProductCardGrid v-if="products.length > 0" :products="products" />
       <div v-else>
         <h2>{{ $t('category.noMatchingProducts') }}</h2>
@@ -41,6 +42,7 @@ import Pagination from '~/components/molecules/Pagination/Pagination.vue'
 import CategoryTree from '~/components/molecules/CategoryTree/CategoryTree.vue'
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
 import Facets from '~/components/molecules/Facets/Facets.vue'
+import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
 
 export default defineComponent({
   name: 'SearchResult',
@@ -50,6 +52,7 @@ export default defineComponent({
     CategoryTree,
     CategoryPageSizeSelection,
     Facets,
+    CartItemCard,
   },
   props: {
     products: {
