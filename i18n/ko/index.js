@@ -6,6 +6,8 @@ import registration from './registration.json'
 import slider from './slider.json'
 import category from './category.json'
 import myaccount from './myaccount.json'
+import cart from './cart.json'
+
 export default {
   language,
   navigation,
@@ -15,4 +17,5 @@ export default {
   category,
   slider,
   myaccount,
+  cart,
 }
