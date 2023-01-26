@@ -7,7 +7,7 @@ export default {
     docs: {
       description: {
         component:
-          'This component is used as a label and login link in the AccesoriesCard, TotalNetInformation and ProductActions component',
+          'This component is used as a label and login link in the AccessoriesCard, TotalNetInformation and ProductActions component',
       },
       source: {
         code: '<LoginToSeePricesLabel v-bind="{}"  />',
