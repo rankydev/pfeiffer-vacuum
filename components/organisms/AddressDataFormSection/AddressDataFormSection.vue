@@ -133,7 +133,7 @@ export default defineComponent({
       // this will happen when accessing the page directly (page reload) without visiting address data page before
       let exisingDeliveryAddress = userStore.getDeliveryAddressByID(addressID)
       if (!exisingDeliveryAddress) {
-        await userStore.loadDeliveryAddresses()
+        await userStore.loadAddressData()
       }
       exisingDeliveryAddress = userStore.getDeliveryAddressByID(addressID)
 
