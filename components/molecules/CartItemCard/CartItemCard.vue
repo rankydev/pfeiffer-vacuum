@@ -34,27 +34,31 @@
         />
       </div>
       <div class="cart-item-card__prices">
-        <p>Preise</p>
-        <p>Preise</p>
+        <p>{{ productPrice }}</p>
+        <p v-if="productPrice">{{ `${productPrice * quantity}` }}</p>
+        <p v-else>{{ productPrice }}</p>
       </div>
-      <div class="cart-item-card__delete tw-col-span-1">
+      <div class="cart-item-card__delete">
         <Button variant="secondary" shape="plain" icon="delete" />
       </div>
     </div>
     <div class="cart-item-card__promotions tw-grid tw-grid-cols-12">
-      <div
-        v-for="(promo, x) in promotions"
-        :key="x"
-        class="lg:tw-col-start-2 lg:tw-col-span-6"
-      >
-        {{ promo.description }}
+      <div class="lg:tw-col-start-2 tw-col-span-6 tw-flex tw-mt-4">
+        <div
+          v-for="(promo, x) in promotions"
+          :key="x"
+          class="cart-item-card__promotion"
+        >
+          {{ promo.description }}
+        </div>
       </div>
+
       <!-- Muss noch gebaut werden -->
       <!-- <promotion-label v-for="(promo, x) in promotions" :key="x">
         {{ promo.description }}
       </promotion-label> -->
     </div>
-    <div class="cart-item-card__promotions__price-row price-row">
+    <di v class="cart-item-card__promotions__price-row price-row">
       <!-- <div class="tw-col-span-5 md:tw-col-span-4 lg:tw-col-span-2 tw-pr-3">
         <span v-if="readOnly">
           {{ $t('cart.quantity') }}: {{ entry.quantity }}
@@ -120,7 +124,7 @@
           {{ $t('login.loginToSeePrices.part3') }}
         </h6>
       </div>
-    </div>
+    </di>
     <div v-if="showAttributes" class="variation-attributes-wrapper">
       <!-- Hier graue Tags anzeigen -->
       <!-- <template
@@ -141,11 +145,12 @@
         </template>
       </template> -->
     </div>
-    <div v-if="currentUser && !isOciUser" class="further-article-information">
+    <!-- <div v-if="currentUser && !isOciUser" class="further-article-information"> -->
+    <div class="further-article-information">
       <Button
         class="add-to-other-list"
         variant="secondary"
-        shape="outlined"
+        shape="plain"
         icon="assignment"
         :label="$t('list.addArticle')"
         @click="addToOtherList(entry.product)"
@@ -161,6 +166,9 @@ import {
   ref,
   useContext,
 } from '@nuxtjs/composition-api'
+import { useUserStore } from '~/stores/user'
+import { useProductStore } from '~/stores/product'
+import { storeToRefs } from 'pinia'
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
@@ -195,21 +203,20 @@ export default defineComponent({
   // emits: ['input'],
   setup(props, { emit }) {
     const context = useContext()
-    // ...mapGetters([
-    //   'currentUser',
-    //   'loggedIn',
-    //   'isLeadUser',
-    //   'isOpenUser',
-    //   'isRejectedUser',
-    //   'isApprovedUser',
-    //   'isOciUser'
-    // ]),
+    const { i18n } = useContext()
+    const userStore = useUserStore()
+    const productStore = useProductStore()
+    const { product, productType, price } = storeToRefs(productStore)
+    const {
+      isApprovedUser,
+      isLeadUser,
+      isOpenUser,
+      isRejectedUser,
+      isLoggedIn,
+    } = storeToRefs(userStore)
+
     const currentUser = ref(true)
-    const loggedIn = ref(true)
-    const isLeadUser = ref(true)
-    const isOpenUser = ref(true)
-    const isRejectedUser = ref(true)
-    const isApprovedUser = ref(true)
+    const loggedIn = ref(isLoggedIn)
     const isOciUser = ref(true)
 
     const cartEntry = ref(props.entry)
@@ -237,6 +244,26 @@ export default defineComponent({
         (isRejectedUser && 'rejected')
       )
     })
+
+    const noPriceReason = computed(() => {
+      const path = 'product.login.loginToSeePrices.'
+      if (isLeadUser.value) return i18n.t(path + 'lead')
+      if (isOpenUser.value) return i18n.t(path + 'open')
+      if (isRejectedUser.value) return i18n.t(path + 'rejected')
+      return i18n.t('product.noPriceAvailable')
+    })
+
+    const hasCustomerPrice = computed(() => !!price.value?.customerPrice)
+
+    const productPrice = computed(() =>
+      price.value
+        ? price.value?.formattedValue || ''
+        : i18n.t('product.priceOnRequest')
+    )
+
+    const isPriceVisible = computed(
+      () => !!(price.value && isApprovedUser.value)
+    )
 
     const isInactive = computed(() => {
       // return props.entry.product?.purchasable === false
@@ -308,6 +335,10 @@ export default defineComponent({
       isRejectedUser,
       isApprovedUser,
       isOciUser,
+      isPriceVisible,
+      noPriceReason,
+      hasCustomerPrice,
+      productPrice,
     }
   },
 })
@@ -315,6 +346,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .cart-item-card {
+  margin-top: 48px;
+
   &__wrapper {
     @apply tw-grid tw-grid-cols-12;
   }
@@ -351,6 +384,23 @@ export default defineComponent({
 
   &__price-row {
     @apply tw-grid tw-grid-cols-12;
+  }
+
+  &__delete {
+    @apply tw-col-span-1;
+    @apply tw-flex;
+    @apply tw-justify-end;
+  }
+
+  &__promotion {
+    @apply tw-bg-pv-grey-16;
+    @apply tw-text-pv-white;
+    @apply tw-rounded-md;
+    @apply tw-font-bold;
+    @apply tw-text-sm;
+    @apply tw-px-2;
+    @apply tw-py-1;
+    @apply tw-mr-2;
   }
 }
 
