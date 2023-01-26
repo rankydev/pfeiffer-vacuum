@@ -30,6 +30,7 @@
           :name="item.uiComponent || item.component"
         />
         <ContentWrapper>
+          <Cart />
           <nuxt-dynamic
             v-for="item in body"
             :key="item._uid"
@@ -72,6 +73,7 @@ import useTemplating from '~/composables/useTemplating'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
 import StickyBar from '~/components/atoms/StickyBar/StickyBar.vue'
+import Cart from '~/components/molecules/Cart/Cart.vue'
 
 export default defineComponent({
   name: 'Page',
@@ -79,6 +81,7 @@ export default defineComponent({
     ContentWrapper,
     OnPageNavigation,
     StickyBar,
+    Cart,
   },
   props: {
     content: {

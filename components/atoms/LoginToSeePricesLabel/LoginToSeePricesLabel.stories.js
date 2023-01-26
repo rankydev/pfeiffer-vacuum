@@ -1,7 +1,7 @@
 import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel.vue'
 
 export default {
-  title: 'Molecules/m_144 LoginToSeePricesLabel',
+  title: 'Molecules/m_142 LoginToSeePricesLabel',
   component: LoginToSeePricesLabel,
   parameters: {
     docs: {
