@@ -24,16 +24,16 @@
 
     <template v-else-if="isLoggedIn">
       <i18n
-        :path="`userStatus.${userStatusType}.priceInfo.text`"
+        :path="`cart.userStatus.${userStatusType}.priceInfo.text`"
         class="price__wrapper"
         tag="div"
       >
         <template #link>
           <nuxt-link
             :to="localePath('shop-my-account-account-data')"
-            class="tw-text-pv-red tw-italic"
+            class="tw-text-pv-red"
           >
-            {{ $t(`userStatus.${userStatusType}.priceInfo.link`) }}
+            {{ $t(`cart.userStatus.${userStatusType}.priceInfo.link`) }}
           </nuxt-link>
         </template>
       </i18n>
@@ -55,7 +55,7 @@
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
-import { storeToRefs } from 'pinia/dist/pinia.mjs'
+import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 
 export default defineComponent({

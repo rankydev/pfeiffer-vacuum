@@ -39,7 +39,7 @@ export default defineComponent({
     @apply tw-text-base;
     @apply tw-rounded-md;
     @apply tw-font-bold;
-    @apply tw-py-2;
+    @apply tw-p-2;
     @apply tw-flex tw-justify-center;
   }
 }
