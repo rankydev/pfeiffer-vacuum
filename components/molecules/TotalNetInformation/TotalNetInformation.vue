@@ -40,15 +40,7 @@
     </template>
 
     <template v-else-if="!isLoggedIn">
-      <div class="price__wrapper">
-        {{ $t('product.login.loginToSeePrices.part1') }}
-        <span
-          class="price__wrapper--login-link"
-          @click="login()"
-          v-html="$t('product.login.loginToSeePrices.part2')"
-        ></span>
-        {{ $t('product.login.loginToSeePrices.part3') }}
-      </div>
+      <LoginToSeePricesLabel class="price__login-link" />
     </template>
   </div>
 </template>
@@ -57,26 +49,22 @@
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel.vue'
 
 export default defineComponent({
   name: 'TotalNetInformation',
-  setup() {
-    // TODO: this initialization needs to be updated after implementing the cartStore
-    const currentCart = {
-      totalPrice: {
-        value: 5,
-        formattedValue: '€ 26.387,00',
-      },
-      totalDiscounts: {
-        value: 'test',
-        formattedValue: '€ 84,00',
-      },
-    }
-
+  components: { LoginToSeePricesLabel },
+  props: {
+    currentCart: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  setup(props) {
     const totalDiscounts = computed(
-      () => currentCart.totalDiscounts.formattedValue
+      () => props.currentCart.totalDiscounts.formattedValue
     )
-    const hasPromotion = computed(() => currentCart.totalDiscounts.value)
+    const hasPromotion = computed(() => props.currentCart.totalDiscounts.value)
 
     const userStore = useUserStore()
     const {
@@ -93,17 +81,11 @@ export default defineComponent({
       if (isRejectedUser.value) return 'rejected'
     })
 
-    const login = async () => {
-      await userStore.login()
-    }
-
     return {
-      currentCart,
       totalDiscounts,
       hasPromotion,
       isApprovedUser,
       isLoggedIn,
-      login,
       userStatusType,
     }
   },
@@ -139,15 +121,9 @@ export default defineComponent({
     }
   }
 
-  &__wrapper {
-    @apply tw-p-3;
+  &__login-link {
     @apply tw-text-center;
-    @apply tw-font-bold;
-
-    &--login-link {
-      @apply tw-cursor-pointer;
-      @apply tw-text-pv-red;
-    }
+    @apply tw-p-3;
   }
 }
 </style>

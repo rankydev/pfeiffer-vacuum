@@ -1,4 +1,8 @@
 import PriceInformation from '~/components/molecules/PriceInformation/PriceInformation.vue'
+import {
+  currentCartSpecificPrices,
+  currentCartDelivery,
+} from '~/components/molecules/PriceInformation/PriceInformation.stories.content'
 
 export default {
   title: 'Molecules/m_143 PriceInformation',
@@ -6,10 +10,11 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '',
+        component:
+          'This component is intended to display further information about the price in the cart.',
       },
       source: {
-        code: '<PriceInformation v-bind="{}"  />',
+        code: '<PriceInformation v-bind="{ currentCart }"  />',
       },
     },
   },
@@ -22,10 +27,13 @@ const Template = (args) => ({
   },
   template: `
   <div class="documentation-preview">
-    <PriceInformation />
+    <PriceInformation v-bind="args"/>
   </div>
 `,
 })
 
-export const Default = Template.bind({})
-Default.args = {}
+export const SpecificPrices = Template.bind({})
+SpecificPrices.args = { currentCart: currentCartSpecificPrices }
+
+export const Delivery = Template.bind({})
+Delivery.args = { currentCart: currentCartDelivery }

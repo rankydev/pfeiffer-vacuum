@@ -4,11 +4,9 @@
       <PromotionLabel
         v-for="(promo, x) in cartPromotions"
         :key="x"
-        variant="normal"
         class="order-discount__additional-information--promotion"
-      >
-        {{ promo.promotion.description }}
-      </PromotionLabel>
+        :subline="promo.promotion.description"
+      />
       <PriceInformation v-if="showReference" />
     </div>
     <div class="order-discount__net-information">

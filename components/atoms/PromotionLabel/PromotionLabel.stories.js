@@ -1,30 +1,19 @@
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel.vue'
 
-const argTypes = {
-  // slots
-  subline: {
-    control: { type: 'text' },
-    defaultValue: 'You get 20% discount on your entire shopping cart',
-    table: { type: { summary: null } },
-  },
-}
-
 export default {
   title: 'Atoms/a_117 PromotionLabel',
   component: PromotionLabel,
   parameters: {
     docs: {
       description: {
-        component: '',
+        component:
+          'This component is intended to display a certain discount next to the total price in the cart.',
       },
       source: {
-        code: `<PromotionLabel v-bind="{}">
-            <template v-slot:subline />
-                </PromotionLabel>`,
+        code: '<PromotionLabel v-bind="{ subline }" />',
       },
     },
   },
-  argTypes,
 }
 
 const Template = (args) => ({
@@ -34,12 +23,10 @@ const Template = (args) => ({
   },
   template: `
   <div class="documentation-preview" >
-    <PromotionLabel v-bind="args">
-      <template v-if="'subline' in args" v-slot:subline>${args.subline}</template>
-    </PromotionLabel>
+    <PromotionLabel v-bind="args" />
   </div>
 `,
 })
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = { subline: 'You get 20% discount on your entire shopping cart' }

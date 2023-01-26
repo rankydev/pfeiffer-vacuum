@@ -1,4 +1,5 @@
 import TotalNetInformation from '~/components/molecules/TotalNetInformation/TotalNetInformation.vue'
+import { currentCart } from '~/components/molecules/TotalNetInformation/TotalNetInformation.stories.content'
 
 export default {
   title: 'Molecules/m_141 TotalNetInformation',
@@ -6,10 +7,11 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '',
+        component:
+          'This component is intended to display the current price of the cart or show a message if a user is not yet logged in',
       },
       source: {
-        code: '<TotalNetInformation v-bind="{}"  />',
+        code: '<TotalNetInformation v-bind="{ currentCart }"  />',
       },
     },
   },
@@ -22,10 +24,10 @@ const Template = (args) => ({
   },
   template: `
   <div class="documentation-preview">
-    <TotalNetInformation />
+    <TotalNetInformation v-bind="args"/>
   </div>
 `,
 })
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = { currentCart }

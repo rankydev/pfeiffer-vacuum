@@ -1,7 +1,7 @@
 <template>
   <div>
     <ContentCTABox
-      v-if="!hiddenUIElements.checkoutInformationSpecificPrices"
+      v-if="!currentCart.hiddenUIElements.checkoutInformationSpecificPrices"
       :headline="$t('cart.priceInformationHeadline')"
       :description="[
         { component: 'Richtext', richtext: $t('cart.priceInformation1') },
@@ -9,7 +9,7 @@
       ]"
     />
     <div
-      v-if="!hiddenUIElements.checkoutInformationDelivery"
+      v-if="!currentCart.hiddenUIElements.checkoutInformationDelivery"
       class="delivery-note"
     >
       <h5 class="delivery-note--headline">
@@ -29,14 +29,11 @@ import ContentCTABox from '~/components/molecules/ContentCTABox/ContentCTABox'
 export default defineComponent({
   name: 'PriceInformation',
   components: { ContentCTABox },
-  setup() {
-    // TODO: this initialization needs to be updated after implementing the cartStore
-    const hiddenUIElements = {
-      checkoutInformationSpecificPrices: false,
-      checkoutInformationDelivery: true,
-    }
-
-    return { hiddenUIElements }
+  props: {
+    currentCart: {
+      type: Object,
+      default: () => ({}),
+    },
   },
 })
 </script>
