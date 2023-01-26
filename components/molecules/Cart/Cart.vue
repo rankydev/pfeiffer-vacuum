@@ -1,20 +1,17 @@
 <template>
   <div class="order-discount">
     <div class="order-discount__additional-information">
-      <div
-        v-if="true"
+      <PromotionLabel
+        v-for="(promo, x) in cartPromotions"
+        :key="x"
+        variant="normal"
         class="order-discount__additional-information--promotion"
       >
-        <PromotionLabel
-          v-for="(promo, x) in cartPromotions"
-          :key="x"
-          variant="normal"
-        >
-          {{ promo.promotion.description }}
-        </PromotionLabel>
-      </div>
+        {{ promo.promotion.description }}
+      </PromotionLabel>
+      <PriceInformation v-if="showReference" />
     </div>
-    <div class="tw-col-span-12 md:tw-col-span-6 lg:tw-col-span-4">
+    <div class="order-discount__net-information">
       <TotalNetInformation />
     </div>
   </div>
@@ -24,9 +21,17 @@
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 import TotalNetInformation from '~/components/molecules/TotalNetInformation/TotalNetInformation'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
+import PriceInformation from '~/components/molecules/PriceInformation/PriceInformation'
 
 export default defineComponent({
-  components: { PromotionLabel, TotalNetInformation },
+  name: 'Cart',
+  components: { PriceInformation, PromotionLabel, TotalNetInformation },
+  props: {
+    showReference: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup() {
     // TODO: this initialization needs to be updated after implementing the cartStore
     const currentCart = {
@@ -39,7 +44,7 @@ export default defineComponent({
       ],
     }
 
-    const cartPromotions = computed(
+    let cartPromotions = computed(
       () => currentCart?.appliedOrderPromotions || []
     )
 
@@ -76,6 +81,18 @@ export default defineComponent({
 
     &--promotion {
       @apply tw-mb-4;
+    }
+  }
+
+  &__net-information {
+    @apply tw-col-span-12;
+
+    @screen md {
+      @apply tw-col-span-6;
+    }
+
+    @screen lg {
+      @apply tw-col-span-4;
     }
   }
 }

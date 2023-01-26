@@ -1,28 +1,28 @@
-import OrderDiscount from '~/components/molecules/OrderDiscount/OrderDiscount.vue'
+import Cart from '~/components/molecules/Cart/Cart.vue'
 
 export default {
-  title: 'Molecules/m_142 OrderDiscount',
-  component: OrderDiscount,
+  title: 'Molecules/m_142 Cart',
+  component: Cart,
   parameters: {
     docs: {
       description: {
         component: '',
       },
       source: {
-        code: '<OrderDiscount v-bind="{}"  />',
+        code: '<Cart v-bind="{}"  />',
       },
     },
   },
 }
 
 const Template = (args) => ({
-  components: { OrderDiscount },
+  components: { Cart },
   setup() {
     return { args }
   },
   template: `
   <div class="documentation-preview">
-    <OrderDiscount />
+    <Cart />
   </div>
 `,
 })

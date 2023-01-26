@@ -59,6 +59,7 @@ import { storeToRefs } from 'pinia/dist/pinia.mjs'
 import { useUserStore } from '~/stores/user'
 
 export default defineComponent({
+  name: 'TotalNetInformation',
   setup() {
     // TODO: this initialization needs to be updated after implementing the cartStore
     const currentCart = {
