@@ -1,5 +1,5 @@
 <template>
-  <div v-if="entry.product" class="cart-item-card tw-container">
+  <div v-if="entry.product" class="cart-item-card tw-container tw-bg-pv-white">
     <div class="cart-item-card__wrapper">
       <div class="cart-item-card__image">
         <Link :href="getUrl">
@@ -42,92 +42,38 @@
         <Button variant="secondary" shape="plain" icon="delete" />
       </div>
     </div>
-    <div class="cart-item-card__promotions tw-grid tw-grid-cols-12">
-      <div class="lg:tw-col-start-2 tw-col-span-6 tw-flex tw-mt-4">
+    <div class="tw-grid tw-grid-cols-12 tw-mt-4">
+      <div
+        v-if="showAttributes"
+        class="variation-attributes-wrapper tw-flex tw-flex-wrap tw-col-start-2 tw-col-span-6"
+      >
+        <!-- Hier graue Tags anzeigen -->
         <div
-          v-for="(promo, x) in promotions"
-          :key="x"
-          class="cart-item-card__promotion"
+          v-for="(attribute, attributeIndex) in entry.product.variationMatrix
+            .variationAttributes"
+          :key="attributeIndex"
+          class="cart-item-card__attributes tw-flex"
         >
-          {{ promo.description }}
-        </div>
-      </div>
-
-      <!-- Muss noch gebaut werden -->
-      <!-- <promotion-label v-for="(promo, x) in promotions" :key="x">
-        {{ promo.description }}
-      </promotion-label> -->
-    </div>
-    <di v class="cart-item-card__promotions__price-row price-row">
-      <!-- <div class="tw-col-span-5 md:tw-col-span-4 lg:tw-col-span-2 tw-pr-3">
-        <span v-if="readOnly">
-          {{ $t('cart.quantity') }}: {{ entry.quantity }}
-        </span>
-        <PvInput
-          v-else
-          v-model="quantity"
-          input-type="number"
-          class="quantity"
-          @input="updateQuantity()"
-        />
-      </div> -->
-      <div
-        v-if="isApprovedUser && !isPriceAvailable"
-        class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 tw-flex tw-justify-end tw-items-center"
-      >
-        <!-- price-on-request__empty -->
-        <span
-          :class="`price-on-request${
-            unavailablePriceState === '-' ? '__empty' : ''
-          }`"
-        >
-          {{ unavailablePriceState }}
-        </span>
-      </div>
-      <!-- <template v-else-if="isApprovedUser">
-        <div class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 price">
-          <h6 v-if="entry.basePrice" class="sub">
-            {{ entry.basePrice.formattedValue }}
-          </h6>
-          <h6 v-if="entry?.totalPrice">
-            {{ entry?.totalPrice.formattedValue }}
-          </h6>
-        </div>
-      </template> -->
-      <div
-        v-else-if="loggedIn"
-        class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 tw-flex tw-justify-end tw-items-center"
-      >
-        <!-- <i18n :path="`userStatus.${userStatusType}.priceInfo.text`" tag="h6">
-          <template #link>
-            <Link
-              class="tw-text-pv-red tw-italic"
-              :href="localePath('shop-my-account-account-data')"
-            >
-              {{ $t(`userStatus.${userStatusType}.priceInfo.link`) }}
-            </Link>
-          </template>
-        </i18n> -->
-      </div>
-      <div
-        v-else-if="!loggedIn"
-        class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 tw-flex tw-justify-end tw-items-center"
-      >
-        <h6>
-          {{ $t('login.loginToSeePrices.part1') }}
-          <span
-            class="login-modal-link font-italic"
-            @click="login()"
-            v-html="$t('login.loginToSeePrices.part2')"
+          <div
+            v-for="(
+              attributeEntry, subindex
+            ) in attribute.variationValues.filter((e) => e.selected)"
+            :key="String(attributeIndex) + String(subindex)"
+            class="cart-item-card__attribute tw-flex tw-mb-2"
           >
-          </span>
-          {{ $t('login.loginToSeePrices.part3') }}
-        </h6>
-      </div>
-    </di>
-    <div v-if="showAttributes" class="variation-attributes-wrapper">
-      <!-- Hier graue Tags anzeigen -->
-      <!-- <template
+            <div
+              class="cart-item-card__attribute-value tw-bg-pv-grey-96 tw-text-xs tw-px-2 tw-py-1 tw-mr-2 tw-rounded-md"
+            >
+              <!-- <span class="tw-text-pv-grey-64">{{ `Käse: ` }}</span>
+              <span>{{ 'Salami' }}</span> -->
+              <span class="tw-text-pv-grey-64">{{
+                `${attribute.name}: `
+              }}</span>
+              <span>{{ attributeEntry.displayValue }}</span>
+            </div>
+          </div>
+        </div>
+        <!-- <template
         v-for="(attribute, attributeIndex) in (
           entry.product.variationMatrix || {}
         ).variationAttributes || []"
@@ -144,17 +90,101 @@
           </p>
         </template>
       </template> -->
+      </div>
     </div>
+
+    <div class="cart-item-card__promotions tw-grid tw-grid-cols-12">
+      <div class="lg:tw-col-start-2 tw-col-span-6 tw-flex tw-mt-2">
+        <div
+          v-for="(promo, x) in promotions"
+          :key="x"
+          class="cart-item-card__promotion"
+        >
+          {{ promo.description }}
+        </div>
+      </div>
+    </div>
+    <!-- <di v class="cart-item-card__promotions__price-row price-row">
+      <div class="tw-col-span-5 md:tw-col-span-4 lg:tw-col-span-2 tw-pr-3">
+        <span v-if="readOnly">
+          {{ $t('cart.quantity') }}: {{ entry.quantity }}
+        </span>
+        <PvInput
+          v-else
+          v-model="quantity"
+          input-type="number"
+          class="quantity"
+          @input="updateQuantity()"
+        />
+      </div>
+      <div
+        v-if="isApprovedUser && !isPriceAvailable"
+        class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 tw-flex tw-justify-end tw-items-center"
+      >
+        price-on-request__empty
+        <span
+          :class="`price-on-request${
+            unavailablePriceState === '-' ? '__empty' : ''
+          }`"
+        >
+          {{ unavailablePriceState }}
+        </span>
+      </div>
+      <template v-else-if="isApprovedUser">
+        <div class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 price">
+          <h6 v-if="entry.basePrice" class="sub">
+            {{ entry.basePrice.formattedValue }}
+          </h6>
+          <h6 v-if="entry?.totalPrice">
+            {{ entry?.totalPrice.formattedValue }}
+          </h6>
+        </div>
+      </template>
+      <div
+        v-else-if="loggedIn"
+        class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 tw-flex tw-justify-end tw-items-center"
+      >
+        <i18n :path="`userStatus.${userStatusType}.priceInfo.text`" tag="h6">
+          <template #link>
+            <Link
+              class="tw-text-pv-red tw-italic"
+              :href="localePath('shop-my-account-account-data')"
+            >
+              {{ $t(`userStatus.${userStatusType}.priceInfo.link`) }}
+            </Link>
+          </template>
+        </i18n>
+      </div>
+      <div
+        v-else-if="!loggedIn"
+        class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 tw-flex tw-justify-end tw-items-center"
+      >
+        <h6>
+          {{ $t('login.loginToSeePrices.part1') }}
+          <span
+            class="login-modal-link font-italic"
+            @click="login()"
+            v-html="$t('login.loginToSeePrices.part2')"
+          >
+          </span>
+          {{ $t('login.loginToSeePrices.part3') }}
+        </h6>
+      </div>
+    </di> -->
     <!-- <div v-if="currentUser && !isOciUser" class="further-article-information"> -->
-    <div class="further-article-information">
-      <Button
-        class="add-to-other-list"
-        variant="secondary"
-        shape="plain"
-        icon="assignment"
-        :label="$t('list.addArticle')"
-        @click="addToOtherList(entry.product)"
-      />
+    <div
+      class="cart-item-card__further-article-information tw-grid tw-grid-cols-12"
+    >
+      <div class="tw-col-start-2 tw-col-span-2">
+        <Button
+          class="add-to-other-list"
+          variant="secondary"
+          shape="plain"
+          icon="assignment"
+          :label="$t('list.addArticle')"
+          @click="addToOtherList(entry.product)"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -214,6 +244,8 @@ export default defineComponent({
       isRejectedUser,
       isLoggedIn,
     } = storeToRefs(userStore)
+
+    console.log(props.entry.product.variationMatrix, 'PRODUCT')
 
     const currentUser = ref(true)
     const loggedIn = ref(isLoggedIn)
