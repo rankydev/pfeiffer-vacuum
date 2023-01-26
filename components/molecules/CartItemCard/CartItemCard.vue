@@ -38,7 +38,7 @@
         <p>Preise</p>
       </div>
       <div class="cart-item-card__delete tw-col-span-1">
-        <Button variant="secondary" icon="delete" />
+        <Button variant="secondary" shape="plain" icon="delete" />
       </div>
     </div>
     <div class="cart-item-card__promotions tw-grid tw-grid-cols-12">
@@ -145,6 +145,7 @@
       <Button
         class="add-to-other-list"
         variant="secondary"
+        shape="outlined"
         icon="assignment"
         :label="$t('list.addArticle')"
         @click="addToOtherList(entry.product)"
@@ -323,6 +324,7 @@ export default defineComponent({
     @apply tw-inline-flex;
     @apply tw-justify-center;
     @apply tw-items-center;
+    @apply tw-mr-4;
     max-height: 48px;
 
     // md:tw-col-span-1 tw-pr-3
