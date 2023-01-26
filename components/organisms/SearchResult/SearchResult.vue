@@ -123,6 +123,7 @@ export default defineComponent({
             {
               entryNumber: 0,
               product: {
+                purchasable: true,
                 alternativeOrderNumbers: ['PK D56 702'],
                 bullets: [
                   'Zweistufige Hochleistungs-Drehschieberpumpe mit Saugvermögen 1,25 m<sup>3</sup>/h bei 50 Hz / 1,50 m<sup>3</sup>/h bei 60 Hz',
