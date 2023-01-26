@@ -18,5 +18,7 @@
   "contactDetails": "Kontaktdetails",
   "deleteDeliveryAddress": "Löschen",
   "setDefaultAddress": "Als Standard benutzen",
-  "defaultDelivery": "Standard Lieferungsadresse"
+  "defaultDelivery": "Standard Lieferungsadresse",
+  "accountData": "Kontodaten",
+  "companyData": "Firmendaten"
 }

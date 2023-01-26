@@ -2,14 +2,11 @@
   <div class="account-data">
     <LoadingSpinner :show="isLoading">
       <ResultHeadline
-        headline="Account Data"
+        :headline="$t('myaccount.accountData')"
         :link="localePath('shop-my-account')"
       />
-      <SectionHeadline
-        :buttons="accountDataButtons"
-        @btnClick="submitAccountData"
-      >
-        Account Data
+      <SectionHeadline :buttons="accountDataButtons" @btnClick="toggleUserEdit">
+        {{ $t('myaccount.accountData') }}
       </SectionHeadline>
       <div
         :class="[
@@ -35,11 +32,11 @@
             v-bind="btn"
             :key="index"
             class="account-data__save-account-data-mobile"
-            @click="submitAccountData(index)"
+            @click="toggleUserEdit(index)"
           />
         </template>
       </div>
-      <SectionHeadline>Company Data</SectionHeadline>
+      <SectionHeadline>{{ $t('myaccount.companyData') }}</SectionHeadline>
       <GlobalMessage
         v-if="infoMessage"
         v-bind="infoMessage"
@@ -166,27 +163,36 @@ export default defineComponent({
 
     const setCompanyData = (val) => (addedCompanyData.value = val?.companyData)
 
-    const submitCompanyData = () => {
-      v.value.$validate()
+    const hasValidationErrors = computed(
+      () => !!(v.value.$errors.length + v.value.$silentErrors.length)
+    )
 
-      if (!v.value.$errors.length && !v.value.$silentErrors.length) {
+    const toggleUserEdit = async (i) => {
+      if (isEditMode.value) {
+        if (i > 0) await submitAccountData()
+        else isEditMode.value = false
+      } else {
+        isEditMode.value = true
+      }
+    }
+
+    const submitCompanyData = async () => {
+      await v.value.$validate()
+
+      if (!hasValidationErrors.value) {
         saveCompanyData()
       }
     }
 
-    const submitAccountData = async (i) => {
-      if (isEditMode.value && i > 0) {
-        v.value.$validate()
+    const submitAccountData = async () => {
+      await v.value.$validate()
 
-        if (!v.value.$errors.length && !v.value.$silentErrors.length) {
-          await updateCurrentUser({
-            ...currentUser.value,
-            ...updatedData.value,
-          })
-          isEditMode.value = !isEditMode.value
-        }
-      } else {
-        isEditMode.value = !isEditMode.value
+      if (!hasValidationErrors.value) {
+        await updateCurrentUser({
+          ...currentUser.value,
+          ...updatedData.value,
+        })
+        isEditMode.value = false
       }
     }
 
@@ -201,9 +207,10 @@ export default defineComponent({
       isLoading,
       isEditMode,
       isAddCompanyMode,
+      hasValidationErrors,
 
+      toggleUserEdit,
       submitCompanyData,
-      submitAccountData,
       toggleAddCompany,
       dataChanged,
       setCompanyData,

@@ -18,5 +18,7 @@
   "contactDetails": "Contact Details",
   "deleteDeliveryAddress": "Delete",
   "setDefaultAddress": "Set as default",
-  "defaultDelivery": "Default delivery address"
+  "defaultDelivery": "Default delivery address",
+  "accountData": "Account Data",
+  "companyData": "Company Data"
 }

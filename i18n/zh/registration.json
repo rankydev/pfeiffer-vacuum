@@ -3,6 +3,15 @@
     "title": "帐户详细资料",
     "password": "密码"
   },
+  "formAccountData": {
+    "companyUniversity": "公司/大学",
+    "name": "名称",
+    "firstname": "名",
+    "lastname": "姓",
+    "email": "电子邮件",
+    "password": "密码",
+    "changePassword": "更改密码"
+  },
   "infotext": "您可以在此處輸入您公司的地址數據。<br /> <b>此步驟是可選的</b> <br /><br /> <b>請注意：</b> 僅適用於 A完整帳戶可讓您查看價格並發送請求!",
   "formCompanyData": {
     "title": "公司資料",
@@ -23,7 +32,30 @@
     "street": "街道",
     "houseNumber": "數字",
     "postalCode": "郵政編碼",
-    "city": "城市"
+    "city": "城市",
+    "phone": "电话",
+    "address": "地址"
+  },
+  "addCompanyData": {
+    "success": {
+      "headline": "感谢您完成您的帐户！",
+      "description": "我们的普发真空团队将在正常工作时间内检查您的注册详细信息。 之后您将收到接受或拒绝电子邮件。 这最多可能需要两个工作日。"
+    },
+    "open": {
+      "headline": "还是有点耐心。。。",
+      "description": "我们的普发真空团队目前正在正常工作时间内检查您的注册详细信息。 之后您将收到接受或拒绝电子邮件。 这最多可能需要两个工作日。"
+    },
+    "rejected": {
+      "headline": "抱歉，您的帐户已被拒绝。",
+      "description": "如有任何疑问，请联系我们的客服。"
+    },
+    "discard": "丢弃",
+    "saveChanges": "保存更改",
+    "errorOccured": "添加公司数据时出错"
+  },
+  "updateAccountData": {
+    "success": "您的数据已成功更新",
+    "errorOccured": "更新用户数据时出错"
   },
   "registrationSuccessPage": {
     "lite": {

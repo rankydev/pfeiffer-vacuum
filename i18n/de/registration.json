@@ -3,6 +3,15 @@
     "title": "Kontodaten",
     "password": "Passwort"
   },
+  "formAccountData": {
+    "companyUniversity": "Firma/Universität",
+    "name": "Name",
+    "firstname": "Vorname",
+    "lastname": "Nachname",
+    "email": "E-Mail",
+    "password": "Password",
+    "changePassword": "Passwort ändern"
+  },
   "formCompanyData": {
     "title": "Firmendaten",
     "infobox": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. Dieser Schritt ist optional.Bitte beachten Sie: Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
@@ -18,7 +27,30 @@
     "telephoneNumber": "Telefon",
     "fax": "Fax",
     "country": "Land",
-    "countryAutofill": "Wird automatisch befüllt"
+    "countryAutofill": "Wird automatisch befüllt",
+    "phone": "Telefon",
+    "address": "Adresse"
+  },
+  "addCompanyData": {
+    "success": {
+      "headline": "Vielen Dank für die Vervollständigung deines Kontos!",
+      "description": "Ihre Registrierung wird von unserem Pfeiffer Vacuum Team geprüft. Sie werden nach der Prüfung durch eine E-Mail informiert. Dies kann bis zu 2 Tage dauern."
+    },
+    "open": {
+      "headline": "Bitte haben Sie noch etwas Geduld...",
+      "description": "Ihre Registrierung wird von unserem Pfeiffer Vacuum Team geprüft. Sie werden nach der Prüfung durch eine E-Mail informiert. Dies kann bis zu 2 Tage dauern."
+    },
+    "rejected": {
+      "headline": "Entschuldigen Sie, Ihr Account wurde abgelehnt.",
+      "description": "Sollten Sie Fragen haben zögern Sie nicht unseren Kundensupport zu kontaktieren."
+    },
+    "discard": "Verwerfen",
+    "saveChanges": "Speichern",
+    "errorOccured": "Beim Hinzufügen der Daten ist ein Fehler aufgetreten"
+  },
+  "updateAccountData": {
+    "success": "Ihre Daten wurden erfolgreich aktualisiert",
+    "errorOccured": "Beim Ändern der Daten ist ein Fehler aufgetreten"
   },
   "infotext": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br /> <b>Dieser Schritt ist optional</b> <br /><br /> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
   "registrationSuccessPage": {

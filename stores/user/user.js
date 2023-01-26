@@ -14,9 +14,11 @@ import { watch } from '@nuxtjs/composition-api'
 import { useLogger } from '~/composables/useLogger'
 import { useOciStore } from '~/stores/oci'
 import { joinURL } from 'ufo'
+import { useToast } from '~/composables/useToast'
 
 export const useUserStore = defineStore('user', () => {
   const { logger } = useLogger('userStore')
+  const toast = useToast()
   const ctx = useContext()
   const route = useRoute()
   const userApi = useUserApi()
@@ -51,7 +53,7 @@ export const useUserStore = defineStore('user', () => {
       currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
   )
 
-  const userCountry = computed(() => userBillingAddress.value.country || {})
+  const userCountry = computed(() => userBillingAddress.value?.country || {})
 
   const changePasswordLink = computed(() => {
     const keycloakBaseUrl = ctx.$config.KEYCLOAK_BASE_URL + 'realms/'
@@ -94,8 +96,20 @@ export const useUserStore = defineStore('user', () => {
     try {
       await userApi.updateUserData(data)
       await loadCurrentUser()
+      toast.success(
+        { description: ctx.i18n.t('registration.updateAccountData.success') },
+        { timeout: 5000 }
+      )
     } catch (e) {
       logger.error('cannot patch user data', e)
+      toast.error(
+        {
+          description: ctx.i18n.t(
+            'registration.updateAccountData.errorOccured'
+          ),
+        },
+        { timeout: 5000 }
+      )
     } finally {
       isLoading.value = false
     }
@@ -107,8 +121,18 @@ export const useUserStore = defineStore('user', () => {
     try {
       res = await userApi.addCompanyData(data)
       await loadCurrentUser()
+      toast.success(
+        { description: 'Your data were updated successfully' },
+        { timeout: 5000 }
+      )
     } catch (e) {
       logger.error('cannot add company data', e)
+      toast.error(
+        {
+          description: 'An error occured while updating company data',
+        },
+        { timeout: 5000 }
+      )
     } finally {
       isLoading.value = false
     }

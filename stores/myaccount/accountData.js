@@ -26,28 +26,28 @@ export const useAccountDataStore = defineStore('accountData', () => {
   const accountDataPattern = computed(() => [
     {
       id: 'company',
-      label: 'Company / University',
+      label: i18n.t('registration.formAccountData.companyUniversity'),
       value: currentUser.value?.orgUnit?.name || '-',
       editable: true,
       disabled: true,
     },
     {
       id: 'country',
-      label: 'Country / Location',
+      label: i18n.t('registration.formCompanyData.country'),
       value: userCountry.value.name,
       editable: true,
       disabled: true,
     },
     {
       id: 'name',
-      label: 'Name',
+      label: i18n.t('registration.formAccountData.name'),
       value: currentUser.value?.name,
       editable: true,
       onlyDisplay: true,
     },
     {
       id: 'firstName',
-      label: 'Firstname',
+      label: i18n.t('registration.formAccountData.firstname'),
       value: currentUser.value?.firstName,
       editable: true,
       onlyEdit: true,
@@ -64,7 +64,7 @@ export const useAccountDataStore = defineStore('accountData', () => {
     },
     {
       id: 'lastName',
-      label: 'Lastname',
+      label: i18n.t('registration.formAccountData.lastname'),
       value: currentUser.value?.lastName,
       editable: true,
       onlyEdit: true,
@@ -81,17 +81,17 @@ export const useAccountDataStore = defineStore('accountData', () => {
     },
     {
       id: 'email',
-      label: 'Email',
+      label: i18n.t('registration.formAccountData.email'),
       value: currentUser.value?.displayUid,
       editable: true,
       disabled: true,
     },
     {
       id: 'password',
-      label: 'Password',
+      label: i18n.t('registration.formAccountData.password'),
       value: '**********',
       button: {
-        label: 'Change password',
+        label: i18n.t('registration.formAccountData.changePassword'),
         variant: 'secondary',
         shape: 'plain',
         icon: 'lock',
@@ -103,37 +103,39 @@ export const useAccountDataStore = defineStore('accountData', () => {
   const companyDataPattern = computed(() => [
     {
       id: 'company-further-details',
-      label: 'Futher company details',
+      label: i18n.t(
+        'registration.formCompanyData.additionalCompanyInformation'
+      ),
       value: currentUser.value?.orgUnit?.furtherDetails,
     },
     {
       id: 'customer-number',
-      label: 'Customer Number',
+      label: i18n.t('registration.formCompanyData.customerNumber'),
       value: currentUser.value?.orgUnit?.customerId || '-',
     },
     {
       id: 'department',
-      label: 'Department / Institute',
+      label: i18n.t('registration.formCompanyData.department'),
       value: currentUser.value?.department,
     },
     {
       id: 'vat',
-      label: 'VAT Number',
+      label: i18n.t('registration.formCompanyData.tax'),
       value: currentUser.value?.orgUnit?.vatID,
     },
     {
       id: 'phone',
-      label: 'Phone',
+      label: i18n.t('registration.formCompanyData.phone'),
       value: currentUser.value?.phone,
     },
     {
       id: 'fax',
-      label: 'Fax',
+      label: i18n.t('registration.formCompanyData.fax'),
       value: currentUser.value?.fax,
     },
     {
       id: 'address',
-      label: 'Address',
+      label: i18n.t('registration.formCompanyData.address'),
       value: formattedAddress.value,
     },
   ])
@@ -141,34 +143,31 @@ export const useAccountDataStore = defineStore('accountData', () => {
   const infoMessagePatterns = ref({
     companyDataSuccess: {
       variant: 'success',
-      headline: 'Thank you for completing your account!',
-      description:
-        'Your registration details will be checked by our Pfeiffer Vacuum Team within normal working hours. You will receive an acceptance or denial email afterwards. This may take up to two business days.',
+      headline: i18n.t('registration.addCompanyData.success.headline'),
+      description: i18n.t('registration.addCompanyData.success.description'),
     },
     open: {
       variant: 'warning',
-      headline: 'Still a little patience...',
-      description:
-        'Your registration details are currently being checked by our Pfeiffer Vacuum Team within normal working hours. You will receive an acceptance or denial email afterwards. This may take up to two business days.',
+      headline: i18n.t('registration.addCompanyData.open.headline'),
+      description: i18n.t('registration.addCompanyData.open.description'),
     },
     rejected: {
       variant: 'error',
-      headline: 'Sorry, your account has been rejected.',
-      description:
-        'If you have any questions, please contact our customer service.',
+      headline: i18n.t('registration.addCompanyData.rejected.headline'),
+      description: i18n.t('registration.addCompanyData.rejected.description'),
     },
   })
 
   const saveAccountDataButtons = ref([
     {
-      label: 'Discard',
+      label: i18n.t('registration.addCompanyData.discard'),
       icon: 'close',
       variant: 'secondary',
       shape: 'outlined',
       desktopOnly: true,
     },
     {
-      label: 'Save changes',
+      label: i18n.t('registration.addCompanyData.saveChanges'),
       icon: 'save',
       variant: 'secondary',
       desktopOnly: true,
@@ -191,7 +190,7 @@ export const useAccountDataStore = defineStore('accountData', () => {
       showCompanySuccess.value = true
     } catch {
       toast.error({
-        description: 'An error occured while adding company data.',
+        description: i18n.t('registration.addCompanyData.errorOccured'),
       })
     }
   }

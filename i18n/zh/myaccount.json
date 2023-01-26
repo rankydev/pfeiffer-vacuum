@@ -18,5 +18,7 @@
   "contactDetails": "联系方式",
   "deleteDeliveryAddress": "删除",
   "setDefaultAddress": "设为默认",
-  "defaultDelivery": "默认的配送地址"
+  "defaultDelivery": "默认的配送地址",
+  "accountData": "帐户数据",
+  "companyData": "公司资料"
 }
