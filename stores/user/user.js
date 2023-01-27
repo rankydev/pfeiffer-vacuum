@@ -31,6 +31,8 @@ export const useUserStore = defineStore('user', () => {
 
   const currentUser = ssrRef(null)
 
+  const customerId = computed(() => currentUser.value?.orgUnit?.customerId)
+
   const isOpenUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'OPEN'
   })
@@ -121,6 +123,7 @@ export const useUserStore = defineStore('user', () => {
     auth,
 
     // getters
+    customerId,
     isApprovedUser,
     isLeadUser,
     isOpenUser,

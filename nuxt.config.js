@@ -68,7 +68,6 @@ export default {
 
   ...(!isStorybook && {
     router: {
-      middleware: ['preload'],
       base: `/${
         process.env.CURRENT_REGION_CODE || process.env.DEFAULT_REGION_CODE
       }/`,

@@ -1,35 +1,50 @@
 import { defineStore } from 'pinia'
-import { ssrRef } from '@nuxtjs/composition-api'
+import {
+  ssrRef,
+  computed,
+  onBeforeMount,
+  onServerPrefetch,
+} from '@nuxtjs/composition-api'
 import { useCartApi } from './partials/useCartApi'
+import { useCookieHelper } from '~/composables/useCookieHelper'
+import { useKeycloak } from '~/stores/user/partials/useKeycloak'
 
-export const useCartStore = defineStore('cartStore', () => {
-  const cartApi = useCartApi()
-  const { getOrCreateCart, mergeCarts } = cartApi
+export const useCartStore = defineStore('cart', () => {
+  const { getCookie } = useCookieHelper()
+  const { isLoginProcess } = useKeycloak()
 
   // State
   const currentCart = ssrRef({})
 
   // Getters
-  const currentCartGuid = computed(() => currentCart.value?.guid)
+  const currentCartGuid = computed(() => {
+    return 'currentCart.value?.guid'
+  })
+
+  const cartApi = useCartApi(currentCart, currentCartGuid)
+  const { getOrCreateCart, mergeCarts } = cartApi
 
   const initialCartCheck = async () => {
-    // ----- Hol dir cart cookie Kram ----- //
-    /*
-    const cartCookie = JSON.parse(cookieHelper.getCookie(ctx, 'cart', null));
-    if (cartCookie) {
-      commit('setCurrentCart', cartCookie);
-    }
-    */
+    console.log('// ----- Start Initial Cart Check ----- //')
+    const cartCookie = JSON.parse(getCookie('cart', null))
+    if (cartCookie) currentCart.value = cartCookie
 
     let tempCart = await getOrCreateCart(false)
 
-    if (currentCartGuid.value !== tempCart?.guid) {
-      const mergedCart = await mergeCarts(currentCartGuid.value, tempCart)
-      if (mergedCart) tempCart = mergedCart
+    if (isLoginProcess.value) {
+      if (currentCartGuid.value !== tempCart?.guid) {
+        tempCart = await mergeCarts(currentCartGuid.value, tempCart)
+      }
+    } else {
+      tempCart = await getOrCreateCart(true)
     }
 
     if (tempCart) currentCart.value = tempCart
+    console.log('// ----- End Initial Cart Check ----- //')
   }
+
+  onBeforeMount(initialCartCheck)
+  onServerPrefetch(initialCartCheck)
 
   return {
     // State
