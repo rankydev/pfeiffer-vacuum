@@ -38,7 +38,10 @@
       </Popup>
     </client-only>
 
-    <Link href="#" class="shop-navigation__shopping-cart">
+    <Link
+      :href="localePath('shop-cart')"
+      class="shop-navigation__shopping-cart"
+    >
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
     </Link>
   </div>
