@@ -1,3 +1,4 @@
+import { setActivePinia, createPinia } from 'pinia'
 import { useMenuStore } from '~/stores/menu'
 
 let menu = null
@@ -38,6 +39,7 @@ const mockElement = document.createElement('div')
 
 describe('Menu', () => {
   beforeEach(() => {
+    setActivePinia(createPinia())
     mockWarn.mockClear()
     mockClickOutside.mockClear()
   })
@@ -75,7 +77,7 @@ describe('Menu', () => {
         menu.open(mockElement)
         jest.runAllTimers()
 
-        expect(menu.isActive.value).toBe(true)
+        expect(menu.isActive).toBe(true)
       })
 
       it('should register all event listeners when open was called', () => {
@@ -83,11 +85,20 @@ describe('Menu', () => {
         menu.open(mockElement)
         jest.runAllTimers()
 
-        expect(addListenerSpy).toBeCalledTimes(1)
-        expect(addListenerSpy).toBeCalledWith('keydown', expect.any(Function))
+        expect(addListenerSpy).toBeCalledTimes(2)
+        expect(addListenerSpy).nthCalledWith(1, 'keydown', expect.any(Function))
+        expect(addListenerSpy).nthCalledWith(
+          2,
+          'resize',
+          expect.any(Function),
+          { passive: true }
+        )
 
         expect(mockClickOutside).toBeCalledTimes(1)
-        expect(mockClickOutside).toBeCalledWith(mockElement, menu.close)
+        expect(mockClickOutside).toBeCalledWith(
+          mockElement,
+          expect.any(Function)
+        )
       })
 
       it('should set isActive=true when toggle was called', () => {
@@ -95,7 +106,7 @@ describe('Menu', () => {
         menu.toggle(mockElement)
         jest.runAllTimers()
 
-        expect(menu.isActive.value).toBe(true)
+        expect(menu.isActive).toBe(true)
       })
 
       it('should register all event listeners when toggle was called', () => {
@@ -103,11 +114,20 @@ describe('Menu', () => {
         menu.toggle(mockElement)
         jest.runAllTimers()
 
-        expect(addListenerSpy).toBeCalledTimes(1)
-        expect(addListenerSpy).toBeCalledWith('keydown', expect.any(Function))
+        expect(addListenerSpy).toBeCalledTimes(2)
+        expect(addListenerSpy).nthCalledWith(1, 'keydown', expect.any(Function))
+        expect(addListenerSpy).nthCalledWith(
+          2,
+          'resize',
+          expect.any(Function),
+          { passive: true }
+        )
 
         expect(mockClickOutside).toBeCalledTimes(1)
-        expect(mockClickOutside).toBeCalledWith(mockElement, menu.close)
+        expect(mockClickOutside).toBeCalledWith(
+          mockElement,
+          expect.any(Function)
+        )
       })
 
       it('should remove no event listeners when close was called', () => {
@@ -132,7 +152,7 @@ describe('Menu', () => {
       it('should set isActive=false when close was called', () => {
         setup({ isOpen: true })
         menu.close()
-        expect(menu.isActive.value).toBe(false)
+        expect(menu.isActive).toBe(false)
       })
 
       it('should remove all event listeners when close was called', () => {
@@ -143,7 +163,7 @@ describe('Menu', () => {
       it('should set isActive=false when toggle was called', () => {
         setup({ isOpen: true })
         menu.toggle()
-        expect(menu.isActive.value).toBe(false)
+        expect(menu.isActive).toBe(false)
       })
 
       it('should remove all event listeners when toggle was called', () => {
@@ -153,9 +173,9 @@ describe('Menu', () => {
 
       it('should register no new event listeners when open was called twice', () => {
         setup({ isOpen: true })
+        expect(addListenerSpy).toBeCalledTimes(2)
         menu.open(mockElement)
-
-        expect(addListenerSpy).toBeCalledTimes(1)
+        expect(addListenerSpy).toBeCalledTimes(2)
       })
 
       it('should not remove any event listeners if resize was called without a different window width', () => {
