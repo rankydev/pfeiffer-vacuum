@@ -13,5 +13,7 @@
   "vacuumRange": "真空范围",
   "suctionSpeed": "抽速",
   "search": "Search",
-  "suggestions": "suggestions"
+  "suggestions": "suggestions",
+  "productsTab": "产品",
+  "documentsTab": "文件"
 }

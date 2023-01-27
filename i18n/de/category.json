@@ -13,5 +13,7 @@
   "vacuumRange": "Vakuumbereich",
   "suctionSpeed": "Saugvermögen",
   "search": "Suche",
-  "suggestions": "Vorschläge"
+  "suggestions": "Vorschläge",
+  "productsTab": "Produkte",
+  "documentsTab": "Dokumente"
 }

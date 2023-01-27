@@ -13,5 +13,7 @@
   "vacuumRange": "진공 범위",
   "suctionSpeed": "펌프 속도",
   "search": "Search",
-  "suggestions": "suggestions"
+  "suggestions": "suggestions",
+  "productsTab": "제품",
+  "documentsTab": "서류"
 }

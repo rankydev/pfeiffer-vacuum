@@ -13,5 +13,7 @@
   "vacuumRange": "Vacuum Range",
   "suctionSpeed": "Pumping Speed",
   "search": "Search",
-  "suggestions": "suggestions"
+  "suggestions": "suggestions",
+  "productsTab": "Products",
+  "documentsTab": "Documents"
 }

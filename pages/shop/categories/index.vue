@@ -28,9 +28,26 @@
             />
           </ContentWrapper>
 
-          <div class="category-page__search-result">
+          <div class="tab-navigation-desktop">
+            <Button
+              v-for="tab in tabNavigationItems"
+              :key="tab.key"
+              :label="tab.name"
+              :variant="
+                currentTabSelected === tab.key ? 'secondary' : 'inverted'
+              "
+              cutaway="bottom"
+              text-center
+              class="tab-navigation-desktop__item"
+              :class="{ active: currentTabSelected === tab.key }"
+              @click="selectTab(tab)"
+            />
+          </div>
+
+          <div class="category-page__search-result-desktop">
             <ContentWrapper>
               <SearchResult
+                v-if="currentTabSelected === 'products'"
                 v-bind="{
                   products,
                   pagination,
@@ -40,6 +57,9 @@
                   sorts,
                 }"
               />
+              <div v-else>
+                <h2 class="tw-my-6">TODO: Document Search</h2>
+              </div>
             </ContentWrapper>
           </div>
         </template>
@@ -61,7 +81,7 @@
 </template>
 
 <script>
-import { defineComponent, watch, computed } from '@nuxtjs/composition-api'
+import { defineComponent, watch, computed, ref } from '@nuxtjs/composition-api'
 import { onBeforeMount, onServerPrefetch } from '@nuxtjs/composition-api'
 import { useRoute, useContext } from '@nuxtjs/composition-api'
 
@@ -141,6 +161,27 @@ export default defineComponent({
     const sorts = computed(() => categoryStore.result?.sorts)
     const metaData = computed(() => categoryStore.metaData)
 
+    /**
+     * page type handling
+     */
+    const currentTabSelected = ref('products')
+
+    const tabNavigationItems = [
+      {
+        name: context.i18n.t('category.productsTab'),
+        key: 'products',
+      },
+      {
+        name: context.i18n.t('category.documentsTab'),
+        key: 'documents',
+      },
+    ]
+
+    const selectTab = (tab) => {
+      currentTabSelected.value = tab.key
+      // TODO: also handle switching tab contents (display docs component, fetch search results, ...)
+    }
+
     return {
       slug,
       fallbackSlug,
@@ -160,15 +201,24 @@ export default defineComponent({
       currentQuery,
       sorts,
       metaData,
+
+      currentTabSelected,
+      tabNavigationItems,
+      selectTab,
     }
   },
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .category-page {
-  &__search-result {
+  &__search-result-desktop {
     @apply tw-bg-pv-grey-96;
+    @apply tw-hidden;
+
+    @screen md {
+      @apply tw-flex;
+    }
   }
 
   &__sticky-btn {
@@ -178,6 +228,25 @@ export default defineComponent({
     @screen md {
       @apply tw-hidden;
     }
+  }
+}
+
+.tab-navigation-desktop {
+  @apply tw-hidden;
+
+  @screen md {
+    @apply tw-flex;
+    @apply tw-flex-row;
+    @apply tw-justify-center;
+    @apply tw-border-b-2;
+    @apply tw-border-pv-red;
+    @apply tw-w-full;
+    @apply tw-overflow-y-auto;
+    @apply tw-gap-2;
+  }
+
+  &__item {
+    min-width: 120px;
   }
 }
 </style>
