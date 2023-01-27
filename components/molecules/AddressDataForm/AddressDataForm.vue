@@ -30,6 +30,11 @@
       required
       :rules="{ requiredIfNoNameInformation }"
     />
+    <PvInput
+      v-model="requestData.department"
+      :label="$t('form.contactRequest.department')"
+      :placeholder="$t('form.contactRequest.department')"
+    />
     <div class="address-data-form__row-container">
       <PvInput
         v-model="requestData.line1"
