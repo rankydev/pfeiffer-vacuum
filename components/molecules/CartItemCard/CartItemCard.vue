@@ -44,28 +44,26 @@
         <Button variant="secondary" shape="plain" icon="delete" />
       </div>
     </div>
-    <div class="tw-grid tw-grid-cols-12 tw-mt-4">
+    <div class="cart-item-card__attribute-wrapper tw-grid">
       <div
         v-if="showAttributes"
-        class="variation-attributes-wrapper tw-flex tw-flex-wrap tw-col-start-2 tw-col-span-6"
+        class="cart-item-card__variation-attributes-row"
       >
         <div
           v-for="(attribute, attributeIndex) in entry.product.variationMatrix
             .variationAttributes"
           :key="attributeIndex"
-          class="cart-item-card__attributes tw-flex"
+          class="cart-item-card__variation-attributes"
         >
           <div
             v-for="(
               attributeEntry, subindex
             ) in attribute.variationValues.filter((e) => e.selected)"
             :key="String(attributeIndex) + String(subindex)"
-            class="cart-item-card__attribute tw-flex tw-mb-2"
+            class="cart-item-card__attribute"
           >
-            <div
-              class="cart-item-card__attribute-value tw-bg-pv-grey-96 tw-text-xs tw-px-2 tw-py-1 tw-mr-2 tw-rounded-md"
-            >
-              <span class="tw-text-pv-grey-64">{{
+            <div class="cart-item-card__attribute-value">
+              <span class="cart-item-card__attribute-name">{{
                 `${attribute.name}: `
               }}</span>
               <span>{{ attributeEntry.displayValue }}</span>
@@ -92,8 +90,8 @@
       </div>
     </div>
 
-    <div class="cart-item-card__promotions tw-grid tw-grid-cols-12">
-      <div class="lg:tw-col-start-2 tw-col-span-6 tw-flex tw-mt-2">
+    <div class="cart-item-card__promotions-wrapper tw-grid">
+      <div class="cart-item-card__promotions">
         <div
           v-for="(promo, x) in promotions"
           :key="x"
@@ -171,12 +169,10 @@
       </div>
     </di> -->
     <!-- <div v-if="currentUser && !isOciUser" class="further-article-information"> -->
-    <div
-      class="cart-item-card__further-article-information tw-grid tw-grid-cols-12"
-    >
-      <div class="tw-col-start-2 tw-col-span-2">
+    <div class="cart-item-card__further-article-information">
+      <div class="cart-item-card__add-to-other-list">
         <Button
-          class="add-to-other-list"
+          class="cart-item-card__add-to-other-list-btn"
           variant="secondary"
           shape="plain"
           icon="assignment"
@@ -189,12 +185,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  computed,
-  ref,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 import { storeToRefs } from 'pinia'
 import Button from '~/components/atoms/Button/Button'
@@ -230,8 +221,6 @@ export default defineComponent({
   },
   // emits: ['input'],
   setup(props, { emit }) {
-    const context = useContext()
-    // const { i18n } = useContext()
     const userStore = useUserStore()
     const {
       isApprovedUser,
@@ -249,21 +238,13 @@ export default defineComponent({
     const quantity = ref(props.entry.quantity)
     const image = computed(() => props.entry.product.images[0])
     const productPrice = ref(1000)
-    // const totalPrice = ref(productPrice.value * quantity.value)
 
-    const url = computed(() =>
-      context.app.localePath({
-        name: 'shop-categories',
-        params: { product: props.entry.product.code },
-      })
-    )
-
-    const getUrl = () => {
-      context.app.localePath({
-        name: 'shop-categories',
-        params: { product: props.entry.product.code },
-      })
-    }
+    // const getUrl = () => {
+    //   context.app.localePath({
+    //     name: 'shop-categories',
+    //     params: { product: props.entry.product.code },
+    //   })
+    // }
 
     const userStatusType = computed(() => {
       return (
@@ -319,8 +300,8 @@ export default defineComponent({
       cartEntry,
       quantity,
       image,
-      url,
-      getUrl,
+      // url,
+      // getUrl,
       userStatusType,
       isInactive,
       isPriceAvailable,
@@ -347,7 +328,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .cart-item-card {
-  margin-top: 48px;
+  @apply tw-py-6;
 
   &__wrapper {
     @apply tw-grid tw-grid-cols-12;
@@ -393,6 +374,50 @@ export default defineComponent({
     @apply tw-justify-end;
   }
 
+  &__attribute-wrapper {
+    @apply tw-grid-cols-12;
+    @apply tw-mt-4;
+  }
+
+  &__variation-attributes-row {
+    @apply tw-col-start-2 tw-col-span-6;
+    @apply tw-flex;
+    @apply tw-flex-wrap;
+  }
+
+  &__cart-item-card__variation-attributes {
+    @apply tw-flex;
+  }
+
+  &__attribute {
+    @apply tw-flex;
+    @apply tw-mb-2;
+  }
+
+  &__attribute-value {
+    @apply tw-bg-pv-grey-96;
+    @apply tw-text-xs;
+    @apply tw-px-2;
+    @apply tw-py-1;
+    @apply tw-mr-2;
+    @apply tw-rounded-md;
+  }
+
+  &__attribute-name {
+    @apply tw-text-pv-grey-64;
+  }
+
+  &__promotions-wrapper {
+    @apply tw-grid-cols-12;
+  }
+
+  &__promotions {
+    @apply tw-col-span-6;
+    @apply tw-col-start-2;
+    @apply tw-flex;
+    @apply tw-flex-wrap;
+  }
+
   &__promotion {
     @apply tw-bg-pv-grey-16;
     @apply tw-text-pv-white;
@@ -401,124 +426,20 @@ export default defineComponent({
     @apply tw-text-sm;
     @apply tw-px-2;
     @apply tw-py-1;
+    @apply tw-mt-2;
     @apply tw-mr-2;
   }
+
+  &__further-article-information {
+    @apply tw-grid;
+    @apply tw-grid-cols-12;
+    @apply tw-mt-6;
+  }
+
+  &__add-to-other-list {
+    @apply tw-flex;
+    @apply tw-col-span-2;
+    @apply tw-col-start-2;
+  }
 }
-
-// .promotions {
-//   @apply tw-mt-6;
-// }
-
-// .add-to-other-list {
-//   border: none;
-//   margin-top: 8px;
-//   padding-left: 0;
-//   background-color: transparent;
-// }
-
-// .tw-container {
-//   @apply tw-bg-pv-white;
-//   padding: 16px;
-//   box-shadow: 0 48px 48px -48px grey;
-//   margin-bottom: 16px;
-
-//   .variation-attributes-wrapper {
-//     .variation-attribute {
-//       display: inline-block;
-//       position: relative;
-//       margin: 0 8px 8px 0;
-//       padding: 4px;
-//       @apply tw-bg-pv-grey-96;
-//       @apply tw-text-pv-grey-48;
-//       font-size: 12px;
-//       white-space: wrap;
-
-//       span {
-//         color: black;
-//         font-size: 12px;
-//       }
-//     }
-//   }
-
-//   h6 {
-//     font-size: 14px;
-//   }
-
-//   @screen sm {
-//     h6 {
-//       font-size: 16px;
-//     }
-//   }
-
-//   .product-image {
-//     max-width: 48px;
-//   }
-
-//   .product-code {
-//     &,
-//     a {
-//       @apply tw-text-pv-black;
-//       font-weight: bold;
-//     }
-//   }
-
-//   .product-order-number {
-//     &,
-//     a {
-//       @apply tw-text-pv-grey-48;
-//     }
-//   }
-
-//   .delete-button {
-//     text-align: right;
-
-//     button {
-//       border: 0 solid transparent;
-//       padding-top: 0;
-//       padding-right: 0;
-//       background-color: transparent;
-
-//       &:focus {
-//         @apply tw-text-pv-red;
-//         border-color: white;
-//         box-shadow: none;
-//       }
-
-//       .material-icons {
-//         font-size: 24px;
-//       }
-//     }
-//   }
-
-//   .price-row {
-//     padding-top: 16px;
-
-//     .login-modal-link {
-//       @apply tw-text-pv-red;
-//       cursor: pointer;
-//       outline: none;
-//     }
-
-//     .price-on-request {
-//       display: inline-block;
-//       padding: 8px;
-//       border: 2px solid black;
-//       color: black;
-//       font-weight: bold;
-//       white-space: nowrap;
-
-//       &__empty {
-//         border: none;
-//       }
-//     }
-
-//     .quantity {
-//       width: 100%;
-//     }
-
-//     .price {
-//       text-align: right;
-//     }
-//   }
-// }
 </style>
