@@ -1,69 +1,72 @@
+import { defineStore } from 'pinia'
 import { ref, readonly } from '@nuxtjs/composition-api'
 import { onClickOutside } from '@vueuse/core'
 import { useLogger } from '~/composables/useLogger'
 
-const isActive = ref(false)
+export const useMenuStore = defineStore('menu', () => {
+  const { logger } = useLogger('menuStore')
 
-let windowWidth = null
-let hasResizeListener = false
-let removeClickListener = null
+  const isActive = ref(false)
 
-const openMenu = (target) => {
-  const { logger } = useLogger('menu-store')
+  let windowWidth = null
+  let hasResizeListener = false
+  let removeClickListener = null
 
-  if (isActive.value) return
+  const openMenu = (target) => {
+    if (isActive.value) return
 
-  isActive.value = true
+    isActive.value = true
 
-  setTimeout(() => {
+    setTimeout(() => {
+      removeClickListener?.()
+
+      if (target) {
+        removeClickListener = onClickOutside(target, closeMenu)
+      } else {
+        logger.warn(
+          "Click outside event listener can't be registered. No taget provided."
+        )
+      }
+
+      addEventListener('keydown', closeMenuEsc)
+
+      windowWidth = window.innerWidth
+
+      if (hasResizeListener) return
+      hasResizeListener = true
+      addEventListener('resize', closeWindowOnResize, { passive: true })
+    }, 0)
+  }
+
+  const closeWindowOnResize = () => {
+    /* istanbul ignore next */
+    if (!isActive.value) return
+
+    const newWidth = window.innerWidth
+
+    if (newWidth !== windowWidth) closeMenu()
+  }
+
+  const closeMenu = () => {
+    if (!isActive.value) return
+
+    isActive.value = false
+
     removeClickListener?.()
+    removeClickListener = null
 
-    if (target) {
-      removeClickListener = onClickOutside(target, closeMenu)
-    } else {
-      logger.warn(
-        "Click outside event listener can't be registered. No taget provided."
-      )
-    }
+    removeEventListener('keydown', closeMenuEsc)
+  }
 
-    addEventListener('keydown', closeMenuEsc)
+  const closeMenuEsc = ($event) => $event.key === 'Escape' && closeMenu()
 
-    windowWidth = window.innerWidth
+  const toggleMenu = (target) =>
+    !isActive.value ? openMenu(target) : closeMenu()
 
-    if (hasResizeListener) return
-    hasResizeListener = true
-    addEventListener('resize', closeWindowOnResize, { passive: true })
-  }, 0)
-}
-
-const closeWindowOnResize = () => {
-  /* istanbul ignore next */
-  if (!isActive.value) return
-
-  const newWidth = window.innerWidth
-
-  if (newWidth !== windowWidth) closeMenu()
-}
-
-const closeMenu = () => {
-  if (!isActive.value) return
-
-  isActive.value = false
-
-  removeClickListener?.()
-  removeClickListener = null
-
-  removeEventListener('keydown', closeMenuEsc)
-}
-
-const closeMenuEsc = ($event) => $event.key === 'Escape' && closeMenu()
-
-const toggleMenu = (target) =>
-  !isActive.value ? openMenu(target) : closeMenu()
-
-export const useMenuStore = () => ({
-  isActive: readonly(isActive),
-  toggle: toggleMenu,
-  open: openMenu,
-  close: closeMenu,
+  return {
+    isActive: readonly(isActive),
+    toggle: toggleMenu,
+    open: openMenu,
+    close: closeMenu,
+  }
 })
