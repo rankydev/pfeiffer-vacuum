@@ -2,7 +2,8 @@
   <div v-if="entry.product" class="cart-item-card tw-container tw-bg-pv-white">
     <div class="cart-item-card__wrapper">
       <div class="cart-item-card__image">
-        <Link :href="getUrl">
+        <!-- <Link :href="getUrl"> -->
+        <Link :href="'#'">
           <ResponsiveImage
             class="cart-item-card__product-image"
             :image="entry.product.images[0]"
@@ -13,7 +14,8 @@
       </div>
       <div class="cart-item-card__product-code">
         <h6>
-          <Link :href="getUrl">
+          <!-- <Link :href="getUrl"> -->
+          <Link :href="'#'">
             {{ entry.product.name }}
           </Link>
         </h6>
@@ -30,13 +32,13 @@
           v-model="quantity"
           input-type="number"
           class="cart-item-card__quanity-input"
-          @input="updateQuantity()"
+          @input="updateQuantity"
         />
       </div>
       <div class="cart-item-card__prices">
         <p>{{ productPrice }}</p>
-        <p v-if="productPrice">{{ `${productPrice * quantity}` }}</p>
-        <p v-else>{{ productPrice }}</p>
+        <p v-if="productPrice">{{ `${totalPrice}` }}</p>
+        <p v-else>{{ totalPrice }}</p>
       </div>
       <div class="cart-item-card__delete">
         <Button variant="secondary" shape="plain" icon="delete" />
@@ -47,7 +49,6 @@
         v-if="showAttributes"
         class="variation-attributes-wrapper tw-flex tw-flex-wrap tw-col-start-2 tw-col-span-6"
       >
-        <!-- Hier graue Tags anzeigen -->
         <div
           v-for="(attribute, attributeIndex) in entry.product.variationMatrix
             .variationAttributes"
@@ -64,8 +65,6 @@
             <div
               class="cart-item-card__attribute-value tw-bg-pv-grey-96 tw-text-xs tw-px-2 tw-py-1 tw-mr-2 tw-rounded-md"
             >
-              <!-- <span class="tw-text-pv-grey-64">{{ `Käse: ` }}</span>
-              <span>{{ 'Salami' }}</span> -->
               <span class="tw-text-pv-grey-64">{{
                 `${attribute.name}: `
               }}</span>
@@ -197,7 +196,6 @@ import {
   useContext,
 } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
-import { useProductStore } from '~/stores/product'
 import { storeToRefs } from 'pinia'
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
@@ -233,10 +231,8 @@ export default defineComponent({
   // emits: ['input'],
   setup(props, { emit }) {
     const context = useContext()
-    const { i18n } = useContext()
+    // const { i18n } = useContext()
     const userStore = useUserStore()
-    const productStore = useProductStore()
-    const { product, productType, price } = storeToRefs(productStore)
     const {
       isApprovedUser,
       isLeadUser,
@@ -245,8 +241,6 @@ export default defineComponent({
       isLoggedIn,
     } = storeToRefs(userStore)
 
-    console.log(props.entry.product.variationMatrix, 'PRODUCT')
-
     const currentUser = ref(true)
     const loggedIn = ref(isLoggedIn)
     const isOciUser = ref(true)
@@ -254,6 +248,8 @@ export default defineComponent({
     const cartEntry = ref(props.entry)
     const quantity = ref(props.entry.quantity)
     const image = computed(() => props.entry.product.images[0])
+    const productPrice = ref(1000)
+    // const totalPrice = ref(productPrice.value * quantity.value)
 
     const url = computed(() =>
       context.app.localePath({
@@ -277,75 +273,47 @@ export default defineComponent({
       )
     })
 
-    const noPriceReason = computed(() => {
-      const path = 'product.login.loginToSeePrices.'
-      if (isLeadUser.value) return i18n.t(path + 'lead')
-      if (isOpenUser.value) return i18n.t(path + 'open')
-      if (isRejectedUser.value) return i18n.t(path + 'rejected')
-      return i18n.t('product.noPriceAvailable')
-    })
-
-    const hasCustomerPrice = computed(() => !!price.value?.customerPrice)
-
-    const productPrice = computed(() =>
-      price.value
-        ? price.value?.formattedValue || ''
-        : i18n.t('product.priceOnRequest')
-    )
-
-    const isPriceVisible = computed(
-      () => !!(price.value && isApprovedUser.value)
-    )
-
     const isInactive = computed(() => {
-      // return props.entry.product?.purchasable === false
-      return false
+      return props.entry.product?.purchasable === false
     })
 
     const isPriceAvailable = computed(() => {
-      return true
-      // return !!(
-      //   loggedIn &&
-      //   props.entry.product?.purchasable !== false &&
-      //   props.entry.product?.totalPrice
-      // )
+      return !!(
+        loggedIn &&
+        props.entry.product?.purchasable !== false &&
+        props.entry.product?.totalPrice
+      )
     })
 
     const unavailablePriceState = computed(() => {
-      // if (props.entry.product?.purchasable === false) {
-      //   return $t('product.inactiveProduct')
-      // } else if (loggedIn && !props.product.entry?.totalPrice) {
-      //   return $t('product.priceOnRequest')
-      // } else {
-      //   return '-'
-      // }
-      return '-'
+      if (props.entry.product?.purchasable === false) {
+        return $t('product.inactiveProduct')
+      } else if (loggedIn && !props.product.entry?.totalPrice) {
+        return $t('product.priceOnRequest')
+      } else {
+        return '-'
+      }
     })
 
-    const updateQuantity = async () => {
-      console.log('store functionality')
-      // await this.$hybrisApi.cartApi.updateQuantity(
-      //   this.entry.entryNumber,
-      //   this.quantity
-      // )
+    const totalPrice = computed(() => {
+      return quantity.value * productPrice.value
+    })
+
+    const updateQuantity = (value) => {
+      if (value > 1) {
+        quantity.value = value
+      } else {
+        quantity.value = 1
+      }
     }
 
     const addToOtherList = (product) => {
       console.log('store functionality', product)
-      // this.$emit('close')
-      // this.$store.commit('setCurrentProduct', product)
-      // this.$store.commit('setShoppingListLastProduct', product)
-      // this.$store.dispatch('addToList')
     }
 
     const login = async () => {
       console.log('store functionality')
-      // await this.$authApi.login()
     }
-
-    // watch(async (newEntry) => {
-    //   quantity = newEntry.quantity
-    // })
 
     return {
       cartEntry,
@@ -367,10 +335,11 @@ export default defineComponent({
       isRejectedUser,
       isApprovedUser,
       isOciUser,
-      isPriceVisible,
-      noPriceReason,
-      hasCustomerPrice,
+      // isPriceVisible,
+      // noPriceReason,
+      // hasCustomerPrice,
       productPrice,
+      totalPrice,
     }
   },
 })
