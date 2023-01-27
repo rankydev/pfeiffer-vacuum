@@ -30,11 +30,6 @@
       required
       :rules="{ requiredIfNoNameInformation }"
     />
-    <PvInput
-      v-model="requestData.department"
-      :label="$t('form.contactRequest.department')"
-      :placeholder="$t('form.contactRequest.department')"
-    />
     <div class="address-data-form__row-container">
       <PvInput
         v-model="requestData.line1"
@@ -176,7 +171,8 @@ export default defineComponent({
       }
 
       &--half {
-        @apply tw-w-6/12;
+        flex-grow: 2;
+        width: auto !important;
       }
     }
   }
