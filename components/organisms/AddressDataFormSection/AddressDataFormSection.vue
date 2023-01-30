@@ -127,13 +127,17 @@ export default defineComponent({
     })
 
     onMounted(async () => {
+      // always load billing address since its needed to prefill country data
+      await userStore.loadBillingAddress()
+
+      // if we do not want to change an existing address we do not need to load/set existing data
       if (!isEditMode.value && !addressID) return
 
       // get delivery address from store, if its not there, load all addresses and try again
       // this will happen when accessing the page directly (page reload) without visiting address data page before
       let exisingDeliveryAddress = userStore.getDeliveryAddressByID(addressID)
       if (!exisingDeliveryAddress) {
-        await userStore.loadAddressData()
+        await userStore.loadDeliveryAddresses()
       }
       exisingDeliveryAddress = userStore.getDeliveryAddressByID(addressID)
 
