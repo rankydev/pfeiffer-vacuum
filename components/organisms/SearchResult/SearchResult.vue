@@ -5,7 +5,7 @@
     </div>
     <div class="search-result__products">
       <div v-if="pagination.totalResults" class="search-result__total-count">
-        {{ pagination.totalResults }} results found
+        {{ pagination.totalResults }} {{ $t('category.resultsFound') }}
       </div>
       <Facets
         class="search-result__facets"
