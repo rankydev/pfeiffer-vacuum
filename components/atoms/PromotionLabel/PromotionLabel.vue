@@ -1,5 +1,5 @@
 <template>
-  <div class="promotion-label" v-if="subline">
+  <div v-if="subline" class="promotion-label">
     <span class="promotion-label--subline"> {{ subline }}</span>
   </div>
 </template>
