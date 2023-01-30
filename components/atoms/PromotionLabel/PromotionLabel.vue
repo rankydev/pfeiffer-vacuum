@@ -1,5 +1,5 @@
 <template>
-  <div class="promotion-label">
+  <div class="promotion-label" v-if="subline">
     <span class="promotion-label--subline"> {{ subline }}</span>
   </div>
 </template>
@@ -12,7 +12,8 @@ export default defineComponent({
   props: {
     subline: {
       type: String,
-      default: 'normal',
+      default: '',
+      required: true,
     },
   },
 })

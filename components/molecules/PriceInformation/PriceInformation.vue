@@ -1,29 +1,14 @@
 <template>
-  <div>
-    <ContentCTABox
-      v-if="!currentCart.hiddenUIElements.checkoutInformationSpecificPrices"
-      :headline="$t('cart.priceInformationHeadline')"
-      :description="[
-        { component: 'Richtext', richtext: $t('cart.priceInformation1') },
-        { component: 'Richtext', richtext: $t('cart.priceInformation2') },
-      ]"
-    />
-    <div
-      v-if="!currentCart.hiddenUIElements.checkoutInformationDelivery"
-      class="delivery-note"
-    >
-      <h5 class="delivery-note--headline">
-        {{ $t('cart.deliveryNote') }}
-      </h5>
-      <h6>
-        {{ $t('cart.deliveryDetails') }}
-      </h6>
-    </div>
-  </div>
+  <ContentCTABox :headline="headline" :description="description" />
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  toRefs,
+  useContext,
+} from '@nuxtjs/composition-api'
 import ContentCTABox from '~/components/molecules/ContentCTABox/ContentCTABox'
 
 export default defineComponent({
@@ -34,6 +19,47 @@ export default defineComponent({
       type: Object,
       default: () => ({}),
     },
+  },
+  setup(props) {
+    const { i18n } = useContext()
+    const { currentCart } = toRefs(props)
+
+    const isPriceInformation = computed(
+      () =>
+        !currentCart.value.hiddenUIElements.checkoutInformationSpecificPrices
+    )
+    const isDeliveryInformation = computed(
+      () => !currentCart.value.hiddenUIElements.checkoutInformationDelivery
+    )
+
+    const headline = computed(() => {
+      if (isPriceInformation.value)
+        return i18n.t('cart.priceInformationHeadline')
+
+      if (isDeliveryInformation.value) return i18n.t('cart.deliveryNote')
+
+      return ''
+    })
+
+    const description = computed(() => {
+      if (isPriceInformation.value)
+        return [
+          { component: 'Richtext', richtext: i18n.t('cart.priceInformation1') },
+          { component: 'Richtext', richtext: i18n.t('cart.priceInformation2') },
+        ]
+
+      if (isDeliveryInformation.value)
+        return [
+          { component: 'Richtext', richtext: i18n.t('cart.deliveryDetails') },
+        ]
+
+      return ''
+    })
+
+    return {
+      headline,
+      description,
+    }
   },
 })
 </script>
