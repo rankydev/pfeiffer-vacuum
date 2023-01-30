@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed, toRefs } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel.vue'
@@ -61,10 +61,15 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { currentCart } = toRefs(props)
+
     const totalDiscounts = computed(
-      () => props.currentCart.totalDiscounts.formattedValue
+      () => currentCart.value?.totalDiscounts?.formattedValue
     )
-    const hasPromotion = computed(() => props.currentCart.totalDiscounts.value)
+
+    const hasPromotion = computed(
+      () => currentCart.value?.totalDiscounts?.value
+    )
 
     const userStore = useUserStore()
     const {
