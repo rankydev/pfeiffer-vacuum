@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { storeToRefs } from 'pinia'
 import { defineComponent } from '@nuxtjs/composition-api'
 import BurgerIcon from '~/components/atoms/BurgerIcon/BurgerIcon.vue'
 import MainNavigationLevel from '../MainNavigationLevel/MainNavigationLevel.vue'
@@ -49,10 +50,11 @@ export default defineComponent({
     },
   },
   setup(_, { refs }) {
-    const menu = useMenuStore()
-    const toggle = () => menu.toggle(refs.menu)
+    const menuStore = useMenuStore()
+    const { isActive } = storeToRefs(menuStore)
+    const toggle = () => menuStore.toggle(refs.menu)
 
-    return { isActive: menu.isActive, toggle }
+    return { isActive, toggle }
   },
 })
 </script>
