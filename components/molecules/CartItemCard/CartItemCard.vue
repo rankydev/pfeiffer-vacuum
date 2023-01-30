@@ -1,76 +1,88 @@
 <template>
-  <div v-if="entry.product" class="cart-item-card tw-container tw-bg-pv-white">
-    <div class="cart-item-card__wrapper">
-      <div class="cart-item-card__image">
-        <!-- <Link :href="getUrl"> -->
-        <Link :href="'#'">
-          <ResponsiveImage
-            class="cart-item-card__product-image"
-            :image="entry.product.images[0]"
-            provider="hybris"
-            aspect-ratio="1:1"
-          />
-        </Link>
-      </div>
-      <div class="cart-item-card__product-code">
-        <h6>
-          <!-- <Link :href="getUrl"> -->
-          <Link :href="'#'">
-            {{ entry.product.name }}
-          </Link>
-        </h6>
-        <p class="cart-item-card__product-order-number">
-          {{ entry.product.orderNumber }}
-        </p>
-      </div>
-      <div class="cart-item-card__quanity">
-        <span v-if="readOnly">
-          {{ $t('cart.quantity') }}: {{ entry.quantity }}
-        </span>
-        <PvInput
-          v-else
-          v-model="quantity"
-          input-type="number"
-          class="cart-item-card__quanity-input"
-          @input="updateQuantity"
-        />
-      </div>
-      <div class="cart-item-card__prices">
-        <p>{{ productPrice }}</p>
-        <p v-if="productPrice">{{ `${totalPrice}` }}</p>
-        <p v-else>{{ totalPrice }}</p>
-      </div>
-      <div class="cart-item-card__delete">
-        <Button variant="secondary" shape="plain" icon="delete" />
-      </div>
-    </div>
-    <div class="cart-item-card__attribute-wrapper tw-grid">
-      <div
-        v-if="showAttributes"
-        class="cart-item-card__variation-attributes-row"
-      >
-        <div
-          v-for="(attribute, attributeIndex) in entry.product.variationMatrix
-            .variationAttributes"
-          :key="attributeIndex"
-          class="cart-item-card__variation-attributes"
-        >
-          <div
-            v-for="(
-              attributeEntry, subindex
-            ) in attribute.variationValues.filter((e) => e.selected)"
-            :key="String(attributeIndex) + String(subindex)"
-            class="cart-item-card__attribute"
-          >
-            <div class="cart-item-card__attribute-value">
-              <span class="cart-item-card__attribute-name">{{
-                `${attribute.name}: `
-              }}</span>
-              <span>{{ attributeEntry.displayValue }}</span>
-            </div>
+  <div
+    v-if="entry.product"
+    :class="[
+      isMinicart
+        ? 'cart-item-card--minicart tw-bg-pv-white'
+        : 'cart-item-card--desktop ',
+    ]"
+  >
+    <div class="cart-item-card__content-wrapper">
+      <div class="cart-item-card___content-wrapper--first-row">
+        <div class="cart-item-card___product">
+          <div class="cart-item-card__image">
+            <!-- <Link :href="getUrl"> -->
+            <Link :href="'#'">
+              <ResponsiveImage
+                class="cart-item-card__product-image"
+                :image="entry.product.images[0]"
+                provider="hybris"
+                aspect-ratio="1:1"
+              />
+            </Link>
+          </div>
+          <div class="cart-item-card__product-code">
+            <h6>
+              <!-- <Link :href="getUrl"> -->
+              <Link :href="'#'">
+                {{ entry.product.name }}
+              </Link>
+            </h6>
+            <p class="cart-item-card__product-order-number">
+              {{ entry.product.orderNumber }}
+            </p>
           </div>
         </div>
-        <!-- <template
+        <div class="cart-item-card__quantity-price">
+          <div class="cart-item-card__quanity">
+            <span v-if="readOnly">
+              {{ $t('cart.quantity') }}: {{ entry.quantity }}
+            </span>
+            <PvInput
+              v-else
+              v-model="quantity"
+              input-type="number"
+              class="cart-item-card__quanity-input"
+              @input="updateQuantity"
+            />
+          </div>
+          <div class="cart-item-card__prices">
+            <p>{{ productPrice }}</p>
+            <p v-if="productPrice">{{ `${totalPrice}` }}</p>
+            <p v-else>{{ totalPrice }}</p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cart-item-card___content-wrapper--second-row tw-flex tw-flex-col"
+      >
+        <div class="cart-item-card__attribute-wrapper">
+          <div
+            v-if="showAttributes"
+            class="cart-item-card__variation-attributes-row"
+          >
+            <div
+              v-for="(attribute, attributeIndex) in entry.product
+                .variationMatrix.variationAttributes"
+              :key="attributeIndex"
+              class="cart-item-card__variation-attributes"
+            >
+              <div
+                v-for="(
+                  attributeEntry, subindex
+                ) in attribute.variationValues.filter((e) => e.selected)"
+                :key="String(attributeIndex) + String(subindex)"
+                class="cart-item-card__attribute"
+              >
+                <div class="cart-item-card__attribute-value">
+                  <span class="cart-item-card__attribute-name">{{
+                    `${attribute.name}: `
+                  }}</span>
+                  <span>{{ attributeEntry.displayValue }}</span>
+                </div>
+              </div>
+            </div>
+            <!-- <template
         v-for="(attribute, attributeIndex) in (
           entry.product.variationMatrix || {}
         ).variationAttributes || []"
@@ -87,21 +99,21 @@
           </p>
         </template>
       </template> -->
-      </div>
-    </div>
-
-    <div class="cart-item-card__promotions-wrapper tw-grid">
-      <div class="cart-item-card__promotions">
-        <div
-          v-for="(promo, x) in promotions"
-          :key="x"
-          class="cart-item-card__promotion"
-        >
-          {{ promo.description }}
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- <di v class="cart-item-card__promotions__price-row price-row">
+
+        <div class="cart-item-card__promotions-wrapper">
+          <div class="cart-item-card__promotions">
+            <div
+              v-for="(promo, x) in promotions"
+              :key="x"
+              class="cart-item-card__promotion"
+            >
+              {{ promo.description }}
+            </div>
+          </div>
+        </div>
+        <!-- <di v class="cart-item-card__promotions__price-row price-row">
       <div class="tw-col-span-5 md:tw-col-span-4 lg:tw-col-span-2 tw-pr-3">
         <span v-if="readOnly">
           {{ $t('cart.quantity') }}: {{ entry.quantity }}
@@ -168,17 +180,24 @@
         </h6>
       </div>
     </di> -->
-    <!-- <div v-if="currentUser && !isOciUser" class="further-article-information"> -->
-    <div class="cart-item-card__further-article-information">
-      <div class="cart-item-card__add-to-other-list">
-        <Button
-          class="cart-item-card__add-to-other-list-btn"
-          variant="secondary"
-          shape="plain"
-          icon="assignment"
-          :label="$t('list.addArticle')"
-          @click="addToOtherList(entry.product)"
-        />
+        <!-- <div v-if="currentUser && !isOciUser" class="further-article-information"> -->
+        <div class="cart-item-card__further-article-information">
+          <div class="cart-item-card__add-to-other-list">
+            <Button
+              class="cart-item-card__add-to-other-list-btn"
+              variant="secondary"
+              shape="plain"
+              icon="assignment"
+              :label="$t('list.addArticle')"
+              @click="addToOtherList(entry.product)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cart-item-card__delete-wrapper">
+      <div class="cart-item-card__delete">
+        <Button variant="secondary" shape="plain" icon="delete" />
       </div>
     </div>
   </div>
@@ -217,6 +236,10 @@ export default defineComponent({
     promotions: {
       type: Array,
       default: () => [],
+    },
+    isMinicart: {
+      type: Boolean,
+      default: true,
     },
   },
   // emits: ['input'],
@@ -300,8 +323,6 @@ export default defineComponent({
       cartEntry,
       quantity,
       image,
-      // url,
-      // getUrl,
       userStatusType,
       isInactive,
       isPriceAvailable,
@@ -316,9 +337,6 @@ export default defineComponent({
       isRejectedUser,
       isApprovedUser,
       isOciUser,
-      // isPriceVisible,
-      // noPriceReason,
-      // hasCustomerPrice,
       productPrice,
       totalPrice,
     }
@@ -327,119 +345,190 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.cart-item-card {
+.cart-item-card--minicart {
+  @apply tw-flex tw-flex-row;
   @apply tw-py-6;
+  @apply tw-px-2;
 
-  &__wrapper {
-    @apply tw-grid tw-grid-cols-12;
+  .cart-item-card {
+    &__content-wrapper {
+      @apply tw-w-full;
+
+      &--first-row {
+        @apply tw-flex tw-flex-col;
+      }
+    }
+
+    &__product {
+      @apply tw-flex;
+    }
+
+    &__image {
+      max-width: 48px;
+    }
+
+    &__quantity-price {
+      @apply tw-flex;
+      @apply tw-justify-between;
+    }
+
+    &__prices {
+      @apply tw-flex;
+      @apply tw-gap-1;
+      @apply tw-items-center;
+    }
+
+    &__variation-attributes-row {
+      @apply tw-flex tw-flex-wrap;
+    }
+
+    &__attribute-value {
+      @apply tw-bg-pv-grey-96;
+      @apply tw-text-xs;
+      @apply tw-px-2;
+      @apply tw-py-1;
+      @apply tw-mt-2;
+      @apply tw-mr-2;
+      @apply tw-rounded-md;
+    }
+
+    &__promotions {
+      @apply tw-flex;
+      @apply tw-flex-wrap;
+    }
+
+    &__promotion {
+      @apply tw-bg-pv-grey-16;
+      @apply tw-text-pv-white;
+      @apply tw-rounded-md;
+      @apply tw-font-bold;
+      @apply tw-text-sm;
+      @apply tw-px-2;
+      @apply tw-py-1;
+      @apply tw-mt-2;
+      @apply tw-mr-2;
+    }
   }
+}
 
-  &__image {
-    @apply tw-col-span-1;
-    @apply tw-inline-flex;
-    @apply tw-justify-center;
-    @apply tw-items-center;
-    @apply tw-mr-4;
-    max-height: 48px;
+.cart-item-card--desktop {
+  .cart-item-card {
+    @apply tw-container;
+    @apply tw-py-6;
 
-    // md:tw-col-span-1 tw-pr-3
-  }
+    &__wrapper {
+      @apply tw-grid tw-grid-cols-12;
+    }
 
-  &__product-code {
-    @apply tw-col-span-6;
+    &__image {
+      @apply tw-col-span-1;
+      @apply tw-inline-flex;
+      @apply tw-justify-center;
+      @apply tw-items-center;
+      @apply tw-mr-4;
+      max-height: 48px;
 
-    // md:tw-col-span-6 tw-pl-3
-  }
+      // md:tw-col-span-1 tw-pr-3
+    }
 
-  &__quantity {
-    @apply tw-col-span-1;
+    &__product-code {
+      @apply tw-col-span-6;
 
-    // md:tw-col-span-4 lg:tw-col-span-1 tw-pr-3
-  }
+      // md:tw-col-span-6 tw-pl-3
+    }
 
-  &__prices {
-    @apply tw-col-span-3;
-    @apply tw-flex;
-    @apply tw-justify-evenly;
-    @apply tw-items-center;
-  }
+    &__quantity {
+      @apply tw-col-span-1;
 
-  &__price-row {
-    @apply tw-grid tw-grid-cols-12;
-  }
+      // md:tw-col-span-4 lg:tw-col-span-1 tw-pr-3
+    }
 
-  &__delete {
-    @apply tw-col-span-1;
-    @apply tw-flex;
-    @apply tw-justify-end;
-  }
+    &__prices {
+      @apply tw-col-span-3;
+      @apply tw-flex;
+      @apply tw-justify-evenly;
+      @apply tw-items-center;
+    }
 
-  &__attribute-wrapper {
-    @apply tw-grid-cols-12;
-    @apply tw-mt-4;
-  }
+    &__price-row {
+      @apply tw-grid tw-grid-cols-12;
+    }
 
-  &__variation-attributes-row {
-    @apply tw-col-start-2 tw-col-span-6;
-    @apply tw-flex;
-    @apply tw-flex-wrap;
-  }
+    &__delete {
+      @apply tw-col-span-1;
+      @apply tw-flex;
+      @apply tw-justify-end;
+    }
 
-  &__cart-item-card__variation-attributes {
-    @apply tw-flex;
-  }
+    &__attribute-wrapper {
+      @apply tw-grid;
+      @apply tw-grid-cols-12;
+      @apply tw-mt-4;
+    }
 
-  &__attribute {
-    @apply tw-flex;
-    @apply tw-mb-2;
-  }
+    &__variation-attributes-row {
+      @apply tw-col-start-2 tw-col-span-6;
+      @apply tw-flex;
+      @apply tw-flex-wrap;
+    }
 
-  &__attribute-value {
-    @apply tw-bg-pv-grey-96;
-    @apply tw-text-xs;
-    @apply tw-px-2;
-    @apply tw-py-1;
-    @apply tw-mr-2;
-    @apply tw-rounded-md;
-  }
+    &__cart-item-card__variation-attributes {
+      @apply tw-flex;
+    }
 
-  &__attribute-name {
-    @apply tw-text-pv-grey-64;
-  }
+    &__attribute {
+      @apply tw-flex;
+      @apply tw-mb-2;
+    }
 
-  &__promotions-wrapper {
-    @apply tw-grid-cols-12;
-  }
+    &__attribute-value {
+      @apply tw-bg-pv-grey-96;
+      @apply tw-text-xs;
+      @apply tw-px-2;
+      @apply tw-py-1;
+      @apply tw-mr-2;
+      @apply tw-rounded-md;
+    }
 
-  &__promotions {
-    @apply tw-col-span-6;
-    @apply tw-col-start-2;
-    @apply tw-flex;
-    @apply tw-flex-wrap;
-  }
+    &__attribute-name {
+      @apply tw-text-pv-grey-64;
+    }
 
-  &__promotion {
-    @apply tw-bg-pv-grey-16;
-    @apply tw-text-pv-white;
-    @apply tw-rounded-md;
-    @apply tw-font-bold;
-    @apply tw-text-sm;
-    @apply tw-px-2;
-    @apply tw-py-1;
-    @apply tw-mt-2;
-    @apply tw-mr-2;
-  }
+    &__promotions-wrapper {
+      @apply tw-grid;
+      @apply tw-grid-cols-12;
+    }
 
-  &__further-article-information {
-    @apply tw-grid;
-    @apply tw-grid-cols-12;
-    @apply tw-mt-6;
-  }
+    &__promotions {
+      @apply tw-col-span-6;
+      @apply tw-col-start-2;
+      @apply tw-flex;
+      @apply tw-flex-wrap;
+    }
 
-  &__add-to-other-list {
-    @apply tw-flex;
-    @apply tw-col-span-2;
-    @apply tw-col-start-2;
+    &__promotion {
+      @apply tw-bg-pv-grey-16;
+      @apply tw-text-pv-white;
+      @apply tw-rounded-md;
+      @apply tw-font-bold;
+      @apply tw-text-sm;
+      @apply tw-px-2;
+      @apply tw-py-1;
+      @apply tw-mt-2;
+      @apply tw-mr-2;
+    }
+
+    &__further-article-information {
+      @apply tw-grid;
+      @apply tw-grid-cols-12;
+      @apply tw-mt-6;
+    }
+
+    &__add-to-other-list {
+      @apply tw-flex;
+      @apply tw-col-span-2;
+      @apply tw-col-start-2;
+    }
   }
 }
 </style>
