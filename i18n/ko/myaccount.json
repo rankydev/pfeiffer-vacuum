@@ -19,6 +19,9 @@
   "deleteDeliveryAddress": "삭제",
   "setDefaultAddress": "기본값으로 설정",
   "defaultDelivery": "기본 배송 주소",
-  "accountData": "계정 데이터",
-  "companyData": "회사 데이터"
+  "accountDataLong": "계정 데이터",
+  "accountDataShort": "계정 데이터",
+  "companyData": "회사 데이터",
+  "saveCompanyData": "회사 정보 저장",
+  "discard": "데이터 삭제"
 }

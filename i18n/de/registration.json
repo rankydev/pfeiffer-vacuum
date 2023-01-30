@@ -9,12 +9,12 @@
     "firstname": "Vorname",
     "lastname": "Nachname",
     "email": "E-Mail",
-    "password": "Password",
+    "password": "Passwort",
     "changePassword": "Passwort ändern"
   },
   "formCompanyData": {
     "title": "Firmendaten",
-    "infobox": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. Dieser Schritt ist optional.Bitte beachten Sie: Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
+    "infobox": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br/><br/> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
     "addCompanyData": "Firmenadresse hinzufügen",
     "removeCompanyData": "Entfernen",
     "registeredCustomer": "Bereits Kunde?",
@@ -33,8 +33,8 @@
   },
   "addCompanyData": {
     "success": {
-      "headline": "Vielen Dank für die Vervollständigung deines Kontos!",
-      "description": "Ihre Registrierung wird von unserem Pfeiffer Vacuum Team geprüft. Sie werden nach der Prüfung durch eine E-Mail informiert. Dies kann bis zu 2 Tage dauern."
+      "headline": "Vielen Dank für das Vervollständigen Ihres Kontos.",
+      "description": "Ihre Registrierungsdetails werden von unserem Pfeiffer Vacuum Team innerhalb der regulären Arbeitszeiten überprüft. Danach wird Ihnen eine Bestätigungs- oder Ablehnungsmail zugesendet. Dies kann bis zu zwei Tage dauern."
     },
     "open": {
       "headline": "Bitte haben Sie noch etwas Geduld...",
@@ -52,7 +52,7 @@
     "success": "Ihre Daten wurden erfolgreich aktualisiert",
     "errorOccured": "Beim Ändern der Daten ist ein Fehler aufgetreten"
   },
-  "infotext": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br /> <b>Dieser Schritt ist optional</b> <br /><br /> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
+  "infotext": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br/><br/> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
   "registrationSuccessPage": {
     "lite": {
       "title": "Ihre Registrierung wurde erfolgreich gesendet",

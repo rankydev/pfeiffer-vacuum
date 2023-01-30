@@ -2,11 +2,11 @@
   <div class="account-data">
     <LoadingSpinner :show="isLoading">
       <ResultHeadline
-        :headline="$t('myaccount.accountData')"
+        :headline="accountDataHeadline"
         :link="localePath('shop-my-account')"
       />
       <SectionHeadline :buttons="accountDataButtons" @btnClick="toggleUserEdit">
-        {{ $t('myaccount.accountData') }}
+        {{ $t('myaccount.accountDataShort') }}
       </SectionHeadline>
       <div
         :class="[
@@ -58,13 +58,13 @@
           <RegistrationPageDataProtection />
           <div class="account-data__add-company-buttons">
             <Button
-              label="Save company data"
+              :label="$t('myaccount.saveCompanyData')"
               icon="save"
               variant="secondary"
               @click="submitCompanyData"
             />
             <Button
-              label="Discard"
+              :label="$t('myaccount.discard')"
               icon="close"
               variant="secondary"
               shape="outlined"
@@ -88,7 +88,12 @@
 
 <script>
 import { storeToRefs } from 'pinia'
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  computed,
+  useContext,
+} from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 import { useAccountDataStore } from '~/stores/myaccount'
 import { useVuelidate } from '@vuelidate/core'
@@ -112,7 +117,9 @@ export default defineComponent({
     ResultHeadline,
   },
   setup() {
+    const { app, i18n } = useContext()
     const v = useVuelidate()
+    const { isMobile } = app.$breakpoints
 
     // Get data from userStore
     const userStore = useUserStore()
@@ -167,6 +174,14 @@ export default defineComponent({
       () => !!(v.value.$errors.length + v.value.$silentErrors.length)
     )
 
+    const accountDataHeadline = computed(() =>
+      i18n.t(
+        isMobile.value
+          ? 'myaccount.accountDataShort'
+          : 'myaccount.accountDataLong'
+      )
+    )
+
     const toggleUserEdit = async (i) => {
       if (isEditMode.value) {
         if (i > 0) await submitAccountData()
@@ -208,6 +223,8 @@ export default defineComponent({
       isEditMode,
       isAddCompanyMode,
       hasValidationErrors,
+      accountDataHeadline,
+      isMobile,
 
       toggleUserEdit,
       submitCompanyData,

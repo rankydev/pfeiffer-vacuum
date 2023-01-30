@@ -21,12 +21,12 @@
     "registeredCustomerTrue": "Yes",
     "registeredCustomerFalse": "No",
     "customerNumber": "Customer number",
-    "additionalCompanyInformation": "More company information",
-    "department": "Department",
+    "additionalCompanyInformation": "Further company details",
+    "department": "Department / Institute",
     "tax": "VAT number",
     "telephoneNumber": "Telephone",
     "fax": "Fax",
-    "country": "Country",
+    "country": "Country/Location",
     "countryAutofill": "Will be filled automatically",
     "phone": "Phone",
     "address": "Address"
@@ -34,15 +34,15 @@
   "addCompanyData": {
     "success": {
       "headline": "Thank you for completing your account!",
-      "description": "Your registration details will be checked by our Pfeiffer Vacuum Team within normal working hours. You will receive an acceptance or denial email afterwards. This may take up to two business days."
+      "description": "Your registration details will be checked by our Pfeiffer Vacuum Team within normal working hours. You’ll receive an acceptance or denial email afterwards. This may take up to two working days."
     },
     "open": {
       "headline": "Still a little patience...",
-      "description": "Your registration details are currently being checked by our Pfeiffer Vacuum Team within normal working hours. You will receive an acceptance or denial email afterwards. This may take up to two business days."
+      "description": "Your registration details are currently being checked by our Pfeiffer Vacuum Team within normal working hours. You’ll receive an acceptance or denial email afterwards. This may take up to two working days."
     },
     "rejected": {
       "headline": "Sorry, your account has been rejected.",
-      "description": "If you have any questions, please contact our customer service."
+      "description": "If you have any questions, please contact our <a target=\"_blank\" href=\"/contact\">customer Link service</a>."
     },
     "discard": "Discard",
     "saveChanges": "Save changes",
@@ -52,7 +52,7 @@
     "success": "Your data were updated successfully",
     "errorOccured": "An error occured while updating user data"
   },
-  "infotext": "You can enter your company's address data here. <br /> <b>This step is optional</b> <br /><br /> <b>Please note:</b> Only a full account allows you to see prices and send requests!",
+  "infotext": "You can add your company’s address data here. <br/><br/> <b>Please note:</b> Only with a full account you can see prices and send requests!",
     "registrationSuccessPage": {
       "lite": {
         "title": "Your registration was sent successfully",

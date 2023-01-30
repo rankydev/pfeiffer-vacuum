@@ -30,6 +30,15 @@ export const useAccountDataStore = defineStore('accountData', () => {
       value: currentUser.value?.orgUnit?.name || '-',
       editable: true,
       disabled: true,
+      validation: {
+        required: true,
+        rules: {
+          required: helpers.withMessage(
+            i18n.t('form.validationErrorMessages.required'),
+            required
+          ),
+        },
+      },
     },
     {
       id: 'country',
@@ -37,6 +46,15 @@ export const useAccountDataStore = defineStore('accountData', () => {
       value: userCountry.value.name,
       editable: true,
       disabled: true,
+      validation: {
+        required: true,
+        rules: {
+          required: helpers.withMessage(
+            i18n.t('form.validationErrorMessages.required'),
+            required
+          ),
+        },
+      },
     },
     {
       id: 'name',
@@ -85,6 +103,15 @@ export const useAccountDataStore = defineStore('accountData', () => {
       value: currentUser.value?.displayUid,
       editable: true,
       disabled: true,
+      validation: {
+        required: true,
+        rules: {
+          required: helpers.withMessage(
+            i18n.t('form.validationErrorMessages.required'),
+            required
+          ),
+        },
+      },
     },
     {
       id: 'password',
@@ -140,7 +167,7 @@ export const useAccountDataStore = defineStore('accountData', () => {
     },
   ])
 
-  const infoMessagePatterns = ref({
+  const infoMessagePatterns = computed(() => ({
     companyDataSuccess: {
       variant: 'success',
       headline: i18n.t('registration.addCompanyData.success.headline'),
@@ -156,9 +183,9 @@ export const useAccountDataStore = defineStore('accountData', () => {
       headline: i18n.t('registration.addCompanyData.rejected.headline'),
       description: i18n.t('registration.addCompanyData.rejected.description'),
     },
-  })
+  }))
 
-  const saveAccountDataButtons = ref([
+  const saveAccountDataButtons = computed(() => [
     {
       label: i18n.t('registration.addCompanyData.discard'),
       icon: 'close',
@@ -187,11 +214,18 @@ export const useAccountDataStore = defineStore('accountData', () => {
         ...addedCompanyData.value,
         companyAddressCountryIso: userCountry.value?.isocode,
       })
+      toast.success(
+        { description: 'Your data were updated successfully' },
+        { timeout: 5000 }
+      )
       showCompanySuccess.value = true
     } catch {
-      toast.error({
-        description: i18n.t('registration.addCompanyData.errorOccured'),
-      })
+      toast.error(
+        {
+          description: i18n.t('registration.addCompanyData.errorOccured'),
+        },
+        { timeout: 5000 }
+      )
     }
   }
 

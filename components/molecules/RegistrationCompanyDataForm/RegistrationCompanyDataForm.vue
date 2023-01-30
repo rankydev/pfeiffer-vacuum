@@ -177,7 +177,6 @@
         v-if="!isOpen"
         :label="$t('registration.formCompanyData.addCompanyData')"
         variant="secondary"
-        shape="outlined"
         icon="domain"
         class="registration-company-data-form__add-button"
         @click="$emit('update:isOpen', true)"

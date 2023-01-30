@@ -19,6 +19,9 @@
   "deleteDeliveryAddress": "Löschen",
   "setDefaultAddress": "Als Standard benutzen",
   "defaultDelivery": "Standard Lieferungsadresse",
-  "accountData": "Kontodaten",
-  "companyData": "Firmendaten"
+  "accountDataLong": "Konto- und Firmendaten",
+  "accountDataShort": "Kontodaten",
+  "companyData": "Firmendaten",
+  "saveCompanyData": "Daten speichern",
+  "discard": "Abbrechen"
 }

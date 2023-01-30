@@ -121,22 +121,13 @@ export const useUserStore = defineStore('user', () => {
     try {
       res = await userApi.addCompanyData(data)
       await loadCurrentUser()
-      toast.success(
-        { description: 'Your data were updated successfully' },
-        { timeout: 5000 }
-      )
+      return res
     } catch (e) {
       logger.error('cannot add company data', e)
-      toast.error(
-        {
-          description: 'An error occured while updating company data',
-        },
-        { timeout: 5000 }
-      )
+      return Promise.reject(e)
     } finally {
       isLoading.value = false
     }
-    return res
   }
 
   const login = async () => {
