@@ -23,8 +23,9 @@
         <template #default>
           <ContentWrapper>
             <ResultHeadline
+              class="search-page__result-headline"
+              :center="showDocumentSearchTab"
               v-bind="{ headline, link, searchTerm }"
-              :result-count="count"
             />
           </ContentWrapper>
 
@@ -44,7 +45,7 @@
             />
           </div>
 
-          <div class="category-page__search-result-desktop">
+          <div class="search-page__search-result-desktop">
             <ContentWrapper>
               <SearchResult
                 v-if="currentTabSelected === 'products'"
@@ -68,7 +69,7 @@
         <template #stickyBar>
           <Button
             v-if="hasLink"
-            class="category-page__sticky-btn"
+            class="search-page__sticky-btn"
             :label="$t('navigation.button.overview.label')"
             :href="href"
             variant="secondary"
@@ -217,7 +218,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.category-page {
+.search-page {
   &__search-result-desktop {
     @apply tw-bg-pv-grey-96;
     @apply tw-hidden;
@@ -234,6 +235,10 @@ export default defineComponent({
     @screen md {
       @apply tw-hidden;
     }
+  }
+
+  &__result-headline {
+    @apply tw-mt-6 tw-mb-12;
   }
 }
 

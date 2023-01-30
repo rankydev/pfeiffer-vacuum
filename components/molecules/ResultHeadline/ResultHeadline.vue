@@ -5,6 +5,7 @@
     :class="{
       'result-headline--with-link': link,
       'result-headline--without-link': !link,
+      'result-headline--center': center,
     }"
   >
     <nuxt-link v-if="link" class="result-headline__link" :to="url">
@@ -58,6 +59,10 @@ export default defineComponent({
       type: String,
       default: null,
     },
+    center: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const route = useRoute()
@@ -108,6 +113,10 @@ export default defineComponent({
       @apply tw-flex;
       @apply tw-items-center;
     }
+  }
+
+  &--center {
+    @apply tw-justify-center;
   }
 
   &__link {
