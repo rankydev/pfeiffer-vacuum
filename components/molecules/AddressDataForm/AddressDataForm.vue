@@ -8,7 +8,7 @@
     <div class="address-data-form__row-container">
       <PvInput
         v-model="requestData.firstName"
-        class="address-data-form__row-container--half"
+        class="row-container-item row-container-item__half"
         :label="$t('form.contactRequest.firstname')"
         :placeholder="$t('form.contactRequest.firstname')"
         required
@@ -16,7 +16,7 @@
       />
       <PvInput
         v-model="requestData.lastName"
-        class="address-data-form__row-container--half"
+        class="row-container-item row-container-item__half"
         :label="$t('form.contactRequest.surname')"
         :placeholder="$t('form.contactRequest.surname')"
         required
@@ -38,7 +38,7 @@
     <div class="address-data-form__row-container">
       <PvInput
         v-model="requestData.line1"
-        class="address-data-form__row-container--three-quarters"
+        class="row-container-item row-container-item__three-quarters"
         :label="$t('form.contactRequest.street')"
         :placeholder="$t('form.contactRequest.street')"
         required
@@ -46,7 +46,7 @@
       />
       <PvInput
         v-model="requestData.line2"
-        class="address-data-form__row-container--one-quarter"
+        class="row-container-item row-container-item__one-quarter"
         :label="$t('form.contactRequest.houseNumber')"
         :placeholder="$t('form.contactRequest.houseNumber')"
       />
@@ -59,7 +59,7 @@
     <div class="address-data-form__row-container">
       <PvInput
         v-model="requestData.postalCode"
-        class="address-data-form__row-container--one-quarter"
+        class="row-container-item row-container-item__one-quarter"
         :label="$t('form.contactRequest.postCode')"
         :placeholder="$t('form.contactRequest.postCode')"
         required
@@ -67,7 +67,7 @@
       />
       <PvInput
         v-model="requestData.town"
-        class="address-data-form__row-container--three-quarters"
+        class="row-container-item row-container-item__three-quarters"
         :label="$t('form.contactRequest.city')"
         :placeholder="$t('form.contactRequest.city')"
         required
@@ -164,19 +164,25 @@ export default defineComponent({
 
     @screen md {
       @apply tw-flex tw-flex-row;
+    }
+  }
 
-      &--three-quarters {
+  .row-container-item {
+    @apply tw-w-full;
+
+    @screen md {
+      &__three-quarters {
         flex-grow: 3;
         width: auto !important;
       }
 
-      &--one-quarter {
+      &__one-quarter {
         @apply tw-grow;
         width: auto !important;
       }
 
-      &--half {
-        flex-grow: 2;
+      &__half {
+        @apply tw-grow;
         width: auto !important;
       }
     }
