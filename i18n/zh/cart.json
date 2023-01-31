@@ -27,5 +27,10 @@
         "text": "您无权查看价格"
       }
     }
-  }
+  },
+  "list": {
+    "addArticle": "Add to list"
+  },
+  "productPrice": "Price",
+  "totalPrice": "Total"
 }

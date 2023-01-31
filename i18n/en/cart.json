@@ -27,5 +27,10 @@
         "text": "You are not permitted to see prices"
       }
     }
-  }
+  },
+  "list": {
+    "addArticle": "Add to list"
+  },
+  "productPrice": "Price",
+  "totalPrice": "Total"
 }

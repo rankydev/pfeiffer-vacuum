@@ -39,7 +39,12 @@
             class="cart-item-card__delete-wrapper cart-item-card__delete-mobile"
           >
             <div class="cart-item-card__delete">
-              <Button variant="secondary" shape="plain" icon="delete" />
+              <Button
+                variant="secondary"
+                shape="plain"
+                icon="delete"
+                @click="$emit('delete', ev)"
+              />
             </div>
           </div>
         </div>
@@ -58,11 +63,15 @@
           </div>
           <div class="cart-item-card__prices">
             <div class="cart-item-card__prices--single-price">
-              <span class="cart-item-card__prices--show-headline">Price</span>
+              <span class="cart-item-card__prices--show-headline">{{
+                $t('cart.productPrice')
+              }}</span>
               <p>{{ ` € ${productPrice}` }}</p>
             </div>
             <div class="cart-item-card__prices--total-price">
-              <span class="cart-item-card__prices--show-headline">Total</span>
+              <span class="cart-item-card__prices--show-headline">{{
+                $t('cart.totalPrice')
+              }}</span>
               <p v-if="productPrice">{{ ` € ${totalPrice}` }}</p>
               <p v-else>{{ totalPrice }}</p>
             </div>
@@ -96,23 +105,6 @@
                 </div>
               </div>
             </div>
-            <!-- <template
-        v-for="(attribute, attributeIndex) in (
-          entry.product.variationMatrix || {}
-        ).variationAttributes || []"
-      >
-        <template
-          v-for="(attributeEntry, subindex) in attribute.variationValues.filter(
-            (e) => e.selected
-          )"
-          :key="String(attributeIndex) + String(subindex)"
-        >
-          <p class="variation-attribute">
-            {{ attribute.name }}:
-            <span>{{ attributeEntry.value }}</span>
-          </p>
-        </template>
-      </template> -->
           </div>
         </div>
 
@@ -127,34 +119,9 @@
             </div>
           </div>
         </div>
-        <!-- <di v class="cart-item-card__promotions__price-row price-row">
-      <div class="tw-col-span-5 md:tw-col-span-4 lg:tw-col-span-2 tw-pr-3">
-        <span v-if="readOnly">
-          {{ $t('cart.quantity') }}: {{ entry.quantity }}
-        </span>
-        <PvInput
-          v-else
-          v-model="quantity"
-          input-type="number"
-          class="quantity"
-          @input="updateQuantity()"
-        />
-      </div>
-      <div
-        v-if="isApprovedUser && !isPriceAvailable"
-        class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 tw-flex tw-justify-end tw-items-center"
-      >
-        price-on-request__empty
-        <span
-          :class="`price-on-request${
-            unavailablePriceState === '-' ? '__empty' : ''
-          }`"
-        >
-          {{ unavailablePriceState }}
-        </span>
-      </div>
-      <template v-else-if="isApprovedUser">
-        <div class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 price">
+        <!-- 
+      <template v-if="isApprovedUser">
+        <div>
           <h6 v-if="entry.basePrice" class="sub">
             {{ entry.basePrice.formattedValue }}
           </h6>
@@ -164,23 +131,8 @@
         </div>
       </template>
       <div
-        v-else-if="loggedIn"
-        class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 tw-flex tw-justify-end tw-items-center"
-      >
-        <i18n :path="`userStatus.${userStatusType}.priceInfo.text`" tag="h6">
-          <template #link>
-            <Link
-              class="tw-text-pv-red tw-italic"
-              :href="localePath('shop-my-account-account-data')"
-            >
-              {{ $t(`userStatus.${userStatusType}.priceInfo.link`) }}
-            </Link>
-          </template>
-        </i18n>
-      </div>
-      <div
         v-else-if="!loggedIn"
-        class="tw-col-span-7 md:tw-col-span-8 lg:tw-col-span-10 tw-flex tw-justify-end tw-items-center"
+        class=""
       >
         <h6>
           {{ $t('login.loginToSeePrices.part1') }}
@@ -194,7 +146,6 @@
         </h6>
       </div>
     </di> -->
-        <!-- <div v-if="currentUser && !isOciUser" class="further-article-information"> -->
         <div class="cart-item-card__further-article-information">
           <div class="cart-item-card__add-to-other-list">
             <Button
@@ -202,8 +153,8 @@
               variant="secondary"
               shape="plain"
               icon="assignment"
-              :label="$t('list.addArticle')"
-              @click="addToOtherList(entry.product)"
+              :label="$t('cart.list.addArticle')"
+              @click="$emit('addToList', ev)"
             />
           </div>
         </div>
@@ -211,7 +162,12 @@
     </div>
     <div class="cart-item-card__delete-wrapper cart-item-card__delete-desktop">
       <div class="cart-item-card__delete">
-        <Button variant="secondary" shape="plain" icon="delete" />
+        <Button
+          variant="secondary"
+          shape="plain"
+          icon="delete"
+          @click="$emit('delete', ev)"
+        />
       </div>
     </div>
   </div>
@@ -239,6 +195,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
+    price: {
+      type: Number,
+      required: true,
+    },
     readOnly: {
       type: Boolean,
       default: false,
@@ -256,7 +216,7 @@ export default defineComponent({
       default: false,
     },
   },
-  // emits: ['input'],
+  emits: ['addToList', 'delete'],
   setup(props, { emit }) {
     const userStore = useUserStore()
     const {
@@ -274,7 +234,7 @@ export default defineComponent({
     const cartEntry = ref(props.entry)
     const quantity = ref(props.entry.quantity)
     const image = computed(() => props.entry.product.images[0])
-    const productPrice = ref(1000)
+    const productPrice = ref(props.price)
 
     // const getUrl = () => {
     //   context.app.localePath({
@@ -295,24 +255,6 @@ export default defineComponent({
       return props.entry.product?.purchasable === false
     })
 
-    const isPriceAvailable = computed(() => {
-      return !!(
-        loggedIn &&
-        props.entry.product?.purchasable !== false &&
-        props.entry.product?.totalPrice
-      )
-    })
-
-    const unavailablePriceState = computed(() => {
-      if (props.entry.product?.purchasable === false) {
-        return $t('product.inactiveProduct')
-      } else if (loggedIn && !props.product.entry?.totalPrice) {
-        return $t('product.priceOnRequest')
-      } else {
-        return '-'
-      }
-    })
-
     const totalPrice = computed(() => {
       return quantity.value * productPrice.value
     })
@@ -325,10 +267,6 @@ export default defineComponent({
       }
     }
 
-    const addToOtherList = (product) => {
-      console.log('store functionality', product)
-    }
-
     const login = async () => {
       console.log('store functionality')
     }
@@ -339,10 +277,7 @@ export default defineComponent({
       image,
       userStatusType,
       isInactive,
-      isPriceAvailable,
-      unavailablePriceState,
       updateQuantity,
-      addToOtherList,
       login,
       currentUser,
       loggedIn,

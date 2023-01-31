@@ -27,5 +27,10 @@
         "text": "가격을 볼 수 없습니다."
       }
     }
-  }
+  },
+  "list": {
+    "addArticle": "Add to list"
+  },
+  "productPrice": "Price",
+  "totalPrice": "Total"
 }

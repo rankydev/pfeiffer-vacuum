@@ -28,5 +28,10 @@
         "text": "Sie dürfen keine Preise sehen"
       }
     }
-  }
+  },
+  "list": {
+    "addArticle": "Zur Liste hinzufügen"
+  },
+  "productPrice": "Preis",
+  "totalPrice": "Gesamt"
 }
