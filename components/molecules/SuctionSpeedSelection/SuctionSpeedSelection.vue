@@ -2,7 +2,7 @@
   <div class="suction-speed-selection">
     <ButtonGroup
       class="suction-speed-selection__button-group"
-      selected-value="meters"
+      :selected-value="selectedVariant"
       :values="buttonGroupOptions"
       @update="
         unitChanged($event)
@@ -10,31 +10,36 @@
       "
     />
     <div class="suction-speed-selection__inputs">
-      <PvInput
-        v-model="lowerBound"
-        class="suction-speed-selection__minimum"
-        placeholder="0"
-        input-type="number"
-        :required="true"
-      />
+      <div class="suction-speed-selection__input-wrapper">
+        <div class="suction-speed-selection__minimum">
+          <PvInput
+            v-model="lowerBound"
+            placeholder="0"
+            input-type="number"
+            :required="true"
+            class="suction-speed-selection__minimum-input"
+          />
+        </div>
 
-      <hr class="suction-speed-selection__divider-line" />
+        <hr class="suction-speed-selection__divider-line" />
 
-      <div class="suction-speed-selection__maximum">
-        <PvInput
-          v-model="upperBound"
-          :placeholder="meters ? limitMeters : limitLiters"
-          input-type="number"
-          class="suction-speed-selection__maximum--selected-value"
-          :required="true"
-        />
+        <div class="suction-speed-selection__maximum">
+          <PvInput
+            v-model="upperBound"
+            :placeholder="meters ? limitMeters : limitLiters"
+            input-type="number"
+            class="suction-speed-selection__maximum--selected-value"
+            :required="true"
+          />
 
-        <div class="suction-speed-selection__maximum--selected-unit">
-          {{ unit }}
+          <div class="suction-speed-selection__maximum--selected-unit">
+            {{ unit }}
+          </div>
         </div>
       </div>
 
       <Button
+        class="suction-speed-selection__forward-button"
         icon="arrow_forward"
         variant="secondary"
         @click.native="
@@ -72,6 +77,7 @@ export default defineComponent({
     const unit = ref('m³/h')
     const limitMeters = '10.000'
     const limitLiters = '2778'
+    const selectedVariant = ref('meters')
     const buttonGroupOptions = [
       {
         label: 'm³/h',
@@ -142,7 +148,8 @@ export default defineComponent({
     }
 
     // when the unit changes, f.ex from liters to meters, the displayed value and unit are supposed to change
-    const unitChanged = () => {
+    const unitChanged = (variant) => {
+      selectedVariant.value = variant
       const tempLower =
         Number(upperBound.value) >= Number(lowerBound.value)
           ? Number(lowerBound.value)
@@ -213,6 +220,7 @@ export default defineComponent({
     }
 
     return {
+      selectedVariant,
       lowerBound,
       upperBound,
       unit,
@@ -246,6 +254,14 @@ export default defineComponent({
     @apply tw-relative;
     @apply tw-text-pv-grey-16;
     @apply tw-bg-pv-black;
+    @apply tw-ml-4;
+    @apply tw-mr-4;
+  }
+
+  &__input-wrapper {
+    @apply tw-flex;
+    @apply tw-w-full;
+    @apply tw-justify-between;
   }
 
   &__minimum {
@@ -272,6 +288,10 @@ export default defineComponent({
       @apply tw-rounded-r-md;
       @apply tw--ml-2;
     }
+  }
+
+  &__forward-button {
+    flex-basis: auto;
   }
 }
 </style>

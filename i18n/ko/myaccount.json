@@ -1,8 +1,7 @@
 {
   "address": "주소",
   "billingAddress": "청구 주소",
-  "billingAddressMissing":
-    "사용자의 청구 주소를 찾을 수 없습니다. 파이퍼 베큠 서비스에 문의하십시오.",
+  "billingAddressMissing": "사용자의 청구 주소를 찾을 수 없습니다. 파이퍼 베큠 서비스에 문의하십시오.",
   "deliveryAddress": "배송 주소",
   "company": "회사",
   "firstName": "이름",
@@ -23,5 +22,16 @@
   "accountDataShort": "계정 데이터",
   "companyData": "회사 데이터",
   "saveCompanyData": "회사 정보 저장",
-  "discard": "데이터 삭제"
+  "discard": "데이터 삭제",
+  "addressDataEditPage": "주소 데이터 편집",
+  "addressDataAddPage": "주소 데이터 추가",
+  "addressDataEditPageDescription": "선택한 배송 주소를 여기에서 수정하세요.",
+  "addressDataAddPageDescription": "여기에서 새 배송 주소를 추가할 수 있습니다. 모든 필수 필드를 작성하십시오. ",
+  "addressDataEditPageSubmitBtn": "변경 사항 저장",
+  "addressDataAddPageSubmitBtn": "저장하고 뒤로 가기",
+  "addressDataAddPageLinkBtn": "개요로 돌아가기",
+  "updateDeliveryAddressError": "변경 사항을 저장할 수 없습니다.",
+  "addDeliveryAddressError": "배송 주소를 저장할 수 없습니다.",
+  "deleteDeliveryAddressSuccess": "배송 주소가 성공적으로 삭제되었습니다.",
+  "setDefaultDeliveryAddressSuccess": "배송 주소를 기본 배송 주소로 성공적으로 저장했습니다."
 }

@@ -6,6 +6,7 @@ import SuctionSpeedSelection from '~/components/molecules/SuctionSpeedSelection/
 import FilterTag from '~/components/atoms/FilterTag/FilterTag'
 import FilterModal from '~/components/molecules/FilterModal/FilterModal'
 import Popup from '~/components/atoms/Popup/Popup'
+import InternalBtnWrapper from '~/components/molecules/InternalBtnWrapper/InternalBtnWrapper'
 import {
   useRangeSliderHandling,
   vacuumRangeIds,
@@ -25,6 +26,7 @@ export default {
     FilterTag,
     FilterModal,
     Popup,
+    InternalBtnWrapper,
   },
   props: {
     /**
