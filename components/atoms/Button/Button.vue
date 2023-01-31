@@ -36,31 +36,31 @@
 </template>
 
 <script>
-import { defineComponent, computed } from '@nuxtjs/composition-api'
-import Icon from '~/components/atoms/Icon/Icon.vue'
-import Link from '~/components/atoms/Link/Link.vue'
-import propsData from './partials/props.js'
+import { computed, defineComponent } from "@nuxtjs/composition-api";
+import Icon from "~/components/atoms/Icon/Icon.vue";
+import Link from "~/components/atoms/Link/Link.vue";
+import propsData from "./partials/props.js";
 
 export default defineComponent({
   components: {
     Icon,
-    Link,
+    Link
   },
   props: propsData,
-  emits: ['click'],
+  emits: ["click"],
   setup(props) {
     const iconSize = computed(() =>
-      props.size === 'xsmall' ? 'xsmall' : 'base'
-    )
+      props.size === "xsmall" ? "xsmall" : "base"
+    );
 
-    const isPrimary = computed(() => props.variant === 'primary')
+    const isPrimary = computed(() => props.variant === "primary");
 
     return {
       isPrimary,
-      iconSize,
-    }
-  },
-})
+      iconSize
+    };
+  }
+});
 </script>
 
 <style lang="scss">
@@ -134,7 +134,12 @@ export default defineComponent({
       &:focus {
         @apply tw-bg-pv-yellow-lighter;
       }
+
+      span {
+        @apply tw-text-pv-grey-16;
+      }
     }
+
 
     &.button--secondary {
       @apply tw-bg-pv-red;
@@ -144,6 +149,10 @@ export default defineComponent({
       &:hover,
       &:focus {
         @apply tw-bg-pv-red-lighter;
+      }
+
+      span {
+        @apply tw-text-pv-white;
       }
     }
 
@@ -156,6 +165,10 @@ export default defineComponent({
       &:hover {
         @apply tw-bg-pv-red-lighter;
       }
+
+      span {
+        @apply tw-text-pv-white;
+      }
     }
 
     &.button--variant-selection-preselected {
@@ -166,6 +179,14 @@ export default defineComponent({
       &:hover {
         @apply tw-shadow-border-red-lighter;
         @apply tw-text-pv-white;
+      }
+
+      span {
+        @apply tw-text-pv-black;
+
+        &:hover {
+          @apply tw-text-pv-white;
+        }
       }
     }
 
@@ -178,6 +199,14 @@ export default defineComponent({
       &:focus {
         @apply tw-text-pv-grey-32;
       }
+
+      span {
+        @apply tw-text-pv-black;
+
+        &:hover, &:focus {
+          @apply tw-text-pv-grey-32;
+        }
+      }
     }
 
     &.button--disabled,
@@ -187,9 +216,17 @@ export default defineComponent({
       @apply tw-text-pv-grey-96;
       @apply tw-shadow-none;
 
+      span {
+        @apply tw-text-pv-grey-96;
+      }
+
       &.button--inverted {
         @apply tw-bg-pv-grey-64;
         @apply tw-text-pv-grey-80;
+
+        span {
+          @apply tw-text-pv-grey-80;
+        }
       }
     }
   }
@@ -208,6 +245,14 @@ export default defineComponent({
         @apply tw-bg-pv-red-lighter;
         @apply tw-bg-opacity-10;
       }
+
+      span {
+        @apply tw-text-pv-red;
+
+        &:hover, &:focus {
+          @apply tw-text-pv-red-lighter;
+        }
+      }
     }
 
     &.button--variant-selection-preselected,
@@ -219,6 +264,12 @@ export default defineComponent({
         @apply tw-shadow-border-red-lighter;
         @apply tw-bg-pv-red-lighter;
         @apply tw-text-pv-white;
+      }
+
+      span {
+        &:hover {
+          @apply tw-text-pv-white;
+        }
       }
     }
 
@@ -234,6 +285,14 @@ export default defineComponent({
         @apply tw-bg-pv-white;
         @apply tw-bg-opacity-10;
       }
+
+      span {
+        @apply tw-text-pv-grey-96;
+
+        &:hover, &:focus {
+          @apply tw-text-pv-white;
+        }
+      }
     }
 
     &.button--disabled,
@@ -247,6 +306,14 @@ export default defineComponent({
         @apply tw-outline-pv-grey-48;
         @apply tw-bg-pv-transparent;
         @apply tw-text-pv-grey-48;
+      }
+
+      span {
+        @apply tw-text-pv-grey-80;
+
+        &:hover, &:focus {
+          @apply tw-text-pv-grey-48;
+        }
       }
     }
   }
@@ -262,6 +329,14 @@ export default defineComponent({
       &:focus {
         @apply tw-text-pv-red-lighter;
       }
+
+      span {
+        @apply tw-text-pv-red;
+
+        &:hover, &:focus {
+          @apply tw-text-pv-red-lighter;
+        }
+      }
     }
 
     &.button--inverted {
@@ -271,6 +346,14 @@ export default defineComponent({
       &:focus {
         @apply tw-text-pv-white;
       }
+
+      span {
+        @apply tw-text-pv-grey-96;
+
+        &:hover, &:focus {
+          @apply tw-text-pv-white;
+        }
+      }
     }
 
     &.button--disabled,
@@ -278,8 +361,16 @@ export default defineComponent({
     &.button--disabled:focus {
       @apply tw-text-pv-grey-80;
 
+      span {
+        @apply tw-text-pv-grey-80;
+      }
+
       &.button--inverted {
         @apply tw-text-pv-grey-48;
+
+        span {
+          @apply tw-text-pv-grey-48;
+        }
       }
     }
   }
@@ -317,6 +408,7 @@ export default defineComponent({
       @apply tw-gap-2;
     }
   }
+
 
   // TODO: comment in if we want label text centered, too (multiline)
   // &__label {
