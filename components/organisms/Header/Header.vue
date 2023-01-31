@@ -23,6 +23,7 @@
 
 <script>
 import { ref, defineComponent } from '@nuxtjs/composition-api'
+import { storeToRefs } from 'pinia'
 
 import Logo from '~/components/atoms/Logo/Logo.vue'
 import SearchHeader from './partials/SearchHeader/SearchHeader.vue'
@@ -67,7 +68,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const menu = useMenuStore()
+    const menuStore = useMenuStore()
+    const { isActive } = storeToRefs(menuStore)
     const active = ref(false)
 
     const myAccountStore = useMyAccountStore()
@@ -75,7 +77,7 @@ export default defineComponent({
 
     return {
       active,
-      menuIsActive: menu.isActive,
+      menuIsActive: isActive,
     }
   },
 })
