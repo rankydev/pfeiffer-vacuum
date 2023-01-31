@@ -1,14 +1,14 @@
 <template>
   <li class="multilevel-dropdown-node">
-    <div class="multilevel-dropdown-node-item">
+    <div class="multilevel-dropdown-node__item">
       <Checkbox
         :label="node[optionLabel]"
-        :checked="Boolean(isChecked)"
+        :checked="isChecked"
         @update="onUpdateCheckBox"
       />
       <Button
         v-if="hasChildren"
-        :icon="isExpanded ? 'expand_more' : 'expand_less'"
+        :icon="isExpanded ? 'expand_less' : 'expand_more'"
         variant="variant-selection"
         shape="plain"
         @click="toggleIsExpanded"
@@ -17,7 +17,7 @@
     <ul
       v-if="hasChildren"
       v-show="isExpanded"
-      class="multilevel-dropdown-node-child"
+      class="multilevel-dropdown-node__child"
     >
       <MultilevelDropdownNode
         v-for="child in children"
@@ -39,7 +39,7 @@ import {
   ref,
   watch,
 } from '@nuxtjs/composition-api'
-import Checkbox from '@/components/atoms/FormComponents/Checkbox/Checkbox.vue'
+import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox.vue'
 
 export default defineComponent({
   name: 'MultilevelDropdownNode',

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, provide, watch } from '@nuxtjs/composition-api'
+import { defineComponent, provide, ref, watch } from '@nuxtjs/composition-api'
 import MultilevelDropdownNode from './MultilevelDropdownNode'
 
 export default defineComponent({
@@ -49,29 +49,32 @@ export default defineComponent({
 <style lang="scss">
 .multilevel-dropdown {
   ul {
-    padding-left: 10px;
+    @apply tw-pl-2.5;
   }
 
   li {
-    padding-top: 12px;
+    @apply tw-pt-3;
 
     &:first-child {
-      padding-top: 0;
+      @apply tw-pt-0;
     }
   }
 
   .button {
-    padding: 0;
-    margin: auto 0 auto 8px;
+    @apply tw-p-0;
+    @apply tw-my-auto;
+    @apply tw-ml-2;
   }
 
-  &-node-item {
-    display: flex;
-  }
+  &-node {
+    &__item {
+      @apply tw-flex;
+    }
 
-  &-node-child {
-    li:first-child {
-      padding-top: 12px;
+    &__child {
+      li:first-child {
+        @apply tw-pt-3;
+      }
     }
   }
 }
