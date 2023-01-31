@@ -36,31 +36,31 @@
 </template>
 
 <script>
-import { computed, defineComponent } from "@nuxtjs/composition-api";
-import Icon from "~/components/atoms/Icon/Icon.vue";
-import Link from "~/components/atoms/Link/Link.vue";
-import propsData from "./partials/props.js";
+import { computed, defineComponent } from '@nuxtjs/composition-api'
+import Icon from '~/components/atoms/Icon/Icon.vue'
+import Link from '~/components/atoms/Link/Link.vue'
+import propsData from './partials/props.js'
 
 export default defineComponent({
   components: {
     Icon,
-    Link
+    Link,
   },
   props: propsData,
-  emits: ["click"],
+  emits: ['click'],
   setup(props) {
     const iconSize = computed(() =>
-      props.size === "xsmall" ? "xsmall" : "base"
-    );
+      props.size === 'xsmall' ? 'xsmall' : 'base'
+    )
 
-    const isPrimary = computed(() => props.variant === "primary");
+    const isPrimary = computed(() => props.variant === 'primary')
 
     return {
       isPrimary,
-      iconSize
-    };
-  }
-});
+      iconSize,
+    }
+  },
+})
 </script>
 
 <style lang="scss">
@@ -140,7 +140,6 @@ export default defineComponent({
       }
     }
 
-
     &.button--secondary {
       @apply tw-bg-pv-red;
       @apply tw-text-pv-white;
@@ -203,7 +202,8 @@ export default defineComponent({
       span {
         @apply tw-text-pv-black;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           @apply tw-text-pv-grey-32;
         }
       }
@@ -249,7 +249,8 @@ export default defineComponent({
       span {
         @apply tw-text-pv-red;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           @apply tw-text-pv-red-lighter;
         }
       }
@@ -289,7 +290,8 @@ export default defineComponent({
       span {
         @apply tw-text-pv-grey-96;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           @apply tw-text-pv-white;
         }
       }
@@ -311,7 +313,8 @@ export default defineComponent({
       span {
         @apply tw-text-pv-grey-80;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           @apply tw-text-pv-grey-48;
         }
       }
@@ -333,7 +336,8 @@ export default defineComponent({
       span {
         @apply tw-text-pv-red;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           @apply tw-text-pv-red-lighter;
         }
       }
@@ -350,7 +354,8 @@ export default defineComponent({
       span {
         @apply tw-text-pv-grey-96;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
           @apply tw-text-pv-white;
         }
       }
@@ -408,7 +413,6 @@ export default defineComponent({
       @apply tw-gap-2;
     }
   }
-
 
   // TODO: comment in if we want label text centered, too (multiline)
   // &__label {
