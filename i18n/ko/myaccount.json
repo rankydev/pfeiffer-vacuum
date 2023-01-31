@@ -22,6 +22,7 @@
   "accountDataShort": "계정 데이터",
   "companyData": "회사 데이터",
   "saveCompanyData": "회사 정보 저장",
+  "successfulSaving": "데이터가 성공적으로 업데이트되었습니다.",
   "discard": "데이터 삭제",
   "addressDataEditPage": "주소 데이터 편집",
   "addressDataAddPage": "주소 데이터 추가",

@@ -22,6 +22,7 @@
   "accountDataShort": "Account Data",
   "companyData": "Company Data",
   "saveCompanyData": "Save company data",
+  "successfulSaving": "Your data were updated successfully",
   "discard": "Discard data",
   "addressData": "Address data",
   "addDeliveryAddress": "Add delivery address",

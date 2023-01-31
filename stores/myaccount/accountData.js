@@ -215,7 +215,7 @@ export const useAccountDataStore = defineStore('accountData', () => {
         companyAddressCountryIso: userCountry.value?.isocode,
       })
       toast.success(
-        { description: 'Your data were updated successfully' },
+        { description: i18n.t('myaccount.successfulSaving') },
         { timeout: 5000 }
       )
       showCompanySuccess.value = true

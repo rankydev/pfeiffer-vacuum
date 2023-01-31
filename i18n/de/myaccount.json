@@ -22,6 +22,7 @@
   "accountDataShort": "Kontodaten",
   "companyData": "Firmendaten",
   "saveCompanyData": "Daten speichern",
+  "successfulSaving": "Ihre Daten wurden erfolgreich aktualisiert",
   "discard": "Abbrechen",
   "addressData": "Address Daten",
   "addDeliveryAddress": "Lieferadresse hinzufügen",
