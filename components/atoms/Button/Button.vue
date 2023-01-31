@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { computed, defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
 import propsData from './partials/props.js'
@@ -128,30 +128,24 @@ export default defineComponent({
     &.button--primary {
       @apply tw-bg-pv-yellow;
       @apply tw-text-pv-grey-16;
+      -webkit-text-fill-color: rgb(41 41 41 / var(--tw-text-opacity));
       @apply tw-shadow-button;
 
       &:hover,
       &:focus {
         @apply tw-bg-pv-yellow-lighter;
       }
-
-      span {
-        @apply tw-text-pv-grey-16;
-      }
     }
 
     &.button--secondary {
       @apply tw-bg-pv-red;
       @apply tw-text-pv-white;
+      -webkit-text-fill-color: rgb(255 255 255 / var(--tw-text-opacity));
       @apply tw-shadow-button;
 
       &:hover,
       &:focus {
         @apply tw-bg-pv-red-lighter;
-      }
-
-      span {
-        @apply tw-text-pv-white;
       }
     }
 
@@ -159,14 +153,11 @@ export default defineComponent({
     &.button--variant-selection {
       @apply tw-bg-pv-red;
       @apply tw-text-pv-white;
+      -webkit-text-fill-color: rgb(255 255 255 / var(--tw-text-opacity));
       @apply tw-shadow-button;
 
       &:hover {
         @apply tw-bg-pv-red-lighter;
-      }
-
-      span {
-        @apply tw-text-pv-white;
       }
     }
 
@@ -174,38 +165,25 @@ export default defineComponent({
       @apply tw-shadow-border-red;
       @apply tw-bg-pv-white;
       @apply tw-text-pv-black;
+      -webkit-text-fill-color: rgb(0 0 0 / var(--tw-text-opacity));
 
       &:hover {
         @apply tw-shadow-border-red-lighter;
         @apply tw-text-pv-white;
-      }
-
-      span {
-        @apply tw-text-pv-black;
-
-        &:hover {
-          @apply tw-text-pv-white;
-        }
+        -webkit-text-fill-color: rgb(255 255 255 / var(--tw-text-opacity));
       }
     }
 
     &.button--inverted {
       @apply tw-bg-pv-white;
       @apply tw-text-pv-black;
+      -webkit-text-fill-color: rgb(0 0 0 / var(--tw-text-opacity));
       @apply tw-shadow-button-inverted;
 
       &:hover,
       &:focus {
         @apply tw-text-pv-grey-32;
-      }
-
-      span {
-        @apply tw-text-pv-black;
-
-        &:hover,
-        &:focus {
-          @apply tw-text-pv-grey-32;
-        }
+        -webkit-text-fill-color: rgb(82 82 82 / var(--tw-text-opacity));
       }
     }
 
@@ -214,19 +192,13 @@ export default defineComponent({
     &.button--disabled:focus {
       @apply tw-bg-pv-grey-80;
       @apply tw-text-pv-grey-96;
+      -webkit-text-fill-color: rgb(245 245 245 / var(--tw-text-opacity));
       @apply tw-shadow-none;
-
-      span {
-        @apply tw-text-pv-grey-96;
-      }
 
       &.button--inverted {
         @apply tw-bg-pv-grey-64;
         @apply tw-text-pv-grey-80;
-
-        span {
-          @apply tw-text-pv-grey-80;
-        }
+        -webkit-text-fill-color: rgb(204 204 204 / var(--tw-text-opacity));
       }
     }
   }
@@ -236,23 +208,16 @@ export default defineComponent({
 
     &.button--secondary {
       @apply tw-text-pv-red;
+      -webkit-text-fill-color: rgb(221 21 65 / var(--tw-text-opacity));
       @apply tw-shadow-border-red;
 
       &:hover,
       &:focus {
         @apply tw-outline-pv-red-lighter;
         @apply tw-text-pv-red-lighter;
+        -webkit-text-fill-color: rgb(255 24 75 / var(--tw-text-opacity));
         @apply tw-bg-pv-red-lighter;
         @apply tw-bg-opacity-10;
-      }
-
-      span {
-        @apply tw-text-pv-red;
-
-        &:hover,
-        &:focus {
-          @apply tw-text-pv-red-lighter;
-        }
       }
     }
 
@@ -265,35 +230,23 @@ export default defineComponent({
         @apply tw-shadow-border-red-lighter;
         @apply tw-bg-pv-red-lighter;
         @apply tw-text-pv-white;
-      }
-
-      span {
-        &:hover {
-          @apply tw-text-pv-white;
-        }
+        -webkit-text-fill-color: rgb(255 255 255 / var(--tw-text-opacity));
       }
     }
 
     &.button--inverted {
       @apply tw-outline-pv-grey-96;
       @apply tw-text-pv-grey-96;
+      -webkit-text-fill-color: rgb(245 245 245 / var(--tw-text-opacity));
       @apply tw-shadow-border-white;
 
       &:hover,
       &:focus {
         @apply tw-outline-pv-white;
         @apply tw-text-pv-white;
+        -webkit-text-fill-color: rgb(255 255 255 / var(--tw-text-opacity));
         @apply tw-bg-pv-white;
         @apply tw-bg-opacity-10;
-      }
-
-      span {
-        @apply tw-text-pv-grey-96;
-
-        &:hover,
-        &:focus {
-          @apply tw-text-pv-white;
-        }
       }
     }
 
@@ -303,20 +256,13 @@ export default defineComponent({
       @apply tw-shadow-border-grey-80;
       @apply tw-bg-pv-transparent;
       @apply tw-text-pv-grey-80;
+      -webkit-text-fill-color: rgb(204 204 204 / var(--tw-text-opacity));
 
       &.button--inverted {
         @apply tw-outline-pv-grey-48;
         @apply tw-bg-pv-transparent;
         @apply tw-text-pv-grey-48;
-      }
-
-      span {
-        @apply tw-text-pv-grey-80;
-
-        &:hover,
-        &:focus {
-          @apply tw-text-pv-grey-48;
-        }
+        -webkit-text-fill-color: rgb(122 122 122 / var(--tw-text-opacity));
       }
     }
   }
@@ -327,37 +273,23 @@ export default defineComponent({
 
     &.button--secondary {
       @apply tw-text-pv-red;
+      -webkit-text-fill-color: rgb(221 21 65 / var(--tw-text-opacity));
 
       &:hover,
       &:focus {
         @apply tw-text-pv-red-lighter;
-      }
-
-      span {
-        @apply tw-text-pv-red;
-
-        &:hover,
-        &:focus {
-          @apply tw-text-pv-red-lighter;
-        }
+        -webkit-text-fill-color: rgb(255 24 75 / var(--tw-text-opacity));
       }
     }
 
     &.button--inverted {
       @apply tw-text-pv-grey-96;
+      -webkit-text-fill-color: rgb(245 245 245 / var(--tw-text-opacity));
 
       &:hover,
       &:focus {
         @apply tw-text-pv-white;
-      }
-
-      span {
-        @apply tw-text-pv-grey-96;
-
-        &:hover,
-        &:focus {
-          @apply tw-text-pv-white;
-        }
+        -webkit-text-fill-color: rgb(255 255 255 / var(--tw-text-opacity));
       }
     }
 
@@ -365,17 +297,11 @@ export default defineComponent({
     &.button--disabled:hover,
     &.button--disabled:focus {
       @apply tw-text-pv-grey-80;
-
-      span {
-        @apply tw-text-pv-grey-80;
-      }
+      -webkit-text-fill-color: rgb(204 204 204 / var(--tw-text-opacity));
 
       &.button--inverted {
         @apply tw-text-pv-grey-48;
-
-        span {
-          @apply tw-text-pv-grey-48;
-        }
+        -webkit-text-fill-color: rgb(122 122 122 / var(--tw-text-opacity));
       }
     }
   }
