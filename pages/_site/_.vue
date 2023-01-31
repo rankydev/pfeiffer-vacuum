@@ -25,8 +25,7 @@ export default defineComponent({
     const route = useRoute()
     const { buildSlugs } = useStoryblokSlugBuilder(context)
 
-    const cartStore = useCartStore()
-    console.log(cartStore)
+    useCartStore()
 
     pageStore.setPageType(CMS_PAGE)
     const currentPath = ref(route.value.path)

@@ -55,6 +55,7 @@
         icon="shopping_cart"
         :label="$t('product.addToCart')"
         :disabled="isMaster"
+        @click="addToCart"
       />
       <template v-if="isLoggedIn">
         <Button
@@ -86,6 +87,7 @@
 <script>
 import { useUserStore } from '~/stores/user'
 import { useProductStore } from '~/stores/product'
+import { useCartStore } from '~/stores/cart'
 import { ref, computed, useContext } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
@@ -98,6 +100,7 @@ export default {
     const { i18n } = useContext()
     const userStore = useUserStore()
     const productStore = useProductStore()
+    const cartStore = useCartStore()
     const { product, productType, price } = storeToRefs(productStore)
     const {
       isApprovedUser,
@@ -106,6 +109,7 @@ export default {
       isRejectedUser,
       isLoggedIn,
     } = storeToRefs(userStore)
+    const { addProductToCart } = cartStore
 
     const userSelectedOrderQuantity = ref(1)
 
@@ -144,8 +148,6 @@ export default {
       )
     })
 
-    const toggleModal = () => (infoModalVisible.value = !infoModalVisible.value)
-
     const informationModalHeadline = computed(() => {
       if (hasCustomerPrice.value)
         return i18n.t('product.priceInfo.InfoPersonal')
@@ -162,6 +164,15 @@ export default {
           'product.priceInfo.textInfoOnlineLine1'
         )}<br/><br/>${i18n.t('product.priceInfo.textInfoOnlineLine2')}`
     })
+
+    const toggleModal = () => (infoModalVisible.value = !infoModalVisible.value)
+
+    const addToCart = async () => {
+      await addProductToCart(
+        product.value?.code,
+        userSelectedOrderQuantity.value
+      )
+    }
 
     return {
       userStore,
@@ -180,6 +191,7 @@ export default {
       informationModalText,
       userSelectedOrderQuantity,
       toggleModal,
+      addToCart,
     }
   },
 }

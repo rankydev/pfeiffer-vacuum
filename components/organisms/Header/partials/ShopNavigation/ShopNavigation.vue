@@ -3,7 +3,7 @@
     <client-only>
       <Popup>
         <template #activator="{ togglePopup }">
-          <LoadingSpinner :show="userStore.isLoginProcess">
+          <LoadingSpinner :show="isLoginProcess">
             <Button
               shape="plain"
               variant="secondary"
@@ -25,7 +25,7 @@
               @entry-clicked="closePopup"
             />
             <Button
-              v-if="userStore.isLoggedIn || userStore.isLoginProcess"
+              v-if="isLoggedIn || isLoginProcess"
               shape="outlined"
               variant="secondary"
               class="shop-navigation__popup-logout"
@@ -40,9 +40,10 @@
 
     <Link
       :href="localePath('shop-cart')"
-      class="shop-navigation__shopping-cart"
+      class="shop-navigation__shopping-cart tw-flex"
     >
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
+      <span>{{ cartItemCount }}</span>
     </Link>
   </div>
 </template>
@@ -55,6 +56,7 @@ import {
   useRouter,
 } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
+import { useCartStore } from '~/stores/cart'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
@@ -62,6 +64,7 @@ import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import MyAccountNavigation from '~/components/organisms/MyAccount/partials/MyAccountNavigation/MyAccountNavigation.vue'
 import Popup from '~/components/atoms/Popup/Popup.vue'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
@@ -76,6 +79,10 @@ export default defineComponent({
     const router = useRouter()
     const { i18n, app } = useContext()
     const userStore = useUserStore()
+    const cartStore = useCartStore()
+
+    const { isLoggedIn, isLoginProcess } = storeToRefs(userStore)
+    const { currentCart } = storeToRefs(cartStore)
     const isMobile = app.$breakpoints.isMobile
 
     const myAccountLabel = computed(() => {
@@ -85,6 +92,8 @@ export default defineComponent({
         ? userStore.currentUser?.name
         : i18n.t('navigation.button.signIn.label')
     })
+
+    const cartItemCount = computed(() => currentCart.value?.totalItems || '')
 
     const handleMyAccount = (openPopupCallback) => {
       if (userStore.isLoggedIn) {
@@ -101,10 +110,15 @@ export default defineComponent({
     }
 
     return {
-      logout: userStore.logout,
-      handleMyAccount,
       myAccountLabel,
       userStore,
+      currentCart,
+      isLoggedIn,
+      isLoginProcess,
+      cartItemCount,
+
+      logout: userStore.logout,
+      handleMyAccount,
     }
   },
 })

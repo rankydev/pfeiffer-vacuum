@@ -36,7 +36,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
    * Get cart information
    */
   const getCartUrl = () => {
-    console.log('----------> Get Cart URL')
     if (isLoggedIn.value) {
       if (currentUser.value?.ociBuyer)
         return config.CARTS_CURRENT_USER_API + '/' + customerId.value
@@ -48,9 +47,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     }
   }
   const getGuidForAnonymousCart = () => {
-    console.log('----------> Get GUID For Anonymous Cart')
-    console.log('> currentCartGUID ', currentCartGuid)
-    console.log('> currentCart ', currentCart)
     console.log(isLoggedIn, currentUser)
     // If current cart id is present return
     if (currentCartGuid.value) return currentCartGuid.value
@@ -69,7 +65,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
    * Get, create or merge cart
    */
   const getAnonymousCart = async (anonymousCartGuid) => {
-    console.log('----------> Get Anonymous Cart')
     if (anonymousCartGuid) {
       const existingCart = await axios.$get(
         `${config.CARTS_ANONYMOUS_API}/${anonymousCartGuid}`,
@@ -80,23 +75,15 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     return null
   }
   const getOrCreateAnonymousCart = async (createIfNotExist) => {
-    console.log('----------> Get Or Create Anonymous Cart')
     const anonymousCartGuid = getGuidForAnonymousCart()
-
-    console.log('> before getting existing cart')
     const existingCart = await getAnonymousCart(anonymousCartGuid)
-
-    console.log('> after getting existing cart', existingCart)
 
     if (isValidCart(existingCart)) {
       updateCartCookie(existingCart)
       return existingCart
     }
 
-    console.log('> after check for validity')
-
     if (createIfNotExist) {
-      console.log('> create if not exist')
       const newCart = await axios.$post(config.CARTS_ANONYMOUS_API, null, {
         params: { fields: 'FULL' },
       })
@@ -108,10 +95,8 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     return null
   }
   const getOrCreateUserCart = async () => {
-    console.log('----------> Get Or Create User Cart')
     let existingCart = null
 
-    console.log('> before getting existing cart')
     existingCart = await axios.$get(
       config.CARTS_CURRENT_USER_API + currentUser.value?.ociBuyer
         ? customerId.value
@@ -119,32 +104,23 @@ export const useCartApi = (currentCart, currentCartGuid) => {
       { params: { fields: 'FULL' } }
     )
 
-    console.log('> after getting existing cart:', existingCart)
-
     // Return when existing cart is valid
     if (isValidCart(existingCart)) return existingCart
-
-    console.log('> after checking validity')
 
     const newCart = await axios.$post(config.CARTS_CURRENT_USER_API, null, {
       params: { fields: 'FULL' },
     })
-
-    console.log('> after getting new cart:', newCart)
 
     // Return when new cart is valid
     if (isValidCart(newCart)) return newCart
 
     return null
   }
-
   const getOrCreateCart = (createIfNotExist) => {
-    console.log('----------> Get Or Create Cart')
     if (isLoggedIn.value) return getOrCreateUserCart()
     return getOrCreateAnonymousCart(createIfNotExist)
   }
   const mergeCarts = async (anonymousCartGuid, userCart) => {
-    console.log('----------> Merge Carts')
     const mergedCart = await axios.$post(config.CARTS_CURRENT_USER_API, null, {
       params: {
         fields: 'FULL',
@@ -162,7 +138,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
    * Handle cart products
    */
   const addToCart = async (code, quantity = 1) => {
-    console.log('----------> Add To Cart')
     await loadCart(true)
     const cartEntry = {
       quantity,
@@ -181,7 +156,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     return false
   }
   const deleteEntry = async (entryNumber) => {
-    console.log('----------> Delete Entry')
     const result = await axios.delete(
       getCartUrl() + '/entries/' + entryNumber,
       {}
@@ -195,7 +169,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     return false
   }
   const updateQuantity = async (entryNumber, quantity) => {
-    console.log('----------> Update Quantity')
     const orderEntry = {
       quantity,
     }
@@ -218,7 +191,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
    * Handle additional information
    */
   const setDeliveryAddress = async (address) => {
-    console.log('----------> Set Delivery Address')
     await loadCart(true)
 
     const result = await axios.$post(
@@ -234,7 +206,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     return null
   }
   const setReferenceNumber = async (reference) => {
-    console.log('----------> Set Reference Number')
     await loadCart(true)
 
     // Because this endpoint needs a JSON String (and not a JSON String wrapped in an Object) we need to stringify the reference and set the appropriate header
@@ -253,7 +224,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     return false
   }
   const setRequestComment = async (comment) => {
-    console.log('----------> Set Request Comment')
     await loadCart(true)
     const result = await axios.post(
       getCartUrl() + '/comment',
@@ -272,5 +242,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   return {
     getOrCreateCart,
     mergeCarts,
+    addToCart,
   }
 }
