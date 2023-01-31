@@ -1,0 +1,31 @@
+{
+  "overall1": "总计",
+  "overall2": "（净额）",
+  "orderDiscount": "订单折扣",
+  "priceInformationHeadline": "有关价格的信息",
+  "priceInformation1":
+  "此处显示的在线价格是不包括运费、关税和税费的参考价格，并非以所有全球货币为单位。",
+  "priceInformation2":
+  "要获得您的个性化报价（以您当地的货币表示），请将您的请求发送给我们，以便您当地的普发真空公司/合作伙伴公司为您提供个性化报价和定价。",
+  "deliveryNote": "预计交货期",
+  "deliveryDetails":
+  "请将您的询价发送给我们，以便我们通知您确切的交货时间。",
+  "userStatus": {
+    "lead": {
+      "priceInfo": {
+        "text": "가격을 보려면 {link}를 추가하세요。",
+        "link": "公司资料"
+      }
+    },
+    "open": {
+      "priceInfo": {
+        "text": "请等待批准以查看价格"
+      }
+    },
+    "rejected": {
+      "priceInfo": {
+        "text": "您无权查看价格"
+      }
+    }
+  }
+}
