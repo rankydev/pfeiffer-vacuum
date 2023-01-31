@@ -16,7 +16,7 @@
           </NuxtLink>
         </ul>
       </div>
-      <Button
+      <InternalBtnWrapper
         :label="$t('language.code')"
         variant="inverted"
         shape="outlined"
@@ -25,6 +25,7 @@
         icon="language"
         :prepend-icon="true"
         class="language-switcher__button"
+        internal-variant="language-switcher"
       />
     </div>
   </div>
@@ -37,13 +38,13 @@ import {
   computed,
   ref,
 } from '@nuxtjs/composition-api'
-import Button from '~/components/atoms/Button/Button'
+import InternalBtnWrapper from '~/components/molecules/InternalBtnWrapper/InternalBtnWrapper'
 import { onClickOutside } from '@vueuse/core'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
   components: {
-    Button,
+    InternalBtnWrapper,
   },
   setup(_, { refs }) {
     const route = useRoute()
@@ -83,22 +84,6 @@ export default defineComponent({
 @import '/assets/scss/z-index';
 
 .language-switcher {
-  &__button {
-    color: #fff !important;
-    @apply tw-p-0;
-    @apply tw-align-middle;
-    box-shadow: none !important;
-    font-size: 0.75rem !important;
-
-    @screen lg {
-      color: #7a7a7a !important;
-    }
-  }
-
-  &__button:hover {
-    background-color: unset !important;
-  }
-
   &__wrapper {
     @apply tw-relative;
   }
@@ -141,11 +126,6 @@ export default defineComponent({
     @apply tw-py-3;
     @apply tw-px-4;
     @apply tw-text-pv-black;
-  }
-
-  .button--small {
-    @apply tw-px-0;
-    @apply tw-pb-0;
   }
 }
 </style>

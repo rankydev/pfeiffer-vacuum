@@ -3,7 +3,7 @@
     <LoadingSpinner :show="loading">
       <GeneralRequest
         v-if="contactRequestType.type === 'GENERAL_QUERY'"
-        :type="contactRequestType"
+        :type="contactRequestType.type"
         @update="requestData = $event"
       />
       <TopicRequest
