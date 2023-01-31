@@ -31,13 +31,14 @@
           </ContentWrapper>
 
           <div v-if="showDocumentSearchTab" class="tab-navigation-desktop">
-            <Button
+            <InternalBtnWrapper
               v-for="tab in tabNavigationItems"
               :key="tab.key"
               :label="tab.name"
               :variant="
                 currentTabSelected === tab.key ? 'secondary' : 'inverted'
               "
+              internal-variant="tab-item"
               cutaway="bottom"
               text-center
               class="tab-navigation-desktop__item"
@@ -90,6 +91,7 @@ import { useRoute, useContext } from '@nuxtjs/composition-api'
 
 import Page from '~/components/templates/Page/Page'
 import Button from '~/components/atoms/Button/Button'
+import InternalBtnWrapper from '~/components/molecules/InternalBtnWrapper/InternalBtnWrapper'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
@@ -106,6 +108,7 @@ export default defineComponent({
   components: {
     Page,
     Button,
+    InternalBtnWrapper,
     ContentWrapper,
     OnPageNavigation,
     ResultHeadline,

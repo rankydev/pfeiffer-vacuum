@@ -318,10 +318,6 @@ export default defineComponent({
     }
   }
 
-  // TODO: comment in if we want label text centered, too (multiline)
-  // &__label {
-  //   @apply tw-text-center;
-  // }
   &__icon {
     &--prepend {
       @apply tw-order-first;

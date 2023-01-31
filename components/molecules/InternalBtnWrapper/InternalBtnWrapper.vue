@@ -17,7 +17,8 @@ export default defineComponent({
     internalVariant: {
       type: String,
       default: 'facets',
-      validator: (val) => ['facets', 'language-switcher'].includes(val),
+      validator: (val) =>
+        ['facets', 'language-switcher', 'tab-item'].includes(val),
     },
     active: {
       type: Boolean,
@@ -85,6 +86,12 @@ export default defineComponent({
   &__language-switcher.button--small {
     @apply tw-px-0;
     @apply tw-pb-0;
+  }
+
+  &__tab-item {
+    &.button--inverted.button--filled {
+      @apply tw-bg-pv-grey-96;
+    }
   }
 }
 </style>
