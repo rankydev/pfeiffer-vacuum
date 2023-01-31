@@ -7,7 +7,9 @@
           :key="item.href"
           :to="item.href"
           class="myaccount-navigation__list-item"
-          :class="{ 'myaccount-navigation__list-item--heading': index === 0 }"
+          :class="`myaccount-navigation__list-item--${
+            index === 0 ? 'heading' : 'subpage'
+          }`"
           @click.native="linkClicked"
         >
           <Icon
@@ -114,23 +116,33 @@ export default defineComponent({
       @apply tw-flex;
       @apply tw-transition-all;
 
-      &--heading {
-        @apply tw-font-bold;
-        @apply tw-text-xl;
-        @apply tw-block;
-      }
-
       &:hover {
         @apply tw-bg-pv-red-lighter;
         @apply tw-text-pv-white;
       }
 
-      &.nuxt-link-exact-active {
+      @mixin active-item-styles() {
         @apply tw-text-pv-red;
 
         &:hover {
           @apply tw-text-pv-red;
           @apply tw-bg-pv-white;
+        }
+      }
+
+      &--heading {
+        @apply tw-font-bold;
+        @apply tw-text-xl;
+        @apply tw-block;
+
+        &.nuxt-link-exact-active {
+          @include active-item-styles;
+        }
+      }
+
+      &--subpage {
+        &.nuxt-link-active {
+          @include active-item-styles;
         }
       }
     }

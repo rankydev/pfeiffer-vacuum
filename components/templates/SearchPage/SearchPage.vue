@@ -23,9 +23,10 @@
         <template #default>
           <ContentWrapper>
             <ResultHeadline
-              class="search-page__result-headline"
-              :center="showDocumentSearchTab"
               v-bind="{ headline, link, searchTerm }"
+              :center="showDocumentSearchTab"
+              :back-button-override-query-params="{ currentPage: 1 }"
+              class="search-page__result-headline"
             />
           </ContentWrapper>
 
@@ -238,7 +239,12 @@ export default defineComponent({
   }
 
   &__result-headline {
-    @apply tw-mt-6 tw-mb-12;
+    @apply tw-mb-12;
+    @apply tw-mt-6;
+
+    @screen md {
+      @apply tw-mt-8;
+    }
   }
 }
 
