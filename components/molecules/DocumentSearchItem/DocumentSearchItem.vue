@@ -1,21 +1,25 @@
 <template>
   <article>
     <Link
-      :href="product.productUrl"
-      target="_blank"
+      v-if="product.id"
       class="document-item__link"
+      @click="$emit('click')"
     >
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <h5 v-html="formatHtml(name)" />
+        <h5 v-html="formatHtml(product.title)" />
         <div class="document-item__data">
-          <div>{{ product.category }}</div>
-          <div>{{ product.language }}</div>
-          <div>{{ product.date }}</div>
+          <div v-if="product.subtitle[0]">{{ product.subtitle[0] }}</div>
+          <div v-if="product.subtitle[1]">{{ product.subtitle[1] }}</div>
+          <div v-if="product.subtitle[2]">{{ product.subtitle[2] }}</div>
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <p v-html="formatHtml(product.description)" />
-        <Link :href="product.downloadUrl" class="document-item__icon-link">
+        <p v-if="product.body" v-html="formatHtml(product.body)" />
+        <Link
+          v-if="product.downloadLink"
+          :href="product.downloadLink"
+          class="document-item__icon-link"
+        >
           <Icon class="document-item__icon" icon="file_download" size="base" />
         </Link>
       </div>
@@ -24,19 +28,21 @@
     <div class="document-item__container">
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <h5 v-html="formatHtml(name)" />
-        <div class="document-item__product">{{ product.category }}</div>
+        <h5 v-html="formatHtml(product.title)" />
+        <div v-if="product.subtitle[0]" class="document-item__product">
+          {{ product.subtitle[0] }}
+        </div>
         <div class="document-item__data">
-          <div>{{ product.language }}</div>
-          <div>{{ product.date }}</div>
+          <div v-if="product.subtitle[1]">{{ product.subtitle[1] }}</div>
+          <div v-if="product.subtitle[2]">{{ product.subtitle[2] }}</div>
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <p v-html="formatHtml(product.description)" />
+        <p v-if="product.body" v-html="formatHtml(product.body)" />
         <div class="document-item__links">
           <Link
-            :href="product.productUrl"
-            target="_blank"
+            v-if="product.id"
             class="document-item__icon-link download-link"
+            @click="emit('click')"
           >
             <span class="document-item__icon-text">
               {{ $t('product.download') }}
@@ -63,12 +69,7 @@
   </article>
 </template>
 <script>
-import {
-  computed,
-  defineComponent,
-  ref,
-  useRoute,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
 import Link from '~/components/atoms/Link/Link'
 import Icon from '~/components/atoms/Icon/Icon'
 
@@ -83,29 +84,29 @@ export default defineComponent({
       type: Object,
       default: () => {
         return {
-          name: 'HiPace 300 with TC 400',
-          category: 'Hipace 300',
-          language: 'Deutsch',
-          date: '12.12.2022',
-          description: `
+          title: 'HiPace 300 with TC 400',
+          id: 'esc_tree~project1_e~12~de',
+          subtitle: ['Hipace 300', 'Deutsch', '12.12.2022'],
+          body: `
             Betriebsanleitung Operating Instructions DE EN Original HiPace 300
           `,
-          productUrl: 'google.com',
-          downloadUrl: 'google.com',
+          downloadLink: `
+            resource/environment/project1_p/documents/pfeifferSharepointProd/12624-128864ODE_02.pdf
+          `,
         }
       },
     },
-    searchTerm: {
-      type: String,
-      default: '',
-    },
   },
+  emits: ['click'],
   setup() {
     const route = useRoute()
-    const name = computed(() => 'HiPace 300 with TC 400')
     const searchTerm = ref(route.value.query.searchTerm || '')
 
     const formatHtml = (input) => {
+      if (searchTerm.value === '') {
+        return input
+      }
+
       const regexp = new RegExp(searchTerm.value, 'ig')
       const formatInput = input.replace(
         regexp,
@@ -114,10 +115,7 @@ export default defineComponent({
       return formatInput
     }
 
-    return {
-      name,
-      formatHtml,
-    }
+    return { formatHtml }
   },
 })
 </script>
@@ -148,6 +146,12 @@ export default defineComponent({
 
     @screen md {
       @apply tw-block;
+    }
+
+    &:hover {
+      h5 {
+        @apply tw-text-pv-red;
+      }
     }
 
     .document-item {
