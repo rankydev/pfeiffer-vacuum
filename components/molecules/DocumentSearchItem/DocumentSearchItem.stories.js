@@ -20,7 +20,7 @@ const Template = (args) => ({
   },
   template: `
       <div class="documentation-preview">
-      	<DocumentSearchItem v-bind="args" />
+        <DocumentSearchItem v-bind="args" />
       </div>
     `,
 })
@@ -28,13 +28,13 @@ const Template = (args) => ({
 export const Default = Template.bind({})
 
 Default.args = {
-	name: 'HiPace 300 with TC 400',
-	category: 'Hipace 300',
-	language: 'Deutsch',
-	date: '12.12.2022',
-	description: `
-		Betriebsanleitung Operating Instructions DE EN Original HiPace 300
-	`,
-	productUrl: 'google.com',
-	downloadUrl: 'google.com',
+  name: 'HiPace 300 with TC 400',
+  category: 'Hipace 300',
+  language: 'Deutsch',
+  date: '12.12.2022',
+  description: `
+    Betriebsanleitung Operating Instructions DE EN Original HiPace 300
+  `,
+  productUrl: 'google.com',
+  downloadUrl: 'google.com',
 }
