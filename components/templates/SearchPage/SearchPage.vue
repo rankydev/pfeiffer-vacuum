@@ -60,18 +60,20 @@
             </template>
           </GenericTabs>
 
-          <ContentWrapper v-else>
-            <SearchResult
-              v-bind="{
-                products,
-                pagination,
-                categories,
-                facets,
-                currentQuery,
-                sorts,
-              }"
-            />
-          </ContentWrapper>
+          <div v-else class="category-page__search-result">
+            <ContentWrapper>
+              <SearchResult
+                v-bind="{
+                  products,
+                  pagination,
+                  categories,
+                  facets,
+                  currentQuery,
+                  sorts,
+                }"
+              />
+            </ContentWrapper>
+          </div>
         </template>
 
         <template #stickyBar>
@@ -249,6 +251,12 @@ export default defineComponent({
     }
   }
 
+  &__search-result {
+    @apply tw-bg-pv-grey-96;
+  }
+}
+
+.category-page {
   &__search-result {
     @apply tw-bg-pv-grey-96;
   }
