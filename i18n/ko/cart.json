@@ -1,0 +1,31 @@
+{
+  "overall1": "합계",
+  "overall2": "(순)",
+  "orderDiscount": "주문 할인",
+  "priceInformationHeadline": "가격 정보",
+  "priceInformation1":
+  "여기에 표시된 온라인 가격은 운임, 관세 및 세금을 포함하지 않는 참조 가격이며 모든 글로벌 통화로 유지되지 않습니다.",
+  "priceInformation2":
+  "개별 제안(현지 통화로)을 받으려면 현지 파이퍼 베큠 회사/파트너 회사에서 개별 제안 및 가격을 제공할 수 있도록 요청을 보내주십시오.",
+  "deliveryNote": "예상 배송",
+  "deliveryDetails":
+  "정확한 배송 시간을 알려드릴 수 있도록 문의 사항을 보내주십시오.",
+  "userStatus": {
+    "lead": {
+      "priceInfo": {
+        "text": "가격을 보려면 {link}를 추가하세요.",
+        "link": "회사 데이터"
+      }
+    },
+    "open": {
+      "priceInfo": {
+        "text": "가격을 보려면 승인을 기다려 주세요."
+      }
+    },
+    "rejected": {
+      "priceInfo": {
+        "text": "가격을 볼 수 없습니다."
+      }
+    }
+  }
+}

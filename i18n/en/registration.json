@@ -3,6 +3,15 @@
     "title": "Account details",
     "password": "Password"
   },
+  "formAccountData": {
+    "companyUniversity": "Company/University",
+    "name": "Name",
+    "firstname": "Firstname",
+    "lastname": "Lastname",
+    "email": "E-Mail",
+    "password": "Password",
+    "changePassword": "Change password"
+  },
   "formCompanyData": {
     "title": "Company Data",
     "infobox": "Here you can store the address data of your company. This step is optional. Please note: you can only see prices and send requests with a full account!",
@@ -12,15 +21,38 @@
     "registeredCustomerTrue": "Yes",
     "registeredCustomerFalse": "No",
     "customerNumber": "Customer number",
-    "additionalCompanyInformation": "More company information",
-    "department": "Department",
+    "additionalCompanyInformation": "Further company details",
+    "department": "Department / Institute",
     "tax": "VAT number",
     "telephoneNumber": "Telephone",
     "fax": "Fax",
-    "country": "Country",
-    "countryAutofill": "Will be filled automatically"
+    "country": "Country/Location",
+    "countryAutofill": "Will be filled automatically",
+    "phone": "Phone",
+    "address": "Address"
   },
-  "infotext": "You can enter your company's address data here. <br /> <b>This step is optional</b> <br /><br /> <b>Please note:</b> Only with A full account allows you to see prices and send requests!",
+  "addCompanyData": {
+    "success": {
+      "headline": "Thank you for completing your account!",
+      "description": "Your registration details will be checked by our Pfeiffer Vacuum Team within normal working hours. You’ll receive an acceptance or denial email afterwards. This may take up to two working days."
+    },
+    "open": {
+      "headline": "Still a little patience...",
+      "description": "Your registration details are currently being checked by our Pfeiffer Vacuum Team within normal working hours. You’ll receive an acceptance or denial email afterwards. This may take up to two working days."
+    },
+    "rejected": {
+      "headline": "Sorry, your account has been rejected.",
+      "description": "If you have any questions, please contact our <a target=\"_blank\" href=\"/contact\" style=\"text-decoration: underline\" >customer service</a>."
+    },
+    "discard": "Discard",
+    "saveChanges": "Save changes",
+    "errorOccured": "An error occured while adding company data"
+  },
+  "updateAccountData": {
+    "success": "Your data were updated successfully",
+    "errorOccured": "An error occured while updating user data"
+  },
+  "infotext": "You can add your company’s address data here. <br/><br/> <b>Please note:</b> Only with a full account you can see prices and send requests!",
     "registrationSuccessPage": {
       "lite": {
         "title": "Your registration was sent successfully",
@@ -39,7 +71,8 @@
     "title": "Create Account",
     "description": "Register on our platform to get more features. With a basic subscription you can watch webinars and whitepapers and create shopping lists. If you add your company details, you can use all other e-commerce features.",
     "conditionsTitle": "Terms and Conditions",
-    "conditionsDescription": "Your registration data will be checked by our Pfeiffer Vacuum team within normal working hours. You will then receive an e-mail to accept or reject your registration. This can take up to two working days.<br /><br />The Registration is only for business customers, registration by private individuals is not possible.",    "linkDataProtection": "You can find the data protection declaration here.",
+    "conditionsDescription": "Your registration details will be checked by our Pfeiffer Vacuum Team within normal working hours. You’ll receive an acceptance or denial email afterwards. This may take up to two working days.<br /><br />The registration is for business clients only, a registration of private persons is not possible.",
+    "linkDataProtection": "You can find the data protection declaration here.",
     "submitRegistrationButton": "Submit Registration",
     "contentCTABoxHelpTitle": "Need Help?",
     "contentCTABoxHelpDescription": "Our product experts are always available to answer your questions about our products and your applications.",

@@ -1,0 +1,31 @@
+{
+  "overall1": "Total",
+  "overall2": "(Net)",
+  "orderDiscount": "Order discount",
+  "priceInformationHeadline": "Information about prices",
+  "priceInformation1":
+  "The here shown Online Price is a reference price that does not include freight, customs and taxes and is not maintained in all global currencies.",
+  "priceInformation2":
+  "To get your individual offer (in your local currency), please send us your request, so that your local Pfeiffer Vacuum Company / Partner Company will then provide you with your individual offer and pricing.",
+  "deliveryNote": "Expected Delivery",
+  "deliveryDetails":
+  "Please send us your inquiry, so that we can inform you about an exact delivery time.",
+  "userStatus": {
+    "lead": {
+      "priceInfo": {
+        "text": "Please add {link} to see prices",
+        "link": "company data"
+      }
+    },
+    "open": {
+      "priceInfo": {
+        "text": "Please wait for approval to see prices"
+      }
+    },
+    "rejected": {
+      "priceInfo": {
+        "text": "You are not permitted to see prices"
+      }
+    }
+  }
+}
