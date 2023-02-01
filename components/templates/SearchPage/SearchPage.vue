@@ -30,42 +30,48 @@
             />
           </ContentWrapper>
 
-          <div v-if="showDocumentSearchTab" class="tab-navigation-desktop">
-            <InternalBtnWrapper
-              v-for="tab in tabNavigationItems"
-              :key="tab.key"
-              :label="tab.name"
-              :variant="
-                currentTabSelected === tab.key ? 'secondary' : 'inverted'
-              "
-              internal-variant="tab-item"
-              cutaway="bottom"
-              text-center
-              class="tab-navigation-desktop__item"
-              :class="{ active: currentTabSelected === tab.key }"
-              @click="selectTab(tab)"
-            />
-          </div>
-
-          <div class="search-page__search-result-desktop">
-            <ContentWrapper>
-              <SearchResult
-                v-if="currentTabSelected === 'products'"
-                :persist-category-name-as-query-param="showDocumentSearchTab"
-                v-bind="{
-                  products,
-                  pagination,
-                  categories,
-                  facets,
-                  currentQuery,
-                  sorts,
-                }"
-              />
-              <div v-else>
-                <h2 class="tw-my-6">TODO: Document Search</h2>
+          <GenericTabs
+            v-if="showDocumentSearchTab"
+            :tabs="tabNavigationItems"
+            :active-tab="currentTabSelected"
+            center-mode
+            @selectTab="selectTab"
+          >
+            <template #activeTabContent>
+              <div class="search-page__search-result-desktop">
+                <ContentWrapper>
+                  <SearchResult
+                    v-if="currentTabSelected === 'products'"
+                    persist-category-name-as-query-param
+                    v-bind="{
+                      products,
+                      pagination,
+                      categories,
+                      facets,
+                      currentQuery,
+                      sorts,
+                    }"
+                  />
+                  <div v-else>
+                    <h2 class="tw-my-6">TODO: Document Search</h2>
+                  </div>
+                </ContentWrapper>
               </div>
-            </ContentWrapper>
-          </div>
+            </template>
+          </GenericTabs>
+
+          <ContentWrapper v-else>
+            <SearchResult
+              v-bind="{
+                products,
+                pagination,
+                categories,
+                facets,
+                currentQuery,
+                sorts,
+              }"
+            />
+          </ContentWrapper>
         </template>
 
         <template #stickyBar>
@@ -91,11 +97,11 @@ import { useRoute, useContext } from '@nuxtjs/composition-api'
 
 import Page from '~/components/templates/Page/Page'
 import Button from '~/components/atoms/Button/Button'
-import InternalBtnWrapper from '~/components/molecules/InternalBtnWrapper/InternalBtnWrapper'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
-import SearchResult from '~/components/organisms/SearchResult/SearchResult.vue'
+import SearchResult from '~/components/organisms/SearchResult/SearchResult'
+import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
 
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { useCategoryStore } from '~/stores/category/category'
@@ -108,11 +114,11 @@ export default defineComponent({
   components: {
     Page,
     Button,
-    InternalBtnWrapper,
     ContentWrapper,
     OnPageNavigation,
     ResultHeadline,
     SearchResult,
+    GenericTabs,
   },
   layout: 'default',
   props: {
@@ -180,17 +186,19 @@ export default defineComponent({
     const tabNavigationItems = [
       {
         name: context.i18n.t('category.productsTab'),
-        key: 'products',
+        trigger: 'products',
+        disabled: false,
       },
       {
         name: context.i18n.t('category.documentsTab'),
-        key: 'documents',
+        trigger: 'documents',
+        disabled: false,
       },
     ]
 
-    const selectTab = (tab) => {
-      currentTabSelected.value = tab.key
-      // TODO: also handle switching tab contents (display docs component, fetch search results, ...)
+    const selectTab = (trigger) => {
+      currentTabSelected.value = trigger
+      // TODO: also handle switching tab contents (persist tab choice in url, retrigger query if needed, ...)
     }
 
     return {
@@ -223,15 +231,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .search-page {
-  &__search-result-desktop {
-    @apply tw-bg-pv-grey-96;
-    @apply tw-hidden;
-
-    @screen md {
-      @apply tw-flex;
-    }
-  }
-
   &__sticky-btn {
     @apply tw-flex;
     @apply tw-bg-pv-white;
@@ -248,25 +247,6 @@ export default defineComponent({
     @screen md {
       @apply tw-mt-8;
     }
-  }
-}
-
-.tab-navigation-desktop {
-  @apply tw-hidden;
-
-  @screen md {
-    @apply tw-flex;
-    @apply tw-flex-row;
-    @apply tw-justify-center;
-    @apply tw-border-b-2;
-    @apply tw-border-pv-red;
-    @apply tw-w-full;
-    @apply tw-overflow-y-auto;
-    @apply tw-gap-2;
-  }
-
-  &__item {
-    min-width: 120px;
   }
 }
 </style>

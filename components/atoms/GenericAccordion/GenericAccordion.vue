@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
@@ -112,15 +112,26 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  emits: ['activeTabChange'],
+  setup(props, { emit }) {
     const sanitizer = useSanitizer()
+
+    const active = ref(undefined)
+    watch(active, (newVal, oldVal) => {
+      // do not emit value change when set initially (change from undefindes) or when active tab is deselected
+      if (oldVal === undefined || newVal === null) return
+      const accordionEntry = props.accordionEntries[newVal]
+      if (accordionEntry) {
+        emit('activeTabChange', props.accordionEntries[newVal].slotName)
+      }
+    })
 
     if (props.multiple) {
       const filterActives = (memo, ele, idx) =>
         ele.isActive === true ? [...memo, idx] : memo
       const initial = props.accordionEntries.reduce(filterActives, [])
 
-      const active = ref([...initial])
+      active.value = [...initial]
       const hasIdx = (idx) => active.value.includes(idx)
       const findIdx = (idx) => active.value.indexOf(idx)
       const removeIdx = (idx) => active.value.splice(findIdx(idx), 1)
@@ -135,8 +146,7 @@ export default defineComponent({
     } else {
       const findIdx = (ele) => ele.isActive === true
       const initial = props.accordionEntries.findIndex(findIdx)
-
-      const active = ref(initial)
+      active.value = initial
       const hasIdx = (idx) => active.value === idx
 
       return {
@@ -232,7 +242,7 @@ export default defineComponent({
 
     .accordion__heading {
       @apply tw-border-t-0;
-      @apply tw-my-1;
+      @apply tw-my-1 tw-mx-5;
     }
 
     .accordion__button {
@@ -251,6 +261,7 @@ export default defineComponent({
 
     .accordion__content {
       @apply tw-px-5;
+      @apply tw-bg-pv-grey-96;
     }
   }
 
