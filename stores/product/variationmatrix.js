@@ -5,6 +5,7 @@ import {
   useRouter,
   useRoute,
   computed,
+  ssrRef,
 } from '@nuxtjs/composition-api'
 import { joinURL } from 'ufo'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
@@ -21,12 +22,12 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
   /*
    * Variationmatrix specific constants
    */
-  const variationMatrix = ref(null)
+  const variationMatrix = ssrRef(null)
   const selectedAttributes = ref({})
-  const currentMasterId = ref(null)
-  const currentVariantId = ref(null)
-  const matrixStillValid = ref(false)
-  const loadingMatrix = ref(false)
+  const currentMasterId = ssrRef(null)
+  const currentVariantId = ssrRef(null)
+  const matrixStillValid = ssrRef(false)
+  const loadingMatrix = ssrRef(false)
 
   /*
    * Retrieve variation matrix object from hybris given a product id and selected attributes
@@ -93,6 +94,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
 
       // Write result into store
       variationMatrix.value = result
+      matrixStillValid.value = true
     } catch (error) {
       console.error(error)
     } finally {
@@ -117,6 +119,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    */
   const addAttribute = async (key, val) => {
     selectedAttributes.value[key] = val
+    matrixStillValid.value = false
     await loadVariationMatrix()
   }
 
@@ -125,6 +128,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    */
   const deleteAttribute = async (key) => {
     delete selectedAttributes.value[key]
+    matrixStillValid.value = false
     await loadVariationMatrix()
   }
 
@@ -148,6 +152,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    */
   const clearSelection = async () => {
     selectedAttributes.value = {}
+    matrixStillValid.value = false
     await loadVariationMatrix()
   }
 
