@@ -1,6 +1,6 @@
 <template>
   <article>
-    <Link :href="product.productUrl" class="document-item__link">
+    <Link :href="product.productUrl" target="_blank" class="document-item__link">
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <h5 v-html="formatHtml(name)" />
@@ -31,6 +31,7 @@
         <div class="document-item__links">
           <Link
             :href="product.productUrl"
+            target="_blank"
             class="document-item__icon-link download-link"
           >
             <span class="document-item__icon-text">
