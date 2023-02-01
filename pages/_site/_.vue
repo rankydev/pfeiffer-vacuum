@@ -15,7 +15,6 @@
 import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
-import { useCartStore } from '~/stores/cart'
 
 export default defineComponent({
   name: 'Default',
@@ -24,8 +23,6 @@ export default defineComponent({
     const pageStore = usePageStore()
     const route = useRoute()
     const { buildSlugs } = useStoryblokSlugBuilder(context)
-
-    useCartStore()
 
     pageStore.setPageType(CMS_PAGE)
     const currentPath = ref(route.value.path)

@@ -91,7 +91,6 @@ import {
 import { useUserStore } from '~/stores/user'
 import { useProductStore } from '~/stores/product'
 import { useCartStore } from '~/stores/cart'
-import { ref, computed, useContext } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import InformationModal from '~/components/molecules/InformationModal/InformationModal'
