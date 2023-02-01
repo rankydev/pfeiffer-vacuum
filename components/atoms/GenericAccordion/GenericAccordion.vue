@@ -3,6 +3,7 @@
     <div
       v-for="(entry, idx) in accordionEntries"
       :key="idx"
+      class="accordion__item"
       :class="{ 'tw-scroll-pb-6': isActive(idx) }"
     >
       <component
@@ -240,9 +241,13 @@ export default defineComponent({
     @apply tw-border-b-0;
     @apply tw-my-0 tw--mx-5;
 
+    .accordion__item {
+      @apply tw-my-1;
+    }
+
     .accordion__heading {
       @apply tw-border-t-0;
-      @apply tw-my-1 tw-mx-5;
+      @apply tw-mx-5;
     }
 
     .accordion__button {

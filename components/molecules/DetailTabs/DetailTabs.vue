@@ -1,16 +1,18 @@
 <template>
-  <GenericTabs
-    :tabs="renderableTabs"
-    :active-tab="currentTabSelected"
-    @selectTab="selectTab"
-  >
-    <template #activeTabContent>
-      <DetailTabContent
-        class="tab-navigation__desktop__content"
-        :last-tab-selected="currentTabSelected"
-      />
-    </template>
-  </GenericTabs>
+  <ContentWrapper :breakout="isMobile">
+    <GenericTabs
+      :tabs="renderableTabs"
+      :active-tab="currentTabSelected"
+      @selectTab="selectTab"
+    >
+      <template #activeTabContent>
+        <DetailTabContent
+          class="tab-navigation__desktop__content"
+          :last-tab-selected="currentTabSelected"
+        />
+      </template>
+    </GenericTabs>
+  </ContentWrapper>
 </template>
 
 <script>
@@ -24,20 +26,19 @@ import {
 import { useProductStore } from '~/stores/product'
 import { storeToRefs } from 'pinia'
 
+import getSortedFeatures from './partials/getSortedFeatures'
+
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
 import DetailTabContent from './DetailTabContent/DetailTabContent'
-import getSortedFeatures from './partials/getSortedFeatures'
 
 export default defineComponent({
   components: {
-    DetailTabContent,
+    ContentWrapper,
     GenericTabs,
+    DetailTabContent,
   },
   props: {
-    productCode: {
-      type: String,
-      default: '',
-    },
     accessories: {
       type: Array,
       default: () => [],
@@ -50,13 +51,10 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
-    loadingReferences: {
-      type: Boolean,
-      default: false,
-    },
   },
   setup() {
-    const { i18n } = useContext()
+    const { i18n, app } = useContext()
+    const { isMobile } = app.$breakpoints
     const productStore = useProductStore()
     const {
       product,
@@ -149,6 +147,7 @@ export default defineComponent({
     }
 
     return {
+      isMobile,
       currentTabSelected,
       renderableTabs,
       selectTab,
