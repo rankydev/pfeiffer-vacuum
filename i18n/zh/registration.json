@@ -43,11 +43,11 @@
     },
     "open": {
       "headline": "还是有点耐心。。。",
-      "description": "我们的普发真空团队目前正在正常工作时间内检查您的注册详细信息。 之后您将收到接受或拒绝电子邮件。 这最多可能需要两个工作日。"
+      "description": "我们的普发真空团队目前正在正常工作时间内检查您的注册详细信息。之后您会收到接受或拒绝电子邮件。这最多可能需要两个工作日。"
     },
     "rejected": {
       "headline": "抱歉，您的帐户已被拒绝。",
-      "description": "如有任何疑问，请联系我们的客服。"
+      "description": "如有任何疑问，请联系我们的<a target=\"_blank\" href=\"/contact\" style=\"text-decoration: underline\" >客服</a>"
     },
     "discard": "丢弃",
     "saveChanges": "保存更改",
@@ -75,7 +75,8 @@
     "title": "創建賬戶",
     "description": "在我們的平台上註冊以獲得更多功能。通過基本訂閱，您可以觀看網絡研討會和白皮書並創建購物清單。如果您添加您的公司詳細信息，您可以使用所有其他電子商務功能。",
     "conditionsTitle": "條款和條件",
-    "conditionsDescription": "我們的普發真空團隊將在正常工作時間內檢查您的註冊數據。然後您將收到一封電子郵件以接受或拒絕您的註冊。這可能需要最多兩個工作日。<br /><br />註冊只針對企業客戶，不能由個人註冊。",    "linkDataProtection": "您可以在這裡找到數據保護聲明。",
+    "conditionsDescription": "我们的普发真空团队将在正常工作时间内检查您的注册详细信息。之后您会收到接受或拒绝电子邮件。这最多可能需要两个工作日。<br /><br />注册仅适用于企业客户，个人无法注册。",
+    "linkDataProtection": "您可以在這裡找到數據保護聲明。",
     "submitRegistrationButton": "提交註冊",
     "contentCTABoxHelpTitle": "需要幫助嗎？",
     "contentCTABoxHelpDescription": "我們的產品專家隨時為您解答有關我們產品和您的應用的問題。",

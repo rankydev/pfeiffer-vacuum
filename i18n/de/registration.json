@@ -38,11 +38,11 @@
     },
     "open": {
       "headline": "Bitte haben Sie noch etwas Geduld...",
-      "description": "Ihre Registrierung wird von unserem Pfeiffer Vacuum Team geprüft. Sie werden nach der Prüfung durch eine E-Mail informiert. Dies kann bis zu 2 Tage dauern."
+      "description": "Ihre Registrierungsdetails werden aktuell von unserem Pfeiffer Vacuum Team innerhalb der regulären Arbeitszeiten überprüft. Anschließend erhalten Sie eine Bestätigungs- oder Ablehnungsmail. Dies kann bis zu zwei Tage dauern."
     },
     "rejected": {
-      "headline": "Entschuldigen Sie, Ihr Account wurde abgelehnt.",
-      "description": "Sollten Sie Fragen haben zögern Sie nicht unseren Kundensupport zu kontaktieren."
+      "headline": "Ihr Konto wurde abgelehnt",
+      "description": "Falls Sie hierzu Fragen haben, kontaktieren Sie bitte unseren <a target=\"_blank\" href=\"/contact\" style=\"text-decoration: underline\" >Kundenservice</a>."
     },
     "discard": "Verwerfen",
     "saveChanges": "Speichern",

@@ -42,7 +42,7 @@
     },
     "rejected": {
       "headline": "Sorry, your account has been rejected.",
-      "description": "If you have any questions, please contact our <a target=\"_blank\" href=\"/contact\">customer Link service</a>."
+      "description": "If you have any questions, please contact our <a target=\"_blank\" href=\"/contact\" style=\"text-decoration: underline\" >customer service</a>."
     },
     "discard": "Discard",
     "saveChanges": "Save changes",
@@ -71,7 +71,8 @@
     "title": "Create Account",
     "description": "Register on our platform to get more features. With a basic subscription you can watch webinars and whitepapers and create shopping lists. If you add your company details, you can use all other e-commerce features.",
     "conditionsTitle": "Terms and Conditions",
-    "conditionsDescription": "Your registration data will be checked by our Pfeiffer Vacuum team within normal working hours. You will then receive an e-mail to accept or reject your registration. This can take up to two working days.<br /><br />The Registration is only for business customers, registration by private individuals is not possible.",    "linkDataProtection": "You can find the data protection declaration here.",
+    "conditionsDescription": "Your registration details will be checked by our Pfeiffer Vacuum Team within normal working hours. You’ll receive an acceptance or denial email afterwards. This may take up to two working days.<br /><br />The registration is for business clients only, a registration of private persons is not possible.",
+    "linkDataProtection": "You can find the data protection declaration here.",
     "submitRegistrationButton": "Submit Registration",
     "contentCTABoxHelpTitle": "Need Help?",
     "contentCTABoxHelpDescription": "Our product experts are always available to answer your questions about our products and your applications.",
