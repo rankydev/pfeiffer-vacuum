@@ -38,7 +38,7 @@
             @selectTab="selectTab"
           >
             <template #activeTabContent>
-              <div class="search-page__search-result-desktop">
+              <div class="search-page__search-result">
                 <ContentWrapper>
                   <SearchResult
                     v-if="currentTabSelected === 'products'"
@@ -53,7 +53,7 @@
                     }"
                   />
                   <div v-else>
-                    <h2 class="tw-my-6">TODO: Document Search</h2>
+                    <h2 class="tw-py-6">TODO: Document Search</h2>
                   </div>
                 </ContentWrapper>
               </div>
@@ -247,6 +247,10 @@ export default defineComponent({
     @screen md {
       @apply tw-mt-8;
     }
+  }
+
+  &__search-result {
+    @apply tw-bg-pv-grey-96;
   }
 }
 </style>

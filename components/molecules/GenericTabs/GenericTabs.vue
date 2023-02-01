@@ -1,10 +1,10 @@
 <template>
   <div
-    class="tab-navigation"
-    :class="{ 'tab-navigation--center-mode': centerMode }"
+    class="generic-tabs"
+    :class="{ 'generic-tabs--center-mode': centerMode }"
   >
-    <div v-if="!isMobile" class="tab-navigation__wrapper">
-      <div class="tab-navigation__desktop">
+    <div v-if="!isMobile" class="generic-tabs__wrapper">
+      <div class="generic-tabs__desktop">
         <InternalBtnWrapper
           v-for="(tab, index) in tabs"
           :key="index"
@@ -16,11 +16,11 @@
           internal-variant="tab-item"
           text-center
           :disabled="tab.disabled"
-          class="tab-navigation__desktop__item"
+          class="generic-tabs__desktop__item"
           @click="selectTab(tab.trigger)"
         />
       </div>
-      <div class="tab-navigation__desktop__content">
+      <div class="generic-tabs__desktop__content">
         <slot name="activeTabContent" />
       </div>
     </div>
@@ -29,7 +29,7 @@
       :accordion-entries="mobileAccordionItems"
       level="h3"
       variant="tab"
-      class="tab-navigation__mobile"
+      class="generic-tabs__mobile"
       @activeTabChange="selectTab"
     >
       <template v-for="item in mobileAccordionItems" #[item.slotName]>
@@ -98,8 +98,8 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
-.tab-navigation {
+<style lang="scss" scoped>
+.generic-tabs {
   $root: &;
   @apply tw-w-full;
 
@@ -122,7 +122,6 @@ export default defineComponent({
 
       @screen md {
         @apply tw-block;
-        @apply tw-bg-pv-grey-96;
       }
     }
   }
