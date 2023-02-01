@@ -1,10 +1,6 @@
 <template>
   <article>
-    <Link
-      v-if="product.id"
-      class="document-item__link"
-      @click="$emit('click')"
-    >
+    <Link class="document-item__link" @click="$emit('click')">
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <h5 v-html="formatHtml(product.title)" />
