@@ -14,8 +14,11 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   /**
    * Cart helper functions
    */
+  // TODO: currently not used, activate when needed
+  /*
   const loadCart = async (create) =>
     (currentCart.value = await getOrCreateCart(create))
+  */
   const isValidCart = (res) => {
     console.log('----------> Is Cart Valid?')
     return res && typeof res === 'object' && !res.error && !res.errors
@@ -35,6 +38,8 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   /**
    * Get cart information
    */
+  // TODO: currently not used, activate when needed
+  /*
   const getCartUrl = () => {
     if (isLoggedIn.value) {
       if (currentUser.value?.ociBuyer)
@@ -46,6 +51,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
       return null
     }
   }
+   */
   const getGuidForAnonymousCart = () => {
     console.log(isLoggedIn, currentUser)
     // If current cart id is present return
@@ -137,6 +143,8 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   /**
    * Handle cart products
    */
+  // TODO: currently not used, activate when needed
+  /*
   const addToCart = async (code, quantity = 1) => {
     await loadCart(true)
     const cartEntry = {
@@ -186,10 +194,13 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     return false
   }
+   */
 
   /**
    * Handle additional information
    */
+  // TODO: currently not used, activate when needed
+  /*
   const setDeliveryAddress = async (address) => {
     await loadCart(true)
 
@@ -238,6 +249,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     return false
   }
+   */
 
   return {
     getOrCreateCart,
