@@ -1,15 +1,17 @@
 <template>
   <article>
-    <Link :href="localePath('shop-cart')" class="document-item__link">
+    <Link :href="product.productUrl" class="document-item__link">
       <div class="document-item">
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <h5 v-html="formatHtml(name)" />
         <div class="document-item__data">
           <div>{{ product.category }}</div>
           <div>{{ product.language }}</div>
           <div>{{ product.date }}</div>
         </div>
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <p v-html="formatHtml(product.description)" />
-        <Link :href="localePath('test')" class="document-item__icon-link">
+        <Link :href="product.downloadUrl" class="document-item__icon-link">
           <Icon class="document-item__icon" icon="file_download" size="base" />
         </Link>
       </div>
@@ -17,16 +19,18 @@
 
     <div class="document-item__container">
       <div class="document-item">
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <h5 v-html="formatHtml(name)" />
         <div class="document-item__product">{{ product.category }}</div>
         <div class="document-item__data">
           <div>{{ product.language }}</div>
           <div>{{ product.date }}</div>
         </div>
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <p v-html="formatHtml(product.description)" />
         <div class="document-item__links">
           <Link
-            :href="localePath('test')"
+            :href="product.productUrl"
             class="document-item__icon-link download-link"
           >
             <span class="document-item__icon-text">
@@ -39,7 +43,7 @@
             />
           </Link>
           <Link
-            :href="localePath('test')"
+            :href="product.downloadUrl"
             class="document-item__icon-link product-link"
           >
             <Icon
@@ -81,6 +85,8 @@ export default defineComponent({
           description: `
             Betriebsanleitung Operating Instructions DE EN Original HiPace 300
           `,
+          productUrl: 'google.com',
+          downloadUrl: 'google.com',
         }
       },
     },
@@ -89,7 +95,7 @@ export default defineComponent({
       default: '',
     },
   },
-  setup(props) {
+  setup() {
     const route = useRoute()
     const name = computed(() => 'HiPace 300 with TC 400')
     const searchTerm = ref(route.value.query.searchTerm || '')
