@@ -33,5 +33,7 @@
     "addArticle": "Zur Liste hinzufügen"
   },
   "productPrice": "Preis",
-  "totalPrice": "Gesamt"
+  "totalPrice": "Gesamt",
+  "quantity": "Anzahl"
+
 }

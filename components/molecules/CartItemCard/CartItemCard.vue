@@ -50,7 +50,10 @@
         </div>
         <div class="cart-item-card__quantity-price">
           <div class="cart-item-card__quantity">
-            <span v-if="readOnly">
+            <span
+              v-if="readOnly"
+              class="cart-item-card__quantity--read-only tw-flex"
+            >
               {{ $t('cart.quantity') }}: {{ entry.quantity }}
             </span>
             <PvInput
@@ -119,33 +122,6 @@
             </div>
           </div>
         </div>
-        <!-- 
-      <template v-if="isApprovedUser">
-        <div>
-          <h6 v-if="entry.basePrice" class="sub">
-            {{ entry.basePrice.formattedValue }}
-          </h6>
-          <h6 v-if="entry?.totalPrice">
-            {{ entry?.totalPrice.formattedValue }}
-          </h6>
-        </div>
-      </template>
-      <div
-        v-else-if="!loggedIn"
-        class=""
-      >
-        <h6>
-          {{ $t('login.loginToSeePrices.part1') }}
-          <span
-            class="login-modal-link font-italic"
-            @click="login()"
-            v-html="$t('login.loginToSeePrices.part2')"
-          >
-          </span>
-          {{ $t('login.loginToSeePrices.part3') }}
-        </h6>
-      </div>
-    </di> -->
         <div class="cart-item-card__further-article-information">
           <div class="cart-item-card__add-to-other-list">
             <Button

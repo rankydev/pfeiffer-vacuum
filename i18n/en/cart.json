@@ -32,5 +32,6 @@
     "addArticle": "Add to list"
   },
   "productPrice": "Price",
-  "totalPrice": "Total"
+  "totalPrice": "Total",
+  "quantity": "Quantity"
 }
