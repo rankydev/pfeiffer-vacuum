@@ -1,4 +1,34 @@
 {
+  "overall1": "Gesamt",
+  "overall2": "(Netto)",
+  "orderDiscount": "Order discount",
+  "priceInformationHeadline": "Informationen über Preise",
+  "priceInformation1":
+  "Der hier angezeigte Online-Preis ist ein Referenzpreis, der keine Fracht, Zölle und Steuern enthält und nicht in allen Landeswährungen gepflegt wird.",
+  "priceInformation2":
+  "Um Ihr individuelles Angebot (in Ihrer Landeswährung) zu erhalten, senden Sie uns bitte Ihre Anfrage, so dass Ihnen Ihr lokales Pfeiffer Vacuum Unternehmen / Partnerunternehmen ein individuelles Angebot mit Ihren Preisen zur Verfügung stellen kann.",
+  "deliveryNote": "Liefertermin",
+  "deliveryDetails":
+  "Bitte senden Sie und Ihre Anfrage damit wir die genauen Liefertermin für Sie ermitteln können",
+  "userStatus": {
+    "lead": {
+      "priceInfo": {
+        "text": "Bitte {link} um Preise zu sehen",
+        "link": "Firmendaten hinzufügen"
+      }
+    },
+    "open": {
+      "priceInfo": {
+        "text":
+        "Bitte warten Sie bis ihr Profil akzeptiert wurde um Preise zu sehen"
+      }
+    },
+    "rejected": {
+      "priceInfo": {
+        "text": "Sie dürfen keine Preise sehen"
+      }
+    }
+  },
   "addToCartSuccess": "Successfully added product to cart",
   "addToCartError": "An error occured while adding product to cart"
 }

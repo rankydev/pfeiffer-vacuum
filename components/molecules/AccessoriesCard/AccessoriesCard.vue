@@ -69,19 +69,7 @@
             </i18n>
           </template>
           <template v-else-if="!isLoggedIn">
-            <p class="accessories-card__login-link">
-              {{ $t('product.login.loginToSeePrices.part1') }}
-              <!-- eslint-disable vue/no-v-html -->
-              <span
-                class="login-modal-link"
-                @click="login()"
-                v-html="
-                  sanitizer.clear($t('product.login.loginToSeePrices.part2'))
-                "
-              ></span>
-              <!-- eslint-enable vue/no-v-html -->
-              {{ $t('product.login.loginToSeePrices.part3') }}
-            </p>
+            <LoginToSeePricesLabel class="accessories-card__login-link" />
           </template>
         </div>
       </template>
@@ -105,6 +93,7 @@
     </GenericCard>
   </client-only>
 </template>
+
 <script>
 import {
   defineComponent,
@@ -116,6 +105,7 @@ import {
 import { useUserStore } from '~/stores/user'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
+import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
@@ -127,6 +117,7 @@ export default defineComponent({
     GenericCard,
     Icon,
     PvInput,
+    LoginToSeePricesLabel,
   },
   props: {
     product: {
@@ -197,9 +188,6 @@ export default defineComponent({
       // ToDo:
       // still has to be done
     }
-    const login = async () => {
-      await userStore.login()
-    }
 
     return {
       context,
@@ -214,7 +202,6 @@ export default defineComponent({
       userStatusType,
       addToCart,
       addToList,
-      login,
       isLoggedIn,
       isApprovedUser,
       sanitizer,
@@ -286,17 +273,6 @@ export default defineComponent({
     @apply tw-text-base;
     @apply tw-text-right;
     @apply tw-mb-2;
-
-    &:hover {
-      @apply tw-text-pv-red;
-    }
-
-    span,
-    .login-modal-link {
-      @apply tw-text-pv-red;
-      @apply tw-cursor-pointer;
-      @apply tw-outline-none;
-    }
   }
 
   &__add-to-cart {

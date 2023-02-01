@@ -17,11 +17,7 @@
         ]"
       >
         <template v-if="!isLoggedIn">
-          {{ $t('product.login.loginToSeePrices.part1') }}
-          <span class="product-actions__login-link" @click="userStore.login()">
-            {{ $t('product.login.loginToSeePrices.part2') }}
-          </span>
-          {{ $t('product.login.loginToSeePrices.part3') }}
+          <LoginToSeePricesLabel />
         </template>
         <template v-else-if="isPriceVisible">
           <span class="product-actions__price-info" @click="toggleModal">
@@ -84,7 +80,14 @@
     />
   </div>
 </template>
+
 <script>
+import {
+  ref,
+  computed,
+  useContext,
+  defineComponent,
+} from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 import { useProductStore } from '~/stores/product'
 import { useCartStore } from '~/stores/cart'
@@ -92,10 +95,12 @@ import { ref, computed, useContext } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import InformationModal from '~/components/molecules/InformationModal/InformationModal'
+import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel.vue'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 
-export default {
+export default defineComponent({
   name: 'ProductActions',
-  components: { PvInput, InformationModal },
+  components: { PvInput, InformationModal, LoginToSeePricesLabel, Icon },
   setup() {
     const { i18n } = useContext()
     const userStore = useUserStore()
@@ -194,7 +199,7 @@ export default {
       addToCart,
     }
   },
-}
+})
 </script>
 <style lang="scss">
 .product-actions {
@@ -255,11 +260,6 @@ export default {
     &-value {
       @apply tw-font-bold;
     }
-  }
-
-  &__login-link {
-    @apply tw-text-pv-red;
-    @apply tw-cursor-pointer;
   }
 
   &__action-wrapper {

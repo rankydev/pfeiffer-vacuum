@@ -1,8 +1,7 @@
 {
   "address": "Adresse",
   "billingAddress": "Rechnungsadresse",
-  "billingAddressMissing":
-    "Es wurde keine Rechnungsadresse gefunden. Bitte kontaktieren Sie den Pfeiffer Vacuum Kundenservice.",
+  "billingAddressMissing": "Es wurde keine Rechnungsadresse gefunden. Bitte kontaktieren Sie den Pfeiffer Vacuum Kundenservice.",
   "deliveryAddress": "Lieferadresse",
   "company": "Firma",
   "firstName": "Vorname",
@@ -18,5 +17,18 @@
   "contactDetails": "Kontaktdetails",
   "deleteDeliveryAddress": "Löschen",
   "setDefaultAddress": "Als Standard benutzen",
-  "defaultDelivery": "Standard Lieferungsadresse"
+  "defaultDelivery": "Standard Lieferungsadresse",
+  "addressData": "Address Daten",
+  "addDeliveryAddress": "Lieferadresse hinzufügen",
+  "addressDataEditPage": "Adressdaten bearbeiten",
+  "addressDataAddPage": "Adressdaten hinzufügen",
+  "addressDataEditPageDescription": "Bearbeiten Sie hier die ausgewählte Lieferadresse.",
+  "addressDataAddPageDescription": "Hier können Sie eine neue Lieferadresse hinzufügen. Bitte füllen Sie alle Pflichtfelder aus. ",
+  "addressDataEditPageSubmitBtn": "Änderungen speichern",
+  "addressDataAddPageSubmitBtn": "Speichern und zurückgehen",
+  "addressDataAddPageLinkBtn": "Zurück zur Übersicht",
+  "updateDeliveryAddressError": "Änderungen konnten nicht gespeichert werden.",
+  "addDeliveryAddressError": "Lieferadresse konnte nicht gespeichert werden.",
+  "deleteDeliveryAddressSuccess": "Lieferadresse wurde erfolgreich gelöscht.",
+  "setDefaultDeliveryAddressSuccess": "Lieferadresse erfolgreich als Standard-Lieferadresse gespeichert."
 }

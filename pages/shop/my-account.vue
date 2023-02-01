@@ -57,12 +57,19 @@ export default defineComponent({
     const pageStore = usePageStore()
     pageStore.setPageType(CMS_PAGE)
 
-    /**
-     * build the cms slug
-     */
+    // When we are on a subpage of "address data" page we need to load the address data base page from storyblok
+    // this is because our "_edit" subpage has a dynamic path with the address item id in it
+    const addressDataBasePath = context.app.localePath(
+      'shop-my-account-address-data'
+    )
+    let path = route.value.path
+    if (path.startsWith(addressDataBasePath)) {
+      path = addressDataBasePath
+    }
+
     const { buildSlugs } = useStoryblokSlugBuilder({ root: context })
     const slugs = computed(() => {
-      return buildSlugs(route.value.path)
+      return buildSlugs(path)
     })
 
     return {
