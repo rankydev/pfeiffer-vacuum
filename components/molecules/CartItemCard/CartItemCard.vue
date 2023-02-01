@@ -13,8 +13,7 @@
         <div class="cart-item-card__product-delete">
           <div class="cart-item-card__product">
             <div class="cart-item-card__image">
-              <!-- <Link :href="getUrl"> -->
-              <Link :href="'#'">
+              <Link :href="url">
                 <ResponsiveImage
                   class="cart-item-card__product-image"
                   :image="entry.product.images[0]"
@@ -25,8 +24,7 @@
             </div>
             <div class="cart-item-card__product-code">
               <h6>
-                <!-- <Link :href="getUrl"> -->
-                <Link :href="'#'">
+                <Link :href="url">
                   {{ entry.product.name }}
                 </Link>
               </h6>
@@ -50,12 +48,15 @@
         </div>
         <div class="cart-item-card__quantity-price">
           <div class="cart-item-card__quantity">
-            <span
+            <div
               v-if="readOnly"
-              class="cart-item-card__quantity--read-only tw-flex"
+              class="cart-item-card__quantity--read-only cart-item-card__prices--single-price"
             >
-              {{ $t('cart.quantity') }}: {{ entry.quantity }}
-            </span>
+              <span class="cart-item-card__prices--show-headline">{{
+                `${$t('cart.quantity')}: `
+              }}</span>
+              <p>{{ entry.quantity }}</p>
+            </div>
             <PvInput
               v-else
               v-model="quantity"
@@ -65,19 +66,30 @@
             />
           </div>
           <div class="cart-item-card__prices">
-            <div class="cart-item-card__prices--single-price">
+            <div
+              v-if="productPrice && showPrice"
+              class="cart-item-card__prices--single-price"
+            >
               <span class="cart-item-card__prices--show-headline">{{
                 $t('cart.productPrice')
               }}</span>
               <p>{{ ` € ${productPrice}` }}</p>
             </div>
-            <div class="cart-item-card__prices--total-price">
+            <div
+              v-if="productPrice && showPrice"
+              class="cart-item-card__prices--total-price"
+            >
               <span class="cart-item-card__prices--show-headline">{{
                 $t('cart.totalPrice')
               }}</span>
-              <p v-if="productPrice">{{ ` € ${totalPrice}` }}</p>
-              <p v-else>{{ totalPrice }}</p>
+              <p>{{ ` € ${totalPrice}` }}</p>
             </div>
+          </div>
+          <div
+            v-if="!productPrice || !showPrice"
+            class="cart-item-card__prices--price-on-request"
+          >
+            <span>{{ $t('cart.priceOnRequest') }}</span>
           </div>
         </div>
       </div>
@@ -150,9 +162,12 @@
 </template>
 
 <script>
-import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
-import { useUserStore } from '~/stores/user'
-import { storeToRefs } from 'pinia'
+import {
+  defineComponent,
+  computed,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
@@ -173,7 +188,11 @@ export default defineComponent({
     },
     price: {
       type: Number,
-      required: true,
+      default: null,
+    },
+    showPrice: {
+      type: Boolean,
+      default: true,
     },
     readOnly: {
       type: Boolean,
@@ -193,38 +212,19 @@ export default defineComponent({
     },
   },
   emits: ['addToList', 'delete'],
-  setup(props, { emit }) {
-    const userStore = useUserStore()
-    const {
-      isApprovedUser,
-      isLeadUser,
-      isOpenUser,
-      isRejectedUser,
-      isLoggedIn,
-    } = storeToRefs(userStore)
-
-    const currentUser = ref(true)
-    const loggedIn = ref(isLoggedIn)
-    const isOciUser = ref(true)
-
-    const cartEntry = ref(props.entry)
+  setup(props) {
+    const context = useContext()
     const quantity = ref(props.entry.quantity)
     const image = computed(() => props.entry.product.images[0])
     const productPrice = ref(props.price)
 
-    // const getUrl = () => {
-    //   context.app.localePath({
-    //     name: 'shop-categories',
-    //     params: { product: props.entry.product.code },
-    //   })
-    // }
+    console.log(props.entry.product.code, 'PATH')
 
-    const userStatusType = computed(() => {
-      return (
-        (isLeadUser && 'lead') ||
-        (isOpenUser && 'open') ||
-        (isRejectedUser && 'rejected')
-      )
+    const url = computed(() => {
+      context.app.localePath({
+        name: 'shop-products-product',
+        params: { product: props.entry.product?.code },
+      })
     })
 
     const isInactive = computed(() => {
@@ -243,25 +243,12 @@ export default defineComponent({
       }
     }
 
-    const login = async () => {
-      console.log('store functionality')
-    }
-
     return {
-      cartEntry,
       quantity,
       image,
-      userStatusType,
       isInactive,
       updateQuantity,
-      login,
-      currentUser,
-      loggedIn,
-      isLeadUser,
-      isOpenUser,
-      isRejectedUser,
-      isApprovedUser,
-      isOciUser,
+      url,
       productPrice,
       totalPrice,
     }
@@ -271,8 +258,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .cart-item-card {
-  @apply tw-py-6;
-  @apply tw-px-2;
+  @apply tw-py-12;
+  @apply tw-px-6;
 
   &__content-wrapper {
     &--first-row {
@@ -296,8 +283,6 @@ export default defineComponent({
   }
 
   &__quantity {
-    max-width: 200px;
-
     @screen lg {
       @apply tw-mr-12;
       max-width: 64px;
@@ -320,6 +305,7 @@ export default defineComponent({
 
     @screen md {
       @apply tw-flex-row;
+      @apply tw-ml-12;
     }
 
     &--show-headline {
@@ -335,8 +321,8 @@ export default defineComponent({
       @apply tw-items-center;
 
       span {
-        @apply tw-mr-2;
         @apply tw-text-xs;
+        @apply tw-mr-2;
         @apply tw-text-pv-grey-48;
       }
 
@@ -372,6 +358,15 @@ export default defineComponent({
           @apply tw-text-xl;
         }
       }
+    }
+
+    &--price-on-request {
+      @apply tw-flex;
+      @apply tw-items-center;
+      @apply tw-font-bold;
+      @apply tw-text-base;
+      @apply tw-ml-4;
+      @apply tw-text-right;
     }
   }
 
@@ -484,12 +479,6 @@ export default defineComponent({
     &__quantity {
       @screen lg {
         width: 64px;
-      }
-    }
-
-    &__prices {
-      @screen lg {
-        width: 85%;
       }
     }
 

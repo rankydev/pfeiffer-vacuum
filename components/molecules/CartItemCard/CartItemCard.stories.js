@@ -1,10 +1,11 @@
 import CartItemCard from './CartItemCard'
 import {
   entry,
-  readOnly,
   price,
+  readOnly,
   shopAttributes,
   appliedOrderPromotions,
+  showPrice,
 } from './CartItemCard.stories.content'
 
 const argTypes = {
@@ -13,10 +14,11 @@ const argTypes = {
   price: price,
   shopAttributes: shopAttributes,
   promotions: appliedOrderPromotions,
+  showPrice: showPrice,
 }
 
 export default {
-  title: 'Molecules/m_XYZ Cart Item Card',
+  title: 'Molecules/m_144 Cart Item Card',
   component: CartItemCard,
   parameters: {
     docs: {
@@ -24,7 +26,8 @@ export default {
         component: '',
       },
       source: {
-        code: '<cart-item-card v-bind="{ entry, readOnly, price, shopAttributes }"/>',
+        appliedOrderPromotions,
+        code: '<cart-item-card v-bind="{ entry, readOnly, price, shopAttributes, promotions, showPrice }"/>',
       },
     },
   },
@@ -45,3 +48,13 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = argTypes
+
+export const PriceOnRequest = Template.bind({})
+Default.args = {
+  entry,
+  price: false,
+  readOnly,
+  shopAttributes,
+  appliedOrderPromotions,
+  showPrice,
+}

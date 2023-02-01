@@ -33,5 +33,6 @@
   },
   "productPrice": "Price",
   "totalPrice": "Total",
-  "quantity": "Quantity"
+  "quantity": "Quantity",
+  "priceOnRequest": "Price on request"
 }
