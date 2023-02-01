@@ -190,7 +190,7 @@ export default defineComponent({
   }
 
   &__dropdown {
-    @apply tw-mt-3;
+    @apply tw-mb-4;
 
     // TODO: why its needed to fix this here and its not correct in the component? copied this fix from ProductAccessories.vue
     .pv-select__search-helper {
