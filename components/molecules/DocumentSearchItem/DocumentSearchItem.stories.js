@@ -1,16 +1,16 @@
 import DocumentSearchItem from '~/components/molecules/DocumentSearchItem/DocumentSearchItem.vue'
 
 export default {
-	title: "Molecules/m_108 Document-Search-Item",
-	component: DocumentSearchItem,
-	parameters: {
-			docs: {
-				description: {
-					component:
-						'The Document Search Item component shows product documents that contain a download file. The product is handed into the DocumentSearchItem by a parent component',
-					},
-			},
-	},
+  title: 'Molecules/m_108 Document-Search-Item',
+  component: ProductCard,
+  parameters: {
+    docs: {
+      description: {
+        component:
+        'The Document Search Item component shows product documents that contain a download file. The product is handed into the DocumentSearchItem by a parent component',
+      },
+    },
+  },
 }
 
 const Template = (args) => ({
