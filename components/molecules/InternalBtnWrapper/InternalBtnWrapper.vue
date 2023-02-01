@@ -98,9 +98,11 @@ export default defineComponent({
       }
 
       &.button--disabled {
+        @apply tw-text-pv-grey-64;
+
         &:hover {
           @apply tw-bg-pv-grey-96;
-          @apply tw-text-pv-grey-80;
+          @apply tw-text-pv-grey-64;
           @apply tw-cursor-not-allowed;
         }
       }
