@@ -14,17 +14,12 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   /**
    * Cart helper functions
    */
-  // TODO: currently not used, activate when needed
-  /*
   const loadCart = async (create) =>
     (currentCart.value = await getOrCreateCart(create))
-  */
-  const isValidCart = (res) => {
-    console.log('----------> Is Cart Valid?')
+  const validateCart = (res) => {
     return res && typeof res === 'object' && !res.error && !res.errors
   }
   const updateCartCookie = (cart) => {
-    console.log('----------> Update Cart Cookie')
     if (cart) {
       cookieHelper.setCookie(
         'cart',
@@ -38,8 +33,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   /**
    * Get cart information
    */
-  // TODO: currently not used, activate when needed
-  /*
   const getCartUrl = () => {
     if (isLoggedIn.value) {
       if (currentUser.value?.ociBuyer)
@@ -51,9 +44,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
       return null
     }
   }
-   */
   const getGuidForAnonymousCart = () => {
-    console.log(isLoggedIn, currentUser)
     // If current cart id is present return
     if (currentCartGuid.value) return currentCartGuid.value
 
@@ -84,7 +75,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     const anonymousCartGuid = getGuidForAnonymousCart()
     const existingCart = await getAnonymousCart(anonymousCartGuid)
 
-    if (isValidCart(existingCart)) {
+    if (validateCart(existingCart)) {
       updateCartCookie(existingCart)
       return existingCart
     }
@@ -93,7 +84,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
       const newCart = await axios.$post(config.CARTS_ANONYMOUS_API, null, {
         params: { fields: 'FULL' },
       })
-      if (isValidCart(newCart)) {
+      if (validateCart(newCart)) {
         updateCartCookie(newCart)
         return newCart
       }
@@ -111,14 +102,14 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     )
 
     // Return when existing cart is valid
-    if (isValidCart(existingCart)) return existingCart
+    if (validateCart(existingCart)) return existingCart
 
     const newCart = await axios.$post(config.CARTS_CURRENT_USER_API, null, {
       params: { fields: 'FULL' },
     })
 
     // Return when new cart is valid
-    if (isValidCart(newCart)) return newCart
+    if (validateCart(newCart)) return newCart
 
     return null
   }
@@ -135,7 +126,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
       },
     })
 
-    if (isValidCart(mergedCart)) return mergedCart
+    if (validateCart(mergedCart)) return mergedCart
 
     return null
   }
@@ -143,8 +134,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   /**
    * Handle cart products
    */
-  // TODO: currently not used, activate when needed
-  /*
   const addToCart = async (code, quantity = 1) => {
     await loadCart(true)
     const cartEntry = {
@@ -163,6 +152,9 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     return false
   }
+
+  // TODO: currently not used, activate when needed
+  /*
   const deleteEntry = async (entryNumber) => {
     const result = await axios.delete(
       getCartUrl() + '/entries/' + entryNumber,

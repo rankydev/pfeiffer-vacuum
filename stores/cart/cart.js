@@ -35,7 +35,6 @@ export const useCartStore = defineStore('cart', () => {
     let tempCart = await getOrCreateCart(false)
 
     if (isLoginProcess.value) {
-      console.log('*** IS LOGIN PROCESS ***')
       if (currentCartGuid.value !== tempCart?.guid) {
         tempCart = await mergeCarts(currentCartGuid.value, tempCart)
       }
