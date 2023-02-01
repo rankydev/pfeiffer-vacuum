@@ -197,7 +197,6 @@ export default defineComponent({
     @apply tw-w-full;
     @apply tw-py-4;
     -webkit-tap-highlight-color: transparent;
-
     @apply tw-duration-200;
     @apply tw-ease-in-out;
     transition-property: color;
@@ -251,7 +250,7 @@ export default defineComponent({
     }
 
     .accordion__button {
-      @apply tw-bg-pv-grey-88;
+      @apply tw-bg-pv-grey-96;
       @apply tw-px-5;
 
       &--active {

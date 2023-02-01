@@ -9,9 +9,7 @@
           v-for="(tab, index) in tabs"
           :key="index"
           :label="tab.name"
-          :variant="
-            activeTab === tab.trigger || tab.disabled ? 'secondary' : 'inverted'
-          "
+          :variant="activeTab === tab.trigger ? 'secondary' : 'inverted'"
           cutaway="bottom"
           internal-variant="tab-item"
           text-center

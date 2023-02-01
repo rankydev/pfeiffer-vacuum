@@ -91,6 +91,19 @@ export default defineComponent({
   &__tab-item {
     &.button--inverted.button--filled {
       @apply tw-bg-pv-grey-96;
+
+      &:hover {
+        @apply tw-bg-pv-red-lighter;
+        @apply tw-text-pv-white;
+      }
+
+      &.button--disabled {
+        &:hover {
+          @apply tw-bg-pv-grey-96;
+          @apply tw-text-pv-grey-80;
+          @apply tw-cursor-not-allowed;
+        }
+      }
     }
   }
 }
