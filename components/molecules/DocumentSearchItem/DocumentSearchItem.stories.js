@@ -36,6 +36,6 @@ Default.args = {
     Betriebsanleitung Operating Instructions DE EN Original HiPace 300
     `,
     downloadLink:
-    'resource/environment/project1_p/documents/pfeifferSharepointProd/12624-128864ODE_02.pdf',
+      'resource/environment/project1_p/documents/pfeifferSharepointProd/12624-128864ODE_02.pdf',
   },
 }
