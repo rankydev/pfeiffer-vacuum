@@ -95,14 +95,17 @@ export default defineComponent({
       &:hover {
         @apply tw-bg-pv-red-lighter;
         @apply tw-text-pv-white;
+        -webkit-text-fill-color: rgb(255 255 255 / var(--tw-text-opacity));
       }
 
       &.button--disabled {
         @apply tw-text-pv-grey-64;
+        -webkit-text-fill-color: rgb(204 204 204 / var(--tw-text-opacity));
 
         &:hover {
           @apply tw-bg-pv-grey-96;
           @apply tw-text-pv-grey-64;
+          -webkit-text-fill-color: rgb(204 204 204 / var(--tw-text-opacity));
           @apply tw-cursor-not-allowed;
         }
       }
