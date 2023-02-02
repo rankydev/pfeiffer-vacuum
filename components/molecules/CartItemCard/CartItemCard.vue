@@ -220,12 +220,12 @@ export default defineComponent({
 
     console.log(props.entry.product.code, 'PATH')
 
-    const url = computed(() => {
+    const url = computed(() =>
       context.app.localePath({
         name: 'shop-products-product',
         params: { product: props.entry.product?.code },
       })
-    })
+    )
 
     const isInactive = computed(() => {
       return props.entry.product?.purchasable === false
