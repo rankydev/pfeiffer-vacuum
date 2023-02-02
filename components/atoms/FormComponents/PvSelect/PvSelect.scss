@@ -134,6 +134,7 @@
     @apply tw-border-solid;
     @apply tw-rounded-md;
     @apply tw-max-h-48;
+
     @screen lg {
       @apply tw-w-fit;
       @apply tw-min-w-full;
@@ -152,6 +153,7 @@
     @screen lg {
       @apply tw-whitespace-nowrap;
     }
+
     &--highlight {
       @apply tw-bg-pv-red-lighter;
     }
