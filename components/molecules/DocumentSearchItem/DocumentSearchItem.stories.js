@@ -1,8 +1,8 @@
-import DocumentSearchItem from '~/components/molecules/DocumentSearchItem/DocumentSearchItem.vue'
+import DocumentSearchItem from './DocumentSearchItem.vue'
 
 export default {
-  title: 'Molecules/m_108 Document-Search-Item',
-  component: ProductCard,
+  title: 'Molecules/m_145 Document-Search-Item',
+  component: DocumentSearchItem,
   parameters: {
     docs: {
       description: {
@@ -28,12 +28,14 @@ const Template = (args) => ({
 export const Default = Template.bind({})
 
 Default.args = {
-  title: 'HiPace 300 with TC 400',
-  id: 'esc_tree~project1_e~12~de',
-  subtitle: ['Hipace 300', 'Deutsch', '12.12.2022'],
-  body: `
+  product: {
+    title: 'HiPace 300 with TC 400',
+    id: 'esc_tree~project1_e~12~de',
+    subtitle: ['Hipace 300', 'Deutsch', '12.12.2022'],
+    body: `
     Betriebsanleitung Operating Instructions DE EN Original HiPace 300
-  `,
-  downloadLink:
+    `,
+    downloadLink:
     'resource/environment/project1_p/documents/pfeifferSharepointProd/12624-128864ODE_02.pdf',
+  },
 }
