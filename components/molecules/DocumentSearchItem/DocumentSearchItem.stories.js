@@ -7,7 +7,7 @@ export default {
     docs: {
       description: {
         component:
-        'The Document Search Item component shows product documents that contain a download file. The product is handed into the DocumentSearchItem by a parent component',
+          'The Document Search Item component shows product documents that contain a download file. The product is handed into the DocumentSearchItem by a parent component',
       },
     },
   },
@@ -34,5 +34,6 @@ Default.args = {
   body: `
     Betriebsanleitung Operating Instructions DE EN Original HiPace 300
   `,
-  downloadLink: 'resource/environment/project1_p/documents/pfeifferSharepointProd/12624-128864ODE_02.pdf',
+  downloadLink:
+    'resource/environment/project1_p/documents/pfeifferSharepointProd/12624-128864ODE_02.pdf',
 }
