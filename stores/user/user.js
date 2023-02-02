@@ -5,6 +5,7 @@ import {
   onBeforeMount,
   onServerPrefetch,
   ssrRef,
+  ref,
 } from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
 import { useKeycloak } from './partials/useKeycloak'
@@ -13,9 +14,11 @@ import { watch } from '@nuxtjs/composition-api'
 import { useLogger } from '~/composables/useLogger'
 import { useOciStore } from '~/stores/oci'
 import { joinURL } from 'ufo'
+import { useToast } from '~/composables/useToast'
 
 export const useUserStore = defineStore('user', () => {
   const { logger } = useLogger('userStore')
+  const toast = useToast()
   const ctx = useContext()
   const route = useRoute()
   const userApi = useUserApi()
@@ -28,6 +31,7 @@ export const useUserStore = defineStore('user', () => {
     createKeycloakInstance,
     removeCookiesAndDeleteAuthData,
   } = useKeycloak()
+  const isLoading = ref(false)
 
   const currentUser = ssrRef(null)
   const billingAddress = ssrRef(null)
@@ -44,6 +48,20 @@ export const useUserStore = defineStore('user', () => {
   })
   const isApprovedUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'APPROVED'
+  })
+
+  const userBillingAddress = computed(
+    () =>
+      currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
+  )
+
+  const userCountry = computed(() => userBillingAddress.value?.country || {})
+
+  const changePasswordLink = computed(() => {
+    const keycloakBaseUrl = ctx.$config.KEYCLOAK_BASE_URL + 'realms/'
+    const keycloackRealm = ctx.$config.KEYCLOAK_REALM_NAME
+    const language = `kc_locale=${ctx.i18n.locale}`
+    return `${keycloakBaseUrl}${keycloackRealm}/account/password?${language}`
   })
 
   watch(auth, async (newAuth) => {
@@ -63,11 +81,54 @@ export const useUserStore = defineStore('user', () => {
       return
     }
 
+    isLoading.value = true
+
     try {
       const user = await userApi.getUserData()
       currentUser.value = user
     } catch (e) {
       logger.error('user not found', e)
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const updateCurrentUser = async (data) => {
+    isLoading.value = true
+    try {
+      await userApi.updateUserData(data)
+      await loadCurrentUser()
+      toast.success(
+        { description: ctx.i18n.t('registration.updateAccountData.success') },
+        { timeout: 5000 }
+      )
+    } catch (e) {
+      logger.error('cannot patch user data', e)
+      toast.error(
+        {
+          description: ctx.i18n.t(
+            'registration.updateAccountData.errorOccured'
+          ),
+        },
+        { timeout: 5000 }
+      )
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const addCompanyData = async (data) => {
+    isLoading.value = true
+    let res
+    try {
+      res = await userApi.addCompanyData(data)
+      await loadCurrentUser()
+      return res
+    } catch (e) {
+      logger.error('cannot add company data', e)
+      return Promise.reject(e)
+    } finally {
+      isLoading.value = false
     }
   }
 
@@ -164,6 +225,8 @@ export const useUserStore = defineStore('user', () => {
   const logout = async () => {
     logger.debug('logout')
 
+    isLoading.value = true
+
     // remove internal data
     removeCookiesAndDeleteAuthData()
 
@@ -176,6 +239,8 @@ export const useUserStore = defineStore('user', () => {
       const { router, localePath } = app
       return router.push(localePath('/'))
     }
+
+    isLoading.value = false
   }
 
   /* istanbul ignore else  */
@@ -204,9 +269,15 @@ export const useUserStore = defineStore('user', () => {
     isOpenUser,
     isRejectedUser,
     isLoggedIn,
+    isLoading,
+    userBillingAddress,
+    userCountry,
+    changePasswordLink,
 
     // actions
     loadCurrentUser,
+    updateCurrentUser,
+    addCompanyData,
     login,
     logout,
     loadBillingAddress,

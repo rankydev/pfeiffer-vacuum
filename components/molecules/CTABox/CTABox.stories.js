@@ -8,7 +8,7 @@ export default {
     docs: {
       description: {
         component:
-          'The CTA Box component is used to display a combination of an image and a section below that contains text and buttons. The buttons should always be filled and inverted. ',
+          'The CTA Box component is used to display a combination of an image and a section below that contains text and buttons. The buttons should always be filled and inverted.',
       },
       source: {
         code: '<CTABox v-bind="{ image, title, description, buttons }"  />',

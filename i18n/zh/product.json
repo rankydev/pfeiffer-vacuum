@@ -42,23 +42,17 @@
       "priceInfo": {
         "text": "请添加 {link} 以查看价格",
         "link": "公司数据"
-      },
-      "requestInfo": "请添加公司数据以发送请求",
-      "functionalityInfo": "请添加公司数据以使用此功能"
+      }
     },
     "open": {
       "priceInfo": {
         "text": "请等待批准查看价格"
-      },
-      "requestInfo": "请等待批准发送请求",
-      "functionalityInfo": "请等待批准使用此功能"
+      }
     },
     "rejected": {
       "priceInfo": {
         "text": "您未被允许查看价格"
-      },
-      "requestInfo": "您未被允许发送请求",
-      "functionalityInfo": "抱歉，您未被允许使用此功能"
+      }
     }
   }
 }
