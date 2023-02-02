@@ -93,9 +93,16 @@
 </template>
 
 <script>
-import { defineComponent, watch, computed, ref } from '@nuxtjs/composition-api'
-import { onBeforeMount, onServerPrefetch } from '@nuxtjs/composition-api'
-import { useRoute, useContext } from '@nuxtjs/composition-api'
+import {
+  onBeforeMount,
+  onServerPrefetch,
+  defineComponent,
+  watch,
+  computed,
+  useRouter,
+  useRoute,
+  useContext,
+} from '@nuxtjs/composition-api'
 
 import Page from '~/components/templates/Page/Page'
 import Button from '~/components/atoms/Button/Button'
@@ -131,8 +138,35 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const context = useContext()
     const { redirectOnError } = useErrorHandler()
+
+    /**
+     * page type handling
+     */
+    const tabNavigationItems = [
+      {
+        name: context.i18n.t('category.productsTab'),
+        trigger: 'products',
+        disabled: false,
+      },
+      {
+        name: context.i18n.t('category.documentsTab'),
+        trigger: 'documents',
+        disabled: false,
+      },
+    ]
+
+    const selectTab = (trigger) => {
+      router.push({
+        query: { ...route.value.query, searchType: trigger },
+      })
+    }
+
+    const currentTabSelected = computed(
+      () => route.value.query?.searchType || 'products'
+    )
 
     /**
      * Set the type of the pages, enabling components
@@ -146,11 +180,17 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const categoryStore = useCategoryStore()
-    const loadCategory = () => redirectOnError(categoryStore.loadByPath)
+    const loadSearchResults = async () => {
+      if (currentTabSelected.value === 'products') {
+        await redirectOnError(categoryStore.loadByPath)
+      } else {
+        // TODO: load documents results
+      }
+    }
 
-    onServerPrefetch(loadCategory)
-    onBeforeMount(loadCategory)
-    watch(route, loadCategory)
+    onServerPrefetch(async () => await loadSearchResults())
+    onBeforeMount(loadSearchResults)
+    watch(route, loadSearchResults)
 
     /**
      * build the cms slug
@@ -179,29 +219,6 @@ export default defineComponent({
     const currentQuery = computed(() => categoryStore.result?.currentQuery)
     const sorts = computed(() => categoryStore.result?.sorts)
     const metaData = computed(() => categoryStore.metaData)
-
-    /**
-     * page type handling
-     */
-    const currentTabSelected = ref('products')
-
-    const tabNavigationItems = [
-      {
-        name: context.i18n.t('category.productsTab'),
-        trigger: 'products',
-        disabled: false,
-      },
-      {
-        name: context.i18n.t('category.documentsTab'),
-        trigger: 'documents',
-        disabled: false,
-      },
-    ]
-
-    const selectTab = (trigger) => {
-      currentTabSelected.value = trigger
-      // TODO: also handle switching tab contents (persist tab choice in url, retrigger query if needed, ...)
-    }
 
     return {
       slug,
