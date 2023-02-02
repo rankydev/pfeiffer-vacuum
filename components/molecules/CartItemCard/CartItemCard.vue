@@ -76,6 +76,12 @@
               <p>{{ ` € ${productPrice}` }}</p>
             </div>
             <div
+              v-if="!productPrice && showPrice"
+              class="cart-item-card__prices--single-price"
+            >
+              <p>-</p>
+            </div>
+            <div
               v-if="productPrice && showPrice"
               class="cart-item-card__prices--total-price"
             >
@@ -84,9 +90,15 @@
               }}</span>
               <p>{{ ` € ${totalPrice}` }}</p>
             </div>
+            <div
+              v-if="!productPrice && showPrice"
+              class="cart-item-card__prices--single-price"
+            >
+              <p>-</p>
+            </div>
           </div>
           <div
-            v-if="!productPrice || !showPrice"
+            v-if="!showPrice"
             class="cart-item-card__prices--price-on-request"
           >
             <span>{{ $t('cart.priceOnRequest') }}</span>
@@ -450,19 +462,27 @@ export default defineComponent({
   background-color: white;
 
   @screen lg {
-    @apply tw-flex;
-    @apply tw-justify-between;
+    @apply tw-grid tw-grid-cols-12;
   }
 
   .cart-item-card {
     &__content-wrapper {
+      @screen lg {
+        @apply tw-col-span-11;
+      }
+
       &--first-row {
         @apply tw-flex;
         @apply tw-flex-col;
 
         @screen lg {
-          @apply tw-flex-row;
-          @apply tw-justify-between;
+          @apply tw-grid tw-col-span-11;
+        }
+      }
+
+      &--second-row {
+        @screen lg {
+          @apply tw-grid tw-col-span-12;
         }
       }
     }
@@ -470,6 +490,18 @@ export default defineComponent({
     &__product-delete {
       @apply tw-flex;
       @apply tw-justify-between;
+
+      @screen lg {
+        @apply tw-col-span-8;
+      }
+    }
+
+    &__quantity-price {
+      @screen lg {
+        @apply tw-col-span-3;
+        @apply tw-col-start-9;
+        @apply tw-ml-0;
+      }
     }
 
     &__product {
@@ -478,7 +510,17 @@ export default defineComponent({
 
     &__quantity {
       @screen lg {
-        width: 64px;
+        @apply tw-col-span-1;
+        @apply tw-col-start-9;
+        @apply tw-mr-0;
+      }
+    }
+
+    &__prices {
+      @screen lg {
+        @apply tw-col-span-2;
+        @apply tw-col-start-10;
+        @apply tw-ml-0;
       }
     }
 
@@ -494,7 +536,11 @@ export default defineComponent({
       @apply tw-hidden;
 
       @screen lg {
+        @apply tw-col-span-1;
+        @apply tw-col-start-12;
         @apply tw-flex;
+        @apply tw-flex-col;
+        @apply tw-items-end;
       }
     }
 

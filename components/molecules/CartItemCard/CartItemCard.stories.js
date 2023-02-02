@@ -52,9 +52,19 @@ Default.args = argTypes
 export const PriceOnRequest = Template.bind({})
 PriceOnRequest.args = {
   entry,
-  price: false,
+  price,
   readOnly: true,
   shopAttributes,
   appliedOrderPromotions,
-  showPrice,
+  showPrice: false,
+}
+
+export const HasNoPrice = Template.bind({})
+HasNoPrice.args = {
+  entry,
+  price: null,
+  readOnly: true,
+  shopAttributes,
+  appliedOrderPromotions,
+  showPrice: true,
 }
