@@ -108,7 +108,7 @@ export const appliedOrderPromotions = [
   },
 ]
 
-export const readOnly = true
+export const readOnly = false
 export const price = 1000
 export const shopAttributes = true
 export const showPrice = true
