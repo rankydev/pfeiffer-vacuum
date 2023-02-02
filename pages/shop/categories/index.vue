@@ -25,6 +25,8 @@
             <ResultHeadline
               v-bind="{ headline, link, searchTerm }"
               :result-count="count"
+              :back-button-override-query-params="{ currentPage: 1 }"
+              class="category-page__result-headline"
             />
           </ContentWrapper>
 
@@ -177,6 +179,14 @@ export default defineComponent({
 
     @screen md {
       @apply tw-hidden;
+    }
+  }
+
+  &__result-headline {
+    @apply tw-mt-6;
+
+    @screen md {
+      @apply tw-mt-8;
     }
   }
 }

@@ -42,23 +42,17 @@
       "priceInfo": {
         "text": "가격을 보려면 {link}을(를) 추가하십시오.",
         "link": "회사 정보"
-      },
-      "requestInfo": "요청을 보내려면 회사 정보를 추가하십시오.",
-      "functionalityInfo": "이 기능을 사용하려면 회사 정보를 추가하십시오."
+      }
     },
     "open": {
       "priceInfo": {
         "text": "가격을 보려면 승인을 기다리십시오."
-      },
-      "requestInfo": "요청을 보내려면 승인을 기다리십시오.",
-      "functionalityInfo": "이 기능을 사용하려면 승인을 기다리십시오."
+      }
     },
     "rejected": {
       "priceInfo": {
         "text": "가격을 볼 수 있는 권한이 없습니다."
-      },
-      "requestInfo": "요청을 보낼 수 있는 권한이 없습니다.",
-      "functionalityInfo": "죄송합니다. 이 기능을 사용할 수 있는 권한이 없습니다."
+      }
     }
   }
 }

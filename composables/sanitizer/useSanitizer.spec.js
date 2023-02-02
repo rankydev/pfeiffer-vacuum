@@ -76,10 +76,10 @@ describe('html sanitizer', function () {
     expect(sut.inline(TEST_TEXT)).toBe(TEST_TEXT)
     expect(sut.inline(HTML_SPAN)).toBe(HTML_SPAN)
     expect(sut.inline(HTML_STYLES)).toBe(HTML_STYLES)
+    expect(sut.inline(HTML_LINKS)).toBe(HTML_LINKS_RESULT)
+    expect(sut.inline(HTML_MAILTO_LINKS)).toBe(HTML_MAILTO_RESULT)
 
     // filtered
-    expect(sut.inline(HTML_LINKS)).toBe(LINK_TEXT)
-    expect(sut.inline(HTML_MAILTO_LINKS)).toBe(MAILTO_LINK_TEXT)
     expect(sut.inline(HTML_BLOCKS)).toBe(TEST_TEXT)
     expect(sut.inline(HTML_LISTS)).toBe(TEST_TEXT)
     expect(sut.inline(HTML_IMG)).toBe('')

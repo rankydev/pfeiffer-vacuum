@@ -9,7 +9,12 @@
     >
       <div class="global-message__content-wrapper">
         <h5 v-if="headline" class="global-message__headline">{{ headline }}</h5>
-        <p class="global-message__description">{{ description }}</p>
+        <!-- eslint-disable vue/no-v-html -->
+        <p
+          class="global-message__description"
+          v-html="sanitizer.inline(description)"
+        ></p>
+        <!-- eslint-enable vue/no-v-html -->
         <Button
           v-if="button"
           v-bind="button"
@@ -38,6 +43,7 @@ import { computed, ref, onBeforeMount } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import Icon from '~/components/atoms/Icon/Icon'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default {
   components: {
@@ -50,6 +56,10 @@ export default {
       type: String,
       default: 'success',
       validator: (val) => ['success', 'warning', 'error'].includes(val),
+    },
+    preventIconChange: {
+      type: Boolean,
+      default: false,
     },
     headline: {
       type: String,
@@ -65,6 +75,7 @@ export default {
     },
   },
   setup(props) {
+    const sanitizer = useSanitizer()
     const icon = ref({
       visible: true,
       name: '',
@@ -87,16 +98,18 @@ export default {
       }
     })
 
-    // Change icon after two seconds
-    setTimeout(() => {
-      icon.value.visible = false
+    if (!props.preventIconChange) {
+      // Change icon after two seconds
       setTimeout(() => {
-        icon.value.name = 'close'
-        icon.value.visible = true
-      }, 300)
-    }, 2000)
+        icon.value.visible = false
+        setTimeout(() => {
+          icon.value.name = 'close'
+          icon.value.visible = true
+        }, 300)
+      }, 2000)
+    }
 
-    return { icon, isSlim }
+    return { sanitizer, icon, isSlim }
   },
 }
 </script>

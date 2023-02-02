@@ -170,6 +170,7 @@ import {
   toRefs,
   useRouter,
 } from '@nuxtjs/composition-api'
+import { storeToRefs } from 'pinia'
 
 import Link from '~/components/atoms/Link/Link.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
@@ -178,7 +179,6 @@ import Button from '~/components/atoms/Button/Button.vue'
 
 import { useMenuStore } from '~/stores/menu'
 import { useUserStore } from '~/stores/user'
-import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'MainNavigationLevel',
