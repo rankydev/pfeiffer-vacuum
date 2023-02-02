@@ -5,15 +5,15 @@
       <Button
         v-for="(btn, index) in buttons"
         :key="index"
-        class="section-headline__buttons--desktop"
-        v-bind="{ ...btn }"
-      />
-      <Button
-        v-if="mobileLink"
-        icon="arrow_forward"
-        variant="secondary"
-        shape="plain"
-        class="section-headline__buttons--mobile"
+        :class="[
+          'section-headline__buttons',
+          {
+            'section-headline__buttons--desktop': btn.desktopOnly,
+            'section-headline__buttons--mobile': btn.mobileOnly,
+          },
+        ]"
+        v-bind="btn"
+        @click="$emit('btnClick', index)"
       />
     </div>
   </div>
@@ -26,11 +26,8 @@ export default {
       type: Array,
       default: () => [],
     },
-    mobileLink: {
-      type: String,
-      default: '',
-    },
   },
+  emits: ['btnClick'],
 }
 </script>
 <style lang="scss">
@@ -40,7 +37,7 @@ export default {
 
   &__buttons {
     @apply tw-flex;
-    @apply tw-gap-8;
+    @apply tw-gap-4;
 
     &--desktop {
       @apply tw-hidden;

@@ -19,8 +19,8 @@
       </div>
     </template>
     <Infobox
-      v-if="!billingAddress"
-      :text="$t('myaccount.billingAddressMissing')"
+      v-if="!billingAddress && userStatusType"
+      :text="$t(`myaccount.userStatus.${userStatusType}.functionalityInfo`)"
     />
 
     <SectionHeadline
@@ -78,6 +78,7 @@ import {
   onBeforeMount,
   onServerPrefetch,
   useContext,
+  computed,
 } from '@nuxtjs/composition-api'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
@@ -99,9 +100,22 @@ export default defineComponent({
   },
   setup() {
     const userStore = useUserStore()
-    const { billingAddress, deliveryAddresses } = storeToRefs(userStore)
+    const {
+      billingAddress,
+      deliveryAddresses,
+      isLeadUser,
+      isOpenUser,
+      isRejectedUser,
+    } = storeToRefs(userStore)
     const { i18n } = useContext()
     const toast = useToast()
+
+    const userStatusType = computed(() => {
+      if (isLeadUser.value) return 'lead'
+      if (isOpenUser.value) return 'open'
+      if (isRejectedUser.value) return 'rejected'
+      return ''
+    })
 
     const handleDelete = async (e) => {
       try {
@@ -142,7 +156,13 @@ export default defineComponent({
     onServerPrefetch(async () => await userStore.loadAddressData())
     onBeforeMount(async () => await userStore.loadAddressData())
 
-    return { billingAddress, deliveryAddresses, handleDelete, handleSetDefault }
+    return {
+      billingAddress,
+      deliveryAddresses,
+      userStatusType,
+      handleDelete,
+      handleSetDefault,
+    }
   },
 })
 </script>
