@@ -23,7 +23,6 @@
         v-for="child in children"
         :key="child.label"
         :node="child"
-        :checked="isChildChecked"
         :option-label="optionLabel"
         :options-key="optionsKey"
       />
@@ -32,13 +31,7 @@
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  inject,
-  ref,
-  watch,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, inject, ref } from '@nuxtjs/composition-api'
 import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox.vue'
 
 export default defineComponent({
@@ -71,7 +64,6 @@ export default defineComponent({
   setup(props) {
     const isExpanded = ref(props.expanded)
     const isChecked = ref(props.checked)
-    const isChildChecked = ref(false)
     const selectedArray = inject('selectedArray')
     const children = computed(() => {
       return props.node[props.optionsKey] || []
@@ -93,25 +85,12 @@ export default defineComponent({
     }
     const onUpdateCheckBox = (checked) => {
       isChecked.value = checked
+      updateSelectedArray()
     }
-    watch(
-      () => props.checked,
-      (newVal) => {
-        isChecked.value = newVal
-      }
-    )
-    watch(
-      () => isChecked.value,
-      () => {
-        updateSelectedArray()
-        isChildChecked.value = isChecked.value
-      }
-    )
 
     return {
       children,
       isChecked,
-      isChildChecked,
       onUpdateCheckBox,
       hasChildren,
       isExpanded,

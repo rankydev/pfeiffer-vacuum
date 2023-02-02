@@ -11,18 +11,18 @@
 </template>
 
 <script>
-import { defineComponent, provide, ref, watch } from '@nuxtjs/composition-api'
-import MultilevelDropdownNode from './MultilevelDropdownNode'
+import { defineComponent, provide, ref, watch } from "@nuxtjs/composition-api";
+import MultilevelDropdownNode from "./MultilevelDropdownNode";
 
 export default defineComponent({
-  name: 'MultilevelDropdown',
+  name: "MultilevelDropdown",
   components: {
-    MultilevelDropdownNode,
+    MultilevelDropdownNode
   },
   props: {
     options: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     optionLabel: {
       type: String,
@@ -57,6 +57,14 @@ export default defineComponent({
 
     &:first-child {
       @apply tw-pt-0;
+    }
+  }
+
+  .checkbox {
+    @apply tw-min-w-fit;
+
+    input {
+      @apply focus:tw-border-pv-red-lighter;
     }
   }
 
