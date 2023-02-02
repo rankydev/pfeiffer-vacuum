@@ -277,7 +277,7 @@ export default defineComponent({
     @apply tw-mt-4;
 
     @screen lg {
-      @apply tw-ml-2;
+      @apply tw-ml-8;
       @apply tw-mt-0;
     }
   }

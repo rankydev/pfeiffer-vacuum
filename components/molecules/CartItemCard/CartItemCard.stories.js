@@ -23,7 +23,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: '',
+        component: 'The Cart Item Card displays the items in the shopping cart',
       },
       source: {
         appliedOrderPromotions,
