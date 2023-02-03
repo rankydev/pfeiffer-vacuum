@@ -28,6 +28,9 @@
               :back-button-override-query-params="{ currentPage: 1 }"
               class="search-page__result-headline"
             />
+            <div class="search-page__search-input">
+              <DocumentSearchInput />
+            </div>
           </ContentWrapper>
 
           <GenericTabs
@@ -111,6 +114,7 @@ import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavi
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 import SearchResult from '~/components/organisms/SearchResult/SearchResult'
 import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
+import DocumentSearchInput from '~/components/molecules/DocumentSearchInput/DocumentSearchInput'
 
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { useCategoryStore } from '~/stores/category/category'
@@ -128,6 +132,7 @@ export default defineComponent({
     ResultHeadline,
     SearchResult,
     GenericTabs,
+    DocumentSearchInput,
   },
   layout: 'default',
   props: {
@@ -227,7 +232,6 @@ export default defineComponent({
 
       hasLink,
       href,
-
       headline,
       searchTerm,
       link,
@@ -239,7 +243,6 @@ export default defineComponent({
       currentQuery,
       sorts,
       metaData,
-
       currentTabSelected,
       tabNavigationItems,
       selectTab,
@@ -268,8 +271,25 @@ export default defineComponent({
     }
   }
 
-  &__search-result {
-    @apply tw-bg-pv-grey-96;
+  &__search {
+    &-result {
+      @apply tw-bg-pv-grey-96;
+    }
+
+    &-input {
+      @apply tw-mb-2;
+      @apply tw-mx-auto;
+
+      @screen md {
+        @apply tw-mb-4;
+        max-width: 534px;
+      }
+
+      @screen lg {
+        @apply tw-mb-8;
+        max-width: 672px;
+      }
+    }
   }
 }
 
