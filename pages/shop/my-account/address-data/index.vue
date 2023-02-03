@@ -5,6 +5,7 @@
       :link="localePath('shop-my-account')"
     />
     <GlobalMessage
+      v-if="!billingAddress && userStatusType"
       :description="
         $t(`myaccount.userStatus.${userStatusType}.functionalityInfo`)
       "
