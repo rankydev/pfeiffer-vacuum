@@ -48,6 +48,7 @@ export default defineComponent({
       @apply tw-text-xs;
       @apply tw-font-normal;
       @apply tw-text-pv-grey-64;
+      -webkit-text-fill-color: #a3a3a3;
       @apply tw-shadow-border-grey-80;
 
       &:hover,
@@ -63,11 +64,13 @@ export default defineComponent({
 
     &--active.button--outlined.button--secondary {
       @apply tw-text-pv-grey-16;
+      -webkit-text-fill-color: #292929;
     }
   }
 
   &__language-switcher {
     color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
     @apply tw-p-0;
     @apply tw-align-middle;
     box-shadow: none !important;
@@ -75,10 +78,12 @@ export default defineComponent({
 
     @screen lg {
       color: #7a7a7a !important;
+      -webkit-text-fill-color: #7a7a7a !important;
     }
 
     &:hover {
       background-color: unset !important;
+      -webkit-text-fill-color: unset !important;
     }
   }
 
