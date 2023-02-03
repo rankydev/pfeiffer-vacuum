@@ -4,6 +4,13 @@
       :headline="$t('myaccount.addressData')"
       :link="localePath('shop-my-account')"
     />
+    <GlobalMessage
+      :description="
+        $t(`myaccount.userStatus.${userStatusType}.functionalityInfo`)
+      "
+      variant="warning"
+      :prevent-icon-change="true"
+    />
     <template v-if="billingAddress">
       <SectionHeadline
         class="address-data__section-headline address-data__section-headline--billing-address"
@@ -18,14 +25,6 @@
         />
       </div>
     </template>
-    <GlobalMessage
-      v-if="!billingAddress && userStatusType"
-      :description="
-        $t(`myaccount.userStatus.${userStatusType}.functionalityInfo`)
-      "
-      variant="warning"
-      :prevent-icon-change="true"
-    />
     <SectionHeadline
       class="address-data__section-headline address-data__section-headline--delivery-address"
     >
@@ -108,7 +107,7 @@ export default defineComponent({
       if (isLeadUser.value) return 'lead'
       if (isOpenUser.value) return 'open'
       if (isRejectedUser.value) return 'rejected'
-      return ''
+      return 'undefined'
     })
 
     const handleDelete = async (e) => {
