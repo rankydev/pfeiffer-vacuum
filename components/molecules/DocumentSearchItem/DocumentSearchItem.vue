@@ -5,7 +5,7 @@
         <!-- eslint-disable-next-line vue/no-v-html -->
         <h5 v-html="formatHtml(product.title)" />
         <div v-if="product.subtitle" class="document-item__data">
-          <div v-for="(item, index) in product.subtitle" :key="index">
+          <div v-for="(item, index) in product.subtitle" :key="getKey(index)">
             {{ item }}
           </div>
         </div>
@@ -28,9 +28,16 @@
         <div v-if="product.subtitle[0]" class="document-item__product">
           {{ product.subtitle[0] }}
         </div>
-        <div class="document-item__data">
-          <div v-if="product.subtitle[1]">{{ product.subtitle[1] }}</div>
-          <div v-if="product.subtitle[2]">{{ product.subtitle[2] }}</div>
+        <div
+          v-if="subtitleRemainingelements.length"
+          class="document-item__data"
+        >
+          <div
+            v-for="(item, index) in subtitleRemainingelements"
+            :key="getKey(index)"
+          >
+            {{ item }}
+          </div>
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
         <p v-if="product.body" v-html="formatHtml(product.body)" />
@@ -65,9 +72,10 @@
   </article>
 </template>
 <script>
-import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, ref, toRefs, useRoute } from '@nuxtjs/composition-api'
 import Link from '~/components/atoms/Link/Link'
 import Icon from '~/components/atoms/Icon/Icon'
+import getKey from '~/composables/useUniqueKey'
 
 export default defineComponent({
   name: 'DocumentSearchItem',
@@ -82,9 +90,11 @@ export default defineComponent({
     },
   },
   emits: ['click'],
-  setup() {
+  setup(props) {
     const route = useRoute()
     const searchTerm = ref(route.value.query.searchTerm || '')
+    const { product } = toRefs(props)
+    const subtitleRemainingelements = product.value.subtitle.slice(1, 3)
 
     const formatHtml = (input) => {
       if (searchTerm.value === '') {
@@ -99,7 +109,11 @@ export default defineComponent({
       return formatInput
     }
 
-    return { formatHtml }
+    return {
+      formatHtml,
+      getKey,
+      subtitleRemainingelements,
+    }
   },
 })
 </script>
