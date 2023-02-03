@@ -56,7 +56,7 @@
   "showProductDetails": "Show product details",
   "help": "Need any help?",
   "articleNumber": "Order number",
-  "noPriceAvailable": "Price cannot be loaded",
+  "noPriceAvailable": "Price can not be loaded",
   "login": {
     "title": "Sign in",
     "account": "Already have an account?",
@@ -117,7 +117,7 @@
   "userStatus": {
     "undefined": {
       "priceInfo": {
-        "text": "Price cannot be loaded"
+        "text": "Price can not be loaded"
       }
     },
     "lead": {
