@@ -43,6 +43,7 @@
       class="shop-navigation__shopping-cart tw-flex"
     >
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
+      <!-- TODO: Add correct cart item count indicator -->
       <span>{{ cartItemCount }}</span>
     </Link>
   </div>
