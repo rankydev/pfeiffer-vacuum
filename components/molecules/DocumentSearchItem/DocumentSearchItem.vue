@@ -4,10 +4,10 @@
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <h5 v-html="formatHtml(product.title)" />
-        <div class="document-item__data">
-          <div v-if="product.subtitle[0]">{{ product.subtitle[0] }}</div>
-          <div v-if="product.subtitle[1]">{{ product.subtitle[1] }}</div>
-          <div v-if="product.subtitle[2]">{{ product.subtitle[2] }}</div>
+        <div v-if="product.subtitle" class="document-item__data">
+          <div v-for="(item, index) in product.subtitle" :key="index">
+            {{ item }}
+          </div>
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
         <p v-if="product.body" v-html="formatHtml(product.body)" />
@@ -78,19 +78,7 @@ export default defineComponent({
   props: {
     product: {
       type: Object,
-      default: () => {
-        return {
-          title: 'HiPace 300 with TC 400',
-          id: 'esc_tree~project1_e~12~de',
-          subtitle: ['Hipace 300', 'Deutsch', '12.12.2022'],
-          body: `
-            Betriebsanleitung Operating Instructions DE EN Original HiPace 300
-          `,
-          downloadLink: `
-            resource/environment/project1_p/documents/pfeifferSharepointProd/12624-128864ODE_02.pdf
-          `,
-        }
-      },
+      default: () => ({}),
     },
   },
   emits: ['click'],
