@@ -140,7 +140,7 @@ export default defineComponent({
     &.button--secondary {
       @apply tw-bg-pv-red;
       @apply tw-text-pv-white;
-      -webkit-text-fill-color: #ffffff;
+      -webkit-text-fill-color: #fff;
       @apply tw-shadow-button;
 
       &:hover,
@@ -153,7 +153,7 @@ export default defineComponent({
     &.button--variant-selection {
       @apply tw-bg-pv-red;
       @apply tw-text-pv-white;
-      -webkit-text-fill-color: #ffffff;
+      -webkit-text-fill-color: #fff;
       @apply tw-shadow-button;
 
       &:hover {
@@ -165,19 +165,19 @@ export default defineComponent({
       @apply tw-shadow-border-red;
       @apply tw-bg-pv-white;
       @apply tw-text-pv-black;
-      -webkit-text-fill-color: #000000;
+      -webkit-text-fill-color: #000;
 
       &:hover {
         @apply tw-shadow-border-red-lighter;
         @apply tw-text-pv-white;
-        -webkit-text-fill-color: #ffffff;
+        -webkit-text-fill-color: #fff;
       }
     }
 
     &.button--inverted {
       @apply tw-bg-pv-white;
       @apply tw-text-pv-black;
-      -webkit-text-fill-color: #000000;
+      -webkit-text-fill-color: #000;
       @apply tw-shadow-button-inverted;
 
       &:hover,
@@ -198,7 +198,7 @@ export default defineComponent({
       &.button--inverted {
         @apply tw-bg-pv-grey-64;
         @apply tw-text-pv-grey-80;
-        -webkit-text-fill-color: #cccccc;
+        -webkit-text-fill-color: #ccc;
       }
     }
   }
@@ -230,7 +230,7 @@ export default defineComponent({
         @apply tw-shadow-border-red-lighter;
         @apply tw-bg-pv-red-lighter;
         @apply tw-text-pv-white;
-        -webkit-text-fill-color: #ffffff;
+        -webkit-text-fill-color: #fff;
       }
     }
 
@@ -244,7 +244,7 @@ export default defineComponent({
       &:focus {
         @apply tw-outline-pv-white;
         @apply tw-text-pv-white;
-        -webkit-text-fill-color: #ffffff;
+        -webkit-text-fill-color: #fff;
         @apply tw-bg-pv-white;
         @apply tw-bg-opacity-10;
       }
@@ -256,7 +256,7 @@ export default defineComponent({
       @apply tw-shadow-border-grey-80;
       @apply tw-bg-pv-transparent;
       @apply tw-text-pv-grey-80;
-      -webkit-text-fill-color: #cccccc;
+      -webkit-text-fill-color: #ccc;
 
       &.button--inverted {
         @apply tw-outline-pv-grey-48;
@@ -289,7 +289,7 @@ export default defineComponent({
       &:hover,
       &:focus {
         @apply tw-text-pv-white;
-        -webkit-text-fill-color: #ffffff;
+        -webkit-text-fill-color: #fff;
       }
     }
 
@@ -297,7 +297,7 @@ export default defineComponent({
     &.button--disabled:hover,
     &.button--disabled:focus {
       @apply tw-text-pv-grey-80;
-      -webkit-text-fill-color: #cccccc;
+      -webkit-text-fill-color: #ccc;
 
       &.button--inverted {
         @apply tw-text-pv-grey-48;
