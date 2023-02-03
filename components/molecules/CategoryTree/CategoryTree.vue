@@ -20,6 +20,7 @@ import { joinURL } from 'ufo'
 import CategoryCollapse from './partials/CategoryCollapse'
 import GenericHorizontalSlider from '~/components/molecules/GenericHorizontalSlider/GenericHorizontalSlider.vue'
 import { useCategoryStore } from '~/stores/category/category'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
@@ -36,13 +37,14 @@ export default defineComponent({
     const route = useRoute()
     const showScrollbar = ref(false)
     const categoryStore = useCategoryStore()
+    const { rootUrl } = storeToRefs(categoryStore)
 
     const toggleScrollbarClass = () => {
       showScrollbar.value = !showScrollbar.value
     }
 
     const getUrl = (id) => ({
-      path: joinURL(categoryStore.rootUrl, id),
+      path: joinURL(rootUrl.value, id),
       query: { ...route.value.query, currentPage: 1 },
     })
 

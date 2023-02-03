@@ -6,15 +6,15 @@
   "moreFilters": "更多筛选器",
   "activeFilters": "有源滤波器",
   "searchResult": "为。。。。寻找结果",
-  "resultsFound": "结果发现",
+  "resultsFound": "{totalResults} 结果发现",
   "sortAndFilter": "排序和過濾",
   "applyFilter": "应用筛选器",
   "noMatchingProducts": "未找到匹配的产品",
   "checkSearchCriteria": "请检查所选的搜索条件",
   "vacuumRange": "真空范围",
   "suctionSpeed": "抽速",
-  "search": "Search",
-  "suggestions": "suggestions",
+  "search": "搜索",
+  "suggestions": "建议",
   "productsTab": "产品",
   "documentsTab": "文件"
 }
