@@ -17,7 +17,7 @@
         :promotions="cart.appliedOrderPromotions"
         :shop-attributes="true"
         :read-only="false"
-        :price="1000"
+        :price="null"
         :show-price="true"
       />
       <ProductCardGrid v-if="products.length > 0" :products="products" />

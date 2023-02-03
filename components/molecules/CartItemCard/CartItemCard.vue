@@ -5,11 +5,11 @@
     :class="[
       isMinicart
         ? 'cart-item-card--minicart tw-bg-pv-white'
-        : 'cart-item-card--desktop ',
+        : 'cart-item-card--desktop',
     ]"
   >
-    <div class="cart-item-card__content-wrapper">
-      <div class="cart-item-card__content-wrapper--first-row">
+    <div class="cart-item-card__grid">
+      <div class="cart-item-card__content-wrapper">
         <div class="cart-item-card__product-delete">
           <div class="cart-item-card__product">
             <div class="cart-item-card__image">
@@ -105,69 +105,71 @@
           </div>
         </div>
       </div>
-      <div class="cart-item-card___content-wrapper--second-row">
-        <div class="cart-item-card__attribute-wrapper">
+      <div
+        class="cart-item-card__delete-wrapper cart-item-card__delete-desktop"
+      >
+        <div class="cart-item-card__delete">
+          <Button
+            variant="secondary"
+            shape="plain"
+            icon="delete"
+            @click="$emit('delete', ev)"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="cart-item-card___content-wrapper--second-row">
+      <div class="cart-item-card__attribute-wrapper">
+        <div
+          v-if="showAttributes"
+          class="cart-item-card__variation-attributes-row"
+        >
           <div
-            v-if="showAttributes"
-            class="cart-item-card__variation-attributes-row"
+            v-for="(attribute, attributeIndex) in entry.product.variationMatrix
+              .variationAttributes"
+            :key="attributeIndex"
+            class="cart-item-card__variation-attributes"
           >
             <div
-              v-for="(attribute, attributeIndex) in entry.product
-                .variationMatrix.variationAttributes"
-              :key="attributeIndex"
-              class="cart-item-card__variation-attributes"
+              v-for="(
+                attributeEntry, subindex
+              ) in attribute.variationValues.filter((e) => e.selected)"
+              :key="String(attributeIndex) + String(subindex)"
+              class="cart-item-card__attribute"
             >
-              <div
-                v-for="(
-                  attributeEntry, subindex
-                ) in attribute.variationValues.filter((e) => e.selected)"
-                :key="String(attributeIndex) + String(subindex)"
-                class="cart-item-card__attribute"
-              >
-                <div class="cart-item-card__attribute-value">
-                  <span class="cart-item-card__attribute-name">{{
-                    `${attribute.name}: `
-                  }}</span>
-                  <span>{{ attributeEntry.displayValue }}</span>
-                </div>
+              <div class="cart-item-card__attribute-value">
+                <span class="cart-item-card__attribute-name">{{
+                  `${attribute.name}: `
+                }}</span>
+                <span>{{ attributeEntry.displayValue }}</span>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="cart-item-card__promotions-wrapper">
-          <div class="cart-item-card__promotions">
-            <div
-              v-for="(promo, x) in promotions"
-              :key="x"
-              class="cart-item-card__promotion"
-            >
-              {{ promo.description }}
-            </div>
-          </div>
-        </div>
-        <div class="cart-item-card__further-article-information">
-          <div class="cart-item-card__add-to-other-list">
-            <Button
-              class="cart-item-card__add-to-other-list-btn"
-              variant="secondary"
-              shape="plain"
-              icon="assignment"
-              :label="$t('cart.list.addArticle')"
-              @click="$emit('addToList', ev)"
-            />
+      <div class="cart-item-card__promotions-wrapper">
+        <div class="cart-item-card__promotions">
+          <div
+            v-for="(promo, x) in promotions"
+            :key="x"
+            class="cart-item-card__promotion"
+          >
+            {{ promo.description }}
           </div>
         </div>
       </div>
-    </div>
-    <div class="cart-item-card__delete-wrapper cart-item-card__delete-desktop">
-      <div class="cart-item-card__delete">
-        <Button
-          variant="secondary"
-          shape="plain"
-          icon="delete"
-          @click="$emit('delete', ev)"
-        />
+      <div class="cart-item-card__further-article-information">
+        <div class="cart-item-card__add-to-other-list">
+          <Button
+            class="cart-item-card__add-to-other-list-btn"
+            variant="secondary"
+            shape="plain"
+            icon="assignment"
+            :label="$t('cart.list.addArticle')"
+            @click="$emit('addToList', ev)"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -428,11 +430,11 @@ export default defineComponent({
 
   .cart-item-card {
     &__content-wrapper {
-      @apply tw-w-full;
+      @apply tw-flex tw-flex-col;
 
-      &--first-row {
-        @apply tw-flex tw-flex-col;
-      }
+      // &--first-row {
+      //   @apply tw-flex tw-flex-col;
+      // }
     }
 
     &__delete-mobile {
@@ -461,25 +463,27 @@ export default defineComponent({
 .cart-item-card--desktop {
   background-color: white;
 
-  @screen lg {
-    @apply tw-grid tw-grid-cols-12;
-  }
-
   .cart-item-card {
+    &__grid {
+      @screen lg {
+        @apply tw-grid tw-grid-cols-12;
+      }
+    }
+
     &__content-wrapper {
       @screen lg {
+        @apply tw-grid tw-grid-cols-11;
         @apply tw-col-span-11;
       }
 
-      &--first-row {
-        @apply tw-flex;
-        @apply tw-flex-col;
+      // &--first-row {
+      //   @apply tw-flex;
+      //   @apply tw-flex-col;
 
-        @screen lg {
-          @apply tw-grid tw-col-span-11;
-        }
-      }
-
+      //   @screen lg {
+      //     @apply tw-grid tw-col-span-11;
+      //   }
+      // }
       &--second-row {
         @screen lg {
           @apply tw-grid tw-col-span-12;
@@ -498,9 +502,12 @@ export default defineComponent({
 
     &__quantity-price {
       @screen lg {
+        // @apply tw-grid;
+        // @apply tw-grid-cols-3;
+        // @apply tw-col-start-9;
         @apply tw-col-span-3;
-        @apply tw-col-start-9;
         @apply tw-ml-0;
+        @apply tw-mr-0;
       }
     }
 
