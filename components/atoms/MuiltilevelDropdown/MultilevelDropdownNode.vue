@@ -3,12 +3,12 @@
     <div class="multilevel-dropdown-node__item">
       <Checkbox
         :label="node[optionLabel]"
-        :checked="isChecked"
+        :checked="getChecked"
         @update="onUpdateCheckBox"
       />
       <Button
         v-if="hasChildren"
-        :icon="isExpanded ? 'expand_less' : 'expand_more'"
+        :icon="getExpanded ? 'expand_less' : 'expand_more'"
         variant="variant-selection"
         shape="plain"
         @click="toggleIsExpanded"
@@ -16,7 +16,7 @@
     </div>
     <ul
       v-if="hasChildren"
-      v-show="isExpanded"
+      v-show="getExpanded"
       class="multilevel-dropdown-node__child"
     >
       <MultilevelDropdownNode
@@ -31,8 +31,13 @@
 </template>
 
 <script>
-import { computed, defineComponent, inject, ref } from '@nuxtjs/composition-api'
-import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox.vue'
+import {
+  computed,
+  defineComponent,
+  inject,
+  toRefs,
+} from '@nuxtjs/composition-api'
+import Checkbox from '@/components/atoms/FormComponents/Checkbox/Checkbox.vue'
 
 export default defineComponent({
   name: 'MultilevelDropdownNode',
@@ -62,38 +67,45 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const isExpanded = ref(props.expanded)
-    const isChecked = ref(props.checked)
+    const { checked, expanded, node, optionsKey } = toRefs(props)
     const selectedArray = inject('selectedArray')
     const children = computed(() => {
-      return props.node[props.optionsKey] || []
+      return node.value[optionsKey.value] || []
     })
     const hasChildren = computed(() => {
       return children.value.length > 0
     })
     const toggleIsExpanded = () => {
-      isExpanded.value = !isExpanded.value
+      expanded.value = !expanded.value
     }
     const updateSelectedArray = () => {
-      if (isChecked.value) {
-        selectedArray.value.push(props.node)
+      if (checked.value) {
+        selectedArray.value.push(node.value)
       } else {
         selectedArray.value = selectedArray.value.filter(
-          (item) => item !== props.node
+          (item) => item !== node.value
         )
       }
     }
-    const onUpdateCheckBox = (checked) => {
-      isChecked.value = checked
+    const onUpdateCheckBox = (checkedValue) => {
+      checked.value = checkedValue
       updateSelectedArray()
     }
 
+    const getChecked = computed(() => {
+      return checked.value
+    })
+
+    const getExpanded = computed(() => {
+      return expanded.value
+    })
+
     return {
       children,
-      isChecked,
+      getChecked,
       onUpdateCheckBox,
       hasChildren,
-      isExpanded,
+      getExpanded,
       toggleIsExpanded,
     }
   },

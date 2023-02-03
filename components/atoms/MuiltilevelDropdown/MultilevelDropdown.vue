@@ -12,7 +12,7 @@
 
 <script>
 import { defineComponent, provide, ref, watch } from '@nuxtjs/composition-api'
-import MultilevelDropdownNode from './MultilevelDropdownNode'
+import MultilevelDropdownNode from './MultilevelDropdownNode.vue'
 
 export default defineComponent({
   name: 'MultilevelDropdown',
@@ -22,7 +22,7 @@ export default defineComponent({
   props: {
     options: {
       type: Array,
-      default: () => [],
+      required: true,
     },
     optionLabel: {
       type: String,
