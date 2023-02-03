@@ -35,6 +35,7 @@ import {
   useRoute,
 } from '@nuxtjs/composition-api'
 import { useCategoryStore } from '~/stores/category/category'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
@@ -62,12 +63,13 @@ export default defineComponent({
   setup(props) {
     const route = useRoute()
     const categoryStore = useCategoryStore()
+    const { rootUrl } = storeToRefs(categoryStore)
     const isOpen = ref(false)
 
     const hasChildren = computed(() => props.children.length || 0 > 0)
 
     const getUrl = (id) => ({
-      path: joinURL(categoryStore.rootUrl, id),
+      path: joinURL(rootUrl.value, id),
       query: { ...route.value.query, currentPage: 1 },
     })
 
