@@ -28,7 +28,7 @@
       level="h3"
       variant="tab"
       class="generic-tabs__mobile"
-      @activeTabChange="selectTab"
+      @newActiveTab="selectTab"
     >
       <template v-for="item in mobileAccordionItems" #[item.slotName]>
         <slot name="activeTabContent" />
