@@ -48,6 +48,7 @@ export default {
   DOUBLE_OPT_IN: joinURL(BASE_API_PATH + '/doubleOptIn'),
   USER_API: joinURL(BASE_API_PATH + '/users/current'),
   REGISTER_API: joinURL(BASE_API_PATH + '/users/anonymous/orgCustomers'),
+  ADD_COMPANY: joinURL(BASE_API_PATH + '/users/current/orgCustomers'),
 
   // Orders
   ORDER_API: joinURL(BASE_API_PATH + '/users/current/orders'),

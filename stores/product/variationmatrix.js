@@ -5,6 +5,7 @@ import {
   useRouter,
   useRoute,
   computed,
+  ssrRef,
 } from '@nuxtjs/composition-api'
 import { joinURL } from 'ufo'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
@@ -21,12 +22,12 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
   /*
    * Variationmatrix specific constants
    */
-  const variationMatrix = ref(null)
+  const variationMatrix = ssrRef(null)
   const selectedAttributes = ref({})
-  const currentMasterId = ref(null)
-  const currentVariantId = ref(null)
-  const matrixStillValid = ref(false)
-  const loadingMatrix = ref(false)
+  const currentMasterId = ssrRef(null)
+  const currentVariantId = ssrRef(null)
+  const matrixStillValid = ssrRef(false)
+  const loadingMatrix = ssrRef(false)
 
   /*
    * Retrieve variation matrix object from hybris given a product id and selected attributes
@@ -77,7 +78,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
         hasDifferentVariant(variationMatrix.value, result)
       ) {
         // Redirect to variant page when only one variant is left
-        redirectToId(result.variants?.[0]?.code)
+        redirectToId(result.variantCodes?.[0])
       } else if (
         currentVariantId.value &&
         !hasOnlyOneVariantLeft(result) &&
@@ -93,6 +94,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
 
       // Write result into store
       variationMatrix.value = result
+      matrixStillValid.value = true
     } catch (error) {
       console.error(error)
     } finally {
@@ -117,6 +119,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    */
   const addAttribute = async (key, val) => {
     selectedAttributes.value[key] = val
+    matrixStillValid.value = false
     await loadVariationMatrix()
   }
 
@@ -125,6 +128,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    */
   const deleteAttribute = async (key) => {
     delete selectedAttributes.value[key]
+    matrixStillValid.value = false
     await loadVariationMatrix()
   }
 
@@ -148,6 +152,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    */
   const clearSelection = async () => {
     selectedAttributes.value = {}
+    matrixStillValid.value = false
     await loadVariationMatrix()
   }
 
@@ -166,7 +171,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
   /*
    * Matrix object can be given to determine whether there is only one variant left or more
    */
-  const hasOnlyOneVariantLeft = (matrix) => matrix?.variants?.length === 1
+  const hasOnlyOneVariantLeft = (matrix) => matrix?.variantCodes?.length === 1
 
   /**
    * Returns index of first attribute where no value is selected
@@ -196,9 +201,9 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
   const manualVariantSelectionOptions = computed(() => {
     if (
       isSelectionCompleted.value &&
-      variationMatrix.value?.variants?.length > 1
+      variationMatrix.value?.variantCodes?.length > 1
     ) {
-      return variationMatrix.value.variants
+      return variationMatrix.value.variantCodes
     }
     return []
   })
@@ -208,8 +213,8 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    */
   const hasDifferentVariant = (oldMatrix, newMatrix) =>
     oldMatrix &&
-    (oldMatrix?.variants?.length > 1 ||
-      oldMatrix?.variants?.[0]?.code !== newMatrix?.variants?.[0]?.code)
+    (oldMatrix?.variantCodes?.length > 1 ||
+      oldMatrix?.variantCodes?.[0] !== newMatrix?.variantCodes?.[0])
 
   /*
    * When product state in frontend application should switch from master to variant and vice versa the application
