@@ -20,7 +20,9 @@
     </template>
     <GlobalMessage
       v-if="!billingAddress && userStatusType"
-      :description="$t(`myaccount.userStatus.${userStatusType}.functionalityInfo`)"
+      :description="
+        $t(`myaccount.userStatus.${userStatusType}.functionalityInfo`)
+      "
       variant="warning"
       :prevent-icon-change="true"
     />
@@ -75,7 +77,7 @@ import {
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import AddressCard from '~/components/molecules/AddressCard/AddressCard'
-import GlobalMessage from "~/components/organisms/GlobalMessage/GlobalMessage";
+import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 import { useUserStore } from '~/stores/user'
 import { storeToRefs } from 'pinia'
 import Icon from '~/components/atoms/Icon/Icon'
