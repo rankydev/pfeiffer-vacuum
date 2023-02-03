@@ -147,6 +147,7 @@
     @apply tw-py-3 tw-px-4;
     @apply tw-leading-6;
     @apply tw-flex tw-gap-2;
+    @apply tw-w-fit;
   }
 
   &__dropdown-option {
