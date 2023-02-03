@@ -119,23 +119,17 @@
       "priceInfo": {
         "text": "Please add {link} to see prices",
         "link": "company data"
-      },
-      "requestInfo": "Please add company data to send request",
-      "functionalityInfo": "Please add company data to use this functionality"
+      }
     },
     "open": {
       "priceInfo": {
         "text": "Please wait for approval to see prices"
-      },
-      "requestInfo": "Please wait for approval to send request",
-      "functionalityInfo": "Please wait for approval to use this functionality"
+      }
     },
     "rejected": {
       "priceInfo": {
         "text": "You are not permitted to see prices"
-      },
-      "requestInfo": "You are not permitted to send requests",
-      "functionalityInfo": "Sorry, you are not permitted to use this functionality"
+      }
     }
   }
 }

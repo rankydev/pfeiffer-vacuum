@@ -5,6 +5,7 @@ import {
   onBeforeMount,
   onServerPrefetch,
   ssrRef,
+  ref,
 } from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
 import { useKeycloak } from './partials/useKeycloak'
@@ -13,9 +14,11 @@ import { watch } from '@nuxtjs/composition-api'
 import { useLogger } from '~/composables/useLogger'
 import { useOciStore } from '~/stores/oci'
 import { joinURL } from 'ufo'
+import { useToast } from '~/composables/useToast'
 
 export const useUserStore = defineStore('user', () => {
   const { logger } = useLogger('userStore')
+  const toast = useToast()
   const ctx = useContext()
   const route = useRoute()
   const userApi = useUserApi()
@@ -28,8 +31,11 @@ export const useUserStore = defineStore('user', () => {
     createKeycloakInstance,
     removeCookiesAndDeleteAuthData,
   } = useKeycloak()
+  const isLoading = ref(false)
 
   const currentUser = ssrRef(null)
+  const billingAddress = ssrRef(null)
+  const deliveryAddresses = ssrRef(null)
 
   const isOpenUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'OPEN'
@@ -42,6 +48,20 @@ export const useUserStore = defineStore('user', () => {
   })
   const isApprovedUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'APPROVED'
+  })
+
+  const userBillingAddress = computed(
+    () =>
+      currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
+  )
+
+  const userCountry = computed(() => userBillingAddress.value?.country || {})
+
+  const changePasswordLink = computed(() => {
+    const keycloakBaseUrl = ctx.$config.KEYCLOAK_BASE_URL + 'realms/'
+    const keycloackRealm = ctx.$config.KEYCLOAK_REALM_NAME
+    const language = `kc_locale=${ctx.i18n.locale}`
+    return `${keycloakBaseUrl}${keycloackRealm}/account/password?${language}`
   })
 
   watch(auth, async (newAuth) => {
@@ -61,12 +81,129 @@ export const useUserStore = defineStore('user', () => {
       return
     }
 
+    isLoading.value = true
+
     try {
       const user = await userApi.getUserData()
       currentUser.value = user
     } catch (e) {
       logger.error('user not found', e)
+    } finally {
+      isLoading.value = false
     }
+  }
+
+  const updateCurrentUser = async (data) => {
+    isLoading.value = true
+    try {
+      await userApi.updateUserData(data)
+      await loadCurrentUser()
+      toast.success(
+        { description: ctx.i18n.t('registration.updateAccountData.success') },
+        { timeout: 5000 }
+      )
+    } catch (e) {
+      logger.error('cannot patch user data', e)
+      toast.error(
+        {
+          description: ctx.i18n.t(
+            'registration.updateAccountData.errorOccured'
+          ),
+        },
+        { timeout: 5000 }
+      )
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const addCompanyData = async (data) => {
+    isLoading.value = true
+    let res
+    try {
+      res = await userApi.addCompanyData(data)
+      await loadCurrentUser()
+      return res
+    } catch (e) {
+      logger.error('cannot add company data', e)
+      return Promise.reject(e)
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  const loadBillingAddress = async () => {
+    try {
+      const result = await userApi.getUserBillingAddress()
+      billingAddress.value = result
+    } catch (e) {
+      logger.error(
+        `Error when fetching billing address for user. Returning empty object.`,
+        e
+      )
+    }
+  }
+
+  const loadDeliveryAddresses = async () => {
+    try {
+      const result = await userApi.getUserDeliveryAddresses()
+      deliveryAddresses.value = {
+        addresses: result.addresses
+          .map((item) => {
+            return {
+              ...item,
+              defaultShippingAddress: item.defaultShippingAddress || false,
+            }
+          })
+          .sort((a, b) => b.defaultShippingAddress - a.defaultShippingAddress),
+      }
+    } catch (e) {
+      logger.error(
+        `Error when fetching billing address for user. Returning empty object.`,
+        e
+      )
+    }
+  }
+
+  const loadAddressData = async () => {
+    await Promise.all([loadBillingAddress(), loadDeliveryAddresses()])
+  }
+
+  const createDeliveryAddress = async (address) => {
+    await userApi.createUserDeliveryAddress(address)
+  }
+
+  const updateDeliveryAddress = async (id, address) => {
+    await userApi.updateUserDeliveryAddress(id, address)
+  }
+
+  const deleteDeliveryAddress = async (id) => {
+    try {
+      await userApi.deleteUserDeliveryAddress(id)
+      // refetch delivery addresses
+      loadDeliveryAddresses()
+    } catch (e) {
+      logger.error(`Error when deleting delivery address.`, e)
+      throw e
+    }
+  }
+
+  const setDefaultDeliveryAddress = async (id) => {
+    try {
+      await userApi.setUserDefaultDeliveryAddress(id)
+      // refetch delivery addresses
+      loadDeliveryAddresses()
+    } catch (e) {
+      logger.error(`Error when setting default delivery address.`, e)
+      throw e
+    }
+  }
+
+  const getDeliveryAddressByID = (id) => {
+    if (!deliveryAddresses.value?.addresses?.length) return null
+    return deliveryAddresses.value.addresses.find(
+      (deliveryAddress) => deliveryAddress.id === id
+    )
   }
 
   const login = async () => {
@@ -88,6 +225,8 @@ export const useUserStore = defineStore('user', () => {
   const logout = async () => {
     logger.debug('logout')
 
+    isLoading.value = true
+
     // remove internal data
     removeCookiesAndDeleteAuthData()
 
@@ -100,6 +239,8 @@ export const useUserStore = defineStore('user', () => {
       const { router, localePath } = app
       return router.push(localePath('/'))
     }
+
+    isLoading.value = false
   }
 
   /* istanbul ignore else  */
@@ -119,6 +260,8 @@ export const useUserStore = defineStore('user', () => {
     isLoginProcess,
     currentUser,
     auth,
+    billingAddress,
+    deliveryAddresses,
 
     // getters
     isApprovedUser,
@@ -126,11 +269,25 @@ export const useUserStore = defineStore('user', () => {
     isOpenUser,
     isRejectedUser,
     isLoggedIn,
+    isLoading,
+    userBillingAddress,
+    userCountry,
+    changePasswordLink,
 
     // actions
     loadCurrentUser,
+    updateCurrentUser,
+    addCompanyData,
     login,
     logout,
+    loadBillingAddress,
+    loadDeliveryAddresses,
+    createDeliveryAddress,
+    updateDeliveryAddress,
+    deleteDeliveryAddress,
+    setDefaultDeliveryAddress,
+    getDeliveryAddressByID,
+    loadAddressData,
     register: userApi.register,
   }
 })

@@ -14,8 +14,7 @@
   },
   "password": {
     "minLength": "至少包含8个字符",
-    "capitalLetter":
-    "至少包含1个大写字母和1个小写字母",
+    "capitalLetter": "至少包含1个大写字母和1个小写字母",
     "digit": "至少包含1位数字",
     "tooLong": "您的密码过长（不得超过128个字节）"
   },
@@ -31,23 +30,23 @@
     "houseNumber": "门牌号码",
     "postCode": "邮政编码",
     "city": "城市",
+    "supplement": "地址補充",
+    "department": "部門",
     "submit": "提交",
     "dataPrivacy": "数据隐私"
   },
   "validationErrorMessages": {
     "required": "值是必需的",
+    "requiredNameOrCompany": "需要公司或名字和姓氏",
     "email": "值不是有效的电子邮件地址"
   },
   "message": {
     "success": "您的请求已发送成功！",
     "error": {
       "defaultError": "无法发送您的请求。",
-      "customerAlreadyExists":
-        "您已经拥有一个普发真空帐户，而且您的密码仍保持未变。",
-      "technicalError":
-        "发生技术错误。 请联系普发真空支持。",
-      "customerInconsistentError":
-        "出现了与您帐户有关的问题。 请联系我们的客服。"
+      "customerAlreadyExists": "您已经拥有一个普发真空帐户，而且您的密码仍保持未变。",
+      "technicalError": "发生技术错误。 请联系普发真空支持。",
+      "customerInconsistentError": "出现了与您帐户有关的问题。 请联系我们的客服。"
     }
   }
 }

@@ -1,41 +1,18 @@
 <template>
-  <div class="tab-navigation">
-    <div v-if="!isMobile" class="tab-navigation__wrapper">
-      <div class="tab-navigation__desktop">
-        <Button
-          v-for="(tab, index) in tabs.filter((o) => o.active)"
-          :key="index"
-          :label="tab.name"
-          :variant="
-            lastTabSelected === tab.trigger || isDisabled(tab.trigger)
-              ? 'secondary'
-              : 'inverted'
-          "
-          :class="{ active: lastTabSelected === tab.trigger }"
-          cutaway="bottom"
-          class="tab-navigation__desktop__item"
-          :disabled="isDisabled(tab.trigger)"
-          @click="selectTab(tab.trigger)"
-        />
-      </div>
-      <DetailTabContent
-        class="tab-navigation__desktop__content"
-        :last-tab-selected="lastTabSelected"
-      />
-    </div>
-    <GenericAccordion
-      v-else
-      :accordion-entries="mobileAccordionItems"
-      level="h3"
-      variant="tab"
-      class="tab-navigation__mobile"
+  <ContentWrapper :breakout="isMobile">
+    <GenericTabs
+      :tabs="renderableTabs"
+      :active-tab="currentTabSelected"
+      @selectTab="selectTab"
     >
-      <template v-for="item in mobileAccordionItems" #[item.slotName]>
-        <!-- eslint-disable-next-line vue/valid-v-for -->
-        <DetailTabContent :last-tab-selected="item.slotName" />
+      <template #activeTabContent>
+        <DetailTabContent
+          class="tab-navigation__desktop__content"
+          :last-tab-selected="currentTabSelected"
+        />
       </template>
-    </GenericAccordion>
-  </div>
+    </GenericTabs>
+  </ContentWrapper>
 </template>
 
 <script>
@@ -45,24 +22,23 @@ import {
   ref,
   computed,
 } from '@nuxtjs/composition-api'
+
 import { useProductStore } from '~/stores/product'
-import Button from '~/components/atoms/Button/Button'
-import DetailTabContent from './DetailTabContent/DetailTabContent'
-import getSortedFeatures from './partials/getSortedFeatures'
-import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordion'
 import { storeToRefs } from 'pinia'
+
+import getSortedFeatures from './partials/getSortedFeatures'
+
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
+import DetailTabContent from './DetailTabContent/DetailTabContent'
 
 export default defineComponent({
   components: {
-    Button,
+    ContentWrapper,
+    GenericTabs,
     DetailTabContent,
-    GenericAccordion,
   },
   props: {
-    productCode: {
-      type: String,
-      default: '',
-    },
     accessories: {
       type: Array,
       default: () => [],
@@ -75,15 +51,10 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
-    loadingReferences: {
-      type: Boolean,
-      default: false,
-    },
   },
-  setup(props) {
+  setup() {
     const { i18n, app } = useContext()
     const { isMobile } = app.$breakpoints
-
     const productStore = useProductStore()
     const {
       product,
@@ -92,7 +63,8 @@ export default defineComponent({
       productAccessoriesGroups,
     } = storeToRefs(productStore)
 
-    let lastTabSelected = ref('productInfo')
+    const currentTabSelected = ref('productInfo')
+
     const tabs = ref([
       {
         name: i18n.t('product.productInformation'),
@@ -136,31 +108,6 @@ export default defineComponent({
       },
     ])
 
-    const mobileAccordionItems = computed(() => {
-      return tabs.value
-        .filter((o) => o.active)
-        .map((item) => {
-          return {
-            label: item.name,
-            isActive: false, // no initial open tab
-            disabled: isDisabled(item.trigger),
-            slotName: item.trigger,
-          }
-        })
-    })
-
-    const spareParts = computed(() => {
-      return props.references.filter((o) => o.referenceType === 'SPAREPART')
-    })
-
-    const consumables = computed(() => {
-      return props.references.filter((o) => o.referenceType === 'CONSUMABLE')
-    })
-
-    const selectTab = (code) => {
-      lastTabSelected.value = code
-    }
-
     const isDisabled = (code) => {
       switch (code) {
         case 'technicalData':
@@ -184,63 +131,27 @@ export default defineComponent({
       }
     }
 
+    const renderableTabs = computed(() => {
+      return tabs.value
+        .filter((o) => o.active)
+        .map((item) => {
+          return {
+            ...item,
+            disabled: isDisabled(item.trigger),
+          }
+        })
+    })
+
+    const selectTab = (code) => {
+      currentTabSelected.value = code
+    }
+
     return {
-      lastTabSelected,
-      tabs,
-      mobileAccordionItems,
-      spareParts,
-      consumables,
-      selectTab,
-      isDisabled,
-      i18n,
       isMobile,
+      currentTabSelected,
+      renderableTabs,
+      selectTab,
     }
   },
 })
 </script>
-
-<style lang="scss">
-.tab-navigation {
-  @apply tw-w-full;
-
-  &__desktop {
-    @apply tw-hidden;
-
-    @screen md {
-      @apply tw-flex;
-      @apply tw-flex-row;
-      @apply tw-justify-start;
-      @apply tw-border-b-2;
-      @apply tw-border-pv-red;
-      @apply tw-w-full;
-      @apply tw-overflow-y-auto;
-    }
-
-    &__content {
-      @apply tw-hidden;
-
-      @screen md {
-        @apply tw-flex;
-      }
-    }
-
-    &__item {
-      @apply tw-ml-2;
-
-      &:first-child {
-        @apply tw-ml-0;
-      }
-    }
-  }
-
-  &__mobile {
-    @apply tw-flex;
-    @apply tw-justify-evenly;
-    @apply tw-flex-col;
-
-    &__item {
-      @apply tw-mt-2;
-    }
-  }
-}
-</style>

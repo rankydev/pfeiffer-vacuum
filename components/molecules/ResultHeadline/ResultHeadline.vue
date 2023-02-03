@@ -5,10 +5,16 @@
     :class="{
       'result-headline--with-link': link,
       'result-headline--without-link': !link,
+      'result-headline--center': center,
     }"
   >
     <nuxt-link v-if="link" class="result-headline__link" :to="url">
-      <Icon v-if="link" class="result-headline__icon" icon="arrow_back_ios" />
+      <Icon
+        v-if="link"
+        class="result-headline__icon"
+        icon="arrow_back_ios"
+        size="large"
+      />
     </nuxt-link>
     <div class="result-headline__content">
       <h1 v-if="searchTerm || headline" class="result-headline__headline">
@@ -58,6 +64,14 @@ export default defineComponent({
       type: String,
       default: null,
     },
+    center: {
+      type: Boolean,
+      default: false,
+    },
+    backButtonOverrideQueryParams: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   setup(props) {
     const route = useRoute()
@@ -70,7 +84,7 @@ export default defineComponent({
 
     const url = computed(() => ({
       path: props.link,
-      query: { ...route.value.query, currentPage: 1 },
+      query: { ...route.value.query, ...props.backButtonOverrideQueryParams },
     }))
 
     return { headlineText, url }
@@ -82,10 +96,10 @@ export default defineComponent({
 .result-headline {
   @apply tw-flex;
   @apply tw-items-center;
-  @apply tw-mt-6 tw-mb-4;
+  @apply tw-mb-4;
 
   @screen md {
-    @apply tw-mt-8 tw-mb-6;
+    @apply tw-mb-6;
   }
 
   &--with-link {
@@ -108,6 +122,10 @@ export default defineComponent({
       @apply tw-flex;
       @apply tw-items-center;
     }
+  }
+
+  &--center {
+    @apply tw-justify-center;
   }
 
   &__link {

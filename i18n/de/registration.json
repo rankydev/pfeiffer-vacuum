@@ -3,9 +3,18 @@
     "title": "Kontodaten",
     "password": "Passwort"
   },
+  "formAccountData": {
+    "companyUniversity": "Firma/Universität",
+    "name": "Name",
+    "firstname": "Vorname",
+    "lastname": "Nachname",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "changePassword": "Passwort ändern"
+  },
   "formCompanyData": {
     "title": "Firmendaten",
-    "infobox": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. Dieser Schritt ist optional.Bitte beachten Sie: Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
+    "infobox": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br/><br/> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
     "addCompanyData": "Firmenadresse hinzufügen",
     "removeCompanyData": "Entfernen",
     "registeredCustomer": "Bereits Kunde?",
@@ -18,9 +27,32 @@
     "telephoneNumber": "Telefon",
     "fax": "Fax",
     "country": "Land",
-    "countryAutofill": "Wird automatisch befüllt"
+    "countryAutofill": "Wird automatisch befüllt",
+    "phone": "Telefon",
+    "address": "Adresse"
   },
-  "infotext": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br /> <b>Dieser Schritt ist optional</b> <br /><br /> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
+  "addCompanyData": {
+    "success": {
+      "headline": "Vielen Dank für das Vervollständigen Ihres Kontos.",
+      "description": "Ihre Registrierungsdetails werden von unserem Pfeiffer Vacuum Team innerhalb der regulären Arbeitszeiten überprüft. Danach wird Ihnen eine Bestätigungs- oder Ablehnungsmail zugesendet. Dies kann bis zu zwei Tage dauern."
+    },
+    "open": {
+      "headline": "Bitte haben Sie noch etwas Geduld...",
+      "description": "Ihre Registrierungsdetails werden aktuell von unserem Pfeiffer Vacuum Team innerhalb der regulären Arbeitszeiten überprüft. Anschließend erhalten Sie eine Bestätigungs- oder Ablehnungsmail. Dies kann bis zu zwei Tage dauern."
+    },
+    "rejected": {
+      "headline": "Ihr Konto wurde abgelehnt",
+      "description": "Falls Sie hierzu Fragen haben, kontaktieren Sie bitte unseren <a target=\"_blank\" href=\"/contact\" style=\"text-decoration: underline\" >Kundenservice</a>."
+    },
+    "discard": "Verwerfen",
+    "saveChanges": "Speichern",
+    "errorOccured": "Beim Hinzufügen der Daten ist ein Fehler aufgetreten"
+  },
+  "updateAccountData": {
+    "success": "Ihre Daten wurden erfolgreich aktualisiert",
+    "errorOccured": "Beim Ändern der Daten ist ein Fehler aufgetreten"
+  },
+  "infotext": "Hier können Sie die Adressdaten Ihres Unternehmens hinterlegen. <br/><br/> <b>Bitte beachten Sie:</b> Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
   "registrationSuccessPage": {
     "lite": {
       "title": "Ihre Registrierung wurde erfolgreich gesendet",

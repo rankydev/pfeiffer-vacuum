@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from '@nuxtjs/composition-api'
+export * from './accountData'
 
 export const useMyAccountStore = defineStore('myaccount', () => {
   const menuItems = ref([])

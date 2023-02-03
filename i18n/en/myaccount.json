@@ -1,8 +1,6 @@
 {
   "address": "Adress",
   "billingAddress": "Billing address",
-  "billingAddressMissing":
-    "No billing address was found for your user. Please contact the Pfeiffer Vacuum Service.",
   "deliveryAddress": "Delivery address",
   "company": "Company",
   "firstName": "First name",
@@ -18,5 +16,38 @@
   "contactDetails": "Contact Details",
   "deleteDeliveryAddress": "Delete",
   "setDefaultAddress": "Set as default",
-  "defaultDelivery": "Default delivery address"
+  "defaultDelivery": "Default delivery address",
+  "accountDataLong": "Account & Company data",
+  "accountDataShort": "Account Data",
+  "companyData": "Company Data",
+  "saveCompanyData": "Save company data",
+  "successfulSaving": "Your data were updated successfully",
+  "discard": "Discard data",
+  "addressData": "Address data",
+  "addDeliveryAddress": "Add delivery address",
+  "addressDataEditPage": "Edit address data",
+  "addressDataAddPage": "Add address data",
+  "addressDataEditPageDescription": "Edit the selected delivery address here.",
+  "addressDataAddPageDescription": "Here you can add a new delivery address. Please fill in all the mandatory fields. ",
+  "addressDataEditPageSubmitBtn": "Save changes",
+  "addressDataAddPageSubmitBtn": "Save and go back",
+  "addressDataAddPageLinkBtn": "Back to overview",
+  "updateDeliveryAddressError": "Could not save changes.",
+  "addDeliveryAddressError": "Could not save delivery address.",
+  "deleteDeliveryAddressSuccess": "Delivery address was deleted successfully.",
+  "setDefaultDeliveryAddressSuccess": "Successfully saved delivery address as default delivery address.",
+  "userStatus": {
+    "lead": {
+      "requestInfo": "Please add company data to send request",
+      "functionalityInfo": "Please add company data to use this functionality"
+    },
+    "open": {
+      "requestInfo": "Please wait for approval to send request",
+      "functionalityInfo": "Please wait for approval to use this functionality"
+    },
+    "rejected": {
+      "requestInfo": "You are not permitted to send requests",
+      "functionalityInfo": "Sorry, you are not permitted to use this functionality"
+    }
+  }
 }
