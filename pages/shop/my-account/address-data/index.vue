@@ -108,7 +108,7 @@ export default defineComponent({
       if (isLeadUser.value) return 'lead'
       if (isOpenUser.value) return 'open'
       if (isRejectedUser.value) return 'rejected'
-      return 'undefined'
+      return undefined
     })
 
     const handleDelete = async (e) => {
