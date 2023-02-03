@@ -16,7 +16,7 @@ import { useToast } from '~/composables/useToast'
 export const useCartStore = defineStore('cart', () => {
   const { getCookie } = useCookieHelper()
   const { isLoggedIn } = storeToRefs(useUserStore())
-  const { logger } = useLogger('cartApi')
+  const { logger } = useLogger('cartStore')
   const toast = useToast()
   const { i18n } = useContext()
 
