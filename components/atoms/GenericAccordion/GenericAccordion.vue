@@ -80,6 +80,7 @@ export default defineComponent({
      * <b>slotName:string</b> // unique identifier for your slot<br>
      * <b>isActive:boolean</b> // items which set this to false will not be displayed<br>
      * <b>disabled:boolean</b> // those items are displayed but cannot be opened<br>
+     * <b>loading:boolean</b>
      */
     accordionEntries: {
       type: Array,
@@ -108,22 +109,34 @@ export default defineComponent({
       default: 'standard',
       validator: (val) => ['standard', 'tab', 'variationmatrix'].includes(val),
     },
+    /**
+     * Display loading indicator
+     */
     loading: {
       type: Boolean,
       default: false,
     },
   },
-  emits: ['activeTabChange'],
+  emits: ['newActiveTab', 'newActiveTabList'],
   setup(props, { emit }) {
     const sanitizer = useSanitizer()
 
     const active = ref(undefined)
     watch(active, (newVal, oldVal) => {
-      // do not emit value change when set initially (change from undefindes) or when active tab is deselected
-      if (oldVal === undefined || newVal === null) return
-      const accordionEntry = props.accordionEntries[newVal]
-      if (accordionEntry) {
-        emit('activeTabChange', props.accordionEntries[newVal].slotName)
+      // do not emit a change event when the active index value is set initially below (change value from undefined)
+      // this is not a real change by the user
+      if (oldVal === undefined) return
+      // do not emit a change event when the new value is null (this means the currently active tab was just deselected)
+      if (newVal === null) return
+
+      // inform parent component about new active tab(s)
+      if (props.multiple) {
+        emit('newActiveTabList', newVal)
+      } else {
+        const accordionEntry = props.accordionEntries[newVal]
+        if (accordionEntry) {
+          emit('newActiveTab', props.accordionEntries[newVal].slotName)
+        }
       }
     })
 
