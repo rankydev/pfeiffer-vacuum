@@ -2,11 +2,14 @@ import { storeToRefs } from 'pinia'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useCookieHelper } from '~/composables/useCookieHelper'
 import { useUserStore } from '~/stores/user'
+import { useLogger } from '~/composables/useLogger'
 import config from '~/config/hybris.config'
 
 export const useCartApi = (currentCart, currentCartGuid) => {
   const cookieHelper = useCookieHelper()
   const { axios } = useAxiosForHybris()
+
+  const { logger } = useLogger('cartApi')
 
   const userStore = useUserStore()
   const { currentUser, customerId, isLoggedIn } = storeToRefs(userStore)
@@ -16,9 +19,11 @@ export const useCartApi = (currentCart, currentCartGuid) => {
    */
   const loadCart = async (create) =>
     (currentCart.value = await getOrCreateCart(create))
+
   const validateCart = (res) => {
     return res && typeof res === 'object' && !res.error && !res.errors
   }
+
   const updateCartCookie = (cart) => {
     if (cart) {
       cookieHelper.setCookie(
@@ -44,11 +49,10 @@ export const useCartApi = (currentCart, currentCartGuid) => {
       return null
     }
   }
+
   const getGuidForAnonymousCart = () => {
-    // If current cart id is present return
     if (currentCartGuid.value) return currentCartGuid.value
 
-    // Else get cart id from cookie
     try {
       const cartCookie = JSON.parse(cookieHelper.getCookie('cart', null))
       if (cartCookie?.guid) return cartCookie.guid
@@ -71,6 +75,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     }
     return null
   }
+
   const getOrCreateAnonymousCart = async (createIfNotExist) => {
     const anonymousCartGuid = getGuidForAnonymousCart()
     const existingCart = await getAnonymousCart(anonymousCartGuid)
@@ -91,13 +96,13 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     }
     return null
   }
+
   const getOrCreateUserCart = async () => {
     let existingCart = null
 
     existingCart = await axios.$get(
-      config.CARTS_CURRENT_USER_API + currentUser.value?.ociBuyer
-        ? customerId.value
-        : '/current',
+      config.CARTS_CURRENT_USER_API +
+        (currentUser.value?.ociBuyer ? customerId.value : '/current'),
       { params: { fields: 'FULL' } }
     )
 
@@ -117,16 +122,25 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     if (isLoggedIn.value) return getOrCreateUserCart()
     return getOrCreateAnonymousCart(createIfNotExist)
   }
-  const mergeCarts = async (anonymousCartGuid, userCart) => {
-    const mergedCart = await axios.$post(config.CARTS_CURRENT_USER_API, null, {
-      params: {
-        fields: 'FULL',
-        oldCartId: anonymousCartGuid,
-        toMergeCartGuid: userCart.guid,
-      },
-    })
 
-    if (validateCart(mergedCart)) return mergedCart
+  const mergeCarts = async (from, to) => {
+    let mergedCart
+
+    try {
+      mergedCart = await axios.$post(config.CARTS_CURRENT_USER_API, null, {
+        params: {
+          fields: 'FULL',
+          oldCartId: from,
+          toMergeCartGuid: to,
+        },
+      })
+      if (validateCart(mergedCart)) {
+        updateCartCookie(null)
+        return mergedCart
+      }
+    } catch (e) {
+      logger.error('Could not merge carts', e)
+    }
 
     return null
   }
@@ -168,6 +182,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     return false
   }
+
   const updateQuantity = async (entryNumber, quantity) => {
     const orderEntry = {
       quantity,
@@ -208,6 +223,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     return null
   }
+
   const setReferenceNumber = async (reference) => {
     await loadCart(true)
 
@@ -226,6 +242,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     return false
   }
+
   const setRequestComment = async (comment) => {
     await loadCart(true)
     const result = await axios.post(

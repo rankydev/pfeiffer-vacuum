@@ -1,26 +1,27 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import {
-  ref,
   computed,
   onBeforeMount,
   onServerPrefetch,
   useContext,
+  watch,
+  ssrRef,
 } from '@nuxtjs/composition-api'
 import { useCartApi } from './partials/useCartApi'
 import { useCookieHelper } from '~/composables/useCookieHelper'
-import { useKeycloak } from '~/stores/user/partials/useKeycloak'
+import { useUserStore } from '~/stores/user'
 import { useLogger } from '~/composables/useLogger'
 import { useToast } from '~/composables/useToast'
 
 export const useCartStore = defineStore('cart', () => {
   const { getCookie } = useCookieHelper()
-  const { isLoginProcess } = useKeycloak()
+  const { isLoggedIn } = storeToRefs(useUserStore())
   const { logger } = useLogger('cartApi')
   const toast = useToast()
   const { i18n } = useContext()
 
   // State
-  const currentCart = ref({})
+  const currentCart = ssrRef({})
 
   // Getters
   const currentCartGuid = computed(() => currentCart.value?.guid)
@@ -28,21 +29,23 @@ export const useCartStore = defineStore('cart', () => {
   const cartApi = useCartApi(currentCart, currentCartGuid)
   const { getOrCreateCart, mergeCarts, addToCart } = cartApi
 
-  const initialCartCheck = async () => {
-    const cartCookie = JSON.parse(getCookie('cart', null))
-    if (cartCookie) currentCart.value = cartCookie
+  const initialCartLoad = async () => {
+    const anonymousCartCookie = JSON.parse(getCookie('cart', null))
+    if (anonymousCartCookie) currentCart.value = anonymousCartCookie
 
-    let tempCart = await getOrCreateCart(false)
-
-    if (isLoginProcess.value) {
-      if (currentCartGuid.value !== tempCart?.guid) {
-        tempCart = await mergeCarts(currentCartGuid.value, tempCart)
-      }
-    } else {
-      tempCart = await getOrCreateCart(true)
-    }
-
+    let tempCart = await getOrCreateCart(!isLoggedIn.value)
     if (tempCart) currentCart.value = tempCart
+  }
+
+  const mergeCartsAfterLogin = async () => {
+    const cartCookie = JSON.parse(getCookie('cart', null))
+
+    if (currentCartGuid.value !== cartCookie?.guid) {
+      currentCart.value = await mergeCarts(
+        cartCookie.guid,
+        currentCartGuid.value
+      )
+    }
   }
 
   const addProductToCart = async (code, quantity) => {
@@ -61,8 +64,15 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
-  onBeforeMount(initialCartCheck)
-  onServerPrefetch(initialCartCheck)
+  onBeforeMount(initialCartLoad)
+  onServerPrefetch(initialCartLoad)
+
+  watch(isLoggedIn, async (newVal) => {
+    await initialCartLoad()
+    if (newVal) {
+      await mergeCartsAfterLogin()
+    }
+  })
 
   return {
     // State
@@ -72,7 +82,6 @@ export const useCartStore = defineStore('cart', () => {
     currentCartGuid,
 
     // Actions
-    initialCartCheck,
     addProductToCart,
   }
 })
