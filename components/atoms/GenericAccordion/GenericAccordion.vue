@@ -194,20 +194,24 @@ export default defineComponent({
     &--active {
       #{$root}__label {
         @apply tw-text-pv-red;
+        -webkit-text-fill-color: #dd1541;
       }
     }
 
     &:hover,
     &:focus-visible {
       @apply tw-text-pv-red-lighter;
+      -webkit-text-fill-color: #ff184b;
     }
 
     &--disabled {
       @apply tw-text-pv-grey-48;
+      -webkit-text-fill-color: #7a7a7a;
 
       &:hover,
       &:focus-visible {
         @apply tw-text-pv-grey-48;
+        -webkit-text-fill-color: #7a7a7a;
       }
     }
 

@@ -276,14 +276,17 @@ export default defineComponent({
     &--is-default {
       button {
         @apply tw-text-pv-grey-16;
+        -webkit-text-fill-color: #292929;
 
         &:hover {
           @apply tw-text-pv-grey-16;
+          -webkit-text-fill-color: #292929;
           @apply tw-cursor-not-allowed;
         }
 
         &:focus {
           @apply tw-text-pv-grey-16;
+          -webkit-text-fill-color: #292929;
         }
       }
     }
