@@ -89,7 +89,7 @@ const getAccessToken = async (req) => {
       new URLSearchParams(formData).toString(),
       config
     )
-    logger.info('axios result', result)
+    // logger.info('axios result', result)
     currentToken = result.data
     // We want to request a new token 5 minutes before the current one expires
     currentToken.expires = new Date(
