@@ -15,15 +15,12 @@
   </div>
 </template>
 <script>
-import {
-  defineComponent,
-  ref,
-  useRoute,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
 import { joinURL } from 'ufo'
 import CategoryCollapse from './partials/CategoryCollapse'
 import GenericHorizontalSlider from '~/components/molecules/GenericHorizontalSlider/GenericHorizontalSlider.vue'
+import { useCategoryStore } from '~/stores/category/category'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
@@ -38,15 +35,16 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute()
-    const { app } = useContext()
     const showScrollbar = ref(false)
+    const categoryStore = useCategoryStore()
+    const { rootUrl } = storeToRefs(categoryStore)
 
     const toggleScrollbarClass = () => {
       showScrollbar.value = !showScrollbar.value
     }
 
     const getUrl = (id) => ({
-      path: joinURL(app.localePath('shop-categories'), id),
+      path: joinURL(rootUrl.value, id),
       query: { ...route.value.query, currentPage: 1 },
     })
 
