@@ -20,15 +20,18 @@
           >
             <div>[Filter] PVWEB-550</div>
           </div>
-          <div class="document-search-result__list">
-            <div
+          <transition-group
+            name="fade-in-out"
+            class="document-search-result__list"
+            tag="div"
+          >
+            <DocumentSearchItem
               v-for="item in searchResultsItems"
               :key="item.id"
-              class="document-search-result__item"
-            >
-              {{ item.title }}
-            </div>
-          </div>
+              :product="item"
+              class="fade-in-out-item"
+            />
+          </transition-group>
           <div class="document-search-result__pages">
             <CategoryPageSizeSelection
               :active="parseInt(pageSize)"
@@ -56,6 +59,7 @@ import { storeToRefs } from 'pinia'
 import { useEmpolisStore } from '~/stores/empolis'
 
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
+import DocumentSearchItem from '~/components/molecules/DocumentSearchItem/DocumentSearchItem.vue'
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
 import Pagination from '~/components/molecules/Pagination/Pagination.vue'
 
@@ -63,6 +67,7 @@ export default defineComponent({
   name: 'DocumentSearchResult',
   components: {
     LoadingSpinner,
+    DocumentSearchItem,
     CategoryPageSizeSelection,
     Pagination,
   },
