@@ -112,3 +112,68 @@ export default [
       '<!--#storyblok#{"name": "MainNavigationLink", "space": "144293", "uid": "8b4b8c55-9119-4248-b929-0a1d8d306829", "id": "104316822"}-->',
   },
 ]
+
+export const OCIHeaderEntries = [
+  {
+    _uid: '684c230e-064f-494a-9984-71cf35147fba',
+    href: '#',
+    label: 'Home',
+    target: '_self',
+    component: 'MainNavigationLink',
+    navigationEntries: [],
+    _editable:
+      '<!--#storyblok#{"name": "MainNavigationLink", "space": "144293", "uid": "684c230e-064f-494a-9984-71cf35147fbb", "id": "104316822"}-->',
+  },
+  {
+    _uid: '684c230e-064f-494a-9984-71cf35147fbb',
+    href: '#',
+    label: 'Produkte',
+    target: '_self',
+    component: 'MainNavigationLink',
+    navigationEntries: [
+      {
+        _uid: '684c230e-064f-494a-9984-71cf35147fbc',
+        href: '#',
+        label: 'Sub1',
+        target: '_self',
+        component: 'MainNavigationLink',
+        navigationEntries: [
+          {
+            _uid: '684c230e-064f-494a-9984-71cf35147fbca',
+            href: '#',
+            label: 'Sub3',
+            target: '_self',
+            component: 'MainNavigationLink',
+            navigationEntries: [],
+            _editable:
+              '<!--#storyblok#{"name": "MainNavigationLink", "space": "144293", "uid": "684c230e-064f-494a-9984-71cf35147fbb", "id": "104316822"}-->',
+          },
+          {
+            _uid: '684c230e-064f-494a-9984-71cf35147fbcb',
+            href: '#',
+            label: 'Sub4',
+            target: '_self',
+            component: 'MainNavigationLink',
+            navigationEntries: [],
+            _editable:
+              '<!--#storyblok#{"name": "MainNavigationLink", "space": "144293", "uid": "684c230e-064f-494a-9984-71cf35147fbb", "id": "104316822"}-->',
+          },
+        ],
+        _editable:
+          '<!--#storyblok#{"name": "MainNavigationLink", "space": "144293", "uid": "684c230e-064f-494a-9984-71cf35147fbb", "id": "104316822"}-->',
+      },
+      {
+        _uid: '684c230e-064f-494a-9984-71cf35147fbd',
+        href: '#',
+        label: 'Sub2',
+        target: '_self',
+        component: 'MainNavigationLink',
+        navigationEntries: [],
+        _editable:
+          '<!--#storyblok#{"name": "MainNavigationLink", "space": "144293", "uid": "684c230e-064f-494a-9984-71cf35147fbb", "id": "104316822"}-->',
+      },
+    ],
+    _editable:
+      '<!--#storyblok#{"name": "MainNavigationLink", "space": "144293", "uid": "684c230e-064f-494a-9984-71cf35147fbb", "id": "104316822"}-->',
+  },
+]

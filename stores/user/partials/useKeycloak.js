@@ -22,7 +22,7 @@ export const useKeycloak = () => {
   const { logger } = useLogger('useKeycloak')
   const { getCurrentHostUrl } = useContextUtil()
   const { setCookie, removeCookie, getCookie } = useCookieHelper()
-  const auth = ssrRef(null)
+  const auth = ssrRef({ type: 'oci' })
   const keycloakInstance = ref(null)
 
   const route = useRoute()

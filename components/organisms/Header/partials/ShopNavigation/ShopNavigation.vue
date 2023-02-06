@@ -2,8 +2,8 @@
   <div class="shop-navigation">
     <client-only>
       <Popup>
-        <template #activator="{ togglePopup }">
-          <LoadingSpinner :show="userStore.isLoginProcess">
+        <template v-if="!isOciUser" #activator="{ togglePopup }">
+          <LoadingSpinner :show="isLoginProcess">
             <Button
               shape="plain"
               variant="secondary"
@@ -25,7 +25,7 @@
               @entry-clicked="closePopup"
             />
             <Button
-              v-if="userStore.isLoggedIn || userStore.isLoginProcess"
+              v-if="isLoggedIn || isLoginProcess"
               shape="outlined"
               variant="secondary"
               class="shop-navigation__popup-logout"
@@ -62,6 +62,7 @@ import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import MyAccountNavigation from '~/components/organisms/MyAccount/partials/MyAccountNavigation/MyAccountNavigation.vue'
 import Popup from '~/components/atoms/Popup/Popup.vue'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
@@ -76,18 +77,21 @@ export default defineComponent({
     const router = useRouter()
     const { i18n, app } = useContext()
     const userStore = useUserStore()
+    const { isOciUser, isLoggedIn, isLoginProcess, currentUser } =
+      storeToRefs(userStore)
+    const { logout, login } = userStore
     const isMobile = app.$breakpoints.isMobile
 
     const myAccountLabel = computed(() => {
-      if (userStore.isLoginProcess || isMobile.value) return ''
+      if (isLoginProcess || isMobile.value) return ''
 
-      return userStore.isLoggedIn
-        ? userStore.currentUser?.name
+      return isLoggedIn
+        ? currentUser?.name
         : i18n.t('navigation.button.signIn.label')
     })
 
     const handleMyAccount = (openPopupCallback) => {
-      if (userStore.isLoggedIn) {
+      if (isLoggedIn) {
         if (isMobile.value) {
           router.push({
             path: app.localePath('shop-my-account'),
@@ -96,15 +100,20 @@ export default defineComponent({
           openPopupCallback()
         }
       } else {
-        userStore.login()
+        login()
       }
     }
 
     return {
-      logout: userStore.logout,
-      handleMyAccount,
+      // getters
+      isLoggedIn,
+      isLoginProcess,
       myAccountLabel,
-      userStore,
+      isOciUser,
+
+      // actions
+      logout,
+      handleMyAccount,
     }
   },
 })
