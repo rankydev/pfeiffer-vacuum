@@ -4,6 +4,14 @@
       :headline="$t('myaccount.addressData')"
       :link="localePath('shop-my-account')"
     />
+    <GlobalMessage
+      v-if="!billingAddress && userStatusType"
+      :description="
+        $t(`myaccount.userStatus.${userStatusType}.functionalityInfo`)
+      "
+      variant="warning"
+      :prevent-icon-change="true"
+    />
     <template v-if="billingAddress">
       <SectionHeadline
         class="address-data__section-headline address-data__section-headline--billing-address"
@@ -18,11 +26,6 @@
         />
       </div>
     </template>
-    <Infobox
-      v-if="!billingAddress && userStatusType"
-      :text="$t(`myaccount.userStatus.${userStatusType}.functionalityInfo`)"
-    />
-
     <SectionHeadline
       class="address-data__section-headline address-data__section-headline--delivery-address"
     >
@@ -60,15 +63,6 @@
         />
       </template>
     </transition-group>
-
-    <!--      <t-button
-        class="address-data-content__add-address tw-col-span-12 md:tw-col-span-6"
-        :disabled="!isApprovedUser"
-        :to="localePath('shop-my-account-address-data-add')"
-      >
-        <material-icon icon="add" class="tw-mr-2" />
-        {{ $t('myaccount.addDeliveryAddress') }}
-      </t-button>-->
   </div>
 </template>
 
@@ -83,7 +77,7 @@ import {
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import AddressCard from '~/components/molecules/AddressCard/AddressCard'
-import Infobox from '~/components/molecules/Infobox/Infobox'
+import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 import { useUserStore } from '~/stores/user'
 import { storeToRefs } from 'pinia'
 import Icon from '~/components/atoms/Icon/Icon'
@@ -95,7 +89,7 @@ export default defineComponent({
     ResultHeadline,
     SectionHeadline,
     AddressCard,
-    Infobox,
+    GlobalMessage,
     Icon,
   },
   setup() {
@@ -114,7 +108,7 @@ export default defineComponent({
       if (isLeadUser.value) return 'lead'
       if (isOpenUser.value) return 'open'
       if (isRejectedUser.value) return 'rejected'
-      return ''
+      return undefined
     })
 
     const handleDelete = async (e) => {

@@ -129,18 +129,18 @@ export default defineComponent({
     const dropdownItems = computed(() => {
       return manualVariantSelectionOptions.value.map((item) => {
         return {
-          value: item.code,
-          label: item.name,
-          disabled: item.code === currentVariantId.value,
+          value: item,
+          label: item,
+          disabled: item === currentVariantId.value,
         }
       })
     })
 
     const selectedVariantLabel = computed(() => {
       const variant = manualVariantSelectionOptions.value.find((item) => {
-        return item.code === currentVariantId.value
+        return item === currentVariantId.value
       })
-      return variant?.name || ''
+      return variant || ''
     })
 
     const manualVariantSelected = (selectItem) => {
