@@ -27,5 +27,7 @@
         "text": "You are not permitted to see prices"
       }
     }
-  }
+  },
+  "addToCartSuccess": "Successfully added product to cart",
+  "addToCartError": "An error occured while adding product to cart"
 }
