@@ -119,7 +119,9 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import '/assets/scss/mixins';
+
 .document-search-result {
   @apply tw-bg-pv-grey-96;
   @apply tw-pt-4;
@@ -160,13 +162,13 @@ export default defineComponent({
     }
   }
 
+  &__list {
+    @include box-shadow;
+  }
+
   &__total-count {
     @apply tw-text-pv-grey-48;
     @apply tw-text-xs;
-    @apply tw-mb-4;
-  }
-
-  &__facets {
     @apply tw-mb-4;
   }
 
