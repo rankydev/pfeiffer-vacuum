@@ -27,11 +27,23 @@ export const useCategoryStore = defineStore('category', () => {
 
   const currentSuggestions = computed(() => searchSuggestions)
 
+  const navigationIsSearchPage = computed(() => {
+    return route.value.path.includes('/shop/search')
+  })
+
+  const rootUrl = computed(() => {
+    return localePath(
+      navigationIsSearchPage.value ? 'shop-search' : 'shop-categories'
+    )
+  })
+
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
     const categoryPath = category.value?.categoryPath || []
-    const rootUrl = localePath('shop-categories')
-    const rootCat = { name: i18n.t('category.rootCategory'), href: rootUrl }
+    const rootCat = {
+      name: i18n.t('category.rootCategory'),
+      href: rootUrl.value,
+    }
 
     if (!searchTerm.value) {
       return [
@@ -39,7 +51,7 @@ export const useCategoryStore = defineStore('category', () => {
         rootCat,
         ...categoryPath.map(({ name, id }) => ({
           name,
-          href: joinURL(rootUrl, id),
+          href: joinURL(rootUrl.value, id),
         })),
       ]
     }
@@ -54,7 +66,7 @@ export const useCategoryStore = defineStore('category', () => {
       ...cmsPrefix,
       ...categoryPath.map(({ name, id }) => ({
         name,
-        href: joinURL(rootUrl, id),
+        href: joinURL(rootUrl.value, id),
       })),
       searchObj,
     ]
@@ -79,10 +91,10 @@ export const useCategoryStore = defineStore('category', () => {
   const parentCategoryPath = computed(() => {
     const categoryPath = category.value?.categoryPath || []
     if (categoryPath.length === 0) return null
-    if (categoryPath.length === 1) return localePath('shop-categories')
+    if (categoryPath.length === 1) return rootUrl.value
 
     const idx = categoryPath.length - 2
-    return joinURL(localePath('shop-categories'), categoryPath[idx].id)
+    return joinURL(rootUrl.value, categoryPath[idx].id)
   })
 
   const loadProducts = async () => {
@@ -153,6 +165,7 @@ export const useCategoryStore = defineStore('category', () => {
     categoryName,
     parentCategoryPath,
     currentSuggestions,
+    rootUrl,
 
     // actions
     loadByPath,

@@ -133,7 +133,7 @@ export const useAccountDataStore = defineStore('accountData', () => {
       label: i18n.t(
         'registration.formCompanyData.additionalCompanyInformation'
       ),
-      value: currentUser.value?.orgUnit?.furtherDetails,
+      value: currentUser.value?.orgUnit?.furtherDetails || '-',
     },
     {
       id: 'customer-number',
@@ -143,27 +143,27 @@ export const useAccountDataStore = defineStore('accountData', () => {
     {
       id: 'department',
       label: i18n.t('registration.formCompanyData.department'),
-      value: currentUser.value?.department,
+      value: currentUser.value?.department || '-',
     },
     {
       id: 'vat',
       label: i18n.t('registration.formCompanyData.tax'),
-      value: currentUser.value?.orgUnit?.vatID,
+      value: currentUser.value?.orgUnit?.vatID || '-',
     },
     {
       id: 'phone',
       label: i18n.t('registration.formCompanyData.phone'),
-      value: currentUser.value?.phone,
+      value: currentUser.value?.phone || '-',
     },
     {
       id: 'fax',
       label: i18n.t('registration.formCompanyData.fax'),
-      value: currentUser.value?.fax,
+      value: currentUser.value?.fax || '-',
     },
     {
       id: 'address',
       label: i18n.t('registration.formCompanyData.address'),
-      value: formattedAddress.value,
+      value: formattedAddress.value || '-',
     },
   ])
 

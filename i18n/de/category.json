@@ -6,6 +6,7 @@
   "moreFilters": "Mehr Filter",
   "activeFilters": "Aktive Filter:",
   "searchResult": "Ergebnisse für",
+  "resultsFound": "{totalResults} Ergebnisse gefunden",
   "sortAndFilter": "Sortieren & Filtern",
   "applyFilter": "Filter anwenden",
   "noMatchingProducts": "Keine passenden Produkte gefunden",
@@ -13,5 +14,7 @@
   "vacuumRange": "Vakuumbereich",
   "suctionSpeed": "Saugvermögen",
   "search": "Suche",
-  "suggestions": "Vorschläge"
+  "suggestions": "Vorschläge",
+  "productsTab": "Produkte",
+  "documentsTab": "Dokumente"
 }

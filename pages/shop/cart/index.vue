@@ -11,7 +11,15 @@
           <ContentWrapper>
             <div class="cart-page">
               <!-- ToDo: remove Placehoder text and insert Cart data -->
-              <h1>Cart Template</h1>
+              <h1>Current cart:</h1>
+              <ul>
+                <li v-for="(entry, index) in cartEntries" :key="index">
+                  <b> Name: </b>
+                  {{ entry.product.name }}
+                  <b> Quantity: </b>
+                  {{ entry.quantity }}
+                </li>
+              </ul>
             </div>
           </ContentWrapper>
         </template>
@@ -27,10 +35,12 @@ import {
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
+import { useCartStore } from '~/stores/cart'
 
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'Cart',
@@ -41,6 +51,11 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const context = useContext()
+    const cartStore = useCartStore()
+
+    const { currentCart } = storeToRefs(cartStore)
+
+    const cartEntries = computed(() => currentCart.value.entries)
 
     /**
      * build the cms slug
@@ -51,6 +66,7 @@ export default defineComponent({
     })
 
     return {
+      cartEntries,
       slugs,
     }
   },

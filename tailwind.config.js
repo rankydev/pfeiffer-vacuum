@@ -26,6 +26,7 @@ module.exports = {
       'pv-red': '#dd1541',
       'pv-red-darker': '#bd1237',
       'pv-red-lighter': '#ff184b',
+      'pv-red-opacity': 'rgba(242, 23, 71, 0.1)',
       'pv-error-lighter': '#E24265',
       'pv-yellow': '#f2e600',
       'pv-yellow-darker': '#dacf00',
