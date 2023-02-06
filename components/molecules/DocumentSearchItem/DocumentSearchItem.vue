@@ -148,7 +148,7 @@ export default defineComponent({
 
     &:hover {
       h5 {
-        @apply tw-text-pv-red;
+        @apply tw-text-pv-red-lighter;
       }
     }
 
@@ -249,7 +249,7 @@ export default defineComponent({
 
       &:hover {
         @apply tw-text-pv-red-lighter;
-        @apply tw-border-pv-red-lighter;
+        @apply tw-bg-pv-red-opacity;
       }
     }
   }
