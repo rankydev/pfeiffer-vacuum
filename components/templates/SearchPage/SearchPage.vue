@@ -163,7 +163,11 @@ export default defineComponent({
 
     const selectTab = (trigger) => {
       router.push({
-        query: { ...route.value.query, searchType: trigger },
+        // TODO: replace searchterm to the "old one" from the tab to switch to (if one exists?) [PVWEB-546]
+        query: {
+          searchTerm: route.value.query.searchTerm,
+          searchType: trigger,
+        },
       })
     }
 
