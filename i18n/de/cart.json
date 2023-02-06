@@ -31,5 +31,4 @@
   },
   "addToCartSuccess": "Produkt erfolgreich zum Warenkorb hinzugefügt",
   "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten"
->>>>>>> i18n/de/cart.json
 }
