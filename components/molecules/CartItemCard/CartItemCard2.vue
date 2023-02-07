@@ -36,9 +36,15 @@
         @input="updateQuantity"
       />
       <div class="cart-item-card-price">
+        <span class="cart-item-card-price__label">
+          {{ $t('cart.productPrice') }}
+        </span>
         <span>{{ ` € ${productPrice}` }}</span>
       </div>
       <div class="cart-item-card-totalPrice">
+        <span class="cart-item-card-totalPrice__label">{{
+          $t('cart.totalPrice')
+        }}</span>
         <span>{{ ` € ${totalPrice}` }}</span>
       </div>
       <Button
@@ -158,6 +164,7 @@ export default defineComponent({
 <style lang="scss">
 .cart-item-header {
   @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
+  @apply tw-mx-4;
 
   &__quantity {
     @apply tw-row-start-1 tw-row-end-1;
@@ -196,6 +203,8 @@ export default defineComponent({
   &-title {
     @apply tw-row-start-1 tw-row-end-1;
     @apply tw-col-start-2 tw-col-end-11;
+    @apply tw-text-base;
+    @apply tw-leading-6;
 
     @screen lg {
       @apply tw-col-start-2 tw-col-end-8;
@@ -233,11 +242,23 @@ export default defineComponent({
       @apply tw-col-start-10 tw-col-end-10;
       @apply tw-text-lg;
     }
+
+    &__label {
+      @apply tw-text-sm;
+      @apply tw-leading-6;
+
+      @screen lg {
+        @apply tw-hidden;
+      }
+    }
   }
 
   &-totalPrice {
-    @apply tw-row-start-3 tw-row-end-3;
+    @apply tw-row-start-2 tw-row-end-2;
     @apply tw-col-start-7 tw-col-end-12;
+    @apply tw-text-sm;
+    @apply tw-leading-6;
+    @apply tw-mt-16;
 
     @screen md {
       @apply tw-row-start-2 tw-row-end-2;
@@ -247,6 +268,12 @@ export default defineComponent({
     @screen lg {
       @apply tw-row-start-1 tw-row-end-1;
       @apply tw-text-lg;
+    }
+
+    &__label {
+      @screen lg {
+        @apply tw-hidden;
+      }
     }
   }
 
