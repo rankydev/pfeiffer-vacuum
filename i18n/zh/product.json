@@ -34,10 +34,15 @@
   "selectVariantExplained": "请根据您的个性化需求选择合适的产品变体，以查看相应的产品详情。",
   "scrollToVariantSelection": "选择变体",
   "priceOnRequest": "价格可垂询",
-  "noPriceAvailable": "没有可用的价格",
+  "noPriceAvailable": "价格无法加载",
   "help": "需要帮助吗？",
   "articleNumber": "订单号",
   "userStatus": {
+    "undefined": {
+      "priceInfo": {
+        "text": "价格无法加载"
+      }
+    },
     "lead": {
       "priceInfo": {
         "text": "请添加 {link} 以查看价格",
