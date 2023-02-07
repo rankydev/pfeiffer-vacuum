@@ -21,6 +21,7 @@
             <div>[Filter] PVWEB-550</div>
           </div>
           <transition-group
+            v-if="searchResultsItems.length"
             name="fade-in-out"
             class="document-search-result__list"
             tag="div"
@@ -32,7 +33,22 @@
               class="fade-in-out-item"
             />
           </transition-group>
-          <div class="document-search-result__pages">
+          <GlobalMessage
+            v-else-if="!searchResultsLoading && !searchResultsLoadingError"
+            :description="$t('category.documents.noResultsFound')"
+            variant="warning"
+            :prevent-icon-change="true"
+          />
+          <GlobalMessage
+            v-else-if="!searchResultsLoading && searchResultsLoadingError"
+            :description="$t('category.documents.loadingError')"
+            variant="error"
+            :prevent-icon-change="true"
+          />
+          <div
+            v-if="searchResultsItems.length"
+            class="document-search-result__pages"
+          >
             <CategoryPageSizeSelection
               :active="parseInt(pageSize)"
               @change="updatePageSize"
@@ -62,6 +78,7 @@ import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue
 import DocumentSearchItem from '~/components/molecules/DocumentSearchItem/DocumentSearchItem.vue'
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
 import Pagination from '~/components/molecules/Pagination/Pagination.vue'
+import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 
 export default defineComponent({
   name: 'DocumentSearchResult',
@@ -70,6 +87,7 @@ export default defineComponent({
     DocumentSearchItem,
     CategoryPageSizeSelection,
     Pagination,
+    GlobalMessage,
   },
   setup() {
     const router = useRouter()
