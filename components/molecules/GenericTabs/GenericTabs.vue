@@ -70,14 +70,14 @@ export default defineComponent({
   setup(props, { emit }) {
     const { app } = useContext()
     const { isMobile } = app.$breakpoints
-    const { tabs } = toRefs(props)
+    const { tabs, activeTab } = toRefs(props)
 
     const mobileAccordionItems = computed(() => {
       return tabs.value.map((item) => {
         return {
           ...item,
           label: item.name,
-          isActive: true, // no initial open tab
+          isActive: item.trigger === activeTab.value,
           slotName: item.trigger,
         }
       })
