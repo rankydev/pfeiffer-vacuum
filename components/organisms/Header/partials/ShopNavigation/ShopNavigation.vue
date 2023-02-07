@@ -82,7 +82,7 @@ export default defineComponent({
     const userStore = useUserStore()
     const { isOciUser, isLoggedIn, isLoginProcess, currentUser } =
       storeToRefs(userStore)
-    const { logout, login } = userStore
+    const { login } = userStore
     const cartStore = useCartStore()
 
     const { currentCart } = storeToRefs(cartStore)
