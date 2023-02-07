@@ -277,6 +277,7 @@ export default defineComponent({
     }
 
     &-input {
+      @apply tw-relative;
       @apply tw-mb-2;
       @apply tw-mx-auto;
 
