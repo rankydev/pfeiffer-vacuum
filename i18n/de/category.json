@@ -6,7 +6,7 @@
   "moreFilters": "Mehr Filter",
   "activeFilters": "Aktive Filter:",
   "searchResult": "Ergebnisse für",
-  "resultsFound": "Ergebnisse gefunden",
+  "resultsFound": "{totalResults} Ergebnisse gefunden",
   "sortAndFilter": "Sortieren & Filtern",
   "applyFilter": "Filter anwenden",
   "noMatchingProducts": "Keine passenden Produkte gefunden",

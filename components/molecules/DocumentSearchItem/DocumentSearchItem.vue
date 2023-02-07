@@ -4,10 +4,10 @@
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <h5 v-html="formatHtml(product.title)" />
-        <div class="document-item__data">
-          <div v-if="product.subtitle[0]">{{ product.subtitle[0] }}</div>
-          <div v-if="product.subtitle[1]">{{ product.subtitle[1] }}</div>
-          <div v-if="product.subtitle[2]">{{ product.subtitle[2] }}</div>
+        <div v-if="product.subtitle" class="document-item__data">
+          <div v-for="(item, index) in product.subtitle" :key="getKey(index)">
+            {{ item }}
+          </div>
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
         <p v-if="product.body" v-html="formatHtml(product.body)" />
@@ -28,9 +28,16 @@
         <div v-if="product.subtitle[0]" class="document-item__product">
           {{ product.subtitle[0] }}
         </div>
-        <div class="document-item__data">
-          <div v-if="product.subtitle[1]">{{ product.subtitle[1] }}</div>
-          <div v-if="product.subtitle[2]">{{ product.subtitle[2] }}</div>
+        <div
+          v-if="subtitleRemainingelements.length"
+          class="document-item__data"
+        >
+          <div
+            v-for="(item, index) in subtitleRemainingelements"
+            :key="getKey(index)"
+          >
+            {{ item }}
+          </div>
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
         <p v-if="product.body" v-html="formatHtml(product.body)" />
@@ -65,9 +72,10 @@
   </article>
 </template>
 <script>
-import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, ref, toRefs, useRoute } from '@nuxtjs/composition-api'
 import Link from '~/components/atoms/Link/Link'
 import Icon from '~/components/atoms/Icon/Icon'
+import getKey from '~/composables/useUniqueKey'
 
 export default defineComponent({
   name: 'DocumentSearchItem',
@@ -78,25 +86,15 @@ export default defineComponent({
   props: {
     product: {
       type: Object,
-      default: () => {
-        return {
-          title: 'HiPace 300 with TC 400',
-          id: 'esc_tree~project1_e~12~de',
-          subtitle: ['Hipace 300', 'Deutsch', '12.12.2022'],
-          body: `
-            Betriebsanleitung Operating Instructions DE EN Original HiPace 300
-          `,
-          downloadLink: `
-            resource/environment/project1_p/documents/pfeifferSharepointProd/12624-128864ODE_02.pdf
-          `,
-        }
-      },
+      default: () => ({}),
     },
   },
   emits: ['click'],
-  setup() {
+  setup(props) {
     const route = useRoute()
     const searchTerm = ref(route.value.query.searchTerm || '')
+    const { product } = toRefs(props)
+    const subtitleRemainingelements = product.value.subtitle.slice(1, 3)
 
     const formatHtml = (input) => {
       if (searchTerm.value === '') {
@@ -111,7 +109,11 @@ export default defineComponent({
       return formatInput
     }
 
-    return { formatHtml }
+    return {
+      formatHtml,
+      getKey,
+      subtitleRemainingelements,
+    }
   },
 })
 </script>
@@ -146,7 +148,7 @@ export default defineComponent({
 
     &:hover {
       h5 {
-        @apply tw-text-pv-red;
+        @apply tw-text-pv-red-lighter;
       }
     }
 
@@ -247,7 +249,7 @@ export default defineComponent({
 
       &:hover {
         @apply tw-text-pv-red-lighter;
-        @apply tw-border-pv-red-lighter;
+        @apply tw-bg-pv-red-opacity;
       }
     }
   }

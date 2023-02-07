@@ -11,6 +11,12 @@
         {{ address.companyName }}
       </p>
       <p
+        v-if="address.department"
+        class="address-card__entry address-card__department"
+      >
+        {{ address.department }}
+      </p>
+      <p
         v-if="address.firstName || address.lastName"
         class="address-card__entry address-card__name"
       >

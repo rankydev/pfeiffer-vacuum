@@ -28,5 +28,7 @@
         "text": "Sie dürfen keine Preise sehen"
       }
     }
-  }
+  },
+  "addToCartSuccess": "Produkt erfolgreich zum Warenkorb hinzugefügt",
+  "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten"
 }

@@ -78,7 +78,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
         hasDifferentVariant(variationMatrix.value, result)
       ) {
         // Redirect to variant page when only one variant is left
-        redirectToId(result.variants?.[0]?.code)
+        redirectToId(result.variantCodes?.[0])
       } else if (
         currentVariantId.value &&
         !hasOnlyOneVariantLeft(result) &&
@@ -171,7 +171,7 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
   /*
    * Matrix object can be given to determine whether there is only one variant left or more
    */
-  const hasOnlyOneVariantLeft = (matrix) => matrix?.variants?.length === 1
+  const hasOnlyOneVariantLeft = (matrix) => matrix?.variantCodes?.length === 1
 
   /**
    * Returns index of first attribute where no value is selected
@@ -201,9 +201,9 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
   const manualVariantSelectionOptions = computed(() => {
     if (
       isSelectionCompleted.value &&
-      variationMatrix.value?.variants?.length > 1
+      variationMatrix.value?.variantCodes?.length > 1
     ) {
-      return variationMatrix.value.variants
+      return variationMatrix.value.variantCodes
     }
     return []
   })
@@ -213,8 +213,8 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    */
   const hasDifferentVariant = (oldMatrix, newMatrix) =>
     oldMatrix &&
-    (oldMatrix?.variants?.length > 1 ||
-      oldMatrix?.variants?.[0]?.code !== newMatrix?.variants?.[0]?.code)
+    (oldMatrix?.variantCodes?.length > 1 ||
+      oldMatrix?.variantCodes?.[0] !== newMatrix?.variantCodes?.[0])
 
   /*
    * When product state in frontend application should switch from master to variant and vice versa the application

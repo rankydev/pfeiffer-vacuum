@@ -1,4 +1,5 @@
 import DocumentSearchItem from './DocumentSearchItem.vue'
+import { product } from './DocumentSearchItem.stories.content.js'
 
 export default {
   title: 'Molecules/m_145 Document-Search-Item',
@@ -19,7 +20,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-      <div class="documentation-preview">
+      <div class="documentation-preview" style="background-color: #F5F5F5; padding: 50px">
         <DocumentSearchItem v-bind="args" />
       </div>
     `,
@@ -27,15 +28,4 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 
-Default.args = {
-  product: {
-    title: 'HiPace 300 with TC 400',
-    id: 'esc_tree~project1_e~12~de',
-    subtitle: ['Hipace 300', 'Deutsch', '12.12.2022'],
-    body: `
-    Betriebsanleitung Operating Instructions DE EN Original HiPace 300
-    `,
-    downloadLink:
-      'resource/environment/project1_p/documents/pfeifferSharepointProd/12624-128864ODE_02.pdf',
-  },
-}
+Default.args = { product }
