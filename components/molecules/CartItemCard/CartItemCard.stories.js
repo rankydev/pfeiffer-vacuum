@@ -1,4 +1,4 @@
-import CartItemCard from './CartItemCard'
+import CartItemCard from './CartItemCard2'
 import {
   entry,
   price,
