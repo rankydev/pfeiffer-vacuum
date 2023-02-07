@@ -40,9 +40,11 @@
 
     <Link
       :href="localePath('shop-cart')"
-      class="shop-navigation__shopping-cart"
+      class="shop-navigation__shopping-cart tw-flex"
     >
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
+      <!-- TODO: Add correct cart item count indicator -->
+      <span>{{ cartItemCount }}</span>
     </Link>
   </div>
 </template>
@@ -55,6 +57,7 @@ import {
   useRouter,
 } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
+import { useCartStore } from '~/stores/cart'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
@@ -80,6 +83,9 @@ export default defineComponent({
     const { isOciUser, isLoggedIn, isLoginProcess, currentUser } =
       storeToRefs(userStore)
     const { logout, login } = userStore
+    const cartStore = useCartStore()
+
+    const { currentCart } = storeToRefs(cartStore)
     const isMobile = app.$breakpoints.isMobile
 
     const myAccountLabel = computed(() => {
@@ -89,6 +95,8 @@ export default defineComponent({
         ? currentUser?.name
         : i18n.t('navigation.button.signIn.label')
     })
+
+    const cartItemCount = computed(() => currentCart.value?.totalItems || '')
 
     const handleMyAccount = (openPopupCallback) => {
       if (isLoggedIn) {
@@ -106,13 +114,17 @@ export default defineComponent({
 
     return {
       // getters
-      isLoggedIn,
-      isLoginProcess,
-      myAccountLabel,
       isOciUser,
 
       // actions
-      logout,
+      myAccountLabel,
+      userStore,
+      currentCart,
+      isLoggedIn,
+      isLoginProcess,
+      cartItemCount,
+
+      logout: userStore.logout,
       handleMyAccount,
     }
   },

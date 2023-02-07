@@ -6,7 +6,6 @@ import {
   icon,
   label,
 } from '~/components/atoms/Button/Button.stories.content'
-import { internalVariants } from '~/components/molecules/InternalBtnWrapper/InternalBtnWrapper.stories.content'
 
 export default {
   title: 'Technical Components/ InternalBtnWrapper',
@@ -21,7 +20,6 @@ export default {
   },
   argTypes: {
     internalVariant: {
-      options: internalVariants,
       control: { type: 'inline-radio' },
     },
     variant: {

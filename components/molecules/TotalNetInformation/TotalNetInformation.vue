@@ -105,16 +105,19 @@ export default defineComponent({
   @apply tw-py-6;
 
   &__total,
-  &__discount {
-    @apply tw-flex tw-justify-between tw-items-center;
+  &__discount,
+  &__wrapper {
+    @apply tw-flex tw-items-center;
   }
 
   &__total {
     @apply tw-text-2xl;
+    @apply tw-justify-between;
   }
 
   &__discount {
     @apply tw-mb-4;
+    @apply tw-justify-between;
 
     span {
       @apply tw-text-pv-warning;
@@ -124,6 +127,11 @@ export default defineComponent({
         @apply tw-text-xl;
       }
     }
+  }
+
+  &__wrapper {
+    @apply tw-font-bold;
+    @apply tw-justify-center;
   }
 
   &__login-link {

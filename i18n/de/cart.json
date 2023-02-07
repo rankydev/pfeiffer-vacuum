@@ -9,7 +9,7 @@
   "Um Ihr individuelles Angebot (in Ihrer Landeswährung) zu erhalten, senden Sie uns bitte Ihre Anfrage, so dass Ihnen Ihr lokales Pfeiffer Vacuum Unternehmen / Partnerunternehmen ein individuelles Angebot mit Ihren Preisen zur Verfügung stellen kann.",
   "deliveryNote": "Liefertermin",
   "deliveryDetails":
-  "Bitte senden Sie und Ihre Anfrage damit wir die genauen Liefertermin für Sie ermitteln können",
+  "Bitte senden Sie uns Ihre Anfrage damit wir die genauen Liefertermin für Sie ermitteln können",
   "userStatus": {
     "lead": {
       "priceInfo": {
@@ -28,5 +28,7 @@
         "text": "Sie dürfen keine Preise sehen"
       }
     }
-  }
+  },
+  "addToCartSuccess": "Produkt erfolgreich zum Warenkorb hinzugefügt",
+  "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten"
 }

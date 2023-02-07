@@ -1,5 +1,5 @@
 <template>
-  <SearchPage />
+  <SearchPage show-document-search-tab />
 </template>
 
 <script>

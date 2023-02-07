@@ -3,6 +3,7 @@ import ShopNavigation from './ShopNavigation.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
 import { createPinia, setActivePinia } from 'pinia'
+import { ref } from '@nuxtjs/composition-api'
 
 const mockedRouterNavigation = jest.fn()
 const mockIsMobile = jest.fn()
@@ -45,6 +46,17 @@ jest.mock('~/stores/user', () => {
         isLoggedIn: mockedIsLoggedIn(),
         login: mockedLogin,
         logout: mockedLogout,
+      }
+    },
+  }
+})
+const mockedCurrentCart = ref({})
+jest.mock('~/stores/cart', () => {
+  return {
+    __esModule: true,
+    useCartStore: () => {
+      return {
+        currentCart: mockedCurrentCart,
       }
     },
   }

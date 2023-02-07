@@ -3,6 +3,7 @@
     <div
       v-for="(entry, idx) in accordionEntries"
       :key="idx"
+      class="accordion__item"
       :class="{ 'tw-scroll-pb-6': isActive(idx) }"
     >
       <component
@@ -63,7 +64,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
@@ -79,6 +80,7 @@ export default defineComponent({
      * <b>slotName:string</b> // unique identifier for your slot<br>
      * <b>isActive:boolean</b> // items which set this to false will not be displayed<br>
      * <b>disabled:boolean</b> // those items are displayed but cannot be opened<br>
+     * <b>loading:boolean</b>
      */
     accordionEntries: {
       type: Array,
@@ -107,20 +109,43 @@ export default defineComponent({
       default: 'standard',
       validator: (val) => ['standard', 'tab', 'variationmatrix'].includes(val),
     },
+    /**
+     * Display loading indicator
+     */
     loading: {
       type: Boolean,
       default: false,
     },
   },
-  setup(props) {
+  emits: ['newActiveTab', 'newActiveTabList'],
+  setup(props, { emit }) {
     const sanitizer = useSanitizer()
+
+    const active = ref(undefined)
+    watch(active, (newVal, oldVal) => {
+      // do not emit a change event when the active index value is set initially below (change value from undefined)
+      // this is not a real change by the user
+      if (oldVal === undefined) return
+      // do not emit a change event when the new value is null (this means the currently active tab was just deselected)
+      if (newVal === null) return
+
+      // inform parent component about new active tab(s)
+      if (props.multiple) {
+        emit('newActiveTabList', newVal)
+      } else {
+        const accordionEntry = props.accordionEntries[newVal]
+        if (accordionEntry) {
+          emit('newActiveTab', props.accordionEntries[newVal].slotName)
+        }
+      }
+    })
 
     if (props.multiple) {
       const filterActives = (memo, ele, idx) =>
         ele.isActive === true ? [...memo, idx] : memo
       const initial = props.accordionEntries.reduce(filterActives, [])
 
-      const active = ref([...initial])
+      active.value = [...initial]
       const hasIdx = (idx) => active.value.includes(idx)
       const findIdx = (idx) => active.value.indexOf(idx)
       const removeIdx = (idx) => active.value.splice(findIdx(idx), 1)
@@ -135,8 +160,7 @@ export default defineComponent({
     } else {
       const findIdx = (ele) => ele.isActive === true
       const initial = props.accordionEntries.findIndex(findIdx)
-
-      const active = ref(initial)
+      active.value = initial
       const hasIdx = (idx) => active.value === idx
 
       return {
@@ -186,7 +210,6 @@ export default defineComponent({
     @apply tw-w-full;
     @apply tw-py-4;
     -webkit-tap-highlight-color: transparent;
-
     @apply tw-duration-200;
     @apply tw-ease-in-out;
     transition-property: color;
@@ -230,13 +253,17 @@ export default defineComponent({
     @apply tw-border-b-0;
     @apply tw-my-0 tw--mx-5;
 
-    .accordion__heading {
-      @apply tw-border-t-0;
+    .accordion__item {
       @apply tw-my-1;
     }
 
+    .accordion__heading {
+      @apply tw-border-t-0;
+      @apply tw-mx-5;
+    }
+
     .accordion__button {
-      @apply tw-bg-pv-grey-88;
+      @apply tw-bg-pv-grey-96;
       @apply tw-px-5;
 
       &--active {
@@ -251,6 +278,7 @@ export default defineComponent({
 
     .accordion__content {
       @apply tw-px-5;
+      @apply tw-bg-pv-grey-96;
     }
   }
 
