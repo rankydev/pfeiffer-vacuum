@@ -10,7 +10,7 @@
 </template>
 
 <style lang="scss">
-@import 'defaultColors';
+@import 'globalColors';
 
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
