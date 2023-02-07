@@ -27,5 +27,7 @@
         "text": "您无权查看价格"
       }
     }
-  }
+  },
+  "addToCartSuccess": "已成功将产品添加到购物车",
+  "addToCartError": "将产品添加到购物车时发生错误"
 }

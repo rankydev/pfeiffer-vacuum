@@ -4,6 +4,11 @@
       <CategoryTree :categories="categories" />
     </div>
     <div class="search-result__products">
+      <div v-if="pagination.totalResults" class="search-result__total-count">
+        {{
+          $t('category.resultsFound', { totalResults: pagination.totalResults })
+        }}
+      </div>
       <Facets
         class="search-result__facets"
         v-bind="{ facets, currentQuery, sorts }"
@@ -161,6 +166,12 @@ export default defineComponent({
       @apply tw-col-start-4;
       @apply tw-col-span-9;
     }
+  }
+
+  &__total-count {
+    @apply tw-text-pv-grey-48;
+    @apply tw-text-xs;
+    @apply tw-mb-4;
   }
 
   &__facets {

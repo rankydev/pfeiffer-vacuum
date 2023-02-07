@@ -82,9 +82,11 @@ export default {
   @apply tw-grid-cols-12;
   @apply tw-gap-6;
   @apply tw-pt-6;
+  @apply tw-px-5;
 
   @screen md {
     @apply tw-pt-8;
+    @apply tw-px-0;
   }
 
   @screen lg {
