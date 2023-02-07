@@ -194,24 +194,24 @@ export default defineComponent({
     &--active {
       #{$root}__label {
         @apply tw-text-pv-red;
-        -webkit-text-fill-color: #dd1541;
+        -webkit-text-fill-color: var(--pv-red);
       }
     }
 
     &:hover,
     &:focus-visible {
       @apply tw-text-pv-red-lighter;
-      -webkit-text-fill-color: #ff184b;
+      -webkit-text-fill-color: var(--pv-red-lighter);
     }
 
     &--disabled {
       @apply tw-text-pv-grey-48;
-      -webkit-text-fill-color: #7a7a7a;
+      -webkit-text-fill-color: var(--pv-grey-48);
 
       &:hover,
       &:focus-visible {
         @apply tw-text-pv-grey-48;
-        -webkit-text-fill-color: #7a7a7a;
+        -webkit-text-fill-color: var(--pv-grey-48);
       }
     }
 

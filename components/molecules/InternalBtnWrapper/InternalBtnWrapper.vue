@@ -69,21 +69,20 @@ export default defineComponent({
   }
 
   &__language-switcher {
-    color: #fff !important;
-    -webkit-text-fill-color: #fff !important;
+    color: var(--pv-white) !important;
+    -webkit-text-fill-color: var(--pv-white) !important;
     @apply tw-p-0;
     @apply tw-align-middle;
     box-shadow: none !important;
     font-size: 0.75rem !important;
 
     @screen lg {
-      color: #7a7a7a !important;
-      -webkit-text-fill-color: #7a7a7a !important;
+      color: var(--pv-grey-48) !important;
+      -webkit-text-fill-color: var(--pv-grey-48) !important;
     }
 
     &:hover {
       background-color: unset !important;
-      -webkit-text-fill-color: unset !important;
     }
   }
 
