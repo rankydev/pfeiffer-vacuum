@@ -134,6 +134,12 @@
     @apply tw-border-solid;
     @apply tw-rounded-md;
     @apply tw-max-h-48;
+
+    @screen lg {
+      @apply tw-w-fit;
+      @apply tw-min-w-full;
+      @apply tw-max-w-3xl;
+    }
   }
 
   &__dropdown-option,
@@ -141,10 +147,13 @@
     @apply tw-py-3 tw-px-4;
     @apply tw-leading-6;
     @apply tw-flex tw-gap-2;
+    @apply tw-w-fit;
   }
 
   &__dropdown-option {
-    @apply tw-whitespace-nowrap;
+    @screen lg {
+      @apply tw-whitespace-nowrap;
+    }
 
     &--highlight {
       @apply tw-bg-pv-red-lighter;

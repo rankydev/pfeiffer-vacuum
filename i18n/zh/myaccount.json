@@ -35,6 +35,10 @@
   "deleteDeliveryAddressSuccess": "收貨地址刪除成功。",
   "setDefaultDeliveryAddressSuccess": "成功將收貨地址保存為默認收貨地址。",
   "userStatus": {
+    "undefined": {
+      "requestInfo": "您无法发送请求，因为出了点问题",
+      "functionalityInfo": "您不能使用此功能，因为出了点问题"
+    },
     "lead": {
       "requestInfo": "请添加公司数据以发送请求",
       "functionalityInfo": "请添加公司数据以使用此功能"

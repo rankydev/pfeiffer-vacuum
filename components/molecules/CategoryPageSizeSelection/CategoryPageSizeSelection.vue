@@ -69,6 +69,7 @@ export default defineComponent({
     @apply tw-border-2 tw-border-pv-transparent;
     @apply tw-rounded;
     @apply tw-text-pv-grey-48;
+    -webkit-text-fill-color: var(--pv-grey-48);
     flex-basis: auto;
 
     &:hover {
@@ -78,11 +79,13 @@ export default defineComponent({
 
       .button__label {
         @apply tw-text-pv-white;
+        -webkit-text-fill-color: var(--pv-white);
       }
     }
 
     .button__label {
       @apply tw-text-pv-grey-48;
+      -webkit-text-fill-color: var(--pv-grey-48);
     }
 
     &--active {
@@ -90,6 +93,7 @@ export default defineComponent({
 
       .button__label {
         @apply tw-text-pv-red;
+        -webkit-text-fill-color: var(--pv-red);
       }
 
       @include rounded-border-bottom;
@@ -102,6 +106,7 @@ export default defineComponent({
 
         .button__label {
           @apply tw-text-pv-red;
+          -webkit-text-fill-color: var(--pv-red);
         }
       }
     }
