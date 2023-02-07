@@ -191,10 +191,10 @@ export default defineComponent({
   }
 
   &__pagination {
-    @apply tw-mt-2;
+    @apply tw-my-2;
 
     @screen md {
-      @apply tw-mt-0;
+      @apply tw-my-0;
     }
   }
 }
