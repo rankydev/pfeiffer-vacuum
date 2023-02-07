@@ -192,10 +192,7 @@ export default defineComponent({
       if (currentTabSelected.value === 'products') {
         await redirectOnError(categoryStore.loadByPath)
       } else if (currentTabSelected.value === 'documents') {
-        // TODO: SSR does not work for this right now? protocol undefined and other errors.
-        if (process.client) {
-          await empolisStore.loadByPath()
-        }
+        await empolisStore.loadByPath()
       }
     }
 
