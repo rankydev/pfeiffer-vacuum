@@ -92,6 +92,7 @@
             :label="$t('myaccount.deleteDeliveryAddress')"
             icon="delete"
             variant="secondary"
+            :disabled="address.defaultShippingAddress"
             shape="plain"
             @click="deleteAddress"
           />
