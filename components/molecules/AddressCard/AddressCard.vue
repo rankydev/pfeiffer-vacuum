@@ -47,7 +47,7 @@
       >
         {{
           `${address.country.name}${
-            address.region.name ? `, ${address.region.name}` : ''
+            address.region ? `, ${address.region.name || address.region}` : ''
           }`
         }}
         <!-- ToDo: implement Coutryname when data is available -->
