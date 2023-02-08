@@ -144,7 +144,7 @@ export default defineComponent({
     },
     isMinicart: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   emits: ['add', 'delete'],
@@ -222,9 +222,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.cart-item-wrapper {
-  max-width: 320px;
-}
 
 .cart-item-header {
   @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
