@@ -30,11 +30,11 @@
     }
   },
   "list": {
-    "addArticle": "Zur Liste hinzufügen"
+    "addArticle": "Zur Einkausliste hinzufügen"
   },
   "productPrice": "Preis",
   "totalPrice": "Gesamt",
   "quantity": "Anzahl",
-  "priceOnRequest": "Preis auf Anfrage"
-
+  "priceOnRequest": "Preis auf Anfrage",
+  "details": "Details"
 }

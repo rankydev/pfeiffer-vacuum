@@ -9,11 +9,16 @@
         {{ $t('cart.totalPrice') }}
       </span>
     </div>
-    <div v-for="i in 6" :key="i" class="cart-item-card">
+    <div
+      v-for="i in 6"
+      :key="i"
+      class="cart-item-card"
+      :class="{ 'cart-item-card-desktop': !isMinicart }"
+    >
       <div class="cart-item-card-image">
         <Link :href="url">
           <ResponsiveImage
-            :image="entry.product.images[0]"
+            :image="productImage"
             provider="hybris"
             aspect-ratio="1:1"
           />
@@ -21,22 +26,32 @@
       </div>
       <div class="cart-item-card-title">
         <h2 class="cart-item-card-title__mainTitle">
-          <Link :href="url">{{ entry.product.name }}</Link>
+          <Link :href="url">{{ productName }}</Link>
         </h2>
         <p class="cart-item-card-title__subTitle">
-          {{ entry.product.orderNumber }}
+          {{ orderNumber }}
         </p>
       </div>
       <div class="cart-item-card-details">
-        <template v-for="detail in details" :key="detail.code">
-          <Badge
-            v-for="(variant, id) in detail.variationValues"
-            :key="detail.code + id"
-            class="cart-item-card-details__detail"
-            :label="detail.name"
-            :content="variant.displayValue"
-          />
-        </template>
+        <Button
+          class="cart-item-card-details__expandButton"
+          variant="secondary"
+          shape="plain"
+          :icon="isDetailsExpanded ? 'arrow_upward' : 'arrow_downward'"
+          :label="$t('cart.details')"
+          @click="toggleDetails"
+        />
+        <div v-if="isDetailsExpanded">
+          <template v-for="detail in details" :key="detail.code">
+            <Badge
+              v-for="(variant, id) in detail.variationValues"
+              :key="detail.code + id"
+              class="cart-item-card-details__detail"
+              :label="detail.name"
+              :content="variant.displayValue"
+            />
+          </template>
+        </div>
       </div>
       <PvInput
         v-model="quantity"
@@ -66,14 +81,14 @@
         shape="plain"
         icon="assignment"
         :label="$t('cart.list.addArticle')"
-        @click="$emit('addToList', ev)"
+        @click="addToList"
       />
       <Button
         class="cart-item-card-delete"
         variant="secondary"
         shape="plain"
         icon="delete"
-        @click="$emit('delete', ev)"
+        @click="deleteFromList"
       />
     </div>
   </div>
@@ -129,24 +144,41 @@ export default defineComponent({
     },
     isMinicart: {
       type: Boolean,
-      default: false,
+      default: true,
     },
   },
-  emits: ['addToList', 'delete'],
-  setup(props) {
+  emits: ['add', 'delete'],
+  setup(props, { emit }) {
     const context = useContext()
-    const { entry, price } = toRefs(props)
+    const { entry, price, isMinicart } = toRefs(props)
     const quantity = ref(entry.value.quantity)
-    const image = computed(() => entry.value.product.images[0])
     const productPrice = ref(price.value)
-    //details works
+    //works and tested
+    const productImage = computed(() => {
+      return entry.value.product.images[0]
+    })
+    const productName = computed(() => {
+      return entry.value.product.name
+    })
+    const orderNumber = computed(() => {
+      return entry.value.product.orderNumber
+    })
     const details = computed(
       () => props.entry?.product?.variationMatrix?.variationAttributes
     )
+    const isDetailsExpanded = ref(!isMinicart.value)
+    const toggleDetails = () => {
+      isDetailsExpanded.value = !isDetailsExpanded.value
+    }
+    const addToList = () => {
+      emit('add', entry.value)
+    }
+    const deleteFromList = () => {
+      emit('delete', entry.value)
+    }
+    // end
 
     console.log(entry.value.product.code, 'PATH')
-
-    console.log('Dennis', details.value)
 
     const url = computed(() =>
       context.app.localePath({
@@ -171,13 +203,19 @@ export default defineComponent({
 
     return {
       quantity,
-      image,
       isInactive,
       updateQuantity,
       url,
       productPrice,
       totalPrice,
       details,
+      isDetailsExpanded,
+      toggleDetails,
+      productImage,
+      addToList,
+      deleteFromList,
+      productName,
+      orderNumber,
     }
   },
 })
@@ -291,12 +329,17 @@ export default defineComponent({
 
   &-details {
     @apply tw-row-start-3 tw-row-end-4;
-    @apply tw-col-start-1 tw-col-end-12;
-    @apply tw-flex;
+    @apply tw-col-start-1 tw-col-end-13;
+    @apply tw-flex tw-flex-wrap;
     @apply tw-mt-4;
+
+    &__expandButton {
+      @apply tw-mx-auto;
+    }
 
     &__detail {
       @apply tw-mr-2;
+      @apply tw-mb-2;
 
       &:last-child {
         @apply tw-mr-0;
@@ -406,6 +449,8 @@ export default defineComponent({
     }
 
     &-details {
+      @apply tw-col-start-1 tw-col-end-12;
+
       @screen lg {
         @apply tw-row-start-2 tw-row-end-3;
         @apply tw-col-start-2 tw-col-end-8;
