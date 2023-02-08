@@ -87,14 +87,12 @@
             :href="editAddressUrl"
           />
         </div>
-        <div
-          v-if="!isBillingAddress && !address.defaultShippingAddress"
-          class="default-switch"
-        >
+        <div v-if="!isBillingAddress" class="default-switch">
           <Button
             :label="$t('myaccount.deleteDeliveryAddress')"
             icon="delete"
             variant="secondary"
+            :disabled="address.defaultShippingAddress"
             shape="plain"
             @click="deleteAddress"
           />
