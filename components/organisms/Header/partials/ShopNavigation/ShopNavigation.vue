@@ -89,17 +89,17 @@ export default defineComponent({
     const isMobile = app.$breakpoints.isMobile
 
     const myAccountLabel = computed(() => {
-      if (isLoginProcess || isMobile.value) return ''
+      if (isLoginProcess.value || isMobile.value) return ''
 
-      return isLoggedIn
-        ? currentUser?.name
+      return isLoggedIn.value
+        ? currentUser.value?.name
         : i18n.t('navigation.button.signIn.label')
     })
 
     const cartItemCount = computed(() => currentCart.value?.totalItems || '')
 
     const handleMyAccount = (openPopupCallback) => {
-      if (isLoggedIn) {
+      if (isLoggedIn.value) {
         if (isMobile.value) {
           router.push({
             path: app.localePath('shop-my-account'),
