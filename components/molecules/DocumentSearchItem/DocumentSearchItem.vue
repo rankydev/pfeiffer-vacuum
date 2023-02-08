@@ -3,14 +3,14 @@
     <Link class="document-item__link" @click="$emit('click')">
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <h5 v-html="formatHtml(product.title)" />
+        <h5 v-html="product.title" />
         <div v-if="product.subtitle" class="document-item__data">
           <div v-for="(item, index) in product.subtitle" :key="getKey(index)">
             {{ item }}
           </div>
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <p v-if="product.body" v-html="formatHtml(product.body)" />
+        <p v-if="product.body" v-html="product.body" />
         <Link
           v-if="product.downloadLink"
           :href="product.downloadLink"
@@ -24,7 +24,7 @@
     <div class="document-item__container">
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <h5 v-html="formatHtml(product.title)" />
+        <h5 v-html="product.title" />
         <div v-if="product.subtitle[0]" class="document-item__product">
           {{ product.subtitle[0] }}
         </div>
@@ -40,7 +40,7 @@
           </div>
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <p v-if="product.body" v-html="formatHtml(product.body)" />
+        <p v-if="product.body" v-html="product.body" />
         <div class="document-item__links">
           <Link
             v-if="product.id"
@@ -72,7 +72,7 @@
   </article>
 </template>
 <script>
-import { defineComponent, ref, toRefs, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs } from '@nuxtjs/composition-api'
 import Link from '~/components/atoms/Link/Link'
 import Icon from '~/components/atoms/Icon/Icon'
 import getKey from '~/composables/useUniqueKey'
@@ -91,26 +91,10 @@ export default defineComponent({
   },
   emits: ['click'],
   setup(props) {
-    const route = useRoute()
-    const searchTerm = ref(route.value.query.searchTerm || '')
     const { product } = toRefs(props)
     const subtitleRemainingelements = product.value.subtitle.slice(1, 3)
 
-    const formatHtml = (input) => {
-      if (searchTerm.value === '') {
-        return input
-      }
-
-      const regexp = new RegExp(searchTerm.value, 'ig')
-      const formatInput = input.replace(
-        regexp,
-        '<span class="marked">$&</span>'
-      )
-      return formatInput
-    }
-
     return {
-      formatHtml,
       getKey,
       subtitleRemainingelements,
     }
@@ -121,7 +105,6 @@ export default defineComponent({
 @import '/assets/scss/mixins';
 
 .document-item {
-  @include box-shadow;
   @apply tw-block;
   @apply tw-relative;
   @apply tw-overflow-hidden;
@@ -135,10 +118,12 @@ export default defineComponent({
     @apply tw-my-1;
   }
 
-  .marked {
+  /* stylelint-disable */
+  concept,
+  hit {
     @apply tw-bg-pv-red-opacity;
   }
-
+  /* stylelint-enable */
   &__link {
     @apply tw-hidden;
 
