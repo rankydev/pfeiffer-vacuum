@@ -57,14 +57,14 @@
             >
               <template #link>
                 <!-- TODO: add correct route after my-account migration -->
-                <nuxt-link
+                <NuxtLink
                   :to="localePath('shop-my-account-account-data')"
                   class="login-modal-link"
                 >
                   {{
                     $t(`product.userStatus.${userStatusType}.priceInfo.link`)
                   }}
-                </nuxt-link>
+                </NuxtLink>
               </template>
             </i18n>
           </template>
@@ -108,6 +108,7 @@ import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
+import Button from '~/components/atoms/Button/Button.vue'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import { storeToRefs } from 'pinia'
 
@@ -118,6 +119,7 @@ export default defineComponent({
     Icon,
     PvInput,
     LoginToSeePricesLabel,
+    Button,
   },
   props: {
     product: {

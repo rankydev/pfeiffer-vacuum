@@ -123,18 +123,14 @@ export default defineComponent({
 
     const active = ref(undefined)
     watch(active, (newVal, oldVal) => {
-      // do not emit a change event when the active index value is set initially below (change value from undefined)
+      // 1. do not emit a change event when the active index value is set initially below (change value from undefined)
       // this is not a real change by the user
-      if (oldVal === undefined) return
-      // do not emit a change event when the new value is null (this means the currently active tab was just deselected)
-      if (newVal === null) return
-
-      // inform parent component about new active tab(s)
-      if (props.multiple) {
-        emit('newActiveTabList', newVal)
-      } else {
-        const accordionEntry = props.accordionEntries[newVal]
-        if (accordionEntry) {
+      // 2. do not emit a change event when the new value is null (this means the currently active tab was just deselected)
+      if (!(oldVal === undefined || newVal === null)) {
+        // inform parent component about new active tab(s)
+        if (props.multiple) {
+          emit('newActiveTabList', newVal)
+        } else if (props.accordionEntries[newVal]) {
           emit('newActiveTab', props.accordionEntries[newVal].slotName)
         }
       }
@@ -142,7 +138,7 @@ export default defineComponent({
 
     if (props.multiple) {
       const filterActives = (memo, ele, idx) =>
-        ele.isActive === true ? [...memo, idx] : memo
+        ele.isActive ? [...memo, idx] : memo
       const initial = props.accordionEntries.reduce(filterActives, [])
 
       active.value = [...initial]
@@ -158,7 +154,7 @@ export default defineComponent({
         sanitizer,
       }
     } else {
-      const findIdx = (ele) => ele.isActive === true
+      const findIdx = (ele) => ele.isActive
       const initial = props.accordionEntries.findIndex(findIdx)
       active.value = initial
       const hasIdx = (idx) => active.value === idx
