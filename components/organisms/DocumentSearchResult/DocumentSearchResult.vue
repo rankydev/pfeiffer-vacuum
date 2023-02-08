@@ -50,7 +50,7 @@
             class="document-search-result__pages"
           >
             <CategoryPageSizeSelection
-              :active="parseInt(pageSize)"
+              :active="pageSize"
               @change="updatePageSize"
             />
             <Pagination
@@ -73,6 +73,7 @@ import {
 } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import { useEmpolisStore } from '~/stores/empolis'
+import { PAGE_SIZE_DEFAULT } from '~/config/pagination.config'
 
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import DocumentSearchItem from '~/components/molecules/DocumentSearchItem/DocumentSearchItem.vue'
@@ -94,7 +95,9 @@ export default defineComponent({
     const route = useRoute()
     const empolisStore = useEmpolisStore()
 
-    const pageSize = computed(() => route.value.query?.pageSize || 9)
+    const pageSize = computed(() =>
+      Number(route.value.query?.pageSize || PAGE_SIZE_DEFAULT)
+    )
 
     const { searchResults, searchResultsLoading, searchResultsLoadingError } =
       storeToRefs(empolisStore)

@@ -46,6 +46,7 @@ import Pagination from '~/components/molecules/Pagination/Pagination.vue'
 import CategoryTree from '~/components/molecules/CategoryTree/CategoryTree.vue'
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
 import Facets from '~/components/molecules/Facets/Facets.vue'
+import { PAGE_SIZE_DEFAULT } from '~/config/pagination.config'
 
 export default defineComponent({
   name: 'SearchResult',
@@ -85,7 +86,9 @@ export default defineComponent({
   setup() {
     const router = useRouter()
     const route = useRoute()
-    const pageSize = computed(() => route.value.query?.pageSize || 9)
+    const pageSize = computed(
+      () => route.value.query?.pageSize || PAGE_SIZE_DEFAULT
+    )
 
     const updatePageSize = (e) => {
       router.push({

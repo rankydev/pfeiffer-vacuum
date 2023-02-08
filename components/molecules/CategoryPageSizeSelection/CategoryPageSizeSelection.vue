@@ -21,8 +21,7 @@
 <script>
 import { defineComponent, toRefs } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
-
-const possibleValues = [9, 30, 90, 120]
+import { PAGE_SIZE_OPTIONS } from '~/config/pagination.config'
 
 export default defineComponent({
   name: 'CategoryPageSizeSelection',
@@ -31,7 +30,7 @@ export default defineComponent({
     active: {
       type: Number,
       required: true,
-      validator: (val) => possibleValues.includes(val),
+      validator: (val) => PAGE_SIZE_OPTIONS.includes(val),
     },
   },
   emits: ['change'],
@@ -43,7 +42,7 @@ export default defineComponent({
     }
 
     return {
-      values: possibleValues,
+      values: PAGE_SIZE_OPTIONS,
       isActiveValue,
     }
   },
