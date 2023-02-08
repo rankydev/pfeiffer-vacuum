@@ -2,47 +2,22 @@
   <div class="document-search-input">
     <PvInput
       ref="pvInput"
-      v-model="searchTermDocument"
+      v-model="searchTerm"
       icon="search"
       :placeholder="$t('form.input.search.placeholder')"
-      @input="getResults"
+      @input="getSearchSuggestionsResult"
+      @submit="closeSearchfield"
     />
 
-    <!-- <GenericModal
-      class="search-header__modal"
-      :is-open="true"
-      :fill-viewport="true"
-    >
-      <div class="search-header__modal-content">
-        <h2 class="search-header__headline">
-          {{ $t('category.search') }}
-        </h2>
-        <SearchInput @submit="closeSearchfield" />
-        <div
-          v-if="currentSuggestions.length"
-          class="search-header__suggestions"
-        >
-          <h4 class="search-header__suggestions--headline">
-            {{ `${$t('category.suggestions')}:` }}
-          </h4>
-          <SearchButton
-            v-for="item in currentSuggestions"
-            :key="item.value"
-            class="search-header__suggestions--result"
-            :title="item.value"
-          />
-        </div>
-      </div>
-    </GenericModal> -->
-    <!-- <div v-if="currentSuggestions.length" class="suggestions"> -->
-    <div class="suggestions">
+    <div v-if="isOpen" class="suggestions">
       <SearchButton
         v-for="item in currentSuggestions"
         :key="item.value"
         class="asdf"
         :title="item.value"
+        @closeModal="closeSearchfield(item.value)"
+        :search-type="activeTab"
       />
-      <!-- </div> -->
     </div>
   </div>
 </template>
@@ -60,9 +35,8 @@ import {
 
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import { useEmpolis } from '~/composables/useEmpolis'
-import SearchHeader from '~/components/organisms/Header/partials/SearchHeader/SearchHeader.vue'
-import GenericModal from '~/components/molecules/GenericModal/GenericModal'
 import SearchButton from '~/components/molecules/SearchButton/SearchButton'
+import { useCategoryStore } from '~/stores/category/category'
 // import _, { debounce } from 'lodash'
 
 export default defineComponent({
@@ -78,8 +52,45 @@ export default defineComponent({
 
     const pvInput = ref(null)
 
-    const searchTermDocument = ref(route.value.query.searchTerm || '')
+    const searchTermDocuments = ref(route.value.query.searchTerm || '')
+    const searchTermProducts = ref(route.value.query.searchTerm || '')
+    const searchTermInitial = ref(route.value.query.searchTerm || '')
+    const searchTerm = ref(searchTermInitial.value)
+    const isOpen = ref(false)
+
     const activeTab = computed(() => route.value.query.searchType)
+
+    watch(searchTermDocuments, (searchTermDocumentsValue) => {
+      if (searchTermDocumentsValue === '') {
+        currentSuggestions.value = []
+      }
+      searchTerm.value = searchTermDocumentsValue
+    })
+
+    const setSearchTerm = (term) => {
+      console.log('termmmm', term)
+      pushSearchTerm(term)
+      isOpen.value = false
+    }
+
+    watch(searchTerm, (searchTermValue) => {
+      if (activeTab?.value === 'documents') {
+        searchTermDocuments.value = searchTermValue
+      }
+      if (activeTab?.value === 'products') {
+        searchTermProducts.value = searchTermValue
+      }
+    })
+
+    watch(activeTab, (activeTabValue) => {
+      searchTerm.value =
+        activeTabValue === 'documents'
+          ? searchTermDocuments.value
+          : activeTabValue === 'products'
+          ? searchTermProducts.value
+          : searchTermInitial.value
+    })
+
     const { getSearchSuggestions } = useEmpolis()
     const currentSuggestions = ref([])
     const suggestionHover = ref(false)
@@ -88,55 +99,62 @@ export default defineComponent({
       if (!val) searchSuggestions.value = []
     }
 
-    const closeSearchfield = () => {
-      blurSuggestions(false)
+    // const updateSearchTerm(value) => {
+
+    // }
+
+    const clearCurrentSuggestions = () => {
+      currentSuggestions.value = []
+      searchTermDocuments.value = value
+    }
+
+    const closeSearchfield = (value) => {
+      currentSuggestions.value = []
+      searchTermDocuments.value = value
       isOpen.value = false
+
+      pushSearchTerm(value)
     }
 
-    const getResults = async () => {
-      const results = await getSearchSuggestions(searchTermDocument.value, 3)
+    const getSearchSuggestionsResult = async () => {
+      if (activeTab.value !== 'documents') {
+        return
+      }
 
-      console.log('results: ', results)
+      const results = await getSearchSuggestions(searchTermDocuments.value, 3)
+      console.log(results)
       currentSuggestions.value = results
-
-      return results
+      isOpen.value = currentSuggestions.value.length > 0
     }
-    // watch(
-    //   activeTab,
-    //   (activeTabValue) => {
-    //     console.log(activeTabValue)
-    //   },
-    //   { immediate: true }
-    // )
 
-    // watch(activeTab, () => {
-    //   console.log(activeTab.value)
-    //   if (activeTab?.value === 'documents') {
-    //     pushSearchTerm(searchTermDocument)
-    //   }
-    // })
-
-    const pushSearchTerm = (e) => {
-      emit('submit')
-      router.push({
-        path: app.localePath('shop-categories'),
-        query: { searchTerm: e.length ? e : undefined },
-      })
+    const pushSearchTerm = (term) => {
+      const searchTerm = activeTab.value ? `&searchType=${activeTab.value}` : ''
+      router.push(`search?searchTerm=${term}${searchTerm}`)
     }
-    console.log('activeTab', activeTab)
 
     const emitFocus = (val) => {
       emit('focus', val)
     }
 
+    const test = (value) => {
+      console.log(value)
+      closeSearchfield()
+    }
+
     return {
       pvInput,
       emitFocus,
-      searchTermDocument,
-      getResults,
+      searchTermDocuments,
+      getSearchSuggestionsResult,
       closeSearchfield,
       currentSuggestions,
       suggestionHover,
+      test,
+      blurSuggestions,
+      activeTab,
+      searchTerm,
+      setSearchTerm,
+      isOpen,
     }
   },
 })
