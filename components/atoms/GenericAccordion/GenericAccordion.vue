@@ -272,10 +272,12 @@ export default defineComponent({
 
       &--active {
         @apply tw-text-pv-white;
+        -webkit-text-fill-color: var(--pv-white);
         @apply tw-bg-pv-red;
 
         .accordion__label {
           @apply tw-text-pv-white;
+          -webkit-text-fill-color: var(--pv-white);
         }
       }
     }

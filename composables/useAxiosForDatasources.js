@@ -6,7 +6,7 @@ import { PATH_DATASOURCES } from '~/server/constants'
 let axios = null
 
 export const useAxiosForDatasources = () => {
-  const { $axios } = useContext()
+  const { req, $axios } = useContext()
   const router = useRouter()
   const { getCurrentHostUrl } = useContextUtil()
 
@@ -20,6 +20,13 @@ export const useAxiosForDatasources = () => {
     instance.setBaseURL(basePath)
     instance.setHeader('Content-Type', 'application/json')
     return instance
+  }
+
+  if (req) {
+    if (!req.axiosForDatasources) {
+      req.axiosForDatasources = createAxios()
+    }
+    return { axios: req.axiosForDatasources }
   }
 
   if (!axios) {

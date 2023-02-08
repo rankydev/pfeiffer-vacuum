@@ -66,3 +66,18 @@
 .transform-position-leave-active {
   position: absolute;
 }
+
+
+.fade-in-out-item {
+  transition: all 0.5s;
+}
+
+.fade-in-out-enter,
+.fade-in-out-leave-to {
+  opacity: 0;
+}
+
+.fade-in-out-leave-active {
+  position: absolute;
+  display: none;
+}
