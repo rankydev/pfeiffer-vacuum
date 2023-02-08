@@ -19,7 +19,9 @@
   </div>
 </template>
 <script>
-export default {
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   name: 'SectionHeadline',
   props: {
     buttons: {
@@ -28,7 +30,7 @@ export default {
     },
   },
   emits: ['btnClick'],
-}
+})
 </script>
 <style lang="scss">
 .section-headline {

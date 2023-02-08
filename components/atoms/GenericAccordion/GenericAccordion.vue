@@ -139,9 +139,8 @@ export default defineComponent({
     if (props.multiple) {
       const filterActives = (memo, ele, idx) =>
         ele.isActive ? [...memo, idx] : memo
-      const initial = props.accordionEntries.reduce(filterActives, [])
 
-      active.value = [...initial]
+      active.value = [...props.accordionEntries.reduce(filterActives, [])]
       const hasIdx = (idx) => active.value.includes(idx)
       const findIdx = (idx) => active.value.indexOf(idx)
       const removeIdx = (idx) => active.value.splice(findIdx(idx), 1)
@@ -155,8 +154,7 @@ export default defineComponent({
       }
     } else {
       const findIdx = (ele) => ele.isActive
-      const initial = props.accordionEntries.findIndex(findIdx)
-      active.value = initial
+      active.value = props.accordionEntries.findIndex(findIdx)
       const hasIdx = (idx) => active.value === idx
 
       return {
