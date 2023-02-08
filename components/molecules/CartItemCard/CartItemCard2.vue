@@ -27,9 +27,16 @@
           {{ entry.product.orderNumber }}
         </p>
       </div>
-      <div class="cart-item-card-tags">
-        <span>Hello</span><span>Hello</span><span>Hello</span><span>Hello</span
-        ><span>Hello</span><span>Hello</span>
+      <div class="cart-item-card-details">
+        <template v-for="detail in details" :key="detail.code">
+          <Badge
+            v-for="(variant, id) in detail.variationValues"
+            :key="detail.code + id"
+            class="cart-item-card-details__detail"
+            :label="detail.name"
+            :content="variant.displayValue"
+          />
+        </template>
       </div>
       <PvInput
         v-model="quantity"
@@ -77,12 +84,14 @@ import {
   computed,
   defineComponent,
   ref,
+  toRefs,
   useContext,
 } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+import Badge from '~/components/molecules/Badge/Badge'
 
 export default defineComponent({
   name: 'CartItemCard',
@@ -91,6 +100,7 @@ export default defineComponent({
     Link,
     ResponsiveImage,
     PvInput,
+    Badge,
   },
   props: {
     entry: {
@@ -125,26 +135,31 @@ export default defineComponent({
   emits: ['addToList', 'delete'],
   setup(props) {
     const context = useContext()
-    const quantity = ref(props.entry.quantity)
-    const image = computed(() => props.entry.product.images[0])
-    const productPrice = ref(props.price)
+    const { entry, price } = toRefs(props)
+    const quantity = ref(entry.value.quantity)
+    const image = computed(() => entry.value.product.images[0])
+    const productPrice = ref(price.value)
+    //details works
+    const details = computed(
+      () => props.entry?.product?.variationMatrix?.variationAttributes
+    )
 
-    console.log(props.entry.product.code, 'PATH')
+    console.log(entry.value.product.code, 'PATH')
+
+    console.log('Dennis', details.value)
 
     const url = computed(() =>
       context.app.localePath({
         name: 'shop-products-product',
-        params: { product: props.entry.product?.code },
+        params: { product: entry.value?.product?.code },
       })
     )
 
     const isInactive = computed(() => {
-      return props.entry.product?.purchasable === false
+      return entry.value.product?.purchasable === false
     })
 
-    const totalPrice = computed(() => {
-      return quantity.value * productPrice.value
-    })
+    const totalPrice = computed(() => quantity.value * productPrice.value)
 
     const updateQuantity = (value) => {
       if (value > 1) {
@@ -162,12 +177,17 @@ export default defineComponent({
       url,
       productPrice,
       totalPrice,
+      details,
     }
   },
 })
 </script>
 
 <style lang="scss">
+.cart-item-wrapper {
+  max-width: 320px;
+}
+
 .cart-item-header {
   @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
   @apply tw-mx-4;
@@ -339,14 +359,23 @@ export default defineComponent({
     }
   }
 
-  &-tags {
+  &-details {
     @apply tw-row-start-3 tw-row-end-4;
     @apply tw-col-start-1 tw-col-end-12;
+    @apply tw-flex;
     @apply tw-mt-4;
 
     @screen lg {
       @apply tw-row-start-2 tw-row-end-3;
       @apply tw-col-start-2 tw-col-end-8;
+    }
+
+    &__detail {
+      @apply tw-mr-2;
+
+      &:last-child {
+        @apply tw-mr-0;
+      }
     }
   }
 
