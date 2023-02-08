@@ -23,6 +23,13 @@ export default {
       component_whitelist: ['MainNavLinkLevel1'],
       description: 'Navigation entries displayed on first level.',
     },
+    useHybrisCategories: {
+      type: 'boolean',
+      display_name: 'Use Hybris Category Tree?',
+      description:
+        'Use hybris category tree as navigation entries instead of storyblok?',
+      default_value: 'false',
+    },
   },
   image: null,
   preview_field: null,

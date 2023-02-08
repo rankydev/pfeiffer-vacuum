@@ -16,6 +16,7 @@ export const useCategoryStore = defineStore('category', () => {
 
   let searchTerm = ref('')
 
+  const categoryTree = ref([])
   const category = ref(null)
   const result = ref(null)
   const reqId = ref(null)
@@ -97,6 +98,30 @@ export const useCategoryStore = defineStore('category', () => {
     return joinURL(rootUrl.value, categoryPath[idx].id)
   })
 
+  const categoryTreeNavigationEntries = computed(() =>
+    categoryTree.value.map((parent) => ({
+      component: 'MainNavLinkLevel1',
+      level: 1,
+      href: joinURL(localePath('shop-categories'), parent.category?.id),
+      label: parent.category?.name,
+      target: '_self',
+      navigationEntries: parent.children.map((child) => ({
+        component: 'MainNavLinkLevel2',
+        level: 2,
+        href: joinURL(localePath('shop-categories'), child.category?.id),
+        label: child.category?.name || '',
+        target: '_self',
+      })),
+    }))
+  )
+
+  const loadCategoryTree = async () => {
+    const res = await axios.get(joinURL(config.PRODUCTS_API, 'search'), {
+      params: { fields: 'FULL', categoryTreeDepth: 2 },
+    })
+    categoryTree.value = res.data?.categorySubtree || []
+  }
+
   const loadProducts = async () => {
     const id = route.value.params.category || ''
     const facets = route.value.query.facets || ''
@@ -166,10 +191,12 @@ export const useCategoryStore = defineStore('category', () => {
     parentCategoryPath,
     currentSuggestions,
     rootUrl,
+    categoryTreeNavigationEntries,
 
     // actions
     loadByPath,
     loadSuggestions,
     blurSuggestions,
+    loadCategoryTree,
   }
 })
