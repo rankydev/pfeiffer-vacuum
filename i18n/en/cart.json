@@ -29,5 +29,13 @@
     }
   },
   "addToCartSuccess": "Successfully added product to cart",
-  "addToCartError": "An error occured while adding product to cart"
+  "addToCartError": "An error occured while adding product to cart",
+  "list": {
+    "addArticle": "Add to shopping list"
+  },
+  "productPrice": "Price",
+  "totalPrice": "Total",
+  "quantity": "Quantity",
+  "priceOnRequest": "Price on request",
+  "details": "Details"
 }
