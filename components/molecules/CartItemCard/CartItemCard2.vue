@@ -214,18 +214,10 @@ export default defineComponent({
   @apply tw-mt-6;
   @apply tw-mx-4;
 
-  @screen lg {
-    @apply tw-grid-rows-3;
-  }
-
   &-image {
     @apply tw-row-start-1 tw-row-end-2;
     @apply tw-col-start-1 tw-col-end-3;
     @apply tw-flex;
-
-    @screen md {
-      @apply tw-col-end-2;
-    }
   }
 
   &-title {
@@ -234,23 +226,9 @@ export default defineComponent({
     @apply tw-flex tw-flex-col;
     @apply tw-ml-4;
 
-    @screen md {
-      @apply tw-col-start-2;
-    }
-
-    @screen lg {
-      @apply tw-ml-0;
-      @apply tw-col-start-2 tw-col-end-8;
-    }
-
     &__mainTitle {
       @apply tw-text-base;
       @apply tw-leading-6;
-
-      @screen lg {
-        @apply tw-text-lg;
-        @apply tw-leading-7;
-      }
     }
 
     &__subTitle {
@@ -264,13 +242,6 @@ export default defineComponent({
     @apply tw-col-start-1 tw-col-end-7;
     @apply tw-mt-4;
     @apply tw-flex;
-
-    @screen lg {
-      @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-9 tw-col-end-10;
-      @apply tw-w-20;
-      @apply tw-m-auto;
-    }
   }
 
   &-price {
@@ -281,25 +252,9 @@ export default defineComponent({
     @apply tw-ml-auto;
     @apply tw-mt-4;
 
-    @screen md {
-      @apply tw-my-auto;
-      @apply tw-col-start-9 tw-col-end-11;
-    }
-
-    @screen lg {
-      @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-10 tw-col-end-11;
-      @apply tw-text-lg;
-      @apply tw-leading-7;
-    }
-
     &__label {
       @apply tw-text-xs;
       @apply tw-ml-2;
-
-      @screen lg {
-        @apply tw-hidden;
-      }
     }
 
     &__price {
@@ -315,34 +270,14 @@ export default defineComponent({
     @apply tw-mt-auto;
     @apply tw-ml-auto;
 
-    @screen md {
-      @apply tw-mb-auto;
-      @apply tw-col-start-11 tw-col-end-13;
-    }
-
-    @screen lg {
-      @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-11 tw-col-end-12;
-    }
-
     &__label {
       @apply tw-text-xs;
-
-      @screen lg {
-        @apply tw-hidden;
-      }
     }
 
     &__price {
       @apply tw-text-base;
       @apply tw-font-bold;
       @apply tw-ml-2;
-
-      @screen lg {
-        @apply tw-text-lg;
-        @apply tw-leading-7;
-        @apply tw-font-normal;
-      }
     }
   }
 
@@ -352,11 +287,6 @@ export default defineComponent({
     @apply tw-mb-auto;
     @apply tw-ml-auto;
     padding: 0 0 0 8px !important;
-
-    @screen lg {
-      @apply tw-mt-auto;
-      @apply tw-mr-auto;
-    }
   }
 
   &-details {
@@ -364,11 +294,6 @@ export default defineComponent({
     @apply tw-col-start-1 tw-col-end-12;
     @apply tw-flex;
     @apply tw-mt-4;
-
-    @screen lg {
-      @apply tw-row-start-2 tw-row-end-3;
-      @apply tw-col-start-2 tw-col-end-8;
-    }
 
     &__detail {
       @apply tw-mr-2;
@@ -385,15 +310,6 @@ export default defineComponent({
     @apply tw-w-fit;
     @apply tw-mx-auto;
     @apply tw-mb-3;
-
-    @screen md {
-      @apply tw-mx-0;
-    }
-
-    @screen lg {
-      @apply tw-row-start-3 tw-row-end-4;
-      @apply tw-col-start-2 tw-col-end-13;
-    }
   }
 }
 
@@ -404,21 +320,12 @@ export default defineComponent({
     }
 
     &-image {
-      @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-1 tw-col-end-3;
-      @apply tw-flex;
-
       @screen md {
         @apply tw-col-end-2;
       }
     }
 
     &-title {
-      @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-4 tw-col-end-12;
-      @apply tw-flex tw-flex-col;
-      @apply tw-ml-4;
-
       @screen md {
         @apply tw-col-start-2;
       }
@@ -429,27 +336,14 @@ export default defineComponent({
       }
 
       &__mainTitle {
-        @apply tw-text-base;
-        @apply tw-leading-6;
-
         @screen lg {
           @apply tw-text-lg;
           @apply tw-leading-7;
         }
       }
-
-      &__subTitle {
-        @apply tw-text-base;
-        @apply tw-text-pv-grey-48;
-      }
     }
 
     &-quantity {
-      @apply tw-row-start-2 tw-row-end-3;
-      @apply tw-col-start-1 tw-col-end-7;
-      @apply tw-mt-4;
-      @apply tw-flex;
-
       @screen lg {
         @apply tw-row-start-1 tw-row-end-1;
         @apply tw-col-start-9 tw-col-end-10;
@@ -459,13 +353,6 @@ export default defineComponent({
     }
 
     &-price {
-      @apply tw-row-start-2 tw-row-end-3;
-      @apply tw-col-start-7 tw-col-end-13;
-      @apply tw-leading-6;
-      @apply tw-flex;
-      @apply tw-ml-auto;
-      @apply tw-mt-4;
-
       @screen md {
         @apply tw-my-auto;
         @apply tw-col-start-9 tw-col-end-11;
@@ -479,27 +366,13 @@ export default defineComponent({
       }
 
       &__label {
-        @apply tw-text-xs;
-        @apply tw-ml-2;
-
         @screen lg {
           @apply tw-hidden;
         }
       }
-
-      &__price {
-        @apply tw-ml-2;
-      }
     }
 
     &-totalPrice {
-      @apply tw-row-start-2 tw-row-end-3;
-      @apply tw-col-start-7 tw-col-end-13;
-      @apply tw-leading-6;
-      @apply tw-flex;
-      @apply tw-mt-auto;
-      @apply tw-ml-auto;
-
       @screen md {
         @apply tw-mb-auto;
         @apply tw-col-start-11 tw-col-end-13;
@@ -511,18 +384,12 @@ export default defineComponent({
       }
 
       &__label {
-        @apply tw-text-xs;
-
         @screen lg {
           @apply tw-hidden;
         }
       }
 
       &__price {
-        @apply tw-text-base;
-        @apply tw-font-bold;
-        @apply tw-ml-2;
-
         @screen lg {
           @apply tw-text-lg;
           @apply tw-leading-7;
@@ -532,12 +399,6 @@ export default defineComponent({
     }
 
     &-delete {
-      @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-12 tw-col-end-13;
-      @apply tw-mb-auto;
-      @apply tw-ml-auto;
-      padding: 0 0 0 8px !important;
-
       @screen lg {
         @apply tw-mt-auto;
         @apply tw-mr-auto;
@@ -545,32 +406,13 @@ export default defineComponent({
     }
 
     &-details {
-      @apply tw-row-start-3 tw-row-end-4;
-      @apply tw-col-start-1 tw-col-end-12;
-      @apply tw-flex;
-      @apply tw-mt-4;
-
       @screen lg {
         @apply tw-row-start-2 tw-row-end-3;
         @apply tw-col-start-2 tw-col-end-8;
       }
-
-      &__detail {
-        @apply tw-mr-2;
-
-        &:last-child {
-          @apply tw-mr-0;
-        }
-      }
     }
 
     &-addArticle {
-      @apply tw-row-start-5 tw-row-end-6;
-      @apply tw-col-start-1 tw-col-end-13;
-      @apply tw-w-fit;
-      @apply tw-mx-auto;
-      @apply tw-mb-3;
-
       @screen md {
         @apply tw-mx-0;
       }
