@@ -278,11 +278,10 @@ export default defineComponent({
 
     &-input {
       @apply tw-relative;
-      @apply tw-mb-2;
+      @apply tw-mb-4;
       @apply tw-mx-auto;
 
       @screen md {
-        @apply tw-mb-4;
         max-width: 534px;
       }
 
