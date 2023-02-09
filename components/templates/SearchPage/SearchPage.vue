@@ -56,7 +56,7 @@
                     }"
                   />
                   <div v-else>
-                    <h2 class="tw-py-6">TODO: Document Search</h2>
+                    <DocumentSearchResult />
                   </div>
                 </ContentWrapper>
               </div>
@@ -113,14 +113,16 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 import SearchResult from '~/components/organisms/SearchResult/SearchResult'
+import DocumentSearchResult from '~/components/organisms/DocumentSearchResult/DocumentSearchResult'
 import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
 import DocumentSearchSuggest from '~/components/molecules/DocumentSearchSuggest/DocumentSearchSuggest'
 
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
-import { useCategoryStore } from '~/stores/category/category'
-import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import { useStoryblokData } from '~/composables/useStoryblokData'
+import { useCategoryStore } from '~/stores/category/category'
+import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
+import { useEmpolisStore } from '~/stores/empolis'
 
 export default defineComponent({
   name: 'CategoryShopPage',
@@ -130,9 +132,10 @@ export default defineComponent({
     ContentWrapper,
     OnPageNavigation,
     ResultHeadline,
-    SearchResult,
     GenericTabs,
     DocumentSearchSuggest,
+    SearchResult,
+    DocumentSearchResult,
   },
   layout: 'default',
   props: {
@@ -165,7 +168,11 @@ export default defineComponent({
 
     const selectTab = (trigger) => {
       router.push({
-        query: { ...route.value.query, searchType: trigger },
+        // TODO: replace searchterm to the "old one" from the tab to switch to (if one exists?) [PVWEB-546]
+        query: {
+          searchTerm: route.value.query.searchTerm,
+          searchType: trigger,
+        },
       })
     }
 
@@ -185,11 +192,12 @@ export default defineComponent({
      * Redirects to the error page if category was not found
      */
     const categoryStore = useCategoryStore()
+    const empolisStore = useEmpolisStore()
     const loadSearchResults = async () => {
       if (currentTabSelected.value === 'products') {
         await redirectOnError(categoryStore.loadByPath)
-      } else {
-        // TODO: load documents results
+      } else if (currentTabSelected.value === 'documents') {
+        await empolisStore.loadByPath()
       }
     }
 

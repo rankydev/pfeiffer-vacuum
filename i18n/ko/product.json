@@ -34,10 +34,15 @@
   "selectVariantExplained": "해당 제품 세부 정보를 보려면 귀하의 개별 요구 사항에 적합한 제품 사양을 선택하십시오.",
   "scrollToVariantSelection": "사양 선택",
   "priceOnRequest": "요청 시 가격 안내",
-  "noPriceAvailable": "가격 없음",
+  "noPriceAvailable": "가격을 로드할 수 없습니다.",
   "help": "도움이 필요하십니까?",
   "articleNumber": "주문 번호",
   "userStatus": {
+    "undefined": {
+      "priceInfo": {
+        "text": "가격을 로드할 수 없습니다."
+      }
+    },
     "lead": {
       "priceInfo": {
         "text": "가격을 보려면 {link}을(를) 추가하십시오.",

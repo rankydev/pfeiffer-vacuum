@@ -22,6 +22,7 @@ export const useAxiosForEmpolis = () => {
       'environments',
       $config.EMPOLIS_STAGE
     )
+
     instance.setBaseURL(basePath)
     instance.setHeader('Content-Type', 'application/json')
 
@@ -32,10 +33,10 @@ export const useAxiosForEmpolis = () => {
   }
 
   if (req) {
-    if (!req.axios) {
-      req.axios = createAxios()
+    if (!req.axiosForEmpolis) {
+      req.axiosForEmpolis = createAxios()
     }
-    return { axios: req.axios }
+    return { axios: req.axiosForEmpolis }
   }
 
   if (!axios) {
