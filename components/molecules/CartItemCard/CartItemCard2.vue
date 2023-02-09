@@ -1,14 +1,5 @@
 <template>
   <div class="cart-item-wrapper">
-    <div class="cart-item-header">
-      <span class="cart-item-header__quantity">{{ $t('cart.quantity') }}</span>
-      <span class="cart-item-header__price">
-        {{ $t('cart.productPrice') }}
-      </span>
-      <span class="cart-item-header__totalPrice">
-        {{ $t('cart.totalPrice') }}
-      </span>
-    </div>
     <div
       v-for="i in 6"
       :key="i"
@@ -42,7 +33,7 @@
           @click="toggleDetails"
         />
         <div v-if="isDetailsExpanded">
-          <template v-for="detail in details" :key="detail.code">
+          <template v-for="detail in details">
             <Badge
               v-for="(variant, id) in detail.variationValues"
               :key="detail.code + id"
@@ -222,7 +213,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-
 .cart-item-header {
   @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
   @apply tw-mx-4;
