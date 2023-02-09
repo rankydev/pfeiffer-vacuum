@@ -3,20 +3,24 @@
     <PvInput
       ref="pvInput"
       v-model="searchTerm"
-      icon="search"
+      :icon="searchTerm.length ? 'cancel' : ''"
       :placeholder="$t('form.input.search.placeholder')"
       @input="getSearchSuggestionsResult"
       @submit="closeSearchfield"
+      @click:icon="clearInput"
     />
 
-    <div v-if="isOpen" class="suggestions">
+    <div
+      v-if="isOpen && currentSuggestions.length && searchTerm.length"
+      class="suggestions"
+    >
       <SearchButton
         v-for="item in currentSuggestions"
         :key="item.value"
-        class="asdf"
+        class="search-header__suggestions--result"
         :title="item.value"
-        @closeModal="closeSearchfield(item.value)"
         :search-type="activeTab"
+        @closeModal="closeSearchfield(item.value)"
       />
     </div>
   </div>
@@ -26,32 +30,33 @@
 import {
   computed,
   defineComponent,
+  useContext,
   useRouter,
   useRoute,
-  useContext,
   ref,
   watch,
 } from '@nuxtjs/composition-api'
 
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import { useEmpolis } from '~/composables/useEmpolis'
+import { useDebounce } from '~/composables/useDebounce'
 import SearchButton from '~/components/molecules/SearchButton/SearchButton'
-import { useCategoryStore } from '~/stores/category/category'
-// import _, { debounce } from 'lodash'
 
 export default defineComponent({
   components: {
     PvInput,
     SearchButton,
   },
-  emits: ['submit', 'focus'],
-  setup(props, { emit }) {
+  setup() {
     const router = useRouter()
     const route = useRoute()
     const { app } = useContext()
+    const { getSearchSuggestions } = useEmpolis()
+    const { debounce } = useDebounce()
+    const isDesktop = app.$breakpoints.isDesktop
 
     const pvInput = ref(null)
-
+    const currentSuggestions = ref([])
     const searchTermDocuments = ref(route.value.query.searchTerm || '')
     const searchTermProducts = ref(route.value.query.searchTerm || '')
     const searchTermInitial = ref(route.value.query.searchTerm || '')
@@ -67,11 +72,9 @@ export default defineComponent({
       searchTerm.value = searchTermDocumentsValue
     })
 
-    const setSearchTerm = (term) => {
-      console.log('termmmm', term)
-      pushSearchTerm(term)
-      isOpen.value = false
-    }
+    watch(searchTermProducts, (searchTermProductsValue) => {
+      searchTerm.value = searchTermProductsValue
+    })
 
     watch(searchTerm, (searchTermValue) => {
       if (activeTab?.value === 'documents') {
@@ -91,21 +94,19 @@ export default defineComponent({
           : searchTermInitial.value
     })
 
-    const { getSearchSuggestions } = useEmpolis()
-    const currentSuggestions = ref([])
-    const suggestionHover = ref(false)
-
-    const blurSuggestions = (val) => {
-      if (!val) searchSuggestions.value = []
+    const setSearchTerm = (term) => {
+      console.log('termmmm', term)
+      pushSearchTerm(term)
+      isOpen.value = false
     }
 
-    // const updateSearchTerm(value) => {
-
-    // }
-
-    const clearCurrentSuggestions = () => {
-      currentSuggestions.value = []
-      searchTermDocuments.value = value
+    const clearInput = () => {
+      if (activeTab?.value === 'documents') {
+        searchTermDocuments.value = ''
+      }
+      if (activeTab?.value === 'products') {
+        searchTermProducts.value = ''
+      }
     }
 
     const closeSearchfield = (value) => {
@@ -116,52 +117,44 @@ export default defineComponent({
       pushSearchTerm(value)
     }
 
-    const getSearchSuggestionsResult = async () => {
+    const getSearchSuggestionsResult = debounce(async () => {
       if (activeTab.value !== 'documents') {
         return
       }
 
       const results = await getSearchSuggestions(searchTermDocuments.value, 3)
-      console.log(results)
       currentSuggestions.value = results
       isOpen.value = currentSuggestions.value.length > 0
-    }
+    })
 
     const pushSearchTerm = (term) => {
-      const searchTerm = activeTab.value ? `&searchType=${activeTab.value}` : ''
-      router.push(`search?searchTerm=${term}${searchTerm}`)
-    }
-
-    const emitFocus = (val) => {
-      emit('focus', val)
-    }
-
-    const test = (value) => {
-      console.log(value)
-      closeSearchfield()
+      const searchType = activeTab.value ? `&searchType=${activeTab.value}` : ''
+      router.push(`search?searchTerm=${term}${searchType}`)
     }
 
     return {
       pvInput,
-      emitFocus,
+      isDesktop,
       searchTermDocuments,
       getSearchSuggestionsResult,
       closeSearchfield,
       currentSuggestions,
-      suggestionHover,
-      test,
-      blurSuggestions,
       activeTab,
       searchTerm,
       setSearchTerm,
       isOpen,
+      clearInput,
     }
   },
 })
 </script>
 <style lang="scss">
 .document-search-input {
-  position: relative;
+  @apply tw-relative;
+
+  .pv-input__icon {
+    @apply tw-text-pv-grey-16;
+  }
 }
 
 .suggestions {
