@@ -12,7 +12,7 @@
 
     <div
       v-if="isOpen && currentSuggestions.length && searchTerm.length"
-      class="suggestions"
+      class="document-search-input__suggestions"
     >
       <SearchButton
         v-for="item in currentSuggestions"
@@ -155,14 +155,14 @@ export default defineComponent({
   .pv-input__icon {
     @apply tw-text-pv-grey-16;
   }
-}
 
-.suggestions {
-  @apply tw-absolute;
-  @apply tw-border-2 tw-border-pv-grey-80;
-  @apply tw-rounded-md;
-  @apply tw-bg-pv-white;
-  @apply tw-w-full;
-  border-top: none;
+  &__suggestions {
+    @apply tw-absolute;
+    @apply tw-border-2 tw-border-pv-grey-80;
+    @apply tw-rounded-md;
+    @apply tw-bg-pv-white;
+    @apply tw-w-full;
+    border-top: none;
+  }
 }
 </style>
