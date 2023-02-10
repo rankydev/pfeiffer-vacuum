@@ -29,5 +29,13 @@
   "addToCartError": "An error occured while adding product to cart",
   "headline": "Shopping Cart",
   "saveCartToList": "Save cart to list",
-  "getProductHelp": "Get product help"
+  "getProductHelp": "Get product help",
+  "list": {
+    "addArticle": "Add to shopping list"
+  },
+  "productPrice": "Price",
+  "totalPrice": "Total",
+  "quantity": "Quantity",
+  "priceOnRequest": "Price on request",
+  "details": "Details"
 }

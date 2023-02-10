@@ -29,5 +29,13 @@
   "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten",
   "headline": "Warenkorb",
   "saveCartToList": "Als Liste speichern",
-  "getProductHelp": "Hilfe zum Produkt"
+  "getProductHelp": "Hilfe zum Produkt",
+  "list": {
+    "addArticle": "Zur Einkausliste hinzufügen"
+  },
+  "productPrice": "Preis",
+  "totalPrice": "Gesamt",
+  "quantity": "Anzahl",
+  "priceOnRequest": "Preis auf Anfrage",
+  "details": "Details"
 }
