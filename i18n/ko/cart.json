@@ -27,6 +27,7 @@
   },
   "addToCartSuccess": "제품을 장바구니에 성공적으로 추가했습니다.",
   "addToCartError": "장바구니에 제품을 추가하는 동안 오류가 발생했습니다.",
+  "headline": "쇼핑 카트",
   "list": {
     "addArticle": "Add to shopping list"
   },

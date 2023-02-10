@@ -13,7 +13,7 @@
               <div class="cart-page__header">
                 <ResultHeadline
                   :headline="$t('cart.headline')"
-                  :result-count="cartEntriesCount"
+                  :result-count="currentCart.totalItems"
                 />
 
                 <div class="cart-page__buttons">
@@ -43,6 +43,34 @@
                   {{ entry.quantity }}
                 </li>
               </ul>
+
+              <div class="cart-page__information">
+                <PriceInformation :current-cart="cart" />
+                <!-- REMOVE COMPUTED PROPERTY CART -->
+              </div>
+
+              <div class="cart-page__total">
+                <TotalNetInformation :current-cart="currentCart" />
+              </div>
+
+              <div class="cart-page__submit">
+                <Button
+                  class="cart-page__button"
+                  variant="primary"
+                  label="Submit your request"
+                  icon="mail_outline"
+                />
+
+                <Button
+                  v-show="isMobile"
+                  class="cart-page__button cart-page__button--back"
+                  variant="secondary"
+                  shape="plain"
+                  label="Back to shopping cart"
+                  icon="arrow_back"
+                  prepend-icon="true"
+                />
+              </div>
             </div>
           </ContentWrapper>
         </template>
@@ -65,6 +93,9 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
 import Button from '~/components/atoms/Button/Button.vue'
+import PriceInformation from '~/components/molecules/PriceInformation/PriceInformation.vue'
+import TotalNetInformation from '~/components/molecules/TotalNetInformation/TotalNetInformation'
+
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
@@ -74,6 +105,8 @@ export default defineComponent({
     ContentWrapper,
     ResultHeadline,
     Button,
+    PriceInformation,
+    TotalNetInformation,
   },
   setup() {
     const route = useRoute()
@@ -85,9 +118,21 @@ export default defineComponent({
 
     const isMobile = app.$breakpoints.isMobile
     const cartEntries = computed(() => currentCart.value.entries)
-    const cartEntriesCount = computed(
-      () => currentCart.value.entries?.length || null
-    )
+    const cart = computed(() => ({
+      ...currentCart.value,
+      ...currentCartSpecificPrices,
+    }))
+
+    const currentCartSpecificPrices = {
+      hiddenUIElements: {
+        checkoutInformationSpecificPrices: false,
+        checkoutInformationDelivery: true,
+      },
+    }
+
+    const helpContainerContent = {
+      headline: 'test',
+    }
 
     /**
      * build the cms slug
@@ -99,9 +144,10 @@ export default defineComponent({
 
     return {
       cartEntries,
-      cartEntriesCount,
       slugs,
       isMobile,
+      currentCart,
+      cart,
     }
   },
 })
@@ -109,7 +155,7 @@ export default defineComponent({
 
 <style lang="scss">
 .cart-page {
-  @apply tw-py-6;
+  @apply tw-pt-6;
 
   &__header {
     @screen md {
@@ -128,12 +174,35 @@ export default defineComponent({
     @apply tw-pb-8;
   }
 
+  &__submit {
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-gap-6;
+
+    @screen md {
+      @apply tw-flex-row;
+    }
+  }
+
   &__button {
     &--save {
       @screen md {
         @apply tw-mr-8;
       }
     }
+
+    &--back {
+      @apply tw-text-pv-red;
+      place-self: center;
+    }
+  }
+
+  &__information {
+    @apply tw-mt-8;
+  }
+
+  &__total {
+    @apply tw-py-6;
   }
 }
 </style>

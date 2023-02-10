@@ -27,6 +27,7 @@
   },
   "addToCartSuccess": "已成功将产品添加到购物车",
   "addToCartError": "将产品添加到购物车时发生错误",
+  "headline": "购物车",
   "list": {
     "addArticle": "Add to shopping list"
   },
