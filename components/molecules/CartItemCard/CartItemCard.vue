@@ -133,7 +133,7 @@ export default defineComponent({
       default: 1,
     },
     promotion: {
-      type: String,
+      type: Object,
       default: null,
     },
     isMiniCart: {
