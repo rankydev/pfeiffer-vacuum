@@ -13,7 +13,7 @@
       v-for="i in 6"
       :key="i"
       class="cart-item-card"
-      :class="{ 'cart-item-card-desktop': !isMinicart }"
+      :class="{ 'cart-item-card-desktop': !isMiniCart }"
     >
       <div class="cart-item-card-image">
         <Link :href="url">
@@ -32,15 +32,16 @@
           {{ orderNumber }}
         </p>
       </div>
+      <Button
+        v-if="isMiniCart"
+        class="cart-item-card-detailsButton"
+        variant="secondary"
+        shape="plain"
+        :icon="isDetailsExpanded ? 'arrow_upward' : 'arrow_downward'"
+        :label="$t('cart.details')"
+        @click="toggleDetails"
+      />
       <div class="cart-item-card-details">
-        <Button
-          class="cart-item-card-details__expandButton"
-          variant="secondary"
-          shape="plain"
-          :icon="isDetailsExpanded ? 'arrow_upward' : 'arrow_downward'"
-          :label="$t('cart.details')"
-          @click="toggleDetails"
-        />
         <div v-if="isDetailsExpanded">
           <template v-for="detail in details" :key="detail.code">
             <Badge
@@ -53,26 +54,39 @@
           </template>
         </div>
       </div>
+      <PromotionLabel
+        v-if="promotion"
+        class="cart-item-card-promotion"
+        subline="20 % auf alles"
+      />
       <PvInput
         v-model="quantity"
         input-type="number"
         class="cart-item-card-quantity"
         @input="updateQuantity"
       />
-      <div class="cart-item-card-price">
+      <div
+        v-if="!isLoggedIn || !isPriceVisible"
+        class="cart-item-card-priceError"
+      >
+        <LoginToSeePricesLabel v-if="!isLoggedIn" />
+        <span v-else>{{ noPriceReason }}</span>
+      </div>
+      <div v-if="isLoggedIn && isPriceVisible" class="cart-item-card-price">
         <span class="cart-item-card-price__label">
           {{ $t('cart.productPrice') }}
         </span>
-        <span class="cart-item-card-price__price">{{
-          `€ ${productPrice}`
-        }}</span>
+        <span class="cart-item-card-price__price">{{ productPrice }}</span>
       </div>
-      <div class="cart-item-card-totalPrice">
+      <div
+        v-if="isLoggedIn && isPriceVisible"
+        class="cart-item-card-totalPrice"
+      >
         <span class="cart-item-card-totalPrice__label">
           {{ $t('cart.totalPrice') }}
         </span>
         <span class="cart-item-card-totalPrice__price">
-          {{ `€ ${totalPrice}` }}
+          {{ totalPrice }}
         </span>
       </div>
       <Button
@@ -106,7 +120,9 @@ import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
-import Badge from '~/components/molecules/Badge/Badge'
+import Badge from '~/components/atoms/Badge/Badge'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
 
 export default defineComponent({
   name: 'CartItemCard',
@@ -138,22 +154,56 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-    promotions: {
-      type: Array,
-      default: () => [],
+    promotion: {
+      type: Text,
+      default: null,
     },
-    isMinicart: {
+    isMiniCart: {
       type: Boolean,
       default: false,
     },
   },
   emits: ['add', 'delete'],
   setup(props, { emit }) {
-    const context = useContext()
-    const { entry, price, isMinicart } = toRefs(props)
+    const { app, i18n } = useContext()
+    const userStore = useUserStore()
+    const { entry, price, isMiniCart } = toRefs(props)
     const quantity = ref(entry.value.quantity)
-    const productPrice = ref(price.value)
-    //works and tested
+    const {
+      isApprovedUser,
+      isLeadUser,
+      isOpenUser,
+      isRejectedUser,
+      isLoggedIn,
+    } = storeToRefs(userStore)
+
+    const noPriceReason = computed(() => {
+      const path = 'product.login.loginToSeePrices.'
+      if (!price.value) return i18n.t('product.priceOnRequest')
+      if (isLeadUser.value) return i18n.t(path + 'lead')
+      if (isOpenUser.value) return i18n.t(path + 'open')
+      if (isRejectedUser.value) return i18n.t(path + 'rejected')
+      return i18n.t('product.noPriceAvailable')
+    })
+
+    const isPriceVisible = computed(
+      () => !!(price.value && isApprovedUser.value)
+    )
+
+    const getPriceString = (priceValue) => {
+      if (price.value === null) {
+        return '-'
+      }
+      return `€ ${priceValue.toFixed(2).toLocaleString()}`
+    }
+
+    const productPrice = computed(() => {
+      return getPriceString(price.value)
+    })
+    const totalPrice = computed(() => {
+      return getPriceString(quantity.value * price.value)
+    })
+
     const productImage = computed(() => {
       return entry.value.product.images[0]
     })
@@ -161,37 +211,32 @@ export default defineComponent({
       return entry.value.product.name
     })
     const orderNumber = computed(() => {
-      return entry.value.product.orderNumber
+      return entry.value.product.orderNumber || ''
     })
     const details = computed(
       () => props.entry?.product?.variationMatrix?.variationAttributes
     )
-    const isDetailsExpanded = ref(!isMinicart.value)
+    const isDetailsExpanded = ref(!isMiniCart.value)
     const toggleDetails = () => {
       isDetailsExpanded.value = !isDetailsExpanded.value
     }
     const addToList = () => {
-      emit('add', entry.value)
+      emit('add', entry.value.product)
     }
     const deleteFromList = () => {
-      emit('delete', entry.value)
+      emit('delete', entry.value.product)
     }
     // end
-
-    console.log(entry.value.product.code, 'PATH')
-
     const url = computed(() =>
-      context.app.localePath({
+      app.localePath({
         name: 'shop-products-product',
         params: { product: entry.value?.product?.code },
       })
     )
-
+    //todo open
     const isInactive = computed(() => {
       return entry.value.product?.purchasable === false
     })
-
-    const totalPrice = computed(() => quantity.value * productPrice.value)
 
     const updateQuantity = (value) => {
       if (value > 1) {
@@ -216,13 +261,15 @@ export default defineComponent({
       deleteFromList,
       productName,
       orderNumber,
+      isLoggedIn,
+      isPriceVisible,
+      noPriceReason,
     }
   },
 })
 </script>
 
 <style lang="scss">
-
 .cart-item-header {
   @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
   @apply tw-mx-4;
@@ -247,7 +294,6 @@ export default defineComponent({
   @apply tw-grid tw-grid-cols-12 tw-auto-rows-auto;
   @apply tw-border-b tw-border-b-pv-grey-80;
   @apply tw-mt-6;
-  @apply tw-mx-4;
 
   &-image {
     @apply tw-row-start-1 tw-row-end-2;
@@ -274,14 +320,28 @@ export default defineComponent({
 
   &-quantity {
     @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-1 tw-col-end-7;
+    @apply tw-col-start-1 tw-col-end-5;
     @apply tw-mt-4;
     @apply tw-flex;
+    @apply tw-pr-1;
+  }
+
+  &-priceError {
+    @apply tw-row-start-2 tw-row-end-3;
+    @apply tw-col-start-5 tw-col-end-13;
+    @apply tw-flex;
+    @apply tw-mt-4;
+
+    .login-to-see-prices-label {
+      text-align: end;
+      @apply tw-my-auto;
+      @apply tw-ml-auto;
+    }
   }
 
   &-price {
     @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-7 tw-col-end-13;
+    @apply tw-col-start-5 tw-col-end-13;
     @apply tw-leading-6;
     @apply tw-flex;
     @apply tw-ml-auto;
@@ -299,7 +359,7 @@ export default defineComponent({
 
   &-totalPrice {
     @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-7 tw-col-end-13;
+    @apply tw-col-start-5 tw-col-end-13;
     @apply tw-leading-6;
     @apply tw-flex;
     @apply tw-mt-auto;
@@ -324,15 +384,30 @@ export default defineComponent({
     padding: 0 0 0 8px !important;
   }
 
-  &-details {
+  &-detailsButton {
     @apply tw-row-start-3 tw-row-end-4;
+    @apply tw-col-start-1 tw-col-end-13;
+    @apply tw-flex;
+    @apply tw-mt-1;
+    @apply tw-mx-auto;
+    @apply tw-w-fit;
+
+    @screen lg {
+      @apply tw-row-start-6 tw-row-end-7;
+      @apply tw-mx-0;
+    }
+
+    @screen 2xl {
+      @apply tw-row-start-5 tw-row-end-6;
+      @apply tw-m-auto;
+    }
+  }
+
+  &-details {
+    @apply tw-row-start-4 tw-row-end-5;
     @apply tw-col-start-1 tw-col-end-13;
     @apply tw-flex tw-flex-wrap;
     @apply tw-mt-4;
-
-    &__expandButton {
-      @apply tw-mx-auto;
-    }
 
     &__detail {
       @apply tw-mr-2;
@@ -344,12 +419,22 @@ export default defineComponent({
     }
   }
 
-  &-addArticle {
+  &-promotion {
     @apply tw-row-start-5 tw-row-end-6;
+    @apply tw-col-start-1 tw-col-end-13;
+    @apply tw-w-fit;
+    @apply tw-h-fit;
+    @apply tw-mt-4;
+    @apply tw-py-1;
+  }
+
+  &-addArticle {
+    @apply tw-row-start-6 tw-row-end-7;
     @apply tw-col-start-1 tw-col-end-13;
     @apply tw-w-fit;
     @apply tw-mx-auto;
     @apply tw-mb-3;
+    @apply tw-mt-4;
   }
 }
 
@@ -388,6 +473,14 @@ export default defineComponent({
         @apply tw-row-start-1 tw-row-end-1;
         @apply tw-col-start-9 tw-col-end-10;
         @apply tw-w-20;
+        @apply tw-m-auto;
+      }
+    }
+
+    &-priceError {
+      @screen lg {
+        @apply tw-row-start-1 tw-row-end-1;
+        @apply tw-col-start-10 tw-col-end-12;
         @apply tw-m-auto;
       }
     }
@@ -454,13 +547,20 @@ export default defineComponent({
       }
     }
 
+    &-promotion {
+      @screen lg {
+        @apply tw-row-start-3 tw-row-end-4;
+        @apply tw-col-start-2 tw-col-end-13;
+      }
+    }
+
     &-addArticle {
       @screen md {
         @apply tw-mx-0;
       }
 
       @screen lg {
-        @apply tw-row-start-3 tw-row-end-4;
+        @apply tw-row-start-4 tw-row-end-5;
         @apply tw-col-start-2 tw-col-end-13;
       }
     }
