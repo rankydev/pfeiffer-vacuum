@@ -1,20 +1,16 @@
-import CartItemCard from './CartItemCard2'
+import CartItemCard from './CartItemCard'
 import {
-  entry,
+  product,
   price,
-  readOnly,
-  shopAttributes,
-  appliedOrderPromotions,
-  showPrice,
+  appliedOrderPromotion,
+  quantity,
 } from './CartItemCard.stories.content'
 
 const argTypes = {
-  entry: entry,
-  readOnly: readOnly,
-  price: price,
-  shopAttributes: shopAttributes,
-  promotions: appliedOrderPromotions,
-  showPrice: showPrice,
+  product,
+  price,
+  quantity,
+  promotion: appliedOrderPromotion,
 }
 
 export default {
@@ -26,7 +22,7 @@ export default {
         component: 'The Cart Item Card displays the items in the shopping cart',
       },
       source: {
-        appliedOrderPromotions,
+        appliedOrderPromotion,
         code: '<cart-item-card v-bind="{ entry, readOnly, price, shopAttributes, promotions, showPrice }"/>',
       },
     },
@@ -48,23 +44,3 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = argTypes
-
-export const PriceOnRequest = Template.bind({})
-PriceOnRequest.args = {
-  entry,
-  price,
-  readOnly: true,
-  shopAttributes,
-  appliedOrderPromotions,
-  showPrice: false,
-}
-
-export const HasNoPrice = Template.bind({})
-HasNoPrice.args = {
-  entry,
-  price: null,
-  readOnly: true,
-  shopAttributes,
-  appliedOrderPromotions,
-  showPrice: true,
-}
