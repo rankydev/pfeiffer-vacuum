@@ -22,12 +22,7 @@
 </template>
 
 <script>
-import {
-  ref,
-  defineComponent,
-  onBeforeMount,
-  onServerPrefetch,
-} from '@nuxtjs/composition-api'
+import { ref, defineComponent } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 
 import Logo from '~/components/atoms/Logo/Logo.vue'
@@ -39,7 +34,6 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 
 import { useMenuStore } from '~/stores/menu'
 import { useMyAccountStore } from '~/stores/myaccount'
-import { useCategoryStore } from '~/stores/category'
 
 export default defineComponent({
   components: {
@@ -80,11 +74,6 @@ export default defineComponent({
 
     const myAccountStore = useMyAccountStore()
     myAccountStore.hydrateMenuItems(props.shopNavigationLinks)
-
-    const { loadCategoryTree } = useCategoryStore()
-
-    onBeforeMount(loadCategoryTree)
-    onServerPrefetch(loadCategoryTree)
 
     return {
       active,

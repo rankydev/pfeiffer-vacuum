@@ -1,6 +1,13 @@
 import { joinURL } from 'ufo'
 import { defineStore } from 'pinia'
-import { useRoute, ref, useContext, computed } from '@nuxtjs/composition-api'
+import {
+  useRoute,
+  ref,
+  useContext,
+  computed,
+  onBeforeMount,
+  onServerPrefetch,
+} from '@nuxtjs/composition-api'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
 import { useCmsStore } from '~/stores/cms'
@@ -176,6 +183,9 @@ export const useCategoryStore = defineStore('category', () => {
   const blurSuggestions = (val) => {
     if (!val) searchSuggestions.value = []
   }
+
+  onBeforeMount(loadCategoryTree)
+  onServerPrefetch(loadCategoryTree)
 
   return {
     // state
