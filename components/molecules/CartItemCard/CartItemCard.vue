@@ -446,6 +446,9 @@ export default defineComponent({
       @screen md {
         @apply tw-col-end-2;
       }
+      @screen lg {
+        @apply tw-mr-4;
+      }
     }
 
     &-title {
