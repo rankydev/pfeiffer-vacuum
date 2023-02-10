@@ -1,111 +1,95 @@
 <template>
-  <div class="cart-item-wrapper">
-    <div class="cart-item-header">
-      <span class="cart-item-header__quantity">{{ $t('cart.quantity') }}</span>
-      <span class="cart-item-header__price">
+  <div
+    class="cart-item-card"
+    :class="{ 'cart-item-card-desktop': !isMiniCart }"
+  >
+    <div class="cart-item-card-image">
+      <Link :href="url">
+        <ResponsiveImage
+          :image="productImage"
+          provider="hybris"
+          aspect-ratio="1:1"
+        />
+      </Link>
+    </div>
+    <div class="cart-item-card-title">
+      <h2 class="cart-item-card-title__main-title">
+        <Link :href="url">{{ productName }}</Link>
+      </h2>
+      <p class="cart-item-card-title__sub-title">
+        {{ orderNumber }}
+      </p>
+    </div>
+    <Button
+      v-if="isMiniCart"
+      class="cart-item-card-details-button"
+      variant="secondary"
+      shape="plain"
+      :icon="isDetailsExpanded ? 'arrow_upward' : 'arrow_downward'"
+      :label="$t('cart.details')"
+      @click="toggleDetails"
+    />
+    <div class="cart-item-card-details">
+      <div v-if="isDetailsExpanded && details">
+        <template v-for="detail in details" :key="detail.code">
+          <Badge
+            v-for="(variant, id) in detail.variationValues"
+            :key="detail.code + id"
+            class="cart-item-card-details__detail"
+            :label="detail.name"
+            :content="variant.displayValue"
+          />
+        </template>
+      </div>
+    </div>
+    <PromotionLabel
+      v-if="promotion"
+      class="cart-item-card-promotion"
+      :subline="getPromotion"
+    />
+    <PvInput
+      v-model="quantityModel"
+      input-type="number"
+      class="cart-item-card-quantity"
+      :disabled="isInactive"
+      @input="updateQuantity"
+    />
+    <div
+      v-if="!isLoggedIn || !isPriceVisible"
+      class="cart-item-card-price-error"
+    >
+      <LoginToSeePricesLabel v-if="!isLoggedIn" />
+      <span v-else>{{ noPriceReason }}</span>
+    </div>
+    <div v-if="isLoggedIn && isPriceVisible" class="cart-item-card-price">
+      <span class="cart-item-card-price__label">
         {{ $t('cart.productPrice') }}
       </span>
-      <span class="cart-item-header__total-price">
+      <span class="cart-item-card-price__price">{{ productPrice }}</span>
+    </div>
+    <div v-if="isLoggedIn && isPriceVisible" class="cart-item-card-total-price">
+      <span class="cart-item-card-total-price__label">
         {{ $t('cart.totalPrice') }}
       </span>
+      <span class="cart-item-card-total-price__price">
+        {{ totalPrice }}
+      </span>
     </div>
-    <div
-      v-for="i in 6"
-      :key="i"
-      class="cart-item-card"
-      :class="{ 'cart-item-card-desktop': !isMiniCart }"
-    >
-      <div class="cart-item-card-image">
-        <Link :href="url">
-          <ResponsiveImage
-            :image="productImage"
-            provider="hybris"
-            aspect-ratio="1:1"
-          />
-        </Link>
-      </div>
-      <div class="cart-item-card-title">
-        <h2 class="cart-item-card-title__main-title">
-          <Link :href="url">{{ productName }}</Link>
-        </h2>
-        <p class="cart-item-card-title__sub-title">
-          {{ orderNumber }}
-        </p>
-      </div>
-      <Button
-        v-if="isMiniCart"
-        class="cart-item-card-details-button"
-        variant="secondary"
-        shape="plain"
-        :icon="isDetailsExpanded ? 'arrow_upward' : 'arrow_downward'"
-        :label="$t('cart.details')"
-        @click="toggleDetails"
-      />
-      <div class="cart-item-card-details">
-        <div v-if="isDetailsExpanded && details">
-          <template v-for="detail in details" :key="detail.code">
-            <Badge
-              v-for="(variant, id) in detail.variationValues"
-              :key="detail.code + id"
-              class="cart-item-card-details__detail"
-              :label="detail.name"
-              :content="variant.displayValue"
-            />
-          </template>
-        </div>
-      </div>
-      <PromotionLabel
-        v-if="promotion"
-        class="cart-item-card-promotion"
-        :subline="getPromotion"
-      />
-      <PvInput
-        v-model="quantityModel"
-        input-type="number"
-        class="cart-item-card-quantity"
-        :disabled="isInactive"
-        @input="updateQuantity"
-      />
-      <div
-        v-if="!isLoggedIn || !isPriceVisible"
-        class="cart-item-card-price-error"
-      >
-        <LoginToSeePricesLabel v-if="!isLoggedIn" />
-        <span v-else>{{ noPriceReason }}</span>
-      </div>
-      <div v-if="isLoggedIn && isPriceVisible" class="cart-item-card-price">
-        <span class="cart-item-card-price__label">
-          {{ $t('cart.productPrice') }}
-        </span>
-        <span class="cart-item-card-price__price">{{ productPrice }}</span>
-      </div>
-      <div
-        v-if="isLoggedIn && isPriceVisible"
-        class="cart-item-card-total-price"
-      >
-        <span class="cart-item-card-total-price__label">
-          {{ $t('cart.totalPrice') }}
-        </span>
-        <span class="cart-item-card-total-price__price">
-          {{ totalPrice }}
-        </span>
-      </div>
-      <Button
-        class="cart-item-card-add-article"
-        variant="secondary"
-        shape="plain"
-        icon="assignment"
-        :label="$t('cart.list.addArticle')"
-        @click="addToShoppingList"
-      />
-      <Button
-        class="cart-item-card-delete"
-        variant="secondary"
-        shape="plain"
-        icon="delete"
-        @click="deleteFromCart"
-      />
-    </div>
+    <Button
+      class="cart-item-card-add-article"
+      variant="secondary"
+      shape="plain"
+      icon="assignment"
+      :label="$t('cart.list.addArticle')"
+      @click="addToShoppingList"
+    />
+    <Button
+      class="cart-item-card-delete"
+      variant="secondary"
+      shape="plain"
+      icon="delete"
+      @click="deleteFromCart"
+    />
   </div>
 </template>
 
