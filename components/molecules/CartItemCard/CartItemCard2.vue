@@ -5,7 +5,7 @@
       <span class="cart-item-header__price">
         {{ $t('cart.productPrice') }}
       </span>
-      <span class="cart-item-header__totalPrice">
+      <span class="cart-item-header__total-price">
         {{ $t('cart.totalPrice') }}
       </span>
     </div>
@@ -25,16 +25,16 @@
         </Link>
       </div>
       <div class="cart-item-card-title">
-        <h2 class="cart-item-card-title__mainTitle">
+        <h2 class="cart-item-card-title__main-title">
           <Link :href="url">{{ productName }}</Link>
         </h2>
-        <p class="cart-item-card-title__subTitle">
+        <p class="cart-item-card-title__sub-title">
           {{ orderNumber }}
         </p>
       </div>
       <Button
         v-if="isMiniCart"
-        class="cart-item-card-detailsButton"
+        class="cart-item-card-details-button"
         variant="secondary"
         shape="plain"
         :icon="isDetailsExpanded ? 'arrow_upward' : 'arrow_downward'"
@@ -67,7 +67,7 @@
       />
       <div
         v-if="!isLoggedIn || !isPriceVisible"
-        class="cart-item-card-priceError"
+        class="cart-item-card-price-error"
       >
         <LoginToSeePricesLabel v-if="!isLoggedIn" />
         <span v-else>{{ noPriceReason }}</span>
@@ -80,17 +80,17 @@
       </div>
       <div
         v-if="isLoggedIn && isPriceVisible"
-        class="cart-item-card-totalPrice"
+        class="cart-item-card-total-price"
       >
-        <span class="cart-item-card-totalPrice__label">
+        <span class="cart-item-card-total-price__label">
           {{ $t('cart.totalPrice') }}
         </span>
-        <span class="cart-item-card-totalPrice__price">
+        <span class="cart-item-card-total-price__price">
           {{ totalPrice }}
         </span>
       </div>
       <Button
-        class="cart-item-card-addArticle"
+        class="cart-item-card-add-article"
         variant="secondary"
         shape="plain"
         icon="assignment"
@@ -284,7 +284,7 @@ export default defineComponent({
     @apply tw-col-start-10 tw-col-end-10;
   }
 
-  &__totalPrice {
+  &__total-price {
     @apply tw-row-start-1 tw-row-end-1;
     @apply tw-col-start-11 tw-col-end-11;
   }
@@ -307,12 +307,12 @@ export default defineComponent({
     @apply tw-flex tw-flex-col;
     @apply tw-ml-4;
 
-    &__mainTitle {
+    &__main-title {
       @apply tw-text-base;
       @apply tw-leading-6;
     }
 
-    &__subTitle {
+    &__sub-title {
       @apply tw-text-base;
       @apply tw-text-pv-grey-48;
     }
@@ -326,7 +326,7 @@ export default defineComponent({
     @apply tw-pr-1;
   }
 
-  &-priceError {
+  &-price-error {
     @apply tw-row-start-2 tw-row-end-3;
     @apply tw-col-start-5 tw-col-end-13;
     @apply tw-flex;
@@ -357,7 +357,7 @@ export default defineComponent({
     }
   }
 
-  &-totalPrice {
+  &-total-price {
     @apply tw-row-start-2 tw-row-end-3;
     @apply tw-col-start-5 tw-col-end-13;
     @apply tw-leading-6;
@@ -384,7 +384,7 @@ export default defineComponent({
     padding: 0 0 0 8px !important;
   }
 
-  &-detailsButton {
+  &-details-button {
     @apply tw-row-start-3 tw-row-end-4;
     @apply tw-col-start-1 tw-col-end-13;
     @apply tw-flex;
@@ -428,7 +428,7 @@ export default defineComponent({
     @apply tw-py-1;
   }
 
-  &-addArticle {
+  &-add-article {
     @apply tw-row-start-6 tw-row-end-7;
     @apply tw-col-start-1 tw-col-end-13;
     @apply tw-w-fit;
@@ -460,7 +460,7 @@ export default defineComponent({
         @apply tw-col-start-2 tw-col-end-8;
       }
 
-      &__mainTitle {
+      &__main-title {
         @screen lg {
           @apply tw-text-lg;
           @apply tw-leading-7;
@@ -477,7 +477,7 @@ export default defineComponent({
       }
     }
 
-    &-priceError {
+    &-price-error {
       @screen lg {
         @apply tw-row-start-1 tw-row-end-1;
         @apply tw-col-start-10 tw-col-end-12;
@@ -505,7 +505,7 @@ export default defineComponent({
       }
     }
 
-    &-totalPrice {
+    &-total-price {
       @screen md {
         @apply tw-mb-auto;
         @apply tw-col-start-11 tw-col-end-13;
@@ -554,7 +554,7 @@ export default defineComponent({
       }
     }
 
-    &-addArticle {
+    &-add-article {
       @screen md {
         @apply tw-mx-0;
       }
