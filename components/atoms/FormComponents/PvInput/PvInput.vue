@@ -155,6 +155,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .pv-input {
   @apply tw-relative;
+  @apply tw-w-full;
 
   &__wrapper {
     @apply tw-relative;

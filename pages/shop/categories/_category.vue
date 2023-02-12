@@ -1,8 +1,15 @@
+<template>
+  <SearchPage />
+</template>
+
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import Category from './index'
+import SearchPage from '~/components/templates/SearchPage/SearchPage'
 
 export default defineComponent({
-  extends: Category,
+  name: 'ShopCategoryPageSubcategory',
+  components: {
+    SearchPage,
+  },
 })
 </script>

@@ -55,8 +55,8 @@ describe('SearchInput', () => {
 
       expect(mockRouterPush).toBeCalledTimes(1)
       expect(mockRouterPush).toBeCalledWith({
-        path: 'shop-categories',
-        query: { searchTerm: mockSearchTerm },
+        path: 'shop-search',
+        query: { searchTerm: mockSearchTerm, searchType: 'products' },
       })
     })
   })

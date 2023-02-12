@@ -31,7 +31,7 @@ export default defineComponent({
     },
     color: {
       type: String,
-      default: 'green',
+      default: 'red',
       validator: (val) => ['green', 'red'].includes(val),
     },
     size: {

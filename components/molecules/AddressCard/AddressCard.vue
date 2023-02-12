@@ -11,6 +11,12 @@
         {{ address.companyName }}
       </p>
       <p
+        v-if="address.department"
+        class="address-card__entry address-card__department"
+      >
+        {{ address.department }}
+      </p>
+      <p
         v-if="address.firstName || address.lastName"
         class="address-card__entry address-card__name"
       >
@@ -86,6 +92,7 @@
             :label="$t('myaccount.deleteDeliveryAddress')"
             icon="delete"
             variant="secondary"
+            :disabled="address.defaultShippingAddress"
             shape="plain"
             @click="deleteAddress"
           />
@@ -270,14 +277,17 @@ export default defineComponent({
     &--is-default {
       button {
         @apply tw-text-pv-grey-16;
+        -webkit-text-fill-color: var(--pv-grey-16);
 
         &:hover {
           @apply tw-text-pv-grey-16;
+          -webkit-text-fill-color: var(--pv-grey-16);
           @apply tw-cursor-not-allowed;
         }
 
         &:focus {
           @apply tw-text-pv-grey-16;
+          -webkit-text-fill-color: var(--pv-grey-16);
         }
       }
     }

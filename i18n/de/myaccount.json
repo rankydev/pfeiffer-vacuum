@@ -1,7 +1,6 @@
 {
   "address": "Adresse",
   "billingAddress": "Rechnungsadresse",
-  "billingAddressMissing": "Es wurde keine Rechnungsadresse gefunden. Bitte kontaktieren Sie den Pfeiffer Vacuum Kundenservice.",
   "deliveryAddress": "Lieferadresse",
   "company": "Firma",
   "firstName": "Vorname",
@@ -18,6 +17,12 @@
   "deleteDeliveryAddress": "Löschen",
   "setDefaultAddress": "Als Standard benutzen",
   "defaultDelivery": "Standard Lieferungsadresse",
+  "accountDataLong": "Konto- und Firmendaten",
+  "accountDataShort": "Kontodaten",
+  "companyData": "Firmendaten",
+  "saveCompanyData": "Daten speichern",
+  "successfulSaving": "Ihre Daten wurden erfolgreich aktualisiert",
+  "discard": "Abbrechen",
   "addressData": "Address Daten",
   "addDeliveryAddress": "Lieferadresse hinzufügen",
   "addressDataEditPage": "Adressdaten bearbeiten",
@@ -30,5 +35,23 @@
   "updateDeliveryAddressError": "Änderungen konnten nicht gespeichert werden.",
   "addDeliveryAddressError": "Lieferadresse konnte nicht gespeichert werden.",
   "deleteDeliveryAddressSuccess": "Lieferadresse wurde erfolgreich gelöscht.",
-  "setDefaultDeliveryAddressSuccess": "Lieferadresse erfolgreich als Standard-Lieferadresse gespeichert."
+  "setDefaultDeliveryAddressSuccess": "Lieferadresse erfolgreich als Standard-Lieferadresse gespeichert.",
+  "userStatus": {
+    "undefined": {
+      "requestInfo": "Sie können keine Anfragen senden, da etwas schiefgelaufen ist",
+      "functionalityInfo": "Sie können diese Funktionalität nicht nutzen, da etwas schiefgelaufen ist"
+    },
+    "lead": {
+      "requestInfo": "Bitte Firmendaten hinzufügen um Anfragen zu senden",
+      "functionalityInfo": "Bitte Kundendaten hinzufügen um diese Funktionalität zu nutzen"
+    },
+    "open": {
+      "requestInfo": "Bitte warten Sie bis ihr Profil akzeptiert wurde um Anfragen zu senden",
+      "functionalityInfo": "Bitte warten Sie bis ihr Profil akzeptiert wurde um diese Funktion zu nutzen"
+    },
+    "rejected": {
+      "requestInfo": "Sie dürfen keine Anfragen senden",
+      "functionalityInfo": "Sie dürfen diese Funktion nicht nutzen"
+    }
+  }
 }

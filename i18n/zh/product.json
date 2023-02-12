@@ -34,31 +34,30 @@
   "selectVariantExplained": "请根据您的个性化需求选择合适的产品变体，以查看相应的产品详情。",
   "scrollToVariantSelection": "选择变体",
   "priceOnRequest": "价格可垂询",
-  "noPriceAvailable": "没有可用的价格",
+  "noPriceAvailable": "价格无法加载",
   "help": "需要帮助吗？",
   "articleNumber": "订单号",
   "userStatus": {
+    "undefined": {
+      "priceInfo": {
+        "text": "价格无法加载"
+      }
+    },
     "lead": {
       "priceInfo": {
         "text": "请添加 {link} 以查看价格",
         "link": "公司数据"
-      },
-      "requestInfo": "请添加公司数据以发送请求",
-      "functionalityInfo": "请添加公司数据以使用此功能"
+      }
     },
     "open": {
       "priceInfo": {
         "text": "请等待批准查看价格"
-      },
-      "requestInfo": "请等待批准发送请求",
-      "functionalityInfo": "请等待批准使用此功能"
+      }
     },
     "rejected": {
       "priceInfo": {
         "text": "您未被允许查看价格"
-      },
-      "requestInfo": "您未被允许发送请求",
-      "functionalityInfo": "抱歉，您未被允许使用此功能"
+      }
     }
   }
 }

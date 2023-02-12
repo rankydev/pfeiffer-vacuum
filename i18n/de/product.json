@@ -55,7 +55,7 @@
   "showProductDetails": "Produktdetails anzeigen",
   "help": "Brauchen Sie Hilfe?",
   "articleNumber": "Artikelnummer",
-  "noPriceAvailable": "Kein Preis verfügbar",
+  "noPriceAvailable": "Preis kann nicht geladen werden",
   "login": {
     "title": "Anmelden",
     "account": "Bereits registriert?",
@@ -114,27 +114,26 @@
     "createBenefitSub3": "Übersicht über Ihre Anfragen"
   },
   "userStatus": {
+    "undefined": {
+      "priceInfo": {
+        "text": "Preis kann nicht geladen werden"
+      }
+    },
     "lead": {
       "priceInfo": {
         "text": "Bitte {link} um Preise zu sehen",
         "link": "Firmendaten hinzufügen"
-      },
-      "requestInfo": "Bitte Firmendaten hinzufügen um Anfragen zu senden",
-      "functionalityInfo": "Bitte Kundendaten hinzufügen um diese Funktionalität zu nutzen"
+      }
     },
     "open": {
       "priceInfo": {
         "text": "Bitte warten Sie bis ihr Profil akzeptiert wurde um Preise zu sehen"
-      },
-      "requestInfo": "Bitte warten Sie bis ihr Profil akzeptiert wurde um Anfragen zu senden",
-      "functionalityInfo": "Bitte warten Sie bis ihr Profil akzeptiert wurde um diese Funktion zu nutzen"
+      }
     },
     "rejected": {
       "priceInfo": {
         "text": "Sie dürfen keine Preise sehen"
-      },
-      "requestInfo": "Sie dürfen keine Anfragen senden",
-      "functionalityInfo": "Sie dürfen diese Funktion nicht nutzen"
+      }
     }
   }
 }

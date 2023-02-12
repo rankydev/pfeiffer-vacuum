@@ -55,12 +55,9 @@
                 "
               />
             </div>
-            <DetailTabs
-              :product="productStore.product"
-              :product-code="productStore.code"
-            />
           </div>
         </ContentWrapper>
+        <DetailTabs class="product-page__detail-tabs" />
       </Page>
     </template>
   </CmsQuery>
@@ -258,6 +255,10 @@ export default defineComponent({
     @screen md {
       @apply tw-min-w-0;
     }
+  }
+
+  &__detail-tabs {
+    @apply tw-mt-8;
   }
 }
 </style>
