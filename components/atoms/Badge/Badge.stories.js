@@ -1,8 +1,8 @@
 import defaultEntries from './Badge.stories.content'
-import Badge from './Badge'
+import Badge from './Badge.vue'
 
 export default {
-  title: 'Molecules/m_145 Badge',
+  title: 'atoms/a_118 Badge',
   parameters: {
     docs: {
       description: {

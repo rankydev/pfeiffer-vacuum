@@ -8,3 +8,5 @@ export const product = {
   downloadLink:
     'resource/environment/project1_p/documents/pfeifferSharepointProd/12624-128864ODE_02.pdf',
 }
+
+export default {}

@@ -29,8 +29,6 @@
       }
     }
   },
-  "addToCartSuccess": "Produkt erfolgreich zum Warenkorb hinzugefügt",
-  "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten",
   "list": {
     "addArticle": "Zur Einkausliste hinzufügen"
   },
@@ -38,5 +36,7 @@
   "totalPrice": "Gesamt",
   "quantity": "Anzahl",
   "priceOnRequest": "Preis auf Anfrage",
-  "details": "Details"
+  "details": "Details",
+  "addToCartSuccess": "Produkt erfolgreich zum Warenkorb hinzugefügt",
+  "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten"
 }

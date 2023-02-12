@@ -28,8 +28,6 @@
       }
     }
   },
-  "addToCartSuccess": "已成功将产品添加到购物车",
-  "addToCartError": "将产品添加到购物车时发生错误",
   "list": {
     "addArticle": "Add to shopping list"
   },
@@ -37,5 +35,7 @@
   "totalPrice": "Total",
   "quantity": "Quantity",
   "priceOnRequest": "Price on request",
-  "details": "Details"
+  "details": "Details",
+  "addToCartSuccess": "已成功将产品添加到购物车",
+  "addToCartError": "将产品添加到购物车时发生错误"
 }
