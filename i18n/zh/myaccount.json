@@ -1,7 +1,6 @@
 {
   "address": "地址",
   "billingAddress": "账单地址",
-  "billingAddressMissing": "未找到您的用户帐单地址。 请联系普发真空服务。",
   "deliveryAddress": "配送地址",
   "company": "公司",
   "firstName": "名",
@@ -18,6 +17,12 @@
   "deleteDeliveryAddress": "删除",
   "setDefaultAddress": "设为默认",
   "defaultDelivery": "默认的配送地址",
+  "accountDataLong": "帐户数据",
+  "accountDataShort": "帐户数据",
+  "companyData": "公司资料",
+  "saveCompanyData": "保存公司数据",
+  "successfulSaving": "您的数据已成功更新",
+  "discard": "丢弃数据",
   "addressDataEditPage": "編輯地址數據",
   "addressDataAddPage": "添加地址數據",
   "addressDataEditPageDescription": "在這裡編輯選擇的送貨地址。",
@@ -28,5 +33,23 @@
   "updateDeliveryAddressError": "無法保存更改。",
   "addDeliveryAddressError": "無法保存送貨地址。",
   "deleteDeliveryAddressSuccess": "收貨地址刪除成功。",
-  "setDefaultDeliveryAddressSuccess": "成功將收貨地址保存為默認收貨地址。"
+  "setDefaultDeliveryAddressSuccess": "成功將收貨地址保存為默認收貨地址。",
+  "userStatus": {
+    "undefined": {
+      "requestInfo": "您无法发送请求，因为出了点问题",
+      "functionalityInfo": "您不能使用此功能，因为出了点问题"
+    },
+    "lead": {
+      "requestInfo": "请添加公司数据以发送请求",
+      "functionalityInfo": "请添加公司数据以使用此功能"
+    },
+    "open": {
+      "requestInfo": "请等待批准发送请求",
+      "functionalityInfo": "请等待批准使用此功能"
+    },
+    "rejected": {
+      "requestInfo": "您未被允许发送请求",
+      "functionalityInfo": "抱歉，您未被允许使用此功能"
+    }
+  }
 }

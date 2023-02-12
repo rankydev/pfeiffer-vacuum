@@ -11,6 +11,14 @@ export const useUserApi = () => {
     return await axios.$get(config.USER_API, {})
   }
 
+  const updateUserData = async (data) => {
+    return await axios.$patch(config.USER_API, data)
+  }
+
+  const addCompanyData = async (data) => {
+    return await axios.$post(config.ADD_COMPANY, data)
+  }
+
   const register = async (customer, anonymous = true) => {
     const { REGISTER_API, USER_API } = config
     const path = joinURL(anonymous ? REGISTER_API : `${USER_API}/orgCustomers`)
@@ -48,6 +56,8 @@ export const useUserApi = () => {
   return {
     getUserData,
     register,
+    updateUserData,
+    addCompanyData,
     getUserBillingAddress,
     getUserDeliveryAddresses,
     createUserDeliveryAddress,

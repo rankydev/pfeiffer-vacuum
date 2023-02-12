@@ -1,17 +1,24 @@
 {
   "rootCategory": "所有产品",
-  "itemsPerPage": "每頁產品：",
+  "itemsPerPage": "每页结果：",
   "sort": "排序依据：",
   "lessFilters": "更少的筛选器",
   "moreFilters": "更多筛选器",
   "activeFilters": "有源滤波器",
   "searchResult": "为。。。。寻找结果",
+  "resultsFound": "{totalResults} 结果发现",
   "sortAndFilter": "排序和過濾",
   "applyFilter": "应用筛选器",
   "noMatchingProducts": "未找到匹配的产品",
   "checkSearchCriteria": "请检查所选的搜索条件",
   "vacuumRange": "真空范围",
   "suctionSpeed": "抽速",
-  "search": "Search",
-  "suggestions": "suggestions"
+  "search": "搜索",
+  "suggestions": "建议",
+  "productsTab": "产品",
+  "documentsTab": "文件",
+  "documents": {
+    "noResultsFound": "抱歉，没有找到结果。请尝试其他搜索词。",
+    "loadingError": "搜索时出错。请使用高级搜索或重试。"
+  }
 }

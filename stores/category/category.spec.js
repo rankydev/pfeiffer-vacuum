@@ -68,6 +68,7 @@ jest.mock('@nuxtjs/composition-api', () => {
     useRoute: jest.fn(() =>
       ref({
         fullPath: '/someExample/',
+        path: '/someExample/',
         params: mockParams(),
         query: mockQuery(),
       })

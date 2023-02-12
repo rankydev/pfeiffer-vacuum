@@ -13,6 +13,7 @@ const sanitizerConfig = {
   clear: { allowedTags: [], selfClosing: [], allowedAttributes: {} },
   inline: {
     allowedTags: [
+      'a',
       'b',
       'i',
       'em',
@@ -27,7 +28,7 @@ const sanitizerConfig = {
     ],
     selfClosing: [],
     allowedAttributes: {
-      '*': ['class', 'style'],
+      '*': ['class', 'style', 'href', 'target'],
     },
   },
   block: {

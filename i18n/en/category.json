@@ -6,6 +6,7 @@
   "moreFilters": "More filters",
   "activeFilters": "Active filters:",
   "searchResult": "Search results for",
+  "resultsFound": "{totalResults} results found",
   "sortAndFilter": "Sort & Filter",
   "applyFilter": "Apply filter",
   "noMatchingProducts": "No matching products found",
@@ -13,5 +14,11 @@
   "vacuumRange": "Vacuum Range",
   "suctionSpeed": "Pumping Speed",
   "search": "Search",
-  "suggestions": "suggestions"
+  "suggestions": "suggestions",
+  "productsTab": "Products",
+  "documentsTab": "Documents",
+  "documents": {
+    "noResultsFound": "Sorry, no results found. Please try another search term.",
+    "loadingError": "There was an error searching. Please use the advanced search or try again."
+  }
 }

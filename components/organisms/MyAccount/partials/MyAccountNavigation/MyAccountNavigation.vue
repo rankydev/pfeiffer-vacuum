@@ -31,6 +31,7 @@ import { useMyAccountStore } from '~/stores/myaccount'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
+  name: 'MyAccountNavigation',
   components: {
     Icon,
   },

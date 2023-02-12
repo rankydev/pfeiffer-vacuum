@@ -4,6 +4,14 @@
       :headline="$t('myaccount.addressData')"
       :link="localePath('shop-my-account')"
     />
+    <GlobalMessage
+      v-if="!billingAddress && userStatusType"
+      :description="
+        $t(`myaccount.userStatus.${userStatusType}.functionalityInfo`)
+      "
+      variant="warning"
+      :prevent-icon-change="true"
+    />
     <template v-if="billingAddress">
       <SectionHeadline
         class="address-data__section-headline address-data__section-headline--billing-address"
@@ -18,11 +26,6 @@
         />
       </div>
     </template>
-    <Infobox
-      v-if="!billingAddress"
-      :text="$t('myaccount.billingAddressMissing')"
-    />
-
     <SectionHeadline
       class="address-data__section-headline address-data__section-headline--delivery-address"
     >
@@ -60,15 +63,6 @@
         />
       </template>
     </transition-group>
-
-    <!--      <t-button
-        class="address-data-content__add-address tw-col-span-12 md:tw-col-span-6"
-        :disabled="!isApprovedUser"
-        :to="localePath('shop-my-account-address-data-add')"
-      >
-        <material-icon icon="add" class="tw-mr-2" />
-        {{ $t('myaccount.addDeliveryAddress') }}
-      </t-button>-->
   </div>
 </template>
 
@@ -78,11 +72,12 @@ import {
   onBeforeMount,
   onServerPrefetch,
   useContext,
+  computed,
 } from '@nuxtjs/composition-api'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import AddressCard from '~/components/molecules/AddressCard/AddressCard'
-import Infobox from '~/components/molecules/Infobox/Infobox'
+import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 import { useUserStore } from '~/stores/user'
 import { storeToRefs } from 'pinia'
 import Icon from '~/components/atoms/Icon/Icon'
@@ -94,14 +89,27 @@ export default defineComponent({
     ResultHeadline,
     SectionHeadline,
     AddressCard,
-    Infobox,
+    GlobalMessage,
     Icon,
   },
   setup() {
     const userStore = useUserStore()
-    const { billingAddress, deliveryAddresses } = storeToRefs(userStore)
+    const {
+      billingAddress,
+      deliveryAddresses,
+      isLeadUser,
+      isOpenUser,
+      isRejectedUser,
+    } = storeToRefs(userStore)
     const { i18n } = useContext()
     const toast = useToast()
+
+    const userStatusType = computed(() => {
+      if (isLeadUser.value) return 'lead'
+      if (isOpenUser.value) return 'open'
+      if (isRejectedUser.value) return 'rejected'
+      return undefined
+    })
 
     const handleDelete = async (e) => {
       try {
@@ -142,7 +150,13 @@ export default defineComponent({
     onServerPrefetch(async () => await userStore.loadAddressData())
     onBeforeMount(async () => await userStore.loadAddressData())
 
-    return { billingAddress, deliveryAddresses, handleDelete, handleSetDefault }
+    return {
+      billingAddress,
+      deliveryAddresses,
+      userStatusType,
+      handleDelete,
+      handleSetDefault,
+    }
   },
 })
 </script>
