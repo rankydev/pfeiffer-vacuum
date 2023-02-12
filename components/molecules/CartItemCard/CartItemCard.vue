@@ -3,7 +3,7 @@
     class="cart-item-card"
     :class="{ 'cart-item-card-desktop': !isMiniCart }"
   >
-    <div class="cart-item-card-image">
+    <div v-if="productImage" class="cart-item-card-image">
       <Link :href="url">
         <ResponsiveImage
           :image="productImage"
@@ -127,18 +127,22 @@ export default defineComponent({
     price: {
       type: Object,
       default: null,
+      required: false,
     },
     quantity: {
       type: Number,
       default: 1,
+      required: false,
     },
     promotion: {
       type: Object,
       default: null,
+      required: false,
     },
     isMiniCart: {
       type: Boolean,
       default: false,
+      required: false,
     },
   },
   emits: ['addToShoppingList', 'delete', 'add', 'remove'],
@@ -188,11 +192,11 @@ export default defineComponent({
     })
 
     const productName = computed(() => {
-      return product.value.name
+      return product.value?.name || ''
     })
 
     const orderNumber = computed(() => {
-      return product.value.orderNumber || ''
+      return product.value?.orderNumber || ''
     })
 
     const details = computed(
@@ -240,6 +244,12 @@ export default defineComponent({
         addToCart()
       } else {
         removeFromCart()
+      }
+    })
+
+    watch(quantity, (newValue, oldValue) => {
+      if (newValue !== oldValue) {
+        quantityModel.value = newValue
       }
     })
 

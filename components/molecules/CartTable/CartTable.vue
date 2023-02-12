@@ -1,6 +1,6 @@
 <template>
   <div class="cart-item-wrapper">
-    <div class="cart-item-header">
+    <div class="cart-item-header" v-if="!isMiniCart">
       <div class="cart-item-header__quantity">
         <span>{{ $t('cart.quantity') }}</span>
       </div>
@@ -8,295 +8,113 @@
         <span>
           {{ $t('cart.productPrice') }}
         </span>
-        <Icon icon="unfold_more" @click="sortPrices('price')" />
+        <Icon icon="unfold_more" @click="sortByPrice" />
       </div>
       <div class="cart-item-header__totalPrice">
         <span>
           {{ $t('cart.totalPrice') }}
         </span>
-        <Icon icon="unfold_more" @click="sortPrices('totalPrice')" />
+        <Icon icon="unfold_more" @click="sortByTotalPrice" />
       </div>
     </div>
-    <CartItemCard2
-      v-for="entry in cart.deliveryOrderGroups[0].entries"
-      :key="entry.entryNumber"
-      :entry="entry"
-      :promotions="cart.appliedOrderPromotions"
-      :shop-attributes="true"
-      :read-only="false"
-      :price="null"
-      :show-price="true"
+    <CartItemCard
+      v-for="({ product, price, quantity, promotion }, id) in sortedCart"
+      :key="id"
+      :product="product"
+      :price="price"
+      :quantity="quantity"
+      :promotion="promotion"
+      :is-mini-cart="isMiniCart"
+      @add="addToCart"
+      @remove="removeFromCart"
+      @delete="deleteFromCart"
+      @addToShoppingList="addToShoppingList"
     />
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon'
+import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
 
 export default defineComponent({
   name: 'CartTable',
   components: {
     Icon,
+    CartItemCard,
   },
-  props: {},
-  emits: [],
-  setup() {
-    const sortVariable = ref(null)
+  props: {
+    cart: {
+      type: Array,
+      default: () => [],
+      required: true,
+    },
+    isMiniCart: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+  },
+  emits: ['update', 'addToShoppingList'],
+  setup(props, { emit }) {
+    const { cart } = toRefs(props)
+    const sortedCart = ref(cart.value)
+    const priceSortedAsc = ref(true)
+    const totalPriceSortedAsc = ref(true)
 
-    const cart = {
-      appliedOrderPromotions: [
-        {
-          description: 'You got a 20% discount on your cart',
-          promotion: {
-            code: 'TestPromotionOnCart',
-            description:
-              'Du hast einen 20% Rabatt auf deinen Einkaufswagen bekommen',
-            promotionType: 'Regelbasierte Werbeaktion',
-          },
-        },
-      ],
-      calculated: true,
-      code: '00468050',
-      deliveryItemsQuantity: 1,
-      deliveryOrderGroups: [
-        {
-          entries: [
-            {
-              entryNumber: 0,
-              product: {
-                purchasable: true,
-                alternativeOrderNumbers: ['PK D56 702'],
-                bullets: [
-                  'Zweistufige Hochleistungs-Drehschieberpumpe mit Saugvermögen 1,25 m<sup>3</sup>/h bei 50 Hz / 1,50 m<sup>3</sup>/h bei 60 Hz',
-                  'Bitte beachten, Kabel muss separat als Zubehör bestellt werden',
-                  'Mit 1-Phasenmotor, mit C14 Stecker im Klemmkasten',
-                  'Integriertes Gasballast- und Sicherheitsventil',
-                  'Für alle Anwendungen im Grob- und Feinvakuumbereich',
-                  'Besonderheit, Weiter Einsatzbereich durch verschiedene Motorspannungen',
-                ],
-                categories: [{ id: 'DUO_16', name: 'Duo 1.6' }],
-                categoryPath: [
-                  { id: 'PUMPS', name: 'Pumpen' },
-                  { id: 'ROTARY_VANE_PUMPS', name: 'Drehschieberpumpen' },
-                  { id: 'DUO_16', name: 'Duo 1.6' },
-                ],
-                code: 'PK_D56_702_C_sample',
-                configurable: false,
-                dimensionImage: {
-                  altText:
-                    'Dimensions for Duo 1.6, 1-ph Motor, 100 V, 50 Hz | 95–105 V, 60 Hz',
-                  format: '300Wx300H',
-                  url: '/medias/?context=bWFzdGVyfGltYWdlc3w1MDA0NHxpbWFnZS9wbmd8aDRlL2gxYy84ODI0Njg2MTgyNDMwfDY4MmVkNjI2ZDJiYWY2ZDgzNWFhZTc2OTBkZDgwOWQ1ZTNmZDQzMzIyOWU1M2E4ZTdhYWUzNGY4OGY4MThmMDM',
-                },
-                images: [
-                  {
-                    altText:
-                      'Duo 1.6, 1-ph Motor, 100 V, 50 Hz | 95–105 V, 60 Hz',
-                    format: 'product',
-                    imageType: 'PRIMARY',
-                    url: '/medias/?context=bWFzdGVyfGltYWdlc3w0NTcwMDd8aW1hZ2UvcG5nfGgxMy9oYTEvODgyNDY4Nzk1MTkwMnxjNGJlMmFkN2RkZTBhOWNjOTdlZThjNzMyYzlhMTc5ZWQ0YmE1ZTlkOTU4NmQ4ZGY1NzI3YmY0YWI1M2ZmNTYz',
-                  },
-                ],
-                master: '77a36ee3-740c-49a9-aeba-5baebe01ff07_sample',
-                name: 'Duo 1.6, 1-ph Motor, 100 V, 50 Hz | 95–105 V, 60 Hz',
-                orderNumber: 'PK D56 702 C',
-                productType: 'VARIANTPRODUCT',
-                purchasable: true,
-                stock: { stockLevelStatus: 'inStock' },
-                url: '/Pumpen/Drehschieberpumpen/Duo-1-6/Duo-1-6%2C-1-ph-Motor%2C-100%C2%A0V%2C-50%C2%A0Hz-%7C-95%E2%80%93105%C2%A0V%2C-60%C2%A0Hz/p/PK_D56_702_C_sample',
-                variationMatrix: {
-                  allSelected: true,
-                  masterProduct: { name: 'Duo 1.6', purchasable: true },
-                  variants: [
-                    {
-                      code: 'PK_D56_702_C_sample',
-                      name: 'Duo 1.6, 1-ph Motor, 100 V, 50 Hz | 95–105 V, 60 Hz',
-                      purchasable: true,
-                    },
-                  ],
-                  variationAttributes: [
-                    {
-                      code: 'pfeifferClassificationCatalog/1.0/cc_3942.3942',
-                      name: 'Spezielle Produktversion',
-                      variationValues: [
-                        {
-                          automaticallySelected: true,
-                          displayValue:
-                            'Für Anwendungen mit nicht korrosiven Gasen',
-                          selectable: true,
-                          selected: true,
-                          value: 'Für Anwendungen mit nicht korrosiven Gasen',
-                        },
-                      ],
-                    },
-                    {
-                      code: 'pfeifferClassificationCatalog/1.0/cc_3920.3920',
-                      name: 'Netzspannung',
-                      variationValues: [
-                        {
-                          automaticallySelected: false,
-                          displayValue:
-                            'DE 100 V AC, 50 Hz // 95 – 105 V AC (±10 %), 60 Hz',
-                          selectable: true,
-                          selected: true,
-                          value:
-                            'DE 100 V AC, 50 Hz // 95 – 105 V AC (±10 %), 60 Hz',
-                        },
-                        {
-                          automaticallySelected: false,
-                          displayValue:
-                            'DE 105 V AC, 50 Hz // 115 – 125 V AC (±10 %), 60 Hz',
-                          selectable: true,
-                          selected: false,
-                          value:
-                            'DE 105 V AC, 50 Hz // 115 – 125 V AC (±10 %), 60 Hz',
-                        },
-                      ],
-                    },
-                  ],
-                },
-              },
-              quantity: 1,
-              updateable: true,
-            },
-          ],
-        },
-      ],
-      entries: [
-        {
-          entryNumber: 0,
-          product: {
-            alternativeOrderNumbers: ['PK D56 702'],
-            bullets: [
-              'Zweistufige Hochleistungs-Drehschieberpumpe mit Saugvermögen 1,25 m<sup>3</sup>/h bei 50 Hz / 1,50 m<sup>3</sup>/h bei 60 Hz',
-              'Bitte beachten, Kabel muss separat als Zubehör bestellt werden',
-              'Mit 1-Phasenmotor, mit C14 Stecker im Klemmkasten',
-              'Integriertes Gasballast- und Sicherheitsventil',
-              'Für alle Anwendungen im Grob- und Feinvakuumbereich',
-              'Besonderheit, Weiter Einsatzbereich durch verschiedene Motorspannungen',
-            ],
-            categories: [{ id: 'DUO_16', name: 'Duo 1.6' }],
-            categoryPath: [
-              { id: 'PUMPS', name: 'Pumpen' },
-              { id: 'ROTARY_VANE_PUMPS', name: 'Drehschieberpumpen' },
-              { id: 'DUO_16', name: 'Duo 1.6' },
-            ],
-            code: 'PK_D56_702_C_sample',
-            configurable: false,
-            dimensionImage: {
-              altText:
-                'Dimensions for Duo 1.6, 1-ph Motor, 100 V, 50 Hz | 95–105 V, 60 Hz',
-              format: '300Wx300H',
-              url: '/medias/?context=bWFzdGVyfGltYWdlc3w1MDA0NHxpbWFnZS9wbmd8aDRlL2gxYy84ODI0Njg2MTgyNDMwfDY4MmVkNjI2ZDJiYWY2ZDgzNWFhZTc2OTBkZDgwOWQ1ZTNmZDQzMzIyOWU1M2E4ZTdhYWUzNGY4OGY4MThmMDM',
-            },
-            images: [
-              {
-                altText: 'Duo 1.6, 1-ph Motor, 100 V, 50 Hz | 95–105 V, 60 Hz',
-                format: 'product',
-                imageType: 'PRIMARY',
-                url: '/medias/?context=bWFzdGVyfGltYWdlc3w0NTcwMDd8aW1hZ2UvcG5nfGgxMy9oYTEvODgyNDY4Nzk1MTkwMnxjNGJlMmFkN2RkZTBhOWNjOTdlZThjNzMyYzlhMTc5ZWQ0YmE1ZTlkOTU4NmQ4ZGY1NzI3YmY0YWI1M2ZmNTYz',
-              },
-            ],
-            master: '77a36ee3-740c-49a9-aeba-5baebe01ff07_sample',
-            name: 'Duo 1.6, 1-ph Motor, 100 V, 50 Hz | 95–105 V, 60 Hz',
-            orderNumber: 'PK D56 702 C',
-            productType: 'VARIANTPRODUCT',
-            purchasable: true,
-            stock: {
-              stockLevelStatus: 'inStock',
-            },
-            url: '/Pumpen/Drehschieberpumpen/Duo-1-6/Duo-1-6%2C-1-ph-Motor%2C-100%C2%A0V%2C-50%C2%A0Hz-%7C-95%E2%80%93105%C2%A0V%2C-60%C2%A0Hz/p/PK_D56_702_C_sample',
-            variationMatrix: {
-              allSelected: true,
-              masterProduct: {
-                name: 'Duo 1.6',
-                purchasable: true,
-              },
-              variants: [
-                {
-                  code: 'PK_D56_702_C_sample',
-                  name: 'Duo 1.6, 1-ph Motor, 100 V, 50 Hz | 95–105 V, 60 Hz',
-                  purchasable: true,
-                },
-              ],
-              variationAttributes: [
-                {
-                  code: 'pfeifferClassificationCatalog/1.0/cc_3942.3942',
-                  name: 'Spezielle Produktversion',
-                  variationValues: [
-                    {
-                      automaticallySelected: true,
-                      displayValue:
-                        'Für Anwendungen mit nicht korrosiven Gasen',
-                      selectable: true,
-                      selected: true,
-                      value: 'Für Anwendungen mit nicht korrosiven Gasen',
-                    },
-                  ],
-                },
-                {
-                  code: 'pfeifferClassificationCatalog/1.0/cc_3920.3920',
-                  name: 'Netzspannung',
-                  variationValues: [
-                    {
-                      automaticallySelected: false,
-                      displayValue:
-                        'DE 100 V AC, 50 Hz // 95 – 105 V AC (±10 %), 60 Hz',
-                      selectable: true,
-                      selected: true,
-                      value:
-                        'DE 100 V AC, 50 Hz // 95 – 105 V AC (±10 %), 60 Hz',
-                    },
-                    {
-                      automaticallySelected: false,
-                      displayValue:
-                        'DE 105 V AC, 50 Hz // 115 – 125 V AC (±10 %), 60 Hz',
-                      selectable: true,
-                      selected: false,
-                      value:
-                        'DE 105 V AC, 50 Hz // 115 – 125 V AC (±10 %), 60 Hz',
-                    },
-                  ],
-                },
-              ],
-            },
-          },
-          quantity: 1,
-          updateable: true,
-        },
-      ],
-      guid: 'a7a6fb60-2606-4c26-bb65-ec1b8ec6be15',
-      net: true,
-      pickupItemsQuantity: 0,
-      site: 'pfeiffer',
-      store: 'pfeiffer',
-      totalItems: 1,
-      user: {
-        uid: 'anonymous',
-      },
-      totalUnitCount: 1,
+    const getPrice = (cartItem) => {
+      return cartItem?.price?.value ? cartItem.price.value : 0
     }
 
-    const sortPrices = (param) => {
-      sortVariable.value = 'aufsteigendPrice'
-      console.log('sortByPrice clicked', param, sortVariable.value)
-    }
     const sortByPrice = () => {
-      sortVariable.value = 'aufsteigendPrice'
-      console.log('sortByPrice clicked', sortVariable.value)
+      priceSortedAsc.value = !priceSortedAsc.value
+      sortedCart.value = sortedCart.value.sort((a, b) => {
+        return priceSortedAsc.value
+          ? getPrice(a) - getPrice(b)
+          : getPrice(b) - getPrice(a)
+      })
     }
+
     const sortByTotalPrice = () => {
-      sortVariable.value = 'aufsteigendTotalPrice'
-      console.log('sortByTotalPrice clicked', sortVariable.value)
+      totalPriceSortedAsc.value = !totalPriceSortedAsc.value
+      sortedCart.value = sortedCart.value.sort((a, b) => {
+        return totalPriceSortedAsc.value
+          ? getPrice(a) * a.quantity - getPrice(b) * b.quantity
+          : getPrice(b) * b.quantity - getPrice(a) * a.quantity
+      })
+    }
+
+    const addToCart = (product) => {
+      sortedCart.value.find((item) => item.product === product).quantity += 1
+      emit('update', sortedCart.value)
+    }
+
+    const removeFromCart = (product) => {
+      sortedCart.value.find((item) => item.product === product).quantity -= 1
+      emit('update', sortedCart.value)
+    }
+
+    const deleteFromCart = (product) => {
+      sortedCart.value = sortedCart.value.filter(
+        (item) => item.product !== product
+      )
+      emit('update', sortedCart.value)
+    }
+
+    const addToShoppingList = (product) => {
+      const cartItem = sortedCart.value.find((item) => item.product === product)
+      emit('addToShoppingList', cartItem)
     }
 
     return {
-      sortVariable,
-      cart,
-      sortPrices,
+      sortedCart,
       sortByPrice,
       sortByTotalPrice,
+      addToCart,
+      removeFromCart,
+      deleteFromCart,
+      addToShoppingList,
     }
   },
 })
@@ -304,8 +122,12 @@ export default defineComponent({
 
 <style lang="scss">
 .cart-item-header {
-  @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
-  @apply tw-mx-4;
+  @apply tw-hidden;
+
+  @screen lg {
+    @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
+    @apply tw-mx-4;
+  }
 
   &__quantity {
     @apply tw-row-start-1 tw-row-end-1;

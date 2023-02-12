@@ -1,22 +1,19 @@
 import CartTable from './CartTable'
-
-const argTypes = {}
-
+import { cart } from './CartTable.stories.content'
 export default {
   title: 'Molecules/m_146 Cart Table',
   component: CartTable,
   parameters: {
     docs: {
       description: {
-        component: 'The Cart Item Card displays the items in the shopping cart',
+        component: 'The Cart Table displays the items in the shopping cart',
       },
       source: {
-        appliedOrderPromotions,
-        code: '<cart-table />',
+        code: '<cart-table v-bind="{cart}" />',
       },
     },
   },
-  argTypes,
+  cart,
 }
 
 const Template = (args) => ({
@@ -32,4 +29,7 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
-Default.args = argTypes
+Default.args = {
+  cart,
+  isMiniCart: false,
+}
