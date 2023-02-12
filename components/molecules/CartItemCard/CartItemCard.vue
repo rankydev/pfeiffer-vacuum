@@ -31,7 +31,7 @@
     />
     <div class="cart-item-card-details">
       <div v-if="isDetailsExpanded && details">
-        <template v-for="detail in details" :key="detail.code">
+        <template v-for="detail in details">
           <Badge
             v-for="(variant, id) in detail.variationValues"
             :key="detail.code + id"
