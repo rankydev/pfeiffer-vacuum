@@ -482,7 +482,7 @@ export default defineComponent({
         @apply tw-col-start-10 tw-col-end-11;
         @apply tw-text-lg;
         @apply tw-leading-7;
-        @apply tw-mx-0;
+        @apply tw-mx-auto;
       }
 
       &__label {
@@ -502,7 +502,7 @@ export default defineComponent({
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-11 tw-col-end-12;
         @apply tw-mt-auto;
-        @apply tw-mx-0;
+        @apply tw-mx-auto;
       }
 
       &__label {
