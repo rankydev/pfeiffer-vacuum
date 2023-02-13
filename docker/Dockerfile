@@ -91,6 +91,7 @@ ARG STORYBLOK_API_BASE_URL
 
 # only for build-image
 ENV CI=${CI}
+ENV NODE_ENV="development"
 
 RUN \
   apk update \
