@@ -1,25 +1,29 @@
 <template>
   <div class="cart-item-wrapper">
-    <div class="cart-item-header" v-if="!isMiniCart">
+    <div v-if="!isMiniCart" class="cart-item-header">
       <div class="cart-item-header__quantity">
         <span>{{ $t('cart.quantity') }}</span>
       </div>
-      <div class="cart-item-header__price">
-        <span>
-          {{ $t('cart.productPrice') }}
-        </span>
-        <Icon icon="unfold_more" @click="sortByPrice" />
-      </div>
-      <div class="cart-item-header__totalPrice">
-        <span>
-          {{ $t('cart.totalPrice') }}
-        </span>
-        <Icon icon="unfold_more" @click="sortByTotalPrice" />
-      </div>
+      <Button
+        class="cart-item-header__price"
+        variant="secondary"
+        shape="plain"
+        icon="unfold_more"
+        :label="$t('cart.productPrice')"
+        @click="sortByPrice"
+      />
+      <Button
+        class="cart-item-header__totalPrice"
+        variant="secondary"
+        shape="plain"
+        icon="unfold_more"
+        :label="$t('cart.totalPrice')"
+        @click="sortByTotalPrice"
+      />
     </div>
     <CartItemCard
       v-for="({ product, price, quantity, promotion }, id) in sortedCart"
-      :key="id"
+      :key="getUniqueId(id)"
       :product="product"
       :price="price"
       :quantity="quantity"
@@ -35,14 +39,15 @@
 
 <script>
 import { defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
-import Icon from '~/components/atoms/Icon/Icon'
 import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
+import Button from '~/components/atoms/Button/Button'
+import useUniqueKey from '~/composables/useUniqueKey'
 
 export default defineComponent({
   name: 'CartTable',
   components: {
-    Icon,
     CartItemCard,
+    Button,
   },
   props: {
     cart: {
@@ -106,6 +111,7 @@ export default defineComponent({
       const cartItem = sortedCart.value.find((item) => item.product === product)
       emit('addToShoppingList', cartItem)
     }
+    const getUniqueId = (id) => useUniqueKey('CART_TABLE_' + id)
 
     return {
       sortedCart,
@@ -115,6 +121,7 @@ export default defineComponent({
       removeFromCart,
       deleteFromCart,
       addToShoppingList,
+      getUniqueId,
     }
   },
 })
@@ -123,41 +130,48 @@ export default defineComponent({
 <style lang="scss">
 .cart-item-header {
   @apply tw-hidden;
+  @apply tw-border-b tw-border-b-pv-grey-80;
 
   @screen lg {
     @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
-    @apply tw-mx-4;
+    @apply tw-pb-4;
+  }
+
+  .button--plain.button--secondary {
+    @apply tw-text-pv-grey-32;
+    @apply tw-font-normal;
+    -webkit-text-fill-color: var(--tw-pv-grey-32);
+
+    :hover {
+      @apply tw-text-pv-grey-48;
+      -webkit-text-fill-color: var(--tw-pv-grey-48);
+    }
   }
 
   &__quantity {
     @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-9 tw-col-end-9;
+    @apply tw-col-start-9 tw-col-end-10;
+    @apply tw-flex;
+    @apply tw-my-auto;
+    @apply tw-text-pv-grey-32;
   }
 
   &__price {
     @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-10 tw-col-end-10;
+    @apply tw-col-start-10 tw-col-end-11;
     @apply tw-flex;
-    @apply tw-justify-center;
-    @apply tw-items-center;
-    @apply tw-cursor-pointer;
-
-    :hover {
-      @apply tw-text-pv-grey-48;
-    }
+    @apply tw-my-auto;
+    @apply tw-w-fit;
+    @apply tw-pl-2;
   }
 
   &__totalPrice {
     @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-11 tw-col-end-11;
+    @apply tw-col-start-11 tw-col-end-12;
     @apply tw-flex;
-    @apply tw-justify-center;
-    @apply tw-items-center;
-    @apply tw-cursor-pointer;
-
-    :hover {
-      @apply tw-text-pv-grey-48;
-    }
+    @apply tw-my-auto;
+    @apply tw-w-fit;
+    @apply tw-pl-2;
   }
 }
 </style>

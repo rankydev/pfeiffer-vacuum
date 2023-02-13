@@ -180,7 +180,7 @@ export default defineComponent({
     }
 
     const productPrice = computed(() => {
-      return getPriceString(price.value.value)
+      return getPriceString(price.value?.value)
     })
 
     const totalPrice = computed(() => {
@@ -226,11 +226,11 @@ export default defineComponent({
       })
     )
     const isInactive = computed(() => {
-      return product.value.purchasable === false
+      return product.value?.purchasable === false
     })
 
     const getPromotion = computed(() => {
-      return promotion.value.description
+      return promotion.value?.description
     })
     const updateQuantity = (value) => {
       if (value > 1) {
@@ -244,12 +244,6 @@ export default defineComponent({
         addToCart()
       } else {
         removeFromCart()
-      }
-    })
-
-    watch(quantity, (newValue, oldValue) => {
-      if (newValue !== oldValue) {
-        quantityModel.value = newValue
       }
     })
 
@@ -278,26 +272,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.cart-item-header {
-  @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
-  @apply tw-mx-4;
-
-  &__quantity {
-    @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-9 tw-col-end-9;
-  }
-
-  &__price {
-    @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-10 tw-col-end-10;
-  }
-
-  &__total-price {
-    @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-11 tw-col-end-11;
-  }
-}
-
 .cart-item-card {
   @apply tw-grid tw-grid-cols-12 tw-auto-rows-auto;
   @apply tw-border-b tw-border-b-pv-grey-80;
@@ -468,6 +442,7 @@ export default defineComponent({
 
       @screen lg {
         @apply tw-ml-0;
+        @apply tw-my-auto;
         @apply tw-col-start-2 tw-col-end-8;
       }
 
@@ -481,16 +456,16 @@ export default defineComponent({
 
     &-quantity {
       @screen lg {
-        @apply tw-row-start-1 tw-row-end-1;
+        @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-9 tw-col-end-10;
         @apply tw-w-20;
-        @apply tw-m-auto;
+        @apply tw-my-auto;
       }
     }
 
     &-price-error {
       @screen lg {
-        @apply tw-row-start-1 tw-row-end-1;
+        @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-10 tw-col-end-12;
         @apply tw-m-auto;
       }
@@ -507,6 +482,7 @@ export default defineComponent({
         @apply tw-col-start-10 tw-col-end-11;
         @apply tw-text-lg;
         @apply tw-leading-7;
+        @apply tw-mx-0;
       }
 
       &__label {
@@ -525,6 +501,8 @@ export default defineComponent({
       @screen lg {
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-11 tw-col-end-12;
+        @apply tw-mt-auto;
+        @apply tw-mx-0;
       }
 
       &__label {
@@ -545,7 +523,6 @@ export default defineComponent({
     &-delete {
       @screen lg {
         @apply tw-mt-auto;
-        @apply tw-mr-auto;
       }
     }
 
@@ -555,6 +532,7 @@ export default defineComponent({
       @screen lg {
         @apply tw-row-start-2 tw-row-end-3;
         @apply tw-col-start-2 tw-col-end-8;
+        @apply tw-mt-0;
       }
     }
 
