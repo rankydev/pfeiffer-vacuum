@@ -3,6 +3,9 @@
 ########################################################################################################################
 FROM node:16-alpine  as frontend-build
 
+# only for build-image
+ARG CI
+
 # !!! IMPORTANT NOTE !!!
 # ENV variables will be set by either
 #   - pipeline
@@ -85,6 +88,9 @@ ARG USERCENTRICS_ID
 ARG GOOGLE_TAG_MANAGER_ID
 
 ARG STORYBLOK_API_BASE_URL
+
+# only for build-image
+ENV CI=${CI}
 
 RUN \
   apk update \
