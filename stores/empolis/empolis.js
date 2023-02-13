@@ -9,12 +9,16 @@ const PDP_DOCUMENT_LIMIT = 500
 
 export const useEmpolisStore = defineStore('empolis', () => {
   const productDownloads = ref(new Map())
+
   const searchResultsCache = ref(new Map())
   const searchResults = ref(null)
+  const activeFilters = ref(null)
+  const availableFilters = ref(null)
+  const searchSuggestions = ref(null)
   const searchResultsLoading = ref(false)
   const searchResultsLoadingError = ref(false)
-  const { logger } = useLogger('empolisStore')
 
+  const { logger } = useLogger('empolisStore')
   const route = useRoute()
   const { axios } = useAxiosForEmpolis()
   const { i18n } = useContext()
@@ -27,11 +31,9 @@ export const useEmpolisStore = defineStore('empolis', () => {
   const loadByPath = async () => {
     // first check if we have cached results for this url (includes all filters, pageSize, ...)
     const cacheKey = route.value.fullPath
-    // TODO: this needs to be rethinked because multiple request results need to cached (filters, translated filters, )
-    // if (searchResultsCache.value.has(cacheKey)) {
-    //   searchResults.value = searchResultsCache.value.get(cacheKey)
-    //   return
-    // }
+    const usedCache = setSearchResultsByCacheKey(cacheKey)
+    // if we used cache successful no new loading required and we exit this function
+    if (usedCache) return
 
     // load search results by query if not found in cache
     const term = route.value.query.searchTerm || ''
@@ -47,34 +49,60 @@ export const useEmpolisStore = defineStore('empolis', () => {
 
     try {
       // first get translates filters filters
-      const activeFilters = await getTranslatedFilters(filtersFromQuery)
-      console.log('activeFilters', activeFilters)
+      const activeFiltersRes = await getTranslatedFilters(filtersFromQuery)
 
       // then fetch all available filters dependent on the current items
-      const availableFilters = await getFilterItems(
+      const availableFiltersRes = await getFilterItems(
         filtersFromQuery,
-        activeFilters
+        activeFiltersRes
       )
-      console.log('availableFilters', availableFilters)
 
-      // TODO: also load filterSuggestions with "annotateText". Can be async (without await in the first place for parallelization)
+      // also load filterSuggestions with "annotateText". Can be async (without await in the first place for parallelization)
       // no dependency after it as it looks like now
+      const searchSuggestionsRes = await annotateText(term)
 
       // TODO: grep filter options here later, too. [PVWEB-550]
-      const files = await fetchSearchResults({
+      const searchResultsRes = await fetchSearchResults({
         text: term,
         offset: (currentPage - 1) * pageSize,
         limit: pageSize,
       })
-      searchResults.value = files
-      searchResultsCache.value.set(cacheKey, files)
+
+      searchResultsCache.value.set(cacheKey, {
+        searchResults: searchResultsRes,
+        activeFilters: activeFiltersRes,
+        availableFilters: availableFiltersRes,
+        searchSuggestions: searchSuggestionsRes,
+      })
+
+      // since we created our cache entry above we can now safely set results by cache
+      setSearchResultsByCacheKey(cacheKey)
     } catch (e) {
       logger.error(e)
-      searchResults.value = null
+      resetAllSearchResults()
       searchResultsLoadingError.value = true
     } finally {
       searchResultsLoading.value = false
     }
+  }
+
+  const resetAllSearchResults = () => {
+    searchResults.value = null
+    activeFilters.value = null
+    availableFilters.value = null
+    searchSuggestions.value = null
+  }
+
+  const setSearchResultsByCacheKey = (cacheKey) => {
+    if (searchResultsCache.value.has(cacheKey)) {
+      const cacheEntry = searchResultsCache.value.get(cacheKey)
+      searchResults.value = cacheEntry.searchResults
+      activeFilters.value = cacheEntry.activeFilters
+      availableFilters.value = cacheEntry.availableFilters
+      searchSuggestions.value = cacheEntry.searchSuggestions
+      return true
+    }
+    return false
   }
 
   const getTranslatedFilters = async (filters) => {
@@ -97,7 +125,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
     }
   }
 
-  const getFilterItems = async (filters, activeFilters) => {
+  const getFilterItems = async (filters, activeFiltersArray) => {
     try {
       const result = await axios.$post('/filters', {
         filter: filters, // NOTE: yes this is no typo but the API really needs "filter" here instead of "filters"
@@ -111,9 +139,9 @@ export const useEmpolisStore = defineStore('empolis', () => {
         )
 
         const activeFiltersString = []
-        for (let i = 0; i < activeFilters.length; i++) {
-          for (let k = 0; k < activeFilters[i].concepts.length; k++) {
-            activeFiltersString.push(activeFilters[i].concepts[k].id)
+        for (let i = 0; i < activeFiltersArray.length; i++) {
+          for (let k = 0; k < activeFiltersArray[i].concepts.length; k++) {
+            activeFiltersString.push(activeFiltersArray[i].concepts[k].id)
           }
         }
 
@@ -174,6 +202,27 @@ export const useEmpolisStore = defineStore('empolis', () => {
     }
   }
 
+  const annotateText = async (searchTerm) => {
+    try {
+      const result = await axios.$post('/annotate', {
+        text: searchTerm,
+        language: language.value,
+      })
+
+      if (result && Array.isArray(result) && !result.error) {
+        return result
+      }
+
+      throw result.error ? result.error : 'unknown error'
+    } catch (e) {
+      logger.error(
+        `Error when fetching results for '${searchTerm}'. Returning empty array.`,
+        e ? e : ''
+      )
+      return []
+    }
+  }
+
   const getProductDownloads = async (orderNumber) => {
     if (!productDownloads.value.has(orderNumber)) {
       let results = []
@@ -206,6 +255,9 @@ export const useEmpolisStore = defineStore('empolis', () => {
     productDownloads,
     searchResultsCache,
     searchResults,
+    activeFilters,
+    availableFilters,
+    searchSuggestions,
     searchResultsLoading,
     searchResultsLoadingError,
     getProductDownloads,
