@@ -38,5 +38,6 @@
   "priceOnRequest": "Preis auf Anfrage",
   "details": "Details",
   "addToCartSuccess": "Produkt erfolgreich zum Warenkorb hinzugefügt",
-  "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten"
+  "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten",
+  "pricePerUnit": "Preis / Stück"
 }

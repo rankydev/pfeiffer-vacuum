@@ -1,7 +1,7 @@
 import CartTable from './CartTable'
 import { cart } from './CartTable.stories.content'
 export default {
-  title: 'Molecules/m_146 Cart Table',
+  title: 'Molecules/m_145 Cart Table',
   component: CartTable,
   parameters: {
     docs: {

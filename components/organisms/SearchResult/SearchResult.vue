@@ -15,17 +15,6 @@
         @updateSort="pushSortToQuery"
         @updateFacets="pushFacetsToQuery"
       />
-      <CartTable />
-      <!-- <CartItemCard2
-        v-for="entry in cart.deliveryOrderGroups[0].entries"
-        :key="entry.entryNumber"
-        :entry="entry"
-        :promotions="cart.appliedOrderPromotions"
-        :shop-attributes="true"
-        :read-only="false"
-        :price="null"
-        :show-price="true"
-      /> -->
       <ProductCardGrid v-if="products.length > 0" :products="products" />
       <div v-else>
         <h2>{{ $t('category.noMatchingProducts') }}</h2>
@@ -58,8 +47,6 @@ import CategoryTree from '~/components/molecules/CategoryTree/CategoryTree.vue'
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
 import Facets from '~/components/molecules/Facets/Facets.vue'
 import { PAGE_SIZE_DEFAULT } from '~/config/pagination.config'
-// import CartItemCard2 from '~/components/molecules/CartItemCard/CartItemCard2'
-import CartTable from '~/components/molecules/CartTable/CartTable'
 
 export default defineComponent({
   name: 'SearchResult',
@@ -69,8 +56,6 @@ export default defineComponent({
     CategoryTree,
     CategoryPageSizeSelection,
     Facets,
-    // CartItemCard2,
-    CartTable,
   },
   props: {
     products: {

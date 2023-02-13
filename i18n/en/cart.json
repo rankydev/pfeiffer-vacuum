@@ -32,10 +32,11 @@
     "addArticle": "Add to shopping list"
   },
   "productPrice": "Price",
-  "totalPrice": "Total",
+  "totalPrice": "Total Price",
   "quantity": "Quantity",
   "priceOnRequest": "Price on request",
   "details": "Details",
   "addToCartSuccess": "Successfully added product to cart",
-  "addToCartError": "An error occured while adding product to cart"
+  "addToCartError": "An error occured while adding product to cart",
+  "pricePerUnit": "Price / PU"
 }

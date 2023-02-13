@@ -32,10 +32,11 @@
     "addArticle": "Add to shopping list"
   },
   "productPrice": "Price",
-  "totalPrice": "Total",
+  "totalPrice": "Total Price",
   "quantity": "Quantity",
   "priceOnRequest": "Price on request",
   "details": "Details",
   "addToCartSuccess": "已成功将产品添加到购物车",
-  "addToCartError": "将产品添加到购物车时发生错误"
+  "addToCartError": "将产品添加到购物车时发生错误",
+  "pricePerUnit": "Price / PU"
 }

@@ -9,7 +9,7 @@
         variant="secondary"
         shape="plain"
         icon="unfold_more"
-        :label="$t('cart.productPrice')"
+        :label="$t('cart.pricePerUnit')"
         @click="sortByPrice"
       />
       <Button
@@ -160,18 +160,18 @@ export default defineComponent({
     @apply tw-row-start-1 tw-row-end-1;
     @apply tw-col-start-10 tw-col-end-11;
     @apply tw-flex;
-    @apply tw-my-auto;
+    @apply tw-m-auto;
     @apply tw-w-fit;
-    @apply tw-pl-2;
+    @apply tw-pl-4;
   }
 
   &__totalPrice {
     @apply tw-row-start-1 tw-row-end-1;
     @apply tw-col-start-11 tw-col-end-12;
     @apply tw-flex;
-    @apply tw-my-auto;
+    @apply tw-m-auto;
     @apply tw-w-fit;
-    @apply tw-pl-2;
+    @apply tw-pl-4;
   }
 }
 </style>
