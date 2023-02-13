@@ -275,6 +275,10 @@ ENV GOOGLE_TAG_MANAGER_ID="${GOOGLE_TAG_MANAGER_ID}"
 
 ENV STORYBLOK_API_BASE_URL="${STORYBLOK_API_BASE_URL}"
 
+RUN \
+  apk update \
+  && apk add gettext
+
 # Create app directory
 WORKDIR /opt/pvac-frontend
 
@@ -287,8 +291,6 @@ COPY --from=frontend-build /src/package*.json ./
 COPY --from=frontend-build /src/nuxt.config.js ./
 COPY --from=frontend-build /src/i18n.config.js ./
 
-RUN cat .env.template | envsubst >> .env
-
 # Bundle app source
 COPY --from=frontend-build /src/.nuxt .nuxt/
 COPY --from=frontend-build /src/node_modules/ ./node_modules/
@@ -297,6 +299,10 @@ COPY --from=frontend-build /src/resolver ./resolver/
 COPY --from=frontend-build /src/server ./server/
 COPY --from=frontend-build /src/providers ./providers/
 COPY --from=frontend-build /src/composables ./composables/
+
+COPY /.env.template ./
+RUN cat .env.template | envsubst >> .env
+RUN rm .env.template
 
 EXPOSE 3000
 
