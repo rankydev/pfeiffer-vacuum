@@ -42,6 +42,9 @@ export const useEmpolisStore = defineStore('empolis', () => {
       ? JSON.parse(decodeURIComponent(route.value.query.filter.toString()))
       : {}
 
+    searchResultsLoading.value = true
+    searchResultsLoadingError.value = false
+
     try {
       // first get translates filters filters
       const activeFilters = await getTranslatedFilters(filtersFromQuery)
@@ -67,6 +70,10 @@ export const useEmpolisStore = defineStore('empolis', () => {
       searchResultsCache.value.set(cacheKey, files)
     } catch (e) {
       logger.error(e)
+      searchResults.value = null
+      searchResultsLoadingError.value = true
+    } finally {
+      searchResultsLoading.value = false
     }
   }
 
@@ -142,9 +149,6 @@ export const useEmpolisStore = defineStore('empolis', () => {
       language: language.value,
     }
 
-    searchResultsLoading.value = true
-    searchResultsLoadingError.value = false
-
     try {
       const files = await axios.$post('/search', options)
 
@@ -165,12 +169,8 @@ export const useEmpolisStore = defineStore('empolis', () => {
           options.text ? options.text : ''
         }'.`
       )
-      searchResults.value = null
-      searchResultsLoadingError.value = true
       // propagate error to caller for error handling in component
       throw e
-    } finally {
-      searchResultsLoading.value = false
     }
   }
 
