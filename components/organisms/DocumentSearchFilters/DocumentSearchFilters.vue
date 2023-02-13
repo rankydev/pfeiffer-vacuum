@@ -4,7 +4,9 @@
       v-if="filterSuggestionsItems && filterSuggestionsItems.length"
       class="document-search-filters__suggested"
     >
-      <span>Potential Filters</span>
+      <span class="document-search-filters__suggested-label"
+        >{{ $t('category.documents.possibleFilters') }}:</span
+      >
       <FilterTag
         v-for="filter in filterSuggestionsItems"
         :key="filter.key + filter.value"
@@ -140,3 +142,23 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.document-search-filters {
+  &__suggested-label {
+    @apply tw-font-bold;
+  }
+
+  &__suggested,
+  &__active {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    @apply tw-gap-2;
+  }
+
+  &__active {
+    @apply tw-mt-3;
+  }
+}
+</style>
