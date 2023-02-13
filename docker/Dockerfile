@@ -91,7 +91,7 @@ ARG STORYBLOK_API_BASE_URL
 
 # only for build-image
 ENV CI=${CI}
-ENV NODE_ENV=${NODE_ENV}
+ENV NODE_ENV=development
 
 RUN \
   apk update \
@@ -286,7 +286,8 @@ COPY --from=frontend-build /src/build_logs ./build_logs/
 COPY --from=frontend-build /src/package*.json ./
 COPY --from=frontend-build /src/nuxt.config.js ./
 COPY --from=frontend-build /src/i18n.config.js ./
-COPY --from=frontend-build /src/.env ./
+
+RUN cat .env.template | envsubst >> .env
 
 # Bundle app source
 COPY --from=frontend-build /src/.nuxt .nuxt/
