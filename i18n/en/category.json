@@ -19,6 +19,7 @@
   "documentsTab": "Documents",
   "documents": {
     "noResultsFound": "Sorry, no results found. Please try another search term.",
-    "loadingError": "There was an error searching. Please use the advanced search or try again."
+    "loadingError": "There was an error searching. Please use the advanced search or try again.",
+    "possibleFilters": "Possible filters"
   }
 }
