@@ -14,9 +14,11 @@ export const useEmpolisStore = defineStore('empolis', () => {
   const searchResults = ref(null)
   const activeFilters = ref(null)
   const availableFilters = ref(null)
-  const searchSuggestions = ref(null)
   const searchResultsLoading = ref(false)
   const searchResultsLoadingError = ref(false)
+
+  const filterSuggestions = ref(null)
+  const filterSuggestionsCache = ref(new Map())
 
   const { logger } = useLogger('empolisStore')
   const route = useRoute()
@@ -29,16 +31,19 @@ export const useEmpolisStore = defineStore('empolis', () => {
   })
 
   const loadByPath = async () => {
-    // first check if we have cached results for this url (includes all filters, pageSize, ...)
-    const cacheKey = route.value.fullPath
-    const usedCache = setSearchResultsByCacheKey(cacheKey)
-    // if we used cache successful no new loading required and we exit this function
-    if (usedCache) return
-
-    // load search results by query if not found in cache
+    // setup search parameters
     const term = route.value.query.searchTerm || ''
     const currentPage = Number(route.value.query.currentPage || 1)
     const pageSize = Number(route.value.query.pageSize || PAGE_SIZE_DEFAULT)
+
+    // load filterSuggestions with "annotateText". Do not wait for the answer since its not relevant for the following requests
+    loadFilterSuggestions(term)
+
+    // first check if we have cached results for this url (includes all filters, pageSize, ...)
+    const cacheKey = route.value.fullPath
+    // const usedCache = setSearchResultsByCacheKey(cacheKey)
+    // // if we used cache successful no new loading required and we exit this function
+    // if (usedCache) return
 
     const filtersFromQuery = route.value.query.filter
       ? JSON.parse(decodeURIComponent(route.value.query.filter.toString()))
@@ -57,13 +62,9 @@ export const useEmpolisStore = defineStore('empolis', () => {
         activeFiltersRes
       )
 
-      // also load filterSuggestions with "annotateText". Can be async (without await in the first place for parallelization)
-      // no dependency after it as it looks like now
-      const searchSuggestionsRes = await annotateText(term)
-
-      // TODO: grep filter options here later, too. [PVWEB-550]
       const searchResultsRes = await fetchSearchResults({
         text: term,
+        filter: filtersFromQuery,
         offset: (currentPage - 1) * pageSize,
         limit: pageSize,
       })
@@ -72,7 +73,6 @@ export const useEmpolisStore = defineStore('empolis', () => {
         searchResults: searchResultsRes,
         activeFilters: activeFiltersRes,
         availableFilters: availableFiltersRes,
-        searchSuggestions: searchSuggestionsRes,
       })
 
       // since we created our cache entry above we can now safely set results by cache
@@ -90,7 +90,6 @@ export const useEmpolisStore = defineStore('empolis', () => {
     searchResults.value = null
     activeFilters.value = null
     availableFilters.value = null
-    searchSuggestions.value = null
   }
 
   const setSearchResultsByCacheKey = (cacheKey) => {
@@ -99,7 +98,6 @@ export const useEmpolisStore = defineStore('empolis', () => {
       searchResults.value = cacheEntry.searchResults
       activeFilters.value = cacheEntry.activeFilters
       availableFilters.value = cacheEntry.availableFilters
-      searchSuggestions.value = cacheEntry.searchSuggestions
       return true
     }
     return false
@@ -202,25 +200,31 @@ export const useEmpolisStore = defineStore('empolis', () => {
     }
   }
 
-  const annotateText = async (searchTerm) => {
-    try {
-      const result = await axios.$post('/annotate', {
-        text: searchTerm,
-        language: language.value,
-      })
+  const loadFilterSuggestions = async (searchTerm) => {
+    const cacheKey = `${language.value}_${searchTerm}`
 
-      if (result && Array.isArray(result) && !result.error) {
-        return result
+    if (!filterSuggestionsCache.value.has(cacheKey)) {
+      try {
+        const result = await axios.$post('/annotate', {
+          text: searchTerm,
+          language: language.value,
+        })
+
+        if (result && Array.isArray(result) && !result.error) {
+          filterSuggestionsCache.value.set(cacheKey, result)
+        } else {
+          throw result.error ? result.error : 'unknown error'
+        }
+      } catch (e) {
+        logger.error(
+          `Error when fetching results for '${searchTerm}'. Returning empty array.`,
+          e ? e : ''
+        )
+        filterSuggestionsCache.value.set(cacheKey, [])
       }
-
-      throw result.error ? result.error : 'unknown error'
-    } catch (e) {
-      logger.error(
-        `Error when fetching results for '${searchTerm}'. Returning empty array.`,
-        e ? e : ''
-      )
-      return []
     }
+
+    filterSuggestions.value = filterSuggestionsCache.value.get(cacheKey) || []
   }
 
   const getProductDownloads = async (orderNumber) => {
@@ -257,9 +261,9 @@ export const useEmpolisStore = defineStore('empolis', () => {
     searchResults,
     activeFilters,
     availableFilters,
-    searchSuggestions,
     searchResultsLoading,
     searchResultsLoadingError,
+    filterSuggestions,
     getProductDownloads,
     loadByPath,
   }

@@ -14,12 +14,7 @@
           <div v-if="totalResults" class="document-search-result__total-count">
             {{ $t('category.resultsFound', { totalResults }) }}
           </div>
-          <div
-            class="tw-flex tw-bg-pv-grey-88 tw-rounded-md tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-2xl tw-text-center tw-mb-5"
-            style="height: 75px"
-          >
-            <div>[Filter] PVWEB-550</div>
-          </div>
+          <DocumentSearchFilters class="document-search-result__filters" />
           <transition-group
             v-if="searchResultsItems.length"
             name="fade-in-out"
@@ -77,6 +72,7 @@ import { PAGE_SIZE_DEFAULT } from '~/config/pagination.config'
 
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import DocumentSearchItem from '~/components/molecules/DocumentSearchItem/DocumentSearchItem.vue'
+import DocumentSearchFilters from '~/components/organisms/DocumentSearchFilters/DocumentSearchFilters.vue'
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
 import Pagination from '~/components/molecules/Pagination/Pagination.vue'
 import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
@@ -86,6 +82,7 @@ export default defineComponent({
   components: {
     LoadingSpinner,
     DocumentSearchItem,
+    DocumentSearchFilters,
     CategoryPageSizeSelection,
     Pagination,
     GlobalMessage,
@@ -181,6 +178,10 @@ export default defineComponent({
       @apply tw-col-start-4;
       @apply tw-col-span-9;
     }
+  }
+
+  &__filters {
+    @apply tw-mb-4;
   }
 
   &__list {
