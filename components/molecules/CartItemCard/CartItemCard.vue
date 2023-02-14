@@ -31,7 +31,7 @@
     />
     <div v-if="isDetailsExpanded && details" class="cart-item-card-details">
       <template v-for="detail in details">
-        <Badge
+        <Tag
           v-for="(variant, id) in detail.variationValues"
           :key="detail.code + id"
           class="cart-item-card-details__detail"
@@ -104,7 +104,7 @@ import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
-import Badge from '~/components/atoms/Badge/Badge'
+import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 
@@ -115,7 +115,7 @@ export default defineComponent({
     Link,
     ResponsiveImage,
     PvInput,
-    Badge,
+    Tag,
   },
   props: {
     product: {
