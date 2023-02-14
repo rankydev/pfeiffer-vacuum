@@ -1,39 +1,32 @@
-import ContactRequestForm from './ContactRequestForm'
+import ContactCard from './ContactCard'
 
 export default {
-  title: 'Molecules/m_115 ContactRequestForm',
-  component: ContactRequestForm,
+  title: 'Molecules/m_147 ContactCard',
+  component: ContactCard,
   parameters: {
     docs: {
       description: {
         component:
-          'This component is a form that can be filled out with inputs as well as validated. In addition to that it offers the possibility to send a contact request.',
+          'This component displays the contact data of the account manager. Furthermore, an account manager card gets shown on the MyAccount area to the user.',
       },
       source: {
-        code: '<ContactRequestForm v-bind="{ contactRequestType }"/>',
+        code: '<ContactCard v-bind="{}"/>',
       },
     },
   },
 }
 
 const Template = (args) => ({
-  components: { ContactRequestForm },
+  components: { ContactCard },
   setup() {
     return { args }
   },
   template: `
   <div class="documentation-preview">
-    <ContactRequestForm v-bind="args"/>
+    <ContactCard v-bind="args"/>
   </div>
 `,
 })
 
-export const GeneralRequest = Template.bind({})
-GeneralRequest.args = {
-  contactRequestType: 'GENERAL_QUERY',
-}
-
-export const TopicRequest = Template.bind({})
-TopicRequest.args = {
-  contactRequestType: 'SERVICE_REQUEST',
-}
+export const Default = Template.bind({})
+Default.args = {}
