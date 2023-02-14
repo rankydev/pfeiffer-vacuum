@@ -286,7 +286,7 @@ export default defineComponent({
     width: calc(100vw - 4.25rem);
 
     @screen md {
-      width: auto;
+      @apply tw-w-auto;
     }
   }
 }

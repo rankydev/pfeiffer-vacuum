@@ -79,6 +79,7 @@ export default defineComponent({
   &-node {
     &__item {
       @apply tw-flex;
+      @apply tw-gap-3;
     }
 
     &__checkbox {
