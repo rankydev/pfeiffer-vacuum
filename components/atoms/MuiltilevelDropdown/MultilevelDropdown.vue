@@ -2,11 +2,11 @@
   <ul class="multilevel-dropdown">
     <MultilevelDropdownNode
       v-for="node in options"
-      :key="node[optionLabel]"
+      :key="node[labelKey]"
       :node="node"
-      :option-label="optionLabel"
+      :label-key="labelKey"
       :options-key="optionsKey"
-      :value-key="valueKey"
+      :checked-key="checkedKey"
       @optionClicked="clickedOption"
     />
   </ul>
@@ -26,7 +26,7 @@ export default defineComponent({
       type: Array,
       required: true,
     },
-    optionLabel: {
+    labelKey: {
       type: String,
       default: 'label',
     },
@@ -34,15 +34,15 @@ export default defineComponent({
       type: String,
       default: 'concepts',
     },
-    valueKey: {
+    checkedKey: {
       type: String,
-      default: 'value',
+      default: 'checked',
     },
   },
   emits: ['update'],
   setup(_, { emit }) {
-    const clickedOption = (optionValue) => {
-      emit('update', optionValue)
+    const clickedOption = (option) => {
+      emit('update', option)
     }
 
     return {

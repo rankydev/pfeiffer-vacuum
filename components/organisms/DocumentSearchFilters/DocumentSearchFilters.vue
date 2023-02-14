@@ -157,7 +157,7 @@ export default defineComponent({
             // label: `${item.label} (${item.count})`, // could display count here. But numbers are only correct if no searchTerm text
             label: item.label,
             checked: item.checked,
-            value: item.id,
+            id: item.id,
             parentId: item.parentId,
             attribute: group.attribute,
           }
@@ -168,9 +168,7 @@ export default defineComponent({
         for (let index = 0; index < concepts.length; index++) {
           const element = concepts[index]
           if (element.parentId) {
-            const parent = concepts.find(
-              (item) => item.value === element.parentId
-            )
+            const parent = concepts.find((item) => item.id === element.parentId)
             if (parent) {
               if (parent.concepts) {
                 parent.concepts.push(element)
@@ -205,9 +203,9 @@ export default defineComponent({
       const newRouteFilter = structuredClone(routeFilter.value)
 
       if (item.attribute in newRouteFilter) {
-        newRouteFilter[item.attribute].push(item.value)
+        newRouteFilter[item.attribute].push(item.id)
       } else {
-        newRouteFilter[item.attribute] = [item.value]
+        newRouteFilter[item.attribute] = [item.id]
       }
 
       router.push({

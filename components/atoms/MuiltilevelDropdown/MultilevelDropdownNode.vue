@@ -2,8 +2,8 @@
   <li class="multilevel-dropdown-node">
     <div class="multilevel-dropdown-node__item">
       <Checkbox
-        :label="node[optionLabel]"
-        :checked="node.checked"
+        :label="node[labelKey]"
+        :checked="node[checkedKey]"
         @update="optionClicked(node)"
       />
       <Button
@@ -17,11 +17,11 @@
     <ul v-if="hasChildren & expanded" class="multilevel-dropdown-node__child">
       <MultilevelDropdownNode
         v-for="child in children"
-        :key="child[optionLabel]"
+        :key="child[labelKey]"
         :node="child"
-        :option-label="optionLabel"
+        :label-key="labelKey"
         :options-key="optionsKey"
-        :value-key="valueKey"
+        :checked-key="checkedKey"
         @optionClicked="optionClicked"
       />
     </ul>
@@ -40,7 +40,7 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    optionLabel: {
+    labelKey: {
       type: String,
       required: true,
     },
@@ -48,7 +48,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    valueKey: {
+    checkedKey: {
       type: String,
       required: true,
     },
