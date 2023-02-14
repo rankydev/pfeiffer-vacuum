@@ -1,18 +1,17 @@
 <template>
   <div v-if="accountManagerData" class="contact-card">
-    <pre>{{ accountManagerData }}</pre>
     <div class="contact-card__headline-with-icon">
       <h4 class="contact-card__headline-with-icon--headline">Contact Us</h4>
       <Icon icon="perm_contact_calendar" />
     </div>
     <div class="contact-card__information">
-      <div>Captain Vacuum</div>
+      <div>{{ accountManagerData.name }}</div>
       <div>Sales Representive</div>
     </div>
     <Button
       class="tw-pb-6"
       icon="phone"
-      :label="accountManagerData.phone"
+      :label="accountManagerData.contactAddress.phone"
       variant="secondary"
       shape="plain"
       :prepend-icon="true"
@@ -20,7 +19,7 @@
     <br />
     <Button
       icon="mail"
-      label="Button Text"
+      :label="accountManagerData.contactAddress.email"
       variant="secondary"
       shape="plain"
       :prepend-icon="true"
