@@ -29,18 +29,16 @@
       :label="$t('cart.details')"
       @click="toggleDetails"
     />
-    <div class="cart-item-card-details">
-      <div v-if="isDetailsExpanded && details">
-        <template v-for="detail in details">
-          <Badge
-            v-for="(variant, id) in detail.variationValues"
-            :key="detail.code + id"
-            class="cart-item-card-details__detail"
-            :label="detail.name"
-            :content="variant.displayValue"
-          />
-        </template>
-      </div>
+    <div v-if="isDetailsExpanded && details" class="cart-item-card-details">
+      <template v-for="detail in details">
+        <Tag
+          v-for="(variant, id) in detail.variationValues"
+          :key="detail.code + id"
+          class="cart-item-card-details__detail"
+          :label="detail.name"
+          :content="variant.displayValue"
+        />
+      </template>
     </div>
     <PromotionLabel
       v-if="promotion"
@@ -106,7 +104,7 @@ import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
-import Badge from '~/components/atoms/Badge/Badge'
+import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 
@@ -117,7 +115,7 @@ export default defineComponent({
     Link,
     ResponsiveImage,
     PvInput,
-    Badge,
+    Tag,
   },
   props: {
     product: {
@@ -363,7 +361,6 @@ export default defineComponent({
     @apply tw-col-start-12 tw-col-end-13;
     @apply tw-mb-auto;
     @apply tw-ml-auto;
-    padding: 0 0 0 8px !important;
   }
 
   &-details-button {

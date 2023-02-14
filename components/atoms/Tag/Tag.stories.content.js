@@ -1,6 +1,6 @@
 const defaultEntries = {
-  label: 'Badge',
-  content: 'Badge content',
+  label: 'Tag',
+  content: 'Tag content',
 }
 
 export default defaultEntries
