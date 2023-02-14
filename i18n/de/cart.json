@@ -28,6 +28,9 @@
   "addToCartSuccess": "Produkt erfolgreich zum Warenkorb hinzugefügt",
   "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten",
   "headline": "Warenkorb",
+  "requestQuotation": "Angebot anfordern",
+  "goToCheckout": "Zum Check-Out",
+  "continueShopping": "Weiter einkaufen",
   "saveCartToList": "Als Liste speichern",
   "getProductHelp": "Hilfe zum Produkt",
   "list": {

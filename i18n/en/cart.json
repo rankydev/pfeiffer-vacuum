@@ -28,6 +28,9 @@
   "addToCartSuccess": "Successfully added product to cart",
   "addToCartError": "An error occured while adding product to cart",
   "headline": "Shopping Cart",
+  "requestQuotation": "Request Quote",
+  "goToCheckout": "Go to Check-Out",
+  "continueShopping": "Continue Shopping",
   "saveCartToList": "Save cart to list",
   "getProductHelp": "Get product help",
   "list": {
