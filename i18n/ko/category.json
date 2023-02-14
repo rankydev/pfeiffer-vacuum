@@ -20,6 +20,7 @@
   "documents": {
     "noResultsFound": "죄송합니다. 결과를 찾을 수 없습니다. 다른 검색어를 사용해 보십시오.",
     "loadingError": "검색 오류가 발생했습니다. 고급 검색을 사용하거나 다시 시도하십시오.",
-    "possibleFilters": "가능한 필터"
+    "possibleFilters": "가능한 필터",
+    "filter": "필터"
   }
 }

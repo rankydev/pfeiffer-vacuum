@@ -1,30 +1,35 @@
 <template>
   <div class="document-search-filters">
-    <div class="document-search-filters__dropdowns">
-      <Popup v-for="group in filterTreeGroups" :key="group.attribute">
-        <template #activator="{ togglePopup }">
-          <InternalBtnWrapper
-            :label="group.label"
-            variant="secondary"
-            shape="outlined"
-            size="xsmall"
-            icon="arrow_drop_down"
-            @click="togglePopup"
-          />
-        </template>
-        <template #default="{ closePopup }">
-          <MultilevelDropdown
-            :options="group.filters"
-            class="document-search-filters__popup"
-            @update="
-              (payload) => {
-                clickedFilterTreeItem(payload), closePopup()
-              }
-            "
-          />
-        </template>
-      </Popup>
-    </div>
+    <FilterModal :label="$t('category.documents.filter')">
+      <template #default="{ close }">
+        <div class="document-search-filters__dropdowns">
+          <Popup v-for="group in filterTreeGroups" :key="group.attribute">
+            <template #activator="{ togglePopup }">
+              <InternalBtnWrapper
+                :label="group.label"
+                variant="secondary"
+                shape="outlined"
+                size="xsmall"
+                icon="arrow_drop_down"
+                class="document-search-filters__popup-trigger"
+                @click="togglePopup"
+              />
+            </template>
+            <template #default="{ closePopup }">
+              <MultilevelDropdown
+                :options="group.filters"
+                class="document-search-filters__popup"
+                @update="
+                  (payload) => {
+                    clickedFilterTreeItem(payload), closePopup(), close()
+                  }
+                "
+              />
+            </template>
+          </Popup>
+        </div>
+      </template>
+    </FilterModal>
     <div
       v-if="filterSuggestionsItems && filterSuggestionsItems.length"
       class="document-search-filters__suggested"
@@ -72,6 +77,7 @@ import FilterTag from '~/components/atoms/FilterTag/FilterTag'
 import MultilevelDropdown from '~/components/atoms/MuiltilevelDropdown/MultilevelDropdown.vue'
 import Popup from '~/components/atoms/Popup/Popup.vue'
 import InternalBtnWrapper from '~/components/molecules/InternalBtnWrapper/InternalBtnWrapper.vue'
+import FilterModal from '~/components/molecules/FilterModal/FilterModal'
 
 export default defineComponent({
   name: 'DocumentSearchFilters',
@@ -80,6 +86,7 @@ export default defineComponent({
     MultilevelDropdown,
     Popup,
     InternalBtnWrapper,
+    FilterModal,
   },
   setup() {
     const router = useRouter()
@@ -139,6 +146,10 @@ export default defineComponent({
     })
 
     const filterTreeGroups = computed(() => {
+      if (!availableFilters.value?.length) {
+        return []
+      }
+
       return availableFilters.value.map((group) => {
         // only store relevant info for tree
         const concepts = group.concepts.map((item) => {
@@ -250,17 +261,35 @@ export default defineComponent({
   &__suggested,
   &__active {
     @apply tw-mt-3;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    @apply tw-flex;
     @apply tw-gap-2;
+    @apply tw-flex-col;
+    @apply tw-items-stretch;
+
+    @screen md {
+      @apply tw-flex-row;
+      @apply tw-items-center;
+    }
+  }
+
+  &__active {
+    @apply tw-mt-5;
+
+    @screen md {
+      @apply tw-mt-3;
+    }
   }
 
   &__popup {
     @apply tw-p-4;
 
     /* viewport minus paddings minus border */
-    max-width: calc(100vw - 64px - 4px);
+    max-width: calc(100vw - 4.25rem);
+    width: calc(100vw - 4.25rem);
+
+    @screen md {
+      width: auto;
+    }
   }
 }
 </style>

@@ -20,6 +20,7 @@
   "documents": {
     "noResultsFound": "Leider keine Ergebnisse gefunden. Bitte versuchen Sie einen anderen Suchbegriff.",
     "loadingError": "Es gab einen Fehler bei der Suche. Bitte nutzen Sie die erweiterte Suche oder versuchen Sie es erneut.",
-    "possibleFilters": "Mögliche Filter"
+    "possibleFilters": "Mögliche Filter",
+    "filter": "Filtern"
   }
 }
