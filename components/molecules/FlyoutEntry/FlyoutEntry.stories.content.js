@@ -32,9 +32,9 @@ export const flyoutEntry3 = {
 export const flyoutEntry4 = {
   _uid: '765ce473-f5b0-4123-8083-9f05ddab958c',
   icon: 'mail',
-  href: 'https://www.pfeiffer-vacuum.com/de/',
+  href: 'https://www.pfeiffer-vacuum.com/de/kontakt/',
   target: '_blank',
-  label: 'Investor Relation',
+  label: 'Kontakt',
   component: 'FlyoutEntry',
   _editable:
     '<!--#storyblok#{"name": "FlyoutEntry", "space": "144293", "uid": "765ce473-f5b0-4123-8083-9f05ddab958c", "id": "104316822"}-->',
