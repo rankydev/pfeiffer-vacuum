@@ -185,6 +185,12 @@ export default defineComponent({
   }
 
   &__button {
+    &--submit {
+      @screen md {
+        @apply tw-w-full;
+      }
+    }
+
     &--save {
       @screen md {
         @apply tw-mr-8;
@@ -197,12 +203,60 @@ export default defineComponent({
     }
   }
 
+  &__info {
+    @apply tw-my-6;
+
+    @screen md {
+      @apply tw-flex tw-justify-between;
+      @apply tw-gap-6;
+    }
+  }
+
+  &__information,
+  &__actions {
+    @screen md {
+      @apply tw-flex-1;
+    }
+  }
+
   &__information {
-    @apply tw-mt-8;
+    @screen md {
+      @apply tw-text-sm;
+    }
+
+    @screen xl {
+      max-width: 789px;
+    }
+  }
+
+  &__actions {
+    @screen xl {
+      max-width: 437px;
+    }
   }
 
   &__total {
-    @apply tw-py-6;
+    @apply tw-my-6;
+
+    @screen md {
+      @apply tw-mb-8 tw-mt-0;
+    }
+
+    .price__total {
+      @apply tw-text-lg;
+    }
+
+    .price {
+      @apply tw-py-4;
+    }
+  }
+
+  &__back-button {
+    @apply tw-text-center;
+
+    @screen md {
+      @apply tw-text-left;
+    }
   }
 }
 </style>
