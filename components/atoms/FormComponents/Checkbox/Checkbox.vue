@@ -1,6 +1,5 @@
 <template>
   <label :class="['checkbox', { 'checkbox--disabled': disabled }]">
-    <!-- TODO: clarify with philipp if this change is possible? I do not want the input to change "internal state" -->
     <input
       v-bind="{ checked, disabled }"
       type="checkbox"
