@@ -102,11 +102,13 @@ export default defineComponent({
 
     const clearInput = () => {
       if (activeTab?.value === 'documents') {
-        searchTermDocuments.value = ''
+        return (searchTermDocuments.value = '')
       }
       if (activeTab?.value === 'products') {
-        searchTermProducts.value = ''
+        return (searchTermProducts.value = '')
       }
+
+      searchTerm.value = ''
     }
 
     const closeSearchfield = (value) => {
