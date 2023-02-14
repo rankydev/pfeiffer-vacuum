@@ -4,6 +4,7 @@
       <Checkbox
         :label="node[labelKey]"
         :checked="node[checkedKey]"
+        class="multilevel-dropdown-node__checkbox"
         @update="optionClicked(node)"
       />
       <Button
@@ -11,6 +12,7 @@
         :icon="expanded ? 'expand_less' : 'expand_more'"
         variant="variant-selection"
         shape="plain"
+        class="multilevel-dropdown-node__expand"
         @click="toggleIsExpanded"
       />
     </div>

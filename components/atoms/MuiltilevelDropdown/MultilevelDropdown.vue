@@ -67,8 +67,6 @@ export default defineComponent({
   }
 
   .checkbox {
-    @apply tw-min-w-fit;
-
     input {
       @apply focus:tw-border-pv-red-lighter;
     }
@@ -76,13 +74,21 @@ export default defineComponent({
 
   .button {
     @apply tw-p-0;
-    @apply tw-my-auto;
-    @apply tw-ml-2;
   }
 
   &-node {
     &__item {
       @apply tw-flex;
+    }
+
+    &__checkbox {
+      .checkbox__input {
+        flex: 0 0 24px;
+      }
+    }
+
+    &__expand {
+      flex: 0 0 24px;
     }
 
     &__child {
