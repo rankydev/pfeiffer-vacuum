@@ -361,7 +361,6 @@ export default defineComponent({
     @apply tw-col-start-12 tw-col-end-13;
     @apply tw-mb-auto;
     @apply tw-ml-auto;
-    padding: 0 0 0 8px !important;
   }
 
   &-details-button {
