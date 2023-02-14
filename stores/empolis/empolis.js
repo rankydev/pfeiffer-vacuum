@@ -41,9 +41,9 @@ export const useEmpolisStore = defineStore('empolis', () => {
 
     // first check if we have cached results for this url (includes all filters, pageSize, ...)
     const cacheKey = route.value.fullPath
-    // const usedCache = setSearchResultsByCacheKey(cacheKey)
-    // // if we used cache successful no new loading required and we exit this function
-    // if (usedCache) return
+    const usedCache = setSearchResultsByCacheKey(cacheKey)
+    // if we used cache successful no new loading required and we exit this function
+    if (usedCache) return
 
     const filtersFromQuery = route.value.query.filter
       ? JSON.parse(decodeURIComponent(route.value.query.filter.toString()))
