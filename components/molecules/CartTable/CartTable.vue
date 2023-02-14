@@ -32,14 +32,14 @@
 <script>
 import { defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
 import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
-import Button from '~/components/atoms/Button/Button'
 import useUniqueKey from '~/composables/useUniqueKey'
+import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
   name: 'CartTable',
   components: {
     CartItemCard,
-    Button,
+    Icon,
   },
   props: {
     cart: {
