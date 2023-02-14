@@ -91,7 +91,7 @@ ARG STORYBLOK_API_BASE_URL
 
 # only for build-image
 ENV CI=${CI}
-ENV NODE_ENV=development
+ENV NODE_ENV=${NODE_ENV}
 
 RUN \
   apk update \
@@ -105,7 +105,13 @@ RUN cat .env.template | envsubst >> .env
 
 RUN mkdir -p build_logs
 
-RUN npm ci && npm run build
+ENV NODE_ENV=development
+
+RUN npm ci
+
+ENV NODE_ENV=${NODE_ENV}
+
+RUN npm run build
 
 ########################################################################################################################
 # end frontend-build image
