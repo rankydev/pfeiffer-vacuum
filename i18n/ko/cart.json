@@ -29,13 +29,13 @@
     }
   },
   "list": {
-    "addArticle": "Add to shopping list"
+    "addArticle": "쇼핑 목록에 추가"
   },
-  "productPrice": "Price",
-  "totalPrice": "Total",
-  "quantity": "Quantity",
-  "priceOnRequest": "Price on request",
-  "details": "Details",
+  "productPrice": "값",
+  "totalPrice": "합계",
+  "quantity": "양",
+  "priceOnRequest": "요청 시 가격",
+  "details": "세부 정보",
   "addToCartSuccess": "제품을 장바구니에 성공적으로 추가했습니다.",
   "addToCartError": "장바구니에 제품을 추가하는 동안 오류가 발생했습니다."
 }

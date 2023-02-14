@@ -29,18 +29,16 @@
       :label="$t('cart.details')"
       @click="toggleDetails"
     />
-    <div class="cart-item-card-details">
-      <div v-if="isDetailsExpanded && details">
-        <template v-for="detail in details">
-          <Badge
-            v-for="(variant, id) in detail.variationValues"
-            :key="detail.code + id"
-            class="cart-item-card-details__detail"
-            :label="detail.name"
-            :content="variant.displayValue"
-          />
-        </template>
-      </div>
+    <div v-if="isDetailsExpanded && details" class="cart-item-card-details">
+      <template v-for="detail in details">
+        <Badge
+          v-for="(variant, id) in detail.variationValues"
+          :key="detail.code + id"
+          class="cart-item-card-details__detail"
+          :label="detail.name"
+          :content="variant.displayValue"
+        />
+      </template>
     </div>
     <PromotionLabel
       v-if="promotion"

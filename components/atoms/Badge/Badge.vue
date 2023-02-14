@@ -29,7 +29,7 @@ export default defineComponent({
   @apply tw-bg-pv-grey-96;
   @apply tw-w-fit;
   @apply tw-px-2 tw-py-1;
-  @apply tw-rounded-sm;
+  @apply tw-rounded;
 
   &-label {
     @apply tw-text-pv-grey-64;
