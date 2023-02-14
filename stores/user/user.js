@@ -57,6 +57,16 @@ export const useUserStore = defineStore('user', () => {
       currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
   )
 
+  const accountManagerData = ref(null)
+
+  const fetchAccountManagerData = async () => {
+    accountManagerData.value = await userApi.getAccountManager(
+      isLoggedIn.value,
+      isApprovedUser.value,
+      currentUser.value
+    )
+  }
+
   const userCountry = computed(() => userBillingAddress.value?.country || {})
 
   const changePasswordLink = computed(() => {
@@ -276,6 +286,7 @@ export const useUserStore = defineStore('user', () => {
     userBillingAddress,
     userCountry,
     changePasswordLink,
+    accountManagerData,
 
     // actions
     loadCurrentUser,
@@ -292,5 +303,6 @@ export const useUserStore = defineStore('user', () => {
     getDeliveryAddressByID,
     loadAddressData,
     register: userApi.register,
+    fetchAccountManagerData,
   }
 })

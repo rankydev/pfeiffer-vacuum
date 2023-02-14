@@ -17,7 +17,7 @@
                 <NuxtChild />
               </div>
 
-              <MyAccountManager class="myaccount-page__account-manager" />
+              <ContactCard class="myaccount-page__account-manager" />
             </div>
           </ContentWrapper>
         </template>
@@ -36,7 +36,7 @@ import {
 
 import Page from '~/components/templates/Page/Page'
 import MyAccountSidebar from '~/components/organisms/MyAccount/sidebar/MyAccountSidebar'
-import MyAccountManager from '~/components/organisms/MyAccount/sidebar/MyAccountManager'
+import ContactCard from '~/components/molecules/ContactCard/ContactCard'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
@@ -47,7 +47,7 @@ export default defineComponent({
     Page,
     ContentWrapper,
     MyAccountSidebar,
-    MyAccountManager,
+    ContactCard,
   },
   middleware: 'my-account-guard',
   setup() {

@@ -53,6 +53,27 @@ export const useUserApi = () => {
     return await axios.$post(`${DELIVERY_ADDRESSES_BASE}/${id}/default`)
   }
 
+  const getAccountManager = async (loggedIn, isApprovedUser, currentUser) => {
+    console.log('currentUser', currentUser)
+    if (!loggedIn || !isApprovedUser) {
+      return {}
+    }
+
+    const result = await axios.$get(
+      `${config.USER_API}/orgUnits/${currentUser.orgUnit.uid}/salesengineer`
+    )
+
+    if (typeof result === 'object' && !result.error) {
+      return result
+    }
+
+    console.error(
+      'Error when fetching account managers. Returning empty array.',
+      result.error ? result.error : ''
+    )
+    return {}
+  }
+
   return {
     getUserData,
     register,
@@ -64,5 +85,6 @@ export const useUserApi = () => {
     updateUserDeliveryAddress,
     deleteUserDeliveryAddress,
     setUserDefaultDeliveryAddress,
+    getAccountManager,
   }
 }

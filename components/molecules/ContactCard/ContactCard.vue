@@ -1,5 +1,6 @@
 <template>
-  <div class="contact-card">
+  <div v-if="accountManagerData" class="contact-card">
+    <pre>{{ accountManagerData }}</pre>
     <div class="contact-card__headline-with-icon">
       <h4 class="contact-card__headline-with-icon--headline">Contact Us</h4>
       <Icon icon="perm_contact_calendar" />
@@ -11,7 +12,7 @@
     <Button
       class="tw-pb-6"
       icon="phone"
-      label="+49 123456789"
+      :label="accountManagerData.phone"
       variant="secondary"
       shape="plain"
       :prepend-icon="true"
@@ -40,11 +41,9 @@ export default defineComponent({
   setup() {
     const userStore = useUserStore()
     const { accountManagerData } = storeToRefs(userStore)
-    console.log('accountData', accountManagerData.value)
+    userStore.fetchAccountManagerData()
 
-    const a = 0
-
-    return { a }
+    return { accountManagerData }
   },
 })
 </script>
