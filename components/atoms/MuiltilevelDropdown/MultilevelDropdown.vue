@@ -6,12 +6,14 @@
       :node="node"
       :option-label="optionLabel"
       :options-key="optionsKey"
+      :value-key="valueKey"
+      @optionClicked="clickedOption"
     />
   </ul>
 </template>
 
 <script>
-import { defineComponent, provide, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import MultilevelDropdownNode from './MultilevelDropdownNode.vue'
 
 export default defineComponent({
@@ -27,21 +29,25 @@ export default defineComponent({
     optionLabel: {
       type: String,
       default: 'label',
-      required: false,
     },
     optionsKey: {
       type: String,
       default: 'concepts',
-      required: false,
+    },
+    valueKey: {
+      type: String,
+      default: 'value',
     },
   },
   emits: ['update'],
-  setup(props, { emit }) {
-    const selectedArray = ref([])
-    provide('selectedArray', selectedArray)
-    watch(selectedArray, () => {
-      emit('update', selectedArray.value)
-    })
+  setup(_, { emit }) {
+    const clickedOption = (optionValue) => {
+      emit('update', optionValue)
+    }
+
+    return {
+      clickedOption,
+    }
   },
 })
 </script>

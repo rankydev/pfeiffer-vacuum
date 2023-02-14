@@ -1,10 +1,12 @@
 <template>
   <label :class="['checkbox', { 'checkbox--disabled': disabled }]">
+    <!-- TODO: clarify with philipp if this change is possible? I do not want the input to change "internal state" -->
     <input
       v-bind="{ checked, disabled }"
       type="checkbox"
       class="checkbox__input"
-      @input="$emit('update', $event.target.checked)"
+      :class="{ 'checkbox__input--checked': checked }"
+      @click.prevent="$emit('update', $event.target.checked)"
     />
     <Icon icon="check" class="checkbox__tick" />
     {{ label }}
@@ -90,7 +92,7 @@ export default {
       @apply tw-border-pv-grey-64;
     }
 
-    &:checked {
+    &--checked {
       @apply tw-bg-pv-red;
 
       &:disabled {
@@ -98,7 +100,7 @@ export default {
       }
     }
 
-    &:checked + .checkbox__tick {
+    &--checked + .checkbox__tick {
       @apply tw-opacity-100;
     }
   }
