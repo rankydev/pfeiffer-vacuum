@@ -37,5 +37,6 @@
   "priceOnRequest": "价格请咨询",
   "details": "详",
   "addToCartSuccess": "已成功将产品添加到购物车",
-  "addToCartError": "将产品添加到购物车时发生错误"
+  "addToCartError": "将产品添加到购物车时发生错误",
+  "pricePerUnit": "价格 / 聚氨酯"
 }
