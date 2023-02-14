@@ -1,124 +1,75 @@
 <template>
-  <div class="contact-request-form">
-    <LoadingSpinner :show="loading">
-      <GeneralRequest
-        v-if="contactRequestType.type === 'GENERAL_QUERY'"
-        :type="contactRequestType.type"
-        @update="requestData = $event"
-      />
-      <TopicRequest
-        v-else
-        :type="contactRequestType.type"
-        @update="requestData = $event"
-      />
-      <div class="contact-request-form__link">
-        <Link :href="personalPrivacyLink" target="_blank" variant="inline">
-          {{ $t('form.contactRequest.dataPrivacy') }}
-        </Link>
-      </div>
-      <Button
-        :label="$t('form.contactRequest.submit')"
-        variant="secondary"
-        shape="filled"
-        size="normal"
-        icon="send"
-        class="contact-request-form__button"
-        @click.native="submit()"
-      />
-    </LoadingSpinner>
+  <div class="contact-card">
+    <div class="contact-card__headline-with-icon">
+      <h4 class="contact-card__headline-with-icon--headline">Contact Us</h4>
+      <Icon icon="perm_contact_calendar" />
+    </div>
+    <div class="contact-card__information">
+      <div>Captain Vacuum</div>
+      <div>Sales Representive</div>
+    </div>
+    <Button
+      class="tw-pb-6"
+      icon="phone"
+      label="+49 123456789"
+      variant="secondary"
+      shape="plain"
+      :prepend-icon="true"
+    />
+    <br />
+    <Button
+      icon="mail"
+      label="Button Text"
+      variant="secondary"
+      shape="plain"
+      :prepend-icon="true"
+    />
   </div>
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  onBeforeMount,
-  ref,
-  useContext,
-} from '@nuxtjs/composition-api'
-import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
-import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
+import { defineComponent } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
-import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
-import useVuelidate from '@vuelidate/core'
-import { useToast } from '~/composables/useToast'
-import { useContactStore } from '~/stores/contact'
-import { useDatasourcesStore } from '~/stores/datasources'
+import { useUserStore } from '~/stores/user'
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
-    LoadingSpinner,
-    GeneralRequest,
-    TopicRequest,
     Button,
   },
-  props: {
-    /**
-     * Defines which input fields are included in the form. Object is passed from Storyblok and contains a field 'type' that will be used for our components.
-     */
-    contactRequestType: {
-      type: Object,
-      required: true,
-    },
-  },
-  emits: ['close'],
-  setup(_, { emit }) {
-    const loading = ref(false)
-    const { i18n } = useContext()
-    const contactStore = useContactStore()
-    const datasourcesStore = useDatasourcesStore()
-    const { files } = storeToRefs(datasourcesStore)
-    const toast = useToast()
-    // this will collect all nested component’s validation results
-    const v = useVuelidate()
-    const requestData = ref({})
-    const personalPrivacyLink = computed(() => {
-      return files.value['personalPrivacyLink'] || ''
-    })
-    onBeforeMount(datasourcesStore.loadLinksFromDatasource)
+  setup() {
+    const userStore = useUserStore()
+    const { accountManagerData } = storeToRefs(userStore)
+    console.log('accountData', accountManagerData.value)
 
-    const submit = async () => {
-      v.value.$validate()
-      if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
-        loading.value = true
-        await contactStore
-          .submitContact(requestData.value)
-          .then(() => {
-            loading.value = false
-            emit('close')
-            toast.success(
-              {
-                description: i18n.t('form.message.success'),
-              },
-              {
-                timeout: 8000,
-              }
-            )
-          })
-          .catch(() => {
-            loading.value = false
-            toast.error({
-              description: i18n.t('form.message.error'),
-            })
-          })
-      }
-    }
+    const a = 0
 
-    return { v, submit, requestData, loading, personalPrivacyLink }
+    return { a }
   },
 })
 </script>
 
 <style lang="scss">
-.contact-request-form {
-  &__button {
-    @apply tw-mt-6;
+.contact-card {
+  @apply tw-bg-pv-grey-96;
+  @apply tw-rounded-md;
+  @apply tw-p-6;
+
+  &__headline-with-icon {
+    @apply tw-flex;
+    @apply tw-pb-2;
+    @apply tw-text-pv-grey-16;
+
+    &--headline {
+      @apply tw-w-full;
+      @apply tw-text-pv-grey-16;
+    }
   }
 
-  &__link {
-    @apply tw-mt-6;
+  &__information {
+    @apply tw-pb-2;
+    @apply tw-text-pv-grey-16;
+    @apply tw-text-sm tw-leading-6;
   }
 }
 </style>
