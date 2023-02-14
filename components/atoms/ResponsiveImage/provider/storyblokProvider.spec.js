@@ -9,6 +9,7 @@ const screenSizes = [
   ['sm', 0],
   ['md', 768],
   ['lg', 1280],
+  ['xl', 1440],
 ].reverse()
 
 describe('StoryblokProvider', () => {
@@ -95,13 +96,13 @@ describe('StoryblokProvider', () => {
         blackAndWhite: true,
       })
 
-      expect(image.webpSources.value.length).toBe(3)
-      expect(imgMock).toBeCalledTimes(6)
+      expect(image.webpSources.value.length).toBe(4)
+      expect(imgMock).toBeCalledTimes(8)
 
       imgMock.mockClear()
 
-      expect(image.pngSources.value.length).toBe(3)
-      expect(imgMock).toBeCalledTimes(6)
+      expect(image.pngSources.value.length).toBe(4)
+      expect(imgMock).toBeCalledTimes(8)
     })
   })
 })

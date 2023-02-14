@@ -2,7 +2,7 @@ import DocumentSearchItem from './DocumentSearchItem.vue'
 import { product } from './DocumentSearchItem.stories.content.js'
 
 export default {
-  title: 'Molecules/m_145 Document-Search-Item',
+  title: 'Molecules/m_146 Document-Search-Item',
   component: DocumentSearchItem,
   parameters: {
     docs: {
