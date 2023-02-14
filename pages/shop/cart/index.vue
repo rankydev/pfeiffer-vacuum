@@ -18,7 +18,7 @@
 
                 <div class="cart-page__buttons">
                   <Button
-                    class="cart-page__button cart-page__button--save"
+                    class="cart-page__button--save"
                     variant="secondary"
                     :label="$t('cart.saveCartToList')"
                     icon="assignment"
@@ -26,7 +26,7 @@
 
                   <Button
                     v-show="!isMobile"
-                    class="cart-page__button"
+                    class="cart-page__button--submit"
                     variant="secondary"
                     shape="outlined"
                     :inverted="true"
@@ -44,31 +44,37 @@
                 </li>
               </ul>
 
-              <div class="cart-page__information">
-                <PriceInformation :current-cart="cart" />
-                <!-- REMOVE COMPUTED PROPERTY CART -->
+              <div class="cart-page__info">
+                <div v-show="!ociBuyer" class="cart-page__information">
+                  <!-- REMOVE COMPUTED PROPERTY CART -->
+                  <PriceInformation :current-cart="cart" />
+                </div>
+
+                <div class="cart-page__actions">
+                  <div class="cart-page__total">
+                    <TotalNetInformation :current-cart="currentCart" />
+                  </div>
+
+                  <div class="cart-page__submit">
+                    <Button
+                      :href="localePath('shop-checkout')"
+                      :label="$t('cart.goToCheckout')"
+                      class="cart-page__button--submit"
+                      variant="primary"
+                      icon="mail_outline"
+                    />
+                  </div>
+                </div>
               </div>
-
-              <div class="cart-page__total">
-                <TotalNetInformation :current-cart="currentCart" />
-              </div>
-
-              <div class="cart-page__submit">
+              <div class="cart-page__back-button">
                 <Button
-                  class="cart-page__button"
-                  variant="primary"
-                  label="Submit your request"
-                  icon="mail_outline"
-                />
-
-                <Button
-                  v-show="isMobile"
+                  :href="localePath('shop')"
                   class="cart-page__button cart-page__button--back"
                   variant="secondary"
                   shape="plain"
-                  label="Back to shopping cart"
+                  :label="$t('cart.continueShopping')"
+                  :prepend-icon="true"
                   icon="arrow_back"
-                  prepend-icon="true"
                 />
               </div>
             </div>
@@ -87,6 +93,7 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import { useCartStore } from '~/stores/cart'
+import { useUserStore } from '~/stores/user'
 
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
@@ -112,6 +119,7 @@ export default defineComponent({
     const route = useRoute()
     const context = useContext()
     const cartStore = useCartStore()
+    const userStore = useUserStore()
 
     const { app } = useContext()
     const { currentCart } = storeToRefs(cartStore)
@@ -122,6 +130,8 @@ export default defineComponent({
       ...currentCart.value,
       ...currentCartSpecificPrices,
     }))
+
+    const ociBuyer = computed(() => userStore.currentUser?.ociBuyer)
 
     const currentCartSpecificPrices = {
       hiddenUIElements: {
@@ -148,6 +158,7 @@ export default defineComponent({
       isMobile,
       currentCart,
       cart,
+      ociBuyer,
     }
   },
 })
