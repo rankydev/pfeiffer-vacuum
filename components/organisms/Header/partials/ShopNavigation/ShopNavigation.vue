@@ -200,4 +200,10 @@ export default defineComponent({
     width: calc(100% - 2rem);
   }
 }
+
+.popup__content {
+  @screen md {
+    left: unset !important;
+  }
+}
 </style>

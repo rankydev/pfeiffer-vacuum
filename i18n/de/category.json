@@ -1,6 +1,6 @@
 {
   "rootCategory": "Alle Produkte",
-  "itemsPerPage": "Produkte pro Seite:",
+  "itemsPerPage": "Ergebnisse pro Seite:",
   "sort": "Sortieren nach:",
   "lessFilters": "Weniger Filter",
   "moreFilters": "Mehr Filter",
@@ -16,5 +16,9 @@
   "search": "Suche",
   "suggestions": "Vorschläge",
   "productsTab": "Produkte",
-  "documentsTab": "Dokumente"
+  "documentsTab": "Dokumente",
+  "documents": {
+    "noResultsFound": "Leider keine Ergebnisse gefunden. Bitte versuchen Sie einen anderen Suchbegriff.",
+    "loadingError": "Es gab einen Fehler bei der Suche. Bitte nutzen Sie die erweiterte Suche oder versuchen Sie es erneut."
+  }
 }
