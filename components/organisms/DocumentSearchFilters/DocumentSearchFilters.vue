@@ -288,6 +288,10 @@ export default defineComponent({
     @screen md {
       @apply tw-w-auto;
     }
+
+    &-trigger {
+      @apply tw-bg-pv-white;
+    }
   }
 }
 </style>

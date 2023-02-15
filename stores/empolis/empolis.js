@@ -113,7 +113,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
       if (result && Array.isArray(result) && !result.error) {
         return JSON.parse(JSON.stringify(result))
       }
-      throw result.error ? result.error : 'unknown error'
+      throw result.error || 'unknown error'
     } catch (e) {
       logger.error(
         'Error when translating filterObject. Returning empty array.',
@@ -154,7 +154,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
         return tempFilters.map((v) => ({ ...v, visible: true }))
       }
 
-      throw result.error ? result.error : 'unknown error'
+      throw result.error || 'unknown error'
     } catch (e) {
       logger.error(
         'Error when fetching filters. Returning empty array.',
@@ -183,12 +183,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
         return files
       }
 
-      // empolis search error
-      if (files.error) {
-        throw files.error
-      }
-      // unknown error
-      throw 'wrong empolis response schema'
+      throw files.error || 'wrong empolis response schema'
     } catch (e) {
       logger.error(
         `Error when fetching empolis search results for '${
@@ -213,7 +208,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
         if (result && Array.isArray(result) && !result.error) {
           filterSuggestionsCache.value.set(cacheKey, result)
         } else {
-          throw result.error ? result.error : 'unknown error'
+          throw result.error || 'unknown error'
         }
       } catch (e) {
         logger.error(
