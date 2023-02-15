@@ -1,34 +1,38 @@
 <template>
-  <div v-editable="(image, stageContent)" class="stage">
-    <div class="stage__inner-wrapper">
-      <div class="stage__content-block">
-        <div class="stage__date tw-flex">
-          <div class="stage__date-day tw-flex tw-mr-8">
-            <Icon class="tw-text-pv-white tw-mr-3" icon="date_range" />
-            <p class="tw-text-pv-white">{{ $d(fixedDate, 'dateLong') }}</p>
+  <div class="knowledge-stage">
+    <div class="knowledge-stage__inner-wrapper">
+      <div class="knowledge-stage__content-block">
+        <div class="knowledge-stage__headline">
+          <h1>{{ headline }}</h1>
+        </div>
+        <div class="knowledge-stage__date tw-flex">
+          <div class="knowledge-stage__date-day tw-flex tw-mr-8">
+            <Icon class="tw-mr-3" icon="date_range" />
+            <p>{{ $d(fixedDate, 'dateLong') }}</p>
             <p class="tw-text-pv-red tw-mx-2">|</p>
-            <p class="tw-text-pv-white">{{ fixedTime }}</p>
-            <p class="tw-text-pv-white">{{ $t('knowledge.minutes') }}</p>
+            <p>{{ fixedTime }}</p>
+            <p>{{ $t('knowledge.time') }}</p>
           </div>
-          <div class="tw-flex tw-text-pv-white">
-            <Icon class="tw-text-pv-white tw-mr-3" icon="timer" />
-            <p class="tw-text-pv-white">{{ hours }}</p>
-            <p class="tw-text-pv-white">:</p>
-            <p class="tw-text-pv-white">{{ minutes }}</p>
+          <div class="tw-flex">
+            <Icon class="tw-mr-3" icon="timer" />
+            <p>{{ hours }}</p>
+            <p>{{ $t('knowledge.hours') }}</p>
+            <p>:</p>
+            <p>{{ minutes }}</p>
+            <p>{{ $t('knowledge.minutes') }}</p>
           </div>
         </div>
-        <div class="stage__content">
-          <h1>{{ headline }}</h1>
+        <div class="knowledge-stage__content">
           <Richtext
             v-if="description"
             :richtext="description"
-            class="stage-content__description"
+            class="knowledge-stage-content__description"
           />
-          <div v-if="button.length" class="stage-content__buttons">
+          <div v-if="button.length" class="knowledge-stage-content__buttons">
             <Button
               v-for="btn in button"
               :key="btn._uid"
-              class="stage-content__button"
+              class="knowledge-stage-content__button"
               v-bind="btn"
             />
           </div>
@@ -37,8 +41,10 @@
       <ResponsiveImage
         v-if="(image || {}).originalFilename"
         :image="image"
-        class="stage__image"
-        :class="`stage__image--${stageContent.length ? 'with-text' : 'full'}`"
+        class="knowledge-stage__image"
+        :class="`knowledge-stage__image--${
+          stageContent.length ? 'with-text' : 'full'
+        }`"
         aspect-ratio="16:9"
       />
     </div>
@@ -134,21 +140,13 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.stage {
+.knowledge-stage {
   @apply tw-mt-48;
 
   &__inner-wrapper {
     @apply tw-flex;
     @apply tw-flex-wrap-reverse;
     @apply tw-px-0;
-
-    h1 {
-      @apply tw-text-pv-white;
-    }
-
-    h4 {
-      @apply tw-text-pv-white;
-    }
 
     @screen md {
       @apply tw-flex-nowrap;
