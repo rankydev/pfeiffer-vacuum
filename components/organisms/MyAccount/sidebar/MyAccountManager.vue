@@ -11,20 +11,24 @@
       <div>{{ $t('myaccount.salesRepresentative') }}</div>
     </div>
     <Button
-      class="tw-pb-6"
+      v-if="accountManagerData.contactAddress.phone"
+      class="myaccount-manager__button"
       icon="phone"
       :label="accountManagerData.contactAddress.phone"
       variant="secondary"
       shape="plain"
       :prepend-icon="true"
+      :href="`tel:${accountManagerData.contactAddress.phone}`"
     />
-    <br />
     <Button
+      v-if="accountManagerData.contactAddress.email"
+      class="myaccount-manager__button"
       icon="mail_outline"
       :label="accountManagerData.contactAddress.email"
       variant="secondary"
       shape="plain"
       :prepend-icon="true"
+      :href="`mailto:${accountManagerData.contactAddress.email}`"
     />
   </div>
 </template>
@@ -53,9 +57,15 @@ export default defineComponent({
 
 <style lang="scss">
 .myaccount-manager {
+  @apply tw-w-1/2;
   @apply tw-bg-pv-grey-96;
   @apply tw-rounded-md;
   @apply tw-p-6;
+  @apply tw-flex tw-flex-col;
+
+  @screen lg {
+    @apply tw-w-full;
+  }
 
   &__headline-with-icon {
     @apply tw-flex;
@@ -72,6 +82,10 @@ export default defineComponent({
     @apply tw-pb-2;
     @apply tw-text-pv-grey-16;
     @apply tw-text-sm tw-leading-6;
+  }
+
+  &__button {
+    @apply tw-w-fit;
   }
 }
 </style>

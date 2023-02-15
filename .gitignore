@@ -97,6 +97,3 @@ lsg-public
 
 # linting output
 report
-
-localhost.pem
-localhost-key.pem
