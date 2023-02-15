@@ -33,6 +33,7 @@ For detailed explanation on how things work, check out [Nuxt.js docs](https://nu
 
 ```bash
 npm run storyblok:sync
+npm run cms:sync
 ```
 
 ### Sync one component
@@ -40,6 +41,13 @@ npm run storyblok:sync
 ```bash
 npm run storyblok:sync ./components/atoms/YourComponent
 ```
+
+### Pull Components Schmas from Storyblok
+
+```bash
+npm run storyblok pull-components --space <SPACE_ID>
+```
+https://www.storyblok.com/docs/Guides/command-line-interface
 
 ## Run living style guide
 
