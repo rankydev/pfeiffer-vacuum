@@ -1,4 +1,5 @@
 import HeaderContent from './Header.stories.content.js'
+import OCIHeaderContent from '~/components/organisms/Header/OCIHeader/OCIHeader.stories.content.js'
 import Header from './Header.vue'
 
 const argTypes = {
@@ -44,3 +45,9 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
+
+export const OCIHeader = Template.bind({})
+OCIHeader.args = {
+  flyoutLinks: OCIHeaderContent.flyoutLinks,
+  navigationEntries: OCIHeaderContent.OCIHeaderEntries,
+}
