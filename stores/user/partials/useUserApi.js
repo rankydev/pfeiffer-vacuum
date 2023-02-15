@@ -54,7 +54,6 @@ export const useUserApi = () => {
   }
 
   const getAccountManager = async (loggedIn, isApprovedUser, currentUser) => {
-    console.log('currentUser', currentUser)
     if (!loggedIn || !isApprovedUser) {
       return {}
     }
