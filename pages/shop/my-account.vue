@@ -16,8 +16,7 @@
               <div class="myaccount-page__content">
                 <NuxtChild />
               </div>
-
-              <ContactCard class="myaccount-page__account-manager" />
+              <MyAccountManager class="myaccount-page__account-manager" />
             </div>
           </ContentWrapper>
         </template>
@@ -33,10 +32,9 @@ import {
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
-
 import Page from '~/components/templates/Page/Page'
 import MyAccountSidebar from '~/components/organisms/MyAccount/sidebar/MyAccountSidebar'
-import ContactCard from '~/components/molecules/ContactCard/ContactCard'
+import MyAccountManager from '~/components/organisms/MyAccount/sidebar/MyAccountManager'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
@@ -47,7 +45,7 @@ export default defineComponent({
     Page,
     ContentWrapper,
     MyAccountSidebar,
-    ContactCard,
+    MyAccountManager,
   },
   middleware: 'my-account-guard',
   setup() {
@@ -95,7 +93,7 @@ export default defineComponent({
       'nav content'
       'widget content'
       'spacer content'
-      / 20% auto;
+      / 23% auto;
 
     &__sidebar {
       grid-area: nav;
