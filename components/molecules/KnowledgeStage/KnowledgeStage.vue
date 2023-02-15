@@ -2,18 +2,20 @@
   <div class="knowledge-stage">
     <div class="knowledge-stage__inner-wrapper">
       <div class="knowledge-stage__content-block">
-        <div class="knowledge-stage__headline">
+        <div class="knowledge-stage__headline tw-mb-4">
           <h1>{{ headline }}</h1>
         </div>
-        <div class="knowledge-stage__date tw-flex">
+        <div class="knowledge-stage__date tw-flex tw-mb-4">
           <div class="knowledge-stage__date-day tw-flex tw-mr-8">
             <Icon class="tw-mr-3" icon="date_range" />
             <p>{{ $d(fixedDate, 'dateLong') }}</p>
-            <p class="tw-text-pv-red tw-mx-2">|</p>
-            <p>{{ fixedTime }}</p>
-            <p>{{ $t('knowledge.time') }}</p>
+            <div v-if="showTime" class="tw-flex">
+              <p class="tw-text-pv-red tw-mx-2">|</p>
+              <p>{{ fixedTime }}</p>
+              <p>{{ $t('knowledge.time') }}</p>
+            </div>
           </div>
-          <div class="tw-flex">
+          <div v-if="showDuration" class="tw-flex">
             <Icon class="tw-mr-3" icon="timer" />
             <p>{{ hours }}</p>
             <p>{{ $t('knowledge.hours') }}</p>
@@ -28,7 +30,10 @@
             :richtext="description"
             class="knowledge-stage-content__description"
           />
-          <div v-if="button.length" class="knowledge-stage-content__buttons">
+          <div
+            v-if="button.length"
+            class="knowledge-stage-content__buttons tw-mt-4"
+          >
             <Button
               v-for="btn in button"
               :key="btn._uid"
@@ -53,7 +58,7 @@
 
 <script>
 // import StageContent from '~/components/molecules/Stage/StageContent/StageContent.vue'
-import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import Button from '~/components/atoms/Button/Button.vue'
@@ -87,6 +92,10 @@ export default defineComponent({
     date: {
       type: String,
       default: '',
+    },
+    isWhitepaper: {
+      type: Boolean,
+      default: false,
     },
     minutes: {
       type: String,
@@ -125,16 +134,34 @@ export default defineComponent({
      * https://stackoverflow.com/questions/4310953/invalid-date-in-safari
      */
     const fixedDate = computed(() => new Date(props.date.replace(/-/g, '/')))
-    const fixedTime = dateObj.toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
+    const fixedTime = ref(
+      dateObj.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+    )
+
+    const showTime = computed(() => {
+      if (props.isWhitepaper) {
+        return false
+      } else if (fixedTime.value === '00:00') {
+        return false
+      } else {
+        return true
+      }
     })
 
-    if (fixedDate === '00:00') {
-      console.log('remove')
-    }
+    const showDuration = computed(() => {
+      if (props.isWhitepaper) {
+        return false
+      } else if (props.minutes === '' && props.hours === '') {
+        return false
+      } else {
+        return true
+      }
+    })
 
-    return { fixedDate, fixedTime }
+    return { fixedDate, fixedTime, showTime, showDuration }
   },
 })
 </script>

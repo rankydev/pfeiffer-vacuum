@@ -24,6 +24,13 @@ export default {
       type: 'text',
       display_name: 'Minutes',
     },
+    isWhitepaper: {
+      type: 'boolean',
+      description:
+        'If the component is a whitepaper, time and duration will not be displayed',
+      display_name: 'isWhitepaper',
+      default_value: false,
+    },
     headline: {
       type: 'text',
       display_name: 'Headline',
