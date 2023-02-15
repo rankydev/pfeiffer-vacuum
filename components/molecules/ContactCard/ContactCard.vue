@@ -11,22 +11,24 @@
       <div>{{ postalCode }}, {{ city }}</div>
       <div>{{ country }}</div>
     </div>
-    <Button
-      class="contact-card__telephone-button"
-      icon="phone"
-      :label="phone"
-      variant="secondary"
-      shape="plain"
-      :prepend-icon="true"
-    />
-    <br v-if="!isDesktop" />
-    <Button
-      icon="mail_outline"
-      :label="$t('form.contactPersons.contactButton')"
-      variant="secondary"
-      :shape="isDesktop ? 'outlined' : 'plain'"
-      :prepend-icon="!isDesktop"
-    />
+    <div class="contact-card__buttons">
+      <Button
+        class="contact-card__buttons--telephone-button"
+        icon="phone"
+        :label="phone"
+        variant="secondary"
+        shape="plain"
+        :prepend-icon="true"
+      />
+      <br v-if="!isDesktop" />
+      <Button
+        icon="mail_outline"
+        :label="$t('form.contactPersons.contactButton')"
+        variant="secondary"
+        :shape="isDesktop ? 'outlined' : 'plain'"
+        :prepend-icon="!isDesktop"
+      />
+    </div>
   </div>
 </template>
 
@@ -99,12 +101,16 @@ export default defineComponent({
     @apply tw-text-base tw-leading-6;
   }
 
-  &__telephone-button {
-    @apply tw-pb-6;
+  &__buttons {
+    @apply tw-flex;
 
-    @screen lg {
-      @apply tw-pb-3;
-      @apply tw-mr-8;
+    &--telephone-button {
+      @apply tw-pb-6;
+
+      @screen lg {
+        @apply tw-pb-3;
+        @apply tw-mr-8;
+      }
     }
   }
 }
