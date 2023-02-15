@@ -1,12 +1,14 @@
 <template>
   <div v-if="accountManagerData" class="contact-card">
     <div class="contact-card__headline-with-icon">
-      <h4 class="contact-card__headline-with-icon--headline">Contact Us</h4>
+      <h4 class="contact-card__headline-with-icon--headline">
+        {{ $t('myaccount.contact') }}
+      </h4>
       <Icon icon="perm_contact_calendar" />
     </div>
     <div class="contact-card__information">
       <div>{{ accountManagerData.name }}</div>
-      <div>Sales Representive</div>
+      <div>{{ $t('myaccount.salesRepresentative') }}</div>
     </div>
     <Button
       class="tw-pb-6"
@@ -36,6 +38,7 @@ import { storeToRefs } from 'pinia'
 export default defineComponent({
   components: {
     Button,
+    Icon,
   },
   setup() {
     const userStore = useUserStore()
