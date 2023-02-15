@@ -1,12 +1,12 @@
 <template>
-  <div v-if="accountManagerData" class="contact-card">
-    <div class="contact-card__headline-with-icon">
-      <h4 class="contact-card__headline-with-icon--headline">
+  <div v-if="accountManagerData" class="myaccount-manager">
+    <div class="myaccount-manager__headline-with-icon">
+      <h4 class="myaccount-manager__headline-with-icon--headline">
         {{ $t('myaccount.contact') }}
       </h4>
       <Icon icon="perm_contact_calendar" />
     </div>
-    <div class="contact-card__information">
+    <div class="myaccount-manager__information">
       <div>{{ accountManagerData.name }}</div>
       <div>{{ $t('myaccount.salesRepresentative') }}</div>
     </div>
@@ -20,7 +20,7 @@
     />
     <br />
     <Button
-      icon="mail"
+      icon="mail_outline"
       :label="accountManagerData.contactAddress.email"
       variant="secondary"
       shape="plain"
@@ -32,6 +32,7 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 import { useUserStore } from '~/stores/user'
 import { storeToRefs } from 'pinia'
 
@@ -51,7 +52,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.contact-card {
+.myaccount-manager {
   @apply tw-bg-pv-grey-96;
   @apply tw-rounded-md;
   @apply tw-p-6;

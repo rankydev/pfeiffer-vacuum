@@ -1,58 +1,84 @@
 <template>
-  <div v-if="accountManagerData" class="contact-card">
+  <div class="contact-card">
     <div class="contact-card__headline-with-icon">
-      <h4 class="contact-card__headline-with-icon--headline">
-        {{ $t('myaccount.contact') }}
-      </h4>
-      <Icon icon="perm_contact_calendar" />
+      <h2 class="contact-card__headline-with-icon--headline">
+        {{ companyName }}
+      </h2>
+      <Icon icon="perm_contact_calendar" size="large" />
     </div>
     <div class="contact-card__information">
-      <div>{{ accountManagerData.name }}</div>
-      <div>{{ $t('myaccount.salesRepresentative') }}</div>
+      <div>{{ street }}</div>
+      <div>{{ postalCode }}, {{ city }}</div>
+      <div>{{ country }}</div>
     </div>
     <Button
-      class="tw-pb-6"
+      class="contact-card__telephone-button"
       icon="phone"
-      :label="accountManagerData.contactAddress.phone"
+      :label="phone"
       variant="secondary"
       shape="plain"
       :prepend-icon="true"
     />
-    <br />
+    <br v-if="!isDesktop" />
     <Button
-      icon="mail"
-      :label="accountManagerData.contactAddress.email"
+      icon="mail_outline"
+      :label="$t('form.contactPersons.contactButton')"
       variant="secondary"
-      shape="plain"
-      :prepend-icon="true"
+      :shape="isDesktop ? 'outlined' : 'plain'"
+      :prepend-icon="!isDesktop"
     />
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
-import { useUserStore } from '~/stores/user'
-import { storeToRefs } from 'pinia'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
   components: {
     Button,
     Icon,
   },
+  props: {
+    companyName: {
+      type: String,
+      default: undefined,
+    },
+    street: {
+      type: String,
+      default: undefined,
+    },
+    postalCode: {
+      type: String,
+      default: undefined,
+    },
+    city: {
+      type: String,
+      default: undefined,
+    },
+    country: {
+      type: String,
+      default: undefined,
+    },
+    phone: {
+      type: String,
+      default: undefined,
+    },
+  },
   setup() {
-    const userStore = useUserStore()
-    const { accountManagerData } = storeToRefs(userStore)
-    userStore.fetchAccountManagerData()
+    const { app } = useContext()
 
-    return { accountManagerData }
+    const { isDesktop } = app.$breakpoints
+
+    return { isDesktop }
   },
 })
 </script>
 
 <style lang="scss">
 .contact-card {
-  @apply tw-bg-pv-grey-96;
+  @apply tw-bg-pv-white;
   @apply tw-rounded-md;
   @apply tw-p-6;
 
@@ -70,7 +96,16 @@ export default defineComponent({
   &__information {
     @apply tw-pb-2;
     @apply tw-text-pv-grey-16;
-    @apply tw-text-sm tw-leading-6;
+    @apply tw-text-base tw-leading-6;
+  }
+
+  &__telephone-button {
+    @apply tw-pb-6;
+
+    @screen lg {
+      @apply tw-pb-3;
+      @apply tw-mr-8;
+    }
   }
 }
 </style>

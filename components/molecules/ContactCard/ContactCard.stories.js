@@ -1,4 +1,7 @@
 import ContactCard from './ContactCard'
+import content from './ContactCard.stories.content'
+
+const { companyName, street, postalCode, city, country, phone } = content
 
 export default {
   title: 'Molecules/m_147 ContactCard',
@@ -7,10 +10,10 @@ export default {
     docs: {
       description: {
         component:
-          'This component displays the contact data of the account manager. Furthermore, an account manager card gets shown on the MyAccount area to the user.',
+          'This component displays the contact data of the account managers in the contact from section.',
       },
       source: {
-        code: '<ContactCard v-bind="{}"/>',
+        code: '<ContactCard v-bind="{ companyName, street, postalCode, city, country, phone }"/>',
       },
     },
   },
@@ -22,11 +25,11 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-  <div class="documentation-preview">
+    <div class="documentation-preview" style="background-color:#000000; padding: 24px">
     <ContactCard v-bind="args"/>
-  </div>
-`,
+    </div>
+  `,
 })
 
 export const Default = Template.bind({})
-Default.args = {}
+Default.args = { companyName, street, postalCode, city, country, phone }
