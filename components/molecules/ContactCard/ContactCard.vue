@@ -102,7 +102,9 @@ export default defineComponent({
   }
 
   &__buttons {
-    @apply tw-flex;
+    @screen lg {
+      @apply tw-flex;
+    }
 
     &--telephone-button {
       @apply tw-pb-6;
