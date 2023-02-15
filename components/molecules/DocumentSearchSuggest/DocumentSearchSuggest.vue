@@ -124,7 +124,10 @@ export default defineComponent({
         return
       }
 
-      const results = await getSearchSuggestions(searchTermDocuments.value, 3)
+      const results = await empolisStore.getSearchSuggestions(
+        searchTermDocuments.value,
+        3
+      )
       currentSuggestions.value = results
       isOpen.value = currentSuggestions.value.length > 0
     })

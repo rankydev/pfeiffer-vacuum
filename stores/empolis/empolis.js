@@ -118,6 +118,32 @@ export const useEmpolisStore = defineStore('empolis', () => {
     productDownloads.value = new Map()
   })
 
+  const getSearchSuggestions = async (text, maxCount) => {
+    try {
+      const suggestions = await axios.$post('/suggest', {
+        query: text,
+        maxCount,
+        language: i18n.locale === 'de' ? 'de' : 'en',
+      })
+
+      if (suggestions && Array.isArray(suggestions) && !suggestions.error) {
+        return suggestions
+      }
+
+      logger.error(
+        `Error when fetching suggestions for '${text}'. Returning empty array.`,
+        suggestions.error ? suggestions.error : ''
+      )
+      return []
+    } catch (e) {
+      logger.error(
+        `Error when fetching suggestions for '${text}'. Returning empty array.`,
+        e ? e : ''
+      )
+      return []
+    }
+  }
+
   return {
     productDownloads,
     searchResultsCache,
@@ -126,5 +152,6 @@ export const useEmpolisStore = defineStore('empolis', () => {
     searchResultsLoadingError,
     getProductDownloads,
     loadByPath,
+    getSearchSuggestions,
   }
 })
