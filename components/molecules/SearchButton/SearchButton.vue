@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { defineComponent, useRouter } from '@nuxtjs/composition-api'
+import { defineComponent, useContext, useRouter } from '@nuxtjs/composition-api'
 import { useCategoryStore } from '~/stores/category/category'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import { storeToRefs } from 'pinia'
@@ -32,13 +32,14 @@ export default defineComponent({
   setup(props, { emit }) {
     const router = useRouter()
     const categoryStore = useCategoryStore()
-    const { rootUrl } = storeToRefs(categoryStore)
     const { blurSuggestions } = categoryStore
+    const { localePath } = useContext()
 
     const pushSearchTerm = (e) => {
       blurSuggestions(false)
+
       router.push({
-        path: rootUrl.value,
+        path: localePath('shop-search'),
         query: { searchTerm: e.length ? e : undefined },
       })
     }

@@ -13,7 +13,6 @@ export const useEmpolis = () => {
       const suggestions = await axios.$post('/suggest', {
         query: text,
         maxCount,
-        maxCount,
         language: i18n.locale === 'de' ? 'de' : 'en',
       })
 
