@@ -2,62 +2,47 @@
   <div class="knowledge-stage">
     <div class="knowledge-stage__inner-wrapper">
       <div class="knowledge-stage__content-block">
-        <div class="knowledge-stage__headline tw-mb-4">
+        <div class="knowledge-stage__headline">
           <h1>{{ headline }}</h1>
         </div>
-        <div class="knowledge-stage__date tw-flex tw-mb-4">
-          <div class="knowledge-stage__date-day tw-flex tw-mr-8">
-            <Icon class="tw-mr-3" icon="date_range" />
+        <div class="knowledge-stage__date">
+          <div class="knowledge-stage__date-day">
+            <Icon class="knowledge-stage__date-icon" icon="date_range" />
             <p>{{ $d(fixedDate, 'dateLong') }}</p>
-            <div v-if="showTime" class="tw-flex">
-              <p class="tw-text-pv-red tw-mx-2">|</p>
-              <p>{{ fixedTime }}</p>
+            <div v-if="showTime" class="knowledge-stage__date-time">
+              <p class="knowledge-stage__date-divider">|</p>
+              <p class="knowledge-stage__space">{{ fixedTime }}</p>
               <p>{{ $t('knowledge.time') }}</p>
             </div>
           </div>
-          <div v-if="showDuration" class="tw-flex">
-            <Icon class="tw-mr-3" icon="timer" />
+          <div v-if="showDuration" class="knowledge-stage__date-time">
+            <Icon class="knowledge-stage__date-icon" icon="timer" />
             <p>{{ hours }}</p>
-            <p>{{ $t('knowledge.hours') }}</p>
-            <p>:</p>
+            <p class="knowledge-stage__space">{{ $t('knowledge.hours') }}</p>
             <p>{{ minutes }}</p>
             <p>{{ $t('knowledge.minutes') }}</p>
           </div>
         </div>
-        <div class="knowledge-stage__content">
-          <Richtext
-            v-if="description"
-            :richtext="description"
-            class="knowledge-stage-content__description"
-          />
-          <div
-            v-if="button.length"
-            class="knowledge-stage-content__buttons tw-mt-4"
-          >
-            <Button
-              v-for="btn in button"
-              :key="btn._uid"
-              class="knowledge-stage-content__button"
-              v-bind="btn"
-            />
+        <div class="knowledge-stage__summary">
+          <Richtext v-if="summary" :richtext="summary" />
+          <div v-if="button.length" class="knowledge-stage__button">
+            <Button v-for="btn in button" :key="btn._uid" v-bind="btn" />
           </div>
         </div>
       </div>
-      <ResponsiveImage
-        v-if="(image || {}).originalFilename"
-        :image="image"
-        class="knowledge-stage__image"
-        :class="`knowledge-stage__image--${
-          stageContent.length ? 'with-text' : 'full'
-        }`"
-        aspect-ratio="16:9"
-      />
+      <div class="knowledge-stage__image-block">
+        <ResponsiveImage
+          v-if="(image || {}).originalFilename"
+          :image="image"
+          class="knowledge-stage__image"
+          aspect-ratio="16:9"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-// import StageContent from '~/components/molecules/Stage/StageContent/StageContent.vue'
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
@@ -67,27 +52,15 @@ import Icon from '~/components/atoms/Icon/Icon'
 export default defineComponent({
   name: 'Stage',
   components: {
-    // StageContent,
     ResponsiveImage,
     Richtext,
     Button,
     Icon,
   },
   props: {
-    /**
-     * An image wich if displayed full width if no stage content is defined.
-     * If a stage content is defined it is displayed on the right side
-     */
     image: {
       type: [Object, String],
       default: () => ({}),
-    },
-    /**
-     * The stage content which can be added optionally
-     */
-    stageContent: {
-      type: Array,
-      default: () => [],
     },
     date: {
       type: String,
@@ -105,23 +78,14 @@ export default defineComponent({
       type: String,
       default: '',
     },
-    /**
-     * The headline of the stage
-     */
     headline: {
       type: String,
       default: '',
     },
-    /**
-     * description text of the stage
-     */
-    description: {
+    summary: {
       type: String,
       default: '',
     },
-    /**
-     * button
-     */
     button: {
       type: Array,
       default: () => [],
@@ -168,8 +132,6 @@ export default defineComponent({
 
 <style lang="scss">
 .knowledge-stage {
-  @apply tw-mt-48;
-
   &__inner-wrapper {
     @apply tw-flex;
     @apply tw-flex-wrap-reverse;
@@ -184,6 +146,7 @@ export default defineComponent({
   &__content-block {
     @apply tw-w-full;
     @apply tw-mx-4;
+    @apply tw-my-6;
 
     @screen md {
       @apply tw-w-1/2;
@@ -198,22 +161,55 @@ export default defineComponent({
     }
   }
 
+  &__headline {
+    @apply tw-mb-4;
+  }
+
+  &__date {
+    @apply tw-flex;
+    @apply tw-mb-4;
+
+    p {
+      @apply tw-text-base;
+      @apply tw-font-bold;
+    }
+  }
+
+  &__date-day {
+    @apply tw-flex;
+    @apply tw-mr-8;
+  }
+
+  &__date-icon {
+    @apply tw-mr-3;
+  }
+
+  &__date-time {
+    @apply tw-flex;
+  }
+
+  &__date-divider {
+    @apply tw-text-pv-red;
+    @apply tw-mx-2;
+  }
+
+  &__space {
+    @apply tw-mr-1;
+  }
+
+  &__image-block {
+    @apply tw-w-full;
+
+    @screen md {
+      @apply tw-w-1/2;
+    }
+  }
+
+  &__button {
+    @apply tw-mt-4;
+  }
+
   &__image {
-    &--with-text {
-      @apply tw-w-full;
-      @apply tw-object-cover;
-
-      @screen md {
-        @apply tw-w-1/2;
-        @apply tw-object-contain;
-      }
-    }
-
-    &--full {
-      @apply tw-w-full;
-      @apply tw-object-cover;
-    }
-
     &.responsive-image {
       img {
         @apply tw-w-full;

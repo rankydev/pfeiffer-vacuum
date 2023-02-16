@@ -39,9 +39,9 @@ export default {
     //   type: 'text',
     //   display_name: 'Description',
     // },
-    description: {
+    summary: {
       ...Richtext.schema.richtext,
-      display_name: 'Description',
+      display_name: 'Summary',
       max_length: '250',
       pos: 3,
     },
