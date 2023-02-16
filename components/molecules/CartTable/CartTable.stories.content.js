@@ -126,3 +126,5 @@ export const cart = [
     price: price,
   },
 ]
+
+export default {}
