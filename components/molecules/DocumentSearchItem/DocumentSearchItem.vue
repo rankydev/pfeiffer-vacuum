@@ -13,7 +13,7 @@
         <p v-if="product.body" v-html="product.body" />
         <Link
           v-if="product.downloadLink"
-          :href="product.downloadLink"
+          v-bind="downloadButtonBaseData"
           class="document-item__icon-link"
         >
           <Icon class="document-item__icon" icon="file_download" size="base" />
@@ -43,9 +43,9 @@
         <p v-if="product.body" v-html="product.body" />
         <div class="document-item__links">
           <Link
-            v-if="product.id"
+            v-if="product.downloadLink"
+            v-bind="downloadButtonBaseData"
             class="document-item__icon-link download-link"
-            @click="emit('click')"
           >
             <span class="document-item__icon-text">
               {{ $t('product.download') }}
@@ -56,10 +56,7 @@
               size="base"
             />
           </Link>
-          <Link
-            :href="product.downloadUrl"
-            class="document-item__icon-link product-link"
-          >
+          <Link class="document-item__icon-link product-link">
             <Icon
               class="document-item__icon"
               icon="arrow_forward"
@@ -72,10 +69,12 @@
   </article>
 </template>
 <script>
-import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs, computed } from '@nuxtjs/composition-api'
+import getKey from '~/composables/useUniqueKey'
+import { useEmpolisHelper } from '~/composables/useEmpolisHelper'
+
 import Link from '~/components/atoms/Link/Link'
 import Icon from '~/components/atoms/Icon/Icon'
-import getKey from '~/composables/useUniqueKey'
 
 export default defineComponent({
   name: 'DocumentSearchItem',
@@ -91,12 +90,19 @@ export default defineComponent({
   },
   emits: ['click'],
   setup(props) {
+    const { getDownloadButtonBaseConfig } = useEmpolisHelper()
     const { product } = toRefs(props)
+
     const subtitleRemainingelements = product.value.subtitle.slice(1, 3)
+
+    const downloadButtonBaseData = computed(() =>
+      getDownloadButtonBaseConfig(product.value)
+    )
 
     return {
       getKey,
       subtitleRemainingelements,
+      downloadButtonBaseData,
     }
   },
 })
