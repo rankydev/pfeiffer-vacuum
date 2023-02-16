@@ -88,7 +88,10 @@ export default defineComponent({
     })
 
     const getTotalCartPrice = computed(() => {
-      return currentCart?.value?.totalPrice?.formattedValue || '-'
+      const price = currentCart?.value?.entries?.reduce((acc, item) => {
+        return acc + item?.totalPrice?.value
+      }, 0)
+      return price > 0 ? `€ ${price.toFixed(2).toLocaleString()}` : '-'
     })
 
     const goToCart = () => {
@@ -112,6 +115,8 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 .cart-overlay {
   @apply tw-ml-4;
   @apply tw-border tw-border-pv-grey-96;
@@ -122,7 +127,7 @@ export default defineComponent({
   @apply tw-flex-col;
   @apply tw-h-full;
   @apply tw-fixed tw-top-0 tw-right-0;
-  @apply tw-z-[9999];
+  z-index: $overlay;
   @screen md {
     @apply tw-ml-0;
     @apply tw-w-1/2;
