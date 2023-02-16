@@ -93,7 +93,7 @@ export default defineComponent({
       'nav content'
       'widget content'
       'spacer content'
-      / 23% auto;
+      / 320px auto;
 
     &__sidebar {
       grid-area: nav;

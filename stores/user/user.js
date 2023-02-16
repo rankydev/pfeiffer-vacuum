@@ -60,14 +60,16 @@ export const useUserStore = defineStore('user', () => {
       currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
   )
 
-  const accountManagerData = ref(null)
+  const accountManagerData = ssrRef(null)
 
   const fetchAccountManagerData = async () => {
-    accountManagerData.value = await userApi.getAccountManager(
-      isLoggedIn.value,
-      isApprovedUser.value,
-      currentUser.value
-    )
+    if (!isLoggedIn.value || !isApprovedUser.value) {
+      accountManagerData.value = {}
+    } else {
+      accountManagerData.value = await userApi.getAccountManager(
+        currentUser.value
+      )
+    }
   }
 
   const userCountry = computed(() => userBillingAddress.value?.country || {})

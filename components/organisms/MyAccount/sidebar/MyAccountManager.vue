@@ -1,5 +1,8 @@
 <template>
-  <div v-if="accountManagerData" class="myaccount-manager">
+  <div
+    v-if="accountManagerData && Object.keys(accountManagerData).length"
+    class="myaccount-manager"
+  >
     <div class="myaccount-manager__headline-with-icon">
       <h4 class="myaccount-manager__headline-with-icon--headline">
         {{ $t('myaccount.contact') }}
@@ -21,10 +24,10 @@
       :href="`tel:${accountManagerData.contactAddress.phone}`"
     />
     <Button
-      v-if="accountManagerData.contactAddress.email"
+      v-if="true"
       class="myaccount-manager__button"
       icon="mail_outline"
-      :label="accountManagerData.contactAddress.email"
+      label="juuuuuuuufffffffffdddddddddddddddddf@ggggggg.deddddddddd"
       variant="secondary"
       shape="plain"
       :prepend-icon="true"

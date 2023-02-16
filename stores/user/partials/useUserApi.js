@@ -53,11 +53,7 @@ export const useUserApi = () => {
     return await axios.$post(`${DELIVERY_ADDRESSES_BASE}/${id}/default`)
   }
 
-  const getAccountManager = async (loggedIn, isApprovedUser, currentUser) => {
-    if (!loggedIn || !isApprovedUser) {
-      return {}
-    }
-
+  const getAccountManager = async (currentUser) => {
     const result = await axios.$get(
       `${config.USER_API}/orgUnits/${currentUser.orgUnit.uid}/salesengineer`
     )
