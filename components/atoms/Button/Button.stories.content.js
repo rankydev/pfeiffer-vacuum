@@ -42,6 +42,20 @@ export const buttonVariantsVariantSelection = [
   ...generateContent(variants[4], shapes.slice(0, 1)),
 ]
 
+export const buttonPrimary = {
+  _uid: '2b6af927-5f0e-4c1a-be88-29bb5d04076d',
+  icon: 'arrow_forward',
+  size: 'normal',
+  label: 'Button Text',
+  shape: 'filled',
+  variant: 'primary',
+  disabled: false,
+  component: 'Button',
+  prependIcon: false,
+  _editable:
+    '<!--#storyblok#{"name": "Button", "space": "152017", "uid": "2b6af927-5f0e-4c1a-be88-29bb5d04076d", "id": "119228911"}-->',
+}
+
 export const buttonOutlinedSecondary = {
   _uid: '2b6af927-5f0e-4c1a-be88-29bb5d04076d',
   icon: 'arrow_forward',

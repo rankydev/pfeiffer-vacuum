@@ -1,0 +1,4687 @@
+{
+  "components": [
+    {
+      "name": "Accordion",
+      "display_name": "Accordion",
+      "created_at": "2023-02-14T14:07:27.639Z",
+      "updated_at": "2023-02-14T14:07:27.639Z",
+      "id": 3438323,
+      "schema": {
+        "level": {
+          "display_name": "Heading",
+          "type": "option",
+          "use_uuid": true,
+          "required": true,
+          "options": [
+            {
+              "value": "h3",
+              "name": "Heading 3"
+            },
+            {
+              "value": "paragraph",
+              "name": "Paragraph"
+            }
+          ]
+        },
+        "accordionEntries": {
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "AccordionEntry"
+          ],
+          "display_name": "Accordion Entries"
+        },
+        "multiple": {
+          "type": "boolean",
+          "description": "Allow the user to open multiple entries at the same time",
+          "display_name": "Multiple",
+          "default_value": false
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Accordion",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "AccordionEntry",
+      "display_name": "Accordion Entry",
+      "created_at": "2023-02-14T14:07:27.659Z",
+      "updated_at": "2023-02-14T14:07:27.659Z",
+      "id": 3438324,
+      "schema": {
+        "label": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Title"
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Attention: If multiple is not selected only the first checked element in the column will be opened",
+          "display_name": "Initially open",
+          "default_value": false
+        },
+        "items": {
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Richtext",
+            "ImageWithDescription",
+            "Button"
+          ],
+          "display_name": "Content"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Accordion Entry",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "AnchorWrapper",
+      "display_name": "Anchor Wrapper",
+      "created_at": "2023-02-14T14:07:26.416Z",
+      "updated_at": "2023-02-14T14:07:26.416Z",
+      "id": 3438282,
+      "schema": {
+        "id": {
+          "type": "text",
+          "display_name": "Identifier",
+          "required": true
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div><div>Identifier: {{ id }}</div></div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Anchor Wrapper",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "Bubble",
+      "display_name": "Bubble",
+      "created_at": "2023-02-14T14:07:26.661Z",
+      "updated_at": "2023-02-14T14:07:26.661Z",
+      "id": 3438289,
+      "schema": {
+        "title": {
+          "type": "text",
+          "max_length": "20",
+          "translatable": true
+        },
+        "richtext": {
+          "type": "richtext",
+          "pos": 2,
+          "translatable": true,
+          "display_name": "Description",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "list",
+            "h6",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "tw-subline tw-subline-2",
+              "name": "Subline H2"
+            },
+            {
+              "value": "tw-subline tw-subline-3",
+              "name": "Subline H3"
+            },
+            {
+              "value": "tw-subline tw-subline-4",
+              "name": "Subline H4"
+            },
+            {
+              "value": "tw-subline tw-subline-5",
+              "name": "Subline H5"
+            },
+            {
+              "value": "tw-subline tw-subline-6",
+              "name": "Subline H6"
+            },
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ]
+        },
+        "position": {
+          "type": "option",
+          "use_uuid": true,
+          "description": "",
+          "exclude_empty_option": true,
+          "options": [
+            {
+              "value": "left",
+              "name": "left"
+            },
+            {
+              "value": "right",
+              "name": "right"
+            }
+          ],
+          "default_value": "right"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Bubble",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "Button",
+      "display_name": "Button",
+      "created_at": "2023-02-14T14:07:26.211Z",
+      "updated_at": "2023-02-14T14:07:26.211Z",
+      "id": 3438275,
+      "schema": {
+        "label": {
+          "type": "text",
+          "max_length": "56",
+          "translatable": true
+        },
+        "icon": {
+          "type": "text",
+          "description": "Use an icon from https://fonts.google.com/icons here (e.g. calculate)"
+        },
+        "prependIcon": {
+          "type": "boolean",
+          "description": "Switch to place the icon in front of the label"
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": ""
+        },
+        "variant": {
+          "type": "option",
+          "exclude_empty_option": true,
+          "default_value": "primary",
+          "description": "The variants are for different stylings",
+          "options": [
+            {
+              "value": "primary",
+              "name": "Primary"
+            },
+            {
+              "value": "secondary",
+              "name": "Secondary"
+            },
+            {
+              "value": "inverted",
+              "name": "Inverted"
+            }
+          ]
+        },
+        "shape": {
+          "type": "option",
+          "exclude_empty_option": true,
+          "default_value": "filled",
+          "description": "Changes in shape wont change the button for the 'primary' variant",
+          "options": [
+            {
+              "value": "filled",
+              "name": "Filled"
+            },
+            {
+              "value": "outlined",
+              "name": "Outlined"
+            },
+            {
+              "value": "plain",
+              "name": "Plain"
+            }
+          ]
+        },
+        "size": {
+          "type": "option",
+          "exclude_empty_option": true,
+          "default_value": "normal",
+          "options": [
+            {
+              "value": "xsmall",
+              "name": "Tiny"
+            },
+            {
+              "value": "small",
+              "name": "Small"
+            },
+            {
+              "value": "normal",
+              "name": "Normal"
+            }
+          ]
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div>{{ label }}</div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Button",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "CategoryCarousel",
+      "display_name": null,
+      "created_at": "2023-02-14T14:07:26.081Z",
+      "updated_at": "2023-02-14T14:07:26.081Z",
+      "id": 3438271,
+      "schema": {},
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "CategoryCarousel",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "CategoryContentPage",
+      "display_name": "Category Content Page",
+      "created_at": "2023-02-14T14:07:27.002Z",
+      "updated_at": "2023-02-14T14:07:27.002Z",
+      "id": 3438300,
+      "schema": {
+        "title": {
+          "type": "text",
+          "required": true,
+          "max_length": "55",
+          "description": "Keep the title around 50 characters and put the keywords you’re focusing on first.",
+          "translatable": true
+        },
+        "categoryShopId": {
+          "display_name": "Category ID",
+          "type": "text",
+          "max_length": "55",
+          "description": "Connect your content page with the shop by entering the shop category ID."
+        },
+        "quicklinks": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "OnPageNavigation"
+          ]
+        },
+        "stage": {
+          "type": "bloks",
+          "display_name": "Stage",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Stage"
+          ],
+          "maximum": 1
+        },
+        "body": {
+          "type": "bloks",
+          "display_name": "Content",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Accordion",
+            "AnchorWrapper",
+            "ContentMediaBlock",
+            "ContentTextBlock",
+            "CustomContentCardCarousel",
+            "DocumentCardCarousel",
+            "GeneralTeaserCarousel",
+            "ImageWithDescription",
+            "ProductCardCarousel",
+            "TeaserCardCarousel",
+            "HelpContainer",
+            "ImageBanner",
+            "ColumnView"
+          ]
+        },
+        "tab-seo": {
+          "type": "tab",
+          "display_name": "SEO",
+          "keys": [
+            "seoTitle",
+            "seoDescription",
+            "advanced",
+            "noindex",
+            "nofollow",
+            "canonical"
+          ]
+        },
+        "seoTitle": {
+          "type": "text",
+          "max_length": "55",
+          "description": "Overrides the title.",
+          "translatable": true
+        },
+        "seoDescription": {
+          "type": "textarea",
+          "translatable": true,
+          "description": "Use Unique, Keyword-Rich Meta Descriptions between 120–156 characters.",
+          "max_length": "156"
+        },
+        "advanced": {
+          "type": "section",
+          "keys": [
+            "noindex",
+            "nofollow",
+            "canonical"
+          ],
+          "display_name": "Advanced"
+        },
+        "noindex": {
+          "type": "boolean",
+          "description": "Instructs search engines not to show the page in search results."
+        },
+        "nofollow": {
+          "type": "boolean",
+          "description": "Instructs search engines not to follow the links on this page.",
+          "display_name": ""
+        },
+        "canonical": {
+          "type": "multilink",
+          "restrict_content_types": true,
+          "component_whitelist": [
+            "Page"
+          ],
+          "description": "A canonical is a way of telling search engines that a specific URL represents the master copy of a page. Using the canonical prevents problems caused by identical or \"duplicate\" content appearing on multiple URLs. If this field is empty there will be a canonical link to this page itself.",
+          "display_name": "Custom Canonical URL"
+        },
+        "tab-social": {
+          "type": "tab",
+          "display_name": "Social",
+          "keys": [
+            "twitter",
+            "twitterTitle",
+            "twitterDescription",
+            "twitterImage",
+            "openGraph",
+            "ogTitle",
+            "ogDescription",
+            "ogImage"
+          ]
+        },
+        "twitter": {
+          "type": "section",
+          "keys": [
+            "twitterTitle",
+            "twitterDescription",
+            "twitterImage"
+          ]
+        },
+        "twitterTitle": {
+          "type": "text",
+          "translatable": true,
+          "description": "The title of your content as it should appear in the card. [Maximum 70 characters.] If this field is empty the page title will be used.",
+          "max_length": "70",
+          "display_name": "Title"
+        },
+        "twitterDescription": {
+          "type": "textarea",
+          "translatable": true,
+          "description": "A description that concisely summarizes the content as appropriate for presentation within a Tweet. You should not re-use the title as the description or use this field to describe the general services provided by the website. [Maximum 200 characters.] If this field is empty the seo description will be used.",
+          "max_length": "200",
+          "display_name": "Description"
+        },
+        "twitterImage": {
+          "type": "asset",
+          "description": "A URL to a unique image representing the content of the page. You should not use a generic image such as your website logo, author photo, or other image that spans multiple pages. Images for this Card should be at least 280px in width, and at least 150px in height. Image must be less than 1MB in size. If there is no image set a fallback image will be used.",
+          "display_name": "Image",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "openGraph": {
+          "type": "section",
+          "keys": [
+            "ogTitle",
+            "ogDescription",
+            "ogImage"
+          ],
+          "display_name": "Open Graph (Facebook)"
+        },
+        "ogTitle": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Title",
+          "max_length": "60",
+          "description": "The title, headline or name of the object. If this field is empty the page title will be used."
+        },
+        "ogDescription": {
+          "type": "textarea",
+          "display_name": "Description",
+          "translatable": true,
+          "max_length": "200",
+          "description": "A short description or summary of the object. [Between 2 and 4 sentences.] If this field is empty the SEO description will be used."
+        },
+        "ogImage": {
+          "type": "asset",
+          "display_name": "Image",
+          "description": "The URL of the image for your object. It should be at least 600x315 pixels, but 1200x630 or larger is preferred (up to 5MB). Stay close to a 1.91:1 aspect ratio to avoid cropping. If there is no image set a fallback image will be used.",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "tab-advanced": {
+          "type": "tab",
+          "display_name": "Advanced",
+          "keys": [
+            "template",
+            "uiComponent"
+          ]
+        },
+        "template": {
+          "type": "option",
+          "use_uuid": true,
+          "source": "internal_stories",
+          "folder_slug": "{0}/templates/",
+          "filter_content_type": "PageConfiguration"
+        },
+        "uiComponent": {
+          "type": "text",
+          "default_value": "CategoryContentPage"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": true,
+      "preview_tmpl": null,
+      "is_nestable": false,
+      "all_presets": [
+        {
+          "id": 1703295,
+          "name": "Standard",
+          "component_id": 3438300,
+          "image": "",
+          "color": "",
+          "icon": "",
+          "description": ""
+        }
+      ],
+      "preset_id": 1703295,
+      "real_name": "Category Content Page",
+      "component_group_uuid": "a7a8206f-e840-4c38-acb8-054923a7647f",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Templates"
+    },
+    {
+      "name": "ColumnView",
+      "display_name": "Column View",
+      "created_at": "2023-02-14T14:07:25.895Z",
+      "updated_at": "2023-02-14T14:07:25.895Z",
+      "id": 3438266,
+      "schema": {
+        "variant": {
+          "type": "option",
+          "exclude_empty_option": true,
+          "default_value": "66",
+          "description": "The variants are for different stylings",
+          "options": [
+            {
+              "value": "66",
+              "name": "one column"
+            },
+            {
+              "value": "50",
+              "name": "two columns"
+            },
+            {
+              "value": "33",
+              "name": "three columns"
+            }
+          ]
+        },
+        "column1": {
+          "display_name": "Column 1",
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Accordion",
+            "ImageWithDescription",
+            "Richtext",
+            "Button"
+          ]
+        },
+        "column2": {
+          "display_name": "Column 2",
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Accordion",
+            "ImageWithDescription",
+            "Richtext",
+            "Button"
+          ]
+        },
+        "column3": {
+          "display_name": "Column 3",
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Accordion",
+            "ImageWithDescription",
+            "Richtext",
+            "Button"
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Column View",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ContactCTABox",
+      "display_name": "Contact CTA Box",
+      "created_at": "2023-02-14T14:07:27.323Z",
+      "updated_at": "2023-02-14T14:07:27.323Z",
+      "id": 3438310,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "display_name": "Headline",
+          "translatable": true
+        },
+        "description": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Richtext"
+          ],
+          "display_name": "Description"
+        },
+        "button": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Button"
+          ],
+          "display_name": "Button"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Contact CTA Box",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ContactFormSection",
+      "display_name": "Contact Form Section",
+      "created_at": "2023-02-14T14:07:27.303Z",
+      "updated_at": "2023-02-14T14:07:27.303Z",
+      "id": 3438309,
+      "schema": {
+        "requestForms": {
+          "display_name": "Request Forms",
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "ContactRequestSelection"
+          ]
+        },
+        "contactPersons": {
+          "display_name": "Contact Persons",
+          "type": "bloks",
+          "maximum": 10,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Accordion"
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Contact Form Section",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ContactPage",
+      "display_name": "Contact Page",
+      "created_at": "2023-02-14T14:07:26.238Z",
+      "updated_at": "2023-02-14T14:07:26.238Z",
+      "id": 3438276,
+      "schema": {
+        "title": {
+          "type": "text",
+          "required": true,
+          "max_length": "55",
+          "description": "Keep the title around 50 characters and put the keywords you’re focusing on first.",
+          "translatable": true
+        },
+        "quicklinks": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "OnPageNavigation"
+          ]
+        },
+        "body": {
+          "type": "bloks",
+          "display_name": "Content",
+          "restrict_components": true,
+          "component_whitelist": [
+            "ContactFormSection",
+            "AnchorWrapper"
+          ]
+        },
+        "tab-seo": {
+          "type": "tab",
+          "display_name": "SEO",
+          "keys": [
+            "seoTitle",
+            "seoDescription",
+            "advanced",
+            "noindex",
+            "nofollow",
+            "canonical"
+          ]
+        },
+        "seoTitle": {
+          "type": "text",
+          "max_length": "55",
+          "description": "Overrides the title.",
+          "translatable": true
+        },
+        "seoDescription": {
+          "type": "textarea",
+          "translatable": true,
+          "description": "Use Unique, Keyword-Rich Meta Descriptions between 120–156 characters.",
+          "max_length": "156"
+        },
+        "advanced": {
+          "type": "section",
+          "keys": [
+            "noindex",
+            "nofollow",
+            "canonical"
+          ],
+          "display_name": "Advanced"
+        },
+        "noindex": {
+          "type": "boolean",
+          "description": "Instructs search engines not to show the page in search results."
+        },
+        "nofollow": {
+          "type": "boolean",
+          "description": "Instructs search engines not to follow the links on this page.",
+          "display_name": ""
+        },
+        "canonical": {
+          "type": "multilink",
+          "restrict_content_types": true,
+          "component_whitelist": [
+            "Page"
+          ],
+          "description": "A canonical is a way of telling search engines that a specific URL represents the master copy of a page. Using the canonical prevents problems caused by identical or \"duplicate\" content appearing on multiple URLs. If this field is empty there will be a canonical link to this page itself.",
+          "display_name": "Custom Canonical URL"
+        },
+        "tab-social": {
+          "type": "tab",
+          "display_name": "Social",
+          "keys": [
+            "twitter",
+            "twitterTitle",
+            "twitterDescription",
+            "twitterImage",
+            "openGraph",
+            "ogTitle",
+            "ogDescription",
+            "ogImage"
+          ]
+        },
+        "twitter": {
+          "type": "section",
+          "keys": [
+            "twitterTitle",
+            "twitterDescription",
+            "twitterImage"
+          ]
+        },
+        "twitterTitle": {
+          "type": "text",
+          "translatable": true,
+          "description": "The title of your content as it should appear in the card. [Maximum 70 characters.] If this field is empty the page title will be used.",
+          "max_length": "70",
+          "display_name": "Title"
+        },
+        "twitterDescription": {
+          "type": "textarea",
+          "translatable": true,
+          "description": "A description that concisely summarizes the content as appropriate for presentation within a Tweet. You should not re-use the title as the description or use this field to describe the general services provided by the website. [Maximum 200 characters.] If this field is empty the seo description will be used.",
+          "max_length": "200",
+          "display_name": "Description"
+        },
+        "twitterImage": {
+          "type": "asset",
+          "description": "A URL to a unique image representing the content of the page. You should not use a generic image such as your website logo, author photo, or other image that spans multiple pages. Images for this Card should be at least 280px in width, and at least 150px in height. Image must be less than 1MB in size. If there is no image set a fallback image will be used.",
+          "display_name": "Image",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "openGraph": {
+          "type": "section",
+          "keys": [
+            "ogTitle",
+            "ogDescription",
+            "ogImage"
+          ],
+          "display_name": "Open Graph (Facebook)"
+        },
+        "ogTitle": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Title",
+          "max_length": "60",
+          "description": "The title, headline or name of the object. If this field is empty the page title will be used."
+        },
+        "ogDescription": {
+          "type": "textarea",
+          "display_name": "Description",
+          "translatable": true,
+          "max_length": "200",
+          "description": "A short description or summary of the object. [Between 2 and 4 sentences.] If this field is empty the SEO description will be used."
+        },
+        "ogImage": {
+          "type": "asset",
+          "display_name": "Image",
+          "description": "The URL of the image for your object. It should be at least 600x315 pixels, but 1200x630 or larger is preferred (up to 5MB). Stay close to a 1.91:1 aspect ratio to avoid cropping. If there is no image set a fallback image will be used.",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "tab-advanced": {
+          "type": "tab",
+          "display_name": "Advanced",
+          "keys": [
+            "template",
+            "uiComponent"
+          ]
+        },
+        "template": {
+          "type": "option",
+          "use_uuid": true,
+          "source": "internal_stories",
+          "folder_slug": "{0}/templates/",
+          "filter_content_type": "PageConfiguration"
+        },
+        "uiComponent": {
+          "type": "text",
+          "default_value": "Page"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": true,
+      "preview_tmpl": null,
+      "is_nestable": false,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Contact Page",
+      "component_group_uuid": "a7a8206f-e840-4c38-acb8-054923a7647f",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Templates"
+    },
+    {
+      "name": "ContactRequestForm",
+      "display_name": "Contact Request Form",
+      "created_at": "2023-02-14T14:07:25.933Z",
+      "updated_at": "2023-02-14T14:07:25.933Z",
+      "id": 3438267,
+      "schema": {
+        "contactRequestType": {
+          "type": "custom",
+          "required": true,
+          "field_type": "pfeiffer-vacuum-contact-request-selector",
+          "display_name": "Contact Request Picker"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div>{{ contactRequestType.type }}</div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Contact Request Form",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ContactRequestSelection",
+      "display_name": "Contact Request Selection",
+      "created_at": "2023-02-14T14:07:27.283Z",
+      "updated_at": "2023-02-14T14:07:27.283Z",
+      "id": 3438308,
+      "schema": {
+        "mainHeadline": {
+          "type": "text",
+          "max_length": "55",
+          "translatable": true
+        },
+        "sectionHeadline": {
+          "type": "text",
+          "max_length": "55",
+          "translatable": true
+        },
+        "text": {
+          "type": "text",
+          "translatable": true
+        },
+        "requestSubjects": {
+          "type": "bloks",
+          "restrict_components": true,
+          "required": true,
+          "component_whitelist": [
+            "ContactRequestSubject"
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Contact Request Selection",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ContactRequestSubject",
+      "display_name": "Request Subject",
+      "created_at": "2023-02-14T14:07:27.170Z",
+      "updated_at": "2023-02-14T14:07:27.170Z",
+      "id": 3438303,
+      "schema": {
+        "title": {
+          "type": "text",
+          "display_name": "Title",
+          "translatable": true
+        },
+        "description": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Richtext"
+          ],
+          "display_name": "Description"
+        },
+        "type": {
+          "type": "bloks",
+          "maximum": 1,
+          "display_name": "Contact Request Type",
+          "restrict_components": true,
+          "component_whitelist": [
+            "ContentCTABox",
+            "ContactRequestForm"
+          ],
+          "description": "Please choose the type of the contact form to show when clicking the subject."
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Request Subject",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ContentCTABox",
+      "display_name": "Contact CTA Box",
+      "created_at": "2023-02-14T14:07:27.142Z",
+      "updated_at": "2023-02-14T14:07:27.142Z",
+      "id": 3438302,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "display_name": "Headline",
+          "translatable": true
+        },
+        "description": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Richtext"
+          ],
+          "display_name": "Description"
+        },
+        "button": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Button"
+          ],
+          "display_name": "Button"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Contact CTA Box",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ContentMediaBlock",
+      "display_name": "Content Media Block",
+      "created_at": "2023-02-14T14:07:26.460Z",
+      "updated_at": "2023-02-14T14:07:26.460Z",
+      "id": 3438284,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "max_length": "55",
+          "translatable": true
+        },
+        "subline": {
+          "type": "text",
+          "max_length": "55",
+          "translatable": true
+        },
+        "richtext": {
+          "type": "richtext",
+          "pos": 2,
+          "translatable": true,
+          "display_name": "Richtext",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "list",
+            "h6",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "tw-subline tw-subline-2",
+              "name": "Subline H2"
+            },
+            {
+              "value": "tw-subline tw-subline-3",
+              "name": "Subline H3"
+            },
+            {
+              "value": "tw-subline tw-subline-4",
+              "name": "Subline H4"
+            },
+            {
+              "value": "tw-subline tw-subline-5",
+              "name": "Subline H5"
+            },
+            {
+              "value": "tw-subline tw-subline-6",
+              "name": "Subline H6"
+            },
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ],
+          "required": true
+        },
+        "buttons": {
+          "type": "bloks",
+          "maximum": 2,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Button"
+          ]
+        },
+        "media": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "required": true,
+          "component_whitelist": [
+            "VideoPlayer",
+            "ImageWithDescription",
+            "CTABox"
+          ]
+        },
+        "ratio": {
+          "type": "option",
+          "use_uuid": true,
+          "description": "Aspect ratio between both elements",
+          "exclude_empty_option": true,
+          "options": [
+            {
+              "value": "half/half",
+              "name": "50:50"
+            },
+            {
+              "value": "one/three",
+              "name": "33:66"
+            },
+            {
+              "value": "three/one",
+              "name": "66:33"
+            }
+          ],
+          "default_value": "three/one"
+        },
+        "order": {
+          "type": "option",
+          "use_uuid": true,
+          "description": "sort order of text and media item",
+          "exclude_empty_option": true,
+          "options": [
+            {
+              "value": "content/media",
+              "name": " Text | Media"
+            },
+            {
+              "value": "media/content",
+              "name": "Media | Text"
+            }
+          ],
+          "default_value": "content/media"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [
+        {
+          "id": 1703292,
+          "name": "Content Media Block with image",
+          "component_id": 3438284,
+          "image": "",
+          "color": "#ff6159",
+          "icon": "block-image",
+          "description": ""
+        },
+        {
+          "id": 1703293,
+          "name": "Content Media Block with Video Template",
+          "component_id": 3438284,
+          "image": "",
+          "color": "#fbce41",
+          "icon": "block-wallet",
+          "description": ""
+        }
+      ],
+      "preset_id": null,
+      "real_name": "Content Media Block",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ContentTextBlock",
+      "display_name": "Content Text Block",
+      "created_at": "2023-02-14T14:07:25.795Z",
+      "updated_at": "2023-02-14T14:07:25.795Z",
+      "id": 3438264,
+      "schema": {
+        "text": {
+          "type": "richtext",
+          "pos": 2,
+          "translatable": true,
+          "display_name": "Richtext",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "list",
+            "h6",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "tw-subline tw-subline-2",
+              "name": "Subline H2"
+            },
+            {
+              "value": "tw-subline tw-subline-3",
+              "name": "Subline H3"
+            },
+            {
+              "value": "tw-subline tw-subline-4",
+              "name": "Subline H4"
+            },
+            {
+              "value": "tw-subline tw-subline-5",
+              "name": "Subline H5"
+            },
+            {
+              "value": "tw-subline tw-subline-6",
+              "name": "Subline H6"
+            },
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Content Text Block",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "CTABox",
+      "display_name": "Call to action Box",
+      "created_at": "2023-02-14T14:07:27.539Z",
+      "updated_at": "2023-02-14T14:07:27.539Z",
+      "id": 3438319,
+      "schema": {
+        "image": {
+          "type": "asset",
+          "display_name": "Image",
+          "required": true,
+          "translatable": true
+        },
+        "description": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Richtext"
+          ],
+          "display_name": "Description"
+        },
+        "button": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Button"
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Call to action Box",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "CustomContentCard",
+      "display_name": "CustomContentCard",
+      "created_at": "2023-02-14T14:07:27.516Z",
+      "updated_at": "2023-02-14T14:07:27.516Z",
+      "id": 3438318,
+      "schema": {
+        "date": {
+          "type": "datetime",
+          "disable_time": true,
+          "display_name": "Date"
+        },
+        "image": {
+          "type": "asset",
+          "display_name": "Image",
+          "required": true,
+          "translatable": true
+        },
+        "title": {
+          "type": "text",
+          "required": true,
+          "translatable": true,
+          "display_name": "Title",
+          "max_length": "30"
+        },
+        "description": {
+          "type": "text",
+          "translatable": true,
+          "required": true,
+          "display_name": "Description",
+          "max_length": "150"
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div>\n<div>Headline: {{ title }}</div>\n<div>{{ image(options.image.filename)/ }}</div>\n</div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "CustomContentCard",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "CustomContentCardCarousel",
+      "display_name": "Custom Content-Card-Carousel",
+      "created_at": "2023-02-14T14:07:26.976Z",
+      "updated_at": "2023-02-14T14:07:26.976Z",
+      "id": 3438299,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "display_name": "Headline",
+          "translatable": true,
+          "pos": 1
+        },
+        "button": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Button"
+          ],
+          "display_name": "Button",
+          "pos": 2
+        },
+        "autoplay": {
+          "type": "boolean",
+          "display_name": "Autoplay",
+          "description": "Enables autoplay on carousel"
+        },
+        "autoplaySpeed": {
+          "type": "number",
+          "display_name": "Autoplay speed",
+          "description": "Autoplay speed in seconds",
+          "default_value": 5
+        },
+        "infinite": {
+          "type": "boolean",
+          "display_name": "Infinite",
+          "description": "Enables infinite wrap around slides on carousel"
+        },
+        "tab-advanced": {
+          "type": "tab",
+          "display_name": "Advanced",
+          "keys": [
+            "uiComponent",
+            "transparent",
+            "variant"
+          ]
+        },
+        "uiComponent": {
+          "type": "text",
+          "default_value": "ContentCarousel"
+        },
+        "slides": {
+          "type": "bloks",
+          "display_name": "Slides",
+          "restrict_components": true,
+          "component_whitelist": [
+            "CustomContentCard"
+          ],
+          "maximum": 16,
+          "required": true,
+          "pos": 3
+        },
+        "variant": {
+          "type": "text",
+          "default_value": "customContentCardCarousel"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div>\n<div>Headline: {{ headline }}</div>\n<div>Number of Slides: {{ slides.length }}</div>\n</div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Custom Content-Card-Carousel",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "DocumentCard",
+      "display_name": "Document-Card",
+      "created_at": "2023-02-14T14:07:26.138Z",
+      "updated_at": "2023-02-14T14:07:26.138Z",
+      "id": 3438273,
+      "schema": {
+        "image": {
+          "type": "asset",
+          "display_name": "Image",
+          "translatable": true,
+          "required": true
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div><div>{{ image(options.image.filename)/ }}</div></div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Document-Card",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "DocumentCardCarousel",
+      "display_name": "Document Card Carousel",
+      "created_at": "2023-02-14T14:07:26.370Z",
+      "updated_at": "2023-02-14T14:07:26.370Z",
+      "id": 3438280,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "display_name": "Headline",
+          "translatable": true,
+          "pos": 1
+        },
+        "button": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Button"
+          ],
+          "display_name": "Button",
+          "pos": 2
+        },
+        "autoplay": {
+          "type": "boolean",
+          "display_name": "Autoplay",
+          "description": "Enables autoplay on carousel"
+        },
+        "autoplaySpeed": {
+          "type": "number",
+          "display_name": "Autoplay speed",
+          "description": "Autoplay speed in seconds",
+          "default_value": 5
+        },
+        "infinite": {
+          "type": "boolean",
+          "display_name": "Infinite",
+          "description": "Enables infinite wrap around slides on carousel"
+        },
+        "tab-advanced": {
+          "type": "tab",
+          "display_name": "Advanced",
+          "keys": [
+            "uiComponent",
+            "transparent",
+            "variant"
+          ]
+        },
+        "uiComponent": {
+          "type": "text",
+          "default_value": "ContentCarousel"
+        },
+        "slides": {
+          "type": "bloks",
+          "display_name": "Slides",
+          "restrict_components": true,
+          "component_whitelist": [
+            "DocumentCard"
+          ],
+          "maximum": 16,
+          "required": true,
+          "pos": 3
+        },
+        "transparent": {
+          "type": "boolean",
+          "display_name": "Transparent",
+          "default_value": "true"
+        },
+        "variant": {
+          "type": "text",
+          "default_value": "documentCardCarousel"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div>\n<div>Headline: {{ headline }}</div>\n<div>Number of Slides: {{ slides.length }}</div>\n</div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Document Card Carousel",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "EcomPage",
+      "display_name": "Ecom Page",
+      "created_at": "2023-02-14T14:07:26.722Z",
+      "updated_at": "2023-02-14T14:07:26.722Z",
+      "id": 3438291,
+      "schema": {
+        "title": {
+          "type": "text",
+          "required": true,
+          "max_length": "55",
+          "description": "Keep the title around 50 characters and put the keywords you’re focusing on first.",
+          "translatable": true
+        },
+        "stage": {
+          "type": "bloks",
+          "display_name": "Stage",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Stage"
+          ],
+          "maximum": 1
+        },
+        "quicklinks": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "OnPageNavigation"
+          ]
+        },
+        "body": {
+          "type": "bloks",
+          "display_name": "Content",
+          "restrict_components": true,
+          "component_whitelist": [
+            "RegistrationSuccessPage",
+            "RegistrationPage"
+          ]
+        },
+        "bottom": {
+          "type": "bloks",
+          "display_name": "Bottom",
+          "restrict_components": true,
+          "component_whitelist": [
+            "HelpContainer"
+          ]
+        },
+        "tab-seo": {
+          "type": "tab",
+          "display_name": "SEO",
+          "keys": [
+            "seoTitle",
+            "seoDescription",
+            "advanced",
+            "noindex",
+            "nofollow",
+            "canonical"
+          ]
+        },
+        "seoTitle": {
+          "type": "text",
+          "max_length": "55",
+          "description": "Overrides the title.",
+          "translatable": true
+        },
+        "seoDescription": {
+          "type": "textarea",
+          "translatable": true,
+          "description": "Use Unique, Keyword-Rich Meta Descriptions between 120–156 characters.",
+          "max_length": "156"
+        },
+        "advanced": {
+          "type": "section",
+          "keys": [
+            "noindex",
+            "nofollow",
+            "canonical"
+          ],
+          "display_name": "Advanced"
+        },
+        "noindex": {
+          "type": "boolean",
+          "description": "Instructs search engines not to show the page in search results."
+        },
+        "nofollow": {
+          "type": "boolean",
+          "description": "Instructs search engines not to follow the links on this page.",
+          "display_name": ""
+        },
+        "canonical": {
+          "type": "multilink",
+          "restrict_content_types": true,
+          "component_whitelist": [
+            "Page"
+          ],
+          "description": "A canonical is a way of telling search engines that a specific URL represents the master copy of a page. Using the canonical prevents problems caused by identical or \"duplicate\" content appearing on multiple URLs. If this field is empty there will be a canonical link to this page itself.",
+          "display_name": "Custom Canonical URL"
+        },
+        "tab-social": {
+          "type": "tab",
+          "display_name": "Social",
+          "keys": [
+            "twitter",
+            "twitterTitle",
+            "twitterDescription",
+            "twitterImage",
+            "openGraph",
+            "ogTitle",
+            "ogDescription",
+            "ogImage"
+          ]
+        },
+        "twitter": {
+          "type": "section",
+          "keys": [
+            "twitterTitle",
+            "twitterDescription",
+            "twitterImage"
+          ]
+        },
+        "twitterTitle": {
+          "type": "text",
+          "translatable": true,
+          "description": "The title of your content as it should appear in the card. [Maximum 70 characters.] If this field is empty the page title will be used.",
+          "max_length": "70",
+          "display_name": "Title"
+        },
+        "twitterDescription": {
+          "type": "textarea",
+          "translatable": true,
+          "description": "A description that concisely summarizes the content as appropriate for presentation within a Tweet. You should not re-use the title as the description or use this field to describe the general services provided by the website. [Maximum 200 characters.] If this field is empty the seo description will be used.",
+          "max_length": "200",
+          "display_name": "Description"
+        },
+        "twitterImage": {
+          "type": "asset",
+          "description": "A URL to a unique image representing the content of the page. You should not use a generic image such as your website logo, author photo, or other image that spans multiple pages. Images for this Card should be at least 280px in width, and at least 150px in height. Image must be less than 1MB in size. If there is no image set a fallback image will be used.",
+          "display_name": "Image",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "openGraph": {
+          "type": "section",
+          "keys": [
+            "ogTitle",
+            "ogDescription",
+            "ogImage"
+          ],
+          "display_name": "Open Graph (Facebook)"
+        },
+        "ogTitle": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Title",
+          "max_length": "60",
+          "description": "The title, headline or name of the object. If this field is empty the page title will be used."
+        },
+        "ogDescription": {
+          "type": "textarea",
+          "display_name": "Description",
+          "translatable": true,
+          "max_length": "200",
+          "description": "A short description or summary of the object. [Between 2 and 4 sentences.] If this field is empty the SEO description will be used."
+        },
+        "ogImage": {
+          "type": "asset",
+          "display_name": "Image",
+          "description": "The URL of the image for your object. It should be at least 600x315 pixels, but 1200x630 or larger is preferred (up to 5MB). Stay close to a 1.91:1 aspect ratio to avoid cropping. If there is no image set a fallback image will be used.",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "tab-advanced": {
+          "type": "tab",
+          "display_name": "Advanced",
+          "keys": [
+            "template",
+            "uiComponent"
+          ]
+        },
+        "template": {
+          "type": "option",
+          "use_uuid": true,
+          "source": "internal_stories",
+          "folder_slug": "{0}/templates/",
+          "filter_content_type": "PageConfiguration"
+        },
+        "uiComponent": {
+          "type": "text",
+          "default_value": "Page"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": true,
+      "preview_tmpl": "",
+      "is_nestable": false,
+      "all_presets": [
+        {
+          "id": 1703294,
+          "name": "With Header and Footer",
+          "component_id": 3438291,
+          "image": "",
+          "color": "",
+          "icon": "",
+          "description": ""
+        }
+      ],
+      "preset_id": null,
+      "real_name": "Ecom Page",
+      "component_group_uuid": "a7a8206f-e840-4c38-acb8-054923a7647f",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Templates"
+    },
+    {
+      "name": "ErrorImageStage",
+      "display_name": "ErrorImageStage",
+      "created_at": "2023-02-14T14:07:27.193Z",
+      "updated_at": "2023-02-14T14:07:27.193Z",
+      "id": 3438304,
+      "schema": {
+        "stageContent": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "HomeStageSlideContent"
+          ],
+          "display_name": "Error Stage Content",
+          "required": true
+        },
+        "image": {
+          "type": "asset",
+          "description": "",
+          "display_name": "Background Image",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "interlay": {
+          "type": "asset",
+          "description": "",
+          "display_name": "Interlay",
+          "filetypes": [
+            "images"
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "ErrorImageStage",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "FlyoutEntry",
+      "display_name": "FlyoutEntry",
+      "created_at": "2023-02-14T14:07:26.108Z",
+      "updated_at": "2023-02-14T14:07:26.108Z",
+      "id": 3438272,
+      "schema": {
+        "label": {
+          "type": "text",
+          "description": "Visible text on hover",
+          "translatable": true,
+          "max_length": "30"
+        },
+        "icon": {
+          "type": "text",
+          "description": "Use an icon from https://jossef.github.io/material-design-icons-iconfont/ here (e.g. calculate)"
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "FlyoutEntry",
+      "component_group_uuid": "5f0bd36f-e7ac-4b42-bb12-fd8e843d7353",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Global"
+    },
+    {
+      "name": "Footer",
+      "display_name": "Footer",
+      "created_at": "2023-02-14T14:07:27.240Z",
+      "updated_at": "2023-02-14T14:07:27.240Z",
+      "id": 3438306,
+      "schema": {
+        "socialMedia": {
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "SocialMediaIconLink"
+          ],
+          "display_name": "Social Media Entries",
+          "maximum": 5
+        },
+        "navigationColumns": {
+          "type": "bloks",
+          "maximum": 3,
+          "restrict_components": true,
+          "component_whitelist": [
+            "FooterLinkList"
+          ],
+          "display_name": "Navigation Columns"
+        },
+        "newsletter": {
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "FooterNewsletter"
+          ],
+          "maximum": 1,
+          "display_name": "Newsletter"
+        },
+        "copyright": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Copyright Text"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Footer",
+      "component_group_uuid": "5f0bd36f-e7ac-4b42-bb12-fd8e843d7353",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Global"
+    },
+    {
+      "name": "FooterLinkList",
+      "display_name": "Link List",
+      "created_at": "2023-02-14T14:07:27.215Z",
+      "updated_at": "2023-02-14T14:07:27.215Z",
+      "id": 3438305,
+      "schema": {
+        "title": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Title"
+        },
+        "links": {
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "TextLink",
+            "PrivacyLink"
+          ],
+          "display_name": "Links"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Link List",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "FooterNewsletter",
+      "display_name": "Newsletter Module",
+      "created_at": "2023-02-14T14:07:26.439Z",
+      "updated_at": "2023-02-14T14:07:26.439Z",
+      "id": 3438283,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "display_name": "Newsletter Headline",
+          "translatable": true
+        },
+        "richtext": {
+          "type": "richtext",
+          "pos": 2,
+          "translatable": true,
+          "display_name": "Newsletter Description",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "list",
+            "h6",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "tw-subline tw-subline-2",
+              "name": "Subline H2"
+            },
+            {
+              "value": "tw-subline tw-subline-3",
+              "name": "Subline H3"
+            },
+            {
+              "value": "tw-subline tw-subline-4",
+              "name": "Subline H4"
+            },
+            {
+              "value": "tw-subline tw-subline-5",
+              "name": "Subline H5"
+            },
+            {
+              "value": "tw-subline tw-subline-6",
+              "name": "Subline H6"
+            },
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ]
+        },
+        "button": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Button"
+          ],
+          "display_name": "Newsletter Button"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Newsletter Module",
+      "component_group_uuid": "5f0bd36f-e7ac-4b42-bb12-fd8e843d7353",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Global"
+    },
+    {
+      "name": "GeneralTeaserCarousel",
+      "display_name": "General-Teaser-Carousel",
+      "created_at": "2023-02-14T14:07:26.318Z",
+      "updated_at": "2023-02-14T14:07:26.318Z",
+      "id": 3438279,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "display_name": "Headline",
+          "translatable": true,
+          "pos": 1
+        },
+        "button": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Button"
+          ],
+          "display_name": "Button",
+          "pos": 2
+        },
+        "autoplay": {
+          "type": "boolean",
+          "display_name": "Autoplay",
+          "description": "Enables autoplay on carousel"
+        },
+        "autoplaySpeed": {
+          "type": "number",
+          "display_name": "Autoplay speed",
+          "description": "Autoplay speed in seconds",
+          "default_value": 5
+        },
+        "infinite": {
+          "type": "boolean",
+          "display_name": "Infinite",
+          "description": "Enables infinite wrap around slides on carousel"
+        },
+        "tab-advanced": {
+          "type": "tab",
+          "display_name": "Advanced",
+          "keys": [
+            "uiComponent",
+            "transparent"
+          ]
+        },
+        "uiComponent": {
+          "type": "text",
+          "default_value": "ContentCarousel"
+        },
+        "slides": {
+          "type": "bloks",
+          "display_name": "Slides",
+          "restrict_components": true,
+          "component_whitelist": [
+            "TeaserCard"
+          ],
+          "maximum": 16,
+          "required": true,
+          "pos": 3
+        },
+        "transparent": {
+          "type": "boolean",
+          "display_name": "Transparent",
+          "default_value": "true"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div>\n<div>Headline: {{ headline }}</div>\n<div>Number of Slides: {{ slides.length }}</div>\n</div>",
+      "is_nestable": true,
+      "all_presets": [
+        {
+          "id": 1703291,
+          "name": "Markets Carousel",
+          "component_id": 3438279,
+          "image": "",
+          "color": "",
+          "icon": "block-image",
+          "description": ""
+        }
+      ],
+      "preset_id": null,
+      "real_name": "General-Teaser-Carousel",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "Header",
+      "display_name": "Header",
+      "created_at": "2023-02-14T14:07:25.737Z",
+      "updated_at": "2023-02-14T14:07:25.737Z",
+      "id": 3438263,
+      "schema": {
+        "navigationEntries": {
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "MainNavLinkLevel0",
+            "MainNavLinkMobile"
+          ],
+          "pos": 1,
+          "description": "Navigation bar entries displayed on the left side."
+        },
+        "flyoutLinks": {
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "FlyoutEntry"
+          ],
+          "pos": 2,
+          "maximum": 4,
+          "description": "Links on the upper right"
+        },
+        "shopNavigationLinks": {
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "ShopNavigationEntry"
+          ],
+          "pos": 3,
+          "description": "Shop Navigation Entries"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Header",
+      "component_group_uuid": "5f0bd36f-e7ac-4b42-bb12-fd8e843d7353",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Global"
+    },
+    {
+      "name": "HelpContainer",
+      "display_name": "Help Container",
+      "created_at": "2023-02-14T14:07:26.627Z",
+      "updated_at": "2023-02-14T14:07:26.627Z",
+      "id": 3438288,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "max_length": "55",
+          "translatable": true
+        },
+        "subline": {
+          "type": "text",
+          "max_length": "55",
+          "translatable": true
+        },
+        "richtext": {
+          "type": "richtext",
+          "pos": 2,
+          "translatable": true,
+          "display_name": "Richtext",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "list",
+            "h6",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "tw-subline tw-subline-2",
+              "name": "Subline H2"
+            },
+            {
+              "value": "tw-subline tw-subline-3",
+              "name": "Subline H3"
+            },
+            {
+              "value": "tw-subline tw-subline-4",
+              "name": "Subline H4"
+            },
+            {
+              "value": "tw-subline tw-subline-5",
+              "name": "Subline H5"
+            },
+            {
+              "value": "tw-subline tw-subline-6",
+              "name": "Subline H6"
+            },
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ],
+          "required": true
+        },
+        "buttons": {
+          "type": "bloks",
+          "maximum": 2,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Button"
+          ]
+        },
+        "icon": {
+          "type": "text",
+          "description": "Use an icon from https://fonts.google.com/icons here (e.g. calculate)"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Help Container",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "HomeStage",
+      "display_name": "Home Stage Module",
+      "created_at": "2023-02-14T14:07:27.391Z",
+      "updated_at": "2023-02-14T15:28:28.342Z",
+      "id": 3438313,
+      "schema": {
+        "slides": {
+          "type": "bloks",
+          "display_name": "Slides",
+          "restrict_components": true,
+          "component_whitelist": [
+            "HomeStageSlide"
+          ],
+          "maximum": 5,
+          "required": true,
+          "pos": 1
+        },
+        "autoplay": {
+          "type": "boolean",
+          "display_name": "Autoplay",
+          "description": "Enables autoplay on carousel"
+        },
+        "autoplaySpeed": {
+          "type": "number",
+          "display_name": "Autoplay speed",
+          "description": "Autoplay speed in seconds",
+          "default_value": 5
+        },
+        "infinite": {
+          "type": "boolean",
+          "display_name": "Infinite",
+          "description": "Enables infinite wrap around slides on carousel"
+        },
+        "date": {
+          "type": "datetime"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div><div>Number of Slides: {{ slides.length }}</div></div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Home Stage Module",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "HomeStageCarousel",
+      "display_name": "Home Stage Carousel",
+      "created_at": "2023-02-14T14:07:27.453Z",
+      "updated_at": "2023-02-14T14:07:27.453Z",
+      "id": 3438316,
+      "schema": {
+        "slides": {
+          "type": "bloks",
+          "display_name": "Slides",
+          "restrict_components": true,
+          "component_whitelist": [
+            "HomeStageModule"
+          ],
+          "maximum": 5,
+          "required": true,
+          "pos": 1
+        },
+        "autoplay": {
+          "type": "boolean",
+          "display_name": "Autoplay",
+          "description": "Enables autoplay on carousel.",
+          "pos": 2
+        },
+        "autoplaySpeed": {
+          "type": "number",
+          "display_name": "Autoplay Speed",
+          "description": "Autoplay Speed in milliseconds",
+          "default_value": 5000,
+          "pos": 3
+        },
+        "infinite": {
+          "type": "boolean",
+          "display_name": "Infinite",
+          "description": "Enables infinite wrap around slides on carousel.",
+          "pos": 4
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div>{{ label }}</div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Home Stage Carousel",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "HomeStageContent",
+      "display_name": "HomeStageContent",
+      "created_at": "2023-02-14T14:07:27.411Z",
+      "updated_at": "2023-02-14T14:07:27.411Z",
+      "id": 3438314,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "translatable": true,
+          "required": true,
+          "display_name": "Headline",
+          "max_length": "50",
+          "pos": 1
+        },
+        "richtext": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "RichtextBasic"
+          ],
+          "display_name": "Description"
+        },
+        "buttons": {
+          "type": "bloks",
+          "restrict_components": true,
+          "maximum": 2,
+          "component_whitelist": [
+            "Button"
+          ],
+          "display_name": "Buttons"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "HomeStageContent",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "HomeStageModule",
+      "display_name": "HomeStageModule",
+      "created_at": "2023-02-14T14:07:27.491Z",
+      "updated_at": "2023-02-14T14:07:27.491Z",
+      "id": 3438317,
+      "schema": {
+        "stageContent": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "HomeStageContent"
+          ],
+          "display_name": "Home Stage Content",
+          "required": true
+        },
+        "image": {
+          "type": "asset",
+          "description": "",
+          "display_name": "Background Image",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "interlay": {
+          "type": "asset",
+          "description": "",
+          "display_name": "Interlay",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "bubble": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Bubble"
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "HomeStageModule",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "HomeStageSlide",
+      "display_name": "HomeStageSlide",
+      "created_at": "2023-02-14T14:07:26.298Z",
+      "updated_at": "2023-02-14T14:07:26.298Z",
+      "id": 3438278,
+      "schema": {
+        "stageContent": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "HomeStageSlideContent"
+          ],
+          "display_name": "Home Stage Content",
+          "required": true
+        },
+        "image": {
+          "type": "asset",
+          "description": "",
+          "display_name": "Background Image",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "interlay": {
+          "type": "asset",
+          "description": "",
+          "display_name": "Interlay",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "bubble": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Bubble"
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div><div>{{image(options.interlay.filename)/}}</div></div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "HomeStageSlide",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "HomeStageSlideContent",
+      "display_name": "HomeStageSlideContent",
+      "created_at": "2023-02-14T14:07:27.369Z",
+      "updated_at": "2023-02-14T14:07:27.369Z",
+      "id": 3438312,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "translatable": true,
+          "required": true,
+          "display_name": "Headline",
+          "max_length": "50",
+          "pos": 1
+        },
+        "richtext": {
+          "type": "richtext",
+          "pos": 2,
+          "translatable": true,
+          "display_name": "Description",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "list",
+            "h6",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "tw-subline tw-subline-2",
+              "name": "Subline H2"
+            },
+            {
+              "value": "tw-subline tw-subline-3",
+              "name": "Subline H3"
+            },
+            {
+              "value": "tw-subline tw-subline-4",
+              "name": "Subline H4"
+            },
+            {
+              "value": "tw-subline tw-subline-5",
+              "name": "Subline H5"
+            },
+            {
+              "value": "tw-subline tw-subline-6",
+              "name": "Subline H6"
+            },
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ]
+        },
+        "buttons": {
+          "type": "bloks",
+          "restrict_components": true,
+          "maximum": 2,
+          "component_whitelist": [
+            "Button"
+          ],
+          "display_name": "Buttons"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "HomeStageSlideContent",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ImageBanner",
+      "display_name": "Image Banner",
+      "created_at": "2023-02-14T14:07:26.599Z",
+      "updated_at": "2023-02-14T14:07:26.599Z",
+      "id": 3438287,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "max_length": "55",
+          "translatable": true,
+          "required": true
+        },
+        "subline": {
+          "type": "text",
+          "max_length": "55",
+          "translatable": true
+        },
+        "richtext": {
+          "type": "richtext",
+          "pos": 2,
+          "translatable": true,
+          "display_name": "Richtext",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "list",
+            "h6",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "tw-subline tw-subline-2",
+              "name": "Subline H2"
+            },
+            {
+              "value": "tw-subline tw-subline-3",
+              "name": "Subline H3"
+            },
+            {
+              "value": "tw-subline tw-subline-4",
+              "name": "Subline H4"
+            },
+            {
+              "value": "tw-subline tw-subline-5",
+              "name": "Subline H5"
+            },
+            {
+              "value": "tw-subline tw-subline-6",
+              "name": "Subline H6"
+            },
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ],
+          "required": true,
+          "max_length": "220"
+        },
+        "buttons": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Button"
+          ]
+        },
+        "image": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "required": true,
+          "component_whitelist": [
+            "ResponsiveImage"
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Image Banner",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ImageWithDescription",
+      "display_name": "Image module with source",
+      "created_at": "2023-02-14T14:07:26.575Z",
+      "updated_at": "2023-02-14T14:07:26.575Z",
+      "id": 3438286,
+      "schema": {
+        "description": {
+          "type": "richtext",
+          "pos": 2,
+          "translatable": true,
+          "display_name": "Description",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "list",
+            "h6",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "tw-subline tw-subline-2",
+              "name": "Subline H2"
+            },
+            {
+              "value": "tw-subline tw-subline-3",
+              "name": "Subline H3"
+            },
+            {
+              "value": "tw-subline tw-subline-4",
+              "name": "Subline H4"
+            },
+            {
+              "value": "tw-subline tw-subline-5",
+              "name": "Subline H5"
+            },
+            {
+              "value": "tw-subline tw-subline-6",
+              "name": "Subline H6"
+            },
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ]
+        },
+        "image": {
+          "type": "asset",
+          "filetypes": [
+            "images"
+          ],
+          "translatable": true,
+          "description": "Image",
+          "display_name": "Image",
+          "required": true
+        },
+        "aspectRatio": {
+          "display_name": "Aspect Ratio",
+          "type": "option",
+          "exclude_empty_option": true,
+          "default_value": "1:1",
+          "description": "The variants of different image formats",
+          "options": [
+            {
+              "name": "1:1",
+              "value": "1:1"
+            },
+            {
+              "name": "3:2",
+              "value": "3:2"
+            },
+            {
+              "name": "2:3",
+              "value": "2:3"
+            },
+            {
+              "name": "16:9",
+              "value": "16:9"
+            },
+            {
+              "name": "2:1",
+              "value": "2:1"
+            },
+            {
+              "name": "3:1",
+              "value": "3:1"
+            }
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Image module with source",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "KnowledgeStage",
+      "display_name": "Stage Module",
+      "created_at": "2023-02-14T14:09:17.649Z",
+      "updated_at": "2023-02-14T14:09:43.458Z",
+      "id": 3438330,
+      "schema": {
+        "image": {
+          "type": "asset",
+          "description": "",
+          "display_name": "Image",
+          "filetypes": [
+            "images"
+          ],
+          "pos": 2,
+          "required": true
+        },
+        "stageContent": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "StageContent"
+          ],
+          "display_name": "Stage Content"
+        },
+        "date": {
+          "type": "datetime"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Stage Module",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "LinkList",
+      "display_name": "Link List",
+      "created_at": "2023-02-14T14:07:27.850Z",
+      "updated_at": "2023-02-14T14:07:27.850Z",
+      "id": 3438329,
+      "schema": {
+        "title": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Title"
+        },
+        "links": {
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "TextLink"
+          ],
+          "display_name": "Links"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Link List",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "MainNavigationLink",
+      "display_name": "MainNavigationLink",
+      "created_at": "2023-02-14T14:07:27.613Z",
+      "updated_at": "2023-02-14T14:07:27.613Z",
+      "id": 3438322,
+      "schema": {
+        "label": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Label"
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "component_whitelist": [
+            "Page"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        },
+        "navigationEntries": {
+          "type": "bloks",
+          "maximum": 7,
+          "restrict_components": true,
+          "component_whitelist": [
+            "MainNavigationLink"
+          ],
+          "description": "Navigation entries displayed on the left side."
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "MainNavigationLink",
+      "component_group_uuid": "5f0bd36f-e7ac-4b42-bb12-fd8e843d7353",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Global"
+    },
+    {
+      "name": "MainNavLinkLevel0",
+      "display_name": "Navigation Entry",
+      "created_at": "2023-02-14T14:07:26.037Z",
+      "updated_at": "2023-02-14T14:07:26.037Z",
+      "id": 3438270,
+      "schema": {
+        "label": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Label",
+          "required": true
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        },
+        "shopLink": {
+          "type": "multilink",
+          "display_name": "Shop Link",
+          "restrict_content_types": true,
+          "required": false,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "navigationEntries": {
+          "type": "bloks",
+          "maximum": 10,
+          "restrict_components": true,
+          "component_whitelist": [
+            "MainNavLinkLevel1"
+          ],
+          "description": "Navigation entries displayed on first level."
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Navigation Entry",
+      "component_group_uuid": "5f0bd36f-e7ac-4b42-bb12-fd8e843d7353",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Global"
+    },
+    {
+      "name": "MainNavLinkLevel1",
+      "display_name": "Navigation Entry",
+      "created_at": "2023-02-14T14:07:26.793Z",
+      "updated_at": "2023-02-14T14:07:26.793Z",
+      "id": 3438293,
+      "schema": {
+        "label": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Label",
+          "required": true
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        },
+        "shopLink": {
+          "type": "multilink",
+          "display_name": "Shop Link",
+          "restrict_content_types": true,
+          "required": false,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "navigationEntries": {
+          "type": "bloks",
+          "maximum": 10,
+          "restrict_components": true,
+          "component_whitelist": [
+            "MainNavLinkLevel2"
+          ],
+          "description": "Navigation entries displayed on second level."
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Navigation Entry",
+      "component_group_uuid": "5f0bd36f-e7ac-4b42-bb12-fd8e843d7353",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Global"
+    },
+    {
+      "name": "MainNavLinkLevel2",
+      "display_name": "Navigation Entry",
+      "created_at": "2023-02-14T14:07:26.858Z",
+      "updated_at": "2023-02-14T14:07:26.858Z",
+      "id": 3438295,
+      "schema": {
+        "label": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Label",
+          "required": true
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Navigation Entry",
+      "component_group_uuid": "5f0bd36f-e7ac-4b42-bb12-fd8e843d7353",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Global"
+    },
+    {
+      "name": "MainNavLinkMobile",
+      "display_name": "Mobile Navigation Entry",
+      "created_at": "2023-02-14T14:07:26.833Z",
+      "updated_at": "2023-02-14T14:07:26.833Z",
+      "id": 3438294,
+      "schema": {
+        "label": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Label",
+          "required": true
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Mobile Navigation Entry",
+      "component_group_uuid": "5f0bd36f-e7ac-4b42-bb12-fd8e843d7353",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Global"
+    },
+    {
+      "name": "OnPageNavigation",
+      "display_name": "OnPageNavigation",
+      "created_at": "2023-02-14T14:07:27.679Z",
+      "updated_at": "2023-02-14T14:07:27.679Z",
+      "id": 3438325,
+      "schema": {
+        "quicklinks": {
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Quicklink"
+          ],
+          "maximum": 4,
+          "description": "Links for Quicklink Navigation"
+        },
+        "hideBreadcrumb": {
+          "type": "boolean",
+          "default_value": false
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "OnPageNavigation",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "Page",
+      "display_name": "Page",
+      "created_at": "2023-02-14T14:07:27.049Z",
+      "updated_at": "2023-02-14T15:22:19.763Z",
+      "id": 3438301,
+      "schema": {
+        "title": {
+          "type": "text",
+          "required": true,
+          "max_length": "55",
+          "description": "Keep the title around 50 characters and put the keywords you’re focusing on first.",
+          "translatable": true
+        },
+        "top": {
+          "type": "bloks",
+          "display_name": "Top",
+          "restrict_components": true,
+          "component_whitelist": []
+        },
+        "quicklinks": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "OnPageNavigation"
+          ]
+        },
+        "stage": {
+          "type": "bloks",
+          "display_name": "Stage",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Stage",
+            "HomeStage",
+            "ErrorImageStage"
+          ],
+          "maximum": 1
+        },
+        "body": {
+          "type": "bloks",
+          "display_name": "Content",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Accordion",
+            "AnchorWrapper",
+            "ContentMediaBlock",
+            "ContentTextBlock",
+            "CustomContentCardCarousel",
+            "DocumentCardCarousel",
+            "GeneralTeaserCarousel",
+            "ImageWithDescription",
+            "ProductCardCarousel",
+            "TeaserCardCarousel",
+            "HelpContainer",
+            "ImageBanner",
+            "ColumnView",
+            "KnowledgeStage"
+          ]
+        },
+        "bottom": {
+          "type": "bloks",
+          "display_name": "Bottom",
+          "restrict_components": true,
+          "component_whitelist": [
+            "HelpContainer"
+          ]
+        },
+        "tab-seo": {
+          "type": "tab",
+          "display_name": "SEO",
+          "keys": [
+            "seoTitle",
+            "seoDescription",
+            "advanced",
+            "noindex",
+            "nofollow",
+            "canonical"
+          ]
+        },
+        "seoTitle": {
+          "type": "text",
+          "max_length": "55",
+          "description": "Overrides the title.",
+          "translatable": true
+        },
+        "seoDescription": {
+          "type": "textarea",
+          "translatable": true,
+          "description": "Use Unique, Keyword-Rich Meta Descriptions between 120–156 characters.",
+          "max_length": "156"
+        },
+        "advanced": {
+          "type": "section",
+          "keys": [
+            "noindex",
+            "nofollow",
+            "canonical"
+          ],
+          "display_name": "Advanced"
+        },
+        "noindex": {
+          "type": "boolean",
+          "description": "Instructs search engines not to show the page in search results."
+        },
+        "nofollow": {
+          "type": "boolean",
+          "description": "Instructs search engines not to follow the links on this page.",
+          "display_name": ""
+        },
+        "canonical": {
+          "type": "multilink",
+          "restrict_content_types": true,
+          "component_whitelist": [
+            "Page"
+          ],
+          "description": "A canonical is a way of telling search engines that a specific URL represents the master copy of a page. Using the canonical prevents problems caused by identical or \"duplicate\" content appearing on multiple URLs. If this field is empty there will be a canonical link to this page itself.",
+          "display_name": "Custom Canonical URL"
+        },
+        "tab-social": {
+          "type": "tab",
+          "display_name": "Social",
+          "keys": [
+            "twitter",
+            "twitterTitle",
+            "twitterDescription",
+            "twitterImage",
+            "openGraph",
+            "ogTitle",
+            "ogDescription",
+            "ogImage"
+          ]
+        },
+        "twitter": {
+          "type": "section",
+          "keys": [
+            "twitterTitle",
+            "twitterDescription",
+            "twitterImage"
+          ]
+        },
+        "twitterTitle": {
+          "type": "text",
+          "translatable": true,
+          "description": "The title of your content as it should appear in the card. [Maximum 70 characters.] If this field is empty the page title will be used.",
+          "max_length": "70",
+          "display_name": "Title"
+        },
+        "twitterDescription": {
+          "type": "textarea",
+          "translatable": true,
+          "description": "A description that concisely summarizes the content as appropriate for presentation within a Tweet. You should not re-use the title as the description or use this field to describe the general services provided by the website. [Maximum 200 characters.] If this field is empty the seo description will be used.",
+          "max_length": "200",
+          "display_name": "Description"
+        },
+        "twitterImage": {
+          "type": "asset",
+          "description": "A URL to a unique image representing the content of the page. You should not use a generic image such as your website logo, author photo, or other image that spans multiple pages. Images for this Card should be at least 280px in width, and at least 150px in height. Image must be less than 1MB in size. If there is no image set a fallback image will be used.",
+          "display_name": "Image",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "openGraph": {
+          "type": "section",
+          "keys": [
+            "ogTitle",
+            "ogDescription",
+            "ogImage"
+          ],
+          "display_name": "Open Graph (Facebook)"
+        },
+        "ogTitle": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Title",
+          "max_length": "60",
+          "description": "The title, headline or name of the object. If this field is empty the page title will be used."
+        },
+        "ogDescription": {
+          "type": "textarea",
+          "display_name": "Description",
+          "translatable": true,
+          "max_length": "200",
+          "description": "A short description or summary of the object. [Between 2 and 4 sentences.] If this field is empty the SEO description will be used."
+        },
+        "ogImage": {
+          "type": "asset",
+          "display_name": "Image",
+          "description": "The URL of the image for your object. It should be at least 600x315 pixels, but 1200x630 or larger is preferred (up to 5MB). Stay close to a 1.91:1 aspect ratio to avoid cropping. If there is no image set a fallback image will be used.",
+          "filetypes": [
+            "images"
+          ]
+        },
+        "tab-advanced": {
+          "type": "tab",
+          "display_name": "Advanced",
+          "keys": [
+            "template",
+            "uiComponent"
+          ]
+        },
+        "template": {
+          "type": "option",
+          "use_uuid": true,
+          "source": "internal_stories",
+          "folder_slug": "{0}/templates/",
+          "filter_content_type": "PageConfiguration"
+        },
+        "uiComponent": {
+          "type": "text",
+          "default_value": "Page"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": true,
+      "preview_tmpl": null,
+      "is_nestable": false,
+      "all_presets": [
+        {
+          "id": 1703296,
+          "name": "Product Content Page Template",
+          "component_id": 3438301,
+          "image": "",
+          "color": null,
+          "icon": null,
+          "description": null
+        },
+        {
+          "id": 1703297,
+          "name": "With German Region Header and Footer",
+          "component_id": 3438301,
+          "image": "",
+          "color": null,
+          "icon": null,
+          "description": null
+        },
+        {
+          "id": 1703298,
+          "name": "With Global Region Header and Footer",
+          "component_id": 3438301,
+          "image": "",
+          "color": null,
+          "icon": null,
+          "description": null
+        }
+      ],
+      "preset_id": 1703298,
+      "real_name": "Page",
+      "component_group_uuid": "a7a8206f-e840-4c38-acb8-054923a7647f",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Templates"
+    },
+    {
+      "name": "PageConfiguration",
+      "display_name": "Page Configuration",
+      "created_at": "2023-02-14T14:07:26.764Z",
+      "updated_at": "2023-02-14T14:07:26.764Z",
+      "id": 3438292,
+      "schema": {
+        "top": {
+          "type": "bloks",
+          "display_name": "Top",
+          "restrict_components": true,
+          "component_whitelist": []
+        },
+        "header": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Header"
+          ]
+        },
+        "stage": {
+          "type": "bloks",
+          "display_name": "Stage",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Stage",
+            "HomeStage",
+            "ErrorImageStage"
+          ],
+          "maximum": 1
+        },
+        "body": {
+          "type": "bloks",
+          "display_name": "Content",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Accordion",
+            "AnchorWrapper",
+            "ContentMediaBlock",
+            "ContentTextBlock",
+            "CustomContentCardCarousel",
+            "DocumentCardCarousel",
+            "GeneralTeaserCarousel",
+            "ImageWithDescription",
+            "ProductCardCarousel",
+            "TeaserCardCarousel",
+            "HelpContainer",
+            "ImageBanner",
+            "ColumnView"
+          ]
+        },
+        "bottom": {
+          "type": "bloks",
+          "display_name": "Bottom",
+          "restrict_components": true,
+          "component_whitelist": [
+            "HelpContainer"
+          ]
+        },
+        "footer": {
+          "type": "bloks",
+          "display_name": "Footer",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Footer"
+          ]
+        },
+        "stickyBar": {
+          "type": "bloks",
+          "display_name": "Sticky Bar",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "StickyBar"
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": true,
+      "preview_tmpl": "",
+      "is_nestable": false,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Page Configuration",
+      "component_group_uuid": "a7a8206f-e840-4c38-acb8-054923a7647f",
+      "color": "#ff6159",
+      "icon": "block-shield",
+      "component_group_name": "Templates"
+    },
+    {
+      "name": "PrivacyLink",
+      "display_name": "PrivacyLink",
+      "created_at": "2023-02-14T14:07:27.261Z",
+      "updated_at": "2023-02-14T14:07:27.261Z",
+      "id": 3438307,
+      "schema": {
+        "label": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Label"
+        },
+        "uiComponent": {
+          "type": "text",
+          "default_value": "PrivacyLink"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "PrivacyLink",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ProductCard",
+      "display_name": "Product-Card",
+      "created_at": "2023-02-14T14:07:25.961Z",
+      "updated_at": "2023-02-14T14:07:25.961Z",
+      "id": 3438268,
+      "schema": {
+        "product": {
+          "type": "custom",
+          "required": true,
+          "field_type": "pfeiffer-vacuum-shop-url-selector",
+          "display_name": "Product-Picker"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div>{{ product.name }}</div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Product-Card",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ProductCardCarousel",
+      "display_name": "ProductCardCarousel",
+      "created_at": "2023-02-14T14:07:26.270Z",
+      "updated_at": "2023-02-14T14:07:26.270Z",
+      "id": 3438277,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "display_name": "Headline",
+          "translatable": true,
+          "pos": 1
+        },
+        "button": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "Button"
+          ],
+          "display_name": "Button",
+          "pos": 2
+        },
+        "autoplay": {
+          "type": "boolean",
+          "display_name": "Autoplay",
+          "description": "Enables autoplay on carousel"
+        },
+        "autoplaySpeed": {
+          "type": "number",
+          "display_name": "Autoplay speed",
+          "description": "Autoplay speed in seconds",
+          "default_value": 5
+        },
+        "infinite": {
+          "type": "boolean",
+          "display_name": "Infinite",
+          "description": "Enables infinite wrap around slides on carousel"
+        },
+        "slides": {
+          "type": "bloks",
+          "display_name": "Slides",
+          "restrict_components": true,
+          "component_whitelist": [
+            "ProductCard"
+          ],
+          "maximum": 16,
+          "required": true,
+          "pos": 3
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div>\n<div>Headline: {{ headline }}</div>\n<div>Number of Slides: {{ slides.length }}</div>\n</div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "ProductCardCarousel",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ProductPickerTS",
+      "display_name": null,
+      "created_at": "2023-02-14T14:07:27.430Z",
+      "updated_at": "2023-02-14T14:07:27.430Z",
+      "id": 3438315,
+      "schema": {
+        "product_picker": {
+          "type": "custom",
+          "field_type": "pfeiffer-vacuum-shop-url-selector",
+          "options": []
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "ProductPickerTS",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "Quicklink",
+      "display_name": "Quicklink",
+      "created_at": "2023-02-14T14:07:27.720Z",
+      "updated_at": "2023-02-14T14:07:27.720Z",
+      "id": 3438327,
+      "schema": {
+        "label": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Label",
+          "max_length": "30"
+        },
+        "anchor": {
+          "type": "text",
+          "display_name": "Anchor",
+          "description": "Which anchor do you want to scroll to? (Must exist on the page or there will be no scroll)"
+        },
+        "tab-advanced": {
+          "type": "tab",
+          "display_name": "Advanced",
+          "keys": [
+            "uiComponent",
+            "variant"
+          ]
+        },
+        "uiComponent": {
+          "type": "text",
+          "default_value": "Link"
+        },
+        "variant": {
+          "type": "text",
+          "default_value": "quicklink"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": false,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Quicklink",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "QuicklinkNavigation",
+      "display_name": "Quicklink Navigation",
+      "created_at": "2023-02-14T14:07:27.698Z",
+      "updated_at": "2023-02-14T14:07:27.698Z",
+      "id": 3438326,
+      "schema": {
+        "quicklinks": {
+          "type": "bloks",
+          "restrict_components": true,
+          "component_whitelist": [
+            "Quicklink"
+          ],
+          "maximum": 4,
+          "description": "Links for Quicklink Navigation"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Quicklink Navigation",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "RegistrationPage",
+      "display_name": "RegistrationPage",
+      "created_at": "2023-02-14T14:07:26.953Z",
+      "updated_at": "2023-02-14T14:07:26.953Z",
+      "id": 3438298,
+      "schema": {},
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "RegistrationPage",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "RegistrationSuccessPage",
+      "display_name": "RegistrationSuccessPage",
+      "created_at": "2023-02-14T14:07:26.927Z",
+      "updated_at": "2023-02-14T14:07:26.927Z",
+      "id": 3438297,
+      "schema": {},
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "RegistrationSuccessPage",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ResponsiveImage",
+      "display_name": "Responsive Image",
+      "created_at": "2023-02-14T14:07:27.565Z",
+      "updated_at": "2023-02-14T14:07:27.565Z",
+      "id": 3438320,
+      "schema": {
+        "image": {
+          "type": "asset",
+          "filetypes": [
+            "images"
+          ],
+          "translatable": true,
+          "description": "Image",
+          "display_name": "Image",
+          "required": true
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Responsive Image",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "Richtext",
+      "display_name": "Richtext",
+      "created_at": "2023-02-14T14:07:27.743Z",
+      "updated_at": "2023-02-14T14:07:27.743Z",
+      "id": 3438328,
+      "schema": {
+        "richtext": {
+          "type": "richtext",
+          "pos": 2,
+          "translatable": true,
+          "display_name": "Richtext",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "list",
+            "h6",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "tw-subline tw-subline-2",
+              "name": "Subline H2"
+            },
+            {
+              "value": "tw-subline tw-subline-3",
+              "name": "Subline H3"
+            },
+            {
+              "value": "tw-subline tw-subline-4",
+              "name": "Subline H4"
+            },
+            {
+              "value": "tw-subline tw-subline-5",
+              "name": "Subline H5"
+            },
+            {
+              "value": "tw-subline tw-subline-6",
+              "name": "Subline H6"
+            },
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Richtext",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "RichtextBasic",
+      "display_name": "Richtext",
+      "created_at": "2023-02-14T14:07:27.588Z",
+      "updated_at": "2023-02-14T14:07:27.588Z",
+      "id": 3438321,
+      "schema": {
+        "richtext": {
+          "type": "richtext",
+          "pos": 2,
+          "translatable": true,
+          "display_name": "Richtext",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ]
+        },
+        "tab-advanced": {
+          "type": "tab",
+          "display_name": "Advanced",
+          "keys": [
+            "uiComponent"
+          ]
+        },
+        "uiComponent": {
+          "type": "text",
+          "default_value": "Richtext"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Richtext",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "ShopNavigationEntry",
+      "display_name": "Shop Navigation Entry",
+      "created_at": "2023-02-14T14:07:26.002Z",
+      "updated_at": "2023-02-14T14:07:26.002Z",
+      "id": 3438269,
+      "schema": {
+        "icon": {
+          "type": "text",
+          "description": "Use an icon from https://fonts.google.com/icons here (e.g. calculate)"
+        },
+        "label": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Label",
+          "required": true
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div><div>Label: {{ label }}</div></div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Shop Navigation Entry",
+      "component_group_uuid": "5f0bd36f-e7ac-4b42-bb12-fd8e843d7353",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Global"
+    },
+    {
+      "name": "SocialMediaIconLink",
+      "display_name": "Social Media Entry",
+      "created_at": "2023-02-14T14:07:26.891Z",
+      "updated_at": "2023-02-14T14:07:26.891Z",
+      "id": 3438296,
+      "schema": {
+        "icon": {
+          "type": "option",
+          "use_uuid": true,
+          "required": true,
+          "options": [
+            {
+              "value": "facebook",
+              "name": "Facebook"
+            },
+            {
+              "value": "twitter",
+              "name": "Twitter"
+            },
+            {
+              "value": "linkedin",
+              "name": "LinkedIn"
+            },
+            {
+              "value": "youtube",
+              "name": "Youtube"
+            },
+            {
+              "value": "xing",
+              "name": "Xing"
+            },
+            {
+              "value": "wechat",
+              "name": "WeChat"
+            },
+            {
+              "value": "zhihu",
+              "name": "Zhihu"
+            }
+          ]
+        },
+        "title": {
+          "type": "text",
+          "display_name": "Title",
+          "translatable": true
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Social Media Entry",
+      "component_group_uuid": "5f0bd36f-e7ac-4b42-bb12-fd8e843d7353",
+      "color": null,
+      "icon": null,
+      "component_group_name": "Global"
+    },
+    {
+      "name": "Stage",
+      "display_name": "Stage Module",
+      "created_at": "2023-02-14T14:07:27.344Z",
+      "updated_at": "2023-02-14T14:07:27.344Z",
+      "id": 3438311,
+      "schema": {
+        "image": {
+          "type": "asset",
+          "description": "",
+          "display_name": "Image",
+          "filetypes": [
+            "images"
+          ],
+          "pos": 2,
+          "required": true
+        },
+        "stageContent": {
+          "type": "bloks",
+          "maximum": 1,
+          "restrict_components": true,
+          "component_whitelist": [
+            "StageContent"
+          ],
+          "display_name": "Stage Content"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Stage Module",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "StageContent",
+      "display_name": "StageContent",
+      "created_at": "2023-02-14T14:07:25.858Z",
+      "updated_at": "2023-02-14T15:26:22.439Z",
+      "id": 3438265,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "translatable": true,
+          "required": true,
+          "display_name": "Headline",
+          "max_length": "65",
+          "pos": 1
+        },
+        "subline": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Subheadline",
+          "max_length": "65",
+          "pos": 2
+        },
+        "teaserText": {
+          "type": "richtext",
+          "pos": 3,
+          "translatable": true,
+          "display_name": "Teaser Text",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "list",
+            "h6",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "tw-subline tw-subline-2",
+              "name": "Subline H2"
+            },
+            {
+              "value": "tw-subline tw-subline-3",
+              "name": "Subline H3"
+            },
+            {
+              "value": "tw-subline tw-subline-4",
+              "name": "Subline H4"
+            },
+            {
+              "value": "tw-subline tw-subline-5",
+              "name": "Subline H5"
+            },
+            {
+              "value": "tw-subline tw-subline-6",
+              "name": "Subline H6"
+            },
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ],
+          "max_length": "250"
+        },
+        "buttons": {
+          "type": "bloks",
+          "restrict_components": true,
+          "maximum": 2,
+          "component_whitelist": [
+            "Button"
+          ],
+          "display_name": "Buttons"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "StageContent",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "StickyBar",
+      "display_name": "Sticky Bar",
+      "created_at": "2023-02-14T14:07:26.699Z",
+      "updated_at": "2023-02-14T14:07:26.699Z",
+      "id": 3438290,
+      "schema": {
+        "label": {
+          "type": "text",
+          "max_length": "55",
+          "translatable": true,
+          "description": "this text is only shown on tablet and desktop"
+        },
+        "icon": {
+          "type": "text",
+          "required": true,
+          "description": "Use an icon from https://fonts.google.com/icons here (e.g. calculate)"
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Sticky Bar",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "TeaserCard",
+      "display_name": "General Teaser Component",
+      "created_at": "2023-02-14T14:07:26.396Z",
+      "updated_at": "2023-02-14T14:07:26.396Z",
+      "id": 3438281,
+      "schema": {
+        "headline": {
+          "type": "text",
+          "translatable": true,
+          "required": true,
+          "max_length": "50",
+          "pos": 1
+        },
+        "image": {
+          "type": "asset",
+          "filetypes": [
+            "images"
+          ],
+          "translatable": true,
+          "description": "Image",
+          "display_name": "Image",
+          "required": true
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": "<div>\n<div>Headline: {{ headline }}</div>\n<div>{{ image(options.image.filename)/ }}</div>\n</div>",
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "General Teaser Component",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "TextLink",
+      "display_name": "TextLink",
+      "created_at": "2023-02-14T14:07:26.169Z",
+      "updated_at": "2023-02-14T14:07:26.169Z",
+      "id": 3438274,
+      "schema": {
+        "label": {
+          "type": "text",
+          "translatable": true,
+          "display_name": "Label"
+        },
+        "href": {
+          "type": "multilink",
+          "display_name": "Link",
+          "restrict_content_types": true,
+          "required": true,
+          "translatable": true,
+          "link_scope": "{0}/",
+          "force_link_scope": true,
+          "component_whitelist": [
+            "CategoryContentPage",
+            "ContactPage",
+            "Page",
+            "EcomPage"
+          ]
+        },
+        "target": {
+          "type": "option",
+          "use_uuid": true,
+          "options": [
+            {
+              "value": "_blank",
+              "name": "New tab / window"
+            },
+            {
+              "value": "_self",
+              "name": "Same window"
+            }
+          ],
+          "default_value": "_self",
+          "display_name": "Open linked page in"
+        },
+        "tab-advanced": {
+          "type": "tab",
+          "display_name": "Advanced",
+          "keys": [
+            "uiComponent",
+            "variant"
+          ]
+        },
+        "uiComponent": {
+          "type": "text",
+          "default_value": "Link"
+        },
+        "variant": {
+          "type": "text",
+          "default_value": "textlink"
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "TextLink",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    },
+    {
+      "name": "VideoPlayer",
+      "display_name": "Video Player Module",
+      "created_at": "2023-02-14T14:07:26.548Z",
+      "updated_at": "2023-02-14T14:07:26.548Z",
+      "id": 3438285,
+      "schema": {
+        "url": {
+          "type": "text",
+          "display_name": "Url",
+          "required": true,
+          "description": "Currently supported videos: Youtube",
+          "translatable": true
+        },
+        "title": {
+          "type": "text",
+          "display_name": "Titel",
+          "required": true,
+          "max_length": "55",
+          "description": "The title is used for accessibility. It will not be visible on the page.",
+          "translatable": true
+        },
+        "description": {
+          "type": "richtext",
+          "pos": 2,
+          "translatable": true,
+          "display_name": "Description",
+          "customize_toolbar": true,
+          "toolbar": [
+            "bold",
+            "underline",
+            "paragraph",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "list",
+            "h6",
+            "olist",
+            "link"
+          ],
+          "style_options": [
+            {
+              "value": "tw-subline tw-subline-2",
+              "name": "Subline H2"
+            },
+            {
+              "value": "tw-subline tw-subline-3",
+              "name": "Subline H3"
+            },
+            {
+              "value": "tw-subline tw-subline-4",
+              "name": "Subline H4"
+            },
+            {
+              "value": "tw-subline tw-subline-5",
+              "name": "Subline H5"
+            },
+            {
+              "value": "tw-subline tw-subline-6",
+              "name": "Subline H6"
+            },
+            {
+              "value": "superscript",
+              "name": "Superscript"
+            },
+            {
+              "value": "subscript",
+              "name": "Subscript"
+            }
+          ]
+        }
+      },
+      "image": null,
+      "preview_field": null,
+      "is_root": false,
+      "preview_tmpl": null,
+      "is_nestable": true,
+      "all_presets": [],
+      "preset_id": null,
+      "real_name": "Video Player Module",
+      "component_group_uuid": null,
+      "color": null,
+      "icon": null
+    }
+  ]
+}
