@@ -48,7 +48,9 @@ export default defineComponent({
   setup() {
     const userStore = useUserStore()
     const { accountManagerData } = storeToRefs(userStore)
-    userStore.fetchAccountManagerData()
+    if (!accountManagerData.value) {
+      userStore.fetchAccountManagerData()
+    }
 
     return { accountManagerData }
   },
