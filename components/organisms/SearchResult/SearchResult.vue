@@ -47,7 +47,6 @@ import CategoryTree from '~/components/molecules/CategoryTree/CategoryTree.vue'
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
 import Facets from '~/components/molecules/Facets/Facets.vue'
 import { PAGE_SIZE_DEFAULT } from '~/config/pagination.config'
-import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
 
 export default defineComponent({
   name: 'SearchResult',
