@@ -35,19 +35,12 @@
                   />
                 </div>
               </div>
-              <ul>
-                <li v-for="(entry, index) in cartEntries" :key="index">
-                  <b> Name: </b>
-                  {{ entry.product.name }}
-                  <b> Quantity: </b>
-                  {{ entry.quantity }}
-                </li>
-              </ul>
+
+              <CartTable :cart="cartEntries" />
 
               <div class="cart-page__info">
                 <div v-show="!ociBuyer" class="cart-page__information">
-                  <!-- REMOVE COMPUTED PROPERTY CART -->
-                  <PriceInformation :current-cart="cart" />
+                  <PriceInformation information-type="price" />
                 </div>
 
                 <div class="cart-page__actions">
