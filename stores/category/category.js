@@ -7,6 +7,7 @@ import {
   computed,
   onBeforeMount,
   onServerPrefetch,
+  watch,
 } from '@nuxtjs/composition-api'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
@@ -186,6 +187,7 @@ export const useCategoryStore = defineStore('category', () => {
 
   onBeforeMount(loadCategoryTree)
   onServerPrefetch(loadCategoryTree)
+  watch(route, loadCategoryTree)
 
   return {
     // state
