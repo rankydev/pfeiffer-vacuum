@@ -3,7 +3,7 @@
     class="cart-item-card"
     :class="{ 'cart-item-card-desktop': !isMiniCart }"
   >
-    <div class="cart-item-card-image">
+    <div v-if="productImage" class="cart-item-card-image">
       <Link :href="url">
         <ResponsiveImage
           :image="productImage"
@@ -29,18 +29,16 @@
       :label="$t('cart.details')"
       @click="toggleDetails"
     />
-    <div class="cart-item-card-details">
-      <div v-if="isDetailsExpanded && details">
-        <template v-for="detail in details" :key="detail.code">
-          <Badge
-            v-for="(variant, id) in detail.variationValues"
-            :key="detail.code + id"
-            class="cart-item-card-details__detail"
-            :label="detail.name"
-            :content="variant.displayValue"
-          />
-        </template>
-      </div>
+    <div v-if="isDetailsExpanded && details" class="cart-item-card-details">
+      <template v-for="detail in details">
+        <Tag
+          v-for="(variant, id) in detail.variationValues"
+          :key="detail.code + id"
+          class="cart-item-card-details__detail"
+          :label="detail.name"
+          :content="variant.displayValue"
+        />
+      </template>
     </div>
     <PromotionLabel
       v-if="promotion"
@@ -106,7 +104,7 @@ import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
-import Badge from '~/components/atoms/Badge/Badge'
+import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 
@@ -117,7 +115,7 @@ export default defineComponent({
     Link,
     ResponsiveImage,
     PvInput,
-    Badge,
+    Tag,
   },
   props: {
     product: {
@@ -127,18 +125,22 @@ export default defineComponent({
     price: {
       type: Object,
       default: null,
+      required: false,
     },
     quantity: {
       type: Number,
       default: 1,
+      required: false,
     },
     promotion: {
       type: Object,
       default: null,
+      required: false,
     },
     isMiniCart: {
       type: Boolean,
       default: false,
+      required: false,
     },
   },
   emits: ['addToShoppingList', 'delete', 'add', 'remove'],
@@ -176,7 +178,7 @@ export default defineComponent({
     }
 
     const productPrice = computed(() => {
-      return getPriceString(price.value.value)
+      return getPriceString(price.value?.value)
     })
 
     const totalPrice = computed(() => {
@@ -188,11 +190,11 @@ export default defineComponent({
     })
 
     const productName = computed(() => {
-      return product.value.name
+      return product.value?.name || ''
     })
 
     const orderNumber = computed(() => {
-      return product.value.orderNumber || ''
+      return product.value?.orderNumber || ''
     })
 
     const details = computed(
@@ -222,11 +224,11 @@ export default defineComponent({
       })
     )
     const isInactive = computed(() => {
-      return product.value.purchasable === false
+      return product.value?.purchasable === false
     })
 
     const getPromotion = computed(() => {
-      return promotion.value.description
+      return promotion.value?.description
     })
     const updateQuantity = (value) => {
       if (value > 1) {
@@ -268,26 +270,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.cart-item-header {
-  @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
-  @apply tw-mx-4;
-
-  &__quantity {
-    @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-9 tw-col-end-9;
-  }
-
-  &__price {
-    @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-10 tw-col-end-10;
-  }
-
-  &__total-price {
-    @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-11 tw-col-end-11;
-  }
-}
-
 .cart-item-card {
   @apply tw-grid tw-grid-cols-12 tw-auto-rows-auto;
   @apply tw-border-b tw-border-b-pv-grey-80;
@@ -379,7 +361,6 @@ export default defineComponent({
     @apply tw-col-start-12 tw-col-end-13;
     @apply tw-mb-auto;
     @apply tw-ml-auto;
-    padding: 0 0 0 8px !important;
   }
 
   &-details-button {
@@ -458,6 +439,7 @@ export default defineComponent({
 
       @screen lg {
         @apply tw-ml-0;
+        @apply tw-my-auto;
         @apply tw-col-start-2 tw-col-end-8;
       }
 
@@ -471,16 +453,16 @@ export default defineComponent({
 
     &-quantity {
       @screen lg {
-        @apply tw-row-start-1 tw-row-end-1;
+        @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-9 tw-col-end-10;
         @apply tw-w-20;
-        @apply tw-m-auto;
+        @apply tw-my-auto;
       }
     }
 
     &-price-error {
       @screen lg {
-        @apply tw-row-start-1 tw-row-end-1;
+        @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-10 tw-col-end-12;
         @apply tw-m-auto;
       }
@@ -497,6 +479,7 @@ export default defineComponent({
         @apply tw-col-start-10 tw-col-end-11;
         @apply tw-text-lg;
         @apply tw-leading-7;
+        @apply tw-mx-auto;
       }
 
       &__label {
@@ -515,6 +498,8 @@ export default defineComponent({
       @screen lg {
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-11 tw-col-end-12;
+        @apply tw-mt-auto;
+        @apply tw-mx-auto;
       }
 
       &__label {
@@ -535,7 +520,6 @@ export default defineComponent({
     &-delete {
       @screen lg {
         @apply tw-mt-auto;
-        @apply tw-mr-auto;
       }
     }
 
@@ -545,6 +529,7 @@ export default defineComponent({
       @screen lg {
         @apply tw-row-start-2 tw-row-end-3;
         @apply tw-col-start-2 tw-col-end-8;
+        @apply tw-mt-0;
       }
     }
 

@@ -112,3 +112,50 @@ export default [
       '<!--#storyblok#{"name": "MainNavigationLink", "space": "144293", "uid": "8b4b8c55-9119-4248-b929-0a1d8d306829", "id": "104316822"}-->',
   },
 ]
+
+export const OCIHeaderEntries = [
+  {
+    href: '#',
+    label: 'Home',
+    target: '_self',
+    component: 'MainNavigationLink',
+    navigationEntries: [],
+  },
+  {
+    href: '#',
+    label: 'Produkte',
+    target: '_self',
+    component: 'MainNavigationLink',
+    navigationEntries: [
+      {
+        href: '#',
+        label: 'Sub1',
+        target: '_self',
+        component: 'MainNavigationLink',
+        navigationEntries: [
+          {
+            href: '#',
+            label: 'Sub3',
+            target: '_self',
+            component: 'MainNavigationLink',
+            navigationEntries: [],
+          },
+          {
+            href: '#',
+            label: 'Sub4',
+            target: '_self',
+            component: 'MainNavigationLink',
+            navigationEntries: [],
+          },
+        ],
+      },
+      {
+        href: '#',
+        label: 'Sub2',
+        target: '_self',
+        component: 'MainNavigationLink',
+        navigationEntries: [],
+      },
+    ],
+  },
+]
