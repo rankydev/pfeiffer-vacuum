@@ -37,5 +37,8 @@
   "priceOnRequest": "价格请咨询",
   "details": "详",
   "addToCartSuccess": "已成功将产品添加到购物车",
-  "addToCartError": "将产品添加到购物车时发生错误"
+  "addToCartError": "将产品添加到购物车时发生错误",
+  "editCart": "编辑购物车",
+  "checkout": "前往结帐",
+  "shoppingCart": "购物车"
 }

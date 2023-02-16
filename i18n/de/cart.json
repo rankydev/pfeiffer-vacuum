@@ -39,5 +39,8 @@
   "details": "Details",
   "addToCartSuccess": "Produkt erfolgreich zum Warenkorb hinzugefügt",
   "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten",
-  "pricePerUnit": "Preis / Stück"
+  "pricePerUnit": "Preis / Stück",
+  "editCart": "Warenkorb bearbeiten",
+  "checkout": "Zur Kasse",
+  "shoppingCart": "Warenkorb"
 }

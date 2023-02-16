@@ -36,6 +36,7 @@
           </div>
         </template>
       </Popup>
+      <CartOverlay />
     </client-only>
 
     <Link

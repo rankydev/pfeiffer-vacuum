@@ -38,5 +38,8 @@
   "details": "Details",
   "addToCartSuccess": "Successfully added product to cart",
   "addToCartError": "An error occured while adding product to cart",
-  "pricePerUnit": "Price / PU"
+  "pricePerUnit": "Price / PU",
+  "editCart": "Edit cart",
+  "checkout": "Go to Checkout",
+  "shoppingCart": "Shopping Cart"
 }

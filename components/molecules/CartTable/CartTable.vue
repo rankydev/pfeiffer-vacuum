@@ -22,10 +22,11 @@
       />
     </div>
     <CartItemCard
-      v-for="({ product, price, quantity, promotion }, id) in sortedCart"
-      :key="getUniqueId(id)"
+      v-for="({ product, quantity, promotion }, index) in sortedCart ||
+      getProducts"
+      :key="getUniqueId(index)"
       :product="product"
-      :price="price"
+      :price="getPriceItem(index)"
       :quantity="quantity"
       :promotion="promotion"
       :is-mini-cart="isMiniCart"
@@ -38,10 +39,12 @@
 </template>
 
 <script>
-import { defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
 import Button from '~/components/atoms/Button/Button'
 import useUniqueKey from '~/composables/useUniqueKey'
+import { useCartStore } from '~/stores/cart'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'CartTable',
@@ -50,11 +53,6 @@ export default defineComponent({
     Button,
   },
   props: {
-    cart: {
-      type: Array,
-      default: () => [],
-      required: true,
-    },
     isMiniCart: {
       type: Boolean,
       default: false,
@@ -63,18 +61,28 @@ export default defineComponent({
   },
   emits: ['update', 'addToShoppingList'],
   setup(props, { emit }) {
-    const { cart } = toRefs(props)
-    const sortedCart = ref(cart.value)
     const priceSortedAsc = ref(true)
     const totalPriceSortedAsc = ref(true)
+    const prices = ref([])
+    const cartStore = useCartStore()
+    const { currentCart } = storeToRefs(cartStore)
+    const { addProductToCart } = cartStore
+    const getProducts = computed(() => currentCart.value.entries)
+    const sortedCart = ref(null)
 
-    const getPrice = (cartItem) => {
-      return cartItem?.price?.value ? cartItem.price.value : 0
+    const getPriceItem = (index) => {
+      if (prices[index]) return prices[index]
+      return null
+    }
+
+    const getPrice = (priceItem) => {
+      return priceItem?.value ? priceItem.value : 0
     }
 
     const sortByPrice = () => {
+      const products = sortedCart.value || getProducts.value
       priceSortedAsc.value = !priceSortedAsc.value
-      sortedCart.value = sortedCart.value.sort((a, b) => {
+      sortedCart.value = products.sort((a, b) => {
         return priceSortedAsc.value
           ? getPrice(a) - getPrice(b)
           : getPrice(b) - getPrice(a)
@@ -82,33 +90,34 @@ export default defineComponent({
     }
 
     const sortByTotalPrice = () => {
+      const products = sortedCart.value || getProducts.value
       totalPriceSortedAsc.value = !totalPriceSortedAsc.value
-      sortedCart.value = sortedCart.value.sort((a, b) => {
+      sortedCart.value = products.value.sort((a, b) => {
         return totalPriceSortedAsc.value
-          ? getPrice(a) * a.quantity - getPrice(b) * b.quantity
-          : getPrice(b) * b.quantity - getPrice(a) * a.quantity
+          ? getPrice(a) * a?.quantity - getPrice(b) * b?.quantity
+          : getPrice(b) * b?.quantity - getPrice(a) * a?.quantity
       })
     }
 
     const addToCart = (product) => {
-      sortedCart.value.find((item) => item.product === product).quantity += 1
-      emit('update', sortedCart.value)
+      addProductToCart(product?.code, 1)
     }
 
     const removeFromCart = (product) => {
-      sortedCart.value.find((item) => item.product === product).quantity -= 1
-      emit('update', sortedCart.value)
+      addProductToCart(product?.code, -1)
     }
 
     const deleteFromCart = (product) => {
       sortedCart.value = sortedCart.value.filter(
-        (item) => item.product !== product
+        (item) => item?.product !== product
       )
       emit('update', sortedCart.value)
     }
 
     const addToShoppingList = (product) => {
-      const cartItem = sortedCart.value.find((item) => item.product === product)
+      const cartItem = sortedCart.value.find(
+        (item) => item?.product === product
+      )
       emit('addToShoppingList', cartItem)
     }
     const getUniqueId = (id) => useUniqueKey('CART_TABLE_' + id)
@@ -122,6 +131,8 @@ export default defineComponent({
       deleteFromCart,
       addToShoppingList,
       getUniqueId,
+      getPriceItem,
+      getProducts,
     }
   },
 })
