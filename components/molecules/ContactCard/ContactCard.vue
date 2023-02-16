@@ -6,6 +6,14 @@
       </h2>
       <Icon icon="perm_contact_calendar" size="large" />
     </div>
+    <div class="contact-card__tags">
+      <Tag
+        v-for="(tag, id) in tags"
+        :key="id"
+        :content="tag.displayValue"
+        class="contact-card__tags--tag"
+      />
+    </div>
     <div class="contact-card__information">
       <div>{{ street }}</div>
       <div>{{ postalCode }}, {{ city }}</div>
@@ -47,6 +55,10 @@ export default defineComponent({
       type: String,
       default: undefined,
     },
+    tags: {
+      type: Array,
+      default: () => [],
+    },
     street: {
       type: String,
       default: undefined,
@@ -83,15 +95,32 @@ export default defineComponent({
   @apply tw-bg-pv-white;
   @apply tw-rounded-md;
   @apply tw-p-6;
+  @apply tw-w-fit;
 
   &__headline-with-icon {
     @apply tw-flex;
-    @apply tw-pb-2;
+    @apply tw-pb-2.5;
     @apply tw-text-pv-grey-16;
 
     &--headline {
       @apply tw-w-full;
       @apply tw-text-pv-grey-16;
+    }
+  }
+
+  &__tags {
+    @apply tw-flex;
+    @apply tw-gap-x-4;
+    @apply tw-pb-2.5;
+
+    &--tag {
+      @apply tw-bg-pv-red;
+      font-size: 10px;
+      @apply tw-leading-4;
+
+      span {
+        @apply tw-text-pv-white;
+      }
     }
   }
 

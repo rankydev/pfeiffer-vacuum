@@ -1,7 +1,7 @@
 import ContactCard from './ContactCard'
 import content from './ContactCard.stories.content'
 
-const { companyName, street, postalCode, city, country, phone } = content
+const { companyName, tags, street, postalCode, city, country, phone } = content
 
 export default {
   title: 'Molecules/m_147 ContactCard',
@@ -25,11 +25,11 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-    <div class="documentation-preview" style="background-color:#000000; padding: 24px">
+    <div class="documentation-preview" style="background-color:#000000; padding: 24px; width: fit-content">
     <ContactCard v-bind="args"/>
     </div>
   `,
 })
 
 export const Default = Template.bind({})
-Default.args = { companyName, street, postalCode, city, country, phone }
+Default.args = { companyName, tags, street, postalCode, city, country, phone }
