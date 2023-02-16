@@ -226,7 +226,7 @@ export default defineComponent({
 
     &--back {
       @apply tw-text-pv-red;
-      place-self: center;
+      @apply tw-place-self-center;
     }
   }
 
