@@ -147,12 +147,6 @@ export default defineComponent({
       }
     }
 
-    &__info-box {
-      @apply tw-border;
-      @apply tw-text-pv-white;
-      @apply tw-bg-pv-green-lighter;
-    }
-
     &__close {
       @apply tw-ml-auto;
       @apply tw-cursor-pointer;

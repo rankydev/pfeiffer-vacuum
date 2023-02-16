@@ -40,5 +40,9 @@
   "addToCartError": "장바구니에 제품을 추가하는 동안 오류가 발생했습니다.",
   "editCart": "장바구니 편집",
   "checkout": "결제로 이동",
-  "shoppingCart": "장바구니"
+  "shoppingCart": "장바구니",
+  "deleteFromCartSuccess": "제품을 장바구니에서 성공적으로 삭제했습니다.",
+  "deleteFromCartError": "장바구니에서 제품을 삭제하는 동안 오류가 발생했습니다.",
+  "updateCartSuccess": "장바구니가 성공적으로 업데이트되었습니다.",
+  "updateCartError": "장바구니를 업데이트하는 동안 오류가 발생했습니다."
 }

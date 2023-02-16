@@ -42,5 +42,9 @@
   "pricePerUnit": "Preis / Stück",
   "editCart": "Warenkorb bearbeiten",
   "checkout": "Zur Kasse",
-  "shoppingCart": "Warenkorb"
+  "shoppingCart": "Warenkorb",
+  "deleteFromCartSuccess": "Produkt erfolgreich aus dem Warenkorb entfernt",
+  "deleteFromCartError": "Beim Entfernen des Produktes aus dem Warenkorb ist ein Fehler aufgetreten",
+  "updateCartSuccess": "Warenkorb erfolgreich aktualisiert",
+  "updateCartError": "Beim Aktualisieren des Warenkorbs ist ein Fehler aufgetreten"
 }

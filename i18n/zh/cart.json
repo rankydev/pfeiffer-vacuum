@@ -40,5 +40,9 @@
   "addToCartError": "将产品添加到购物车时发生错误",
   "editCart": "编辑购物车",
   "checkout": "前往结帐",
-  "shoppingCart": "购物车"
+  "shoppingCart": "购物车",
+  "deleteFromCartSuccess": "已成功从购物车中删除产品",
+  "deleteFromCartError": "从购物车中删除产品时发生错误",
+  "updateCartSuccess": "已成功更新购物车",
+  "updateCartError": "更新购物车时发生错误"
 }

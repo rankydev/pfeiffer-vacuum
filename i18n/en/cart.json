@@ -41,5 +41,9 @@
   "pricePerUnit": "Price / PU",
   "editCart": "Edit cart",
   "checkout": "Go to Checkout",
-  "shoppingCart": "Shopping Cart"
+  "shoppingCart": "Shopping Cart",
+  "deleteFromCartSuccess": "Successfully deleted product from cart",
+  "deleteFromCartError": "An error occured while deleting product from cart",
+  "updateCartSuccess": "Successfully updated cart",
+  "updateCartError": "An error occured while updating cart"
 }
