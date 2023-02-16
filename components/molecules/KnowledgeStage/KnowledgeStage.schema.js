@@ -2,7 +2,7 @@ import Richtext from '~/components/atoms/Richtext/Richtext.schema'
 
 export default {
   name: 'KnowledgeStage',
-  display_name: 'Knowledge Stage Module',
+  display_name: 'Knowledge Stage',
   schema: {
     image: {
       type: 'asset',
@@ -18,11 +18,11 @@ export default {
     },
     hours: {
       type: 'text',
-      display_name: 'Hours',
+      display_name: 'Duration Hours',
     },
     minutes: {
       type: 'text',
-      display_name: 'Minutes',
+      display_name: 'Duration Minutes',
     },
     isWhitepaper: {
       type: 'boolean',
@@ -35,15 +35,10 @@ export default {
       type: 'text',
       display_name: 'Headline',
     },
-    // description: {
-    //   type: 'text',
-    //   display_name: 'Description',
-    // },
     summary: {
       ...Richtext.schema.richtext,
       display_name: 'Summary',
       max_length: '250',
-      pos: 3,
     },
     button: {
       type: 'bloks',
@@ -52,13 +47,6 @@ export default {
       component_whitelist: ['Button'],
       display_name: 'Button',
     },
-    // stageContent: {
-    //   type: 'bloks',
-    //   maximum: 1,
-    //   restrict_components: true,
-    //   component_whitelist: ['StageContent'],
-    //   display_name: 'Stage Content',
-    // },
   },
   image: null,
   preview_field: null,
