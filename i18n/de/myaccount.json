@@ -37,6 +37,10 @@
   "deleteDeliveryAddressSuccess": "Lieferadresse wurde erfolgreich gelöscht.",
   "setDefaultDeliveryAddressSuccess": "Lieferadresse erfolgreich als Standard-Lieferadresse gespeichert.",
   "userStatus": {
+    "undefined": {
+      "requestInfo": "Sie können keine Anfragen senden, da etwas schiefgelaufen ist",
+      "functionalityInfo": "Sie können diese Funktionalität nicht nutzen, da etwas schiefgelaufen ist"
+    },
     "lead": {
       "requestInfo": "Bitte Firmendaten hinzufügen um Anfragen zu senden",
       "functionalityInfo": "Bitte Kundendaten hinzufügen um diese Funktionalität zu nutzen"

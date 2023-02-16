@@ -34,10 +34,10 @@ export const useAxiosForHybris = () => {
   }
 
   if (req) {
-    if (!req.axios) {
-      req.axios = createAxios()
+    if (!req.axiosForHybris) {
+      req.axiosForHybris = createAxios()
     }
-    return { axios: req.axios }
+    return { axios: req.axiosForHybris }
   }
 
   if (!axios) {

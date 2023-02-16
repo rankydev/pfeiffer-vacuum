@@ -30,3 +30,5 @@ export const normalData = {
     { label: 'Node 3' },
   ],
 }
+
+export default {}

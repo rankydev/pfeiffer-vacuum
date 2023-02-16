@@ -21,8 +21,7 @@
 <script>
 import { defineComponent, toRefs } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
-
-const possibleValues = [9, 30, 90, 120]
+import { PAGE_SIZE_OPTIONS } from '~/config/pagination.config'
 
 export default defineComponent({
   name: 'CategoryPageSizeSelection',
@@ -31,7 +30,7 @@ export default defineComponent({
     active: {
       type: Number,
       required: true,
-      validator: (val) => possibleValues.includes(val),
+      validator: (val) => PAGE_SIZE_OPTIONS.includes(val),
     },
   },
   emits: ['change'],
@@ -43,7 +42,7 @@ export default defineComponent({
     }
 
     return {
-      values: possibleValues,
+      values: PAGE_SIZE_OPTIONS,
       isActiveValue,
     }
   },
@@ -69,6 +68,7 @@ export default defineComponent({
     @apply tw-border-2 tw-border-pv-transparent;
     @apply tw-rounded;
     @apply tw-text-pv-grey-48;
+    -webkit-text-fill-color: var(--pv-grey-48);
     flex-basis: auto;
 
     &:hover {
@@ -78,11 +78,13 @@ export default defineComponent({
 
       .button__label {
         @apply tw-text-pv-white;
+        -webkit-text-fill-color: var(--pv-white);
       }
     }
 
     .button__label {
       @apply tw-text-pv-grey-48;
+      -webkit-text-fill-color: var(--pv-grey-48);
     }
 
     &--active {
@@ -90,6 +92,7 @@ export default defineComponent({
 
       .button__label {
         @apply tw-text-pv-red;
+        -webkit-text-fill-color: var(--pv-red);
       }
 
       @include rounded-border-bottom;
@@ -102,6 +105,7 @@ export default defineComponent({
 
         .button__label {
           @apply tw-text-pv-red;
+          -webkit-text-fill-color: var(--pv-red);
         }
       }
     }
