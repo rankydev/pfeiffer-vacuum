@@ -8,8 +8,20 @@
       @input="getSearchSuggestionsResult"
       @submit="closeSearchfield"
       @click:icon="clearInput"
+      @focus="toggleSuggestionsOnFocus"
     />
 
+    <div
+      v-if="currentSuggestions.length && (isFocused || suggestionHover)"
+      class="document-search-input__suggestions"
+    >
+      <SearchSuggestions
+        :items="currentSuggestions"
+        @mouseover="suggestionHover = true"
+        @mouseleave="suggestionHover = false"
+      />
+    </div>
+    <!--
     <div
       v-if="isOpen && currentSuggestions.length && searchTerm.length"
       class="document-search-input__suggestions"
@@ -22,7 +34,7 @@
         :search-type="activeTab"
         @closeModal="closeSearchfield(item.value)"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -38,22 +50,27 @@ import {
 } from '@nuxtjs/composition-api'
 
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
-import { useEmpolis } from '~/composables/useEmpolis'
+import { useEmpolisStore } from '~/stores/empolis'
 import { useDebounce } from '~/composables/useDebounce'
-import SearchButton from '~/components/molecules/SearchButton/SearchButton'
+import SearchSuggestions from '~/components/molecules/SearchSuggestions/SearchSuggestions.vue'
 
 export default defineComponent({
   components: {
     PvInput,
-    SearchButton,
+    // SearchButton,
+    // SearchInput,
+    SearchSuggestions,
   },
   setup() {
     const router = useRouter()
     const route = useRoute()
     const { app } = useContext()
-    const { getSearchSuggestions } = useEmpolis()
+    const empolisStore = useEmpolisStore()
     const { debounce } = useDebounce()
     const isDesktop = app.$breakpoints.isDesktop
+    const isFocused = ref(true)
+
+    const { fetchDocumentSuggestions } = empolisStore
 
     const pvInput = ref(null)
     const currentSuggestions = ref([])
@@ -62,6 +79,7 @@ export default defineComponent({
     const searchTermInitial = ref(route.value.query.searchTerm || '')
     const searchTerm = ref(searchTermInitial.value)
     const isOpen = ref(false)
+    const suggestionHover = ref(true)
 
     const activeTab = computed(() => route.value.query.searchType)
 
@@ -119,16 +137,26 @@ export default defineComponent({
       pushSearchTerm(value)
     }
 
+    const toggleSuggestionsOnFocus = async (val) => {
+      isFocused.value = val
+    }
+
     const getSearchSuggestionsResult = debounce(async () => {
       if (activeTab.value !== 'documents') {
         return
       }
 
-      const results = await empolisStore.getSearchSuggestions(
-        searchTermDocuments.value,
-        3
+      currentSuggestions.value = await fetchDocumentSuggestions(
+        searchTermDocuments.value
       )
-      currentSuggestions.value = results
+
+      console.log('currentsugge', currentSuggestions.value)
+
+      // const results = await empolisStore.fetchDocumentSuggestions(
+      //   searchTermDocuments.value,
+      //   3
+      // )
+
       isOpen.value = currentSuggestions.value.length > 0
     })
 
@@ -149,6 +177,9 @@ export default defineComponent({
       setSearchTerm,
       isOpen,
       clearInput,
+      isFocused,
+      toggleSuggestionsOnFocus,
+      suggestionHover,
     }
   },
 })

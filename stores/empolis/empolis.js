@@ -13,6 +13,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
   const searchResults = ref(null)
   const searchResultsLoading = ref(false)
   const searchResultsLoadingError = ref(false)
+  const searchSuggestions = ref([])
   const { logger } = useLogger('empolisStore')
 
   const route = useRoute()
@@ -118,7 +119,8 @@ export const useEmpolisStore = defineStore('empolis', () => {
     productDownloads.value = new Map()
   })
 
-  const getSearchSuggestions = async (text, maxCount) => {
+  const fetchDocumentSuggestions = async (text, maxCount = 3) => {
+    console.log('here')
     try {
       const suggestions = await axios.$post('/suggest', {
         query: text,
@@ -152,6 +154,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
     searchResultsLoadingError,
     getProductDownloads,
     loadByPath,
-    getSearchSuggestions,
+    fetchDocumentSuggestions,
+    searchSuggestions,
   }
 })

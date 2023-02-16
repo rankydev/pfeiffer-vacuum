@@ -37,36 +37,52 @@
         </div>
       </div>
     </GenericModal>
+    <!-- <SearchInput
+      class="search-header__field"
+      @focus="toggleSuggestionsOnFocus"
+      @submit="closeSearchfield"
+    /> -->
     <SearchInput
       class="search-header__field"
       @focus="toggleSuggestionsOnFocus"
       @submit="closeSearchfield"
     />
-    <div
+    <!-- <div
       v-if="currentSuggestions.length && (isFocused || suggestionHover)"
       class="search-header__suggestions--desktop"
       @mouseover="suggestionHover = true"
       @mouseleave="suggestionHover = false"
+    > -->
+    <div
+      v-if="currentSuggestions.length && (isFocused || suggestionHover)"
+      class="search-header__suggestions--desktop"
     >
-      <SearchButton
+      <SearchSuggestions
+        :items="currentSuggestions"
+        @mouseover="suggestionHover = true"
+        @mouseleave="suggestionHover = false"
+        @closeModal="closeSearchfield"
+      />
+    </div>
+    <!-- <SearchButton
         v-for="item in currentSuggestions"
         :key="item.value"
         class="search-header__suggestions--result"
         :title="item.value"
         @closeModal="closeSearchfield"
-      />
-    </div>
+      /> -->
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
 import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
-
 import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
 import SearchButton from '~/components/molecules/SearchButton/SearchButton'
 import { useCategoryStore } from '~/stores/category/category'
+import SearchSuggestions from '~/components/molecules/SearchSuggestions/SearchSuggestions.vue'
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
@@ -75,6 +91,7 @@ export default defineComponent({
     Icon,
     GenericModal,
     SearchButton,
+    SearchSuggestions,
   },
   props: {
     hasOpacity: {
@@ -88,10 +105,9 @@ export default defineComponent({
     const isDesktop = app.$breakpoints.isDesktop
     const isOpen = ref(false)
     const isFocused = ref(true)
-    const suggestionHover = ref(false)
+    const suggestionHover = ref(true)
 
     const { currentSuggestions } = storeToRefs(categoryStore)
-
     const { blurSuggestions } = categoryStore
 
     const toggleSearchfield = () => {

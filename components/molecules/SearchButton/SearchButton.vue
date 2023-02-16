@@ -11,7 +11,6 @@
 import { defineComponent, useContext, useRouter } from '@nuxtjs/composition-api'
 import { useCategoryStore } from '~/stores/category/category'
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: { Icon },
