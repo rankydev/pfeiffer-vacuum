@@ -27,7 +27,13 @@ export const useCartStore = defineStore('cart', () => {
   const currentCartGuid = computed(() => currentCart.value?.guid)
 
   const cartApi = useCartApi(currentCart, currentCartGuid)
-  const { getOrCreateCart, mergeCarts, addToCart } = cartApi
+  const {
+    getOrCreateCart,
+    mergeCarts,
+    addToCart,
+    updateQuantity,
+    deleteEntry,
+  } = cartApi
 
   const initialCartLoad = async () => {
     const anonymousCartCookie = JSON.parse(getCookie('cart', null))
@@ -64,6 +70,37 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
+  const addProductToCartWithoutToast = async (code, quantity) => {
+    try {
+      await addToCart(code, quantity)
+    } catch (e) {
+      logger.error('Could not add product to cart', e)
+    }
+  }
+
+  const deleteProductFromCartWithoutToast = async (entryNumber) => {
+    try {
+      await deleteEntry(entryNumber)
+    } catch (e) {
+      logger.error('Could not delete product from cart', e)
+    }
+  }
+
+  const updateProductQuantityFromCartWithoutToast = async (
+    entryNumber,
+    quantity
+  ) => {
+    try {
+      if (quantity === 0) {
+        await deleteEntry(entryNumber)
+      } else {
+        await updateQuantity(entryNumber, quantity)
+      }
+    } catch (e) {
+      logger.error('Could not update product quantity', e)
+    }
+  }
+
   onBeforeMount(initialCartLoad)
   onServerPrefetch(initialCartLoad)
 
@@ -83,5 +120,8 @@ export const useCartStore = defineStore('cart', () => {
 
     // Actions
     addProductToCart,
+    addProductToCartWithoutToast,
+    updateProductQuantityFromCartWithoutToast,
+    deleteProductFromCartWithoutToast,
   }
 })

@@ -4,7 +4,7 @@
       <h2 class="cart-overlay-title__title">
         <span>{{ $t('cart.shoppingCart') }}</span>
         <span
-          v-if="getTotalCartUniqueItems > 0"
+          v-if="getTotalCartUniqueItems"
           class="cart-overlay-title__title-count"
         >
           ({{ getTotalCartUniqueItems }})
@@ -29,7 +29,7 @@
           {{ $t('cart.overall2') }}
         </span>
         <span class="cart-overlay-content__total-value">
-          {{ cartTotal }}
+          {{ getTotalCartPrice }}
         </span>
       </div>
       <div class="cart-overlay-content__navigation">
@@ -37,7 +37,6 @@
           class="cart-overlay-content__navigation-checkout"
           :label="$t('cart.checkout')"
           icon="arrow_forward"
-          @click="goToCheckout"
         />
         <Button
           class="cart-overlay-content__navigation-edit"
@@ -69,55 +68,45 @@ export default defineComponent({
   components: {
     CartTable,
   },
-  setup() {
+  props: {
+    isOpen: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+  },
+  emits: ['close'],
+  setup(props, { emit }) {
     const router = useRouter()
     const { localePath } = useContext()
     const isMiniCart = ref(true)
     const cartStore = useCartStore()
     const { currentCart } = storeToRefs(cartStore)
-    const { entries } = currentCart.value
-    const isOpen = ref(true)
-    const prices = ref([])
 
     const getTotalCartUniqueItems = computed(() => {
       return currentCart?.value?.totalItems
     })
-    const getPrice = (index) => {
-      return prices[index]?.value ? prices[index]?.value : 0
-    }
 
-    const cartTotalValue = computed(() => {
-      let total = 0
-      entries?.forEach((entry, index) => {
-        total += getPrice(getPrice(index)) * entry.quantity
-      })
-      return total
+    const getTotalCartPrice = computed(() => {
+      return currentCart?.value?.totalPrice?.formattedValue || '-'
     })
-    const cartTotal = computed(() => {
-      return `€ ${cartTotalValue.value.toFixed(2).toLocaleString()}`
-    })
-    const goToCheckout = () => {
-      // Todo: !!! ask for route maybe wrong !!!!
-      router.push({ name: 'shop-checkout' })
-      closeOverlay()
-    }
+
     const goToCart = () => {
       router.push(localePath('shop-cart'))
       closeOverlay()
     }
+
     const closeOverlay = () => {
-      isOpen.value = false
+      emit('close')
     }
 
     return {
       currentCart,
       isMiniCart,
-      cartTotal,
-      isOpen,
       closeOverlay,
-      goToCheckout,
       goToCart,
       getTotalCartUniqueItems,
+      getTotalCartPrice,
     }
   },
 })
@@ -133,7 +122,7 @@ export default defineComponent({
   @apply tw-flex-col;
   @apply tw-h-full;
   @apply tw-fixed tw-top-0 tw-right-0;
-  @apply tw-z-[9999] !important;
+  @apply tw-z-[9999];
   @screen md {
     @apply tw-ml-0;
     @apply tw-w-1/2;
@@ -156,6 +145,12 @@ export default defineComponent({
       &-count {
         @apply tw-font-normal;
       }
+    }
+
+    &__info-box {
+      @apply tw-border;
+      @apply tw-text-pv-white;
+      @apply tw-bg-pv-green-lighter;
     }
 
     &__close {

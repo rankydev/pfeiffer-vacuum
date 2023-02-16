@@ -36,17 +36,14 @@
           </div>
         </template>
       </Popup>
-      <CartOverlay />
     </client-only>
 
-    <Link
-      :href="localePath('shop-cart')"
-      class="shop-navigation__shopping-cart tw-flex"
-    >
+    <div class="shop-navigation__shopping-cart tw-flex" @click="toggleOverlay">
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
       <!-- TODO: Add correct cart item count indicator -->
       <span>{{ cartItemCount }}</span>
-    </Link>
+    </div>
+    <CartOverlay :is-open="isOverlayOpen" @close="toggleOverlay" />
   </div>
 </template>
 
@@ -56,12 +53,12 @@ import {
   defineComponent,
   useContext,
   useRouter,
+  ref,
 } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 import { useCartStore } from '~/stores/cart'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import Link from '~/components/atoms/Link/Link.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import MyAccountNavigation from '~/components/organisms/MyAccount/partials/MyAccountNavigation/MyAccountNavigation.vue'
@@ -71,7 +68,6 @@ import { storeToRefs } from 'pinia'
 export default defineComponent({
   components: {
     Icon,
-    Link,
     Button,
     LoadingSpinner,
     MyAccountNavigation,
@@ -111,6 +107,11 @@ export default defineComponent({
       }
     }
 
+    const isOverlayOpen = ref(false)
+    const toggleOverlay = () => {
+      isOverlayOpen.value = !isOverlayOpen.value
+    }
+
     return {
       myAccountLabel,
       userStore,
@@ -118,6 +119,8 @@ export default defineComponent({
       isLoggedIn,
       isLoginProcess,
       cartItemCount,
+      isOverlayOpen,
+      toggleOverlay,
 
       logout: userStore.logout,
       handleMyAccount,
@@ -161,6 +164,8 @@ export default defineComponent({
   }
 
   &__shopping-cart {
+    @apply tw-cursor-pointer;
+
     @apply tw-ml-0;
 
     @screen md {

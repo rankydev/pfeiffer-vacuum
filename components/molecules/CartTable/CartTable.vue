@@ -10,7 +10,7 @@
         shape="plain"
         icon="unfold_more"
         :label="$t('cart.pricePerUnit')"
-        @click="sortByPrice"
+        @click="useSortByPrice"
       />
       <Button
         class="cart-item-header__totalPrice"
@@ -18,22 +18,25 @@
         shape="plain"
         icon="unfold_more"
         :label="$t('cart.totalPrice')"
-        @click="sortByTotalPrice"
+        @click="useSortByTotalPrice"
       />
     </div>
     <CartItemCard
-      v-for="({ product, quantity, promotion }, index) in sortedCart ||
-      getProducts"
-      :key="getUniqueId(index)"
+      v-for="{
+        product,
+        quantity,
+        promotion,
+        basePrice,
+        code,
+      } in getSortedProducts"
+      :key="getUniqueId(code)"
       :product="product"
-      :price="getPriceItem(index)"
+      :price="basePrice"
       :quantity="quantity"
       :promotion="promotion"
       :is-mini-cart="isMiniCart"
-      @add="addToCart"
-      @remove="removeFromCart"
+      @update="updateCartQuantity"
       @delete="deleteFromCart"
-      @addToShoppingList="addToShoppingList"
     />
   </div>
 </template>
@@ -60,79 +63,87 @@ export default defineComponent({
     },
   },
   emits: ['update', 'addToShoppingList'],
-  setup(props, { emit }) {
-    const priceSortedAsc = ref(true)
-    const totalPriceSortedAsc = ref(true)
-    const prices = ref([])
+  setup() {
+    const priceSortedDsc = ref(false)
+    const totalPriceDsc = ref(false)
+    const lastSortedBy = ref(null)
     const cartStore = useCartStore()
     const { currentCart } = storeToRefs(cartStore)
-    const { addProductToCart } = cartStore
-    const getProducts = computed(() => currentCart.value.entries)
-    const sortedCart = ref(null)
-
-    const getPriceItem = (index) => {
-      if (prices[index]) return prices[index]
-      return null
-    }
-
-    const getPrice = (priceItem) => {
-      return priceItem?.value ? priceItem.value : 0
-    }
+    const {
+      deleteProductFromCartWithoutToast,
+      updateProductQuantityFromCartWithoutToast,
+    } = cartStore
+    const getUniqueId = (id) => useUniqueKey('CART_TABLE_' + id)
+    const getProducts = computed(() => {
+      return currentCart?.value?.entries
+    })
+    const getSortedProducts = computed(() => {
+      if (lastSortedBy.value === 'price') {
+        return sortByPrice()
+      }
+      if (lastSortedBy.value === 'totalPrice') {
+        return sortByTotalPrice()
+      }
+      return getProducts.value
+    })
 
     const sortByPrice = () => {
-      const products = sortedCart.value || getProducts.value
-      priceSortedAsc.value = !priceSortedAsc.value
-      sortedCart.value = products.sort((a, b) => {
-        return priceSortedAsc.value
-          ? getPrice(a) - getPrice(b)
-          : getPrice(b) - getPrice(a)
+      return [...getProducts.value].sort((a, b) => {
+        return priceSortedDsc.value
+          ? b?.basePrice?.value - a?.basePrice?.value
+          : a?.basePrice?.value - b?.basePrice?.value
       })
     }
 
     const sortByTotalPrice = () => {
-      const products = sortedCart.value || getProducts.value
-      totalPriceSortedAsc.value = !totalPriceSortedAsc.value
-      sortedCart.value = products.value.sort((a, b) => {
-        return totalPriceSortedAsc.value
-          ? getPrice(a) * a?.quantity - getPrice(b) * b?.quantity
-          : getPrice(b) * b?.quantity - getPrice(a) * a?.quantity
+      return [...getProducts.value].sort((a, b) => {
+        return totalPriceDsc.value
+          ? b?.totalPrice?.value - a?.totalPrice?.value
+          : a?.totalPrice?.value - b?.totalPrice?.value
       })
     }
 
-    const addToCart = (product) => {
-      addProductToCart(product?.code, 1)
+    const useSortByTotalPrice = () => {
+      if (lastSortedBy.value === 'totalPrice') {
+        totalPriceDsc.value = !totalPriceDsc.value
+      } else {
+        totalPriceDsc.value = true
+        lastSortedBy.value = 'totalPrice'
+      }
     }
 
-    const removeFromCart = (product) => {
-      addProductToCart(product?.code, -1)
+    const useSortByPrice = () => {
+      if (lastSortedBy.value === 'totalPrice') {
+        totalPriceDsc.value = !totalPriceDsc.value
+      } else {
+        totalPriceDsc.value = true
+        lastSortedBy.value = 'totalPrice'
+      }
     }
 
-    const deleteFromCart = (product) => {
-      sortedCart.value = sortedCart.value.filter(
-        (item) => item?.product !== product
-      )
-      emit('update', sortedCart.value)
+    const findProductIndexInCart = (product) => {
+      return getProducts.value.findIndex((item) => {
+        return item?.product?.code === product.code
+      })
     }
 
-    const addToShoppingList = (product) => {
-      const cartItem = sortedCart.value.find(
-        (item) => item?.product === product
-      )
-      emit('addToShoppingList', cartItem)
+    const updateCartQuantity = async (product) => {
+      const index = findProductIndexInCart(product)
+      await updateProductQuantityFromCartWithoutToast(index, product?.quantity)
     }
-    const getUniqueId = (id) => useUniqueKey('CART_TABLE_' + id)
+
+    const deleteFromCart = async (product) => {
+      const index = findProductIndexInCart(product)
+      await deleteProductFromCartWithoutToast(index)
+    }
 
     return {
-      sortedCart,
-      sortByPrice,
-      sortByTotalPrice,
-      addToCart,
-      removeFromCart,
+      updateCartQuantity,
       deleteFromCart,
-      addToShoppingList,
+      getSortedProducts,
+      useSortByPrice,
+      useSortByTotalPrice,
       getUniqueId,
-      getPriceItem,
-      getProducts,
     }
   },
 })
