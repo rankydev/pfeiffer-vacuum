@@ -27,6 +27,7 @@
         variant="secondary"
         shape="plain"
         :prepend-icon="true"
+        :href="`tel:${phone}`"
       />
       <br v-if="!isDesktop" />
       <Button
@@ -35,6 +36,7 @@
         variant="secondary"
         :shape="isDesktop ? 'outlined' : 'plain'"
         :prepend-icon="!isDesktop"
+        :href="`mailto:${email}`"
       />
     </div>
   </div>
@@ -44,11 +46,13 @@
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import Tag from '~/components/atoms/Tag/Tag.vue'
 
 export default defineComponent({
   components: {
     Button,
     Icon,
+    Tag,
   },
   props: {
     companyName: {
@@ -76,6 +80,10 @@ export default defineComponent({
       default: undefined,
     },
     phone: {
+      type: String,
+      default: undefined,
+    },
+    email: {
       type: String,
       default: undefined,
     },

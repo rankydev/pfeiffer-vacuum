@@ -60,11 +60,11 @@ export const useUserStore = defineStore('user', () => {
       currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
   )
 
-  const accountManagerData = ssrRef(null)
+  const accountManagerData = ref(null)
 
-  const fetchAccountManagerData = async () => {
+  const loadAccountManagerData = async () => {
     if (!isLoggedIn.value || !isApprovedUser.value) {
-      accountManagerData.value = {}
+      accountManagerData.value = null
     } else {
       accountManagerData.value = await userApi.getAccountManager(
         currentUser.value
@@ -85,6 +85,7 @@ export const useUserStore = defineStore('user', () => {
     //load currentUser data if currentUser obj is empty
     if (newAuth && !currentUser.value) {
       await loadCurrentUser()
+      await loadAccountManagerData()
     }
 
     if (!newAuth) {
@@ -268,8 +269,14 @@ export const useUserStore = defineStore('user', () => {
   // the initial store initialization
   /* istanbul ignore else  */
   if (!currentUser.value) {
-    onBeforeMount(loadCurrentUser)
-    onServerPrefetch(loadCurrentUser)
+    onBeforeMount(async () => {
+      await loadCurrentUser()
+      await loadAccountManagerData()
+    })
+    onServerPrefetch(async () => {
+      await loadCurrentUser()
+      await loadAccountManagerData()
+    })
   }
 
   return {
@@ -279,6 +286,7 @@ export const useUserStore = defineStore('user', () => {
     auth,
     billingAddress,
     deliveryAddresses,
+    accountManagerData,
 
     // getters
     customerId,
@@ -292,7 +300,6 @@ export const useUserStore = defineStore('user', () => {
     userBillingAddress,
     userCountry,
     changePasswordLink,
-    accountManagerData,
 
     // actions
     loadCurrentUser,
@@ -309,6 +316,5 @@ export const useUserStore = defineStore('user', () => {
     getDeliveryAddressByID,
     loadAddressData,
     register: userApi.register,
-    fetchAccountManagerData,
   }
 })

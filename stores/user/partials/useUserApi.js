@@ -66,7 +66,7 @@ export const useUserApi = () => {
       'Error when fetching account managers. Returning empty array.',
       result.error || 'Unknown error'
     )
-    return {}
+    return null
   }
 
   return {

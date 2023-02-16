@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="accountManagerData && Object.keys(accountManagerData).length"
-    class="myaccount-manager"
-  >
+  <div v-if="accountManagerData" class="myaccount-manager">
     <div class="myaccount-manager__headline-with-icon">
       <h4 class="myaccount-manager__headline-with-icon--headline">
         {{ $t('myaccount.contact') }}
@@ -24,10 +21,10 @@
       :href="`tel:${accountManagerData.contactAddress.phone}`"
     />
     <Button
-      v-if="true"
+      v-if="accountManagerData.contactAddress.email"
       class="myaccount-manager__button"
       icon="mail_outline"
-      label="juuuuuuuufffffffffdddddddddddddddddf@ggggggg.deddddddddd"
+      :label="accountManagerData.contactAddress.email"
       variant="secondary"
       shape="plain"
       :prepend-icon="true"
@@ -51,9 +48,6 @@ export default defineComponent({
   setup() {
     const userStore = useUserStore()
     const { accountManagerData } = storeToRefs(userStore)
-    if (!accountManagerData.value) {
-      userStore.fetchAccountManagerData()
-    }
 
     return { accountManagerData }
   },
@@ -91,6 +85,17 @@ export default defineComponent({
 
   &__button {
     @apply tw-w-fit;
+    @apply tw-whitespace-normal;
+    @apply tw-max-w-full;
+
+    span {
+      @apply tw-break-words;
+      @apply tw-overflow-hidden;
+
+      &.button__icon--prepend {
+        overflow: unset;
+      }
+    }
   }
 }
 </style>
