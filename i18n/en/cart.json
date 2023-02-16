@@ -26,8 +26,7 @@
     }
   },
   "headline": "Shopping Cart",
-  "requestQuotation": "Request Quote",
-  "goToCheckout": "Go to Check-Out",
+  "requestQuotation": "Submit your request",
   "continueShopping": "Continue Shopping",
   "saveCartToList": "Save cart to list",
   "getProductHelp": "Get product help",
@@ -41,5 +40,7 @@
   "details": "Details",
   "addToCartSuccess": "Successfully added product to cart",
   "addToCartError": "An error occured while adding product to cart",
-  "pricePerUnit": "Price / PU"
+  "pricePerUnit": "Price / PU",
+  "emptyMessage": "Please add an item to the shopping cart.",
+  "showAllProducts": "Show all products"
 }

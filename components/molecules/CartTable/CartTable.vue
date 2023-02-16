@@ -14,10 +14,10 @@
       </span>
     </div>
     <CartItemCard
-      v-for="({ product, price, quantity, promotion }, id) in sortedCart"
+      v-for="({ product, totalPrice, quantity, promotion }, id) in sortedCart"
       :key="getUniqueId(id)"
       :product="product"
-      :price="price"
+      :price="totalPrice"
       :quantity="quantity"
       :promotion="promotion"
       :is-mini-cart="isMiniCart"

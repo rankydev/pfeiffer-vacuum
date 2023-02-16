@@ -9,68 +9,89 @@
       <Page v-if="data" v-bind="data">
         <template #default>
           <ContentWrapper>
-            <div class="cart-page">
-              <div class="cart-page__header">
-                <ResultHeadline
-                  :headline="$t('cart.headline')"
-                  :result-count="currentCart.totalItems"
-                />
-
-                <div class="cart-page__buttons">
-                  <Button
-                    class="cart-page__button--save"
-                    variant="secondary"
-                    :label="$t('cart.saveCartToList')"
-                    icon="assignment"
+            <template v-if="cartEntries">
+              <div class="cart-page">
+                <div class="cart-page__header">
+                  <ResultHeadline
+                    :headline="$t('cart.headline')"
+                    :result-count="currentCart.totalItems"
                   />
 
-                  <Button
-                    v-show="!isMobile"
-                    class="cart-page__button--submit"
-                    variant="secondary"
-                    shape="outlined"
-                    :inverted="true"
-                    :label="$t('cart.getProductHelp')"
-                    icon="help"
-                  />
-                </div>
-              </div>
-
-              <CartTable :cart="cartEntries" />
-
-              <div class="cart-page__info">
-                <div v-show="!ociBuyer" class="cart-page__information">
-                  <PriceInformation information-type="price" />
-                </div>
-
-                <div class="cart-page__actions">
-                  <div class="cart-page__total">
-                    <TotalNetInformation :current-cart="currentCart" />
-                  </div>
-
-                  <div class="cart-page__submit">
+                  <div class="cart-page__buttons">
                     <Button
-                      :href="localePath('shop-checkout')"
-                      :label="$t('cart.goToCheckout')"
+                      class="cart-page__button--save"
+                      variant="secondary"
+                      :label="$t('cart.saveCartToList')"
+                      icon="assignment"
+                    />
+
+                    <Button
+                      v-show="!isMobile"
                       class="cart-page__button--submit"
-                      variant="primary"
-                      icon="mail_outline"
+                      variant="secondary"
+                      shape="outlined"
+                      :inverted="true"
+                      :label="$t('cart.getProductHelp')"
+                      icon="help"
                     />
                   </div>
                 </div>
+
+                <CartTable :cart="cartEntries" />
+
+                <div class="cart-page__info">
+                  <div v-show="!ociBuyer" class="cart-page__information">
+                    <PriceInformation information-type="price" />
+                  </div>
+
+                  <div class="cart-page__actions">
+                    <div class="cart-page__total">
+                      <TotalNetInformation :current-cart="currentCart" />
+                    </div>
+
+                    <div class="cart-page__submit">
+                      <Button
+                        :href="localePath('shop-checkout')"
+                        :label="$t('cart.requestQuotation')"
+                        class="cart-page__button--submit"
+                        variant="primary"
+                        icon="mail_outline"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="cart-page__back-button">
+                  <Button
+                    :href="localePath('shop')"
+                    class="cart-page__button cart-page__button--back"
+                    variant="secondary"
+                    shape="plain"
+                    :label="$t('cart.continueShopping')"
+                    :prepend-icon="true"
+                    icon="arrow_back"
+                  />
+                </div>
               </div>
-              <div class="cart-page__back-button">
+            </template>
+            <template v-else>
+              <div class="cart-page__empty">
+                <Icon
+                  icon="shopping_cart"
+                  class="cart-page__empty-icon"
+                  size="xxlarge"
+                />
+                <h2 class="cart-page__empty-headline">
+                  {{ $t('cart.emptyMessage') }}
+                </h2>
                 <Button
                   :href="localePath('shop')"
-                  class="cart-page__button cart-page__button--back"
-                  variant="secondary"
-                  shape="plain"
-                  :label="$t('cart.continueShopping')"
-                  :prepend-icon="true"
-                  icon="arrow_back"
+                  :label="$t('cart.showAllProducts')"
+                  class="cart-page__button"
+                  variant="primary"
+                  icon="arrow_forward"
                 />
               </div>
-            </div>
+            </template>
           </ContentWrapper>
         </template>
       </Page>
@@ -95,6 +116,8 @@ import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline
 import Button from '~/components/atoms/Button/Button.vue'
 import PriceInformation from '~/components/molecules/PriceInformation/PriceInformation.vue'
 import TotalNetInformation from '~/components/molecules/TotalNetInformation/TotalNetInformation'
+import CartTable from '~/components/molecules/CartTable/CartTable'
+import Icon from '~/components/atoms/Icon/Icon.vue'
 
 import { storeToRefs } from 'pinia'
 
@@ -107,6 +130,8 @@ export default defineComponent({
     Button,
     PriceInformation,
     TotalNetInformation,
+    CartTable,
+    Icon,
   },
   setup() {
     const route = useRoute()
@@ -119,23 +144,7 @@ export default defineComponent({
 
     const isMobile = app.$breakpoints.isMobile
     const cartEntries = computed(() => currentCart.value.entries)
-    const cart = computed(() => ({
-      ...currentCart.value,
-      ...currentCartSpecificPrices,
-    }))
-
     const ociBuyer = computed(() => userStore.currentUser?.ociBuyer)
-
-    const currentCartSpecificPrices = {
-      hiddenUIElements: {
-        checkoutInformationSpecificPrices: false,
-        checkoutInformationDelivery: true,
-      },
-    }
-
-    const helpContainerContent = {
-      headline: 'test',
-    }
 
     /**
      * build the cms slug
@@ -150,7 +159,6 @@ export default defineComponent({
       slugs,
       isMobile,
       currentCart,
-      cart,
       ociBuyer,
     }
   },
@@ -160,6 +168,20 @@ export default defineComponent({
 <style lang="scss">
 .cart-page {
   @apply tw-pt-6;
+
+  &__empty {
+    @apply tw-text-center;
+    @apply tw-pb-12;
+    @apply tw-pt-4;
+
+    &-icon {
+      @apply tw-text-pv-red;
+    }
+
+    &-headline {
+      @apply tw-mb-4;
+    }
+  }
 
   &__header {
     @screen md {

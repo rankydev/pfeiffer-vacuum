@@ -35,5 +35,7 @@
   "details": "详",
   "addToCartSuccess": "已成功将产品添加到购物车",
   "addToCartError": "将产品添加到购物车时发生错误",
-  "pricePerUnit": "价格 / 聚氨酯"
+  "pricePerUnit": "价格 / 聚氨酯",
+  "emptyMessage": "请将一个商品添加到购物车。",
+  "showAllProducts": "显示所有产品"
 }

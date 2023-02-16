@@ -27,7 +27,6 @@
   },
   "headline": "Warenkorb",
   "requestQuotation": "Angebot anfordern",
-  "goToCheckout": "Zum Check-Out",
   "continueShopping": "Weiter einkaufen",
   "saveCartToList": "Als Liste speichern",
   "getProductHelp": "Hilfe zum Produkt",
@@ -41,5 +40,7 @@
   "details": "Details",
   "addToCartSuccess": "Produkt erfolgreich zum Warenkorb hinzugefügt",
   "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten",
-  "pricePerUnit": "Preis / Stück"
+  "pricePerUnit": "Preis / Stück",
+  "emptyMessage": "Bitte legen Sie einen Artikel in den Warenkorb.",
+  "showAllProducts": "Alle Produkte anzeigen"
 }
