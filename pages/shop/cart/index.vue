@@ -18,6 +18,7 @@
                   />
 
                   <div class="cart-page__buttons">
+                    <!-- TODO: add correct route after shopping list migration -->
                     <Button
                       class="cart-page__button--save"
                       variant="secondary"
@@ -62,6 +63,7 @@
                   </div>
                 </div>
                 <div class="cart-page__back-button">
+                  <!-- TODO: add correct route after shop migration -->
                   <Button
                     :href="localePath('shop')"
                     class="cart-page__button cart-page__button--back"
@@ -84,6 +86,7 @@
                 <h2 class="cart-page__empty-headline">
                   {{ $t('cart.emptyMessage') }}
                 </h2>
+                <!-- TODO: add correct route after shop migration -->
                 <Button
                   :href="localePath('shop')"
                   :label="$t('cart.showAllProducts')"
