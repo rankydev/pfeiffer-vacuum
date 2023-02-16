@@ -5,6 +5,28 @@ import {
   contactPersons,
 } from './ContactFormSection.stories.content'
 
+jest.mock('~/stores/user', () => {
+  return {
+    __esModule: true,
+    useUserStore: () => {
+      return {
+        accountManagerData: WeakRef({
+          contactAddress: {
+            companyName: '',
+            tags: [],
+            street: '',
+            postalCode: '',
+            city: '',
+            country: { name: '' },
+            pphone: '',
+            email: '',
+          },
+        }),
+      }
+    },
+  }
+})
+
 let wrapper
 
 function createComponent(propsData = {}) {

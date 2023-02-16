@@ -16,7 +16,7 @@
     </div>
     <div class="contact-card__information">
       <div>{{ street }}</div>
-      <div>{{ postalCode }}, {{ city }}</div>
+      <div>{{ postalCode }} {{ city }}</div>
       <div>{{ country }}</div>
     </div>
     <div class="contact-card__buttons">
@@ -103,7 +103,6 @@ export default defineComponent({
   @apply tw-bg-pv-white;
   @apply tw-rounded-md;
   @apply tw-p-6;
-  @apply tw-w-fit;
 
   &__headline-with-icon {
     @apply tw-flex;
