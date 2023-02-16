@@ -27,6 +27,7 @@
 
                     <Button
                       v-show="!isMobile"
+                      anchor="#help-block"
                       class="cart-page__button--submit"
                       variant="secondary"
                       shape="outlined"

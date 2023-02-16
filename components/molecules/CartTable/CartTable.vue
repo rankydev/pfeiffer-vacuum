@@ -143,6 +143,7 @@ export default defineComponent({
     @apply tw-text-pv-grey-32;
     @apply tw-font-normal;
     @apply tw-block;
+    @apply tw-leading-4;
 
     &:hover {
       @apply tw-text-pv-grey-48;
@@ -155,7 +156,7 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-m-auto;
     @apply tw-w-fit;
-    @apply tw-pl-4;
+    @apply tw-pl-2;
   }
 
   &__totalPrice {
@@ -164,7 +165,11 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-m-auto;
     @apply tw-w-fit;
-    @apply tw-pl-4;
+    @apply tw-pl-2;
+  }
+
+  .icon__material.icon--base {
+    @apply tw-text-base;
   }
 }
 </style>
