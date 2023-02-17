@@ -18,7 +18,7 @@
       <SearchSuggestions
         :items="currentSuggestions"
         search-type="documents"
-        @suggestionHover="suggestionHover = $event"
+        @suggestionHover="(value) => (suggestionHover = value)"
         @click="closeSearchfield"
       />
     </div>
@@ -46,7 +46,8 @@ export default defineComponent({
     PvInput,
     SearchSuggestions,
   },
-  setup() {
+  emits: ['searchTermChange'],
+  setup(props, { emit }) {
     const route = useRoute()
     const router = useRouter()
     const { app } = useContext()
@@ -114,6 +115,7 @@ export default defineComponent({
     }
 
     const pushSearchTerm = (term) => {
+      emit('searchTermChange', term)
       const encodedTerm = encodeURIComponent(term)
       const searchType = activeTab.value ? `&searchType=${activeTab.value}` : ''
       router.push(`search?searchTerm=${encodedTerm}${searchType}`)

@@ -29,7 +29,9 @@
               class="search-page__result-headline"
             />
             <div class="search-page__search-input">
-              <SearchInputPage />
+              <SearchInputPage
+                @searchTermChange="(value) => (searchTerm = value)"
+              />
             </div>
           </ContentWrapper>
 
@@ -105,6 +107,7 @@ import {
   useRouter,
   useRoute,
   useContext,
+  ref,
 } from '@nuxtjs/composition-api'
 
 import Page from '~/components/templates/Page/Page'
@@ -221,8 +224,8 @@ export default defineComponent({
     /**
      * category data
      */
+    const searchTerm = ref(route.value.query.searchTerm || '')
     const headline = computed(() => categoryStore.categoryName)
-    const searchTerm = computed(() => categoryStore.searchTerm || '')
     const link = computed(() => categoryStore.parentCategoryPath)
     const count = computed(() => categoryStore.result?.pagination?.totalResults)
     const products = computed(() => categoryStore.result?.products)
@@ -237,7 +240,6 @@ export default defineComponent({
       slug,
       fallbackSlug,
       language,
-
       hasLink,
       href,
       headline,

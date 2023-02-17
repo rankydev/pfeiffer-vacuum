@@ -43,7 +43,7 @@ export default defineComponent({
       })
     }
 
-    const handleClickEvent = (e) => {
+    const handleClickEvent = () => {
       emit('closeModal', true)
 
       if (props?.searchType === 'documents') {

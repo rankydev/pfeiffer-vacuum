@@ -128,7 +128,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
       const suggestions = await axios.$post('/suggest', {
         query: text,
         maxCount,
-        language,
+        language: language.value,
       })
 
       if (suggestions && Array.isArray(suggestions) && !suggestions.error) {

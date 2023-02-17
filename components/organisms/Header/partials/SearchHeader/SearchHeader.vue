@@ -48,7 +48,7 @@
     >
       <SearchSuggestions
         :items="currentSuggestions"
-        @suggestionHover="suggestionHover = $event"
+        @suggestionHover="(value) => (suggestionHover = value)"
         @closeModal="closeSearchfield"
       />
     </div>
