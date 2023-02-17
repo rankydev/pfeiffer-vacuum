@@ -234,7 +234,7 @@ export default defineComponent({
     const { navigationEntries } = toRefs(props)
     const selectedPrimaryLink = computed(() => {
       for (const [idx, entry] of navigationEntries.value.entries()) {
-        const splittedHref = entry?.href.split('/')
+        const splittedHref = entry?.href?.split('/') || []
         const path = route.value.path
         // Check if the route contains the first and second part of an entry(like f.ex. 'en' and 'products')
         // this logic is relevant for subentries
@@ -285,22 +285,22 @@ export default defineComponent({
 
     return {
       prefix,
-      toggleActive,
-      hasActiveElement,
       activeElement,
+      selectedPrimaryLink,
+      currentUser,
+      userStore,
+      loggedInOrInLoginProcess,
+      hasActiveElement,
       isMobile,
       isTablet,
       isDesktop,
       isHovered,
+      logout,
+      toggleActive,
       hasSubmenu,
-      selectedPrimaryLink,
       closeMenu,
-      currentUser,
-      userStore,
       handleMyAccount,
       navigateToMyAccount,
-      loggedInOrInLoginProcess,
-      logout,
     }
   },
 })
