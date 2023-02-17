@@ -1,7 +1,10 @@
+import { useLogger } from '../../composables/useLogger'
 import { createProxyMiddleware } from 'http-proxy-middleware'
 import https from 'https'
 import nuxtConfig from '../../nuxt.config'
 import { PATH_DATASOURCES } from '../constants.js'
+
+const { logger } = useLogger('datasources-proxy')
 
 const agent = new https.Agent({
   keepAlive: true,
@@ -33,7 +36,8 @@ export default createProxyMiddleware({
         nuxtConfig.privateRuntimeConfig.STORYBLOK_ACCESS_TOKEN
       }`
     }
-    console.log('newPath: ', newPath)
+
+    logger.trace('newPath: ', newPath)
     return newPath
   },
 })
