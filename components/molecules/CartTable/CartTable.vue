@@ -4,11 +4,11 @@
       <div class="cart-item-header__quantity">
         <span>{{ $t('cart.quantity') }}</span>
       </div>
-      <span class="cart-item-header__price" @click="sortByPrice">
+      <span class="cart-item-header__price" @click="useSortByPrice">
         {{ $t('cart.pricePerUnit') }}
         <Icon icon="unfold_more" />
       </span>
-      <span class="cart-item-header__totalPrice" @click="sortByPrice">
+      <span class="cart-item-header__totalPrice" @click="useSortByTotalPrice">
         {{ $t('cart.totalPrice') }}
         <Icon icon="unfold_more" />
       </span>
@@ -36,7 +36,6 @@
 <script>
 import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
-import Button from '~/components/atoms/Button/Button'
 import useUniqueKey from '~/composables/useUniqueKey'
 import Icon from '~/components/atoms/Icon/Icon'
 import { useCartStore } from '~/stores/cart'
@@ -46,7 +45,7 @@ export default defineComponent({
   name: 'CartTable',
   components: {
     CartItemCard,
-    Button,
+    Icon,
   },
   props: {
     isMiniCart: {
