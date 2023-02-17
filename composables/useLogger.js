@@ -1,15 +1,18 @@
 import consola from 'consola'
-import { getCurrentInstance } from '@nuxtjs/composition-api'
+import nuxtConfig from '../nuxt.config'
+import { getCurrentInstance, useContext } from '@nuxtjs/composition-api'
 
 let initialized = false
 
-if (!initialized) {
-  initialized = true
-  consola
-    .create({
-      level: process.env.CONSOLA_LEVEL || 4,
-    })
-    .wrapConsole() // wrap regular console to consola
+const initializeLogger = (config) => {
+  if (!initialized) {
+    initialized = true
+    consola
+      .create({
+        level: config.CONSOLA_LEVEL || 4,
+      })
+      .wrapConsole() // wrap regular console to consola
+  }
 }
 
 /**
@@ -46,6 +49,18 @@ const getLoggerFor = (file) => {
 }
 
 export const useLogger = (name) => {
+  let config
+
+  try {
+    const { $config } = useContext()
+    config = $config
+  } catch (e) {
+    // here we catch an Eror from the composition API which occurs in the server-middlewares,
+    // because we do not have any context there, but we use the logger.
+    config = nuxtConfig.publicRuntimeConfig
+  }
+
+  initializeLogger(config)
   const loggerName = name ? name : getCurrentInstance()?.proxy?.$options?.name
   const logger = getLoggerFor(loggerName)
   return { logger }

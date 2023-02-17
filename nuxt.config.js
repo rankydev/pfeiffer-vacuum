@@ -234,6 +234,7 @@ export default {
       CI_PROJECT_URL: process.env.CI_PROJECT_URL,
       NODE_ENV: process.env.NODE_ENV,
     }),
+    CONSOLA_LEVEL: process.env.CONSOLA_LEVEL,
   },
 
   privateRuntimeConfig: {
