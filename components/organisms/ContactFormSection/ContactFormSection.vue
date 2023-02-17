@@ -17,19 +17,7 @@
         v-bind="entry"
         :name="entry.uiComponent || entry.component"
       />
-      <ContactCard
-        v-if="accountManagerData"
-        :company-name="accountManagerData.contactAddress.companyName"
-        :tags="[]"
-        :street="`${accountManagerData.contactAddress.line1}
-          ${accountManagerData.contactAddress.line2}`"
-        :postal-code="accountManagerData.contactAddress.postalCode"
-        :city="accountManagerData.contactAddress.town"
-        :country="accountManagerData.contactAddress.country.name"
-        :phone="accountManagerData.contactAddress.phone"
-        :email="accountManagerData.contactAddress.email"
-        class="contact-form-section__contact-card"
-      />
+      <MyAccountManager />
     </div>
   </div>
 </template>
@@ -37,13 +25,11 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 // ToDo: only for moch purpose until contactPerson Component is defined
 import richtext from '~/components/atoms/Richtext/Richtext.stories.content.js'
-import { useUserStore } from '~/stores/user'
-import { storeToRefs } from 'pinia'
-import ContactCard from '~/components/molecules/ContactCard/ContactCard'
+import MyAccountManager from '~/components/organisms/MyAccount/sidebar/MyAccountManager'
 
 export default defineComponent({
   name: 'ContactFormSection',
-  components: { ContactCard },
+  components: { MyAccountManager },
   props: {
     /**
      * Array of requestForms rendered on the left side
@@ -60,12 +46,6 @@ export default defineComponent({
       default: () => [richtext.content],
     },
   },
-  setup() {
-    const userStore = useUserStore()
-    const { accountManagerData } = storeToRefs(userStore)
-
-    return { accountManagerData }
-  },
 })
 </script>
 <style lang="scss">
@@ -79,10 +59,6 @@ export default defineComponent({
 
   @screen lg {
     @apply tw-pt-12;
-  }
-
-  &__contact-card {
-    @apply tw-mt-9;
   }
 }
 </style>
