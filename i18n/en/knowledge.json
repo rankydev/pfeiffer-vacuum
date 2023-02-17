@@ -1,5 +1,34 @@
 {
   "time": "Uhr",
   "hours": "h",
-  "minutes": "min"
+  "minutes": "min",
+  "allRessources": "All Ressources",
+    "whitepapers": "Whitepapers",
+    "webinars": "Webinars",
+    "search": "Search in Knowledge ...",
+    "webinar": {
+      "heading": "Webinar",
+      "about": "  What is the webinar about?",
+      "tragetAudience": "Who should attend?",
+      "authors": "Speakers",
+      "button": {
+        "join": "Join Webinar",
+        "watch": "Watch Webinar"
+      },
+      "waitForVod":
+        "A recording of this Webinar will be available to watch within five days after the original date.",
+      "registration": {
+        "success":
+          "You have successfully registered for this webinar. You'll receive all further details via mail"
+      }
+    },
+    "whitepaper": {
+      "heading": "Whitepaper",
+      "about": "  What is the whitepaper about?",
+      "tragetAudience": "Who should read it?",
+      "authors": "Authors",
+      "button": {
+        "download": "Download"
+      }
+    }
 }

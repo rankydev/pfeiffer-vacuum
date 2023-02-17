@@ -26,7 +26,20 @@
         <div class="knowledge-stage__summary">
           <Richtext v-if="summary" :richtext="summary" />
           <div v-if="button.length" class="knowledge-stage__button">
-            <Button v-for="btn in button" :key="btn._uid" v-bind="btn" />
+            <KnowledgeAssetButton v-for="btn in button" :key="btn._uid" />
+            <KnowledgeAssetButton
+              id="123"
+              type="WEBINAR"
+              :date="date"
+              asset-url="https://www.google.com"
+              :is-detail-page="false"
+            />
+            <!-- <Button
+              v-for="btn in button"
+              :key="btn._uid"
+              v-bind="btn"
+              @click="openModal"
+            /> -->
           </div>
         </div>
       </div>
@@ -46,16 +59,18 @@
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
-import Button from '~/components/atoms/Button/Button.vue'
+// import Button from '~/components/atoms/Button/Button.vue'
 import Icon from '~/components/atoms/Icon/Icon'
+import KnowledgeAssetButton from '~/components/molecules/KnowledgeAssetButton/KnowledgeAssetButton.vue'
 
 export default defineComponent({
-  name: 'Stage',
+  name: 'KnowledgeStage',
   components: {
     ResponsiveImage,
     Richtext,
-    Button,
+    // Button,
     Icon,
+    KnowledgeAssetButton,
   },
   props: {
     image: {
@@ -93,6 +108,7 @@ export default defineComponent({
   },
   setup(props) {
     const dateObj = new Date(props.date)
+    const isOpen = ref(false)
     /**
      * Workaround to make sure the date works in Safari:
      * https://stackoverflow.com/questions/4310953/invalid-date-in-safari
@@ -125,7 +141,22 @@ export default defineComponent({
       }
     })
 
-    return { fixedDate, fixedTime, showTime, showDuration }
+    const openModal = () => {
+      isOpen.value = true
+    }
+
+    const closeModal = () => {
+      isOpen.value = false
+    }
+
+    return {
+      fixedDate,
+      fixedTime,
+      showTime,
+      showDuration,
+      openModal,
+      closeModal,
+    }
   },
 })
 </script>
