@@ -43,9 +43,9 @@
                 class="accessories-card__price-info-icon"
               />
             </p>
-            <span class="accessories-card__price-value">{{
-              productPrice
-            }}</span>
+            <span class="accessories-card__price-value">
+              {{ productPrice }}
+            </span>
           </template>
         </div>
         <div>
@@ -102,6 +102,7 @@ import {
   computed,
   toRefs,
 } from '@nuxtjs/composition-api'
+import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
@@ -134,6 +135,7 @@ export default defineComponent({
     const { i18n } = useContext()
     const context = useContext()
     const userStore = useUserStore()
+    const cartStore = useCartStore()
     const sanitizer = useSanitizer()
     const { product } = toRefs(props)
     const { imageUrl } = useImageHelper()
@@ -146,6 +148,7 @@ export default defineComponent({
       isOpenUser,
       isRejectedUser,
     } = storeToRefs(userStore)
+    const { addProductToCart } = cartStore
 
     const hasAddToListButton = computed(() => {
       // TODO: Once OCI is implemented extend this computed again
@@ -180,10 +183,10 @@ export default defineComponent({
       })
     )
 
-    const addToCart = () => {
-      // ToDo:
-      // still has to be done
+    const addToCart = async () => {
+      await addProductToCart(product.value?.code, quantity.value)
     }
+
     const addToList = () => {
       // ToDo:
       // still has to be done
