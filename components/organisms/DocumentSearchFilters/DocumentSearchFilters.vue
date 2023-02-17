@@ -1,7 +1,7 @@
 <template>
   <div class="document-search-filters">
     <FilterModal :label="$t('category.documents.filter')">
-      <template #default="{ close }">
+      <template #default>
         <div class="document-search-filters__dropdowns">
           <Popup v-for="group in filterTreeGroups" :key="group.attribute">
             <template #activator="{ togglePopup }">
@@ -15,16 +15,14 @@
                 @click="togglePopup"
               />
             </template>
-            <template #default="{ closePopup }">
-              <MultilevelDropdown
-                :options="group.filters"
-                class="document-search-filters__popup"
-                @update="
-                  (payload) => {
-                    clickedFilterTreeItem(payload), closePopup(), close()
-                  }
-                "
-              />
+            <template #default>
+              <LoadingSpinner :show="searchResultsLoading">
+                <MultilevelDropdown
+                  :options="group.filters"
+                  class="document-search-filters__popup"
+                  @update="clickedFilterTreeItem"
+                />
+              </LoadingSpinner>
             </template>
           </Popup>
         </div>
@@ -78,6 +76,7 @@ import MultilevelDropdown from '~/components/atoms/MuiltilevelDropdown/Multileve
 import Popup from '~/components/atoms/Popup/Popup.vue'
 import InternalBtnWrapper from '~/components/molecules/InternalBtnWrapper/InternalBtnWrapper.vue'
 import FilterModal from '~/components/molecules/FilterModal/FilterModal'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   name: 'DocumentSearchFilters',
@@ -87,13 +86,18 @@ export default defineComponent({
     Popup,
     InternalBtnWrapper,
     FilterModal,
+    LoadingSpinner,
   },
   setup() {
     const router = useRouter()
     const route = useRoute()
     const empolisStore = useEmpolisStore()
-    const { filterSuggestions, activeFilters, availableFilters } =
-      storeToRefs(empolisStore)
+    const {
+      filterSuggestions,
+      activeFilters,
+      availableFilters,
+      searchResultsLoading,
+    } = storeToRefs(empolisStore)
 
     const routeFilter = computed(() =>
       route.value.query?.filter
@@ -238,6 +242,7 @@ export default defineComponent({
     }
 
     return {
+      searchResultsLoading,
       filterTreeGroups,
       filterSuggestionsItems,
       activeFilterItems,
