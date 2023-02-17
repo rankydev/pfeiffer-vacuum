@@ -2,7 +2,7 @@
   <div class="shop-navigation">
     <client-only>
       <Popup>
-        <template #activator="{ togglePopup }">
+        <template v-if="!isOciUser" #activator="{ togglePopup }">
           <LoadingSpinner :show="isLoginProcess">
             <Button
               shape="plain"
@@ -77,24 +77,26 @@ export default defineComponent({
     const router = useRouter()
     const { i18n, app } = useContext()
     const userStore = useUserStore()
+    const { isOciUser, isLoggedIn, isLoginProcess, currentUser } =
+      storeToRefs(userStore)
+    const { login } = userStore
     const cartStore = useCartStore()
 
-    const { isLoggedIn, isLoginProcess } = storeToRefs(userStore)
     const { currentCart } = storeToRefs(cartStore)
     const isMobile = app.$breakpoints.isMobile
 
     const myAccountLabel = computed(() => {
-      if (userStore.isLoginProcess || isMobile.value) return ''
+      if (isLoginProcess.value || isMobile.value) return ''
 
-      return userStore.isLoggedIn
-        ? userStore.currentUser?.name
+      return isLoggedIn.value
+        ? currentUser.value?.name
         : i18n.t('navigation.button.signIn.label')
     })
 
     const cartItemCount = computed(() => currentCart.value?.totalItems || '')
 
     const handleMyAccount = (openPopupCallback) => {
-      if (userStore.isLoggedIn) {
+      if (isLoggedIn.value) {
         if (isMobile.value) {
           router.push({
             path: app.localePath('shop-my-account'),
@@ -103,7 +105,7 @@ export default defineComponent({
           openPopupCallback()
         }
       } else {
-        userStore.login()
+        login()
       }
     }
 
@@ -113,6 +115,10 @@ export default defineComponent({
     }
 
     return {
+      // getters
+      isOciUser,
+
+      // actions
       myAccountLabel,
       userStore,
       currentCart,

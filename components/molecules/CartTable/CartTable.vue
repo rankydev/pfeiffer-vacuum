@@ -4,22 +4,14 @@
       <div class="cart-item-header__quantity">
         <span>{{ $t('cart.quantity') }}</span>
       </div>
-      <Button
-        class="cart-item-header__price"
-        variant="secondary"
-        shape="plain"
-        icon="unfold_more"
-        :label="$t('cart.pricePerUnit')"
-        @click="useSortByPrice"
-      />
-      <Button
-        class="cart-item-header__totalPrice"
-        variant="secondary"
-        shape="plain"
-        icon="unfold_more"
-        :label="$t('cart.totalPrice')"
-        @click="useSortByTotalPrice"
-      />
+      <span class="cart-item-header__price" @click="sortByPrice">
+        {{ $t('cart.pricePerUnit') }}
+        <Icon icon="unfold_more" />
+      </span>
+      <span class="cart-item-header__totalPrice" @click="sortByPrice">
+        {{ $t('cart.totalPrice') }}
+        <Icon icon="unfold_more" />
+      </span>
     </div>
     <CartItemCard
       v-for="{
@@ -46,6 +38,7 @@ import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
 import Button from '~/components/atoms/Button/Button'
 import useUniqueKey from '~/composables/useUniqueKey'
+import Icon from '~/components/atoms/Icon/Icon'
 import { useCartStore } from '~/stores/cart'
 import { storeToRefs } from 'pinia'
 
@@ -156,23 +149,24 @@ export default defineComponent({
     @apply tw-pb-4;
   }
 
-  .button--plain.button--secondary {
-    @apply tw-text-pv-grey-32;
-    @apply tw-font-normal;
-    -webkit-text-fill-color: var(--tw-pv-grey-32);
-
-    :hover {
-      @apply tw-text-pv-grey-48;
-      -webkit-text-fill-color: var(--tw-pv-grey-48);
-    }
-  }
-
   &__quantity {
     @apply tw-row-start-1 tw-row-end-1;
     @apply tw-col-start-9 tw-col-end-10;
     @apply tw-flex;
     @apply tw-my-auto;
     @apply tw-text-pv-grey-32;
+  }
+
+  &__price,
+  &__totalPrice {
+    @apply tw-cursor-pointer;
+    @apply tw-text-pv-grey-32;
+    @apply tw-font-normal;
+    @apply tw-block;
+
+    &:hover {
+      @apply tw-text-pv-grey-48;
+    }
   }
 
   &__price {

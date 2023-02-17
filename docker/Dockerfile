@@ -3,6 +3,9 @@
 ########################################################################################################################
 FROM node:16-alpine  as frontend-build
 
+# only for build-image
+ARG CI
+
 # !!! IMPORTANT NOTE !!!
 # ENV variables will be set by either
 #   - pipeline
@@ -86,6 +89,10 @@ ARG GOOGLE_TAG_MANAGER_ID
 
 ARG STORYBLOK_API_BASE_URL
 
+# only for build-image
+ENV CI=${CI}
+ENV NODE_ENV=${NODE_ENV}
+
 RUN \
   apk update \
   && apk add gettext
@@ -98,7 +105,19 @@ RUN cat .env.template | envsubst >> .env
 
 RUN mkdir -p build_logs
 
-RUN npm ci && npm run build
+# Due to an error in the '@nuxtjs/eslint-module' (https://github.com/nuxt-community/eslint-module/issues/37)
+# the es-lint dependency needs to be in node_modules even for builds with NODE_ENV=production
+# (Solution: https://github.com/nuxt-community/eslint-module/issues/37#issuecomment-674745140)
+# thus we ensure using NODE_ENV=development for npm ci to get all dependencies
+# and than run npm run build with NODE_ENV with the given value from the pipeline.
+ENV NODE_ENV=development
+
+RUN npm ci
+
+# see comment in lines 108 ff
+ENV NODE_ENV=${NODE_ENV}
+
+RUN npm run build
 
 ########################################################################################################################
 # end frontend-build image
@@ -268,6 +287,10 @@ ENV GOOGLE_TAG_MANAGER_ID="${GOOGLE_TAG_MANAGER_ID}"
 
 ENV STORYBLOK_API_BASE_URL="${STORYBLOK_API_BASE_URL}"
 
+RUN \
+  apk update \
+  && apk add gettext
+
 # Create app directory
 WORKDIR /opt/pvac-frontend
 
@@ -279,7 +302,6 @@ COPY --from=frontend-build /src/build_logs ./build_logs/
 COPY --from=frontend-build /src/package*.json ./
 COPY --from=frontend-build /src/nuxt.config.js ./
 COPY --from=frontend-build /src/i18n.config.js ./
-COPY --from=frontend-build /src/.env ./
 
 # Bundle app source
 COPY --from=frontend-build /src/.nuxt .nuxt/
@@ -289,6 +311,10 @@ COPY --from=frontend-build /src/resolver ./resolver/
 COPY --from=frontend-build /src/server ./server/
 COPY --from=frontend-build /src/providers ./providers/
 COPY --from=frontend-build /src/composables ./composables/
+
+COPY /.env.template ./
+RUN cat .env.template | envsubst >> .env
+RUN rm .env.template
 
 EXPOSE 3000
 
