@@ -14,7 +14,7 @@ export const useContextUtil = () => {
       }
       logger.trace('Request::Protocol: ', protocol)
       if (!protocol) {
-        logger.trace('Request: ', req)
+        logger.trace('Did not find protocol for request: ', req)
       }
       // server side
       return protocol + '://' + req.headers.host
