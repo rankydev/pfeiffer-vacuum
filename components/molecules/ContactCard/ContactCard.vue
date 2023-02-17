@@ -101,8 +101,11 @@ export default defineComponent({
 <style lang="scss">
 .contact-card {
   @apply tw-bg-pv-white;
-  @apply tw-rounded-md;
+  @apply tw-rounded-lg;
   @apply tw-p-6;
+  @apply tw-border-pv-grey-96;
+  @apply tw-border-2;
+  box-shadow: 0 40px 40px -40px #ccc;
 
   &__headline-with-icon {
     @apply tw-flex;
@@ -142,8 +145,15 @@ export default defineComponent({
       @apply tw-flex;
     }
 
+    .button {
+      @screen lg {
+        @apply tw-w-1/2;
+      }
+    }
+
     &--telephone-button {
       @apply tw-pb-6;
+      @apply tw-justify-start;
 
       @screen lg {
         @apply tw-pb-3;

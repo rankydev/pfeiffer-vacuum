@@ -17,7 +17,6 @@
         v-bind="entry"
         :name="entry.uiComponent || entry.component"
       />
-      <!-- TODO: remove this Contact Card after implementing the search contact epic in the contact form section -->
       <ContactCard
         v-if="accountManagerData"
         :company-name="accountManagerData.contactAddress.companyName"
@@ -29,7 +28,7 @@
         :country="accountManagerData.contactAddress.country.name"
         :phone="accountManagerData.contactAddress.phone"
         :email="accountManagerData.contactAddress.email"
-        style="background-color: #f5f5f5; margin-top: 36px"
+        class="contact-form-section__contact-card"
       />
     </div>
   </div>
@@ -40,10 +39,11 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import richtext from '~/components/atoms/Richtext/Richtext.stories.content.js'
 import { useUserStore } from '~/stores/user'
 import { storeToRefs } from 'pinia'
+import ContactCard from '~/components/molecules/ContactCard/ContactCard'
 
 export default defineComponent({
   name: 'ContactFormSection',
-  components: {},
+  components: { ContactCard },
   props: {
     /**
      * Array of requestForms rendered on the left side
@@ -61,7 +61,6 @@ export default defineComponent({
     },
   },
   setup() {
-    // TODO: Remove the userStore logic after implementing the search contact epic in the contact form section
     const userStore = useUserStore()
     const { accountManagerData } = storeToRefs(userStore)
 
@@ -80,6 +79,10 @@ export default defineComponent({
 
   @screen lg {
     @apply tw-pt-12;
+  }
+
+  &__contact-card {
+    @apply tw-mt-9;
   }
 }
 </style>
