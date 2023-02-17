@@ -73,6 +73,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const userCountry = computed(() => userBillingAddress.value?.country || {})
+  const userRegion = computed(() => userBillingAddress.value?.region || {})
 
   const changePasswordLink = computed(() => {
     const keycloakBaseUrl = ctx.$config.KEYCLOAK_BASE_URL + 'realms/'
@@ -299,6 +300,7 @@ export const useUserStore = defineStore('user', () => {
     isLoading,
     userBillingAddress,
     userCountry,
+    userRegion,
     changePasswordLink,
 
     // actions
