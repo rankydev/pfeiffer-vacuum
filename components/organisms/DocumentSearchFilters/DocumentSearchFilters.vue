@@ -7,6 +7,7 @@
             <template #activator="{ togglePopup }">
               <InternalBtnWrapper
                 :label="group.label"
+                :active="group.hasActiveFilters"
                 variant="secondary"
                 shape="outlined"
                 size="xsmall"
@@ -190,6 +191,7 @@ export default defineComponent({
         return {
           label: group.label,
           attribute: group.attribute,
+          hasActiveFilters: group.concepts.some((item) => item.checked),
           filters: rootOnlyFilters,
         }
       })
