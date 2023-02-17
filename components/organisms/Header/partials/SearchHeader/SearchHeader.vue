@@ -37,41 +37,21 @@
         </div>
       </div>
     </GenericModal>
-    <!-- <SearchInput
-      class="search-header__field"
-      @focus="toggleSuggestionsOnFocus"
-      @submit="closeSearchfield"
-    /> -->
     <SearchInput
       class="search-header__field"
       @focus="toggleSuggestionsOnFocus"
       @submit="closeSearchfield"
     />
-    <!-- <div
-      v-if="currentSuggestions.length && (isFocused || suggestionHover)"
-      class="search-header__suggestions--desktop"
-      @mouseover="suggestionHover = true"
-      @mouseleave="suggestionHover = false"
-    > -->
     <div
       v-if="currentSuggestions.length && (isFocused || suggestionHover)"
       class="search-header__suggestions--desktop"
     >
       <SearchSuggestions
         :items="currentSuggestions"
-        @mouseover="suggestionHover = true"
-        @mouseleave="suggestionHover = false"
+        @suggestionHover="suggestionHover = $event"
         @closeModal="closeSearchfield"
       />
     </div>
-    <!-- <SearchButton
-        v-for="item in currentSuggestions"
-        :key="item.value"
-        class="search-header__suggestions--result"
-        :title="item.value"
-        @closeModal="closeSearchfield"
-      /> -->
-    <!-- </div> -->
   </div>
 </template>
 

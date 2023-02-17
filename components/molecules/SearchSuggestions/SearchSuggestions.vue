@@ -1,16 +1,21 @@
 <template>
-  <div class="search-suggestions">
+  <div
+    class="search-suggestions"
+    @mouseover="$emit('suggestionHover', true)"
+    @mouseleave="$emit('suggestionHover', false)"
+  >
     <SearchButton
       v-for="item in items"
       :key="item.value"
       class="search-header__suggestions--result"
       :title="item.value"
+      @closeModal="closeSearchfield"
     />
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {
@@ -19,10 +24,8 @@ export default defineComponent({
       default: () => [],
     },
   },
-  setup(props) {
-    const suggestionHover = ref(false)
-
-    console.log('props', props.items)
+  emits: ['suggestionHover'],
+  setup() {
     const closeSearchfield = () => {
       blurSuggestions(false)
       isOpen.value = false
@@ -30,7 +33,6 @@ export default defineComponent({
 
     return {
       closeSearchfield,
-      suggestionHover,
     }
   },
 })

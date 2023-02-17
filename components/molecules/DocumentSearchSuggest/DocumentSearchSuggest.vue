@@ -17,24 +17,9 @@
     >
       <SearchSuggestions
         :items="currentSuggestions"
-        @mouseover="suggestionHover = true"
-        @mouseleave="suggestionHover = false"
+        @suggestionHover="suggestionHover = $event"
       />
     </div>
-    <!--
-    <div
-      v-if="isOpen && currentSuggestions.length && searchTerm.length"
-      class="document-search-input__suggestions"
-    >
-      <SearchButton
-        v-for="item in currentSuggestions"
-        :key="item.value"
-        class="search-header__suggestions--result"
-        :title="item.value"
-        :search-type="activeTab"
-        @closeModal="closeSearchfield(item.value)"
-      />
-    </div> -->
   </div>
 </template>
 
@@ -57,8 +42,6 @@ import SearchSuggestions from '~/components/molecules/SearchSuggestions/SearchSu
 export default defineComponent({
   components: {
     PvInput,
-    // SearchButton,
-    // SearchInput,
     SearchSuggestions,
   },
   setup() {
@@ -150,13 +133,6 @@ export default defineComponent({
         searchTermDocuments.value
       )
 
-      console.log('currentsugge', currentSuggestions.value)
-
-      // const results = await empolisStore.fetchDocumentSuggestions(
-      //   searchTermDocuments.value,
-      //   3
-      // )
-
       isOpen.value = currentSuggestions.value.length > 0
     })
 
@@ -185,6 +161,8 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
+@import '/assets/scss/z-index';
+
 .document-search-input {
   @apply tw-relative;
 
@@ -199,6 +177,7 @@ export default defineComponent({
     @apply tw-bg-pv-white;
     @apply tw-w-full;
     border-top: none;
+    z-index: $suggestions-container;
   }
 }
 </style>
