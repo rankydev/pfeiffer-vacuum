@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, useContext, useRoute } from '@nuxtjs/composition-api'
+import { computed, ref, useContext, useRoute } from '@nuxtjs/composition-api'
 import { useAxiosForEmpolis } from '~/composables/useAxiosForEmpolis'
 import { useLanguageSwitch } from '~/composables/useLanguageSwitch'
 import { useLogger } from '~/composables/useLogger'
@@ -20,6 +20,10 @@ export const useEmpolisStore = defineStore('empolis', () => {
   const { axios } = useAxiosForEmpolis()
   const { i18n } = useContext()
   const { onLanguageSwitched } = useLanguageSwitch()
+
+  const language = computed(() => {
+    return i18n.locale === 'de' ? 'de' : 'en'
+  })
 
   const getProductDownloads = async (orderNumber) => {
     if (!productDownloads.value.has(orderNumber)) {
@@ -124,7 +128,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
       const suggestions = await axios.$post('/suggest', {
         query: text,
         maxCount,
-        language: i18n.locale === 'de' ? 'de' : 'en',
+        language,
       })
 
       if (suggestions && Array.isArray(suggestions) && !suggestions.error) {
