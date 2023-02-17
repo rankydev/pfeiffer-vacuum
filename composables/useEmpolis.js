@@ -6,7 +6,7 @@ export default {
     ...mapGetters(['loggedIn']),
     empolisPortalUrl() {
       const useEmpolisProductionSystem =
-        this.$config.EMPOLIS_STAGE === 'project_p'
+        this.$config.EMPOLIS_STAGE === 'project1_p'
 
       const publicPortalUrl = `${this.$config.EMPOLIS_PATH}portal/${this.$config.EMPOLIS_STAGE}/`
       if (!useEmpolisProductionSystem) {
