@@ -69,6 +69,7 @@ export default defineComponent({
   &--suggestion {
     @apply tw-text-pv-grey-16;
     @apply tw-shadow-border-grey-16;
+    @apply tw-justify-start;
   }
 
   &:hover,

@@ -17,15 +17,15 @@ describe('Oci store', () => {
       expect(ociStore.returnTarget).toBe('_self')
       expect(ociStore.hiddenUIElements).toStrictEqual({})
       expect(ociStore.customerId).toBe('')
-      expect(ociStore.isOciUser).toBeInstanceOf(Function)
+      expect(ociStore.checkForOciUser).toBeInstanceOf(Function)
     })
   })
 
   describe('during interaction', () => {
-    test('should invoke isOciUser correctly', async () => {
+    test('should invoke checkForOciUser correctly', async () => {
       const ociStore = useOciStore()
 
-      const result = ociStore.isOciUser(mockAuth)
+      const result = ociStore.checkForOciUser(mockAuth)
 
       expect(result).toBe(true)
     })

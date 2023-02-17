@@ -1,9 +1,11 @@
 export const normalData = {
-  optionLabel: 'label',
+  labelKey: 'label',
   optionsKey: 'concepts',
+  checkedKey: 'checked',
   options: [
     {
       label: 'Node 1',
+
       concepts: [
         {
           label: 'Child Node 1',
@@ -27,7 +29,7 @@ export const normalData = {
       label: 'Node 2',
       concepts: [{ label: 'Child Node 3' }, { label: 'Child Node 4' }],
     },
-    { label: 'Node 3' },
+    { label: 'Node 3 (checked)', checked: true },
   ],
 }
 
