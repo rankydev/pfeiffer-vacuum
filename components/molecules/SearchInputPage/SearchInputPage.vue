@@ -17,7 +17,9 @@
     >
       <SearchSuggestions
         :items="currentSuggestions"
+        search-type="documents"
         @suggestionHover="suggestionHover = $event"
+        @click="closeSearchfield"
       />
     </div>
   </div>
@@ -28,8 +30,8 @@ import {
   computed,
   defineComponent,
   useContext,
-  useRouter,
   useRoute,
+  useRouter,
   ref,
   watch,
 } from '@nuxtjs/composition-api'
@@ -45,8 +47,8 @@ export default defineComponent({
     SearchSuggestions,
   },
   setup() {
-    const router = useRouter()
     const route = useRoute()
+    const router = useRouter()
     const { app } = useContext()
     const empolisStore = useEmpolisStore()
     const { debounce } = useDebounce()
@@ -93,13 +95,12 @@ export default defineComponent({
           : activeTabValue === 'products'
           ? searchTermProducts.value
           : searchTermInitial.value
-    })
 
-    const setSearchTerm = (term) => {
-      console.log('termmmm', term)
-      pushSearchTerm(term)
-      isOpen.value = false
-    }
+      if (activeTabValue === 'documents') {
+        return pushSearchTerm(searchTermDocuments.value)
+      }
+      pushSearchTerm(searchTermProducts.value)
+    })
 
     const clearInput = () => {
       if (activeTab?.value === 'documents') {
@@ -112,11 +113,16 @@ export default defineComponent({
       searchTerm.value = ''
     }
 
+    const pushSearchTerm = (term) => {
+      const encodedTerm = encodeURIComponent(term)
+      const searchType = activeTab.value ? `&searchType=${activeTab.value}` : ''
+      router.push(`search?searchTerm=${encodedTerm}${searchType}`)
+    }
+
     const closeSearchfield = (value) => {
       currentSuggestions.value = []
       searchTermDocuments.value = value
       isOpen.value = false
-
       pushSearchTerm(value)
     }
 
@@ -136,11 +142,6 @@ export default defineComponent({
       isOpen.value = currentSuggestions.value.length > 0
     })
 
-    const pushSearchTerm = (term) => {
-      const searchType = activeTab.value ? `&searchType=${activeTab.value}` : ''
-      router.push(`search?searchTerm=${term}${searchType}`)
-    }
-
     return {
       pvInput,
       isDesktop,
@@ -150,7 +151,6 @@ export default defineComponent({
       currentSuggestions,
       activeTab,
       searchTerm,
-      setSearchTerm,
       isOpen,
       clearInput,
       isFocused,

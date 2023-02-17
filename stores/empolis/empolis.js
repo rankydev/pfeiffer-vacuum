@@ -120,7 +120,6 @@ export const useEmpolisStore = defineStore('empolis', () => {
   })
 
   const fetchDocumentSuggestions = async (text, maxCount = 3) => {
-    console.log('here')
     try {
       const suggestions = await axios.$post('/suggest', {
         query: text,

@@ -1,8 +1,8 @@
-import DocumentSearchSuggest from './DocumentSearchSuggest.vue'
+import SearchInputPage from './SearchInputPage.vue'
 
 export default {
   title: 'Document-Search-Suggest',
-  component: DocumentSearchSuggest,
+  component: SearchInputPage,
   parameters: {
     docs: {
       description: {
@@ -14,10 +14,10 @@ export default {
 }
 
 const Template = () => ({
-  components: { DocumentSearchSuggest },
+  components: { SearchInputPage },
   template: `
       <div class="documentation-preview" style="background-color: #F5F5F5; padding: 50px">
-        <DocumentSearchSuggest />
+        <SearchInputPage />
       </div>
     `,
 })

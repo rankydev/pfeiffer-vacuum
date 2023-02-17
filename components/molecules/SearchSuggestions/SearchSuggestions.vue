@@ -7,9 +7,10 @@
     <SearchButton
       v-for="item in items"
       :key="item.value"
-      class="search-header__suggestions--result"
       :title="item.value"
-      @closeModal="closeSearchfield"
+      :search-type="searchType"
+      class="search-header__suggestions--result"
+      @click="$emit('click', $event)"
     />
   </div>
 </template>
@@ -23,17 +24,11 @@ export default defineComponent({
       type: Array,
       default: () => [],
     },
+    searchType: {
+      type: String,
+      default: '',
+    },
   },
-  emits: ['suggestionHover'],
-  setup() {
-    const closeSearchfield = () => {
-      blurSuggestions(false)
-      isOpen.value = false
-    }
-
-    return {
-      closeSearchfield,
-    }
-  },
+  emits: ['suggestionHover', 'click'],
 })
 </script>

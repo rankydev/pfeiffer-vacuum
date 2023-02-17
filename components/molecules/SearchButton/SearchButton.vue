@@ -43,11 +43,11 @@ export default defineComponent({
       })
     }
 
-    const handleClickEvent = () => {
+    const handleClickEvent = (e) => {
       emit('closeModal', true)
 
       if (props?.searchType === 'documents') {
-        return
+        return emit('click', props.title)
       }
 
       pushSearchTerm(props.title)

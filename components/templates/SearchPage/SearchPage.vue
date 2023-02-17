@@ -29,7 +29,7 @@
               class="search-page__result-headline"
             />
             <div class="search-page__search-input">
-              <DocumentSearchSuggest />
+              <SearchInputPage />
             </div>
           </ContentWrapper>
 
@@ -115,7 +115,7 @@ import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline
 import SearchResult from '~/components/organisms/SearchResult/SearchResult'
 import DocumentSearchResult from '~/components/organisms/DocumentSearchResult/DocumentSearchResult'
 import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
-import DocumentSearchSuggest from '~/components/molecules/DocumentSearchSuggest/DocumentSearchSuggest'
+import SearchInputPage from '~/components/molecules/SearchInputPage/SearchInputPage'
 
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { useErrorHandler } from '~/composables/useErrorHandler'
@@ -133,7 +133,7 @@ export default defineComponent({
     OnPageNavigation,
     ResultHeadline,
     GenericTabs,
-    DocumentSearchSuggest,
+    SearchInputPage,
     SearchResult,
     DocumentSearchResult,
   },
