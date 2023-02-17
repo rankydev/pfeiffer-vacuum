@@ -9,7 +9,11 @@
           {{ $t('category.documents.advancedSearchInfo') }}
         </div>
       </div>
-      <Link href="/todo" class="advanced-search__link" target="_blank">
+      <Link
+        :href="empolisSearchUrl"
+        class="advanced-search__link"
+        target="_blank"
+      >
         <Button
           variant="secondary"
           shape="outlined"
@@ -79,6 +83,7 @@ import {
 import { storeToRefs } from 'pinia'
 import { useEmpolisStore } from '~/stores/empolis'
 import { PAGE_SIZE_DEFAULT } from '~/config/pagination.config'
+import { useEmpolisHelper } from '~/composables/useEmpolisHelper'
 
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import DocumentSearchItem from '~/components/molecules/DocumentSearchItem/DocumentSearchItem.vue'
@@ -105,6 +110,7 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const empolisStore = useEmpolisStore()
+    const { empolisSearchUrl } = useEmpolisHelper()
 
     const pageSize = computed(() =>
       Number(route.value.query?.pageSize || PAGE_SIZE_DEFAULT)
@@ -146,6 +152,7 @@ export default defineComponent({
       searchResultsItems,
       searchResultsLoading,
       searchResultsLoadingError,
+      empolisSearchUrl,
     }
   },
 })

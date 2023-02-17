@@ -1,6 +1,10 @@
 <template>
   <article>
-    <Link class="document-item__link" @click="$emit('click')">
+    <Link
+      class="document-item__link"
+      :href="linkToEmpolisPortal"
+      target="_blank"
+    >
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <h5 v-html="product.title" />
@@ -56,7 +60,11 @@
               size="base"
             />
           </Link>
-          <Link class="document-item__icon-link product-link">
+          <Link
+            class="document-item__icon-link product-link"
+            :href="linkToEmpolisPortal"
+            target="_blank"
+          >
             <Icon
               class="document-item__icon"
               icon="arrow_forward"
@@ -90,8 +98,9 @@ export default defineComponent({
   },
   emits: ['click'],
   setup(props) {
-    const { getDownloadButtonBaseConfig } = useEmpolisHelper()
     const { product } = toRefs(props)
+    const { getDownloadButtonBaseConfig, getFileInEmpolisUrl } =
+      useEmpolisHelper()
 
     const subtitleRemainingelements = product.value.subtitle.slice(1, 3)
 
@@ -99,10 +108,15 @@ export default defineComponent({
       getDownloadButtonBaseConfig(product.value)
     )
 
+    const linkToEmpolisPortal = computed(() => {
+      return getFileInEmpolisUrl(product.value.id)
+    })
+
     return {
       getKey,
       subtitleRemainingelements,
       downloadButtonBaseData,
+      linkToEmpolisPortal,
     }
   },
 })

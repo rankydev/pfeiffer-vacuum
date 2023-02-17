@@ -1,6 +1,15 @@
 import { PATH_EMPOLIS } from '~/server/constants'
+import { computed, useContext, useRoute } from '@nuxtjs/composition-api'
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 
 export const useEmpolisHelper = () => {
+  const userStore = useUserStore()
+  const { keycloakInstance, isLoggedIn } = storeToRefs(userStore)
+  const ctx = useContext()
+  const { $config } = ctx
+  const route = useRoute()
+
   const isStepFile = (file) => {
     return file.informationType?.value?.includes('Step-File')
   }
@@ -13,53 +22,56 @@ export const useEmpolisHelper = () => {
     }
   }
 
+  const empolisPortalUrl = computed(() => {
+    const useEmpolisProductionSystem = $config.EMPOLIS_STAGE === 'project1_p'
+
+    const publicPortalUrl = `${$config.EMPOLIS_PATH}portal/${$config.EMPOLIS_STAGE}/`
+    if (!useEmpolisProductionSystem) {
+      return publicPortalUrl
+    }
+
+    const guestTokenRedirectUrl = `${$config.EMPOLIS_GUEST_TOKEN_URL}?redirect=${publicPortalUrl}`
+
+    // Empolis only offers a Guest-Token URL for our production environment
+    if (!isLoggedIn.value) {
+      return guestTokenRedirectUrl
+    }
+
+    const isInternalLevel =
+      keycloakInstance.value?.hasRealmRole('internal_level_0') ||
+      keycloakInstance.value?.hasRealmRole('internal_level_1') ||
+      keycloakInstance.value?.hasRealmRole('internal_level_2')
+
+    if (!isInternalLevel) {
+      return guestTokenRedirectUrl
+    }
+
+    return `${$config.EMPOLIS_SSO_PATH}portal/${$config.EMPOLIS_STAGE}/`
+  })
+
+  const empolisSearchUrl = computed(() => {
+    return `${empolisPortalUrl.value}search`
+  })
+
+  const getFileInEmpolisUrl = (id) => {
+    const empolisContext = {
+      filter: route.value.query?.filter
+        ? JSON.parse(route.value.query?.filter.toString())
+        : {},
+      text: route.value.query?.searchTerm ? route.value.query?.searchTerm : '',
+      page: 1,
+      useExportQuery: 0,
+    }
+
+    const searchContext = encodeURIComponent(JSON.stringify(empolisContext))
+
+    return `${empolisPortalUrl.value}document/${id}?context=${searchContext}`
+  }
+
   return {
+    empolisPortalUrl,
+    empolisSearchUrl,
     getDownloadButtonBaseConfig,
+    getFileInEmpolisUrl,
   }
 }
-
-// export default {
-//   computed: {
-//     ...mapGetters(['loggedIn']),
-//     empolisPortalUrl() {
-//       const useEmpolisProductionSystem = this.$env.NODE_PROFILE !== 'develop'
-
-//       const publicPortalUrl = `${this.$env.EMPOLIS_PATH}portal/${this.$env.EMPOLIS_STAGE}/`
-//       if (!useEmpolisProductionSystem) {
-//         return publicPortalUrl
-//       }
-
-//       // Empolis only offers a Guest-Token URL for our production environment
-//       if (!this.loggedIn) {
-//         return `${this.$env.EMPOLIS_GUEST_TOKEN_URL}?redirect=${publicPortalUrl}`
-//       }
-
-//       const keycloakInstance = this.$store?.$keycloakInstance
-//       const isInternalLevel =
-//         keycloakInstance?.hasRealmRole('internal_level_0') ||
-//         keycloakInstance?.hasRealmRole('internal_level_1') ||
-//         keycloakInstance?.hasRealmRole('internal_level_2')
-//       if (!isInternalLevel) {
-//         return `${this.$env.EMPOLIS_GUEST_TOKEN_URL}?redirect=${publicPortalUrl}`
-//       }
-
-//       return `${this.$env.EMPOLIS_SSO_PATH}portal/${this.$env.EMPOLIS_STAGE}/`
-//     },
-//     empolisProxyDownloadPath() {
-//       return this.$env.PROXY_PATH_EMPOLIS
-//     },
-//   },
-//   methods: {
-//     openEmpolisSearch: function () {
-//       window.event.preventDefault()
-//       window.open(`${this.empolisPortalUrl}search`, '_blank')
-//     },
-//     openFileInEmpolis: function (id) {
-//       const searchContext = encodeURIComponent(JSON.stringify(this.context))
-//       window.open(
-//         `${this.empolisPortalUrl}document/${id}?context=${searchContext}`,
-//         '_blank'
-//       )
-//     },
-//   },
-// }
