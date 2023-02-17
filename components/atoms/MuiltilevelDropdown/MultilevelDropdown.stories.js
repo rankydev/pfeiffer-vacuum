@@ -17,16 +17,18 @@ export default {
 const Template = (args) => ({
   components: { MultilevelDropdown },
   setup() {
-    return { args }
-  },
-  methods: {
-    selected: (selected) => {
-      console.log(selected)
-    },
+    const selected = (option) => {
+      console.log(
+        'This option was clicked. Now handle here outside what to do (async request, update tree and set item to "checked", etc.).',
+        option
+      )
+    }
+
+    return { args, selected }
   },
   template: `
       <div class="documentation-preview">
-      <MultilevelDropdown v-bind="args" @update="selected" />
+        <MultilevelDropdown v-bind="args" @update="selected" />
       </div>
     `,
 })

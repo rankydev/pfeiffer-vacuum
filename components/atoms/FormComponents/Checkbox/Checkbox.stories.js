@@ -12,7 +12,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Form component used to display a checkbox with a label',
+        component:
+          'Form component used to display a checkbox with a label.<br> Please note, the checkbox has NO internal checked state. Parent component is responsible to pass correct "checked" prop. Use "update" event to handle checked state',
       },
       source: {
         code: '<Checkbox v-bind="{ label, checked, disabled }"  />',
