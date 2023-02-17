@@ -65,6 +65,8 @@ jest.mock('@nuxtjs/composition-api', () => {
       }
     }),
     useRouter: jest.fn(() => ({ options: { base: '' } })),
+    onBeforeMount: jest.fn(),
+    onServerPrefetch: jest.fn(),
     useRoute: jest.fn(() =>
       ref({
         fullPath: '/someExample/',

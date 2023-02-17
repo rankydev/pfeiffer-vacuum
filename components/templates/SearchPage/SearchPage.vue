@@ -34,6 +34,7 @@
             v-if="showDocumentSearchTab"
             :tabs="tabNavigationItems"
             :active-tab="currentTabSelected"
+            :active-tab-initially-open-on-mobile="false"
             center-mode
             @selectTab="selectTab"
           >

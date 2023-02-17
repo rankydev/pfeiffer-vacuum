@@ -65,19 +65,25 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    activeTabInitiallyOpenOnMobile: {
+      type: Boolean,
+      default: true,
+    },
   },
   emits: ['selectTab'],
   setup(props, { emit }) {
     const { app } = useContext()
     const { isMobile } = app.$breakpoints
-    const { tabs, activeTab } = toRefs(props)
+    const { tabs, activeTab, activeTabInitiallyOpenOnMobile } = toRefs(props)
 
     const mobileAccordionItems = computed(() => {
       return tabs.value.map((item) => {
         return {
           ...item,
           label: item.name,
-          isActive: item.trigger === activeTab.value,
+          isActive:
+            item.trigger === activeTab.value &&
+            activeTabInitiallyOpenOnMobile.value,
           slotName: item.trigger,
         }
       })

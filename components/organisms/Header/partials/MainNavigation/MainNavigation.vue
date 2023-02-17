@@ -15,7 +15,7 @@
       :class="{ 'main-navigation__items--active': isActive }"
     >
       <MainNavigationLevel
-        :navigation-entries="navigationEntries"
+        :navigation-entries="enrichedNavigationEntries"
         :flyout-links="flyoutLinks"
       />
       <!-- flyout -->
@@ -26,10 +26,16 @@
 
 <script>
 import { storeToRefs } from 'pinia'
-import { defineComponent } from '@nuxtjs/composition-api'
+import {
+  computed,
+  toRefs,
+  useContext,
+  defineComponent,
+} from '@nuxtjs/composition-api'
 import BurgerIcon from '~/components/atoms/BurgerIcon/BurgerIcon.vue'
 import MainNavigationLevel from '../MainNavigationLevel/MainNavigationLevel.vue'
 import { useMenuStore } from '~/stores/menu'
+import { useCategoryStore } from '~/stores/category'
 
 export default defineComponent({
   components: {
@@ -49,12 +55,31 @@ export default defineComponent({
       default: /* istanbul ignore next */ () => [],
     },
   },
-  setup(_, { refs }) {
+  setup(props, { refs }) {
     const menuStore = useMenuStore()
     const { isActive } = storeToRefs(menuStore)
+    const { localePath } = useContext()
     const toggle = () => menuStore.toggle(refs.menu)
 
-    return { isActive, toggle }
+    const { navigationEntries } = toRefs(props)
+
+    const categoryStore = useCategoryStore()
+    const { categoryTreeNavigationEntries } = storeToRefs(categoryStore)
+
+    const enrichedNavigationEntries = computed(() =>
+      navigationEntries.value.map((entry) =>
+        entry.useHybrisCategories
+          ? {
+              ...entry,
+              href: localePath('shop-categories'),
+              shopLink: undefined,
+              navigationEntries: categoryTreeNavigationEntries.value,
+            }
+          : entry
+      )
+    )
+
+    return { enrichedNavigationEntries, isActive, toggle }
   },
 })
 </script>
