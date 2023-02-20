@@ -53,13 +53,14 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const empolisStore = useEmpolisStore()
-    const isDesktop = app.$breakpoints.isDesktop
     const isFocused = ref(true)
     const categoryStore = useCategoryStore()
     const { app } = useContext()
     const { debounce } = useDebounce()
     const { searchTerm: initialSearchTerm } = storeToRefs(categoryStore)
     const { fetchDocumentSuggestions } = empolisStore
+
+    const isDesktop = app.$breakpoints.isDesktop
 
     const pvInput = ref(null)
     const currentSuggestions = ref([])
