@@ -18,26 +18,15 @@ export default createProxyMiddleware({
   target: `${nuxtConfig.privateRuntimeConfig.STORYBLOK_API_BASE_URL}`,
   changeOrigin: true,
   agent,
-  pathRewrite: (path, req) => {
-    let newPath = path.replace(
-      `^(/(${regionsForRegex}))${PATH_DATASOURCES}`,
-      '/'
-    )
+  pathRewrite: { [`^(/(${regionsForRegex}))${PATH_DATASOURCES}`]: '/' },
+  onProxyReq: (proxyReq, req) => {
+    const cmsToken = `${nuxtConfig.privateRuntimeConfig.STORYBLOK_ACCESS_TOKEN}`
 
-    const newQuery = { ...req.query } // copy object
-    if (Object.keys(newQuery).length) {
-      // There were more query parameters than just _csrf
-      newPath = `${newPath.split('?')[0]}?${querystring.stringify(
-        newQuery
-      )}&token=${nuxtConfig.privateRuntimeConfig.STORYBLOK_ACCESS_TOKEN}`
+    if (proxyReq.path.includes('token=')) {
+      proxyReq.path = proxyReq.path.replace('token=[^&]*', 'token=' + cmsToken)
     } else {
-      // _csrf was the only query parameter
-      newPath = `${newPath.split('?')[0]}?token=${
-        nuxtConfig.privateRuntimeConfig.STORYBLOK_ACCESS_TOKEN
-      }`
+      proxyReq.path = `${proxyReq.path}&token=${cmsToken}`
     }
-
-    logger.trace('newPath: ', newPath)
-    return newPath
+    proxyReq.removeHeader('cookie')
   },
 })
