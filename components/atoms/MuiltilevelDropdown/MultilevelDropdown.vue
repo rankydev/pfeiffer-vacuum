@@ -2,16 +2,18 @@
   <ul class="multilevel-dropdown">
     <MultilevelDropdownNode
       v-for="node in options"
-      :key="node[optionLabel]"
+      :key="node[labelKey]"
       :node="node"
-      :option-label="optionLabel"
+      :label-key="labelKey"
       :options-key="optionsKey"
+      :checked-key="checkedKey"
+      @optionClicked="clickedOption"
     />
   </ul>
 </template>
 
 <script>
-import { defineComponent, provide, ref, watch } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import MultilevelDropdownNode from './MultilevelDropdownNode.vue'
 
 export default defineComponent({
@@ -24,24 +26,28 @@ export default defineComponent({
       type: Array,
       required: true,
     },
-    optionLabel: {
+    labelKey: {
       type: String,
       default: 'label',
-      required: false,
     },
     optionsKey: {
       type: String,
       default: 'concepts',
-      required: false,
+    },
+    checkedKey: {
+      type: String,
+      default: 'checked',
     },
   },
   emits: ['update'],
-  setup(props, { emit }) {
-    const selectedArray = ref([])
-    provide('selectedArray', selectedArray)
-    watch(selectedArray, () => {
-      emit('update', selectedArray.value)
-    })
+  setup(_, { emit }) {
+    const clickedOption = (option) => {
+      emit('update', option)
+    }
+
+    return {
+      clickedOption,
+    }
   },
 })
 </script>
@@ -61,8 +67,6 @@ export default defineComponent({
   }
 
   .checkbox {
-    @apply tw-min-w-fit;
-
     input {
       @apply focus:tw-border-pv-red-lighter;
     }
@@ -70,13 +74,22 @@ export default defineComponent({
 
   .button {
     @apply tw-p-0;
-    @apply tw-my-auto;
-    @apply tw-ml-2;
   }
 
   &-node {
     &__item {
       @apply tw-flex;
+      @apply tw-gap-3;
+    }
+
+    &__checkbox {
+      .checkbox__input {
+        flex: 0 0 24px;
+      }
+    }
+
+    &__expand {
+      flex: 0 0 24px;
     }
 
     &__child {

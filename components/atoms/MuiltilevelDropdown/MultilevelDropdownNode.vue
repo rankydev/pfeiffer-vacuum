@@ -2,41 +2,36 @@
   <li class="multilevel-dropdown-node">
     <div class="multilevel-dropdown-node__item">
       <Checkbox
-        :label="node[optionLabel]"
-        :checked="getChecked"
-        @update="onUpdateCheckBox"
+        :label="node[labelKey]"
+        :checked="node[checkedKey]"
+        class="multilevel-dropdown-node__checkbox"
+        @update="optionClicked(node)"
       />
       <Button
         v-if="hasChildren"
-        :icon="getExpanded ? 'expand_less' : 'expand_more'"
+        :icon="expanded ? 'expand_less' : 'expand_more'"
         variant="variant-selection"
         shape="plain"
+        class="multilevel-dropdown-node__expand"
         @click="toggleIsExpanded"
       />
     </div>
-    <ul
-      v-if="hasChildren"
-      v-show="getExpanded"
-      class="multilevel-dropdown-node__child"
-    >
+    <ul v-if="hasChildren & expanded" class="multilevel-dropdown-node__child">
       <MultilevelDropdownNode
         v-for="child in children"
-        :key="child.label"
+        :key="child[labelKey]"
         :node="child"
-        :option-label="optionLabel"
+        :label-key="labelKey"
         :options-key="optionsKey"
+        :checked-key="checkedKey"
+        @optionClicked="optionClicked"
       />
     </ul>
   </li>
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  inject,
-  toRefs,
-} from '@nuxtjs/composition-api'
+import { defineComponent, computed, ref, toRefs } from '@nuxtjs/composition-api'
 import Checkbox from '@/components/atoms/FormComponents/Checkbox/Checkbox.vue'
 
 export default defineComponent({
@@ -47,17 +42,7 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    expanded: {
-      type: Boolean,
-      default: false,
-      required: false,
-    },
-    checked: {
-      type: Boolean,
-      default: false,
-      required: false,
-    },
-    optionLabel: {
+    labelKey: {
       type: String,
       required: true,
     },
@@ -65,47 +50,38 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    checkedKey: {
+      type: String,
+      required: true,
+    },
   },
-  setup(props) {
-    const { checked, expanded, node, optionsKey } = toRefs(props)
-    const selectedArray = inject('selectedArray')
-    const children = computed(() => {
-      return node.value[optionsKey.value] || []
-    })
-    const hasChildren = computed(() => {
-      return children.value.length > 0
-    })
+  emits: ['optionClicked'],
+  setup(props, { emit }) {
+    const { node, optionsKey } = toRefs(props)
+
+    const expanded = ref(false)
+
     const toggleIsExpanded = () => {
       expanded.value = !expanded.value
     }
-    const updateSelectedArray = () => {
-      if (checked.value) {
-        selectedArray.value.push(node.value)
-      } else {
-        selectedArray.value = selectedArray.value.filter(
-          (item) => item !== node.value
-        )
-      }
-    }
-    const onUpdateCheckBox = (checkedValue) => {
-      checked.value = checkedValue
-      updateSelectedArray()
-    }
 
-    const getChecked = computed(() => {
-      return checked.value
+    const children = computed(() => {
+      return node.value[optionsKey.value] || []
     })
 
-    const getExpanded = computed(() => {
-      return expanded.value
+    const hasChildren = computed(() => {
+      return children.value.length > 0
     })
+
+    const optionClicked = (optionValue) => {
+      emit('optionClicked', optionValue)
+    }
 
     return {
       children,
-      getChecked,
-      onUpdateCheckBox,
       hasChildren,
-      getExpanded,
+      expanded,
+      optionClicked,
       toggleIsExpanded,
     }
   },
