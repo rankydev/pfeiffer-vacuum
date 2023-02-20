@@ -1,54 +1,66 @@
 <template>
-  <div v-show="isOpen" class="cart-overlay">
-    <div class="cart-overlay-title">
-      <h2 class="cart-overlay-title__title">
-        <span>{{ $t('cart.shoppingCart') }}</span>
-        <span
-          v-if="getTotalCartUniqueItems"
-          class="cart-overlay-title__title-count"
-        >
-          ({{ getTotalCartUniqueItems }})
-        </span>
-      </h2>
-      <Icon
-        icon="close"
-        class="cart-overlay-title__close"
-        @click="closeOverlay"
-      />
-    </div>
-    <div class="cart-overlay-content">
-      <CartTable
-        class="cart-overlay-content__table"
-        :is-mini-cart="isMiniCart"
-      />
-      <div class="cart-overlay-content__total">
-        <span class="cart-overlay-content__total-label">
-          {{ $t('cart.overall1') }}
-        </span>
-        <span class="cart-overlay-content__total-tax">
-          {{ $t('cart.overall2') }}
-        </span>
-        <span class="cart-overlay-content__total-value">
-          {{ getTotalCartPrice }}
-        </span>
+  <GenericSidebar
+    :is-open="isOpen"
+    position="right"
+    @closeSidebar="closeOverlay"
+  >
+    <div class="cart-overlay">
+      <div class="cart-overlay-title">
+        <h2 class="cart-overlay-title__title">
+          <span>{{ $t('cart.shoppingCart') }}</span>
+          <span
+            v-if="getTotalCartUniqueItems"
+            class="cart-overlay-title__title-count"
+          >
+            ({{ getTotalCartUniqueItems }})
+          </span>
+        </h2>
       </div>
-      <div class="cart-overlay-content__navigation">
-        <Button
-          class="cart-overlay-content__navigation-checkout"
-          :label="$t('cart.checkout')"
-          icon="arrow_forward"
+      <div v-if="getTotalCartUniqueItems" class="cart-overlay-content">
+        <CartTable
+          class="cart-overlay-content__table"
+          :is-mini-cart="isMiniCart"
         />
+        <div class="cart-overlay-content__total">
+          <span class="cart-overlay-content__total-label">
+            {{ $t('cart.overall1') }}
+          </span>
+          <span class="cart-overlay-content__total-tax">
+            {{ $t('cart.overall2') }}
+          </span>
+          <span class="cart-overlay-content__total-value">
+            {{ getTotalCartPrice }}
+          </span>
+        </div>
+        <div class="cart-overlay-content__navigation">
+          <Button
+            class="cart-overlay-content__navigation-checkout"
+            :label="$t('cart.checkout')"
+            icon="arrow_forward"
+          />
+          <Button
+            class="cart-overlay-content__navigation-edit"
+            variant="secondary"
+            shape="plain"
+            icon="shopping_cart"
+            :label="$t('cart.editCart')"
+            @click="goToCart"
+          />
+        </div>
+      </div>
+      <div v-else class="cart-overlay-empty">
+        <p class="cart-overlay-empty__text">{{ $t('cart.cartEmpty') }}</p>
         <Button
-          class="cart-overlay-content__navigation-edit"
+          class="cart-overlay-empty__button"
+          :label="$t('cart.showAllProducts')"
           variant="secondary"
-          shape="plain"
-          icon="shopping_cart"
-          :label="$t('cart.editCart')"
-          @click="goToCart"
+          shape="outlined"
+          icon="arrow_forward"
+          @click="goToShop"
         />
       </div>
     </div>
-  </div>
+  </GenericSidebar>
 </template>
 
 <script>
@@ -94,13 +106,18 @@ export default defineComponent({
       return price > 0 ? `€ ${price.toFixed(2).toLocaleString()}` : '-'
     })
 
+    const closeOverlay = () => {
+      emit('close')
+    }
+
     const goToCart = () => {
       router.push(localePath('shop-cart'))
       closeOverlay()
     }
 
-    const closeOverlay = () => {
-      emit('close')
+    const goToShop = () => {
+      router.push(localePath('shop-categories'))
+      closeOverlay()
     }
 
     return {
@@ -110,32 +127,17 @@ export default defineComponent({
       goToCart,
       getTotalCartUniqueItems,
       getTotalCartPrice,
+      goToShop,
     }
   },
 })
 </script>
 <style lang="scss">
-@import '/assets/scss/z-index';
-
 .cart-overlay {
-  @apply tw-ml-4;
-  @apply tw-border tw-border-pv-grey-96;
-  @apply tw-rounded-tl-lg;
-  @apply tw-rounded-bl-lg;
-  @apply tw-bg-pv-grey-96;
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-h-full;
-  @apply tw-fixed tw-top-0 tw-right-0;
-  z-index: $overlay;
-  @screen md {
-    @apply tw-ml-0;
-    @apply tw-w-1/2;
-  }
-
-  @screen lg {
-    @apply tw-w-1/3;
-  }
+  @apply tw-bg-pv-grey-96;
 
   &-title {
     @apply tw-flex;
@@ -150,11 +152,6 @@ export default defineComponent({
       &-count {
         @apply tw-font-normal;
       }
-    }
-
-    &__close {
-      @apply tw-ml-auto;
-      @apply tw-cursor-pointer;
     }
   }
 
@@ -218,6 +215,18 @@ export default defineComponent({
           @apply tw-mx-0;
         }
       }
+    }
+  }
+
+  &-empty {
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-m-auto;
+
+    &__text {
+      @apply tw-font-bold;
+      @apply tw-text-lg;
+      @apply tw-leading-6;
     }
   }
 }

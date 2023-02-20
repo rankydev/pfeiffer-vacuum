@@ -45,5 +45,7 @@
   "deleteFromCartError": "从购物车中删除产品时发生错误",
   "updateCartSuccess": "已成功更新购物车",
   "updateCartError": "更新购物车时发生错误",
-  "pricePerUnit": "价格 / 聚氨酯"
+  "pricePerUnit": "价格 / 聚氨酯",
+  "cartEmpty": "请将商品添加到购物车。",
+  "showAllProducts": "显示所有产品"
 }

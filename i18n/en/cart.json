@@ -45,5 +45,7 @@
   "deleteFromCartSuccess": "Successfully deleted product from cart",
   "deleteFromCartError": "An error occured while deleting product from cart",
   "updateCartSuccess": "Successfully updated cart",
-  "updateCartError": "An error occured while updating cart"
+  "updateCartError": "An error occured while updating cart",
+  "cartEmpty": "Please add an item to the shopping cart.",
+  "showAllProducts": "Show all products"
 }

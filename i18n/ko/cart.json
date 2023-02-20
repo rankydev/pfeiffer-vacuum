@@ -45,5 +45,7 @@
   "deleteFromCartError": "장바구니에서 제품을 삭제하는 동안 오류가 발생했습니다.",
   "updateCartSuccess": "장바구니가 성공적으로 업데이트되었습니다.",
   "updateCartError": "장바구니를 업데이트하는 동안 오류가 발생했습니다.",
-  "pricePerUnit": "가격 / 우레탄"
+  "pricePerUnit": "가격 / 우레탄",
+  "cartEmpty": "장바구니에 항목을 추가해주세요.",
+  "showAllProducts": "모든 제품 보기"
 }

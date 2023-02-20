@@ -46,5 +46,7 @@
   "deleteFromCartSuccess": "Produkt erfolgreich aus dem Warenkorb entfernt",
   "deleteFromCartError": "Beim Entfernen des Produktes aus dem Warenkorb ist ein Fehler aufgetreten",
   "updateCartSuccess": "Warenkorb erfolgreich aktualisiert",
-  "updateCartError": "Beim Aktualisieren des Warenkorbs ist ein Fehler aufgetreten"
+  "updateCartError": "Beim Aktualisieren des Warenkorbs ist ein Fehler aufgetreten",
+  "cartEmpty": "Bitte legen Sie einen Artikel in den Warenkorb.",
+  "showAllProducts": "Alle Produkte anzeigen"
 }

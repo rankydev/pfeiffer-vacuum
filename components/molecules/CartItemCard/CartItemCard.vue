@@ -21,7 +21,7 @@
       </p>
     </div>
     <Button
-      v-if="isMiniCart"
+      v-if="details && isMiniCart"
       class="cart-item-card-details-button"
       variant="secondary"
       shape="plain"
@@ -29,7 +29,7 @@
       :label="$t('cart.details')"
       @click="toggleDetails"
     />
-    <div v-if="isDetailsExpanded && details" class="cart-item-card-details">
+    <div v-if="details && isDetailsExpanded" class="cart-item-card-details">
       <template v-for="detail in details">
         <Tag
           v-for="(variant, id) in detail.variationValues"
