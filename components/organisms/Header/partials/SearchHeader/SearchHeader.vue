@@ -81,14 +81,14 @@ export default defineComponent({
   },
   setup() {
     const { app } = useContext()
-    const categoryStore = useCategoryStore()
     const isDesktop = app.$breakpoints.isDesktop
+    const categoryStore = useCategoryStore()
     const isOpen = ref(false)
     const isFocused = ref(true)
     const suggestionHover = ref(true)
 
     const { currentSuggestions } = storeToRefs(categoryStore)
-    const { blurSuggestions } = categoryStore
+    const { blurSuggestions, setSearchTermChanged } = categoryStore
 
     const toggleSearchfield = () => {
       isOpen.value = !isOpen.value
@@ -97,6 +97,7 @@ export default defineComponent({
     const closeSearchfield = () => {
       blurSuggestions(false)
       isOpen.value = false
+      setSearchTermChanged(true)
     }
 
     const toggleSuggestionsOnFocus = async (val) => {

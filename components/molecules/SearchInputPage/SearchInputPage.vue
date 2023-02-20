@@ -29,6 +29,7 @@
 import {
   computed,
   defineComponent,
+  nextTick,
   useContext,
   useRoute,
   useRouter,
@@ -40,6 +41,8 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import { useEmpolisStore } from '~/stores/empolis'
 import { useDebounce } from '~/composables/useDebounce'
 import SearchSuggestions from '~/components/molecules/SearchSuggestions/SearchSuggestions.vue'
+import { useCategoryStore } from '~/stores/category/category'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
@@ -55,6 +58,9 @@ export default defineComponent({
     const { debounce } = useDebounce()
     const isDesktop = app.$breakpoints.isDesktop
     const isFocused = ref(true)
+    const categoryStore = useCategoryStore()
+    const { searchTermChanged } = storeToRefs(categoryStore)
+    const { setSearchTermChanged } = categoryStore
 
     const { fetchDocumentSuggestions } = empolisStore
 
@@ -74,6 +80,10 @@ export default defineComponent({
         currentSuggestions.value = []
       }
       searchTerm.value = searchTermDocumentsValue
+    })
+
+    watch(searchTermInitial, (searchTermInitialValue) => {
+      console.log('initial', searchTermInitialValue)
     })
 
     watch(searchTermProducts, (searchTermProductsValue) => {
@@ -103,6 +113,18 @@ export default defineComponent({
       pushSearchTerm(searchTermProducts.value)
     })
 
+    watch(searchTermChanged, (searchTermChangedValue) => {
+      if (searchTermChangedValue) {
+        nextTick(() => {
+          console.log('searchTermChangedValue', searchTermChangedValue)
+          searchTermDocuments.value = searchTerm.value
+          searchTermProducts.value = searchTerm.value
+          console.log('docs', searchTermDocuments.value)
+          console.log('products', searchTermProducts.value)
+        })
+      }
+    })
+
     const clearInput = () => {
       if (activeTab?.value === 'documents') {
         return (searchTermDocuments.value = '')
@@ -119,6 +141,7 @@ export default defineComponent({
       const encodedTerm = encodeURIComponent(term)
       const searchType = activeTab.value ? `&searchType=${activeTab.value}` : ''
       router.push(`search?searchTerm=${encodedTerm}${searchType}`)
+      setSearchTermChanged(false)
     }
 
     const closeSearchfield = (value) => {

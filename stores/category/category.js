@@ -20,6 +20,7 @@ export const useCategoryStore = defineStore('category', () => {
   const result = ref(null)
   const reqId = ref(null)
   const searchSuggestions = ref([])
+  const searchTermChanged = ref(false)
 
   const defaultSort = computed(() => {
     return searchTerm.value.length > 0 ? 'relevance' : 'name-asc'
@@ -152,11 +153,16 @@ export const useCategoryStore = defineStore('category', () => {
     if (!val) searchSuggestions.value = []
   }
 
+  const setSearchTermChanged = (val) => {
+    searchTermChanged.value = val
+  }
+
   return {
     // state
     category,
     result,
     searchTerm,
+    searchTermChanged,
     searchSuggestions,
 
     // getters
@@ -171,5 +177,6 @@ export const useCategoryStore = defineStore('category', () => {
     loadByPath,
     loadSuggestions,
     blurSuggestions,
+    setSearchTermChanged,
   }
 })

@@ -98,6 +98,7 @@ export default defineComponent({
     @apply tw-text-sm;
     @apply tw-leading-6;
     @apply tw-font-normal;
+    @apply tw-text-left;
   }
 }
 </style>
