@@ -1,7 +1,7 @@
 import SearchInputPage from './SearchInputPage.vue'
 
 export default {
-  title: 'Document-Search-Suggest',
+  title: 'Search-Input-Page',
   component: SearchInputPage,
   parameters: {
     docs: {
