@@ -19,7 +19,8 @@ export default createProxyMiddleware({
   changeOrigin: true,
   agent,
   pathRewrite: { [`^(/(${regionsForRegex}))${PATH_DATASOURCES}`]: '/' },
-  onProxyReq: (proxyReq, req) => {
+  // eslint-disable-next-line no-unused-vars,unused-imports/no-unused-vars
+  onProxyReq: (proxyReq, _req) => {
     const cmsToken = `${nuxtConfig.privateRuntimeConfig.STORYBLOK_ACCESS_TOKEN}`
 
     if (proxyReq.path.includes('token=')) {
