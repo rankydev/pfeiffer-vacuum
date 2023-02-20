@@ -29,7 +29,6 @@
 import {
   computed,
   defineComponent,
-  nextTick,
   useContext,
   useRoute,
   useRouter,
@@ -50,40 +49,44 @@ export default defineComponent({
     SearchSuggestions,
   },
   emits: ['searchTermChange'],
-  setup(props, { emit }) {
+  setup() {
     const route = useRoute()
     const router = useRouter()
-    const { app } = useContext()
     const empolisStore = useEmpolisStore()
-    const { debounce } = useDebounce()
     const isDesktop = app.$breakpoints.isDesktop
     const isFocused = ref(true)
     const categoryStore = useCategoryStore()
-    const { searchTermChanged } = storeToRefs(categoryStore)
-    const { setSearchTermChanged } = categoryStore
-
+    const { app } = useContext()
+    const { debounce } = useDebounce()
+    const { searchTerm: initialSearchTerm } = storeToRefs(categoryStore)
     const { fetchDocumentSuggestions } = empolisStore
 
     const pvInput = ref(null)
     const currentSuggestions = ref([])
     const searchTermDocuments = ref(route.value.query.searchTerm || '')
     const searchTermProducts = ref(route.value.query.searchTerm || '')
-    const searchTermInitial = ref(route.value.query.searchTerm || '')
-    const searchTerm = ref(searchTermInitial.value)
+    const searchTerm = ref(route.value.query.searchTerm || '')
     const isOpen = ref(false)
     const suggestionHover = ref(true)
 
     const activeTab = computed(() => route.value.query.searchType)
+
+    watch(initialSearchTerm, (initialSearchTermValue) => {
+      if (
+        initialSearchTermValue !== searchTermDocuments.value &&
+        initialSearchTermValue !== searchTermProducts
+      ) {
+        searchTermDocuments.value = initialSearchTermValue
+        searchTermProducts.value = initialSearchTermValue
+        searchTerm.value = initialSearchTermValue
+      }
+    })
 
     watch(searchTermDocuments, (searchTermDocumentsValue) => {
       if (searchTermDocumentsValue === '') {
         currentSuggestions.value = []
       }
       searchTerm.value = searchTermDocumentsValue
-    })
-
-    watch(searchTermInitial, (searchTermInitialValue) => {
-      console.log('initial', searchTermInitialValue)
     })
 
     watch(searchTermProducts, (searchTermProductsValue) => {
@@ -105,24 +108,12 @@ export default defineComponent({
           ? searchTermDocuments.value
           : activeTabValue === 'products'
           ? searchTermProducts.value
-          : searchTermInitial.value
+          : initialSearchTerm.value
 
       if (activeTabValue === 'documents') {
         return pushSearchTerm(searchTermDocuments.value)
       }
       pushSearchTerm(searchTermProducts.value)
-    })
-
-    watch(searchTermChanged, (searchTermChangedValue) => {
-      if (searchTermChangedValue) {
-        nextTick(() => {
-          console.log('searchTermChangedValue', searchTermChangedValue)
-          searchTermDocuments.value = searchTerm.value
-          searchTermProducts.value = searchTerm.value
-          console.log('docs', searchTermDocuments.value)
-          console.log('products', searchTermProducts.value)
-        })
-      }
     })
 
     const clearInput = () => {
@@ -137,11 +128,9 @@ export default defineComponent({
     }
 
     const pushSearchTerm = (term) => {
-      emit('searchTermChange', term)
       const encodedTerm = encodeURIComponent(term)
       const searchType = activeTab.value ? `&searchType=${activeTab.value}` : ''
       router.push(`search?searchTerm=${encodedTerm}${searchType}`)
-      setSearchTermChanged(false)
     }
 
     const closeSearchfield = (value) => {

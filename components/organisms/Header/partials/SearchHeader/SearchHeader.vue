@@ -88,7 +88,7 @@ export default defineComponent({
     const suggestionHover = ref(true)
 
     const { currentSuggestions } = storeToRefs(categoryStore)
-    const { blurSuggestions, setSearchTermChanged } = categoryStore
+    const { blurSuggestions } = categoryStore
 
     const toggleSearchfield = () => {
       isOpen.value = !isOpen.value
@@ -97,7 +97,6 @@ export default defineComponent({
     const closeSearchfield = () => {
       blurSuggestions(false)
       isOpen.value = false
-      setSearchTermChanged(true)
     }
 
     const toggleSuggestionsOnFocus = async (val) => {
