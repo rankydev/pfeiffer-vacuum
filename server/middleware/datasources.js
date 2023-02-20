@@ -23,10 +23,16 @@ export default createProxyMiddleware({
     const cmsToken = `${nuxtConfig.privateRuntimeConfig.STORYBLOK_ACCESS_TOKEN}`
 
     if (proxyReq.path.includes('token=')) {
-      proxyReq.path = proxyReq.path.replace('token=[^&]*', 'token=' + cmsToken)
+      proxyReq.path = proxyReq.path.replace(
+        RegExp('token=[^&]*'),
+        `token=${cmsToken}`
+      )
+      logger.trace('new path: ', proxyReq.path)
     } else {
       proxyReq.path = `${proxyReq.path}&token=${cmsToken}`
     }
     proxyReq.removeHeader('cookie')
+
+    logger.trace('new path: ', proxyReq.path)
   },
 })
