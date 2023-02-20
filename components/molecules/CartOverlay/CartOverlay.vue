@@ -5,7 +5,10 @@
     @closeSidebar="closeOverlay"
   >
     <div class="cart-overlay">
-      <div class="cart-overlay-title">
+      <div
+        class="cart-overlay-title"
+        :class="{ 'cart-overlay-title-show-info': showInfo }"
+      >
         <h2 class="cart-overlay-title__title">
           <span>{{ $t('cart.shoppingCart') }}</span>
           <span
@@ -15,13 +18,27 @@
             ({{ getTotalCartUniqueItems }})
           </span>
         </h2>
+        <p v-if="showInfo" class="cart-overlay-title__info">
+          {{
+            isAddedToCart
+              ? $t('cart.updateCartSuccess')
+              : $t('cart.deleteFromCartSuccess')
+          }}
+        </p>
       </div>
       <div v-if="getTotalCartUniqueItems" class="cart-overlay-content">
         <CartTable
           class="cart-overlay-content__table"
+          :class="{
+            'cart-overlay-content__table-no-border': !isLoggedIn,
+          }"
           :is-mini-cart="isMiniCart"
         />
-        <div class="cart-overlay-content__total">
+        <LoginToSeePricesLabel
+          v-if="!isLoggedIn"
+          class="cart-overlay-content__hide-price"
+        />
+        <div v-else class="cart-overlay-content__total">
           <span class="cart-overlay-content__total-label">
             {{ $t('cart.overall1') }}
           </span>
@@ -70,10 +87,12 @@ import {
   ref,
   useContext,
   useRouter,
+  watch,
 } from '@nuxtjs/composition-api'
 import CartTable from '../CartTable/CartTable.vue'
 import { useCartStore } from '@/stores/cart'
 import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
 
 export default defineComponent({
   name: 'CartOverlay',
@@ -94,9 +113,13 @@ export default defineComponent({
     const isMiniCart = ref(true)
     const cartStore = useCartStore()
     const { currentCart } = storeToRefs(cartStore)
+    const userStore = useUserStore()
+    const { isLoggedIn } = storeToRefs(userStore)
+    const showInfo = ref(false)
+    const isAddedToCart = ref(false)
 
     const getTotalCartUniqueItems = computed(() => {
-      return currentCart?.value?.totalItems
+      return currentCart?.value?.totalItems || 0
     })
 
     const getTotalCartPrice = computed(() => {
@@ -120,6 +143,20 @@ export default defineComponent({
       closeOverlay()
     }
 
+    watch(currentCart, (newValue, oldValue) => {
+      if (newValue?.totalUnitCount > oldValue?.totalUnitCount) {
+        showInfo.value = true
+        isAddedToCart.value = true
+      }
+      if (newValue?.totalUnitCount < oldValue?.totalUnitCount) {
+        showInfo.value = true
+        isAddedToCart.value = false
+      }
+      setTimeout(() => {
+        showInfo.value = false
+      }, 3000)
+    })
+
     return {
       currentCart,
       isMiniCart,
@@ -128,6 +165,9 @@ export default defineComponent({
       getTotalCartUniqueItems,
       getTotalCartPrice,
       goToShop,
+      isLoggedIn,
+      showInfo,
+      isAddedToCart,
     }
   },
 })
@@ -141,9 +181,14 @@ export default defineComponent({
 
   &-title {
     @apply tw-flex;
+    @apply tw-flex-col;
     @apply tw-p-4;
     @apply tw-bg-pv-white;
     @apply tw-h-[60px];
+
+    &-show-info {
+      @apply tw-h-[132px];
+    }
 
     &__title {
       @apply tw-text-lg;
@@ -152,6 +197,17 @@ export default defineComponent({
       &-count {
         @apply tw-font-normal;
       }
+    }
+
+    &__info {
+      @apply tw-my-4;
+      @apply tw-p-2;
+      @apply tw-text-base;
+      @apply tw-font-bold;
+      @apply tw-leading-6;
+      @apply tw-rounded;
+      @apply tw-text-pv-white;
+      @apply tw-bg-pv-green;
     }
   }
 
@@ -168,6 +224,15 @@ export default defineComponent({
       @apply tw-overflow-x-hidden;
       @apply tw-border-b-2 tw-border-b-pv-black;
       @apply tw-h-full;
+    }
+
+    &__table-no-border {
+      @apply tw-border-b-0;
+    }
+
+    &__hide-price {
+      @apply tw-py-4;
+      @apply tw-border-b-2 tw-border-b-pv-black;
     }
 
     &__total {

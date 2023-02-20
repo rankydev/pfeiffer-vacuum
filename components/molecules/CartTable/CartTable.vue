@@ -61,7 +61,10 @@ export default defineComponent({
     const lastSortedBy = ref(null)
     const cartStore = useCartStore()
     const { currentCart } = storeToRefs(cartStore)
-    const { deleteProductFromCart, updateProductQuantityFromCart } = cartStore
+    const {
+      deleteProductFromCartWithoutToast,
+      updateProductQuantityFromCartWithoutToast,
+    } = cartStore
     const getUniqueId = (id) => useUniqueKey('CART_TABLE_' + id)
     const getProducts = computed(() => {
       return currentCart?.value?.entries
@@ -118,12 +121,12 @@ export default defineComponent({
 
     const updateCartQuantity = async (product) => {
       const index = findProductIndexInCart(product)
-      await updateProductQuantityFromCart(index, product?.quantity)
+      await updateProductQuantityFromCartWithoutToast(index, product?.quantity)
     }
 
     const deleteFromCart = async (product) => {
       const index = findProductIndexInCart(product)
-      await deleteProductFromCart(index)
+      await deleteProductFromCartWithoutToast(index)
     }
 
     return {

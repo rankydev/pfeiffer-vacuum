@@ -86,6 +86,14 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
+  const deleteProductFromCartWithoutToast = async (entryNumber) => {
+    try {
+      await deleteEntry(entryNumber)
+    } catch (e) {
+      logger.error('Could not delete product from cart', e)
+    }
+  }
+
   const updateProductQuantityFromCart = async (entryNumber, quantity) => {
     try {
       if (quantity === 0) {
@@ -103,6 +111,21 @@ export const useCartStore = defineStore('cart', () => {
         { description: i18n.t('cart.updateCartError') },
         { timeout: 3000 }
       )
+    }
+  }
+
+  const updateProductQuantityFromCartWithoutToast = async (
+    entryNumber,
+    quantity
+  ) => {
+    try {
+      if (quantity === 0) {
+        await deleteEntry(entryNumber)
+      } else {
+        await updateQuantity(entryNumber, quantity)
+      }
+    } catch (e) {
+      logger.error('Could not update product quantity', e)
     }
   }
 
@@ -127,5 +150,7 @@ export const useCartStore = defineStore('cart', () => {
     addProductToCart,
     deleteProductFromCart,
     updateProductQuantityFromCart,
+    deleteProductFromCartWithoutToast,
+    updateProductQuantityFromCartWithoutToast,
   }
 })
