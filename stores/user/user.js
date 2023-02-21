@@ -2,6 +2,7 @@ import {
   computed,
   useContext,
   useRoute,
+  useRouter,
   onBeforeMount,
   onServerPrefetch,
   ssrRef,
@@ -20,6 +21,7 @@ export const useUserStore = defineStore('user', () => {
   const { logger } = useLogger('userStore')
   const toast = useToast()
   const ctx = useContext()
+  const router = useRouter()
   const route = useRoute()
   const userApi = useUserApi()
   const ociStore = useOciStore()
@@ -121,6 +123,57 @@ export const useUserStore = defineStore('user', () => {
     } finally {
       isLoading.value = false
     }
+  }
+
+  const register = async (data, isLiteRegistration = true) => {
+    const customerData = {
+      ...data.value.personalData,
+      ...data.value.companyData,
+      companyAddressCountryIso: data.value.personalData.address.country.isocode,
+      companyAddressRegion: data.value.personalData.address.region?.isocode,
+      companyAlreadyCustomer:
+        data.value.companyData?.companyAlreadyCustomer || false,
+    }
+
+    await userApi
+      .register(customerData)
+      .then(() => {
+        let successPagePath = '/shop/register/success'
+        if (isLiteRegistration) {
+          successPagePath += '?type=lite'
+        }
+        router.push(ctx.app.localePath(successPagePath))
+      })
+      .catch((err) => {
+        err?.data?.errors.forEach((error) => {
+          switch (error.type) {
+            case 'CustomerAlreadyExistsError':
+              toast.error({
+                description: ctx.i18n.t(
+                  'form.message.error.customerAlreadyExists'
+                ),
+              })
+              break
+            case 'CustomerInconsistentError':
+              toast.error({
+                description: ctx.i18n.t(
+                  'form.message.error.customerInconsistentError'
+                ),
+              })
+              break
+            case 'B2bRegistrationFailedError':
+              toast.error({
+                description: ctx.i18n.t('form.message.error.technicalError'),
+              })
+              break
+            default:
+              toast.error({
+                description: ctx.i18n.t('form.message.error.defaultError'),
+              })
+              break
+          }
+        })
+      })
   }
 
   const addCompanyData = async (data) => {
@@ -297,6 +350,6 @@ export const useUserStore = defineStore('user', () => {
     setDefaultDeliveryAddress,
     getDeliveryAddressByID,
     loadAddressData,
-    register: userApi.register,
+    register,
   }
 })

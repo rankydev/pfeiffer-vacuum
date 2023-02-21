@@ -1,8 +1,10 @@
 <template>
   <div class="create-account">
     <h2>
-      {{ $t('registration.registrationRequest.title') }}
+      {{ headline }}
     </h2>
+
+    <p v-if="description">{{ description }}</p>
 
     <PvInput
       v-model="requestData.registration.companyName"
@@ -101,6 +103,14 @@ export default defineComponent({
   name: 'CreateAccount',
   components: { PvInput, Password, FormCountrySelection },
   props: {
+    headline: {
+      type: String,
+      default: 'registration.registrationRequest.title',
+    },
+    description: {
+      type: String,
+      default: '',
+    },
     selectedCountry: {
       type: Object,
       default: undefined,
