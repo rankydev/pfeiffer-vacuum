@@ -168,7 +168,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   }
 
   const deleteEntry = async (entryNumber) => {
-    console.log('deleteEntry', entryNumber)
     const result = await axios.delete(
       getCartUrl() + '/entries/' + Number(entryNumber),
       {}
