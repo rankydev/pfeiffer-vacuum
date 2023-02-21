@@ -1,5 +1,8 @@
 <template>
-  <div id="help-block" class="help-container">
+  <div
+    id="help-block"
+    class="help-container tw-grid-container tw-my-component-wide"
+  >
     <div class="help-container__content">
       <div class="help-container__headline-wrapper">
         <div class="help-container__headline-text">
@@ -79,8 +82,6 @@ export default defineComponent({
   @apply tw-bg-pv-grey-32;
   @apply tw-rounded-lg;
   @apply tw-text-pv-white;
-  @apply tw-grid-container;
-  @apply tw-my-component-wide;
 
   &__headline-wrapper {
     @apply tw-flex tw-justify-between;
