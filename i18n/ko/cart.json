@@ -28,6 +28,8 @@
   "headline": "쇼핑 카트",
   "requestQuotation": "견적 요청",
   "continueShopping": "쇼핑 계속",
+  "saveCartToList": "카트를 목록에 저장",
+  "getProductHelp": "제품 도움받기",
   "list": {
     "addArticle": "쇼핑 목록에 추가"
   },
