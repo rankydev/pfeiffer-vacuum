@@ -1,58 +1,36 @@
 <template>
   <div>
     <!-- register for webinar button -->
-    <!-- <Button
-      :label="'salami'"
+    <Button
+      v-if="isFutureEvent && isWebinar"
+      :label="isDetailPage ? $t('knowledge.webinar.button.join') : ''"
       variant="primary"
       icon="person_add"
-      @click="checkLogin"
-    /> -->
-    <button
-      v-if="isFutureEvent && isWebinar"
-      variant="cta"
-      @click="isLoggedIn ? registerWebinar() : showLoginModal()"
-    >
-      <span v-if="isDetailPage" class="tw-mr-4">
-        {{ $t('knowledge.webinar.button.join') }}
-      </span>
-      <Icon class="knowledge-btn-icon" icon="person_add" />
-    </button>
+      @click="() => (isLoggedIn ? registerWebinar() : showLoginModal())"
+    />
 
     <!-- watch webinar button -->
     <template v-else-if="isWebinar">
-      <!-- <Button
-        :label="'käse'"
+      <Button
+        :label="isDetailPage ? $t('knowledge.webinar.button.watch') : ''"
         :disabled="!hasAsset"
         variant="primary"
-        icon="knowledge-btn-icon"
-        @click="isLoggedIn ? registerWebinar() : showLoginModal()"
-      /> -->
-      <button
-        variant="cta"
-        :disabled="!hasAsset"
-        @click="isLoggedIn ? openAsset() : showLoginModal()"
-      >
-        <span v-if="isDetailPage" class="tw-mr-4">
-          {{ $t('knowledge.webinar.button.watch') }}
-        </span>
-        <Icon icon="play_circle_outline" />
-      </button>
+        icon="play_circle_outline"
+        @click="() => (isLoggedIn ? openAsset() : showLoginModal())"
+      />
       <div v-if="!hasAsset && isDetailPage" class="tw-mt-4">
         {{ $t('knowledge.webinar.waitForVod') }}
       </div>
     </template>
 
     <!-- download whitepaper button -->
-    <button
-      v-else-if="isWhitepaper && hasAsset"
-      variant="cta"
-      @click="isLoggedIn ? openAsset() : showLoginModal()"
-    >
-      <span v-if="isDetailPage" class="tw-mr-4">
-        {{ $t('knowledge.whitepaper.button.download') }}
-      </span>
-      <Icon icon="get_app" />
-    </button>
+    <Button
+      v-else-if="isWhitepaper && !hasAsset"
+      :label="isDetailPage ? $t('knowledge.webinar.button.download') : ''"
+      variant="primary"
+      icon="get_app"
+      @click="() => (isLoggedIn ? openAsset() : showLoginModal())"
+    />
   </div>
 </template>
 <script>
@@ -65,15 +43,13 @@ import {
 import { useUserStore } from '~/stores/user'
 import { useKnowledgeStore } from '~/stores/knowledge'
 import { useToast } from '~/composables/useToast'
-import Icon from '~/components/atoms/Icon/Icon'
-// import Button from '~/components/atoms/Button/Button'
+import Button from '~/components/atoms/Button/Button'
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'KnowledgeAssetButton',
   components: {
-    Icon,
-    // Button,
+    Button,
   },
   props: {
     type: {
@@ -81,7 +57,7 @@ export default defineComponent({
       required: true,
       validator: (val) => ['WHITEPAPER', 'WEBINAR'].includes(val),
     },
-    id: {
+    webinarRegistrationId: {
       type: String,
       default: null,
     },
@@ -124,14 +100,12 @@ export default defineComponent({
     }
 
     const showLoginModal = () => {
-      console.log('showLoginModal')
-      login()
+      // ToDo: open LoginModal PVWEB-933
     }
 
     const registerWebinar = async () => {
-      console.log('registerWebinar')
       try {
-        await registerForWebinar(props.id)
+        await registerForWebinar(props.webinarRegistrationId)
         const message = i18n.t('knowledge.webinar.registration.success')
         toast.success(
           {
@@ -154,11 +128,6 @@ export default defineComponent({
       }
     }
 
-    const checkLogin = () => {
-      console.log('checkLogin')
-      isLoggedIn ? registerWebinar() : showLoginModal()
-    }
-
     return {
       buttonLabel,
       isWebinar,
@@ -167,7 +136,6 @@ export default defineComponent({
       hasAsset,
       isLoggedIn,
       openAsset,
-      checkLogin,
       showLoginModal,
       registerWebinar,
     }
