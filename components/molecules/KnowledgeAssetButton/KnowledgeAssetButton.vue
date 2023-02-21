@@ -81,7 +81,6 @@ export default defineComponent({
 
     const userStore = useUserStore()
     const { isLoggedIn } = storeToRefs(userStore)
-    const { login } = userStore
 
     const knowledgeStore = useKnowledgeStore()
     const { registerForWebinar } = knowledgeStore
