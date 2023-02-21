@@ -15,7 +15,7 @@
               <p>{{ $t('knowledge.time') }}</p>
             </div>
           </div>
-          <div v-if="showDuration" class="knowledge-stage__date-time">
+          <div v-if="showDuration" class="knowledge-stage__date-duration">
             <Icon class="knowledge-stage__date-icon" icon="timer" />
             <p>{{ hours }}</p>
             <p class="knowledge-stage__space">{{ $t('knowledge.hours') }}</p>
@@ -132,6 +132,8 @@ export default defineComponent({
 
 <style lang="scss">
 .knowledge-stage {
+  @apply tw-bg-pv-grey-96;
+
   &__inner-wrapper {
     @apply tw-flex;
     @apply tw-flex-wrap-reverse;
@@ -167,7 +169,12 @@ export default defineComponent({
 
   &__date {
     @apply tw-flex;
+    @apply tw-flex-col;
     @apply tw-mb-4;
+
+    @screen md {
+      @apply tw-flex-row;
+    }
 
     p {
       @apply tw-text-base;
@@ -186,6 +193,15 @@ export default defineComponent({
 
   &__date-time {
     @apply tw-flex;
+  }
+
+  &__date-duration {
+    @apply tw-flex;
+    @apply tw-mt-2;
+
+    @screen md {
+      @apply tw-mt-0;
+    }
   }
 
   &__date-divider {
