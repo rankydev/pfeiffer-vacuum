@@ -83,6 +83,7 @@ import FilterModal from '~/components/molecules/FilterModal/FilterModal'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import GenericTable from '~/components/molecules/GenericTable/GenericTable'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
+import Icon from '~/components/atoms/Icon/Icon'
 import { useProductStore } from '~/stores/product'
 import { useEmpolisStore } from '~/stores/empolis'
 import { sortAsString } from '~/utils/sortHelper'
@@ -96,6 +97,7 @@ export default defineComponent({
     FilterTag,
     FilterModal,
     LoadingSpinner,
+    Icon,
   },
   setup() {
     const { product } = useProductStore()

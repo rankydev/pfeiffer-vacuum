@@ -67,10 +67,14 @@
 import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
+import Icon from '~/components/atoms/Icon/Icon'
+import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse'
 
 export default defineComponent({
   components: {
     LoadingSpinner,
+    Icon,
+    AnimatedCollapse,
   },
   props: {
     /**

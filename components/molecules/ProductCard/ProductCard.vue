@@ -42,10 +42,12 @@
 <script>
 import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+import Icon from '~/components/atoms/Icon/Icon.vue'
+import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({
-  components: { ResponsiveImage },
+  components: { ResponsiveImage, Icon, GenericCard },
   props: {
     /**
      * productData that specifies Product Card
