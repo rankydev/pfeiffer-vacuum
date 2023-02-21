@@ -56,12 +56,10 @@ export default defineComponent({
 
 <style lang="scss">
 .myaccount-manager {
-  @apply tw-w-1/2;
   @apply tw-bg-pv-grey-96;
   @apply tw-rounded-md;
   @apply tw-p-6;
   @apply tw-flex tw-flex-col;
-  @apply tw-w-full;
 
   &__headline-with-icon {
     @apply tw-flex;
