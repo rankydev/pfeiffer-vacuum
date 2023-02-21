@@ -38,12 +38,16 @@
       </Popup>
     </client-only>
 
-    <div class="shop-navigation__shopping-cart tw-flex" @click="toggleOverlay">
+    <Link
+      :href="localePath('shop-cart')"
+      class="shop-navigation__shopping-cart tw-flex"
+    >
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
       <!-- TODO: Add correct cart item count indicator -->
       <span>{{ cartItemCount }}</span>
-    </div>
-    <CartOverlay :is-open="isOverlayOpen" @close="toggleOverlay" />
+    </Link>
+
+    <CartOverlay :is-open="isOverlayOpen" @close="closeOverlay" />
   </div>
 </template>
 
@@ -54,6 +58,7 @@ import {
   useContext,
   useRouter,
   ref,
+  watch,
 } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 import { useCartStore } from '~/stores/cart'
@@ -110,9 +115,15 @@ export default defineComponent({
     }
 
     const isOverlayOpen = ref(false)
-    const toggleOverlay = () => {
-      isOverlayOpen.value = !isOverlayOpen.value
+    const closeOverlay = () => {
+      isOverlayOpen.value = false
     }
+
+    watch(currentCart, (newValue, oldValue) => {
+      if (newValue?.totalUnitCount > oldValue?.totalUnitCount) {
+        isOverlayOpen.value = true
+      }
+    })
 
     return {
       // getters
@@ -126,7 +137,7 @@ export default defineComponent({
       isLoginProcess,
       cartItemCount,
       isOverlayOpen,
-      toggleOverlay,
+      closeOverlay,
 
       logout: userStore.logout,
       handleMyAccount,

@@ -57,10 +57,6 @@ export const useCartStore = defineStore('cart', () => {
   const addProductToCart = async (code, quantity) => {
     try {
       await addToCart(code, quantity)
-      toast.success(
-        { description: i18n.t('cart.addToCartSuccess') },
-        { timeout: 3000 }
-      )
     } catch (e) {
       logger.error('Could not add product to cart', e)
       toast.error(
@@ -73,24 +69,12 @@ export const useCartStore = defineStore('cart', () => {
   const deleteProductFromCart = async (entryNumber) => {
     try {
       await deleteEntry(entryNumber)
-      toast.success(
-        { description: i18n.t('cart.deleteFromCartSuccess') },
-        { timeout: 3000 }
-      )
     } catch (e) {
       logger.error('Could not delete product from cart', e)
       toast.error(
         { description: i18n.t('cart.deleteFromCartError') },
         { timeout: 3000 }
       )
-    }
-  }
-
-  const deleteProductFromCartWithoutToast = async (entryNumber) => {
-    try {
-      await deleteEntry(entryNumber)
-    } catch (e) {
-      logger.error('Could not delete product from cart', e)
     }
   }
 
@@ -101,31 +85,12 @@ export const useCartStore = defineStore('cart', () => {
       } else {
         await updateQuantity(entryNumber, quantity)
       }
-      toast.success(
-        { description: i18n.t('cart.updateCartSuccess') },
-        { timeout: 3000 }
-      )
     } catch (e) {
       logger.error('Could not update product quantity', e)
       toast.error(
         { description: i18n.t('cart.updateCartError') },
         { timeout: 3000 }
       )
-    }
-  }
-
-  const updateProductQuantityFromCartWithoutToast = async (
-    entryNumber,
-    quantity
-  ) => {
-    try {
-      if (quantity === 0) {
-        await deleteEntry(entryNumber)
-      } else {
-        await updateQuantity(entryNumber, quantity)
-      }
-    } catch (e) {
-      logger.error('Could not update product quantity', e)
     }
   }
 
@@ -150,7 +115,5 @@ export const useCartStore = defineStore('cart', () => {
     addProductToCart,
     deleteProductFromCart,
     updateProductQuantityFromCart,
-    deleteProductFromCartWithoutToast,
-    updateProductQuantityFromCartWithoutToast,
   }
 })

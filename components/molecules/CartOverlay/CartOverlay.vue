@@ -21,7 +21,7 @@
         <p v-if="showInfo" class="cart-overlay-title__info">
           {{
             isAddedToCart
-              ? $t('cart.updateCartSuccess')
+              ? $t('cart.addToCartSuccess')
               : $t('cart.deleteFromCartSuccess')
           }}
         </p>
