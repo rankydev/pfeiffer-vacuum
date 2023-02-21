@@ -18,7 +18,7 @@
                   />
 
                   <div class="cart-page__buttons">
-                    <!-- TODO: add correct route after shopping list migration -->
+                    <!-- TODO: add correct route after shopping list implementation -->
                     <Button
                       class="cart-page__button--save"
                       variant="secondary"
@@ -29,7 +29,7 @@
                     <Button
                       v-show="!isMobile"
                       anchor="#help-block"
-                      class="cart-page__button--submit"
+                      class="cart-page__button"
                       variant="secondary"
                       shape="outlined"
                       :inverted="true"
@@ -52,8 +52,9 @@
                     </div>
 
                     <div class="cart-page__submit">
+                      <!-- TODO: add correct route after implementation -->
                       <Button
-                        :href="localePath('shop-checkout')"
+                        :href="localePath('/')"
                         :label="$t('cart.requestQuotation')"
                         class="cart-page__button--submit"
                         variant="primary"
@@ -63,9 +64,9 @@
                   </div>
                 </div>
                 <div class="cart-page__back-button">
-                  <!-- TODO: add correct route after shop migration -->
+                  <!-- TODO: add correct route after implementation -->
                   <Button
-                    :href="localePath('shop')"
+                    :href="localePath('shop-categories')"
                     class="cart-page__button cart-page__button--back"
                     variant="secondary"
                     shape="plain"
@@ -86,9 +87,8 @@
                 <h2 class="cart-page__empty-headline">
                   {{ $t('cart.emptyMessage') }}
                 </h2>
-                <!-- TODO: add correct route after shop migration -->
                 <Button
-                  :href="localePath('shop')"
+                  :href="localePath('shop-categories')"
                   :label="$t('cart.showAllProducts')"
                   class="cart-page__button"
                   variant="primary"
