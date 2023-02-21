@@ -13,14 +13,14 @@
           :img-normal="(renderableImages[currentImage] || {}).src"
           :scale="2"
           :disabled="!isDesktop"
-          @click.native="showLightBox = true"
+          @click.native="showLightBox"
         />
         <Button
           icon="zoom_out_map"
           variant="secondary"
           shape="outlined"
           class="image-gallery__zoom-indicator"
-          @click.native="showLightBox = true"
+          @click.native="showLightBox"
         />
       </client-only>
     </div>
@@ -62,9 +62,9 @@ import {
 } from '@nuxtjs/composition-api'
 import ImageLightbox from '~/components/molecules/ImageLightbox/ImageLightbox'
 import ImageThumbnails from '~/components/molecules/ImageThumbnails/ImageThumbnails'
-import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 import Button from '~/components/atoms/Button/Button.vue'
+import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 
 export default defineComponent({
   name: 'ImageGallery',
@@ -167,8 +167,7 @@ export default defineComponent({
   }
 
   .normal {
-    @apply tw-w-full;
-    @apply tw-h-full;
+    @apply tw-w-full tw-h-full;
     @apply tw-object-contain;
   }
 }
