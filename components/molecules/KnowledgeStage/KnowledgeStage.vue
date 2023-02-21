@@ -26,7 +26,7 @@
         <div class="knowledge-stage__summary">
           <Richtext v-if="summary" :richtext="summary" />
           <div v-if="button.length" class="knowledge-stage__button">
-            <KnowledgeAssetButton v-for="btn in button" :key="btn._uid" />
+            <!-- <KnowledgeAssetButton v-for="btn in button" :key="btn._uid" /> -->
             <KnowledgeAssetButton
               id="123"
               type="WEBINAR"

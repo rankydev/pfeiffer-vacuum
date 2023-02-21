@@ -1,6 +1,12 @@
 <template>
   <div>
     <!-- register for webinar button -->
+    <!-- <Button
+      :label="'salami'"
+      variant="primary"
+      icon="person_add"
+      @click="checkLogin"
+    /> -->
     <button
       v-if="isFutureEvent && isWebinar"
       variant="cta"
@@ -9,11 +15,18 @@
       <span v-if="isDetailPage" class="tw-mr-4">
         {{ $t('knowledge.webinar.button.join') }}
       </span>
-      <Icon class="tw-mx-4" icon="person_add" />
+      <Icon class="knowledge-btn-icon" icon="person_add" />
     </button>
 
     <!-- watch webinar button -->
     <template v-else-if="isWebinar">
+      <!-- <Button
+        :label="'käse'"
+        :disabled="!hasAsset"
+        variant="primary"
+        icon="knowledge-btn-icon"
+        @click="isLoggedIn ? registerWebinar() : showLoginModal()"
+      /> -->
       <button
         variant="cta"
         :disabled="!hasAsset"
@@ -43,17 +56,24 @@
   </div>
 </template>
 <script>
-import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  useContext,
+  ref,
+} from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 import { useKnowledgeStore } from '~/stores/knowledge'
 import { useToast } from '~/composables/useToast'
 import Icon from '~/components/atoms/Icon/Icon'
+// import Button from '~/components/atoms/Button/Button'
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'KnowledgeAssetButton',
   components: {
     Icon,
+    // Button,
   },
   props: {
     type: {
@@ -89,6 +109,9 @@ export default defineComponent({
     const knowledgeStore = useKnowledgeStore()
     const { registerForWebinar } = knowledgeStore
 
+    const buttonLabel = ref(
+      props.isDetailPage ? i18n.t('knowledge.webinar.button.join') : ''
+    )
     const isWebinar = computed(() => props.type === 'WEBINAR')
     const isWhitepaper = computed(() => props.type === 'WHITEPAPER')
     const isFutureEvent = computed(() =>
@@ -101,10 +124,12 @@ export default defineComponent({
     }
 
     const showLoginModal = () => {
+      console.log('showLoginModal')
       login()
     }
 
     const registerWebinar = async () => {
+      console.log('registerWebinar')
       try {
         await registerForWebinar(props.id)
         const message = i18n.t('knowledge.webinar.registration.success')
@@ -129,13 +154,20 @@ export default defineComponent({
       }
     }
 
+    const checkLogin = () => {
+      console.log('checkLogin')
+      isLoggedIn ? registerWebinar() : showLoginModal()
+    }
+
     return {
+      buttonLabel,
       isWebinar,
       isWhitepaper,
       isFutureEvent,
       hasAsset,
       isLoggedIn,
       openAsset,
+      checkLogin,
       showLoginModal,
       registerWebinar,
     }
@@ -143,8 +175,9 @@ export default defineComponent({
 })
 </script>
 <style land="scss" scoped>
-button {
+.knowledge-btn-icon {
   background-color: #f2e600;
   @apply tw-rounded-md;
+  @apply tw-p-4;
 }
 </style>
