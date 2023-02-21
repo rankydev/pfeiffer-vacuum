@@ -151,6 +151,8 @@
   }
 
   &__dropdown-option {
+    @apply tw-w-full;
+
     @screen lg {
       @apply tw-whitespace-nowrap;
     }
