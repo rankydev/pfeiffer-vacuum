@@ -2,29 +2,33 @@
   <ContentWrapper>
     <GenericModal v-bind="{ isOpen }" @close-modal="$emit('close')">
       <div class="knowledge-modal">
-        <h2>Please log in</h2>
-        <span class="tw-subline-3"
-          >Register on our platform to access more features.</span
-        >
+        <h2>{{ $t('registration.registrationModal.pleaseLogIn') }}</h2>
+        <span class="tw-subline-3">
+          {{ $t('registration.registrationModal.registerForMoreFeatures') }}
+        </span>
         <div class="knowledge-modal__content">
           <div v-if="!isMobile" class="knowledge-modal__registration-form">
             <CreateAccount
-              headline="Basis registration"
-              description="With a basic registration you can view webinars and whitepapers and create shopping lists. After registration you can return to this page."
+              :headline="$t('registration.registrationModal.basisRegistration')"
+              :description="
+                $t(
+                  'registration.registrationModal.basisRegistrationDescription'
+                )
+              "
               :selected-country="selectedCountry"
               :selected-region="selectedRegion"
               @update="requestData.personalData = $event.registration"
             />
             <div class="knowledge-modal__actions">
               <Button
-                label="Cancel"
+                :label="$t('registration.registrationModal.cancel')"
                 variant="secondary"
                 shape="outlined"
                 icon="close"
                 @click="$emit('close')"
               />
               <Button
-                label="Submit registration"
+                :label="$t('registration.registrationModal.submit')"
                 variant="secondary"
                 icon="send"
                 @click="submit"
@@ -36,7 +40,7 @@
               v-for="(box, index) in ctaBoxContents"
               :key="index"
               v-bind="box"
-              @click="box.click || null"
+              @click="box.click() || null"
             />
           </div>
         </div>
@@ -45,7 +49,7 @@
   </ContentWrapper>
 </template>
 <script>
-import { computed, ref, toRefs, useContext } from '@nuxtjs/composition-api'
+import { computed, ref, useContext } from '@nuxtjs/composition-api'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
 import CreateAccount from '~/components/molecules/CreateAccount/CreateAccount'
 import ContentCTABox from '~/components/molecules/ContentCTABox/ContentCTABox'
@@ -68,7 +72,7 @@ export default {
     const { app } = useContext()
     const userStore = useUserStore()
     const v = useVuelidate()
-    const { ctaBoxContents } = toRefs(getKnowledgeData())
+    const { ctaBoxContents } = getKnowledgeData()
     const requestData = ref({ personalData: {}, companyData: {} })
 
     const selectedCountry = computed(() => {

@@ -1,45 +1,53 @@
 import { useContext } from '@nuxtjs/composition-api'
 import { computed } from '@nuxtjs/composition-api'
+import { useUserStore } from '~/stores/user'
 
 export const getKnowledgeData = () => {
-  const { app } = useContext()
+  const { app, i18n } = useContext()
+  const userStore = useUserStore()
+
+  const i18nKey = 'registration.registrationModal.'
 
   const ctaBoxContents = computed(() => [
     {
-      headline: 'You have an account',
+      headline: i18n.t(i18nKey + 'alreadyHaveAccount'),
       description: [
         {
           component: 'Richtext',
-          richtext:
-            'Please sign in. After login you will be  redirected back to this page.',
+          richtext: i18n.t(i18nKey + 'pleaseSignIn'),
         },
       ],
       button: [
         {
           component: 'Button',
-          label: 'Sign in',
+          label: i18n.t(i18nKey + 'signIn'),
           icon: 'arrow_forward',
           variant: 'secondary',
-          shape: app?.$breakpoints?.isMobile ? 'filled' : 'outlined',
+          shape: app?.$breakpoints?.isMobile.value ? 'filled' : 'outlined',
         },
       ],
-      click: 'login',
+      click: userStore.login,
     },
     {
-      headline: app?.$breakpoints?.isMobile
-        ? 'Or create new account'
-        : 'Create full account',
+      headline: i18n.t(
+        i18nKey +
+          (app?.$breakpoints?.isMobile.value
+            ? 'createAccountDesktop'
+            : 'createAccountMobile')
+      ),
       description: [
         {
           component: 'Richtext',
-          richtext:
-            'You can add your company’s address data here. This step is optional for now. Please note: Only with a full account you can see prices and send requests!',
+          richtext: i18n.t(
+            i18nKey +
+              (app?.$breakpoints?.isMobile.value ? 'addCompanyAddressData' : '')
+          ),
         },
       ],
       button: [
         {
           component: 'Button',
-          label: 'Go to Registration',
+          label: i18n.t(i18nKey + 'goToRegistration'),
           icon: 'arrow_forward',
           variant: 'secondary',
           shape: 'outlined',
@@ -51,3 +59,5 @@ export const getKnowledgeData = () => {
 
   return { ctaBoxContents }
 }
+
+export default {}
