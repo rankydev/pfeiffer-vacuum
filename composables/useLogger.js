@@ -55,7 +55,7 @@ export const useLogger = (name) => {
     const { $config } = useContext()
     config = $config
   } catch (e) {
-    // here we catch an Eror from the composition API which occurs in the server-middlewares,
+    // here we catch an error from the Composition API which occurs in the server-middlewares,
     // because we do not have any context there, but we use the logger.
     config = nuxtConfig.publicRuntimeConfig
   }
