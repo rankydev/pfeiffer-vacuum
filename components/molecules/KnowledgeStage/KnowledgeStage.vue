@@ -25,8 +25,8 @@
         </div>
         <div class="knowledge-stage__summary">
           <Richtext v-if="summary" :richtext="summary" />
-          <div v-if="button.length" class="knowledge-stage__button">
-            <Button v-for="btn in button" :key="btn._uid" v-bind="btn" />
+          <div class="knowledge-stage__button">
+            <Button label="Button Text" icon="arrow" />
           </div>
         </div>
       </div>
@@ -46,7 +46,6 @@
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
-import Button from '~/components/atoms/Button/Button.vue'
 import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
@@ -85,10 +84,6 @@ export default defineComponent({
     summary: {
       type: String,
       default: '',
-    },
-    button: {
-      type: Array,
-      default: () => [],
     },
   },
   setup(props) {
