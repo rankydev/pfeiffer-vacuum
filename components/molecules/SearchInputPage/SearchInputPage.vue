@@ -49,7 +49,7 @@ export default defineComponent({
     SearchSuggestions,
   },
   emits: ['searchTermChange'],
-  setup() {
+  setup(props, { emit }) {
     const route = useRoute()
     const router = useRouter()
     const empolisStore = useEmpolisStore()
@@ -75,11 +75,11 @@ export default defineComponent({
     watch(initialSearchTerm, (initialSearchTermValue) => {
       if (
         initialSearchTermValue !== searchTermDocuments.value &&
-        initialSearchTermValue !== searchTermProducts
+        initialSearchTermValue !== searchTermProducts.value
       ) {
         searchTermDocuments.value = initialSearchTermValue
         searchTermProducts.value = initialSearchTermValue
-        searchTerm.value = initialSearchTermValue
+        emit('searchTermChange', initialSearchTermValue)
       }
     })
 
@@ -129,6 +129,7 @@ export default defineComponent({
     }
 
     const pushSearchTerm = (term) => {
+      emit('searchTermChange', term)
       const encodedTerm = encodeURIComponent(term)
       const searchType = activeTab.value ? `&searchType=${activeTab.value}` : ''
       router.push(`search?searchTerm=${encodedTerm}${searchType}`)
