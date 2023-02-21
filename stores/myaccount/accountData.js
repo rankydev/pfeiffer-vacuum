@@ -8,8 +8,13 @@ export const useAccountDataStore = defineStore('accountData', () => {
   const { i18n } = useContext()
   const toast = useToast()
   const userStore = useUserStore()
-  const { currentUser, userCountry, userBillingAddress, changePasswordLink } =
-    storeToRefs(userStore)
+  const {
+    currentUser,
+    userCountry,
+    userRegion,
+    userBillingAddress,
+    changePasswordLink,
+  } = storeToRefs(userStore)
   const { addCompanyData } = userStore
 
   // States
@@ -20,7 +25,11 @@ export const useAccountDataStore = defineStore('accountData', () => {
   // Getters
   const formattedAddress = computed(
     () =>
-      `${userBillingAddress.value.line1} ${userBillingAddress.value.line2}, ${userBillingAddress.value.postalCode} ${userBillingAddress.value.town}, ${userCountry.value.name}`
+      `${userBillingAddress.value.line1} ${userBillingAddress.value.line2}, ${
+        userBillingAddress.value.postalCode
+      } ${userBillingAddress.value.town}, ${userCountry.value.name}${
+        userRegion.value.name ? `, ${userRegion.value.name}` : ''
+      }`
   )
 
   const accountDataPattern = computed(() => [
@@ -43,7 +52,9 @@ export const useAccountDataStore = defineStore('accountData', () => {
     {
       id: 'country',
       label: i18n.t('registration.formCompanyData.country'),
-      value: userCountry.value.name,
+      value: `${userCountry.value.name}${
+        userRegion.value.name ? `, ${userRegion.value.name}` : ''
+      }`,
       editable: true,
       disabled: true,
       validation: {
@@ -213,6 +224,7 @@ export const useAccountDataStore = defineStore('accountData', () => {
       await addCompanyData({
         ...addedCompanyData.value,
         companyAddressCountryIso: userCountry.value?.isocode,
+        companyAddressRegion: userRegion.value?.isocode,
       })
       toast.success(
         { description: i18n.t('myaccount.successfulSaving') },

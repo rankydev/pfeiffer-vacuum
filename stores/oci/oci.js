@@ -8,7 +8,7 @@ export const useOciStore = defineStore('oci', () => {
   const hiddenUIElements = ref({})
   const customerId = ref('')
 
-  const isOciUser = (auth) => {
+  const checkForOciUser = (auth) => {
     return auth.type === 'oci'
   }
 
@@ -21,6 +21,6 @@ export const useOciStore = defineStore('oci', () => {
     customerId,
 
     // getters
-    isOciUser,
+    checkForOciUser,
   }
 })

@@ -45,7 +45,11 @@
         v-if="address.country"
         class="address-card__entry address-card__country"
       >
-        {{ address.country.name }}
+        {{
+          `${address.country.name}${
+            address.region ? `, ${address.region.name || address.region}` : ''
+          }`
+        }}
         <!-- ToDo: implement Coutryname when data is available -->
         <!-- {{ getCountry(address.country.isocode) }} -->
       </p>

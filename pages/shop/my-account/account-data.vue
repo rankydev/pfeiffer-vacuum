@@ -48,6 +48,7 @@
           :no-header="true"
           :is-open="isAddCompanyMode"
           :selected-country="userCountry"
+          :selected-region="userRegion"
           @update:isOpen="toggleAddCompany"
           @update:data="setCompanyData"
         />
@@ -126,6 +127,7 @@ export default defineComponent({
     const {
       currentUser,
       userCountry,
+      userRegion,
       isLoading,
       isLeadUser,
       isOpenUser,
@@ -213,6 +215,7 @@ export default defineComponent({
 
     return {
       userCountry,
+      userRegion,
       companyDataPattern,
       accountDataButtons,
       accountDataFields,
