@@ -1,6 +1,6 @@
 <template>
   <ContentWrapper>
-    <GenericModal v-bind="{ isOpen }" @close-modal="$emit('close')">
+    <GenericModal v-bind="{ isOpen }" @closeModal="$emit('closeModal')">
       <div class="knowledge-modal">
         <h2>{{ $t('registration.registrationModal.pleaseLogIn') }}</h2>
         <span class="tw-subline-3">
@@ -25,7 +25,7 @@
                 variant="secondary"
                 shape="outlined"
                 icon="close"
-                @click="$emit('close')"
+                @click="$emit('closeModal')"
               />
               <Button
                 :label="$t('registration.registrationModal.submit')"
@@ -67,7 +67,7 @@ export default {
       default: false,
     },
   },
-  emits: ['close'],
+  emits: ['closeModal'],
   setup() {
     const { app } = useContext()
     const userStore = useUserStore()

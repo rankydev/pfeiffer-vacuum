@@ -50,7 +50,6 @@
           v-bind="item"
           :name="item.uiComponent || item.component"
         />
-        <KnowledgeModal :is-open="true" />
       </ContentWrapper>
 
       <nuxt-dynamic
@@ -74,15 +73,12 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation.vue'
 import StickyBar from '~/components/atoms/StickyBar/StickyBar.vue'
 
-import KnowledgeModal from '~/components/molecules/KnowledgeModal/KnowledgeModal'
-
 export default defineComponent({
   name: 'Page',
   components: {
     ContentWrapper,
     OnPageNavigation,
     StickyBar,
-    KnowledgeModal,
   },
   props: {
     content: {
