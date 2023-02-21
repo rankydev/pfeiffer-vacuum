@@ -2,19 +2,12 @@
   <GenericCard href="detailPageLink" image-size="cover">
     <template #tag>
       <span class="knowledge-card__tag">
-        <v-icon class="knowledge-card__tag-icon" :size="16">{{
-          tagIcon
-        }}</v-icon>
+        <Icon :icon="tagIcon" size="xsmall" class="knowledge-card__tag-icon" />
         {{ tag }}
       </span>
     </template>
     <template #image>
-      <ResponsiveImage
-        v-if="image"
-        :src="image"
-        :aspect-ratio="isWebinar ? '16:9' : '3:2'"
-        :fallback-image-icon-size="isWebinar ? 'large' : 'xxlarge'"
-      />
+      <ResponsiveImage v-if="image" :src="image" />
     </template>
     <template #content>
       <div class="knowledge-card__content">
@@ -33,10 +26,12 @@ import {
   useContext,
 } from '@nuxtjs/composition-api'
 import GenericCard from '~/components/atoms/GenericCard/GenericCard.vue'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 export default defineComponent({
   name: 'KnowledgeCard',
   components: {
     GenericCard,
+    ResponsiveImage,
   },
   props: {
     knowledge: {
