@@ -268,7 +268,7 @@ export const useUserStore = defineStore('user', () => {
   const login = async () => {
     logger.debug('login')
     const { i18n, app } = ctx
-    const { router, localePath } = app
+    const { localePath } = app
     const url = joinURL(
       window.location.origin,
       router.options.base,
@@ -295,7 +295,7 @@ export const useUserStore = defineStore('user', () => {
     } else {
       // redirect here, if no keycloak instance is available.
       const { app } = ctx
-      const { router, localePath } = app
+      const { localePath } = app
       return router.push(localePath('/'))
     }
 
