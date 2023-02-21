@@ -74,7 +74,8 @@ export default defineComponent({
       default: false,
     },
   },
-  setup(props) {
+  emits: ['openModal'],
+  setup(props, { emit }) {
     const { i18n } = useContext()
     const toast = useToast()
 
@@ -101,6 +102,7 @@ export default defineComponent({
 
     const showLoginModal = () => {
       // ToDo: open LoginModal PVWEB-933
+      emit('openModal')
     }
 
     const registerWebinar = async () => {

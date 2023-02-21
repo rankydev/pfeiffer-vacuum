@@ -8,7 +8,7 @@
         <div class="knowledge-stage__date">
           <div class="knowledge-stage__date-day">
             <Icon class="knowledge-stage__date-icon" icon="date_range" />
-            <p>{{ $d(fixedDate, 'dateLong') }}</p>
+            <p>{{ $d(fixedDate, 'date') }}</p>
             <div v-if="showTime" class="knowledge-stage__date-time">
               <p class="knowledge-stage__date-divider">|</p>
               <p class="knowledge-stage__space">{{ fixedTime }}</p>
@@ -26,8 +26,13 @@
         <div class="knowledge-stage__summary">
           <Richtext v-if="summary" :richtext="summary" />
           <div v-if="button.length" class="knowledge-stage__button">
-            <!-- ToDo: Assembling KnowledgeAssetButton into KnowledgeStage -->
-            <!-- <KnowledgeAssetButton /> -->
+            <KnowledgeAssetButton
+              :type="isWhitepaper ? 'WHITEPAPER' : 'WEBINAR'"
+              :webinar-registration-id="webinarRegistrationId"
+              date
+              :asset-url="assetUrl"
+              :is-detail-page="isDetailPage"
+            />
           </div>
         </div>
       </div>
@@ -48,7 +53,7 @@ import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import Icon from '~/components/atoms/Icon/Icon'
-// import KnowledgeAssetButton from '~/components/molecules/KnowledgeAssetButton/KnowledgeAssetButton.vue'
+import KnowledgeAssetButton from '~/components/molecules/KnowledgeAssetButton/KnowledgeAssetButton.vue'
 
 export default defineComponent({
   name: 'KnowledgeStage',
@@ -56,7 +61,7 @@ export default defineComponent({
     ResponsiveImage,
     Richtext,
     Icon,
-    // KnowledgeAssetButton,
+    KnowledgeAssetButton,
   },
   props: {
     image: {
@@ -68,6 +73,18 @@ export default defineComponent({
       default: '',
     },
     isWhitepaper: {
+      type: Boolean,
+      default: false,
+    },
+    webinarRegistrationId: {
+      type: String,
+      default: null,
+    },
+    assetUrl: {
+      type: String,
+      default: null,
+    },
+    isDetailPage: {
       type: Boolean,
       default: false,
     },
