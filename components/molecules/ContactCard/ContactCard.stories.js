@@ -26,7 +26,7 @@ const Template = (args) => ({
   },
   template: `
     <div class="documentation-preview">
-    <ContactCard v-bind="args" style="width: 550px;"/>
+    <ContactCard v-bind="args" style="max-width: 550px;"/>
     </div>
   `,
 })

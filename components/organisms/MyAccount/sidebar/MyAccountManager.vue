@@ -61,10 +61,7 @@ export default defineComponent({
   @apply tw-rounded-md;
   @apply tw-p-6;
   @apply tw-flex tw-flex-col;
-
-  @screen lg {
-    @apply tw-w-full;
-  }
+  @apply tw-w-full;
 
   &__headline-with-icon {
     @apply tw-flex;
