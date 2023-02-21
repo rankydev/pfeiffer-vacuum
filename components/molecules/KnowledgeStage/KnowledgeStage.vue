@@ -25,7 +25,7 @@
         </div>
         <div class="knowledge-stage__summary">
           <Richtext v-if="summary" :richtext="summary" />
-          <div v-if="button.length" class="knowledge-stage__button">
+          <div class="knowledge-stage__button">
             <KnowledgeAssetButton
               :type="isWhitepaper ? 'WHITEPAPER' : 'WEBINAR'"
               :webinar-registration-id="webinarRegistrationId"
@@ -103,10 +103,6 @@ export default defineComponent({
     summary: {
       type: String,
       default: '',
-    },
-    button: {
-      type: Array,
-      default: () => [],
     },
   },
   setup(props) {
