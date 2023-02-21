@@ -64,6 +64,7 @@ import ImageLightbox from '~/components/molecules/ImageLightbox/ImageLightbox'
 import ImageThumbnails from '~/components/molecules/ImageThumbnails/ImageThumbnails'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
+import Button from '~/components/atoms/Button/Button.vue'
 
 export default defineComponent({
   name: 'ImageGallery',
@@ -71,6 +72,7 @@ export default defineComponent({
     ImageLightbox,
     ImageThumbnails,
     ResponsiveImage,
+    Button,
   },
   props: {
     images: {

@@ -16,8 +16,8 @@
             variant="secondary"
             :label="$t('product.help')"
             shape="outlined"
-          ></Button
-        ></NuxtLink>
+          />
+        </NuxtLink>
       </div>
     </div>
   </GenericModal>

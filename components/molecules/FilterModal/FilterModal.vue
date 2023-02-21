@@ -30,7 +30,7 @@
               shape="filled"
               icon="filter_list"
               @click="close"
-            ></Button>
+            />
           </div>
         </div>
       </GenericModal>

@@ -105,6 +105,7 @@ import RegistrationCompanyDataForm from '~/components/molecules/RegistrationComp
 import RegistrationPageDataProtection from '~/components/organisms/RegistrationPage/RegistrationPageDataProtection/RegistrationPageDataProtection'
 import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
+import Button from '~/components/atoms/Button/Button.vue'
 
 export default defineComponent({
   name: 'AccountData',
@@ -116,6 +117,7 @@ export default defineComponent({
     RegistrationPageDataProtection,
     GlobalMessage,
     ResultHeadline,
+    Button,
   },
   setup() {
     const { app, i18n } = useContext()

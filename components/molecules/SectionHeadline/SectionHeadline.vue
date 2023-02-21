@@ -1,6 +1,8 @@
 <template>
   <div class="section-headline">
-    <h3 class="section-headline__text"><slot /></h3>
+    <h3 class="section-headline__text">
+      <slot />
+    </h3>
     <div class="section-headline__buttons">
       <Button
         v-for="(btn, index) in buttons"
@@ -20,9 +22,11 @@
 </template>
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import Button from '~/components/atoms/Button/Button.vue'
 
 export default defineComponent({
   name: 'SectionHeadline',
+  components: { Button },
   props: {
     buttons: {
       type: Array,
