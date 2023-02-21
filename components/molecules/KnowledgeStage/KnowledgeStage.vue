@@ -8,7 +8,7 @@
         <div class="knowledge-stage__date">
           <div class="knowledge-stage__date-day">
             <Icon class="knowledge-stage__date-icon" icon="date_range" />
-            <p>{{ $d(fixedDate, 'date') }}</p>
+            <p>{{ $d(fixedDate, 'date', 'de') }}</p>
             <div v-if="showTime" class="knowledge-stage__date-time">
               <p class="knowledge-stage__date-divider">|</p>
               <p class="knowledge-stage__space">{{ fixedTime }}</p>
