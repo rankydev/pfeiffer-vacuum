@@ -271,7 +271,7 @@ export const useUserStore = defineStore('user', () => {
     const { localePath } = app
     const url = joinURL(
       window.location.origin,
-      router.options.base,
+      router?.options.base,
       localePath({
         path: route.value.path,
         query: { ...route.value.query, isLoginProcess: true },
@@ -296,7 +296,7 @@ export const useUserStore = defineStore('user', () => {
       // redirect here, if no keycloak instance is available.
       const { app } = ctx
       const { localePath } = app
-      return router.push(localePath('/'))
+      return router?.push(localePath('/'))
     }
 
     isLoading.value = false
