@@ -102,3 +102,5 @@ export const price = {
   value: 55.36,
 }
 export const quantity = 1
+
+export default {}
