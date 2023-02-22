@@ -9,10 +9,11 @@
           <div class="knowledge-stage__date-day">
             <Icon class="knowledge-stage__date-icon" icon="date_range" />
             <p>{{ $d(fixedDate, 'date') }}</p>
-            <div v-if="showTime" class="knowledge-stage__date-time">
+            <div class="knowledge-stage__date-time">
               <p class="knowledge-stage__date-divider">|</p>
-              <p class="knowledge-stage__space">{{ fixedTime }}</p>
-              <p>{{ $t('knowledge.time') }}</p>
+              <p class="knowledge-stage__space">
+                {{ $d(fixedDate, 'time') }} {{ $t('knowledge.time') }}
+              </p>
             </div>
           </div>
           <div v-if="showDuration" class="knowledge-stage__date-duration">
