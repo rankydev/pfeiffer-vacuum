@@ -98,6 +98,7 @@ export const dateTimeFormats = {
     time: {
       hour: 'numeric',
       minute: 'numeric',
+      timeZoneName: 'short',
     },
     timeLong: {
       hour: 'numeric',
@@ -119,7 +120,7 @@ export const dateTimeFormats = {
       hour: 'numeric',
       minute: 'numeric',
     },
-    dateTimeLongTimezone: {
+    dateTimeTimezone: {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',

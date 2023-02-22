@@ -1,5 +1,4 @@
 import KnowledgeStage from '~/components/molecules/KnowledgeStage/KnowledgeStage.vue'
-
 import {
   image,
   date,
@@ -8,7 +7,6 @@ import {
   hours,
   headline,
   summary,
-  button,
 } from './KnowledgeStage.stories.content'
 
 const argTypes = {
@@ -39,10 +37,6 @@ const argTypes = {
   summary: {
     defaultValue: summary,
     control: { type: 'object' },
-  },
-  button: {
-    defaultValue: button,
-    control: { type: 'array' },
   },
 }
 

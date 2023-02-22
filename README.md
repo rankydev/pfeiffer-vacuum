@@ -42,7 +42,7 @@ npm run cms:sync
 npm run storyblok:sync ./components/atoms/YourComponent
 ```
 
-### Pull Components Schmas from Storyblok
+### Pull Components Schemas from Storyblok
 
 ```bash
 npm run storyblok pull-components --space <SPACE_ID>

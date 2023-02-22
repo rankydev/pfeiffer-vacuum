@@ -9,13 +9,14 @@
           <div class="knowledge-stage__date-day">
             <Icon class="knowledge-stage__date-icon" icon="date_range" />
             <p>{{ $d(fixedDate, 'date') }}</p>
-            <div v-if="showTime" class="knowledge-stage__date-time">
+            <div class="knowledge-stage__date-time">
               <p class="knowledge-stage__date-divider">|</p>
-              <p class="knowledge-stage__space">{{ fixedTime }}</p>
-              <p>{{ $t('knowledge.time') }}</p>
+              <p class="knowledge-stage__space">
+                {{ $d(fixedDate, 'time') }} {{ $t('knowledge.time') }}
+              </p>
             </div>
           </div>
-          <div v-if="showDuration" class="knowledge-stage__date-time">
+          <div v-if="showDuration" class="knowledge-stage__date-duration">
             <Icon class="knowledge-stage__date-icon" icon="timer" />
             <p>{{ hours }}</p>
             <p class="knowledge-stage__space">{{ $t('knowledge.hours') }}</p>
@@ -24,15 +25,17 @@
           </div>
         </div>
         <div class="knowledge-stage__summary">
-          <Richtext v-if="summary" :richtext="summary" />
+          <p>{{ summary }}</p>
           <div class="knowledge-stage__button">
-            <KnowledgeAssetButton
-              :type="isWhitepaper ? 'WHITEPAPER' : 'WEBINAR'"
-              :webinar-registration-id="webinarRegistrationId"
-              date
-              :asset-url="assetUrl"
-              :is-detail-page="isDetailPage"
-            />
+            <div class="knowledge-stage__button">
+              <KnowledgeAssetButton
+                :type="isWhitepaper ? 'WHITEPAPER' : 'WEBINAR'"
+                :webinar-registration-id="webinarRegistrationId"
+                date
+                :asset-url="assetUrl"
+                :is-detail-page="isDetailPage"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -51,7 +54,6 @@
 <script>
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
-import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import Icon from '~/components/atoms/Icon/Icon'
 import KnowledgeAssetButton from '~/components/molecules/KnowledgeAssetButton/KnowledgeAssetButton.vue'
 
@@ -59,7 +61,6 @@ export default defineComponent({
   name: 'KnowledgeStage',
   components: {
     ResponsiveImage,
-    Richtext,
     Icon,
     KnowledgeAssetButton,
   },
@@ -151,6 +152,8 @@ export default defineComponent({
 
 <style lang="scss">
 .knowledge-stage {
+  @apply tw-bg-pv-grey-96;
+
   &__inner-wrapper {
     @apply tw-flex;
     @apply tw-flex-wrap-reverse;
@@ -185,12 +188,22 @@ export default defineComponent({
   }
 
   &__date {
+    @apply tw-text-pv-grey-16;
     @apply tw-flex;
+    @apply tw-flex-col;
     @apply tw-mb-4;
 
+    @screen md {
+      @apply tw-flex-row;
+    }
+
     p {
-      @apply tw-text-base;
+      @apply tw-text-sm;
       @apply tw-font-bold;
+
+      @screen lg {
+        @apply tw-text-base;
+      }
     }
   }
 
@@ -207,6 +220,15 @@ export default defineComponent({
     @apply tw-flex;
   }
 
+  &__date-duration {
+    @apply tw-flex;
+    @apply tw-mt-2;
+
+    @screen md {
+      @apply tw-mt-0;
+    }
+  }
+
   &__date-divider {
     @apply tw-text-pv-red;
     @apply tw-mx-2;
@@ -221,6 +243,17 @@ export default defineComponent({
 
     @screen md {
       @apply tw-w-1/2;
+    }
+  }
+
+  &__summary {
+    p {
+      @apply tw-text-base;
+
+      @screen lg {
+        @apply tw-text-xl;
+        @apply tw-leading-7;
+      }
     }
   }
 

@@ -1,7 +1,7 @@
 {
-  "time": "Uhr",
-  "hours": "h",
-  "minutes": "min",
+  "time": "",
+  "hours": "시간",
+  "minutes": "분",
   "allRessources": "모든 리소스",
     "whitepapers": "백서",
     "webinars": "웨비나",
