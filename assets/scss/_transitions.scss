@@ -20,38 +20,37 @@
 
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.1s;
+  // TODO Check if these changes are ok and what kind of transition we want to have
+  transition: all 0.25s;
 }
 
 .page-enter,
 .page-leave-to {
   opacity: 0;
+  filter: blur(0.125rem);
 }
 
 .sidebar-slide-left-enter-active,
-.sidebar-slide-left-leave-active
-{
+.sidebar-slide-left-leave-active {
   transition: transform 0.2s ease;
 }
 
 .sidebar-slide-left-enter,
 .sidebar-slide-left-leave-to {
   transform: translateX(-100%);
-  transition: all .3s ease-in 0s
+  transition: all 0.3s ease-in 0s;
 }
 
 .sidebar-slide-right-enter-active,
-.sidebar-slide-right-leave-active
-{
+.sidebar-slide-right-leave-active {
   transition: transform 0.2s ease;
 }
 
 .sidebar-slide-right-enter,
 .sidebar-slide-right-leave-to {
   transform: translateX(100%);
-  transition: all .3s ease-in 0s
+  transition: all 0.3s ease-in 0s;
 }
-
 
 .transform-position-item {
   transition: all 1s;
@@ -66,7 +65,6 @@
 .transform-position-leave-active {
   position: absolute;
 }
-
 
 .fade-in-out-item {
   transition: all 0.5s;

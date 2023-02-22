@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO Check the metadata on my-account pages -->
   <!-- NOTE: we could use :key="slugs.slug" on CmsQuery to force CmsQuery to re-evaluate. this way we could get subpage meta page information (f.e. page title) -->
   <CmsQuery
     :handle-preview-events="true"
