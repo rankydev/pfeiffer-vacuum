@@ -53,5 +53,7 @@
       "requestInfo": "You are not permitted to send requests",
       "functionalityInfo": "Sorry, you are not permitted to use this functionality"
     }
-  }
+  },
+  "contact": "Contact Us",
+  "salesRepresentative": "Sales Representative"
 }

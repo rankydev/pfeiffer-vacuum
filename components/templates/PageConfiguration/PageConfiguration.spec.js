@@ -9,6 +9,7 @@ localVue.directive('editable', (el, key) => {
 
 describe('PageConfiguration', () => {
   let wrapper
+
   function createComponent(propsData = {}) {
     wrapper = shallowMount(PageConfiguration, {
       localVue,
@@ -63,6 +64,7 @@ describe('PageConfiguration', () => {
               {
                 label: 'Kontakt',
                 icon: 'mail_outline',
+
                 href: '',
                 target: '_self',
               },
