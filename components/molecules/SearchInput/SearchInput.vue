@@ -56,7 +56,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      if (isMobile) {
+      if (isMobile.value) {
         pvInput.value.$refs.input.focus()
       }
     })
