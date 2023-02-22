@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import FooterLinkList from '~/components/molecules/FooterLinkList/FooterLinkList'
@@ -90,14 +90,21 @@ export default defineComponent({
     },
   },
   setup() {
+    const { $config } = useContext()
     const hasVersionInfo =
-      process.env.NODE_ENV !== 'production' &&
-      Boolean(process.env.CI_COMMIT_SHORT_SHA) &&
-      Boolean(process.env.CI_COMMIT_REF_NAME)
+      $config.NODE_ENV === 'development' &&
+      Boolean($config.CI_COMMIT_SHORT_SHA) &&
+      Boolean($config.CI_COMMIT_REF_NAME)
 
-    const versionInfo = `Version: ${process.env.CI_COMMIT_REF_NAME}/${process.env.CI_COMMIT_SHORT_SHA}`
+    if (!hasVersionInfo) {
+      return {
+        hasVersionInfo,
+      }
+    }
 
-    const commitUrl = `${process.env.CI_PROJECT_URL}/-/commit/${process.env.CI_COMMIT_SHORT_SHA}`
+    const versionInfo = `Version: ${$config.CI_COMMIT_REF_NAME}/${$config.CI_COMMIT_SHORT_SHA}`
+
+    const commitUrl = `${$config.CI_PROJECT_URL}/-/commit/${$config.CI_COMMIT_SHORT_SHA}`
 
     return {
       hasVersionInfo,
