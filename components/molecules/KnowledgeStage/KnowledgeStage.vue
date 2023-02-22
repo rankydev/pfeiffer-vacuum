@@ -9,7 +9,7 @@
           <div class="knowledge-stage__date-day">
             <Icon class="knowledge-stage__date-icon" icon="date_range" />
             <p>{{ $d(fixedDate, 'date') }}</p>
-            <div class="knowledge-stage__date-time">
+            <div v-if="!isWhitepaper" class="knowledge-stage__date-time">
               <p class="knowledge-stage__date-divider">|</p>
               <p class="knowledge-stage__space">
                 {{ $d(fixedDate, 'time') }} {{ $t('knowledge.time') }}
