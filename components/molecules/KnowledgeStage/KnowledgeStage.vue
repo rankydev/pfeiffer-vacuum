@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="knowledge-stage__summary">
-          <Richtext v-if="summary" :richtext="summary" />
+          <p>{{ summary }}</p>
           <div class="knowledge-stage__button"></div>
         </div>
       </div>
@@ -43,14 +43,12 @@
 <script>
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
-import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
   name: 'Stage',
   components: {
     ResponsiveImage,
-    Richtext,
     Icon,
   },
   props: {
@@ -160,6 +158,7 @@ export default defineComponent({
   }
 
   &__date {
+    @apply tw-text-pv-grey-16;
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-mb-4;
@@ -169,8 +168,12 @@ export default defineComponent({
     }
 
     p {
-      @apply tw-text-base;
+      @apply tw-text-sm;
       @apply tw-font-bold;
+
+      @screen lg {
+        @apply tw-text-base;
+      }
     }
   }
 
@@ -210,6 +213,17 @@ export default defineComponent({
 
     @screen md {
       @apply tw-w-1/2;
+    }
+  }
+
+  &__summary {
+    p {
+      @apply tw-text-base;
+
+      @screen lg {
+        @apply tw-text-xl;
+        @apply tw-leading-7;
+      }
     }
   }
 
