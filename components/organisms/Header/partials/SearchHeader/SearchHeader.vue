@@ -56,13 +56,7 @@
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  ref,
-  useContext,
-  useRoute,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
 import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
