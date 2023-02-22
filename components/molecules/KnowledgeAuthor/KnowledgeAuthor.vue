@@ -36,7 +36,6 @@ export default {
 
   img {
     @apply tw-mr-4;
-
     width: 72px;
     height: 72px;
     object-fit: cover;
