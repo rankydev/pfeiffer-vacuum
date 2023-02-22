@@ -135,9 +135,8 @@
     @apply tw-rounded-md;
     @apply tw-max-h-48;
 
-    @screen lg {
+    @screen md {
       @apply tw-w-fit;
-      @apply tw-min-w-full;
       @apply tw-max-w-3xl;
     }
   }
@@ -151,7 +150,7 @@
   }
 
   &__dropdown-option {
-    @screen lg {
+    @screen md {
       @apply tw-whitespace-nowrap;
     }
 
