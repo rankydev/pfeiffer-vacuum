@@ -8,6 +8,7 @@ jest.mock('~/composables/useLogger', () => ({
   useLogger: () => {
     return {
       logger: {
+        trace: jest.fn(),
         error: mockError,
       },
     }
