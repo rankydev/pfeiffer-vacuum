@@ -1,6 +1,5 @@
 <template>
-  <li class="knowledge-author">
-    <!-- <img :src="image" /> -->
+  <div class="knowledge-author">
     <ResponsiveImage
       class="knowledge-author__image"
       :image="image"
@@ -11,7 +10,7 @@
       <span class="knowledge-author__name">{{ name }}</span>
       <span class="knowledge-author__title">{{ title }}</span>
     </p>
-  </li>
+  </div>
 </template>
 
 <script>
@@ -42,8 +41,12 @@ export default defineComponent({
 .knowledge-author {
   @apply tw-flex;
   @apply tw-mb-4;
-  @apply tw-pr-4;
+  @apply tw-pr-2;
   @apply tw-bg-pv-grey-96;
+
+  @screen md {
+    @apply tw-pr-4;
+  }
 
   &__image {
     @apply tw-mr-4;

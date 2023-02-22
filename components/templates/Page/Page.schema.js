@@ -38,6 +38,8 @@ export default {
       display_name: 'Content',
       restrict_components: true,
       component_whitelist: [
+        'KnowledgeAuthorsList',
+        'KnowledgeAuthor',
         'Accordion',
         'AnchorWrapper',
         'ContentMediaBlock',
