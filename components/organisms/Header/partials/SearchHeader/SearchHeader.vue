@@ -49,14 +49,20 @@
       <SearchSuggestions
         :items="currentSuggestions"
         @suggestionHover="(value) => (suggestionHover = value)"
-        @closeModal="closeSearchfield"
+        @click="closeSearchfield"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+  useRoute,
+} from '@nuxtjs/composition-api'
 import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'

@@ -226,7 +226,6 @@ export default defineComponent({
      * category data
      */
     const searchTerm = ref(route.value.query.searchTerm || '')
-    const headline = computed(() => categoryStore.categoryName)
     const link = computed(() => categoryStore.parentCategoryPath)
     const count = computed(() => categoryStore.result?.pagination?.totalResults)
     const products = computed(() => categoryStore.result?.products)
@@ -236,6 +235,11 @@ export default defineComponent({
     const currentQuery = computed(() => categoryStore.result?.currentQuery)
     const sorts = computed(() => categoryStore.result?.sorts)
     const metaData = computed(() => categoryStore.metaData)
+    const headline = computed(() =>
+      route.value.query?.searchType === 'documents'
+        ? context.i18n.t('category.documents.allDocuments')
+        : categoryStore.categoryName
+    )
 
     return {
       slug,

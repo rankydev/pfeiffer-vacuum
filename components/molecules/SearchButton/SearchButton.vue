@@ -39,18 +39,17 @@ export default defineComponent({
 
       router.push({
         path: localePath('shop-search'),
-        query: { searchTerm: e.length ? e : undefined },
+        query: {
+          searchTerm: e.length ? e : undefined,
+          searchType: props.searchType.value || '',
+        },
       })
     }
 
     const handleClickEvent = () => {
       emit('closeModal', true)
-
-      if (props?.searchType === 'documents') {
-        return emit('click', props.title)
-      }
-
       pushSearchTerm(props.title)
+      emit('click', props.title)
     }
 
     return { handleClickEvent }

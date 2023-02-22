@@ -1,5 +1,5 @@
 <template>
-  <div class="document-search-input">
+  <div class="search-input-page">
     <PvInput
       ref="pvInput"
       v-model="searchTerm"
@@ -13,11 +13,11 @@
 
     <div
       v-if="currentSuggestions.length && (isFocused || suggestionHover)"
-      class="document-search-input__suggestions"
+      class="search-input-page__suggestions"
     >
       <SearchSuggestions
         :items="currentSuggestions"
-        search-type="documents"
+        :search-type="activeTab"
         @suggestionHover="(value) => (suggestionHover = value)"
         @click="closeSearchfield"
       />
@@ -41,7 +41,6 @@ import { useEmpolisStore } from '~/stores/empolis'
 import { useDebounce } from '~/composables/useDebounce'
 import SearchSuggestions from '~/components/molecules/SearchSuggestions/SearchSuggestions.vue'
 import { useCategoryStore } from '~/stores/category/category'
-import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   components: {
@@ -57,75 +56,31 @@ export default defineComponent({
     const categoryStore = useCategoryStore()
     const { app } = useContext()
     const { debounce } = useDebounce()
-    const { searchTerm: initialSearchTerm } = storeToRefs(categoryStore)
     const { fetchDocumentSuggestions } = empolisStore
-
+    const { loadSuggestions } = categoryStore
     const isDesktop = app.$breakpoints.isDesktop
 
     const pvInput = ref(null)
     const currentSuggestions = ref([])
-    const searchTermDocuments = ref(route.value.query.searchTerm || '')
-    const searchTermProducts = ref(route.value.query.searchTerm || '')
     const searchTerm = ref(route.value.query.searchTerm || '')
     const isOpen = ref(false)
     const suggestionHover = ref(true)
 
     const activeTab = computed(() => route.value.query.searchType)
 
-    watch(initialSearchTerm, (initialSearchTermValue) => {
-      if (
-        initialSearchTermValue !== searchTermDocuments.value &&
-        initialSearchTermValue !== searchTermProducts.value
-      ) {
-        searchTermDocuments.value = initialSearchTermValue
-        searchTermProducts.value = initialSearchTermValue
-        emit('searchTermChange', initialSearchTermValue)
-      }
+    watch(activeTab, () => {
+      currentSuggestions.value = []
     })
 
-    watch(searchTermDocuments, (searchTermDocumentsValue) => {
-      if (searchTermDocumentsValue === '') {
-        currentSuggestions.value = []
+    watch(route, (val) => {
+      if (val.query.initialSearchTerm) {
+        searchTerm.value = val.query.initialSearchTerm
       }
-      searchTerm.value = searchTermDocumentsValue
-    })
-
-    watch(searchTermProducts, (searchTermProductsValue) => {
-      searchTerm.value = searchTermProductsValue
-    })
-
-    watch(searchTerm, (searchTermValue) => {
-      if (activeTab?.value === 'documents') {
-        searchTermDocuments.value = searchTermValue
-      }
-      if (activeTab?.value === 'products') {
-        searchTermProducts.value = searchTermValue
-      }
-    })
-
-    watch(activeTab, (activeTabValue) => {
-      searchTerm.value =
-        activeTabValue === 'documents'
-          ? searchTermDocuments.value
-          : activeTabValue === 'products'
-          ? searchTermProducts.value
-          : initialSearchTerm.value
-
-      if (activeTabValue === 'documents') {
-        return pushSearchTerm(searchTermDocuments.value)
-      }
-      pushSearchTerm(searchTermProducts.value)
     })
 
     const clearInput = () => {
-      if (activeTab?.value === 'documents') {
-        return (searchTermDocuments.value = '')
-      }
-      if (activeTab?.value === 'products') {
-        return (searchTermProducts.value = '')
-      }
-
       searchTerm.value = ''
+      pushSearchTerm(searchTerm.value)
     }
 
     const pushSearchTerm = (term) => {
@@ -136,8 +91,8 @@ export default defineComponent({
     }
 
     const closeSearchfield = (value) => {
+      searchTerm.value = value
       currentSuggestions.value = []
-      searchTermDocuments.value = value
       isOpen.value = false
       pushSearchTerm(value)
     }
@@ -147,13 +102,17 @@ export default defineComponent({
     }
 
     const getSearchSuggestionsResult = debounce(async () => {
-      if (activeTab.value !== 'documents') {
-        return
+      if (searchTerm.value === '') return
+
+      if (activeTab.value === 'documents') {
+        currentSuggestions.value = await fetchDocumentSuggestions(
+          searchTerm.value
+        )
       }
 
-      currentSuggestions.value = await fetchDocumentSuggestions(
-        searchTermDocuments.value
-      )
+      if (activeTab.value === 'products') {
+        currentSuggestions.value = await loadSuggestions(searchTerm.value, true)
+      }
 
       isOpen.value = currentSuggestions.value.length > 0
     })
@@ -161,7 +120,6 @@ export default defineComponent({
     return {
       pvInput,
       isDesktop,
-      searchTermDocuments,
       getSearchSuggestionsResult,
       closeSearchfield,
       currentSuggestions,
@@ -179,7 +137,7 @@ export default defineComponent({
 <style lang="scss">
 @import '/assets/scss/z-index';
 
-.document-search-input {
+.search-input-page {
   @apply tw-relative;
 
   .pv-input__icon {

@@ -14,9 +14,8 @@
 <script>
 import {
   defineComponent,
-  useRouter,
-  useRoute,
   useContext,
+  useRouter,
   onMounted,
   ref,
 } from '@nuxtjs/composition-api'
@@ -31,22 +30,25 @@ export default defineComponent({
   emits: ['submit', 'focus'],
   setup(props, { emit }) {
     const router = useRouter()
-    const route = useRoute()
-    const { app } = useContext()
     const categoryStore = useCategoryStore()
+    const { loadSuggestions, blurSuggestions } = categoryStore
+    const { app } = useContext()
+    const isMobile = app.$breakpoints.isMobile
 
     const pvInput = ref(null)
-
-    const { loadSuggestions, blurSuggestions } = categoryStore
-
-    const searchTerm = ref(route.value.query.searchTerm || '')
+    const searchTerm = ref('')
 
     const pushSearchTerm = (e) => {
       emit('submit')
       router.push({
         path: app.localePath('shop-search'),
-        query: { searchTerm: e.length ? e : undefined, searchType: 'products' },
+        query: {
+          searchTerm: e.length ? e : undefined,
+          initialSearchTerm: e.length ? e : undefined,
+          searchType: 'products',
+        },
       })
+      searchTerm.value = ''
     }
 
     const emitFocus = (val) => {
@@ -54,7 +56,9 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      pvInput.value.$refs.input.focus()
+      if (isMobile) {
+        pvInput.value.$refs.input.focus()
+      }
     })
 
     return {
