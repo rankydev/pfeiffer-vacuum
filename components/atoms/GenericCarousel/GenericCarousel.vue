@@ -94,6 +94,7 @@ export default defineComponent({
           'documentCardCarousel',
           'customContentCardCarousel',
           'accessoriesCardCarousel',
+          'tableCardCarousel',
         ].includes(val),
     },
     /**
@@ -253,6 +254,19 @@ export default defineComponent({
       ],
     }))
 
+    const tableCardCarouselSettings = computed(() => ({
+      responsive: [
+        {
+          breakpoint: splitBreakpointString(tailwindConfigScreens.md),
+          settings: {
+            slidesToShow: 1,
+            dots: true,
+            arrows: false,
+          },
+        },
+      ],
+    }))
+
     /**
      * Settings for slick carousel
      * see: https://github.com/gs-shop/vue-slick-carousel/blob/master/docs/API.md#props
@@ -265,6 +279,8 @@ export default defineComponent({
       slidesToScroll: 1,
       initialSlide: 0,
       swipeToSlide: true,
+      ...(props.variant === 'tableCardCarousel' &&
+        tableCardCarouselSettings.value),
       ...(props.variant === 'documentCardCarousel' &&
         documentCardCarouselSettings.value),
       ...(props.variant === 'customContentCardCarousel' &&
