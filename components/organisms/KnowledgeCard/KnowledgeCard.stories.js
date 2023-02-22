@@ -1,4 +1,5 @@
 import KnowledgeCard from './KnowledgeCard'
+import content from './KnowledgeCard.content.js'
 
 export default {
   title: 'Test/KnowledgeCard',
@@ -12,3 +13,4 @@ const Template = (args, { argTypes }) => ({
 })
 
 export const Default = Template.bind({})
+Default.args = { knowledge: content[1] }
