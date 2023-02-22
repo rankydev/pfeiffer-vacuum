@@ -42,7 +42,6 @@ export default defineComponent({
   @apply tw-flex;
   @apply tw-mb-4;
   @apply tw-pr-2;
-  @apply tw-bg-pv-grey-96;
 
   @screen md {
     @apply tw-pr-4;
