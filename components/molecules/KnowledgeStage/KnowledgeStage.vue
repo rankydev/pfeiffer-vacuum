@@ -25,9 +25,7 @@
         </div>
         <div class="knowledge-stage__summary">
           <Richtext v-if="summary" :richtext="summary" />
-          <div class="knowledge-stage__button">
-            <Button label="Button Text" icon="arrow" />
-          </div>
+          <div class="knowledge-stage__button"></div>
         </div>
       </div>
       <div class="knowledge-stage__image-block">
@@ -53,7 +51,6 @@ export default defineComponent({
   components: {
     ResponsiveImage,
     Richtext,
-    Button,
     Icon,
   },
   props: {
