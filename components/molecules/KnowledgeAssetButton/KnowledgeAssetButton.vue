@@ -25,7 +25,7 @@
 
     <!-- download whitepaper button -->
     <Button
-      v-else-if="isWhitepaper && !hasAsset"
+      v-else-if="isWhitepaper && hasAsset"
       :label="isDetailPage ? $t('knowledge.webinar.button.download') : ''"
       variant="primary"
       icon="get_app"
@@ -145,7 +145,7 @@ export default defineComponent({
 </script>
 <style land="scss" scoped>
 .knowledge-btn-icon {
-  background-color: #f2e600;
+  @apply tw-bg-pv-yellow;
   @apply tw-rounded-md;
   @apply tw-p-4;
 }
