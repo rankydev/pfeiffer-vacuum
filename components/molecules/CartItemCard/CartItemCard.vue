@@ -106,6 +106,7 @@ import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useDebounceFn } from '@vueuse/core'
 
 export default defineComponent({
   name: 'CartItemCard',
@@ -214,9 +215,9 @@ export default defineComponent({
       emit('delete', { ...product.value, quantity: quantityModel.value })
     }
 
-    const updateCartQuantity = () => {
+    const updateCartQuantity = useDebounceFn(() => {
       emit('update', { ...product.value, quantity: quantityModel.value })
-    }
+    }, 500)
 
     const url = computed(() =>
       app.localePath({
