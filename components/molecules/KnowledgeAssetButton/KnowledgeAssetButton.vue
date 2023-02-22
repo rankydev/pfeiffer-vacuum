@@ -26,7 +26,7 @@
     <!-- download whitepaper button -->
     <Button
       v-else-if="isWhitepaper && hasAsset"
-      :label="isDetailPage ? $t('knowledge.webinar.button.download') : ''"
+      :label="isDetailPage ? $t('knowledge.whitepaper.button.download') : ''"
       variant="primary"
       icon="get_app"
       @click="() => (isLoggedIn ? openAsset() : showLoginModal())"
