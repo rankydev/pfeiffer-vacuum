@@ -137,6 +137,7 @@
 
     @screen md {
       @apply tw-w-fit;
+      @apply tw-min-w-full;
       @apply tw-max-w-3xl;
     }
   }
@@ -150,6 +151,8 @@
   }
 
   &__dropdown-option {
+    @apply tw-w-full;
+
     @screen md {
       @apply tw-whitespace-nowrap;
     }
