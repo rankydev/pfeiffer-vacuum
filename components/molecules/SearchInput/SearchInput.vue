@@ -33,7 +33,7 @@ export default defineComponent({
     const categoryStore = useCategoryStore()
     const { loadSuggestions, blurSuggestions } = categoryStore
     const { app } = useContext()
-    const isMobile = app.$breakpoints.isMobile
+    const isMobile = ref(app.$breakpoints.isMobile)
 
     const pvInput = ref(null)
     const searchTerm = ref('')
