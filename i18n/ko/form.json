@@ -48,5 +48,8 @@
       "technicalError": "기술적인 오류가 발생했습니다. 파이퍼 베큠 지원 팀에 문의하십시오.",
       "customerInconsistentError": "계정에 문제가 있습니다. 당사 고객 서비스에 문의하십시오."
     }
+  },
+  "contactPersons": {
+    "contactButton": "문자 보내"
   }
 }

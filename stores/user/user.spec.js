@@ -59,6 +59,7 @@ jest.mock('~/stores/user/partials/useUserApi', () => {
   return {
     useUserApi: () => ({
       getUserData: mockGetUserData,
+      getAccountManager: jest.fn(),
     }),
   }
 })
