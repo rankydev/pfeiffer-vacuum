@@ -17,6 +17,7 @@
         v-bind="entry"
         :name="entry.uiComponent || entry.component"
       />
+      <MyAccountManager />
     </div>
   </div>
 </template>
@@ -24,10 +25,11 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 // ToDo: only for moch purpose until contactPerson Component is defined
 import richtext from '~/components/atoms/Richtext/Richtext.stories.content.js'
+import MyAccountManager from '~/components/organisms/MyAccount/sidebar/MyAccountManager'
 
 export default defineComponent({
   name: 'ContactFormSection',
-  components: {},
+  components: { MyAccountManager },
   props: {
     /**
      * Array of requestForms rendered on the left side
