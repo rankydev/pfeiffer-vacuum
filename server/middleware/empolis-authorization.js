@@ -9,27 +9,27 @@ const { logger } = useLogger('empolis-authorization')
 const EMPOLIS_AUTH_HEADER =
   'Basic ' +
   Buffer.from(
-    `${nuxtConfig.publicRuntimeConfig.EMPOLIS_CLIENT_ID}:${nuxtConfig.publicRuntimeConfig.EMPOLIS_CLIENT_SECRET}`
+    `${nuxtConfig.privateRuntimeConfig.EMPOLIS_CLIENT_ID}:${nuxtConfig.privateRuntimeConfig.EMPOLIS_CLIENT_SECRET}`
   ).toString('base64')
 const tokenCache = new Map()
 
 // public level will never occur in role mapping but is used for default
 const empolisRoleMap = {
   public_level: {
-    username: nuxtConfig.publicRuntimeConfig.EMPOLIS_USERNAME_CUSTOMER,
-    password: nuxtConfig.publicRuntimeConfig.EMPOLIS_PASSWORD_CUSTOMER,
+    username: nuxtConfig.privateRuntimeConfig.EMPOLIS_USERNAME_CUSTOMER,
+    password: nuxtConfig.privateRuntimeConfig.EMPOLIS_PASSWORD_CUSTOMER,
   },
   internal_level_0: {
-    username: nuxtConfig.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_0,
-    password: nuxtConfig.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_0,
+    username: nuxtConfig.privateRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_0,
+    password: nuxtConfig.privateRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_0,
   },
   internal_level_1: {
-    username: nuxtConfig.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_1,
-    password: nuxtConfig.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_1,
+    username: nuxtConfig.privateRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_1,
+    password: nuxtConfig.privateRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_1,
   },
   internal_level_2: {
-    username: nuxtConfig.publicRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_2,
-    password: nuxtConfig.publicRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_2,
+    username: nuxtConfig.privateRuntimeConfig.EMPOLIS_USERNAME_INTERNAL_LEVEL_2,
+    password: nuxtConfig.privateRuntimeConfig.EMPOLIS_PASSWORD_INTERNAL_LEVEL_2,
   },
 }
 
@@ -49,7 +49,7 @@ const getAccessToken = async (req) => {
 
     if (
       (jwt.iss || '').startsWith(
-        nuxtConfig.publicRuntimeConfig.KEYCLOAK_BASE_URL
+        axiosConfig.publicRuntimeConfig.KEYCLOAK_BASE_URL
       )
     ) {
       const roles = (jwt.realm_access || {}).roles || []
@@ -76,7 +76,7 @@ const getAccessToken = async (req) => {
     return currentToken.access_token
   }
 
-  const config = {
+  const axiosConfig = {
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
       Authorization: EMPOLIS_AUTH_HEADER,
@@ -85,9 +85,9 @@ const getAccessToken = async (req) => {
 
   try {
     const result = await axios.default.post(
-      process.env.EMPOLIS_AUTH_URL,
+      nuxtConfig.privateRuntimeConfig.EMPOLIS_AUTH_URL,
       new URLSearchParams(formData).toString(),
-      config
+      axiosConfig
     )
     logger.info('axios result', result)
     currentToken = result.data

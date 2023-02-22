@@ -48,5 +48,8 @@
       "technicalError": "A technical error occurred. Please contact the Pfeiffer Vacuum support.",
       "customerInconsistentError": "There is a problem with your account. Please contact our customer service."
     }
+  },
+  "contactPersons": {
+    "contactButton": "Send message"
   }
 }

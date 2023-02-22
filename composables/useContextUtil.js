@@ -8,10 +8,19 @@ export const useContextUtil = () => {
     const { req } = useContext()
 
     if (req) {
+      let protocol = req.protocol
+      if (!protocol) {
+        protocol = req.headers['x-forwarded-proto']
+      }
+      logger.trace('Request::Protocol: ', protocol)
+      if (!protocol) {
+        logger.trace('Did not find protocol for request: ', req)
+      }
       // server side
-      return req.protocol + '://' + req.headers.host
+      return protocol + '://' + req.headers.host
     }
     if (window) {
+      logger.trace('Window::Protocol: ', window.location.protocol)
       // client side
       return window.location.protocol + '//' + window.location.host
     }
