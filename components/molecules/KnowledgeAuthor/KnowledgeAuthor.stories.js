@@ -1,7 +1,5 @@
 import KnowledgeAuthor from './KnowledgeAuthor.vue'
-import { name, title } from './KnowledgeAuthor.stories.content.js'
-import { image } from '~/components/atoms/ResponsiveImage/ResponsiveImage.stories.content.js'
-
+import { name, title, image } from './KnowledgeAuthor.stories.content.js'
 const argTypes = {
   image: {
     control: { type: 'array' },
@@ -10,7 +8,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/m_??? KnowledgeAuthor',
+  title: 'Molecules/m_147 KnowledgeAuthor',
   component: KnowledgeAuthor,
   parameters: {
     docs: {

@@ -1,7 +1,7 @@
 <template>
   <div class="knowledge-authors-list">
     <h2 class="knowledge-authors-list__headline">
-      {{ isWhitelist ? 'Whitelists' : 'Webinars' }}
+      {{ isWhitepaper ? 'Whitepapers' : 'Webinars' }}
     </h2>
     <div class="knowledge-authors-list__authorlist">
       <KnowledgeAuthor
@@ -23,7 +23,7 @@ export default defineComponent({
   name: 'KnowledgeAuthorsList',
   components: { KnowledgeAuthor },
   props: {
-    isWhitelist: {
+    isWhitepaper: {
       type: Boolean,
       default: false,
     },

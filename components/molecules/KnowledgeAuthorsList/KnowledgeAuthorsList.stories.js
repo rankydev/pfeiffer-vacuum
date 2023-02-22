@@ -1,13 +1,13 @@
 import KnowledgeAuthorsList from './KnowledgeAuthorsList.vue'
 import {
-  isWhitelist,
+  isWhitepaper,
   authorcardlist,
 } from '~/components/molecules/KnowledgeAuthorsList/KnowledgeAuthorsList.stories.content'
 
 const argTypes = {
-  isWhitelist: {
+  isWhitepaper: {
     control: { type: 'boolean' },
-    defaultValue: isWhitelist,
+    defaultValue: isWhitepaper,
   },
   authorcardlist: {
     control: { type: 'array' },
@@ -16,7 +16,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/m_??? KnowledgeAuthorsList',
+  title: 'Molecules/m_148 KnowledgeAuthorsList',
   component: KnowledgeAuthorsList,
   parameters: {
     docs: {
@@ -45,3 +45,6 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {}
+
+export const Whitepapers = Template.bind({})
+Whitepapers.args = { isWhitepaper: true }

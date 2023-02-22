@@ -26,9 +26,9 @@ export const authorcardlist = [
   authorCard,
 ]
 
-export const isWhitelist = false
+export const isWhitepaper = false
 
 export default {
   authorcardlist,
-  isWhitelist,
+  isWhitepaper,
 }
