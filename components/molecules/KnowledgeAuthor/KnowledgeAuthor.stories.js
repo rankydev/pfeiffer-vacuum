@@ -1,7 +1,13 @@
 import KnowledgeAuthor from './KnowledgeAuthor.vue'
-import { image, name, title } from './KnowledgeAuthor.stories.content.js'
+import { name, title } from './KnowledgeAuthor.stories.content.js'
+import { image } from '~/components/atoms/ResponsiveImage/ResponsiveImage.stories.content.js'
 
-const argTypes = {}
+const argTypes = {
+  image: {
+    control: { type: 'array' },
+    defaultValue: image,
+  },
+}
 
 export default {
   title: 'Molecules/m_??? KnowledgeAuthor',
@@ -12,7 +18,7 @@ export default {
         component: 'The KnowledgeAuthor component is used to display ',
       },
       source: {
-        code: '<KnowledgeAuthor v-bind="{ image name title }"  />',
+        code: '<KnowledgeAuthor v-bind="args"  />',
       },
     },
   },
