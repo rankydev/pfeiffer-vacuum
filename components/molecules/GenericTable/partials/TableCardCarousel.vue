@@ -4,9 +4,8 @@
       variant="tableCardCarousel"
       class="table-card-carousel__content"
     >
-      <template #slides>
+      <template v-if="recentTableDataEntries.length" #slides>
         <div
-          v-if="recentTableDataEntries.length"
           v-for="(entry, index) in recentTableDataEntries"
           :key="getKey(index)"
           class="table-card-carousel__card"
@@ -21,7 +20,6 @@
 <script>
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel'
-import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import TableCard from '~/components/molecules/GenericTable/partials/TableCard'
 import getKey from '~/composables/useUniqueKey'
 
@@ -29,7 +27,6 @@ export default defineComponent({
   name: 'TableCardCarousel',
   components: {
     GenericCarousel,
-    ContentWrapper,
     TableCard,
   },
   props: {
