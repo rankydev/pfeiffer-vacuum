@@ -13,7 +13,6 @@ export const useDatasourcesStore = defineStore('datasources', () => {
     await axios
       .$get('/datasource_entries', {
         params: {
-          token: process.env.STORYBLOK_ACCESS_TOKEN,
           dimension: lang,
           datasource: 'files',
           cv: 0, // For cache invalidation

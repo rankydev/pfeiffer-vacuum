@@ -62,6 +62,9 @@ jest.mock('@nuxtjs/composition-api', () => {
       return {
         i18n: { locale: 'en', t: (val) => val },
         localePath: jest.fn(() => mockLocalePath),
+        $config: {
+          CONSOLA_LEVEL: 5,
+        },
       }
     }),
     useRouter: jest.fn(() => ({ options: { base: '' } })),

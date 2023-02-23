@@ -1,4 +1,4 @@
-import config from '../../nuxt.config'
+import nuxtConfig from '../../nuxt.config'
 import { urlJoin } from '@nuxt/utils'
 import { useLogger } from '../../composables/useLogger'
 
@@ -15,11 +15,11 @@ import { useLogger } from '../../composables/useLogger'
  */
 export default function (req, res, next) {
   const { logger } = useLogger('region-redirect')
-  const routerBase = decodeURI(config.router.base)
+  const routerBase = decodeURI(nuxtConfig.router.base)
   const isEmptyBase = (routerBase || '').length === 0
   const isRootBase = routerBase === '/'
   const isCurrentBase = decodeURI(req.url).startsWith(routerBase)
-  const regionCodes = config.publicRuntimeConfig.REGION_CODES
+  const regionCodes = nuxtConfig.publicRuntimeConfig.REGION_CODES
 
   if (isEmptyBase || isRootBase || isCurrentBase) {
     return next()

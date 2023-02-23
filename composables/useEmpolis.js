@@ -5,16 +5,17 @@ export default {
   computed: {
     ...mapGetters(['loggedIn']),
     empolisPortalUrl() {
-      const useEmpolisProductionSystem = this.$env.NODE_PROFILE !== 'develop'
+      const useEmpolisProductionSystem =
+        this.$config.EMPOLIS_STAGE === 'project1_p'
 
-      const publicPortalUrl = `${this.$env.EMPOLIS_PATH}portal/${this.$env.EMPOLIS_STAGE}/`
+      const publicPortalUrl = `${this.$config.EMPOLIS_PATH}portal/${this.$config.EMPOLIS_STAGE}/`
       if (!useEmpolisProductionSystem) {
         return publicPortalUrl
       }
 
       // Empolis only offers a Guest-Token URL for our production environment
       if (!this.loggedIn) {
-        return `${this.$env.EMPOLIS_GUEST_TOKEN_URL}?redirect=${publicPortalUrl}`
+        return `${this.$config.EMPOLIS_GUEST_TOKEN_URL}?redirect=${publicPortalUrl}`
       }
 
       const keycloakInstance = this.$store?.$keycloakInstance
@@ -23,13 +24,13 @@ export default {
         keycloakInstance?.hasRealmRole('internal_level_1') ||
         keycloakInstance?.hasRealmRole('internal_level_2')
       if (!isInternalLevel) {
-        return `${this.$env.EMPOLIS_GUEST_TOKEN_URL}?redirect=${publicPortalUrl}`
+        return `${this.$config.EMPOLIS_GUEST_TOKEN_URL}?redirect=${publicPortalUrl}`
       }
 
-      return `${this.$env.EMPOLIS_SSO_PATH}portal/${this.$env.EMPOLIS_STAGE}/`
+      return `${this.$config.EMPOLIS_SSO_PATH}portal/${this.$config.EMPOLIS_STAGE}/`
     },
     empolisProxyDownloadPath() {
-      return this.$env.PROXY_PATH_EMPOLIS
+      return this.$config.PROXY_PATH_EMPOLIS
     },
   },
   methods: {

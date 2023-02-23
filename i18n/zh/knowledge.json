@@ -1,0 +1,32 @@
+{
+  "time": "",
+  "hours": "小时",
+  "minutes": "分钟",
+  "allRessources": "所有资源",
+  "whitepapers": "白皮书",
+  "webinars": "各网络研讨会",
+  "search": "搜索知识...",
+  "webinar": {
+    "heading": "网络研讨会",
+    "about": "  网络研讨会是关于什么的？",
+    "tragetAudience": "谁该参加？",
+    "authors": "发言者，演讲者",
+    "button": {
+      "join": "加入网络研讨会",
+      "watch": "观看网络研讨会"
+    },
+    "waitForVod": "本次网络研讨会的录像将在原定日期后五天内可供观看。",
+    "registration": {
+      "success": "您已成功注册此网络研讨会。您将通过邮件收到所有更多详细信息"
+    }
+  },
+  "whitepaper": {
+    "heading": "白皮书",
+    "about": "  白皮书是关于什么的？",
+    "tragetAudience": "谁应该阅读它？",
+    "authors": "作者",
+    "button": {
+      "download": "下载"
+    }
+  }
+}
