@@ -4,15 +4,7 @@
     <span class="empty-wrapper__label">
       {{ $t(label) }}
     </span>
-    <Button
-      v-if="button.variant"
-      :variant="button.variant"
-      :shape="button.shape"
-      :icon="button.icon"
-      :label="button.label"
-      :href="button.href"
-      :disabled="button.disabled"
-    />
+    <Button v-if="button.variant" v-bind="button" />
   </div>
 </template>
 
