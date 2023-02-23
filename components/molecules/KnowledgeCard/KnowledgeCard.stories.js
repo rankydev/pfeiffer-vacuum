@@ -2,7 +2,7 @@ import KnowledgeCard from './KnowledgeCard'
 import content from './KnowledgeCard.stories.content.js'
 
 const argTypes = {
-  knowledge: {
+  entry: {
     control: { type: 'object' },
     defaultValue: content,
   },
@@ -15,7 +15,7 @@ export default {
       description: {
         component: 'Knowledge Card component used on the knowledge page.',
       },
-      code: `<KnowledgeCard :knowledge="knowledge)"/>`,
+      code: `<KnowledgeCard :entry="entry"/>`,
     },
   },
   argTypes,

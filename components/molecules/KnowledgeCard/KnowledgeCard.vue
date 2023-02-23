@@ -1,9 +1,9 @@
 <template>
   <GenericCard href="detailPageLink" image-size="cover">
     <template v-if="tag" #tag>
-      <span class="knowledge-card-tag">
-        <Icon :icon="tagIcon" size="xsmall" class="knowledge-card-tag__icon" />
-        <span class="knowledge-card-tag__label">{{ tag }}</span>
+      <span class="knowledge-card__tag">
+        <Icon :icon="tagIcon" size="xsmall" class="knowledge-card__tag-icon" />
+        <span class="knowledge-card__tag-label">{{ tag }}</span>
       </span>
     </template>
     <template #image>
@@ -24,12 +24,12 @@
       <p v-html="summary" />
     </template>
     <template #actionItems>
-      <div class="knowledge-card-action-items">
+      <div class="knowledge-card__action-items">
         <Button
           shape="plain"
           variant="secondary"
           gap="narrow"
-          class="knowledge-card-action-items__detail"
+          class="knowledge-card__action-items-detail"
           :href="detailPageLink"
           icon="arrow_forward"
           :label="$t('misc.details')"
@@ -70,19 +70,19 @@ export default defineComponent({
     KnowledgeAssetButton,
   },
   props: {
-    knowledge: {
+    entry: {
       type: Object,
       required: false,
       default: () => ({}),
     },
   },
   setup(props) {
-    const { knowledge } = toRefs(props)
+    const { entry } = toRefs(props)
     const { localePath, i18n } = useContext()
-    const isWebinar = computed(() => knowledge?.value?.type === 'WEBINAR')
+    const isWebinar = computed(() => entry?.value?.type === 'WEBINAR')
     const tag = computed(() => {
       const type = isWebinar.value ? 'webinar' : 'whitepaper'
-      const transString = `knowledge.${type}.heading`
+      const transString = `entry.${type}.heading`
       const hasTag = i18n.te(transString)
       return hasTag ? i18n.t(transString) : null
     })
@@ -90,16 +90,16 @@ export default defineComponent({
       return isWebinar.value ? 'video_library' : 'library_books'
     })
     const image = computed(() => {
-      const imageUrl = knowledge?.value?.imageURL
+      const imageUrl = entry?.value?.imageURL
       return imageUrl || null
     })
     const date = computed(() => {
-      const dateValue = knowledge?.value?.date
+      const dateValue = entry?.value?.date
       const dateType = isWebinar?.value ? 'full-timezone' : 'date'
       return dateValue ? i18n.d(new Date(dateValue), dateType) : ''
     })
     const slug = computed(() => {
-      return knowledge?.value?.slug
+      return entry?.value?.slug
     })
     const detailPageLink = computed(() => {
       const typeVar = isWebinar.value ? 'webinar' : 'whitepaper'
@@ -109,22 +109,22 @@ export default defineComponent({
       })
     })
     const name = computed(() => {
-      return knowledge?.value?.name
+      return entry?.value?.name
     })
     const tags = computed(() => {
-      return knowledge?.value?.tags || []
+      return entry?.value?.tags || []
     })
     const summary = computed(() => {
-      return knowledge?.value?.summary
+      return entry?.value?.summary
     })
     const id = computed(() => {
-      return knowledge?.value?.id
+      return entry?.value?.id
     })
     const type = computed(() => {
-      return knowledge?.value?.type
+      return entry?.value?.type
     })
     const assetUrl = computed(() => {
-      return knowledge?.value?.assetURL
+      return entry?.value?.assetURL
     })
     return {
       isWebinar,
@@ -150,28 +150,28 @@ export default defineComponent({
     @apply tw-text-base;
   }
 
-  &-tag {
+  &__tag {
     @apply tw-flex;
 
     @screen lg {
       @apply tw-mt-2;
     }
 
-    &__icon {
+    &-icon {
       @apply tw-mr-1;
       @apply tw-my-auto;
     }
 
-    &__label {
+    &-label {
       @apply tw-my-auto;
     }
   }
 
-  &-action-items {
+  &__action-items {
     @apply tw-flex;
     @apply tw-justify-between;
 
-    &__detail {
+    &-detail {
       @apply tw-mr-2;
       @apply tw-pl-0;
       @apply tw-border-0;
