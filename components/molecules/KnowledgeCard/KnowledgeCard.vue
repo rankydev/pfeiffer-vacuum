@@ -33,17 +33,12 @@
           icon="arrow_forward"
           :label="$t('misc.details')"
         />
-        <span
-          >missing Button here, example underneath: {{ id }}-{{ type }}-{{
-            date
-          }}-{{ assetUrl }}</span
-        >
-        <!--        <knowledge-asset-button-->
-        <!--          :id="id"-->
-        <!--          :type="knowledge.type"-->
-        <!--          :date="knowledge.date"-->
-        <!--          :asset-url="knowledge.assetURL"-->
-        <!--        />-->
+        <KnowledgeAssetButton
+          :webinar-registration-id="id"
+          :type="type"
+          :date="date"
+          :asset-url="assetUrl"
+        />
       </div>
     </template>
   </GenericCard>
@@ -61,6 +56,7 @@ import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Tag from '~/components/atoms/Tag/Tag.vue'
 import Button from '~/components/atoms/Button/Button.vue'
+import KnowledgeAssetButton from '~/components/molecules/KnowledgeAssetButton/KnowledgeAssetButton.vue'
 
 export default defineComponent({
   name: 'KnowledgeCard',
@@ -70,6 +66,7 @@ export default defineComponent({
     Icon,
     Tag,
     Button,
+    KnowledgeAssetButton,
   },
   props: {
     knowledge: {
@@ -96,17 +93,20 @@ export default defineComponent({
       return imageUrl || null
     })
     const date = computed(() => {
-      const dateValue = knowledge.value?.date
-      const dateType = isWebinar.value ? 'full-timezone' : 'date'
-      return date ? i18n.d(new Date(dateValue), dateType) : ''
+      console.log(knowledge.value)
+      const dateValue = knowledge?.value?.date
+      const dateType = isWebinar?.value ? 'full-timezone' : 'date'
+      return dateValue ? i18n.d(new Date(dateValue), dateType) : ''
+    })
+    const slug = computed(() => {
+      return knowledge?.value?.slug
     })
     const detailPageLink = computed(() => {
-      const type = isWebinar.value ? 'webinar' : 'whitepaper'
-      // return localePath({
-      //   name: `knowledge-${type}s-${type}`,
-      //   params: { [type]: this.knowledge.slug },
-      // })
-      return type
+      const typeVar = isWebinar.value ? 'webinar' : 'whitepaper'
+      return localePath({
+        name: `knowledge-${typeVar}s-${typeVar}`,
+        params: { [typeVar]: slug.value },
+      })
     })
     const name = computed(() => {
       return knowledge?.value?.name
@@ -152,6 +152,10 @@ export default defineComponent({
 
   &-tag {
     @apply tw-flex;
+
+    @screen lg {
+      @apply tw-mt-2;
+    }
 
     &__icon {
       @apply tw-mr-1;
