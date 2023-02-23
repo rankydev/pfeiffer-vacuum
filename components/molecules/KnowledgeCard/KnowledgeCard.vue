@@ -90,11 +90,10 @@ export default defineComponent({
       return isWebinar.value ? 'video_library' : 'library_books'
     })
     const image = computed(() => {
-      const imageUrl = knowledge.value?.imageURL
+      const imageUrl = knowledge?.value?.imageURL
       return imageUrl || null
     })
     const date = computed(() => {
-      console.log(knowledge.value)
       const dateValue = knowledge?.value?.date
       const dateType = isWebinar?.value ? 'full-timezone' : 'date'
       return dateValue ? i18n.d(new Date(dateValue), dateType) : ''
