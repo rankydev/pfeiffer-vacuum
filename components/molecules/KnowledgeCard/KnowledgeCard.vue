@@ -20,6 +20,7 @@
       <Tag v-for="(tagItem, idx) in tags" :key="idx" :content="tagItem" />
     </template>
     <template #description>
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <p v-html="summary" />
     </template>
     <template #actionItems>
