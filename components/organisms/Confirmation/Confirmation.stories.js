@@ -9,7 +9,7 @@ export default {
         component: 'This component ...',
       },
       source: {
-        code: '<Confirmation v-bind="{}"/>',
+        code: '<Confirmation v-bind="{ order }"/>',
       },
     },
   },
@@ -28,3 +28,8 @@ const Template = (args) => ({
 })
 
 export const Default = Template.bind({})
+Default.args = {
+  order: {
+    code: '1234567890',
+  },
+}

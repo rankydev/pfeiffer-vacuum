@@ -1,6 +1,6 @@
 export default {
-  name: 'RegistrationSuccessPage',
-  display_name: 'RegistrationSuccessPage',
+  name: 'Confirmation',
+  display_name: 'Confirmation',
   image: null,
   preview_field: null,
   is_root: false,
@@ -8,5 +8,5 @@ export default {
   is_nestable: true,
   all_presets: [],
   preset_id: null,
-  real_name: 'RegistrationSuccessPage',
+  real_name: 'Confirmation',
 }

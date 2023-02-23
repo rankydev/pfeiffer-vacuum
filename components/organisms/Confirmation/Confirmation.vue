@@ -9,107 +9,72 @@
       </h2>
     </div>
     <div class="confirmation__description">
-      <h6 class="sub md:tw-hidden">
+      <div>
         {{ $t('checkout.requestDescription') }}
-      </h6>
-      <h5 class="sub tw-hidden md:tw-block">
-        {{ $t('checkout.requestDescription') }}
-      </h5>
+      </div>
     </div>
     <div class="confirmation__requestNumber">
-      <h3 class="sub tw-mb-6">
+      <Icon
+        icon="check_circle_outline"
+        class="confirmation__requestNumber--icon"
+        size="xlarge"
+      />
+      <h3 class="confirmation__requestNumber--subline tw-font-normal">
         {{ $t('checkout.requestNumber') }}
       </h3>
-      <h3 class="tw-mb-6">1234567890</h3>
-      <h6 class="sub">
+      <h3 class="confirmation__requestNumber--subline">{{ order.code }}</h3>
+      <h5 class="confirmation__requestNumber--subline">
         {{ $t('checkout.requestSupport') }}
-      </h6>
+      </h5>
     </div>
-    <div class="tw-col-span-12 tw-mb-4 text-center">
+    <div class="confirmation__buttons">
       <Button
-        variant="primary"
-        :to="localePath('shop-my-account-request-history') + '/' + '1234567890'"
+        variant="secondary"
+        :to="localePath('shop-my-account-request-history') + '/' + order.code"
         icon="arrow_forward"
         :label="$t('checkout.viewRequest')"
       />
-    </div>
-    <div class="tw-col-span-12 tw-text-center">
       <Button
         variant="secondary"
-        class="back"
+        shape="outlined"
         :to="localePath('shop')"
-        icon="arrow_forward"
+        icon="arrow_back"
         :label="$t('checkout.backToHomepage')"
+        :prepend-icon="true"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
+import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
   name: 'Confirmation',
-  components: { Button },
+  components: { Button, Icon },
   props: {
     order: {
       type: Object,
       required: true,
     },
   },
-  mounted() {
-    if (this.order) {
-      this.prepareDataLayer()
-    }
-  },
-  methods: {
-    prepareDataLayer() {
-      const totalPrice = this.order.totalPrice.value.toFixed(2)
-      const ecommerceItems = []
-      for (const entry of this.order.entries) {
-        const product = entry.product
-        const productCategories = product.categoryPath
-        const basePrice = entry?.basePrice?.value
+  setup() {
+    const { app } = useContext()
+    const { isMobile } = app.$breakpoints
 
-        const tmpObj = {
-          item_name: product.name,
-          item_id: product.code,
-          price: basePrice ? basePrice.toFixed(2) : null,
-          item_brand: null,
-          item_category: productCategories?.[0]?.id || null,
-          item_category_2: productCategories?.[1]?.id || null,
-          item_category_3: productCategories?.[2]?.id || null,
-          item_category_4: productCategories?.[3]?.id || null,
-          quantity: entry.quantity,
-        }
-
-        ecommerceItems.push(tmpObj)
-      }
-
-      const dataLayerData = {
-        event: 'purchase',
-        ecommerce: {
-          purchase: {
-            transaction_id: this.order.code, // ID of the transaction / quote
-            value: totalPrice.toString(), // Total value of the transaction / quote
-            currency: totalPrice.currencyIso, // Currency
-            items: ecommerceItems,
-          },
-        },
-      }
-      /* eslint-enable */
-
-      this.$store.dispatch('pushToDataLayer', dataLayerData)
-    },
+    return { isMobile }
   },
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .confirmation {
   @apply tw-grid tw-grid-cols-12;
   @apply tw-text-center;
+  @apply tw-w-fit;
+  @apply tw-m-4;
 
   &__headline {
     @apply tw-col-span-12;
@@ -119,11 +84,58 @@ export default defineComponent({
   &__description {
     @apply tw-col-span-12;
     @apply tw-mb-12;
+
+    @screen lg {
+      @apply tw-text-lg;
+      @apply tw-leading-7;
+    }
   }
 
   &__requestNumber {
+    @apply tw-bg-pv-green;
+    @apply tw-rounded-lg;
     @apply tw-col-span-12;
     @apply tw-mb-12;
+
+    &--icon {
+      position: relative;
+      top: -32px;
+      @apply tw-text-pv-green;
+      @apply tw-bg-pv-white;
+    }
+
+    &--subline {
+      @apply tw-mb-6;
+      @apply tw-text-pv-white;
+      top: -12px;
+      position: relative;
+    }
+
+    h5:last-of-type {
+      @apply tw-mb-3;
+      @apply tw-font-normal;
+      @apply tw-px-6;
+    }
+  }
+
+  &__buttons {
+    @apply tw-col-span-12;
+    @apply tw-mb-4;
+    @apply tw-flex;
+    @apply tw-flex-col;
+
+    @screen md {
+      @apply tw-flex-row-reverse;
+      @apply tw-justify-between;
+    }
+
+    button:first-of-type {
+      @apply tw-mb-4;
+
+      @screen md {
+        @apply tw-mb-0;
+      }
+    }
   }
 }
 </style>
