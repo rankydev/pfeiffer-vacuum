@@ -1,5 +1,5 @@
 import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper.vue'
-import { label, icon, buttons } from './EmptyWrapper.stories.content'
+import { label, icon, button } from './EmptyWrapper.stories.content'
 
 const argTypes = {
   label: {
@@ -10,8 +10,8 @@ const argTypes = {
     defaultValue: icon,
     control: { type: 'text' },
   },
-  buttons: {
-    defaultValue: buttons,
+  button: {
+    defaultValue: button,
     control: { type: 'array' },
   },
 }

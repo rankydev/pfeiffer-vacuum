@@ -5,8 +5,7 @@
       {{ $t(label) }}
     </span>
     <Button
-      v-for="button in buttons"
-      :key="button.label"
+      v-if="button.variant"
       :variant="button.variant"
       :shape="button.shape"
       :icon="button.icon"
@@ -37,9 +36,9 @@ export default defineComponent({
       type: String,
       default: 'description',
     },
-    buttons: {
-      type: Array,
-      default: () => [],
+    button: {
+      type: Object,
+      default: () => ({}),
     },
   },
 })
