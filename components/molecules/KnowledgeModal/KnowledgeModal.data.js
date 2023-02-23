@@ -32,15 +32,16 @@ export const getKnowledgeData = () => {
       headline: i18n.t(
         i18nKey +
           (app?.$breakpoints?.isMobile.value
-            ? 'createAccountDesktop'
-            : 'createAccountMobile')
+            ? 'createAccountMobile'
+            : 'createAccountDesktop')
       ),
       description: [
         {
           component: 'Richtext',
           richtext: i18n.t(
-            i18nKey +
-              (app?.$breakpoints?.isMobile.value ? 'addCompanyAddressData' : '')
+            !app?.$breakpoints?.isMobile.value
+              ? i18nKey + 'addCompanyAddressData'
+              : ''
           ),
         },
       ],

@@ -9,7 +9,7 @@
     <PvInput
       v-model="requestData.registration.companyName"
       :label="$t('form.contactRequest.company')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.placeholder.company')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
@@ -32,7 +32,7 @@
     <PvInput
       v-model="requestData.registration.firstName"
       :label="$t('form.contactRequest.firstname')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.placeholder.firstname')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
@@ -46,7 +46,7 @@
     <PvInput
       v-model="requestData.registration.lastName"
       :label="$t('form.contactRequest.surname')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.placeholder.lastname')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
@@ -60,7 +60,7 @@
     <PvInput
       v-model="requestData.registration.email"
       :label="$t('form.contactRequest.mail')"
-      placeholder="Placeholder"
+      :placeholder="$t('form.placeholder.email')"
       :required="true"
       :rules="{
         required: helpers.withMessage(
@@ -78,7 +78,6 @@
     <Password
       v-model="requestData.registration.password"
       :label="$t('registration.registrationRequest.password')"
-      placeholder="Placeholder"
       :required="true"
       :rules="{
         required: helpers.withMessage(

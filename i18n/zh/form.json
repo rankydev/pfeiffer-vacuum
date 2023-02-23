@@ -18,6 +18,12 @@
     "digit": "至少包含1位数字",
     "tooLong": "您的密码过长（不得超过128个字节）"
   },
+  "placeholder": {
+    "company": "公司名称",
+    "firstname": "名",
+    "lastname": "姓",
+    "email": "email@email.com"
+  },
   "contactRequest": {
     "firstname": "名",
     "surname": "姓",

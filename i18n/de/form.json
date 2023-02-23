@@ -18,6 +18,12 @@
     "digit": "Mindestens eine Ziffer",
     "tooLong": "Ihr Passwort ist zu lang (max. 128 Charaktere)"
   },
+  "placeholder": {
+    "company": "Firma",
+    "firstname": "Vorname",
+    "lastname": "Nachname",
+    "email": "email@email.com"
+  },
   "contactRequest": {
     "firstname": "Vorname",
     "surname": "Nachname",
