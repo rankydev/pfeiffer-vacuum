@@ -18,6 +18,7 @@
       <SearchSuggestions
         :items="currentSuggestions"
         :search-type="activeTab"
+        :object-key="objectKey"
         @suggestionHover="(value) => (suggestionHover = value)"
         @click="closeSearchfield"
       />
@@ -67,6 +68,9 @@ export default defineComponent({
     const suggestionHover = ref(true)
 
     const activeTab = computed(() => route.value.query.searchType)
+    const objectKey = computed(() =>
+      route.value.query.searchType === 'documents' ? 'label' : 'value'
+    )
 
     watch(activeTab, () => {
       currentSuggestions.value = []
@@ -130,6 +134,7 @@ export default defineComponent({
       isFocused,
       toggleSuggestionsOnFocus,
       suggestionHover,
+      objectKey,
     }
   },
 })

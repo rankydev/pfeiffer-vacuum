@@ -6,8 +6,8 @@
   >
     <SearchButton
       v-for="item in items"
-      :key="item.value"
-      :title="item.value"
+      :key="item[objectKey]"
+      :title="item[objectKey]"
       :search-type="searchType"
       class="search-header__suggestions--result"
       @click="$emit('click', $event)"
@@ -27,6 +27,10 @@ export default defineComponent({
     searchType: {
       type: String,
       default: '',
+    },
+    objectKey: {
+      type: String,
+      default: 'value',
     },
   },
   emits: ['suggestionHover', 'click'],
