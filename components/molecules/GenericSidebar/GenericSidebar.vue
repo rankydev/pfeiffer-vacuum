@@ -13,11 +13,9 @@
         class="sidebar__panel"
         :class="`sidebar__panel--${position}`"
       >
-        <Button
+        <Icon
           icon="close"
-          variant="secondary"
-          shape="plain"
-          class="sidebar__panel-btn"
+          class="sidebar__panel-close"
           @click="$emit('closeSidebar')"
         />
         <div class="sidebar__panel-content">
@@ -30,11 +28,10 @@
 
 <script>
 import { defineComponent, watch } from '@nuxtjs/composition-api'
-import Button from '~/components/atoms/Button/Button'
-
+import Icon from '~/components/atoms/Icon/Icon.vue'
 export default defineComponent({
   name: 'GenericSidebar',
-  components: { Button },
+  components: { Icon },
   props: {
     isOpen: {
       type: Boolean,
@@ -83,37 +80,44 @@ export default defineComponent({
   }
 
   &__panel {
-    @apply tw-overflow-y-auto;
     @apply tw-fixed;
-    @apply tw-bg-pv-white;
     @apply tw-top-0;
+    @apply tw-bg-pv-white;
     @apply tw-h-screen;
-    @apply tw-w-11/12;
+    @apply tw-w-[calc(100%-1rem)];
+    @apply tw-border tw-border-pv-grey-96;
     z-index: $generic-modal;
 
     @screen md {
-      @apply tw-w-3/5;
+      @apply tw-w-1/2;
     }
     @screen lg {
-      @apply tw-w-2/5;
+      @apply tw-w-1/3;
     }
 
     &--right {
       @apply tw-right-0;
+      @apply tw-rounded-tl-lg;
+      @apply tw-rounded-bl-lg;
     }
 
     &--left {
       @apply tw-left-0;
+      @apply tw-rounded-tr-lg;
+      @apply tw-rounded-br-lg;
     }
   }
 
-  &__panel-btn {
+  &__panel-close {
     @apply tw-absolute;
-    @apply tw-right-0;
+    @apply tw-right-4;
+    @apply tw-top-4;
+    @apply tw-text-pv-grey-16;
+    @apply tw-cursor-pointer;
   }
 
   &__panel-content {
-    @apply tw-p-4;
+    @apply tw-h-screen;
   }
 }
 </style>

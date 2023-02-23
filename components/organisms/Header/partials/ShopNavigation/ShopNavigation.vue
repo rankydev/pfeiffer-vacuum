@@ -46,6 +46,8 @@
       <!-- TODO: Add correct cart item count indicator -->
       <span>{{ cartItemCount }}</span>
     </Link>
+
+    <CartOverlay :is-open="isOverlayOpen" @close="closeOverlay" />
   </div>
 </template>
 
@@ -55,12 +57,13 @@ import {
   defineComponent,
   useContext,
   useRouter,
+  ref,
+  watch,
 } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 import { useCartStore } from '~/stores/cart'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
-import Link from '~/components/atoms/Link/Link.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import MyAccountNavigation from '~/components/organisms/MyAccount/partials/MyAccountNavigation/MyAccountNavigation.vue'
@@ -70,7 +73,6 @@ import { storeToRefs } from 'pinia'
 export default defineComponent({
   components: {
     Icon,
-    Link,
     Button,
     LoadingSpinner,
     MyAccountNavigation,
@@ -112,6 +114,17 @@ export default defineComponent({
       }
     }
 
+    const isOverlayOpen = ref(false)
+    const closeOverlay = () => {
+      isOverlayOpen.value = false
+    }
+
+    watch(currentCart, (newValue, oldValue) => {
+      if (newValue?.totalUnitCount > oldValue?.totalUnitCount) {
+        isOverlayOpen.value = true
+      }
+    })
+
     return {
       // getters
       isOciUser,
@@ -123,6 +136,8 @@ export default defineComponent({
       isLoggedIn,
       isLoginProcess,
       cartItemCount,
+      isOverlayOpen,
+      closeOverlay,
 
       logout: userStore.logout,
       handleMyAccount,
@@ -166,6 +181,8 @@ export default defineComponent({
   }
 
   &__shopping-cart {
+    @apply tw-cursor-pointer;
+
     @apply tw-ml-0;
 
     @screen md {
