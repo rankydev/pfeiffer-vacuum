@@ -50,10 +50,11 @@ export default {
   &__content {
     @apply tw-flex;
     @apply tw-justify-between;
+    @apply tw-flex-col;
     @apply tw-gap-4;
-    @apply tw-flex-wrap;
 
     @screen md {
+      @apply tw-flex-row;
       @apply tw-gap-6;
     }
 
