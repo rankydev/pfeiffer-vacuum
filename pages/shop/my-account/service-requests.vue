@@ -1,18 +1,19 @@
 <template>
   <div>
-    <div
-      class="tw-flex tw-bg-pv-grey-88 tw-rounded-md tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-2xl tw-text-center"
-      style="height: 800px"
-    >
-      <div>Coming Soon</div>
-    </div>
+    <ResultHeadline
+      :headline="$t('myaccount.serviceHistory.serviceRequests')"
+    />
+    <EmptyWrapper :label="$t('myaccount.comingSoon')" icon="handyman" />
   </div>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
+import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper'
+import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 
 export default defineComponent({
   name: 'ServiceRequests',
+  components: { ResultHeadline, EmptyWrapper },
 })
 </script>
