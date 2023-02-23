@@ -1,7 +1,7 @@
 import Confirmation from './Confirmation'
 
 export default {
-  title: 'ECOM Pages/ecom_1 Confirmation',
+  title: 'ECOM Pages/ecom_3 Confirmation',
   component: Confirmation,
   parameters: {
     docs: {
