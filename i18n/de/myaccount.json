@@ -53,5 +53,7 @@
       "requestInfo": "Sie dürfen keine Anfragen senden",
       "functionalityInfo": "Sie dürfen diese Funktion nicht nutzen"
     }
-  }
+  },
+  "contact": "Kontakt",
+  "salesRepresentative": "Vertriebsingenieur"
 }

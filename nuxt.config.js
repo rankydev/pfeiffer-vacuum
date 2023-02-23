@@ -88,9 +88,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/storyblok/storyblok-api-client', mode: 'client' },
     '~/plugins/helper/breakpoints',
-    { src: '~/plugins/service/service.plugin', mode: 'client' },
     '~/plugins/zoomOnHover',
     '~/plugins/touchEvents',
     '~/plugins/tooltip',
@@ -228,6 +226,19 @@ export default {
     EMPOLIS_PATH: process.env.EMPOLIS_PATH,
     EMPOLIS_GUEST_TOKEN_URL: process.env.EMPOLIS_GUEST_TOKEN_URL,
     EMPOLIS_SSO_PATH: process.env.EMPOLIS_SSO_PATH,
+
+    // version info
+    CI_COMMIT_REF_NAME: process.env.CI_COMMIT_REF_NAME,
+    CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,
+    ...(process.env.NODE_ENV === 'development' ?? {
+      CI_PROJECT_URL: process.env.CI_PROJECT_URL,
+      NODE_ENV: process.env.NODE_ENV,
+    }),
+    CONSOLA_LEVEL: process.env.CONSOLA_LEVEL,
+  },
+
+  privateRuntimeConfig: {
+    // empolis
     EMPOLIS_AUTH_URL: process.env.EMPOLIS_AUTH_URL,
     EMPOLIS_USERNAME_CUSTOMER: process.env.EMPOLIS_USERNAME_CUSTOMER,
     EMPOLIS_PASSWORD_CUSTOMER: process.env.EMPOLIS_PASSWORD_CUSTOMER,
@@ -245,18 +256,12 @@ export default {
       process.env.EMPOLIS_PASSWORD_INTERNAL_LEVEL_2,
     EMPOLIS_CLIENT_ID: process.env.EMPOLIS_CLIENT_ID,
     EMPOLIS_CLIENT_SECRET: process.env.EMPOLIS_CLIENT_SECRET,
-  },
-
-  env: {
-    // version info
-    CI_COMMIT_REF_NAME: process.env.CI_COMMIT_REF_NAME,
-    CI_COMMIT_SHORT_SHA: process.env.CI_COMMIT_SHORT_SHA,
-    CI_PROJECT_URL: process.env.CI_PROJECT_URL,
-    NODE_ENV: process.env.NODE_ENV,
+    // storyblok
+    STORYBLOK_API_BASE_URL: process.env.STORYBLOK_API_BASE_URL,
     STORYBLOK_ACCESS_TOKEN: process.env.STORYBLOK_ACCESS_TOKEN,
+    // SAP Commerce Cloud
     SHOP_BASE_URL: process.env.SHOP_BASE_URL,
     SHOP_IMAGE_URL: process.env.SHOP_IMAGE_URL,
-    CONSOLA_LEVEL: process.env.CONSOLA_LEVEL,
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img

@@ -48,5 +48,8 @@
       "technicalError": "发生技术错误。 请联系普发真空支持。",
       "customerInconsistentError": "出现了与您帐户有关的问题。 请联系我们的客服。"
     }
+  },
+  "contactPersons": {
+    "contactButton": "发信息"
   }
 }
