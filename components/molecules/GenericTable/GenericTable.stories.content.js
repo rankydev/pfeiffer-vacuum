@@ -207,7 +207,7 @@ export const tableData = [
 export const tableDataCarousel = [
   {
     entries: [
-      'Request Number 1234567',
+      'Request Number 1234564',
       'Total (Net) € 123.456,78',
       'Reference 4455778899',
       '17.01.2022',
@@ -226,7 +226,26 @@ export const tableDataCarousel = [
   },
   {
     entries: [
-      'Request Number 1234567',
+      'Request Number 1234565',
+      'Total (Net) € 123.456,78',
+      'Reference 4455778899',
+      '17.01.2022',
+    ],
+    actions: [
+      {
+        icon: 'arrow_forward',
+        variant: 'secondary',
+        shape: 'outlined',
+        href: 'https://www.example.com',
+        target: '_blank',
+        label: 'Details',
+        desktop: false,
+      },
+    ],
+  },
+  {
+    entries: [
+      'Request Number 1234566',
       'Total (Net) € 123.456,78',
       'Reference 4455778899',
       '17.01.2022',

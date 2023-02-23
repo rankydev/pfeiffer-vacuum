@@ -127,7 +127,10 @@ export default defineComponent({
      */
     const { app } = useContext()
     const isBreakout = computed(() => {
-      if (props.variant === 'accessoriesCardCarousel') {
+      if (
+        props.variant === 'accessoriesCardCarousel' ||
+        props.variant === 'tableCardCarousel'
+      ) {
         return false
       }
       return !app.$breakpoints.isDesktop.value || props.isWide
@@ -255,16 +258,9 @@ export default defineComponent({
     }))
 
     const tableCardCarouselSettings = computed(() => ({
-      responsive: [
-        {
-          breakpoint: splitBreakpointString(tailwindConfigScreens.md),
-          settings: {
-            slidesToShow: 1,
-            dots: true,
-            arrows: false,
-          },
-        },
-      ],
+      slidesToShow: 1,
+      dots: true,
+      arrows: false,
     }))
 
     /**
@@ -279,8 +275,6 @@ export default defineComponent({
       slidesToScroll: 1,
       initialSlide: 0,
       swipeToSlide: true,
-      ...(props.variant === 'tableCardCarousel' &&
-        tableCardCarouselSettings.value),
       ...(props.variant === 'documentCardCarousel' &&
         documentCardCarouselSettings.value),
       ...(props.variant === 'customContentCardCarousel' &&
@@ -288,6 +282,8 @@ export default defineComponent({
       ...(props.variant === 'homeStage' && homeStageSettings.value),
       ...(props.variant === 'default' && defaultSettings.value),
       ...(props.variant === 'accessoriesCardCarousel' && defaultSettings.value),
+      ...(props.variant === 'tableCardCarousel' &&
+        tableCardCarouselSettings.value),
     }))
 
     return {
