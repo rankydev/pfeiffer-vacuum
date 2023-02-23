@@ -26,7 +26,17 @@
         </div>
         <div class="knowledge-stage__summary">
           <p>{{ summary }}</p>
-          <div class="knowledge-stage__button"></div>
+          <div class="knowledge-stage__button">
+            <div class="knowledge-stage__button">
+              <KnowledgeAssetButton
+                :type="isWhitepaper ? 'WHITEPAPER' : 'WEBINAR'"
+                :webinar-registration-id="webinarRegistrationId"
+                date
+                :asset-url="assetUrl"
+                :is-detail-page="isDetailPage"
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div class="knowledge-stage__image-block">
@@ -45,12 +55,14 @@
 import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Icon from '~/components/atoms/Icon/Icon'
+import KnowledgeAssetButton from '~/components/molecules/KnowledgeAssetButton/KnowledgeAssetButton.vue'
 
 export default defineComponent({
-  name: 'Stage',
+  name: 'KnowledgeStage',
   components: {
     ResponsiveImage,
     Icon,
+    KnowledgeAssetButton,
   },
   props: {
     image: {
@@ -62,6 +74,18 @@ export default defineComponent({
       default: '',
     },
     isWhitepaper: {
+      type: Boolean,
+      default: false,
+    },
+    webinarRegistrationId: {
+      type: String,
+      default: null,
+    },
+    assetUrl: {
+      type: String,
+      default: null,
+    },
+    isDetailPage: {
       type: Boolean,
       default: false,
     },
@@ -116,7 +140,12 @@ export default defineComponent({
       }
     })
 
-    return { fixedDate, fixedTime, showTime, showDuration }
+    return {
+      fixedDate,
+      fixedTime,
+      showTime,
+      showDuration,
+    }
   },
 })
 </script>
