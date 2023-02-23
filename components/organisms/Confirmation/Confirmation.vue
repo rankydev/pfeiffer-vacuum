@@ -15,7 +15,7 @@
     </div>
     <div class="confirmation__requestNumber">
       <Icon
-        icon="check_circle_outline"
+        icon="check"
         class="confirmation__requestNumber--icon"
         size="xlarge"
       />
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { defineComponent, useContext } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import Icon from '~/components/atoms/Icon/Icon'
 
@@ -59,12 +59,6 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-  },
-  setup() {
-    const { app } = useContext()
-    const { isMobile } = app.$breakpoints
-
-    return { isMobile }
   },
 })
 </script>
@@ -98,17 +92,19 @@ export default defineComponent({
     @apply tw-mb-12;
 
     &--icon {
-      position: relative;
+      @apply tw-relative;
       top: -32px;
       @apply tw-text-pv-green;
       @apply tw-bg-pv-white;
+      border-width: thick;
+      @apply tw-rounded-full;
     }
 
     &--subline {
       @apply tw-mb-6;
       @apply tw-text-pv-white;
       top: -12px;
-      position: relative;
+      @apply tw-relative;
     }
 
     h5:last-of-type {
