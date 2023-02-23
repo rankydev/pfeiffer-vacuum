@@ -6,7 +6,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'This component ...',
+        component:
+          'This component is used to confirm that a certain user request has been processed successfully.',
       },
       source: {
         code: '<Confirmation v-bind="{ order }"/>',
