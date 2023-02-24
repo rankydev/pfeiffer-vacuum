@@ -2,7 +2,7 @@ import defaultEntries from './Tag.stories.content'
 import Tag from './Tag.vue'
 
 export default {
-  title: 'atoms/a_118 Tag',
+  title: 'atoms/a_119 Tag',
   parameters: {
     docs: {
       description: {

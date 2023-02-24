@@ -167,11 +167,9 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     return false
   }
 
-  // TODO: currently not used, activate when needed
-  /*
   const deleteEntry = async (entryNumber) => {
     const result = await axios.delete(
-      getCartUrl() + '/entries/' + entryNumber,
+      getCartUrl() + '/entries/' + Number(entryNumber),
       {}
     )
 
@@ -201,7 +199,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     return false
   }
-   */
 
   /**
    * Handle additional information
@@ -264,5 +261,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     getOrCreateCart,
     mergeCarts,
     addToCart,
+    deleteEntry,
+    updateQuantity,
   }
 }
