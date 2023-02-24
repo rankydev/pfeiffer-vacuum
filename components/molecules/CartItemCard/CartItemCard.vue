@@ -21,7 +21,7 @@
       </p>
     </div>
     <Button
-      v-if="isMiniCart"
+      v-if="details && isMiniCart"
       class="cart-item-card-details-button"
       variant="secondary"
       shape="plain"
@@ -29,7 +29,7 @@
       :label="$t('cart.details')"
       @click="toggleDetails"
     />
-    <div v-if="isDetailsExpanded && details" class="cart-item-card-details">
+    <div v-if="details && isDetailsExpanded" class="cart-item-card-details">
       <template v-for="detail in details">
         <Tag
           v-for="(variant, id) in detail.variationValues"
@@ -98,7 +98,6 @@ import {
   ref,
   toRefs,
   useContext,
-  watch,
 } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
@@ -107,6 +106,7 @@ import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useDebounceFn } from '@vueuse/core'
 
 export default defineComponent({
   name: 'CartItemCard',
@@ -143,7 +143,7 @@ export default defineComponent({
       required: false,
     },
   },
-  emits: ['addToShoppingList', 'delete', 'add', 'remove'],
+  emits: ['addToShoppingList', 'update', 'delete'],
   setup(props, { emit }) {
     const { app, i18n } = useContext()
     const userStore = useUserStore()
@@ -186,7 +186,7 @@ export default defineComponent({
     })
 
     const productImage = computed(() => {
-      return product.value?.images[0]
+      return product.value?.images?.[0] || null
     })
 
     const productName = computed(() => {
@@ -206,17 +206,19 @@ export default defineComponent({
       isDetailsExpanded.value = !isDetailsExpanded.value
     }
     const addToShoppingList = () => {
-      emit('addToShoppingList', product.value)
+      emit('addToShoppingList', {
+        ...product.value,
+        quantity: quantityModel.value,
+      })
     }
     const deleteFromCart = () => {
-      emit('delete', product.value)
+      emit('delete', { ...product.value, quantity: quantityModel.value })
     }
-    const addToCart = () => {
-      emit('add', product.value)
-    }
-    const removeFromCart = () => {
-      emit('remove', product.value)
-    }
+
+    const updateCartQuantity = useDebounceFn(() => {
+      emit('update', { ...product.value, quantity: quantityModel.value })
+    }, 500)
+
     const url = computed(() =>
       app.localePath({
         name: 'shop-products-product',
@@ -236,14 +238,8 @@ export default defineComponent({
       } else {
         quantityModel.value = 1
       }
+      updateCartQuantity()
     }
-    watch(quantityModel, (newValue, oldValue) => {
-      if (newValue > oldValue) {
-        addToCart()
-      } else {
-        removeFromCart()
-      }
-    })
 
     return {
       quantityModel,
