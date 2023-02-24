@@ -44,7 +44,13 @@
 
                   <div class="checkout__info">
                     <div v-show="!ociBuyer" class="checkout__information">
+                      <PromotionLabel
+                        v-for="(promotion, index) in cartPromotions"
+                        :key="index"
+                        :subline="promotion.description"
+                      />
                       <PriceInformation information-type="price" />
+                      <PriceInformation information-type="delivery" />
                     </div>
 
                     <div class="checkout__actions">
@@ -126,6 +132,7 @@ import CartTable from '~/components/molecules/CartTable/CartTable'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AddressCard from '~/components/molecules/AddressCard/AddressCard'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
+import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 
 import { storeToRefs } from 'pinia'
 
@@ -142,6 +149,7 @@ export default defineComponent({
     Icon,
     AddressCard,
     LoadingSpinner,
+    PromotionLabel,
   },
   setup() {
     const route = useRoute()
@@ -180,6 +188,10 @@ export default defineComponent({
       }
     })
 
+    const cartPromotions = computed(() => {
+      return currentCart.value?.appliedOrderPromotions || []
+    })
+
     const placeOrder = () => {
       console.log('TODO: PLACE ORDER')
     }
@@ -202,6 +214,7 @@ export default defineComponent({
       ociBuyer,
       userBillingAddress,
       deliveryAddress,
+      cartPromotions,
       placeOrder,
     }
   },
@@ -313,6 +326,10 @@ export default defineComponent({
   }
 
   &__information {
+    @apply tw-gap-5;
+    @apply tw-flex;
+    @apply tw-flex-col;
+
     @screen md {
       @apply tw-text-sm;
     }
