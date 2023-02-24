@@ -7,6 +7,7 @@ import category from './category.json'
 import slider from './slider.json'
 import myaccount from './myaccount.json'
 import cart from './cart.json'
+import checkout from './checkout.json'
 
 export default {
   language,
@@ -18,4 +19,5 @@ export default {
   category,
   myaccount,
   cart,
+  checkout,
 }
