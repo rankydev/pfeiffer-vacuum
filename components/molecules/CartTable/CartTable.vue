@@ -27,6 +27,7 @@
       :quantity="quantity"
       :promotion="promotion"
       :is-mini-cart="isMiniCart"
+      :edit-mode="editMode"
       @update="updateCartQuantity"
       @delete="deleteFromCart"
     />
@@ -52,6 +53,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
       required: false,
+    },
+    editMode: {
+      type: Boolean,
+      default: true,
     },
   },
   emits: ['update', 'addToShoppingList'],

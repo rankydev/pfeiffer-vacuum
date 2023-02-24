@@ -46,12 +46,19 @@
       :subline="getPromotion"
     />
     <PvInput
+      v-if="editMode"
       v-model="quantityModel"
       input-type="number"
       class="cart-item-card-quantity"
       :disabled="isInactive"
       @input="updateQuantity"
     />
+    <div v-else class="cart-item-card-quantity cart-item-card-quantity--fixed">
+      <span class="cart-item-card-price__label">
+        {{ $t('cart.quantity') }}
+      </span>
+      {{ quantity }}
+    </div>
     <div
       v-if="!isLoggedIn || !isPriceVisible"
       class="cart-item-card-price-error"
@@ -82,6 +89,7 @@
       @click="addToShoppingList"
     />
     <Button
+      v-if="editMode"
       class="cart-item-card-delete"
       variant="secondary"
       shape="plain"
@@ -140,6 +148,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
       required: false,
+    },
+    editMode: {
+      type: Boolean,
+      default: true,
     },
   },
   emits: ['addToShoppingList', 'update', 'delete'],
@@ -299,6 +311,17 @@ export default defineComponent({
     @apply tw-mt-4;
     @apply tw-flex;
     @apply tw-pr-1;
+
+    &--fixed {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+
+    &__label {
+      @apply tw-text-xs;
+      @apply tw-mr-2;
+    }
   }
 
   &-price-error {
@@ -447,6 +470,14 @@ export default defineComponent({
     }
 
     &-quantity {
+      &--fixed {
+        .cart-item-card-quantity__label {
+          @screen lg {
+            @apply tw-hidden;
+          }
+        }
+      }
+
       @screen lg {
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-9 tw-col-end-10;

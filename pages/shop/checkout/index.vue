@@ -10,63 +10,47 @@
         <template #default>
           <ContentWrapper>
             <template v-if="cartEntries">
-              <div class="cart-page">
-                <div class="cart-page__header">
-                  <ResultHeadline
-                    :headline="$t('cart.headline')"
-                    :result-count="currentCart.totalItems"
-                  />
-
-                  <div class="cart-page__buttons">
-                    <!-- TODO: add correct route after shopping list implementation -->
-                    <Button
-                      class="cart-page__button--save"
-                      variant="secondary"
-                      :label="$t('cart.saveCartToList')"
-                      icon="assignment"
-                    />
-
-                    <Button
-                      v-show="!isMobile"
-                      anchor="#help-block"
-                      class="cart-page__button"
-                      variant="secondary"
-                      shape="outlined"
-                      :inverted="true"
-                      :label="$t('cart.getProductHelp')"
-                      icon="help"
-                    />
-                  </div>
+              <div class="checkout">
+                <div class="checkout__header">
+                  <ResultHeadline :headline="$t('checkout.summary')" />
                 </div>
 
-                <CartTable :cart="cartEntries" />
+                <div class="checkout__check-details">
+                  {{ $t('checkout.checkDetails') }}
+                </div>
 
-                <div class="cart-page__info">
-                  <div v-show="!ociBuyer" class="cart-page__information">
+                <div class="checkout__article-list">
+                  <h3>{{ $t('checkout.articleList') }}</h3>
+                </div>
+
+                <CartTable :cart="cartEntries" :edit-mode="false" />
+
+                <div class="checkout__info">
+                  <div v-show="!ociBuyer" class="checkout__information">
                     <PriceInformation information-type="price" />
                   </div>
 
-                  <div class="cart-page__actions">
-                    <div class="cart-page__total">
+                  <div class="checkout__actions">
+                    <div class="checkout__total">
                       <TotalNetInformation :current-cart="currentCart" />
                     </div>
 
-                    <div class="cart-page__submit">
+                    <div class="checkout__submit">
                       <Button
                         :href="localePath('shop-checkout')"
                         :label="$t('cart.requestQuotation')"
-                        class="cart-page__button--submit"
+                        class="checkout__button--submit"
                         variant="primary"
                         icon="mail_outline"
                       />
                     </div>
                   </div>
                 </div>
-                <div class="cart-page__back-button">
+                <div class="checkout__back-button">
                   <!-- TODO: add correct route after implementation -->
                   <Button
                     :href="localePath('shop-categories')"
-                    class="cart-page__button cart-page__button--back"
+                    class="checkout__button checkout__button--back"
                     variant="secondary"
                     shape="plain"
                     :label="$t('cart.continueShopping')"
@@ -77,19 +61,19 @@
               </div>
             </template>
             <template v-else>
-              <div class="cart-page__empty">
+              <div class="checkout__empty">
                 <Icon
                   icon="shopping_cart"
-                  class="cart-page__empty-icon"
+                  class="checkout__empty-icon"
                   size="xxlarge"
                 />
-                <h2 class="cart-page__empty-headline">
+                <h2 class="checkout__empty-headline">
                   {{ $t('cart.emptyMessage') }}
                 </h2>
                 <Button
                   :href="localePath('shop-categories')"
                   :label="$t('cart.showAllProducts')"
-                  class="cart-page__button"
+                  class="checkout__button"
                   variant="primary"
                   icon="arrow_forward"
                 />
@@ -125,7 +109,7 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
-  name: 'Cart',
+  name: 'Checkout',
   components: {
     Page,
     ContentWrapper,
@@ -169,7 +153,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.cart-page {
+.checkout {
   @apply tw-pt-6;
 
   &__empty {
