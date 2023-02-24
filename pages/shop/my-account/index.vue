@@ -1,23 +1,32 @@
 <template>
-  <div>
-    <MyAccountHeading />
-    <div
-      class="tw-flex tw-bg-pv-grey-88 tw-rounded-md tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-2xl tw-text-center"
-      style="height: 800px"
-    >
-      <div>Dashboard</div>
-    </div>
+  <div class="dashboard">
+    <SectionHeadline>
+      {{ $t('myaccount.accountDataShort') }}
+    </SectionHeadline>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-import MyAccountHeading from '~/components/organisms/MyAccount/partials/MyAccountHeading'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
+import { useMyAccountStore } from '~/stores/myaccount'
 
 export default defineComponent({
   name: 'Dashboard',
   components: {
-    MyAccountHeading,
+    SectionHeadline,
+  },
+  setup() {
+    const myAccountStore = useMyAccountStore()
+    const orders = ref([])
+
+    const getOrders = async () => {
+      const result = await myAccountStore.getOrders()
+      console.log(result)
+      orders.value = result
+    }
+
+    getOrders()
   },
 })
 </script>
