@@ -6,6 +6,7 @@ import {
   useContext,
   watch,
   ssrRef,
+  ref,
 } from '@nuxtjs/composition-api'
 import { useCartApi } from './partials/useCartApi'
 import { useCookieHelper } from '~/composables/useCookieHelper'
@@ -22,6 +23,7 @@ export const useCartStore = defineStore('cart', () => {
 
   // State
   const currentCart = ssrRef({})
+  const loading = ref(false)
 
   // Getters
   const currentCartGuid = computed(() => currentCart.value?.guid)
@@ -33,14 +35,22 @@ export const useCartStore = defineStore('cart', () => {
     addToCart,
     updateQuantity,
     deleteEntry,
+    setDeliveryAddress,
+    setReferenceNumber,
+    setRequestComment,
   } = cartApi
 
   const initialCartLoad = async () => {
-    const anonymousCartCookie = JSON.parse(getCookie('cart', null))
-    if (anonymousCartCookie) currentCart.value = anonymousCartCookie
+    try {
+      loading.value = true
+      const anonymousCartCookie = JSON.parse(getCookie('cart', null))
+      if (anonymousCartCookie) currentCart.value = anonymousCartCookie
 
-    let tempCart = await getOrCreateCart(!isLoggedIn.value)
-    if (tempCart) currentCart.value = tempCart
+      let tempCart = await getOrCreateCart(!isLoggedIn.value)
+      if (tempCart) currentCart.value = tempCart
+    } finally {
+      loading.value = false
+    }
   }
 
   const mergeCartsAfterLogin = async () => {
@@ -106,6 +116,7 @@ export const useCartStore = defineStore('cart', () => {
   return {
     // State
     currentCart,
+    loading,
 
     // Getters
     currentCartGuid,
@@ -114,5 +125,8 @@ export const useCartStore = defineStore('cart', () => {
     addProductToCart,
     updateProductQuantityFromCartWithoutToast,
     deleteProductFromCartWithoutToast,
+    setDeliveryAddress,
+    setReferenceNumber,
+    setRequestComment,
   }
 })
