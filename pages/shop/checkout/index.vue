@@ -9,76 +9,93 @@
       <Page v-if="data" v-bind="data">
         <template #default>
           <ContentWrapper>
-            <template v-if="cartEntries">
-              <div class="checkout">
-                <div class="checkout__header">
-                  <ResultHeadline :headline="$t('checkout.summary')" />
-                </div>
-
-                <div class="checkout__check-details">
-                  {{ $t('checkout.checkDetails') }}
-                </div>
-
-                <div class="checkout__article-list">
-                  <h3>{{ $t('checkout.articleList') }}</h3>
-                </div>
-
-                <CartTable :cart="cartEntries" :edit-mode="false" />
-
-                <div class="checkout__info">
-                  <div v-show="!ociBuyer" class="checkout__information">
-                    <PriceInformation information-type="price" />
+            <LoadingSpinner :show="loading || cartLoading">
+              <template v-if="cartEntries">
+                <div class="checkout">
+                  <div class="checkout__header">
+                    <ResultHeadline :headline="$t('checkout.summary')" />
                   </div>
 
-                  <div class="checkout__actions">
-                    <div class="checkout__total">
-                      <TotalNetInformation :current-cart="currentCart" />
+                  <div class="checkout__check-details">
+                    {{ $t('checkout.checkDetails') }}
+                  </div>
+
+                  <div class="checkout__addresses">
+                    <AddressCard
+                      :address="deliveryAddress"
+                      :headline="$t('checkout.deliveryAddress')"
+                      :editable="false"
+                      class="checkout__address-item"
+                    />
+                    <AddressCard
+                      :address="userBillingAddress"
+                      :headline="$t('checkout.billingAddress')"
+                      :is-billing-address="true"
+                      :editable="false"
+                      class="checkout__address-item"
+                    />
+                  </div>
+
+                  <div class="checkout__article-list-heading">
+                    <h3>{{ $t('checkout.articleList') }}</h3>
+                  </div>
+
+                  <CartTable :cart="cartEntries" :edit-mode="false" />
+
+                  <div class="checkout__info">
+                    <div v-show="!ociBuyer" class="checkout__information">
+                      <PriceInformation information-type="price" />
                     </div>
 
-                    <div class="checkout__submit">
-                      <Button
-                        :href="localePath('shop-checkout')"
-                        :label="$t('cart.requestQuotation')"
-                        class="checkout__button--submit"
-                        variant="primary"
-                        icon="mail_outline"
-                      />
+                    <div class="checkout__actions">
+                      <div class="checkout__total">
+                        <TotalNetInformation :current-cart="currentCart" />
+                      </div>
+
+                      <div class="checkout__submit">
+                        <Button
+                          :label="$t('checkout.completeRequest')"
+                          class="checkout__button--submit"
+                          variant="primary"
+                          icon="mail_outline"
+                          @click="placeOrder"
+                        />
+                      </div>
                     </div>
                   </div>
+                  <div class="checkout__back-button">
+                    <Button
+                      :href="localePath('shop-cart')"
+                      class="checkout__button checkout__button--back"
+                      variant="secondary"
+                      shape="plain"
+                      :label="$t('checkout.backToCart')"
+                      :prepend-icon="true"
+                      icon="arrow_back"
+                    />
+                  </div>
                 </div>
-                <div class="checkout__back-button">
-                  <!-- TODO: add correct route after implementation -->
+              </template>
+              <template v-else>
+                <div class="checkout__empty">
+                  <Icon
+                    icon="shopping_cart"
+                    class="checkout__empty-icon"
+                    size="xxlarge"
+                  />
+                  <h2 class="checkout__empty-headline">
+                    {{ $t('cart.emptyMessage') }}
+                  </h2>
                   <Button
                     :href="localePath('shop-categories')"
-                    class="checkout__button checkout__button--back"
-                    variant="secondary"
-                    shape="plain"
-                    :label="$t('cart.continueShopping')"
-                    :prepend-icon="true"
-                    icon="arrow_back"
+                    :label="$t('cart.showAllProducts')"
+                    class="checkout__button"
+                    variant="primary"
+                    icon="arrow_forward"
                   />
                 </div>
-              </div>
-            </template>
-            <template v-else>
-              <div class="checkout__empty">
-                <Icon
-                  icon="shopping_cart"
-                  class="checkout__empty-icon"
-                  size="xxlarge"
-                />
-                <h2 class="checkout__empty-headline">
-                  {{ $t('cart.emptyMessage') }}
-                </h2>
-                <Button
-                  :href="localePath('shop-categories')"
-                  :label="$t('cart.showAllProducts')"
-                  class="checkout__button"
-                  variant="primary"
-                  icon="arrow_forward"
-                />
-              </div>
-            </template>
+              </template>
+            </LoadingSpinner>
           </ContentWrapper>
         </template>
       </Page>
@@ -92,6 +109,8 @@ import {
   useRoute,
   useContext,
   computed,
+  onMounted,
+  ref,
 } from '@nuxtjs/composition-api'
 import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
@@ -105,6 +124,8 @@ import PriceInformation from '~/components/molecules/PriceInformation/PriceInfor
 import TotalNetInformation from '~/components/molecules/TotalNetInformation/TotalNetInformation'
 import CartTable from '~/components/molecules/CartTable/CartTable'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import AddressCard from '~/components/molecules/AddressCard/AddressCard'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 
 import { storeToRefs } from 'pinia'
 
@@ -119,19 +140,49 @@ export default defineComponent({
     TotalNetInformation,
     CartTable,
     Icon,
+    AddressCard,
+    LoadingSpinner,
   },
   setup() {
     const route = useRoute()
     const context = useContext()
-    const cartStore = useCartStore()
-    const userStore = useUserStore()
-
     const { app } = useContext()
-    const { currentCart } = storeToRefs(cartStore)
+    const cartStore = useCartStore()
+    const { currentCart, loading: cartLoading } = storeToRefs(cartStore)
+    const userStore = useUserStore()
+    const { userBillingAddress } = storeToRefs(userStore)
 
     const isMobile = app.$breakpoints.isMobile
-    const cartEntries = computed(() => currentCart.value.entries)
+    const cartEntries = computed(() => currentCart.value?.entries)
+    const deliveryAddress = computed(() => currentCart.value?.deliveryAddress)
     const ociBuyer = computed(() => userStore.currentUser?.ociBuyer)
+
+    // when entering the page loading state is already active until mounted is done
+    const loading = ref(true)
+
+    onMounted(async () => {
+      console.log('executing onMounted hook of checkout page')
+      try {
+        // When entering the checkout page we want to grab the default delivery address from user and set as delivery address for cart
+        await userStore.loadDeliveryAddresses()
+        const defaultDeliveryAddress = userStore.getDefaultDeliveryAddress()
+
+        if (defaultDeliveryAddress) {
+          await cartStore.setDeliveryAddress(defaultDeliveryAddress)
+          console.log('YES! SET ADDRESS SUCCESSFULLY')
+        } else {
+          console.error('NO DEFAULT DELIVERY ADDRESS FOUND!')
+        }
+      } catch (error) {
+        console.error('COULD NOT SET DEFAULT DELIVERY ADDRESS!', error)
+      } finally {
+        loading.value = false
+      }
+    })
+
+    const placeOrder = () => {
+      console.log('TODO: PLACE ORDER')
+    }
 
     /**
      * build the cms slug
@@ -142,11 +193,16 @@ export default defineComponent({
     })
 
     return {
+      loading,
+      cartLoading,
       cartEntries,
       slugs,
       isMobile,
       currentCart,
       ociBuyer,
+      userBillingAddress,
+      deliveryAddress,
+      placeOrder,
     }
   },
 })
@@ -155,6 +211,30 @@ export default defineComponent({
 <style lang="scss">
 .checkout {
   @apply tw-pt-6;
+
+  &__addresses {
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-gap-5;
+
+    @screen md {
+      @apply tw-flex-row;
+    }
+  }
+
+  &__address-item {
+    @apply tw-flex-1;
+  }
+
+  &__check-details {
+    @apply tw-text-lg;
+    @apply tw-mb-10;
+  }
+
+  &__article-list-heading {
+    @apply tw-text-2xl;
+    @apply tw-mt-8 tw-mb-4;
+  }
 
   &__empty {
     @apply tw-text-center;

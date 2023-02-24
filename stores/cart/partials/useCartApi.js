@@ -203,8 +203,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   /**
    * Handle additional information
    */
-  // TODO: currently not used, activate when needed
-  /*
   const setDeliveryAddress = async (address) => {
     await loadCart(true)
 
@@ -214,7 +212,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     )
 
     if (result && typeof result === 'object' && !result.error) {
-      await store.dispatch('loadCurrentCart', false) // refresh cart in store
+      await loadCart(false)
       return result
     }
 
@@ -233,7 +231,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     if (result && result.status === 200 && !result.error) {
       await loadCart(false)
-
       return true
     }
 
@@ -255,13 +252,16 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     return false
   }
-   */
 
   return {
     getOrCreateCart,
     mergeCarts,
+    loadCart,
     addToCart,
     updateQuantity,
     deleteEntry,
+    setDeliveryAddress,
+    setReferenceNumber,
+    setRequestComment,
   }
 }
