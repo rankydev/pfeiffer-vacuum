@@ -29,7 +29,8 @@
     }
   },
   "list": {
-    "addArticle": "Add to shopping list"
+    "addArticle": "Add to shopping list",
+    "addToAnotherList": "Add to another shopping list"
   },
   "productPrice": "Price",
   "totalPrice": "Total Price",

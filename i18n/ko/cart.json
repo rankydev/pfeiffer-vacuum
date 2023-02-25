@@ -29,7 +29,8 @@
     }
   },
   "list": {
-    "addArticle": "쇼핑 목록에 추가"
+    "addArticle": "쇼핑 목록에 추가",
+    "addToAnotherList": "다른 쇼핑 목록에 추가"
   },
   "productPrice": "값",
   "totalPrice": "합계",

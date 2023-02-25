@@ -30,7 +30,8 @@
     }
   },
   "list": {
-    "addArticle": "Zur Einkaufsliste hinzufügen"
+    "addArticle": "Zur Einkaufsliste hinzufügen",
+    "addToAnotherList": "Zu einer anderen Einkaufsliste hinzufügen"
   },
   "productPrice": "Preis",
   "totalPrice": "Gesamt",

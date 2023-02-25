@@ -29,7 +29,8 @@
     }
   },
   "list": {
-    "addArticle": "添加到购物清单"
+    "addArticle": "添加到购物清单",
+    "addToAnotherList": "添加到其他购物清单"
   },
   "productPrice": "价格",
   "totalPrice": "总",
