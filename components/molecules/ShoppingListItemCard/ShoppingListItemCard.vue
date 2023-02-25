@@ -1,6 +1,6 @@
 <template>
   <div class="shopping-list-item-card">
-    <div v-if="productImage" class="shopping-list-item-card-image">
+    <div v-if="productImage" class="shopping-list-item-card__image">
       <Link :href="url">
         <ResponsiveImage
           :image="productImage"
@@ -9,20 +9,20 @@
         />
       </Link>
     </div>
-    <div class="shopping-list-item-card-title">
-      <h2 class="shopping-list-item-card-title__main-title">
+    <div class="shopping-list-item-card__title">
+      <h2 class="shopping-list-item-card__title__main-title">
         <Link :href="url">{{ productName }}</Link>
       </h2>
-      <p class="shopping-list-item-card-title__sub-title">
+      <p class="shopping-list-item-card__title__sub-title">
         {{ orderNumber }}
       </p>
     </div>
-    <div v-if="details" class="shopping-list-item-card-details">
+    <div v-if="details" class="shopping-list-item-card__details">
       <template v-for="detail in details">
         <Tag
           v-for="(variant, id) in detail.variationValues"
           :key="detail.code + id"
-          class="shopping-list-item-card-details__detail"
+          class="shopping-list-item-card__details__detail"
           :label="detail.name"
           :content="variant.displayValue"
         />
@@ -31,41 +31,41 @@
     <PvInput
       v-model="quantityModel"
       input-type="number"
-      class="shopping-list-item-card-quantity"
+      class="shopping-list-item-card__quantity"
       :disabled="isInactive"
       @input="updateQuantity"
     />
     <div
       v-if="!isLoggedIn || !isPriceVisible"
-      class="shopping-list-item-card-price-error"
+      class="shopping-list-item-card__price-error"
     >
       <LoginToSeePricesLabel v-if="!isLoggedIn" />
       <span v-else>{{ noPriceReason }}</span>
     </div>
     <div
       v-if="isLoggedIn && isPriceVisible"
-      class="shopping-list-item-card-price"
+      class="shopping-list-item-card__price"
     >
-      <span class="shopping-list-item-card-price__label">
+      <span class="shopping-list-item-card__price__label">
         {{ $t('cart.productPrice') }}
       </span>
-      <span class="shopping-list-item-card-price__price">{{
+      <span class="shopping-list-item-card__price__price">{{
         productPrice
       }}</span>
     </div>
     <div
       v-if="isLoggedIn && isPriceVisible"
-      class="shopping-list-item-card-total-price"
+      class="shopping-list-item-card__total-price"
     >
-      <span class="shopping-list-item-card-total-price__label">
+      <span class="shopping-list-item-card__total-price__label">
         {{ $t('cart.totalPrice') }}
       </span>
-      <span class="shopping-list-item-card-total-price__price">
+      <span class="shopping-list-item-card__total-price__price">
         {{ totalPrice }}
       </span>
     </div>
     <Button
-      class="shopping-list-item-card-delete"
+      class="shopping-list-item-card__delete"
       variant="secondary"
       shape="plain"
       icon="delete"
@@ -248,7 +248,7 @@ export default defineComponent({
   @apply tw-grid tw-grid-cols-12 tw-auto-rows-auto;
   @apply tw-border-b tw-border-b-pv-grey-80;
 
-  &-image {
+  &__image {
     @apply tw-row-start-1 tw-row-end-2;
     @apply tw-col-start-1 tw-col-end-3;
     @apply tw-flex;
@@ -260,7 +260,7 @@ export default defineComponent({
     }
   }
 
-  &-title {
+  &__title {
     @apply tw-row-start-1 tw-row-end-2;
     @apply tw-col-start-4 tw-col-end-12;
     @apply tw-flex tw-flex-col;
@@ -291,7 +291,7 @@ export default defineComponent({
     }
   }
 
-  &-quantity {
+  &__quantity {
     @apply tw-row-start-2 tw-row-end-3;
     @apply tw-col-start-1 tw-col-end-5;
     @apply tw-mt-4;
@@ -305,7 +305,7 @@ export default defineComponent({
     }
   }
 
-  &-price-error {
+  &__price-error {
     @apply tw-row-start-2 tw-row-end-3;
     @apply tw-col-start-5 tw-col-end-13;
     @apply tw-flex;
@@ -324,7 +324,7 @@ export default defineComponent({
     }
   }
 
-  &-price {
+  &__price {
     @apply tw-row-start-2 tw-row-end-3;
     @apply tw-col-start-5 tw-col-end-13;
     @apply tw-leading-6;
@@ -359,7 +359,7 @@ export default defineComponent({
     }
   }
 
-  &-total-price {
+  &__total-price {
     @apply tw-row-start-2 tw-row-end-3;
     @apply tw-col-start-5 tw-col-end-13;
     @apply tw-leading-6;
@@ -400,7 +400,7 @@ export default defineComponent({
     }
   }
 
-  &-delete {
+  &__delete {
     @apply tw-row-start-1 tw-row-end-2;
     @apply tw-col-start-12 tw-col-end-13;
     @apply tw-mb-auto;
@@ -411,7 +411,7 @@ export default defineComponent({
     }
   }
 
-  &-details {
+  &__details {
     @apply tw-hidden;
     @apply tw-row-start-3 tw-row-end-4;
     @apply tw-col-start-1 tw-col-end-13;
