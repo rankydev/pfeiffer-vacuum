@@ -10,20 +10,19 @@ const argTypes = {
   product,
   price,
   quantity,
-  promotion: appliedOrderPromotion,
 }
 
 export default {
-  title: 'Molecules/m_144 Shopping List Item Card',
+  title: 'Molecules/m_149 Shopping List Item Card',
   component: ShoppingListItemCard,
   parameters: {
     docs: {
       description: {
-        component: 'The Cart Item Card displays the items in the shopping cart',
+        component: 'Shopping List Item Card to be used in Shopping List Page',
       },
       source: {
         appliedOrderPromotion,
-        code: '<ShoppingListItemCard v-bind="{ entry, readOnly, price, shopAttributes, promotions, showPrice }"/>',
+        code: '<ShoppingListItemCard v-bind="{ product, price, quantity }"/>',
       },
     },
   },
