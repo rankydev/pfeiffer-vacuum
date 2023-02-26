@@ -133,7 +133,7 @@ export default defineComponent({
       required: false,
     },
   },
-  emits: ['addToShoppingList', 'add', 'delete', 'update'],
+  emits: ['addToShoppingList', 'delete', 'update'],
   setup(props, { emit }) {
     const { app, i18n } = useContext()
     const userStore = useUserStore()
