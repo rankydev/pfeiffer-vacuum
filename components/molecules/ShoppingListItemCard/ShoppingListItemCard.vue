@@ -53,17 +53,6 @@
         productPrice
       }}</span>
     </div>
-    <div
-      v-if="isLoggedIn && isPriceVisible"
-      class="shopping-list-item-card__total-price"
-    >
-      <span class="shopping-list-item-card__total-price__label">
-        {{ $t('cart.totalPrice') }}
-      </span>
-      <span class="shopping-list-item-card__total-price__price">
-        {{ totalPrice }}
-      </span>
-    </div>
     <Button
       class="shopping-list-item-card__delete"
       variant="secondary"
@@ -365,47 +354,6 @@ export default defineComponent({
 
     &__price {
       @apply tw-ml-2;
-    }
-  }
-
-  &__total-price {
-    @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-5 tw-col-end-13;
-    @apply tw-leading-6;
-    @apply tw-flex;
-    @apply tw-mt-auto;
-    @apply tw-ml-auto;
-
-    @screen md {
-      @apply tw-mb-auto;
-      @apply tw-col-start-11 tw-col-end-13;
-    }
-
-    @screen lg {
-      @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-11 tw-col-end-12;
-      @apply tw-mt-auto;
-      @apply tw-mx-auto;
-    }
-
-    &__label {
-      @apply tw-text-xs;
-
-      @screen lg {
-        @apply tw-hidden;
-      }
-    }
-
-    &__price {
-      @apply tw-text-base;
-      @apply tw-font-bold;
-      @apply tw-ml-2;
-
-      @screen lg {
-        @apply tw-text-lg;
-        @apply tw-leading-7;
-        @apply tw-font-normal;
-      }
     }
   }
 
