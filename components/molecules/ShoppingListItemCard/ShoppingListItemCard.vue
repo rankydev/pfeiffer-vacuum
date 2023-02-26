@@ -106,6 +106,7 @@ import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useDebounceFn } from '@vueuse/core'
+import { useCartStore } from '~/stores/cart'
 
 export default defineComponent({
   name: 'ShoppingListItemCard',
@@ -136,6 +137,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { app, i18n } = useContext()
     const userStore = useUserStore()
+    const cartStore = useCartStore()
     const { price, quantity, product } = toRefs(props)
     const quantityModel = ref(quantity.value)
     const {
@@ -145,6 +147,7 @@ export default defineComponent({
       isRejectedUser,
       isLoggedIn,
     } = storeToRefs(userStore)
+    const { addProductToCart } = cartStore
 
     const noPriceReason = computed(() => {
       const path = 'product.login.loginToSeePrices.'
@@ -200,8 +203,8 @@ export default defineComponent({
       emit('delete', { ...product.value, quantity: quantityModel.value })
     }
 
-    const addToCart = () => {
-      emit('add', { ...product.value, quantity: quantityModel.value })
+    const addToCart = async () => {
+      await addProductToCart(product.value?.code, quantityModel.value)
     }
 
     const updateCartQuantity = useDebounceFn(() => {
