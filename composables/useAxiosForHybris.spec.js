@@ -25,6 +25,9 @@ jest.mock('@nuxtjs/composition-api', () => {
         create: () => mockAxios(),
       },
       req: mockReq(),
+      $config: {
+        CONSOLA_LEVEL: 5,
+      },
     }),
     useRouter: () => ({
       options: {

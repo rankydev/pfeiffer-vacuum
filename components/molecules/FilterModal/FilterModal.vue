@@ -13,14 +13,14 @@
         class="filter-modal"
         :is-open="isOpen"
         :fill-viewport="true"
-        @closeModal="isOpen = false"
+        @closeModal="close"
       >
         <div class="filter-modal__content">
           <h2 class="filter-modal__headline">
             {{ label }}
           </h2>
           <div class="filter-modal__slot">
-            <slot />
+            <slot :close="close" />
           </div>
           <div>
             <Button
@@ -29,14 +29,14 @@
               :label="$t('category.applyFilter')"
               shape="filled"
               icon="filter_list"
-              @click="isOpen = false"
+              @click="close"
             ></Button>
           </div>
         </div>
       </GenericModal>
     </template>
     <template v-else>
-      <slot />
+      <slot :close="close" />
     </template>
   </div>
 </template>
@@ -63,7 +63,11 @@ export default defineComponent({
     const { app } = useContext()
     const isMobile = app.$breakpoints.isMobile
 
-    return { isOpen, isMobile }
+    const close = () => {
+      isOpen.value = false
+    }
+
+    return { isOpen, isMobile, close }
   },
 })
 </script>

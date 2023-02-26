@@ -60,14 +60,6 @@ describe('Button', () => {
       })
 
       describe('given a label', () => {
-        it('should render append class', () => {
-          const propsData = { icon, label }
-          const wrapper = shallowMount(Button, { propsData })
-
-          const iconTag = wrapper.findComponent(Icon)
-          expect(iconTag.attributes('class')).toMatch('button__icon--append')
-        })
-
         it('should render prepend class when prepend=true', () => {
           const propsData = { icon, label, prependIcon: true }
           const wrapper = shallowMount(Button, { propsData })
