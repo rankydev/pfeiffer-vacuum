@@ -124,7 +124,7 @@ export default {
     '@nuxtjs/axios',
     'vue-toastification/nuxt',
     [
-      'nuxt-maps-module',
+      'nuxt-prometheus-module',
       {
         path: '/metrics',
         host: '127.0.0.1',
