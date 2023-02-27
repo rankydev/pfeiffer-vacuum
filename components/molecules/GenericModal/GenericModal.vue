@@ -98,7 +98,6 @@ export default defineComponent({
     @apply tw-h-auto;
     @apply tw-max-h-full;
     @apply tw-w-auto;
-    @apply tw-max-w-full;
 
     &--fill {
       @apply tw-w-full;
