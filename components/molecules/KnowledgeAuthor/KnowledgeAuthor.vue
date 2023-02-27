@@ -4,7 +4,6 @@
       class="knowledge-author__image"
       :image="image"
       aspect-ratio="1:1"
-      :rounded="true"
     />
     <p class="knowledge-author__description">
       <span class="knowledge-author__name">{{ name }}</span>
@@ -40,15 +39,20 @@ export default defineComponent({
 <style lang="scss">
 .knowledge-author {
   @apply tw-flex;
-  @apply tw-mb-4;
+  @apply tw-mb-6;
   @apply tw-pr-2;
 
   @screen md {
     @apply tw-pr-4;
   }
 
+  @screen lg {
+    @apply tw-mb-4;
+  }
+
   &__image {
     @apply tw-mr-4;
+    @apply tw-rounded;
     width: 80px;
     height: 80px;
   }
@@ -64,7 +68,7 @@ export default defineComponent({
     @apply tw-text-base;
 
     @screen lg {
-      @apply tw-text-xl;
+      @apply tw-text-lg;
     }
   }
 
