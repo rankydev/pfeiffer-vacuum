@@ -1,24 +1,15 @@
 <template>
   <div class="confirmation">
-    <div class="confirmation__headline">
-      <h3 class="lg:tw-hidden">
-        {{ $t('checkout.requestSuccess') }}
-      </h3>
-      <h2 class="tw-hidden lg:tw-block">
-        {{ $t('checkout.requestSuccess') }}
-      </h2>
-    </div>
+    <h2 class="confirmation__headline">
+      {{ $t('checkout.requestSuccess') }}
+    </h2>
     <div class="confirmation__description">
       <div>
         {{ $t('checkout.requestDescription') }}
       </div>
     </div>
     <div class="confirmation__requestNumber">
-      <Icon
-        icon="check"
-        class="confirmation__requestNumber--icon"
-        size="xlarge"
-      />
+      <Icon icon="check" class="confirmation__requestNumber--icon" />
       <h3 class="confirmation__requestNumber--subline tw-font-normal">
         {{ $t('checkout.requestNumber') }}
       </h3>
@@ -73,6 +64,13 @@ export default defineComponent({
   &__headline {
     @apply tw-col-span-12;
     @apply tw-mb-6;
+    @apply tw-text-2xl;
+    @apply tw-leading-9;
+
+    @screen lg {
+      @apply tw-text-4xl;
+      @apply tw-leading-11;
+    }
   }
 
   &__description {
@@ -89,7 +87,15 @@ export default defineComponent({
     @apply tw-bg-pv-green;
     @apply tw-rounded-lg;
     @apply tw-col-span-12;
-    @apply tw-mb-12;
+    @apply tw-mb-6;
+
+    @screen md {
+      @apply tw-mb-9;
+    }
+
+    @screen lg {
+      @apply tw-mb-12;
+    }
 
     &--icon {
       @apply tw-relative;
@@ -98,13 +104,18 @@ export default defineComponent({
       @apply tw-bg-pv-white;
       border-width: thick;
       @apply tw-rounded-full;
+      font-size: 53.33px !important;
     }
 
     &--subline {
-      @apply tw-mb-6;
+      @apply tw-mb-2;
       @apply tw-text-pv-white;
       top: -12px;
       @apply tw-relative;
+
+      @screen lg {
+        @apply tw-mb-4;
+      }
     }
 
     h5:last-of-type {
@@ -131,6 +142,10 @@ export default defineComponent({
       @screen md {
         @apply tw-mb-0;
       }
+    }
+
+    button:last-of-type {
+      @apply tw-justify-start;
     }
   }
 }
