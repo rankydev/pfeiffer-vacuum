@@ -53,5 +53,11 @@
     }
   },
   "contact": "联系我们",
-  "salesRepresentative": "销售代表"
+  "salesRepresentative": "销售代表",
+  "lastEdited": "上次编辑",
+  "shoppingList": {
+    "items": "项目",
+    "details": "详情"
+  }
 }
+

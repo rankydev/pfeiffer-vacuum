@@ -55,5 +55,10 @@
     }
   },
   "contact": "Contact Us",
-  "salesRepresentative": "Sales Representative"
+  "salesRepresentative": "Sales Representative",
+  "lastEdited": "Last edited",
+  "shoppingList": {
+    "items": "items",
+    "details": "Details"
+  }
 }

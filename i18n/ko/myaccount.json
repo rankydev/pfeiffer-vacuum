@@ -53,5 +53,10 @@
     }
   },
   "contact": "문의하기",
-  "salesRepresentative": "영업 담당자"
+  "salesRepresentative": "영업 담당자",
+  "lastEdited": "마지막으로 수정한 날짜",
+  "shoppingList": {
+    "items": "항목",
+    "details": "세부 정보"
+  }
 }

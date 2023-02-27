@@ -55,5 +55,10 @@
     }
   },
   "contact": "Kontakt",
-  "salesRepresentative": "Vertriebsingenieur"
+  "salesRepresentative": "Vertriebsingenieur",
+  "lastEdited": "Zuletzt bearbeitet",
+  "shoppingList": {
+    "items": "Artikel",
+    "details": "Details"
+  }
 }
