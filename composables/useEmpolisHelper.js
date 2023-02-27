@@ -1,7 +1,13 @@
 import { PATH_EMPOLIS } from '~/server/constants'
-import { computed, useContext, useRoute } from '@nuxtjs/composition-api'
+import {
+  computed,
+  useContext,
+  useRoute,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
+import { joinURL } from 'ufo'
 
 export const useEmpolisHelper = () => {
   const userStore = useUserStore()
@@ -9,6 +15,7 @@ export const useEmpolisHelper = () => {
   const ctx = useContext()
   const { $config } = ctx
   const route = useRoute()
+  const router = useRouter()
 
   const isStepFile = (file) => {
     return file.informationType?.value?.includes('Step-File')
@@ -17,7 +24,7 @@ export const useEmpolisHelper = () => {
   const getDownloadButtonBaseConfig = (file) => {
     return {
       target: '_blank',
-      href: `${PATH_EMPOLIS}/${file.downloadLink}`,
+      href: joinURL(router.options.base, PATH_EMPOLIS, file.downloadLink),
       download: isStepFile(file) ? `${file.title}.stp` : null,
     }
   }
