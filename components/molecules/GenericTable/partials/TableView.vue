@@ -39,7 +39,13 @@
           :key="`row${i}-${j}`"
           class="table-view__cell"
         >
-          <Icon v-if="cell.icon" :icon="cell.icon" type="svg" size="small" />
+          <!-- <Icon
+            v-if="cell.icon"
+            class="table-icon"
+            :icon="cell.icon"
+            type="svg"
+            size="small"
+          /> -->
           {{ typeof cell === 'object' ? cell.text : cell }}
           <span v-if="cell.marginal" class="table-view__cell-marginal">
             {{ cell.marginal }}

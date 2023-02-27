@@ -25,6 +25,7 @@
         v-if="recentShoppingLists"
         :header="recentShoppingListTableHeader"
         :table-data="recentShoppingLists"
+        :carousel="true"
       />
     </section>
   </div>
@@ -88,10 +89,11 @@ export default defineComponent({
           icon: 'add',
         },
         {
-          variant: 'secondary',
-          shape: 'plain',
           label: i18n.t('myaccount.shoppingList.all'),
           icon: 'arrow_forward',
+          href: localePath('shop-my-account-shopping-lists'),
+          variant: 'secondary',
+          shape: 'plain',
         },
       ],
     }

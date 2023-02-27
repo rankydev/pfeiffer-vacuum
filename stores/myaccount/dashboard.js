@@ -82,7 +82,6 @@ export const useDashboardStore = defineStore('accountData', () => {
     'shoppingList.title',
     'shoppingList.lastEdited',
     'shoppingList.items',
-    'shoppingList.items',
   ]
   const recentShoppingListTableHeader = recentShoppingListHeader.map((title) =>
     buildTableHeaderObject(title)
@@ -97,9 +96,8 @@ export const useDashboardStore = defineStore('accountData', () => {
       return {
         entries: [
           { icon: 'assignment', text: list.name },
-          list.lastModified,
-          'asdf',
-          'link',
+          i18n.d(new Date(list.lastModified), 'date'),
+          '10 Artikel',
         ],
         actions: [
           {
