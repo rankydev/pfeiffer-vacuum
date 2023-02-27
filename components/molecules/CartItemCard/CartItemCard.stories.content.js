@@ -94,11 +94,19 @@ export const appliedOrderPromotion = {
   },
 }
 
-export const price = {
+export const basePrice = {
   currencyIso: 'EUR',
   customerPrice: false,
-  formattedValue: '55,36 €',
+  formattedValue: '€74.89',
   priceType: 'BUY',
-  value: 55.36,
+  value: 74.89,
+}
+
+export const totalPrice = {
+  currencyIso: 'EUR',
+  customerPrice: false,
+  formattedValue: '€15,756.86',
+  priceType: 'BUY',
+  value: 15756.86,
 }
 export const quantity = 1

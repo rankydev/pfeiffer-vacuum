@@ -19,11 +19,13 @@
         quantity,
         promotion,
         basePrice,
+        totalPrice,
         code,
       } in getSortedProducts"
       :key="getUniqueId(code)"
       :product="product"
-      :price="basePrice"
+      :base-price="basePrice"
+      :total-price="totalPrice"
       :quantity="quantity"
       :promotion="promotion"
       :is-mini-cart="isMiniCart"
@@ -112,7 +114,7 @@ export default defineComponent({
 
     const findProductIndexInCart = (product) => {
       return getProducts.value.findIndex((item) => {
-        return item?.product?.code === product.code
+        return item?.product?.code === product?.code
       })
     }
 
