@@ -118,23 +118,25 @@ import {
   onMounted,
   ref,
 } from '@nuxtjs/composition-api'
+
 import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
+import { storeToRefs } from 'pinia'
+
+import { useLogger } from '~/composables/useLogger'
+import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
-import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
-import Button from '~/components/atoms/Button/Button.vue'
-import PriceInformation from '~/components/molecules/PriceInformation/PriceInformation.vue'
+import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
+import Button from '~/components/atoms/Button/Button'
+import PriceInformation from '~/components/molecules/PriceInformation/PriceInformation'
 import TotalNetInformation from '~/components/molecules/TotalNetInformation/TotalNetInformation'
 import CartTable from '~/components/molecules/CartTable/CartTable'
-import Icon from '~/components/atoms/Icon/Icon.vue'
+import Icon from '~/components/atoms/Icon/Icon'
 import AddressCard from '~/components/molecules/AddressCard/AddressCard'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
-
-import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'Checkout',
@@ -154,6 +156,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const context = useContext()
+    const { logger } = useLogger('checkout')
     const { app } = useContext()
     const cartStore = useCartStore()
     const { currentCart, loading: cartLoading } = storeToRefs(cartStore)
@@ -169,7 +172,6 @@ export default defineComponent({
     const loading = ref(true)
 
     onMounted(async () => {
-      console.log('executing onMounted hook of checkout page')
       try {
         // When entering the checkout page we want to grab the default delivery address from user and set as delivery address for cart
         await userStore.loadDeliveryAddresses()
@@ -177,12 +179,12 @@ export default defineComponent({
 
         if (defaultDeliveryAddress) {
           await cartStore.setDeliveryAddress(defaultDeliveryAddress)
-          console.log('YES! SET ADDRESS SUCCESSFULLY')
+          logger.trace('Successfully set default delivery address as cart delivery address.')
         } else {
-          console.error('NO DEFAULT DELIVERY ADDRESS FOUND!')
+          logger.warn('did not find a default delivery address. Cannot set cart delivery address.')
         }
       } catch (error) {
-        console.error('COULD NOT SET DEFAULT DELIVERY ADDRESS!', error)
+        logger.error('could not set delivery address.', error)
       } finally {
         loading.value = false
       }
