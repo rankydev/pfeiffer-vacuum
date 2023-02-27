@@ -64,5 +64,11 @@
   "recentServiceRequests": "Letzte Service-Anfragen",
   "newServiceRequests": "Neue Service-Anfragen",
   "allServiceRequests": "Alle Service-Anfragen",
-  "details": "Details"
+  "details": "Details",
+  "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
+  "goToProducts": "Zu den Produkten",
+  "requestNumber": "Anfragennummer",
+  "reference": "Referenz",
+  "date": "Datum",
+  "total": "Gesamt (Netto)"
 }

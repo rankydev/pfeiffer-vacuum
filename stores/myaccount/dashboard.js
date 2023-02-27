@@ -48,11 +48,24 @@ export const useDashboardStore = defineStore('accountData', () => {
     })
   }
 
+  const buildTableHeaderObject = (title) => {
+    return {
+      title: i18n.t(`myaccount.${title}`),
+    }
+  }
+
+  const recentRequestHeader = ['requestNumber', 'reference', 'date', 'total']
+  const recentRequestsTableHeader = recentRequestHeader.map((title) =>
+    buildTableHeaderObject(title)
+  )
+
   return {
     // States
-    recentRequestsTableData,
+    recentRequestsTableHeader,
+
     //Getters
     getRecentRequestsTableData,
+
     // getOrders,
     // Actions
   }
