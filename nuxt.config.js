@@ -123,6 +123,18 @@ export default {
     '@nuxtjs/i18n',
     '@nuxtjs/axios',
     'vue-toastification/nuxt',
+    [
+      'nuxt-maps-module',
+      {
+        path: '/metrics',
+        host: '127.0.0.1',
+        port: 9100,
+        metrics: {
+          collectDefault: true,
+          requestDuration: true,
+        },
+      },
+    ],
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
