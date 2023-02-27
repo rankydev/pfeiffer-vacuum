@@ -179,9 +179,13 @@ export default defineComponent({
 
         if (defaultDeliveryAddress) {
           await cartStore.setDeliveryAddress(defaultDeliveryAddress)
-          logger.trace('Successfully set default delivery address as cart delivery address.')
+          logger.trace(
+            'Successfully set default delivery address as cart delivery address.'
+          )
         } else {
-          logger.warn('did not find a default delivery address. Cannot set cart delivery address.')
+          logger.warn(
+            'did not find a default delivery address. Cannot set cart delivery address.'
+          )
         }
       } catch (error) {
         logger.error('could not set delivery address.', error)
