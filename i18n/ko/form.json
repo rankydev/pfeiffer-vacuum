@@ -18,6 +18,12 @@
     "digit": "최소 1자리 숫자 포함",
     "tooLong": "당신의 패스워드가 너무 길 수 있습니다.(최대 128 자)"
   },
+  "placeholder": {
+    "company": "회사 이름",
+    "firstname": "이름",
+    "lastname": "성",
+    "email": "email@email.com"
+  },
   "contactRequest": {
     "firstname": "이름",
     "surname": "성",

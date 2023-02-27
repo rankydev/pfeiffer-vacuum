@@ -1,5 +1,9 @@
 import GenericTable from './GenericTable'
-import { header, data } from './GenericTable.stories.content.js'
+import {
+  header,
+  tableData,
+  tableDataCarousel,
+} from './GenericTable.stories.content.js'
 
 const argTypes = {}
 
@@ -16,7 +20,7 @@ export default {
           'The data array accepts beside the row entries an actions array, in which buttons can be defined. (displayed at the end of a row)',
       },
       source: {
-        code: '<GenericTable v-bind="{ header, data }"  />',
+        code: '<GenericTable v-bind="{ header, tableData }"  />',
       },
     },
   },
@@ -38,8 +42,29 @@ const Template = (args) => ({
 `,
 })
 
+const CarouselTemplate = (args) => ({
+  components: { GenericTable },
+  setup() {
+    const logSorting = (e) => {
+      alert(`ID: ${e.id}, State: ${e.state}`)
+    }
+    return { args, logSorting }
+  },
+  template: `
+  <div class="documentation-preview">
+    <GenericTable v-bind="args" />
+  </div>
+`,
+})
+
 export const Default = Template.bind({})
 Default.args = {
   header,
-  data,
+  tableData,
+}
+
+export const TableCardCarousel = CarouselTemplate.bind({})
+TableCardCarousel.args = {
+  tableData: tableDataCarousel,
+  carousel: true,
 }
