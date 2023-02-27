@@ -14,14 +14,8 @@
       </span>
     </div>
     <CartItemCard
-      v-for="{
-        product,
-        quantity,
-        promotion,
-        basePrice,
-        code,
-      } in getSortedProducts"
-      :key="getUniqueId(code)"
+      v-for="{ product, quantity, promotion, basePrice } in getSortedProducts"
+      :key="product.code"
       :product="product"
       :price="basePrice"
       :quantity="quantity"
