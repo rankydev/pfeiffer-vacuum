@@ -39,14 +39,20 @@
           :key="`row${i}-${j}`"
           class="table-view__cell"
         >
-          <!-- <Icon
+          <Icon
             v-if="cell.icon"
-            class="table-icon"
+            class="table-view__icon"
             :icon="cell.icon"
-            type="svg"
-            size="small"
-          /> -->
-          {{ typeof cell === 'object' ? cell.text : cell }}
+            variant="secondary"
+            shape="outlined"
+          />
+          <span
+            v-if="typeof cell === 'object' && cell.bold"
+            class="table-view__cell table-view__cell--bold"
+          >
+            {{ cell.text }}
+          </span>
+          <span v-else>{{ typeof cell === 'object' ? cell.text : cell }}</span>
           <span v-if="cell.marginal" class="table-view__cell-marginal">
             {{ cell.marginal }}
           </span>
@@ -187,6 +193,10 @@ export default {
       @apply tw-justify-end tw-items-center;
       @apply tw-gap-2;
       @apply tw-text-right;
+    }
+
+    &--bold {
+      @apply tw-font-bold;
     }
   }
 }

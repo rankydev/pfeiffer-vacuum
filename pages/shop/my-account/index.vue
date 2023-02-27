@@ -9,6 +9,7 @@
         v-if="recentRequests"
         :header="recentRequestsTableHeader"
         :table-data="recentRequests"
+        :carousel="true"
       />
       <EmptyWrapper
         v-else
@@ -21,6 +22,7 @@
       <SectionHeadline :buttons="buttons.recentShoppingListsButtons">{{
         $t('myaccount.recentShoppingLists')
       }}</SectionHeadline>
+
       <GenericTable
         v-if="recentShoppingLists"
         :header="recentShoppingListTableHeader"
@@ -61,8 +63,6 @@ export default defineComponent({
       return dashBoardStore.getRecentShoppingListsTableData()
     })
 
-    console.log('recentshoppinglists', recentShoppingLists)
-
     const button = {
       size: 'normal',
       label: i18n.t('myaccount.goToProducts'),
@@ -87,6 +87,7 @@ export default defineComponent({
           shape: 'plain',
           label: i18n.t('myaccount.shoppingList.new'),
           icon: 'add',
+          desktopOnly: true,
         },
         {
           label: i18n.t('myaccount.shoppingList.all'),
@@ -97,9 +98,6 @@ export default defineComponent({
         },
       ],
     }
-
-    console.log('recentShoppingListTableHeader', recentShoppingListTableHeader)
-    console.log('recentShoppingLists', recentShoppingLists)
 
     return {
       recentRequests,
@@ -120,13 +118,15 @@ export default defineComponent({
     @apply tw-mb-8;
   }
 
-  .button__label {
-    @apply tw-invisible;
-    @apply tw-opacity-0;
+  .section-headline__buttons {
+    .button__label {
+      @apply tw-invisible;
+      @apply tw-opacity-0;
 
-    @screen md {
-      @apply tw-visible;
-      @apply tw-opacity-100;
+      @screen md {
+        @apply tw-visible;
+        @apply tw-opacity-100;
+      }
     }
   }
 }

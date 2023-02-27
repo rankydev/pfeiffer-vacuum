@@ -16,7 +16,7 @@ export const useDashboardStore = defineStore('accountData', () => {
       orders.value = await myAccountStore.getOrders()
     }
 
-    return orders.value?.orders?.slice(0, 4).map((order) => {
+    return orders.value?.orders?.slice(0, 3).map((order) => {
       const orderUrl = `${localePath('shop-my-account-request-history')}/${
         order.code
       }`
@@ -92,12 +92,14 @@ export const useDashboardStore = defineStore('accountData', () => {
       shoppingLists.value = await getShoppingLists()
     }
 
-    return shoppingLists.value?.slice(0, 4).map((list) => {
+    return shoppingLists.value?.slice(0, 3).map((list) => {
       return {
         entries: [
-          { icon: 'assignment', text: list.name },
+          { icon: 'assignment', text: list.name, bold: true },
           i18n.d(new Date(list.lastModified), 'date'),
-          '10 Artikel',
+          `${list.entries?.length || 0} ${i18n.t(
+            'myaccount.shoppingList.items'
+          )}`,
         ],
         actions: [
           {
