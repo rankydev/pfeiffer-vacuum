@@ -22,6 +22,8 @@
     "loadingError": "搜索时出错。请使用高级搜索或重试。",
     "possibleFilters": "可能的过滤器，可能的筛选器",
     "filter": "筛选",
-    "allDocuments": "所有文件"
+    "allDocuments": "所有文件",
+    "advancedSearch": "高级搜索",
+    "advancedSearchInfo": "高级搜索会将您带到一个外部页面，您可以在其中更详细地搜索我们的文档。"
   }
 }

@@ -45,9 +45,8 @@
           >
             <template #activeTabContent>
               <div class="search-page__search-result">
-                <ContentWrapper>
+                <ContentWrapper v-if="currentTabSelected === 'products'">
                   <SearchResult
-                    v-if="currentTabSelected === 'products'"
                     persist-category-name-as-query-param
                     v-bind="{
                       products,
@@ -58,9 +57,9 @@
                       sorts,
                     }"
                   />
-                  <div v-else>
-                    <DocumentSearchResult />
-                  </div>
+                </ContentWrapper>
+                <ContentWrapper v-else no-padding>
+                  <DocumentSearchResult />
                 </ContentWrapper>
               </div>
             </template>

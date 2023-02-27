@@ -1,6 +1,10 @@
 <template>
   <article>
-    <Link class="document-item__link" @click="$emit('click')">
+    <Link
+      class="document-item__link"
+      :href="linkToEmpolisPortal"
+      target="_blank"
+    >
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
         <h5 v-html="product.title" />
@@ -13,7 +17,7 @@
         <p v-if="product.body" v-html="product.body" />
         <Link
           v-if="product.downloadLink"
-          :href="product.downloadLink"
+          v-bind="downloadButtonBaseData"
           class="document-item__icon-link"
         >
           <Icon class="document-item__icon" icon="file_download" size="base" />
@@ -43,9 +47,9 @@
         <p v-if="product.body" v-html="product.body" />
         <div class="document-item__links">
           <Link
-            v-if="product.id"
+            v-if="product.downloadLink"
+            v-bind="downloadButtonBaseData"
             class="document-item__icon-link download-link"
-            @click="emit('click')"
           >
             <span class="document-item__icon-text">
               {{ $t('product.download') }}
@@ -57,8 +61,9 @@
             />
           </Link>
           <Link
-            :href="product.downloadUrl"
             class="document-item__icon-link product-link"
+            :href="linkToEmpolisPortal"
+            target="_blank"
           >
             <Icon
               class="document-item__icon"
@@ -72,10 +77,12 @@
   </article>
 </template>
 <script>
-import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import { defineComponent, toRefs, computed } from '@nuxtjs/composition-api'
+import getKey from '~/composables/useUniqueKey'
+import { useEmpolisHelper } from '~/composables/useEmpolisHelper'
+
 import Link from '~/components/atoms/Link/Link'
 import Icon from '~/components/atoms/Icon/Icon'
-import getKey from '~/composables/useUniqueKey'
 
 export default defineComponent({
   name: 'DocumentSearchItem',
@@ -92,11 +99,24 @@ export default defineComponent({
   emits: ['click'],
   setup(props) {
     const { product } = toRefs(props)
+    const { getDownloadButtonBaseConfig, getFileInEmpolisUrl } =
+      useEmpolisHelper()
+
     const subtitleRemainingelements = product.value.subtitle.slice(1, 3)
+
+    const downloadButtonBaseData = computed(() =>
+      getDownloadButtonBaseConfig(product.value)
+    )
+
+    const linkToEmpolisPortal = computed(() => {
+      return getFileInEmpolisUrl(product.value.id)
+    })
 
     return {
       getKey,
       subtitleRemainingelements,
+      downloadButtonBaseData,
+      linkToEmpolisPortal,
     }
   },
 })

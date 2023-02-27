@@ -22,6 +22,8 @@
     "loadingError": "There was an error searching. Please use the advanced search or try again.",
     "possibleFilters": "Possible filters",
     "filter": "Filter",
-    "allDocuments": "All documents"
+    "allDocuments": "All documents",
+    "advancedSearch": "Advanced search",
+    "advancedSearchInfo": "The advanced search will talke you to an external page where you can search our documents in more detail."
   }
 }
