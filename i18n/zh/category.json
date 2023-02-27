@@ -21,6 +21,8 @@
     "noResultsFound": "抱歉，没有找到结果。请尝试其他搜索词。",
     "loadingError": "搜索时出错。请使用高级搜索或重试。",
     "possibleFilters": "可能的过滤器，可能的筛选器",
-    "filter": "筛选"
+    "filter": "筛选",
+    "advancedSearch": "高级搜索",
+    "advancedSearchInfo": "高级搜索会将您带到一个外部页面，您可以在其中更详细地搜索我们的文档。"
   }
 }

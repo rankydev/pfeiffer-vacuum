@@ -49,7 +49,7 @@ const getAccessToken = async (req) => {
 
     if (
       (jwt.iss || '').startsWith(
-        axiosConfig.publicRuntimeConfig.KEYCLOAK_BASE_URL
+        nuxtConfig.publicRuntimeConfig.KEYCLOAK_BASE_URL
       )
     ) {
       const roles = (jwt.realm_access || {}).roles || []
@@ -101,7 +101,7 @@ const getAccessToken = async (req) => {
 
     return currentToken.access_token
   } catch (e) {
-    logger.error('Error when fetching empolis access token.')
+    logger.error('Error when fetching empolis access token.', e)
   }
 
   return ''
