@@ -1,34 +1,22 @@
 <template>
   <div class="dashboard">
-    <div class="headline-container">
-      <SectionHeadline>
-        {{ $t('myaccount.recentRequests') }}
-      </SectionHeadline>
-      <Button
-        class="headline-container__link"
-        :label="$t('myaccount.allRequests')"
-        icon="arrow_forward"
-        :href="localePath('shop-my-account-request-history')"
-        variant="secondary"
-        shape="plain"
-      />
-    </div>
+    <SectionHeadline :buttons="buttons.recentRequestButtons">
+      {{ $t('myaccount.recentRequests') }}
+    </SectionHeadline>
 
-    <template v-if="recentRequests">
-      <GenericTable
-        :header="recentRequestsTableHeader"
-        :table-data="recentRequests"
-      />
-    </template>
-    <template v-else>
-      <EmptyWrapper
-        :button="button"
-        :label="$t('myaccount.lastRequestNotFound')"
-      />
-    </template>
+    <GenericTable
+      v-if="recentRequests"
+      :header="recentRequestsTableHeader"
+      :table-data="recentRequests"
+    />
+    <EmptyWrapper
+      v-else
+      :button="button"
+      :label="$t('myaccount.lastRequestNotFound')"
+    />
 
     <div class="headline-container">
-      <SectionHeadline :buttons="recentShoppingListsButtons">{{
+      <SectionHeadline :buttons="buttons.recentShoppingListsButtons">{{
         $t('myaccount.recentShoppingLists')
       }}</SectionHeadline>
     </div>
@@ -49,7 +37,7 @@ export default defineComponent({
     EmptyWrapper,
   },
   setup() {
-    const { i18n } = useContext()
+    const { i18n, localePath } = useContext()
     const dashBoardStore = useDashboardStore()
     const { recentRequestsTableHeader } = storeToRefs(dashBoardStore)
 
@@ -65,48 +53,51 @@ export default defineComponent({
       prependIcon: false,
     }
 
-    const recentShoppingListsButtons = [
-      {
-        variant: 'secondary',
-        shape: 'plain',
-        label: 'Button left',
-        icon: 'add',
-      },
-      {
-        variant: 'secondary',
-        shape: 'plain',
-        label: 'Button right',
-        icon: 'arrow_forward',
-      },
-    ]
+    const buttons = {
+      recentRequestButtons: [
+        {
+          label: i18n.t('myaccount.allRequests'),
+          icon: 'arrow_forward',
+          href: localePath('shop-my-account-request-history'),
+          variant: 'secondary',
+          shape: 'plain',
+        },
+      ],
+      recentShoppingListsButtons: [
+        {
+          variant: 'secondary',
+          shape: 'plain',
+          label: 'Button left',
+          icon: 'add',
+        },
+        {
+          variant: 'secondary',
+          shape: 'plain',
+          label: 'Button right',
+          icon: 'arrow_forward',
+        },
+      ],
+    }
 
     return {
       recentRequests,
       recentRequestsTableHeader,
       button,
-      recentShoppingListsButtons,
+      buttons,
     }
   },
 })
 </script>
 
 <style lang="scss">
-.headline-container {
-  @apply tw-flex tw-justify-between;
-  @apply tw-my-4;
+.dashboard {
+  .button__label {
+    @apply tw-invisible;
+    @apply tw-opacity-0;
 
-  &__link {
-    @apply tw-text-pv-red;
-    @apply tw-flex-1;
-
-    .button__label {
-      @apply tw-invisible;
-      @apply tw-opacity-0;
-
-      @screen md {
-        @apply tw-visible;
-        @apply tw-opacity-100;
-      }
+    @screen md {
+      @apply tw-visible;
+      @apply tw-opacity-100;
     }
   }
 }
