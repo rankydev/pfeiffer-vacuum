@@ -26,6 +26,12 @@
         :label="$t('myaccount.lastRequestNotFound')"
       />
     </template>
+
+    <div class="headline-container">
+      <SectionHeadline :buttons="recentShoppingListsButtons">{{
+        $t('myaccount.recentShoppingLists')
+      }}</SectionHeadline>
+    </div>
   </div>
 </template>
 
@@ -58,9 +64,28 @@ export default defineComponent({
       variant: 'secondary',
       prependIcon: false,
     }
-    console.log('recentRequestsTableHeader', recentRequestsTableHeader)
 
-    return { recentRequests, recentRequestsTableHeader, button }
+    const recentShoppingListsButtons = [
+      {
+        variant: 'secondary',
+        shape: 'plain',
+        label: 'Button left',
+        icon: 'add',
+      },
+      {
+        variant: 'secondary',
+        shape: 'plain',
+        label: 'Button right',
+        icon: 'arrow_forward',
+      },
+    ]
+
+    return {
+      recentRequests,
+      recentRequestsTableHeader,
+      button,
+      recentShoppingListsButtons,
+    }
   },
 })
 </script>
@@ -68,6 +93,7 @@ export default defineComponent({
 <style lang="scss">
 .headline-container {
   @apply tw-flex tw-justify-between;
+  @apply tw-my-4;
 
   &__link {
     @apply tw-text-pv-red;
