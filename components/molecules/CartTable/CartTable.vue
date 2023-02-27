@@ -4,36 +4,44 @@
       <div class="cart-item-header__quantity">
         <span>{{ $t('cart.quantity') }}</span>
       </div>
-      <span class="cart-item-header__price" @click="sortByPrice">
+      <span class="cart-item-header__price" @click="useSortByPrice">
         {{ $t('cart.pricePerUnit') }}
         <Icon icon="unfold_more" />
       </span>
-      <span class="cart-item-header__totalPrice" @click="sortByPrice">
+      <span class="cart-item-header__totalPrice" @click="useSortByTotalPrice">
         {{ $t('cart.totalPrice') }}
         <Icon icon="unfold_more" />
       </span>
     </div>
     <CartItemCard
-      v-for="({ product, price, quantity, promotion }, id) in sortedCart"
-      :key="getUniqueId(id)"
+      v-for="{
+        product,
+        quantity,
+        promotion,
+        basePrice,
+        totalPrice,
+        code,
+      } in getSortedProducts"
+      :key="getUniqueId(code)"
       :product="product"
-      :price="price"
+      :base-price="basePrice"
+      :total-price="totalPrice"
       :quantity="quantity"
       :promotion="promotion"
       :is-mini-cart="isMiniCart"
-      @add="addToCart"
-      @remove="removeFromCart"
+      @update="updateCartQuantity"
       @delete="deleteFromCart"
-      @addToShoppingList="addToShoppingList"
     />
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, toRefs } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
 import useUniqueKey from '~/composables/useUniqueKey'
 import Icon from '~/components/atoms/Icon/Icon'
+import { useCartStore } from '~/stores/cart'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'CartTable',
@@ -42,11 +50,6 @@ export default defineComponent({
     Icon,
   },
   props: {
-    cart: {
-      type: Array,
-      default: () => [],
-      required: true,
-    },
     isMiniCart: {
       type: Boolean,
       default: false,
@@ -54,65 +57,83 @@ export default defineComponent({
     },
   },
   emits: ['update', 'addToShoppingList'],
-  setup(props, { emit }) {
-    const { cart } = toRefs(props)
-    const sortedCart = ref(cart.value)
-    const priceSortedAsc = ref(true)
-    const totalPriceSortedAsc = ref(true)
-
-    const getPrice = (cartItem) => {
-      return cartItem?.price?.value ? cartItem.price.value : 0
-    }
+  setup() {
+    const priceSortedDsc = ref(false)
+    const totalPriceDsc = ref(false)
+    const lastSortedBy = ref(null)
+    const cartStore = useCartStore()
+    const { currentCart } = storeToRefs(cartStore)
+    const { deleteProductFromCart, updateProductQuantityFromCart } = cartStore
+    const getUniqueId = (id) => useUniqueKey('CART_TABLE_' + id)
+    const getProducts = computed(() => {
+      return currentCart?.value?.entries
+    })
+    const getSortedProducts = computed(() => {
+      if (lastSortedBy.value === 'price') {
+        return sortByPrice()
+      }
+      if (lastSortedBy.value === 'totalPrice') {
+        return sortByTotalPrice()
+      }
+      return getProducts.value
+    })
 
     const sortByPrice = () => {
-      priceSortedAsc.value = !priceSortedAsc.value
-      sortedCart.value = sortedCart.value.sort((a, b) => {
-        return priceSortedAsc.value
-          ? getPrice(a) - getPrice(b)
-          : getPrice(b) - getPrice(a)
+      return [...getProducts.value].sort((a, b) => {
+        return priceSortedDsc.value
+          ? b?.basePrice?.value - a?.basePrice?.value
+          : a?.basePrice?.value - b?.basePrice?.value
       })
     }
 
     const sortByTotalPrice = () => {
-      totalPriceSortedAsc.value = !totalPriceSortedAsc.value
-      sortedCart.value = sortedCart.value.sort((a, b) => {
-        return totalPriceSortedAsc.value
-          ? getPrice(a) * a.quantity - getPrice(b) * b.quantity
-          : getPrice(b) * b.quantity - getPrice(a) * a.quantity
+      return [...getProducts.value].sort((a, b) => {
+        return totalPriceDsc.value
+          ? b?.totalPrice?.value - a?.totalPrice?.value
+          : a?.totalPrice?.value - b?.totalPrice?.value
       })
     }
 
-    const addToCart = (product) => {
-      sortedCart.value.find((item) => item.product === product).quantity += 1
-      emit('update', sortedCart.value)
+    const useSortByTotalPrice = () => {
+      if (lastSortedBy.value === 'totalPrice') {
+        totalPriceDsc.value = !totalPriceDsc.value
+      } else {
+        totalPriceDsc.value = true
+        lastSortedBy.value = 'totalPrice'
+      }
     }
 
-    const removeFromCart = (product) => {
-      sortedCart.value.find((item) => item.product === product).quantity -= 1
-      emit('update', sortedCart.value)
+    const useSortByPrice = () => {
+      if (lastSortedBy.value === 'totalPrice') {
+        totalPriceDsc.value = !totalPriceDsc.value
+      } else {
+        totalPriceDsc.value = true
+        lastSortedBy.value = 'totalPrice'
+      }
     }
 
-    const deleteFromCart = (product) => {
-      sortedCart.value = sortedCart.value.filter(
-        (item) => item.product !== product
-      )
-      emit('update', sortedCart.value)
+    const findProductIndexInCart = (product) => {
+      return getProducts.value.findIndex((item) => {
+        return item?.product?.code === product?.code
+      })
     }
 
-    const addToShoppingList = (product) => {
-      const cartItem = sortedCart.value.find((item) => item.product === product)
-      emit('addToShoppingList', cartItem)
+    const updateCartQuantity = async (product) => {
+      const index = findProductIndexInCart(product)
+      await updateProductQuantityFromCart(index, product?.quantity)
     }
-    const getUniqueId = (id) => useUniqueKey('CART_TABLE_' + id)
+
+    const deleteFromCart = async (product) => {
+      const index = findProductIndexInCart(product)
+      await deleteProductFromCart(index)
+    }
 
     return {
-      sortedCart,
-      sortByPrice,
-      sortByTotalPrice,
-      addToCart,
-      removeFromCart,
+      updateCartQuantity,
       deleteFromCart,
-      addToShoppingList,
+      getSortedProducts,
+      useSortByPrice,
+      useSortByTotalPrice,
       getUniqueId,
     }
   },

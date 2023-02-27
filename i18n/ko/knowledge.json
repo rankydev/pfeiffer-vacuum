@@ -1,0 +1,32 @@
+{
+  "time": "",
+  "hours": "시간",
+  "minutes": "분",
+  "allRessources": "모든 리소스",
+  "whitepapers": "백서",
+  "webinars": "웨비나",
+  "search": "지식에서 검색 ...",
+  "webinar": {
+    "heading": "웨비나",
+    "about": "  웨비나는 무엇에 관한 것입니까?",
+    "tragetAudience": "누가 참석해야 합니까?",
+    "authors": "발언자",
+    "button": {
+      "join": "웨비나 참석",
+      "watch": "웨비나 시청"
+    },
+    "waitForVod": "이 웨비나의 녹화본은 원래 날짜 이후 5일 이내에 시청할 수 있습니다.",
+    "registration": {
+      "success": "이 웨비나에 성공적으로 등록되었습니다. 메일을 통해 모든 추가 정보를 받게 됩니다."
+    }
+  },
+  "whitepaper": {
+    "heading": "백서",
+    "about": "  백서는 무엇에 관한 것입니까?",
+    "tragetAudience": "누가 읽어야 합니까?",
+    "authors": "작성자",
+    "button": {
+      "download": "다운로드"
+    }
+  }
+}

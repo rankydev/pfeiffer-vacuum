@@ -1,6 +1,10 @@
 <template>
   <div class="generic-table">
-    <div v-if="isMobile" class="generic-table__card-wrapper">
+    <template v-if="carousel && isMobile">
+      <TableCardCarousel v-bind="{ tableData, primary, secondary }" />
+    </template>
+
+    <div v-else-if="!carousel && isMobile" class="generic-table__card-wrapper">
       <TableCard
         v-for="(row, i) in tableData"
         :key="`row${i}`"
@@ -8,6 +12,7 @@
         v-bind="{ primary, secondary }"
       />
     </div>
+
     <template v-else>
       <TableView v-bind="{ header, tableData }" />
     </template>
@@ -17,9 +22,10 @@
 import { useContext } from '@nuxtjs/composition-api'
 import TableView from './partials/TableView'
 import TableCard from './partials/TableCard'
+import TableCardCarousel from './partials/TableCardCarousel'
 
 export default {
-  components: { TableView, TableCard },
+  components: { TableView, TableCard, TableCardCarousel },
   props: {
     header: {
       type: Array,
@@ -42,6 +48,10 @@ export default {
         position: 1,
         active: true,
       }),
+    },
+    carousel: {
+      type: Boolean,
+      default: false,
     },
   },
   setup() {

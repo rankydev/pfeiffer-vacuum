@@ -16,7 +16,6 @@
               <div class="myaccount-page__content">
                 <NuxtChild />
               </div>
-
               <MyAccountManager class="myaccount-page__account-manager" />
             </div>
           </ContentWrapper>
@@ -33,7 +32,6 @@ import {
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
-
 import Page from '~/components/templates/Page/Page'
 import MyAccountSidebar from '~/components/organisms/MyAccount/sidebar/MyAccountSidebar'
 import MyAccountManager from '~/components/organisms/MyAccount/sidebar/MyAccountManager'
@@ -95,7 +93,7 @@ export default defineComponent({
       'nav content'
       'widget content'
       'spacer content'
-      / 20% auto;
+      / 320px auto;
 
     &__sidebar {
       grid-area: nav;
