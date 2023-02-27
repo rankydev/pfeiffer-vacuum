@@ -85,20 +85,12 @@ export const product = {
   },
 }
 
-export const appliedOrderPromotion = {
-  description: 'You got a 20% discount on your cart',
-  promotion: {
-    code: 'TestPromotionOnCart',
-    description: 'Du hast einen 20% Rabatt auf deinen Einkaufswagen bekommen',
-    promotionType: 'Regelbasierte Werbeaktion',
-  },
-}
-
-export const price = {
+export const basePrice = {
   currencyIso: 'EUR',
   customerPrice: false,
-  formattedValue: '55,36 €',
+  formattedValue: '55,36 €',
   priceType: 'BUY',
   value: 55.36,
 }
+
 export const quantity = 1

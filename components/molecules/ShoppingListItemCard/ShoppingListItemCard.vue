@@ -49,9 +49,9 @@
       <span class="shopping-list-item-card__price__label">
         {{ $t('cart.productPrice') }}
       </span>
-      <span class="shopping-list-item-card__price__price">{{
-        productPrice
-      }}</span>
+      <span class="shopping-list-item-card__price__price">
+        {{ productPrice }}
+      </span>
     </div>
     <Button
       class="shopping-list-item-card__delete"
@@ -111,7 +111,7 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    price: {
+    basePrice: {
       type: Object,
       default: null,
       required: false,
@@ -127,7 +127,7 @@ export default defineComponent({
     const { app, i18n } = useContext()
     const userStore = useUserStore()
     const cartStore = useCartStore()
-    const { price, quantity, product } = toRefs(props)
+    const { basePrice, quantity, product } = toRefs(props)
     const quantityModel = ref(quantity.value)
     const {
       isApprovedUser,
@@ -140,7 +140,7 @@ export default defineComponent({
 
     const noPriceReason = computed(() => {
       const path = 'product.login.loginToSeePrices.'
-      if (!price.value) return i18n.t('product.priceOnRequest')
+      if (!basePrice.value) return i18n.t('product.priceOnRequest')
       if (isLeadUser.value) return i18n.t(path + 'lead')
       if (isOpenUser.value) return i18n.t(path + 'open')
       if (isRejectedUser.value) return i18n.t(path + 'rejected')
@@ -148,22 +148,20 @@ export default defineComponent({
     })
 
     const isPriceVisible = computed(
-      () => !!(price.value && isApprovedUser.value)
+      () => !!(basePrice.value && isApprovedUser.value)
     )
 
     const getPriceString = (priceValue) => {
-      if (price.value === null) {
+      if (basePrice.value === null || !priceValue) {
         return '-'
       }
-      return `€ ${priceValue.toFixed(2).toLocaleString()}`
+      const priceSign = priceValue?.substring(priceValue?.length - 1)
+      const price = priceValue?.substring(0, priceValue.length - 1)
+      return `${priceSign} ${price}`
     }
 
     const productPrice = computed(() => {
-      return getPriceString(price.value?.value)
-    })
-
-    const totalPrice = computed(() => {
-      return getPriceString(quantityModel.value * price.value?.value)
+      return getPriceString(basePrice?.value?.formattedValue)
     })
 
     const productImage = computed(() => {
@@ -225,7 +223,6 @@ export default defineComponent({
       updateQuantity,
       url,
       productPrice,
-      totalPrice,
       details,
       productImage,
       addToShoppingList,
@@ -329,18 +326,20 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-ml-auto;
     @apply tw-mt-4;
+    @apply tw-items-center;
 
     @screen md {
-      @apply tw-my-auto;
-      @apply tw-col-start-9 tw-col-end-11;
+      @apply tw-mt-auto;
+      @apply tw-items-end;
     }
 
     @screen lg {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-10 tw-col-end-11;
+      @apply tw-col-start-11 tw-col-end-12;
       @apply tw-text-lg;
       @apply tw-leading-7;
-      @apply tw-mx-auto;
+      @apply tw-m-auto;
+      @apply tw-items-center;
     }
 
     &__label {
@@ -380,7 +379,7 @@ export default defineComponent({
 
     @screen lg {
       @apply tw-row-start-2 tw-row-end-3;
-      @apply tw-col-start-2 tw-col-end-8;
+      @apply tw-col-start-2 tw-col-end-11;
       @apply tw-mt-0;
     }
 

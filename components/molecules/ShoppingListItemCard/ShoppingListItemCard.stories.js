@@ -1,14 +1,13 @@
 import ShoppingListItemCard from './ShoppingListItemCard'
 import {
   product,
-  price,
-  appliedOrderPromotion,
+  basePrice,
   quantity,
 } from './ShoppingListItemCard.stories.content'
 
 const argTypes = {
   product,
-  price,
+  basePrice,
   quantity,
 }
 
@@ -21,8 +20,7 @@ export default {
         component: 'Shopping List Item Card to be used in Shopping List Page',
       },
       source: {
-        appliedOrderPromotion,
-        code: '<ShoppingListItemCard v-bind="{ product, price, quantity }"/>',
+        code: '<ShoppingListItemCard v-bind="{ product, basePrice, quantity }"/>',
       },
     },
   },
