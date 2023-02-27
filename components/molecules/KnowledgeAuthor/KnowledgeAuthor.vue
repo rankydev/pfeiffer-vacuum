@@ -15,6 +15,7 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+
 export default defineComponent({
   name: 'KnowledgeAuthor',
   components: { ResponsiveImage },
@@ -53,8 +54,8 @@ export default defineComponent({
   &__image {
     @apply tw-mr-4;
     @apply tw-rounded;
-    width: 80px;
-    height: 80px;
+    @apply tw-w-20;
+    @apply tw-h-20;
   }
 
   &__description {

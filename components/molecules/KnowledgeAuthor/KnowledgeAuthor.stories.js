@@ -13,7 +13,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'The KnowledgeAuthor component is used to display ',
+        component:
+          'The KnowledgeAuthor component is used to display information about the author of a webinar or whitepaper',
       },
       source: {
         code: '<KnowledgeAuthor v-bind="args"  />',

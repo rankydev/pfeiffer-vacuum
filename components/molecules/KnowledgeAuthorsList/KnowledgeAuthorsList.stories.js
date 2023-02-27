@@ -21,7 +21,8 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'The KnowledgeAuthorsList component is used to display ',
+        component:
+          'The KnowledgeAuthorsList component is used to display a List auf athors',
       },
       source: {
         code: '<KnowledgeAuthorsList v-bind="args"  />',
