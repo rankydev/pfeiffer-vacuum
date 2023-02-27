@@ -55,5 +55,14 @@
     }
   },
   "contact": "Kontakt",
-  "salesRepresentative": "Vertriebsingenieur"
+  "salesRepresentative": "Vertriebsingenieur",
+  "recentRequests": "Letzte Bestellanfragen",
+  "allRequests": "Alle Anfragen",
+  "recentShoppingLists": "Letzte Einkaufslisten",
+  "allShoppingLists": "Alle Einkaufslisten",
+  "installedBase": "Installed Base",
+  "recentServiceRequests": "Letzte Service-Anfragen",
+  "newServiceRequests": "Neue Service-Anfragen",
+  "allServiceRequests": "Alle Service-Anfragen",
+  "details": "Details"
 }

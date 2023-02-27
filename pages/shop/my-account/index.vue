@@ -1,15 +1,31 @@
 <template>
   <div class="dashboard">
-    <SectionHeadline>
-      {{ $t('myaccount.accountDataShort') }}
-    </SectionHeadline>
+    <div class="headline-container">
+      <SectionHeadline>
+        {{ $t('myaccount.recentRequests') }}
+      </SectionHeadline>
+      <Button
+        class="headline-container__link"
+        :label="$t('myaccount.allRequests')"
+        icon="arrow_forward"
+        :href="localePath('shop-my-account-request-history')"
+        variant="secondary"
+        shape="plain"
+      />
+    </div>
+
+    <GenericTable
+      v-if="recentRequests"
+      :header="recentRequestsTableHeader"
+      :table-data="recentRequests"
+    />
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync } from '@nuxtjs/composition-api'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
-import { useMyAccountStore } from '~/stores/myaccount'
+import { useDashboardStore } from '~/stores/myaccount'
 
 export default defineComponent({
   name: 'Dashboard',
@@ -17,16 +33,49 @@ export default defineComponent({
     SectionHeadline,
   },
   setup() {
-    const myAccountStore = useMyAccountStore()
-    const orders = ref([])
+    const dashBoardStore = useDashboardStore()
 
-    const getOrders = async () => {
-      const result = await myAccountStore.getOrders()
-      console.log(result)
-      orders.value = result
-    }
+    const recentRequests = useAsync(() => {
+      return dashBoardStore.getRecentRequestsTableData()
+    })
 
-    getOrders()
+    const recentRequestsTableHeader = [
+      {
+        title: 'Request',
+      },
+      {
+        title: 'Reference',
+      },
+      {
+        title: 'Last edited',
+      },
+      {
+        title: 'Total (net)',
+      },
+    ]
+
+    return { recentRequests, recentRequestsTableHeader }
   },
 })
 </script>
+
+<style lang="scss">
+.headline-container {
+  @apply tw-flex tw-justify-between;
+
+  &__link {
+    @apply tw-text-pv-red;
+    @apply tw-flex-1;
+
+    .button__label {
+      @apply tw-invisible;
+      @apply tw-opacity-0;
+
+      @screen md {
+        @apply tw-visible;
+        @apply tw-opacity-100;
+      }
+    }
+  }
+}
+</style>
