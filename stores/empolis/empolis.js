@@ -251,7 +251,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
     productDownloads.value = new Map()
   })
 
-  const fetchDocumentSuggestions = async (text, maxCount = 3) => {
+  const fetchDocumentSuggestions = async (text, maxCount = 6) => {
     try {
       const suggestions = await axios.$post('/suggest', {
         query: text,
