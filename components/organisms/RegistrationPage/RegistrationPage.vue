@@ -49,13 +49,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  ref,
-  useContext,
-  useRouter,
-  computed,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import Richtext from '~/components/atoms/Richtext/Richtext'
 import ContentCTABox from '~/components/molecules/ContentCTABox/ContentCTABox'
@@ -64,7 +58,6 @@ import RegistrationCompanyDataForm from '~/components/molecules/RegistrationComp
 import RegistrationPageDataProtection from '~/components/organisms/RegistrationPage/RegistrationPageDataProtection/RegistrationPageDataProtection'
 import Button from '~/components/atoms/Button/Button'
 import HintModal from '~/components/organisms/RegistrationPage/HintModal/HintModal'
-import { useToast } from '~/composables/useToast'
 import useVuelidate from '@vuelidate/core'
 import { useUserStore } from '~/stores/user'
 import { useCTABoxHelper } from './partials/useCTABoxHelper'
@@ -82,10 +75,7 @@ export default defineComponent({
     HintModal,
   },
   setup() {
-    const { i18n, localePath } = useContext()
     const userStore = useUserStore()
-    const router = useRouter()
-    const toast = useToast()
     const v = useVuelidate()
     const loading = ref(false)
     const proceedWithoutCompany = ref(false)
@@ -144,7 +134,7 @@ export default defineComponent({
     /**
      * Function either triggered by closeModal > triggerModal, or submit-button
      */
-    const triggerSendRegistrationProcess = () => {
+    const triggerSendRegistrationProcess = async () => {
       const hasCompanyData =
         requestData.value.companyData &&
         Object.values(requestData.value.companyData).length
@@ -157,64 +147,10 @@ export default defineComponent({
           return
         }
 
-        submit()
+        loading.value = true
+        await userStore.register(requestData)
+        loading.value = false
       }
-    }
-
-    const submit = async () => {
-      loading.value = true
-      const customerData = {
-        ...requestData.value.personalData,
-        ...requestData.value.companyData,
-        companyAddressCountryIso:
-          requestData.value.personalData.address.country.isocode,
-        companyAddressRegion:
-          requestData.value.personalData.address.region?.isocode,
-        companyAlreadyCustomer:
-          requestData.value.companyData?.companyAlreadyCustomer || false,
-      }
-
-      await userStore
-        .register(customerData)
-        .then(() => {
-          loading.value = false
-          let successPagePath = '/shop/register/success'
-          if (!isCompanyAddressFormVisible.value) {
-            successPagePath += '?type=lite'
-          }
-          router.push(localePath(successPagePath))
-        })
-        .catch((err) => {
-          err.data.errors.forEach((error) => {
-            switch (error.type) {
-              case 'CustomerAlreadyExistsError':
-                toast.error({
-                  description: i18n.t(
-                    'form.message.error.customerAlreadyExists'
-                  ),
-                })
-                break
-              case 'CustomerInconsistentError':
-                toast.error({
-                  description: i18n.t(
-                    'form.message.error.customerInconsistentError'
-                  ),
-                })
-                break
-              case 'B2bRegistrationFailedError':
-                toast.error({
-                  description: i18n.t('form.message.error.technicalError'),
-                })
-                break
-              default:
-                toast.error({
-                  description: i18n.t('form.message.error.defaultError'),
-                })
-                break
-            }
-          })
-          loading.value = false
-        })
     }
 
     return {

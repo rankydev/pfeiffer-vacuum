@@ -90,5 +90,20 @@
     "benefit3": "Use the installed base management",
     "buttonLeft": "Register without company data",
     "buttonRight": "Add Company Info"
+  },
+  "registrationModal": {
+    "alreadyHaveAccount": "You have an account",
+    "pleaseLogIn": "Please log in",
+    "signIn": "Sign in",
+    "pleaseSignIn": "Please sign in. After login you will be redirected back to this page.",
+    "createAccountDesktop": "Create full account",
+    "createAccountMobile": "Or create new account",
+    "addCompanyAddressData": "You can add your company’s address data here. This step is optional for now. Please note: Only with a full account you can see prices and send requests!",
+    "goToRegistration": "Go to Registration",
+    "registerForMoreFeatures": "Register on our platform to access more features.",
+    "basisRegistration": "Basis registration",
+    "basisRegistrationDescription": "With a basic registration you can view webinars and whitepapers and create shopping lists. After registration you can return to this page.",
+    "cancel": "Cancel",
+    "submit": "Submit registration"
   }
 }
