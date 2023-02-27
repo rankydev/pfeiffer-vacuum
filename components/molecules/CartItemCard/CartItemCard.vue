@@ -180,7 +180,7 @@ export default defineComponent({
       if (basePrice.value === null || !priceValue) {
         return '-'
       }
-      return `${priceValue?.substring(0, 1)} ${priceValue?.substring(1)}`
+      return priceValue
     }
 
     const productPrice = computed(() => {
