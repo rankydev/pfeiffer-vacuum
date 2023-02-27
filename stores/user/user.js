@@ -2,6 +2,7 @@ import {
   computed,
   useContext,
   useRoute,
+  useRouter,
   onBeforeMount,
   onServerPrefetch,
   ssrRef,
@@ -20,6 +21,7 @@ export const useUserStore = defineStore('user', () => {
   const { logger } = useLogger('userStore')
   const toast = useToast()
   const ctx = useContext()
+  const router = useRouter()
   const route = useRoute()
   const userApi = useUserApi()
   const ociStore = useOciStore()
@@ -136,6 +138,57 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const register = async (data, isLiteRegistration = true) => {
+    const customerData = {
+      ...data.value.personalData,
+      ...data.value.companyData,
+      companyAddressCountryIso: data.value.personalData.address.country.isocode,
+      companyAddressRegion: data.value.personalData.address.region?.isocode,
+      companyAlreadyCustomer:
+        data.value.companyData?.companyAlreadyCustomer || false,
+    }
+
+    await userApi
+      .register(customerData)
+      .then(() => {
+        let successPagePath = '/shop/register/success'
+        if (isLiteRegistration) {
+          successPagePath += '?type=lite'
+        }
+        router.push(ctx.app.localePath(successPagePath))
+      })
+      .catch((err) => {
+        err?.data?.errors.forEach((error) => {
+          switch (error.type) {
+            case 'CustomerAlreadyExistsError':
+              toast.error({
+                description: ctx.i18n.t(
+                  'form.message.error.customerAlreadyExists'
+                ),
+              })
+              break
+            case 'CustomerInconsistentError':
+              toast.error({
+                description: ctx.i18n.t(
+                  'form.message.error.customerInconsistentError'
+                ),
+              })
+              break
+            case 'B2bRegistrationFailedError':
+              toast.error({
+                description: ctx.i18n.t('form.message.error.technicalError'),
+              })
+              break
+            default:
+              toast.error({
+                description: ctx.i18n.t('form.message.error.defaultError'),
+              })
+              break
+          }
+        })
+      })
+  }
+
   const addCompanyData = async (data) => {
     isLoading.value = true
     let res
@@ -228,10 +281,10 @@ export const useUserStore = defineStore('user', () => {
   const login = async () => {
     logger.debug('login')
     const { i18n, app } = ctx
-    const { router, localePath } = app
+    const { localePath } = app
     const url = joinURL(
       window.location.origin,
-      router.options.base,
+      router?.options.base,
       localePath({
         path: route.value.path,
         query: { ...route.value.query, isLoginProcess: true },
@@ -255,8 +308,8 @@ export const useUserStore = defineStore('user', () => {
     } else {
       // redirect here, if no keycloak instance is available.
       const { app } = ctx
-      const { router, localePath } = app
-      return router.push(localePath('/'))
+      const { localePath } = app
+      return router?.push(localePath('/'))
     }
 
     isLoading.value = false
@@ -318,6 +371,6 @@ export const useUserStore = defineStore('user', () => {
     setDefaultDeliveryAddress,
     getDeliveryAddressByID,
     loadAddressData,
-    register: userApi.register,
+    register,
   }
 })
