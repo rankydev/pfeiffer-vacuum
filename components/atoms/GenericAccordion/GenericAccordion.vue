@@ -130,13 +130,15 @@ export default defineComponent({
       // 1. do not emit a change event when the active index value is set initially below (change value from undefined)
       // this is not a real change by the user
       // 2. do not emit a change event when the new value is null (this means the currently active tab was just deselected)
-      if (!(oldVal === undefined || newVal === null)) {
-        // inform parent component about new active tab(s)
-        if (props.multiple) {
-          emit('newActiveTabList', newVal)
-        } else if (props.accordionEntries[newVal]) {
-          emit('newActiveTab', props.accordionEntries[newVal].slotName)
-        }
+      if (oldVal === undefined || newVal === null) {
+        return
+      }
+
+      // inform parent component about new active tab(s)
+      if (props.multiple) {
+        emit('newActiveTabList', newVal)
+      } else if (props.accordionEntries[newVal]) {
+        emit('newActiveTab', props.accordionEntries[newVal].slotName)
       }
     })
 
