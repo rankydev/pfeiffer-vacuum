@@ -70,5 +70,12 @@
   "requestNumber": "Anfragennummer",
   "reference": "Referenz",
   "date": "Datum",
-  "total": "Gesamt (Netto)"
+  "total": "Gesamt (Netto)",
+  "shoppingList": {
+    "new": "Neue Einkaufsliste",
+    "all": "Alle Einkaufslisten",
+    "title": "Titel",
+    "lastEdited": "Letzte Änderung",
+    "items": "Artikel"
+  }
 }

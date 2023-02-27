@@ -1,25 +1,32 @@
 <template>
   <div class="dashboard">
-    <SectionHeadline :buttons="buttons.recentRequestButtons">
-      {{ $t('myaccount.recentRequests') }}
-    </SectionHeadline>
+    <section class="section">
+      <SectionHeadline :buttons="buttons.recentRequestButtons">
+        {{ $t('myaccount.recentRequests') }}
+      </SectionHeadline>
 
-    <GenericTable
-      v-if="recentRequests"
-      :header="recentRequestsTableHeader"
-      :table-data="recentRequests"
-    />
-    <EmptyWrapper
-      v-else
-      :button="button"
-      :label="$t('myaccount.lastRequestNotFound')"
-    />
+      <GenericTable
+        v-if="recentRequests"
+        :header="recentRequestsTableHeader"
+        :table-data="recentRequests"
+      />
+      <EmptyWrapper
+        v-else
+        :button="button"
+        :label="$t('myaccount.lastRequestNotFound')"
+      />
+    </section>
 
-    <div class="headline-container">
+    <section class="section">
       <SectionHeadline :buttons="buttons.recentShoppingListsButtons">{{
         $t('myaccount.recentShoppingLists')
       }}</SectionHeadline>
-    </div>
+      <GenericTable
+        v-if="recentShoppingLists"
+        :header="recentShoppingListTableHeader"
+        :table-data="recentShoppingLists"
+      />
+    </section>
   </div>
 </template>
 
@@ -39,11 +46,21 @@ export default defineComponent({
   setup() {
     const { i18n, localePath } = useContext()
     const dashBoardStore = useDashboardStore()
-    const { recentRequestsTableHeader } = storeToRefs(dashBoardStore)
+    const {
+      recentRequestsTableHeader,
+      recentShoppingListTableHeader,
+      recentShoppingListHeader,
+    } = storeToRefs(dashBoardStore)
 
     const recentRequests = useAsync(() => {
       return dashBoardStore.getRecentRequestsTableData()
     })
+
+    const recentShoppingLists = useAsync(() => {
+      return dashBoardStore.getRecentShoppingListsTableData()
+    })
+
+    console.log('recentshoppinglists', recentShoppingLists)
 
     const button = {
       size: 'normal',
@@ -67,23 +84,29 @@ export default defineComponent({
         {
           variant: 'secondary',
           shape: 'plain',
-          label: 'Button left',
+          label: i18n.t('myaccount.shoppingList.new'),
           icon: 'add',
         },
         {
           variant: 'secondary',
           shape: 'plain',
-          label: 'Button right',
+          label: i18n.t('myaccount.shoppingList.all'),
           icon: 'arrow_forward',
         },
       ],
     }
 
+    console.log('recentShoppingListTableHeader', recentShoppingListTableHeader)
+    console.log('recentShoppingLists', recentShoppingLists)
+
     return {
       recentRequests,
       recentRequestsTableHeader,
+      recentShoppingLists,
+      recentShoppingListTableHeader,
       button,
       buttons,
+      recentShoppingListHeader,
     }
   },
 })
@@ -91,6 +114,10 @@ export default defineComponent({
 
 <style lang="scss">
 .dashboard {
+  .section {
+    @apply tw-mb-8;
+  }
+
   .button__label {
     @apply tw-invisible;
     @apply tw-opacity-0;
