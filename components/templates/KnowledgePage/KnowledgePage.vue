@@ -16,9 +16,7 @@
               v-bind="item"
               :name="item.uiComponent || item.component"
             />
-            <div class="knowledge-page">
-              <!-- ToDo: remove placeholder text and insert knowledge data -->
-            </div>
+            <KnowledgeContent />
           </ContentWrapper>
         </template>
       </Page>
@@ -38,12 +36,14 @@ import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import useTemplating from '~/composables/useTemplating'
+import KnowledgeContent from '~/components/molecules/KnowledgeContent/KnowledgeContent'
 
 export default defineComponent({
   name: 'KnowledgePage',
   components: {
     Page,
     ContentWrapper,
+    KnowledgeContent,
   },
   props: {
     content: {
