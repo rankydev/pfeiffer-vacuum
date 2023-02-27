@@ -24,7 +24,12 @@ jest.mock('@nuxtjs/composition-api', () => {
       push: jest.fn((e) => mockRouterPush(e)),
     })),
     useContext: jest.fn(() => ({
-      app: { localePath: jest.fn((e) => e) },
+      app: {
+        localePath: jest.fn((e) => e),
+        $breakpoints: {
+          isMobile: { value: jest.fn() },
+        },
+      },
     })),
   }
 })
@@ -56,7 +61,11 @@ describe('SearchInput', () => {
       expect(mockRouterPush).toBeCalledTimes(1)
       expect(mockRouterPush).toBeCalledWith({
         path: 'shop-search',
-        query: { searchTerm: mockSearchTerm, searchType: 'products' },
+        query: {
+          searchTerm: mockSearchTerm,
+          initialSearchTerm: mockSearchTerm,
+          searchType: 'products',
+        },
       })
     })
   })
