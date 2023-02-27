@@ -155,9 +155,7 @@ export default defineComponent({
       if (basePrice.value === null || !priceValue) {
         return '-'
       }
-      const priceSign = priceValue?.substring(priceValue?.length - 1)
-      const price = priceValue?.substring(0, priceValue.length - 1)
-      return `${priceSign} ${price}`
+      return `${priceValue?.substring(0, 1)} ${priceValue?.substring(1)}`
     }
 
     const productPrice = computed(() => {
