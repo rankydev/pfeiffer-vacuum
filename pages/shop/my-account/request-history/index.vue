@@ -11,13 +11,29 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  onBeforeMount,
+  onServerPrefetch,
+} from '@nuxtjs/composition-api'
 import MyAccountHeading from '~/components/organisms/MyAccount/partials/MyAccountHeading'
+import { useRequestHistoryStore } from '~/stores/myaccount'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'RequestHistory',
   components: {
     MyAccountHeading,
+  },
+  setup() {
+    const requestHistoryStore = useRequestHistoryStore()
+    const { loadRequestHistory } = requestHistoryStore
+    const { requestHistory } = storeToRefs(requestHistoryStore)
+
+    onBeforeMount(loadRequestHistory)
+    onServerPrefetch(loadRequestHistory)
+
+    return { requestHistory }
   },
 })
 </script>
