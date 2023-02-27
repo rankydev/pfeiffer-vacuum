@@ -231,14 +231,12 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     if (result && result.status === 200 && !result.error) {
       await loadCart(false)
-      return true
     }
-
-    return false
   }
 
   const setRequestComment = async (comment) => {
     await loadCart(true)
+
     const result = await axios.post(
       getCartUrl() + '/comment',
       JSON.stringify(comment),
@@ -247,10 +245,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     if (result && result.status === 200 && !result.error) {
       await loadCart(false)
-      return true
     }
-
-    return false
   }
 
   return {

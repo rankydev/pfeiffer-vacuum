@@ -22,17 +22,32 @@
 
                   <div class="checkout__addresses">
                     <AddressCard
-                      :address="deliveryAddress"
+                      :address="deliveryAddress || {}"
                       :headline="$t('checkout.deliveryAddress')"
                       :editable="false"
                       class="checkout__address-item"
                     />
                     <AddressCard
-                      :address="userBillingAddress"
+                      :address="userBillingAddress || {}"
                       :headline="$t('checkout.billingAddress')"
                       :is-billing-address="true"
                       :editable="false"
                       class="checkout__address-item"
+                    />
+                  </div>
+
+                  <div class="checkout__text-fields">
+                    <PvInput
+                      v-model="customerReference"
+                      :label="$t('checkout.reference')"
+                      class="checkout__text-field-item"
+                      @focus="saveCustomerReference"
+                    />
+                    <PvTextArea
+                      v-model="commentOnRequest"
+                      :label="$t('checkout.comment')"
+                      class="checkout__text-field-item"
+                      @focus="saveCommentOnRequest"
                     />
                   </div>
 
@@ -123,8 +138,9 @@ import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
 import { storeToRefs } from 'pinia'
 
-import { useLogger } from '~/composables/useLogger'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
+import { useLogger } from '~/composables/useLogger'
+import { useToast } from '~/composables/useToast'
 
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
@@ -137,6 +153,8 @@ import Icon from '~/components/atoms/Icon/Icon'
 import AddressCard from '~/components/molecules/AddressCard/AddressCard'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
+import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
+import PvInput from '@/components/atoms/FormComponents/PvInput/PvInput'
 
 export default defineComponent({
   name: 'Checkout',
@@ -152,21 +170,59 @@ export default defineComponent({
     AddressCard,
     LoadingSpinner,
     PromotionLabel,
+    PvTextArea,
+    PvInput,
   },
   setup() {
     const route = useRoute()
     const context = useContext()
+    const { app, i18n } = useContext()
+    const isMobile = app.$breakpoints.isMobile
     const { logger } = useLogger('checkout')
-    const { app } = useContext()
+    const toast = useToast()
+
     const cartStore = useCartStore()
     const { currentCart, loading: cartLoading } = storeToRefs(cartStore)
     const userStore = useUserStore()
     const { userBillingAddress } = storeToRefs(userStore)
 
-    const isMobile = app.$breakpoints.isMobile
     const cartEntries = computed(() => currentCart.value?.entries)
     const deliveryAddress = computed(() => currentCart.value?.deliveryAddress)
     const ociBuyer = computed(() => userStore.currentUser?.ociBuyer)
+
+    // additional input text fields for user
+    const asyncRequests = ref([])
+    const customerReference = ref(currentCart.value?.customerReference || '')
+    const commentOnRequest = ref(currentCart.value?.comment || '')
+
+    const saveCustomerReference = async () => {
+      const updateNeeded =
+        currentCart.value?.customerReference !== customerReference.value
+      if (!updateNeeded) return
+      try {
+        const result = cartStore.setReferenceNumber(customerReference.value)
+        asyncRequests.value = [...asyncRequests.value, result]
+        await result
+      } catch (error) {
+        toast.error({
+          description: i18n.t('checkout.errorSettingReference'),
+        })
+      }
+    }
+
+    const saveCommentOnRequest = async () => {
+      const updateNeeded = currentCart.value?.comment !== commentOnRequest.value
+      if (!updateNeeded) return
+      try {
+        const result = cartStore.setRequestComment(commentOnRequest.value)
+        asyncRequests.value = [...asyncRequests.value, result]
+        await result
+      } catch (error) {
+        toast.error({
+          description: i18n.t('checkout.errorSettingComment'),
+        })
+      }
+    }
 
     // when entering the page loading state is already active until mounted is done
     const loading = ref(true)
@@ -198,7 +254,8 @@ export default defineComponent({
       return currentCart.value?.appliedOrderPromotions || []
     })
 
-    const placeOrder = () => {
+    const placeOrder = async () => {
+      await Promise.allSettled(asyncRequests.value)
       console.log('TODO: PLACE ORDER')
     }
 
@@ -211,6 +268,11 @@ export default defineComponent({
     })
 
     return {
+      customerReference,
+      commentOnRequest,
+      saveCommentOnRequest,
+      saveCustomerReference,
+
       loading,
       cartLoading,
       cartEntries,
@@ -231,16 +293,19 @@ export default defineComponent({
 .checkout {
   @apply tw-pt-6;
 
+  &__text-fields,
   &__addresses {
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-gap-5;
+    @apply tw-mb-6;
 
     @screen md {
       @apply tw-flex-row;
     }
   }
 
+  &__text-field-item,
   &__address-item {
     @apply tw-flex-1;
   }
@@ -252,7 +317,7 @@ export default defineComponent({
 
   &__article-list-heading {
     @apply tw-text-2xl;
-    @apply tw-mt-8 tw-mb-4;
+    @apply tw-mt-6 tw-mb-4;
   }
 
   &__empty {
