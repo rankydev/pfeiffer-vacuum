@@ -110,3 +110,5 @@ export const totalPrice = {
   value: 15756.86,
 }
 export const quantity = 1
+
+export default {}

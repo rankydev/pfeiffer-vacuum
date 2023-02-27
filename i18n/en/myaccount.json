@@ -55,5 +55,12 @@
     }
   },
   "contact": "Contact Us",
-  "salesRepresentative": "Sales Representative"
+  "salesRepresentative": "Sales Representative",
+  "serviceHistory": {
+    "serviceRequests": "Service requests"
+  },
+  "installedBase": {
+    "installedBase": "Installed Base"
+  },
+  "comingSoon": "This function will be available soon!"
 }
