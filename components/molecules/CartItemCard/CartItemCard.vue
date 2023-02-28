@@ -1,7 +1,10 @@
 <template>
   <div
     class="cart-item-card"
-    :class="{ 'cart-item-card-desktop': !isMiniCart }"
+    :class="{
+      'cart-item-card-desktop': !isMiniCart,
+      'cart-item-card--edit-mode': editMode,
+    }"
   >
     <div v-if="productImage" class="cart-item-card-image">
       <Link :href="url">
@@ -54,7 +57,7 @@
       @input="updateQuantity"
     />
     <div v-else class="cart-item-card-quantity cart-item-card-quantity--fixed">
-      <span class="cart-item-card-price__label">
+      <span class="cart-item-card-quantity__label">
         {{ $t('cart.quantity') }}
       </span>
       {{ quantity }}
@@ -316,17 +319,6 @@ export default defineComponent({
     @apply tw-mt-4;
     @apply tw-flex;
     @apply tw-pr-1;
-
-    &--fixed {
-      width: 100%;
-      text-align: center;
-      justify-content: center;
-    }
-
-    &__label {
-      @apply tw-text-xs;
-      @apply tw-mr-2;
-    }
   }
 
   &-price-error {
@@ -353,6 +345,7 @@ export default defineComponent({
     &__label {
       @apply tw-text-xs;
       @apply tw-ml-2;
+      @apply tw-text-pv-grey-48;
     }
 
     &__price {
@@ -370,6 +363,7 @@ export default defineComponent({
 
     &__label {
       @apply tw-text-xs;
+      @apply tw-text-pv-grey-48;
     }
 
     &__price {
@@ -441,6 +435,18 @@ export default defineComponent({
 }
 
 .cart-item-card-desktop {
+  &.cart-item-card {
+    @apply tw-grid-cols-12;
+
+    @screen lg {
+      @apply tw-grid-cols-11;
+    }
+
+    &--edit-mode {
+      @apply tw-grid-cols-12;
+    }
+  }
+
   .cart-item-card {
     @screen lg {
       @apply tw-grid-rows-3;
@@ -476,11 +482,25 @@ export default defineComponent({
 
     &-quantity {
       &--fixed {
-        .cart-item-card-quantity__label {
-          @screen lg {
+        @apply tw-items-center;
+        @apply tw-justify-start;
+        @apply tw-w-full;
+        @apply tw-mt-4;
+        @apply tw-h-12;
+
+        @screen lg {
+          @apply tw-justify-center;
+
+          .cart-item-card-quantity__label {
             @apply tw-hidden;
           }
         }
+      }
+
+      &__label {
+        @apply tw-text-xs;
+        @apply tw-mr-2;
+        @apply tw-text-pv-grey-48;
       }
 
       @screen lg {

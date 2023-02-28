@@ -1,6 +1,10 @@
 <template>
   <div class="cart-item-wrapper">
-    <div v-if="!isMiniCart" class="cart-item-header">
+    <div
+      v-if="!isMiniCart"
+      class="cart-item-header"
+      :class="{ 'cart-item-header--edit-mode': editMode }"
+    >
       <div class="cart-item-header__quantity">
         <span>{{ $t('cart.quantity') }}</span>
       </div>
@@ -153,14 +157,18 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .cart-item-header {
   @apply tw-hidden;
-  @apply tw-border-b tw-border-b-pv-grey-80;
 
   @screen lg {
-    @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
+    @apply tw-grid tw-grid-rows-1 tw-grid-cols-11;
+    @apply tw-border-b tw-border-b-pv-grey-80;
     @apply tw-pb-4;
+  }
+
+  &--edit-mode {
+    @apply tw-grid-cols-12;
   }
 
   &__quantity {
