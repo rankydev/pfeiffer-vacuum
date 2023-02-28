@@ -23,7 +23,7 @@ export const useDashboardStore = defineStore('accountData', () => {
 
       return {
         entries: [
-          order.code,
+          { icon: 'assignment', text: order.code, bold: true },
           order.customerReference || '-',
           i18n.d(new Date(order.placed), 'date'),
           order.total?.formattedValue,
@@ -50,16 +50,29 @@ export const useDashboardStore = defineStore('accountData', () => {
     })
   }
 
-  const buildTableHeaderObject = (title) => {
-    return {
-      title: i18n.t(`myaccount.${title}`),
+  const buildTableHeaderObject = (value) => {
+    const object = {
+      title: i18n.t(`myaccount.${value?.title || value}`),
     }
+    if (typeof value === 'object' && value?.bold) {
+      object.bold = value.bold
+    }
+    return object
   }
 
-  const recentRequestHeader = ['requestNumber', 'reference', 'date', 'total']
-  const recentRequestsTableHeader = recentRequestHeader.map((title) =>
-    buildTableHeaderObject(title)
-  )
+  const recentRequestHeader = [
+    {
+      title: 'requestNumber',
+      sortable: false,
+      bold: true,
+    },
+    'reference',
+    'date',
+    'total',
+  ]
+  const recentRequestsTableHeader = recentRequestHeader.map((value) => {
+    return buildTableHeaderObject(value)
+  })
 
   const getShoppingLists = async () => {
     try {
@@ -79,10 +92,14 @@ export const useDashboardStore = defineStore('accountData', () => {
   }
 
   const recentShoppingListHeader = [
-    'shoppingList.title',
+    {
+      title: 'shoppingList.title',
+      bold: true,
+    },
     'shoppingList.lastEdited',
     'shoppingList.items',
   ]
+
   const recentShoppingListTableHeader = recentShoppingListHeader.map((title) =>
     buildTableHeaderObject(title)
   )

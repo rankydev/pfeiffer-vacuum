@@ -14,7 +14,10 @@
           ]"
           @click="isSortable(entry) ? changeSorting(i) : null"
         >
-          {{ entry.title }}
+          <span v-if="entry.bold" class="table-view__head-entry--bold">{{
+            entry.title
+          }}</span>
+          <span v-else>{{ entry.title }}</span>
           <Icon
             v-if="isSortable(entry)"
             class="table-view__sort-icon"
@@ -164,7 +167,8 @@ export default {
       @apply tw-cursor-pointer;
     }
 
-    &--active {
+    &--active,
+    &--bold {
       @apply tw-font-bold;
     }
   }
@@ -197,6 +201,10 @@ export default {
 
     &--bold {
       @apply tw-font-bold;
+    }
+
+    .icon__material.icon--base {
+      @apply tw-align-bottom;
     }
   }
 }

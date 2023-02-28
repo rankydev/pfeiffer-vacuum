@@ -118,14 +118,20 @@ export default defineComponent({
     @apply tw-mb-8;
   }
 
-  .section-headline__buttons {
-    .button__label {
-      @apply tw-invisible;
-      @apply tw-opacity-0;
+  .section-headline {
+    @screen md {
+      @apply tw-mb-4;
+    }
 
-      @screen md {
-        @apply tw-visible;
-        @apply tw-opacity-100;
+    &__buttons {
+      .button__label {
+        @apply tw-invisible;
+        @apply tw-opacity-0;
+
+        @screen md {
+          @apply tw-visible;
+          @apply tw-opacity-100;
+        }
       }
     }
   }
