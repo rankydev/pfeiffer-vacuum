@@ -46,7 +46,7 @@
                     <PvTextArea
                       v-model="commentOnRequest"
                       :label="$t('checkout.comment')"
-                      class="checkout__text-field-item"
+                      class="checkout__text-field-item checkout__textarea"
                       @focus="saveCommentOnRequest"
                     />
                   </div>
@@ -308,6 +308,12 @@ export default defineComponent({
   &__text-field-item,
   &__address-item {
     @apply tw-flex-1;
+  }
+
+  &__textarea {
+    textarea {
+      @apply tw-h-12;
+    }
   }
 
   &__check-details {
