@@ -110,6 +110,9 @@ export const useDashboardStore = defineStore('accountData', () => {
     }
 
     return shoppingLists.value?.slice(0, 3).map((list) => {
+      const shoppingListUrl = `${localePath(
+        'shop-my-account-shopping-lists'
+      )}/${list.id}`
       return {
         entries: [
           { icon: 'assignment', text: list.name, bold: true },
@@ -124,6 +127,7 @@ export const useDashboardStore = defineStore('accountData', () => {
             icon: 'arrow_forward',
             variant: 'secondary',
             shape: 'plain',
+            href: shoppingListUrl,
             mobile: false,
           },
           {
@@ -131,6 +135,7 @@ export const useDashboardStore = defineStore('accountData', () => {
             variant: 'secondary',
             shape: 'outlined',
             label: i18n.t('myaccount.details'),
+            href: shoppingListUrl,
             desktop: false,
           },
         ],
