@@ -13,6 +13,7 @@ import {
 
 // only set to true during LSG build. Otherwise should default to false
 const isStorybook = process.env.STORYBOOK || false
+const baseURL = process.env.BASE_URL || 'http://localhost:3000'
 
 export default {
   srcDir: '',
@@ -118,6 +119,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    'nuxt-helmet',
     '@txp-cms/storyblok',
     '@nuxt/image',
     '@nuxtjs/i18n',
@@ -205,9 +207,9 @@ export default {
   },
 
   publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL || 'https://localhost:3000',
+    baseURL,
     axios: {
-      baseURL: process.env.BASE_URL || 'https://localhost:3000',
+      baseURL,
     },
     LANGUAGE_CODES: languageCodes,
     DEFAULT_LANGUAGE_CODE: defaultLanguageCode,
@@ -313,6 +315,42 @@ export default {
     // Temporary fix: https://github.com/nuxt-community/tailwindcss-module/issues/359
     webpack: {
       ignored: ['**/.git/**'],
+    },
+  },
+  render: {
+    csp: {
+      reportOnly: false,
+      hashAlgorithm: 'sha256',
+      policies: {
+        'default-src': ["'self'"],
+        'img-src': ["'self'", 'https:'],
+        'style-src': ["'self'", "'unsafe-inline'"],
+        'script-src': [
+          "'self'",
+          "'unsafe-inline'",
+          "'unsafe-eval'",
+          '*.usercentrics.eu',
+        ],
+        'connect-src': [
+          "'self'",
+          '*.usercentrics.eu',
+          '*.storyblok.com', // TODO Should be removed with PVWEB-955 since we don't want links to Storyblok directly
+          'sso.pfeiffer-vacuum.com',
+        ],
+        'frame-src': [
+          "'self'",
+          'sso.pfeiffer-vacuum.com',
+          'app.usercentrics.eu',
+        ],
+        'form-action': ["'self'"],
+        'frame-ancestors': ["'none'"],
+        'object-src': ["'none'"],
+        'base-uri': [baseURL],
+        // TODO If we have sentry, we can add this:
+        // 'report-uri': [
+        // `https://sentry.io/api/<project>/security/?sentry_key=<key>`
+        //]
+      },
     },
   },
 }
