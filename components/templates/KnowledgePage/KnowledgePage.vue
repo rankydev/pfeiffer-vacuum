@@ -10,7 +10,7 @@
         <template #default>
           <ContentWrapper>
             <nuxt-dynamic
-              v-for="item in stage"
+              v-for="item in enrichedStage"
               :key="item._uid"
               v-editable="item"
               v-bind="item"
@@ -31,6 +31,7 @@ import {
   useContext,
   computed,
   toRefs,
+  unref,
 } from '@nuxtjs/composition-api'
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
@@ -66,9 +67,21 @@ export default defineComponent({
 
     const { stage } = useTemplating(content)
 
+    // TODO: needs to be adapted and deleted as soon as the buttons have the possibility to add an anchor link
+    const enrichedStage = computed(() => {
+      const newStage = unref(stage) || []
+      if (newStage.length > 0) {
+        delete newStage[0].stageContent[0].buttons[0].href
+        newStage[0].stageContent[0].buttons[0].anchor = '#knowledge-results'
+      }
+
+      return newStage
+    })
+
     return {
       slugs,
       stage,
+      enrichedStage,
     }
   },
 })
