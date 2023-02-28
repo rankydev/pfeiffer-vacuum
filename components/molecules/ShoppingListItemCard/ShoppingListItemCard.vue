@@ -128,7 +128,7 @@ export default defineComponent({
     const userStore = useUserStore()
     const cartStore = useCartStore()
     const { basePrice, quantity, product } = toRefs(props)
-    const quantityModel = ref(quantity.value)
+    const quantityModel = ref(quantity?.value)
     const {
       isApprovedUser,
       isLeadUser,
@@ -140,19 +140,19 @@ export default defineComponent({
 
     const noPriceReason = computed(() => {
       const path = 'product.login.loginToSeePrices.'
-      if (!basePrice.value) return i18n.t('product.priceOnRequest')
-      if (isLeadUser.value) return i18n.t(path + 'lead')
-      if (isOpenUser.value) return i18n.t(path + 'open')
-      if (isRejectedUser.value) return i18n.t(path + 'rejected')
-      return i18n.t('product.noPriceAvailable')
+      if (!basePrice.value) return i18n?.t('product.priceOnRequest')
+      if (isLeadUser.value) return i18n?.t(path + 'lead')
+      if (isOpenUser.value) return i18n?.t(path + 'open')
+      if (isRejectedUser.value) return i18n?.t(path + 'rejected')
+      return i18n?.t('product.noPriceAvailable')
     })
 
     const isPriceVisible = computed(
-      () => !!(basePrice.value && isApprovedUser.value)
+      () => !!(basePrice?.value && isApprovedUser?.value)
     )
 
     const getPriceString = (priceValue) => {
-      if (basePrice.value === null || !priceValue) {
+      if (!basePrice?.value || !priceValue) {
         return '-'
       }
       return priceValue
@@ -163,47 +163,47 @@ export default defineComponent({
     })
 
     const productImage = computed(() => {
-      return product.value?.images?.[0] || null
+      return product?.value?.images?.[0] || null
     })
 
     const productName = computed(() => {
-      return product.value?.name || ''
+      return product?.value?.name || ''
     })
 
     const orderNumber = computed(() => {
-      return product.value?.orderNumber || ''
+      return product?.value?.orderNumber || ''
     })
 
     const details = computed(
-      () => product.value.variationMatrix?.variationAttributes
+      () => product?.value?.variationMatrix?.variationAttributes
     )
 
     const addToShoppingList = () => {
       emit('addToShoppingList', {
-        ...product.value,
-        quantity: quantityModel.value,
+        ...product?.value,
+        quantity: quantityModel?.value,
       })
     }
     const deleteFromCart = () => {
-      emit('delete', { ...product.value, quantity: quantityModel.value })
+      emit('delete', { ...product?.value, quantity: quantityModel?.value })
     }
 
     const addToCart = async () => {
-      await addProductToCart(product.value?.code, quantityModel.value)
+      await addProductToCart(product?.value?.code, quantityModel?.value)
     }
 
     const updateCartQuantity = useDebounceFn(() => {
-      emit('update', { ...product.value, quantity: quantityModel.value })
+      emit('update', { ...product?.value, quantity: quantityModel?.value })
     }, 500)
 
     const url = computed(() =>
       app.localePath({
         name: 'shop-products-product',
-        params: { product: product.value?.code },
+        params: { product: product?.value?.code },
       })
     )
     const isInactive = computed(() => {
-      return product.value?.purchasable === false
+      return product?.value?.purchasable === false
     })
 
     const updateQuantity = (value) => {
