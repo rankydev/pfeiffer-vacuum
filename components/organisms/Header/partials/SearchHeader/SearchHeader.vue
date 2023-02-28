@@ -45,15 +45,11 @@
     <div
       v-if="currentSuggestions.length && (isFocused || suggestionHover)"
       class="search-header__suggestions--desktop"
-      @mouseover="suggestionHover = true"
-      @mouseleave="suggestionHover = false"
     >
-      <SearchButton
-        v-for="item in currentSuggestions"
-        :key="item.value"
-        class="search-header__suggestions--result"
-        :title="item.value"
-        @closeModal="closeSearchfield"
+      <SearchSuggestions
+        :items="currentSuggestions"
+        @suggestionHover="(value) => (suggestionHover = value)"
+        @click="closeSearchfield"
       />
     </div>
   </div>
@@ -61,12 +57,12 @@
 
 <script>
 import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
-
 import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
 import SearchButton from '~/components/molecules/SearchButton/SearchButton'
 import { useCategoryStore } from '~/stores/category/category'
+import SearchSuggestions from '~/components/molecules/SearchSuggestions/SearchSuggestions.vue'
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
@@ -75,6 +71,7 @@ export default defineComponent({
     Icon,
     GenericModal,
     SearchButton,
+    SearchSuggestions,
   },
   props: {
     hasOpacity: {
@@ -84,14 +81,13 @@ export default defineComponent({
   },
   setup() {
     const { app } = useContext()
-    const categoryStore = useCategoryStore()
     const isDesktop = app.$breakpoints.isDesktop
+    const categoryStore = useCategoryStore()
     const isOpen = ref(false)
     const isFocused = ref(true)
-    const suggestionHover = ref(false)
+    const suggestionHover = ref(true)
 
     const { currentSuggestions } = storeToRefs(categoryStore)
-
     const { blurSuggestions } = categoryStore
 
     const toggleSearchfield = () => {

@@ -3,9 +3,9 @@ import {
   computed,
   onBeforeMount,
   onServerPrefetch,
+  ssrRef,
   useContext,
   watch,
-  ssrRef,
   ref,
 } from '@nuxtjs/composition-api'
 import { useCartApi } from './partials/useCartApi'
@@ -67,10 +67,6 @@ export const useCartStore = defineStore('cart', () => {
   const addProductToCart = async (code, quantity) => {
     try {
       await addToCart(code, quantity)
-      toast.success(
-        { description: i18n.t('cart.addToCartSuccess') },
-        { timeout: 3000 }
-      )
     } catch (e) {
       logger.error('Could not add product to cart', e)
       toast.error(
@@ -80,10 +76,19 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
-  const updateProductQuantityFromCartWithoutToast = async (
-    entryNumber,
-    quantity
-  ) => {
+  const deleteProductFromCart = async (entryNumber) => {
+    try {
+      await deleteEntry(entryNumber)
+    } catch (e) {
+      logger.error('Could not delete product from cart', e)
+      toast.error(
+        { description: i18n.t('cart.deleteFromCartError') },
+        { timeout: 3000 }
+      )
+    }
+  }
+
+  const updateProductQuantityFromCart = async (entryNumber, quantity) => {
     try {
       if (quantity === 0) {
         await deleteEntry(entryNumber)
@@ -92,14 +97,10 @@ export const useCartStore = defineStore('cart', () => {
       }
     } catch (e) {
       logger.error('Could not update product quantity', e)
-    }
-  }
-
-  const deleteProductFromCartWithoutToast = async (entryNumber) => {
-    try {
-      await deleteEntry(entryNumber)
-    } catch (e) {
-      logger.error('Could not delete product from cart', e)
+      toast.error(
+        { description: i18n.t('cart.updateCartError') },
+        { timeout: 3000 }
+      )
     }
   }
 
@@ -123,10 +124,10 @@ export const useCartStore = defineStore('cart', () => {
 
     // Actions
     addProductToCart,
-    updateProductQuantityFromCartWithoutToast,
-    deleteProductFromCartWithoutToast,
     setDeliveryAddress,
     setReferenceNumber,
     setRequestComment,
+    deleteProductFromCart,
+    updateProductQuantityFromCart,
   }
 })

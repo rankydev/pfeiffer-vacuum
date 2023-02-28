@@ -3,10 +3,11 @@ import navigation from './navigation.json'
 import form from './form.json'
 import product from './product.json'
 import registration from './registration.json'
-import slider from './slider.json'
 import category from './category.json'
+import slider from './slider.json'
 import myaccount from './myaccount.json'
 import cart from './cart.json'
+import knowledge from './knowledge.json'
 import checkout from './checkout.json'
 
 export default {
@@ -15,9 +16,10 @@ export default {
   form,
   product,
   registration,
-  category,
   slider,
+  category,
   myaccount,
   cart,
+  knowledge,
   checkout,
 }

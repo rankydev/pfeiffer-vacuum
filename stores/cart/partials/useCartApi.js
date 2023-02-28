@@ -253,10 +253,10 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     mergeCarts,
     loadCart,
     addToCart,
-    updateQuantity,
     deleteEntry,
     setDeliveryAddress,
     setReferenceNumber,
     setRequestComment,
+    updateQuantity,
   }
 }

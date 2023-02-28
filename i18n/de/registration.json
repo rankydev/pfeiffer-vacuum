@@ -90,5 +90,20 @@
     "benefit3": "Das Installed Base Management (VSM) nutzen",
     "buttonLeft": "Ohne Firmendaten registrieren",
     "buttonRight": "Firmendaten hinzufügen"
+  },
+  "registrationModal": {
+    "alreadyHaveAccount": "Si haben einen Account",
+    "pleaseLogIn": "Bitte melden Sie sich an",
+    "signIn": "Anmelden",
+    "pleaseSignIn": "Bitte melden Sie sich an. Nach der Anmeldung werden Sie wieder auf diese Seite weitergeleitet.",
+    "createAccountDesktop": "Vollständiges Konto erstellen",
+    "createAccountMobile": "Oder erstellen Sie ein neues Konto",
+    "addCompanyAddressData": "Hier können Sie die Adressdaten Ihres Unternehmens hinzufügen. Dieser Schritt ist optional. Anmekrung: Nur mit einem vollständigen Konto können Sie Preise sehen und Anfragen senden!",
+    "goToRegistration": "Zur Registrierung",
+    "registerForMoreFeatures": "Registrieren Sie sich auf unserer Plattform, um Zugang zu mehr Funktionen zu erhalten.",
+    "basisRegistration": "Basis Registrierung",
+    "basisRegistrationDescription": "Mit der Basis Registrierung können Sie Webinars und Whitepapers sehen und Einkaufslisten erstellen. Nach der Registrierung können Sie zu dieser Seite zurückkehren.",
+    "cancel": "Abbrechen",
+    "submit": "Absenden"
   }
 }

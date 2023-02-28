@@ -18,6 +18,12 @@
     "digit": "Contains at least 1 digit",
     "tooLong": "Your password may be too long (max. 128 characters)"
   },
+  "placeholder": {
+    "company": "Company name",
+    "firstname": "First name",
+    "lastname": "Last name",
+    "email": "email@email.com"
+  },
   "contactRequest": {
     "firstname": "First name",
     "surname": "Last name",
@@ -48,5 +54,8 @@
       "technicalError": "A technical error occurred. Please contact the Pfeiffer Vacuum support.",
       "customerInconsistentError": "There is a problem with your account. Please contact our customer service."
     }
+  },
+  "contactPersons": {
+    "contactButton": "Send message"
   }
 }

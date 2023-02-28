@@ -18,6 +18,12 @@
     "digit": "至少包含1位数字",
     "tooLong": "您的密码过长（不得超过128个字节）"
   },
+  "placeholder": {
+    "company": "公司名称",
+    "firstname": "名",
+    "lastname": "姓",
+    "email": "email@email.com"
+  },
   "contactRequest": {
     "firstname": "名",
     "surname": "姓",
@@ -48,5 +54,8 @@
       "technicalError": "发生技术错误。 请联系普发真空支持。",
       "customerInconsistentError": "出现了与您帐户有关的问题。 请联系我们的客服。"
     }
+  },
+  "contactPersons": {
+    "contactButton": "发信息"
   }
 }

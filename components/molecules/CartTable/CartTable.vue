@@ -14,12 +14,15 @@
       </span>
     </div>
     <CartItemCard
-      v-for="{ product, quantity, promotion, basePrice } in getSortedProducts"
+      v-for="(
+        { product, quantity, basePrice, totalPrice }, index
+      ) in getSortedProducts"
       :key="product.code"
       :product="product"
-      :price="basePrice"
+      :base-price="basePrice"
+      :price-total="totalPrice"
       :quantity="quantity"
-      :promotion="promotion"
+      :promotion="getProductPromotions(index)"
       :is-mini-cart="isMiniCart"
       :edit-mode="editMode"
       @update="updateCartQuantity"
@@ -60,10 +63,7 @@ export default defineComponent({
     const lastSortedBy = ref(null)
     const cartStore = useCartStore()
     const { currentCart } = storeToRefs(cartStore)
-    const {
-      deleteProductFromCartWithoutToast,
-      updateProductQuantityFromCartWithoutToast,
-    } = cartStore
+    const { deleteProductFromCart, updateProductQuantityFromCart } = cartStore
     const getUniqueId = (id) => useUniqueKey('CART_TABLE_' + id)
     const getProducts = computed(() => {
       return currentCart?.value?.entries
@@ -114,18 +114,30 @@ export default defineComponent({
 
     const findProductIndexInCart = (product) => {
       return getProducts.value.findIndex((item) => {
-        return item?.product?.code === product.code
+        return item?.product?.code === product?.code
       })
     }
 
     const updateCartQuantity = async (product) => {
       const index = findProductIndexInCart(product)
-      await updateProductQuantityFromCartWithoutToast(index, product?.quantity)
+      await updateProductQuantityFromCart(index, product?.quantity)
     }
 
     const deleteFromCart = async (product) => {
       const index = findProductIndexInCart(product)
-      await deleteProductFromCartWithoutToast(index)
+      await deleteProductFromCart(index)
+    }
+
+    const getProductPromotions = (index) => {
+      const productPromotion = {}
+
+      currentCart?.value?.appliedProductPromotions?.forEach((item) => {
+        if (item.consumedEntries?.find((e) => e.orderEntryNumber === index)) {
+          Object.assign(productPromotion, item)
+        }
+      })
+
+      return productPromotion
     }
 
     return {
@@ -135,6 +147,7 @@ export default defineComponent({
       useSortByPrice,
       useSortByTotalPrice,
       getUniqueId,
+      getProductPromotions,
     }
   },
 })

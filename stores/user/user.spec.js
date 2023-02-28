@@ -35,7 +35,10 @@ jest.mock('@nuxtjs/composition-api', () => {
       }
     },
     useRoute: () => ({ value: {} }),
-    useRouter: jest.fn(),
+    useRouter: jest.fn(() => ({
+      options: {},
+      push: jest.fn(),
+    })),
     onBeforeMount: jest.fn(),
     onServerPrefetch: jest.fn(),
     watch: (variable, callback) => mockWatch(variable, callback),
@@ -59,6 +62,7 @@ jest.mock('~/stores/user/partials/useUserApi', () => {
   return {
     useUserApi: () => ({
       getUserData: mockGetUserData,
+      getAccountManager: jest.fn(),
     }),
   }
 })

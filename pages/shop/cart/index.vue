@@ -43,6 +43,11 @@
 
                 <div class="cart-page__info">
                   <div v-show="!ociBuyer" class="cart-page__information">
+                    <PromotionLabel
+                      v-for="(promotion, index) in cartPromotions"
+                      :key="index"
+                      :subline="promotion.description"
+                    />
                     <PriceInformation information-type="price" />
                   </div>
 
@@ -54,7 +59,7 @@
                     <div class="cart-page__submit">
                       <Button
                         :href="localePath('shop-checkout')"
-                        :label="$t('cart.requestQuotation')"
+                        :label="$t('cart.requestQuote')"
                         class="cart-page__button--submit"
                         variant="primary"
                         icon="mail_outline"
@@ -111,7 +116,6 @@ import {
 } from '@nuxtjs/composition-api'
 import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
-
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
@@ -121,6 +125,7 @@ import PriceInformation from '~/components/molecules/PriceInformation/PriceInfor
 import TotalNetInformation from '~/components/molecules/TotalNetInformation/TotalNetInformation'
 import CartTable from '~/components/molecules/CartTable/CartTable'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 
 import { storeToRefs } from 'pinia'
 
@@ -135,6 +140,7 @@ export default defineComponent({
     TotalNetInformation,
     CartTable,
     Icon,
+    PromotionLabel,
   },
   setup() {
     const route = useRoute()
@@ -148,6 +154,9 @@ export default defineComponent({
     const isMobile = app.$breakpoints.isMobile
     const cartEntries = computed(() => currentCart.value.entries)
     const ociBuyer = computed(() => userStore.currentUser?.ociBuyer)
+    const cartPromotions = computed(() => {
+      return currentCart.value?.appliedOrderPromotions || []
+    })
 
     /**
      * build the cms slug
@@ -163,6 +172,7 @@ export default defineComponent({
       isMobile,
       currentCart,
       ociBuyer,
+      cartPromotions,
     }
   },
 })
@@ -249,6 +259,10 @@ export default defineComponent({
   }
 
   &__information {
+    .promotion-label {
+      @apply tw-mb-4;
+    }
+
     @screen md {
       @apply tw-text-sm;
     }

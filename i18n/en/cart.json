@@ -26,7 +26,7 @@
     }
   },
   "headline": "Shopping Cart",
-  "requestQuotation": "Request quotation",
+  "requestQuote": "Request quote",
   "continueShopping": "Continue Shopping",
   "saveCartToList": "Save cart to list",
   "getProductHelp": "Get product help",
@@ -38,9 +38,16 @@
   "quantity": "Quantity",
   "priceOnRequest": "Price on request",
   "details": "Details",
-  "addToCartSuccess": "Successfully added product to cart",
-  "addToCartError": "An error occured while adding product to cart",
+  "addToCartSuccess": "Item successfully added to shopping cart",
+  "addToCartError": "An error occured while adding item to shopping cart",
   "pricePerUnit": "Price / PU",
+  "editCart": "Edit cart",
+  "checkout": "Go to Checkout",
+  "shoppingCart": "Shopping Cart",
+  "deleteFromCartSuccess": "Item successfully removed from cart",
+  "deleteFromCartError": "An error occured while deleting product from cart",
+  "updateCartError": "An error occured while updating cart",
+  "cartEmpty": "Please add an item to the shopping cart.",
   "emptyMessage": "Please add an item to the shopping cart.",
   "showAllProducts": "Show all products"
 }

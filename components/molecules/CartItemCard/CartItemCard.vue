@@ -114,6 +114,7 @@ import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useDebounceFn } from '@vueuse/core'
 
 export default defineComponent({
   name: 'CartItemCard',
@@ -129,7 +130,12 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    price: {
+    basePrice: {
+      type: Object,
+      default: null,
+      required: false,
+    },
+    priceTotal: {
       type: Object,
       default: null,
       required: false,
@@ -158,7 +164,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const { app, i18n } = useContext()
     const userStore = useUserStore()
-    const { price, isMiniCart, quantity, product, promotion } = toRefs(props)
+    const { basePrice, isMiniCart, quantity, product, promotion } =
+      toRefs(props)
     const quantityModel = ref(quantity.value)
     const {
       isApprovedUser,
@@ -170,7 +177,7 @@ export default defineComponent({
 
     const noPriceReason = computed(() => {
       const path = 'product.login.loginToSeePrices.'
-      if (!price.value) return i18n.t('product.priceOnRequest')
+      if (!basePrice.value) return i18n.t('product.priceOnRequest')
       if (isLeadUser.value) return i18n.t(path + 'lead')
       if (isOpenUser.value) return i18n.t(path + 'open')
       if (isRejectedUser.value) return i18n.t(path + 'rejected')
@@ -178,23 +185,21 @@ export default defineComponent({
     })
 
     const isPriceVisible = computed(
-      () => !!(price.value && isApprovedUser.value)
+      () => !!(basePrice.value && isApprovedUser.value)
     )
 
     const getPriceString = (priceValue) => {
-      if (price.value === null) {
+      if (basePrice.value === null || !priceValue) {
         return '-'
       }
-      return `€ ${priceValue.toFixed(2).toLocaleString()}`
+      return priceValue
     }
 
     const productPrice = computed(() => {
-      return getPriceString(price.value?.value)
+      return getPriceString(basePrice?.value?.formattedValue)
     })
 
-    const totalPrice = computed(() => {
-      return getPriceString(quantityModel.value * price.value?.value)
-    })
+    const totalPrice = computed(() => props.priceTotal?.formattedValue || '')
 
     const productImage = computed(() => {
       return product.value?.images?.[0] || null
@@ -226,9 +231,9 @@ export default defineComponent({
       emit('delete', { ...product.value, quantity: quantityModel.value })
     }
 
-    const updateCartQuantity = () => {
+    const updateCartQuantity = useDebounceFn(() => {
       emit('update', { ...product.value, quantity: quantityModel.value })
-    }
+    }, 500)
 
     const url = computed(() =>
       app.localePath({

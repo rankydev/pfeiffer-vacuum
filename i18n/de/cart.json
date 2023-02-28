@@ -1,7 +1,7 @@
 {
   "overall1": "Gesamt",
   "overall2": "(Netto)",
-  "orderDiscount": "Order discount",
+  "orderDiscount": "Rabatt",
   "priceInformationHeadline": "Informationen über Preise",
   "priceInformation1": "Der hier angezeigte Online-Preis ist ein Referenzpreis, der keine Fracht, Zölle und Steuern enthält und nicht in allen Landeswährungen gepflegt wird.",
   "priceInformation2": "Um Ihr individuelles Angebot (in Ihrer Landeswährung) zu erhalten, senden Sie uns bitte Ihre Anfrage, so dass Ihnen Ihr lokales Pfeiffer Vacuum Unternehmen / Partnerunternehmen ein individuelles Angebot mit Ihren Preisen zur Verfügung stellen kann.",
@@ -26,21 +26,28 @@
     }
   },
   "headline": "Warenkorb",
-  "requestQuotation": "Angebot anfordern",
+  "requestQuote": "Angebot anfordern",
   "continueShopping": "Weiter einkaufen",
   "saveCartToList": "Als Liste speichern",
   "getProductHelp": "Hilfe zum Produkt",
   "list": {
-    "addArticle": "Zur Einkausliste hinzufügen"
+    "addArticle": "Zur Einkaufsliste hinzufügen"
   },
   "productPrice": "Preis",
   "totalPrice": "Gesamt",
   "quantity": "Anzahl",
   "priceOnRequest": "Preis auf Anfrage",
   "details": "Details",
-  "addToCartSuccess": "Produkt erfolgreich zum Warenkorb hinzugefügt",
-  "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten",
+  "addToCartSuccess": "Artikel wurde erfolgreich in den Warenkorb gelegt",
+  "addToCartError": "Beim Hinzufügen des Gegenstandes zum Warenkorb ist ein Fehler aufgetreten",
   "pricePerUnit": "Preis / Stück",
+  "editCart": "Warenkorb bearbeiten",
+  "checkout": "Zur Kasse",
+  "shoppingCart": "Warenkorb",
+  "deleteFromCartSuccess": "Artikel erfolgreich aus dem Warenkorb entfernt",
+  "deleteFromCartError": "Beim Entfernen des Produktes aus dem Warenkorb ist ein Fehler aufgetreten",
+  "updateCartError": "Beim Aktualisieren des Warenkorbs ist ein Fehler aufgetreten",
+  "cartEmpty": "Bitte legen Sie einen Artikel in den Warenkorb.",
   "emptyMessage": "Bitte legen Sie einen Artikel in den Warenkorb.",
   "showAllProducts": "Alle Produkte anzeigen"
 }
