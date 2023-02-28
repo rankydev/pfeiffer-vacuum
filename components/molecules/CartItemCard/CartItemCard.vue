@@ -126,6 +126,11 @@ export default defineComponent({
       default: null,
       required: false,
     },
+    priceTotal: {
+      type: Object,
+      default: null,
+      required: false,
+    },
     quantity: {
       type: Number,
       default: 1,
@@ -180,9 +185,7 @@ export default defineComponent({
       return getPriceString(price.value?.value)
     })
 
-    const totalPrice = computed(() => {
-      return getPriceString(quantityModel.value * price.value?.value)
-    })
+    const totalPrice = computed(() => props.priceTotal?.formattedValue || '')
 
     const productImage = computed(() => {
       return product.value?.images?.[0] || null

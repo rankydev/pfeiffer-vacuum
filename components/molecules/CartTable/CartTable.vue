@@ -14,18 +14,15 @@
       </span>
     </div>
     <CartItemCard
-      v-for="{
-        product,
-        quantity,
-        promotion,
-        basePrice,
-        code,
-      } in getSortedProducts"
+      v-for="(
+        { product, totalPrice, quantity, basePrice, code }, index
+      ) in getSortedProducts"
       :key="getUniqueId(code)"
       :product="product"
       :price="basePrice"
+      :priceTotal="totalPrice"
       :quantity="quantity"
-      :promotion="promotion"
+      :promotion="getProductPromotions(index)"
       :is-mini-cart="isMiniCart"
       @update="updateCartQuantity"
       @delete="deleteFromCart"
@@ -129,6 +126,18 @@ export default defineComponent({
       await deleteProductFromCartWithoutToast(index)
     }
 
+    const getProductPromotions = (index) => {
+      const productPromotion = {}
+
+      currentCart?.value?.appliedProductPromotions?.forEach((item) => {
+        if (item.consumedEntries?.find((e) => e.orderEntryNumber === index)) {
+          Object.assign(productPromotion, item)
+        }
+      })
+
+      return productPromotion
+    }
+
     return {
       updateCartQuantity,
       deleteFromCart,
@@ -136,6 +145,7 @@ export default defineComponent({
       useSortByPrice,
       useSortByTotalPrice,
       getUniqueId,
+      getProductPromotions,
     }
   },
 })
