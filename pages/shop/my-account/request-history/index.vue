@@ -15,6 +15,8 @@ import {
   onServerPrefetch,
   useContext,
   computed,
+  watch,
+  useRoute,
 } from '@nuxtjs/composition-api'
 import MyAccountHeading from '~/components/organisms/MyAccount/partials/MyAccountHeading'
 import GenericTable from '~/components/molecules/GenericTable/GenericTable'
@@ -31,6 +33,7 @@ export default defineComponent({
   },
   setup() {
     const { i18n, app } = useContext()
+    const route = useRoute()
 
     const requestHistoryStore = useRequestHistoryStore()
     const { loadRequestHistory } = requestHistoryStore
@@ -40,7 +43,9 @@ export default defineComponent({
     onServerPrefetch(loadRequestHistory)
 
     const header = computed(() => [
-      { title: i18n.t('myaccount.requestHistory.table.requestNumber') },
+      {
+        title: i18n.t('myaccount.requestHistory.table.requestNumber'),
+      },
       { title: i18n.t('myaccount.requestHistory.table.requestReference') },
       { title: i18n.t('myaccount.requestHistory.table.date') },
       { title: i18n.t('myaccount.requestHistory.table.requestTotal') },
@@ -54,11 +59,13 @@ export default defineComponent({
       const result = []
 
       if (requestHistory.value.orders) {
+        console.log(requestHistory.value.sorts, 'SALAMI')
         for (const request of requestHistory.value.orders) {
           const entries = []
 
           entries.push({
             text: request.code,
+            icon: 'description',
           })
           entries.push({
             text: request.customerReference || '-',
@@ -97,7 +104,9 @@ export default defineComponent({
       return result
     })
 
-    console.log(requestHistory.value.orders)
+    watch(route, (val1, val2) => {
+      loadRequestHistory(val1.query.currentPage || 1)
+    })
 
     return { requestHistory, header, tableData, totalPages }
   },

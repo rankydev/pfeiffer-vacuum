@@ -39,10 +39,17 @@
           :key="`row${i}-${j}`"
           class="table-view__cell"
         >
-          {{ typeof cell === 'object' ? cell.text : cell }}
-          <span v-if="cell.marginal" class="table-view__cell-marginal">
-            {{ cell.marginal }}
-          </span>
+          <div class="table-view__cell-wrapper">
+            <Icon
+              v-if="cell.icon"
+              class="table-view__cell-icon"
+              :icon="cell.icon"
+            />
+            {{ typeof cell === 'object' ? cell.text : cell }}
+            <span v-if="cell.marginal" class="table-view__cell-marginal">
+              {{ cell.marginal }}
+            </span>
+          </div>
         </td>
         <td class="table-view__cell table-view__cell--action">
           <Button
@@ -168,11 +175,19 @@ export default {
     @apply tw-p-4;
     @apply tw-text-pv-grey-16;
 
+    &-wrapper {
+      @apply tw-flex;
+    }
+
     &-marginal {
       @apply tw-block;
       @apply tw-text-pv-grey-48;
       @apply tw-text-xs;
       @apply tw-leading-6;
+    }
+
+    &-icon {
+      @apply tw-mr-3;
     }
 
     &--action {

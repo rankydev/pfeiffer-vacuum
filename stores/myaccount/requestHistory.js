@@ -10,13 +10,14 @@ export const useRequestHistoryStore = defineStore('requestHistory', () => {
 
   const requestHistory = ref([])
 
-  const loadRequestHistory = async (page, size = 5) => {
+  const loadRequestHistory = async (page, size = 5, sortCode) => {
     try {
       const result = await axios.$get(config.ORDER_API, {
         params: {
           fields: 'FULL',
           pageSize: size,
           currentPage: page - 1 || 0,
+          sort: sortCode,
         },
       })
 
