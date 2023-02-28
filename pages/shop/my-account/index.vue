@@ -2,7 +2,7 @@
   <div class="dashboard">
     <section class="section">
       <SectionHeadline :buttons="buttons.recentRequestButtons">
-        {{ $t('myaccount.recentRequests') }}
+        {{ $t('myaccount.recentRequests.recentRequests') }}
       </SectionHeadline>
 
       <GenericTable
@@ -14,13 +14,13 @@
       <EmptyWrapper
         v-else
         :button="buttons.emptyWrapper.recentRequests"
-        :label="$t('myaccount.lastRequestNotFound')"
+        :label="$t('myaccount.recentRequests.lastRequestNotFound')"
       />
     </section>
 
     <section class="section">
       <SectionHeadline :buttons="buttons.recentShoppingListsButtons">{{
-        $t('myaccount.recentShoppingLists')
+        $t('myaccount.shoppingList.recentShoppingLists')
       }}</SectionHeadline>
       <GenericTable
         v-if="recentShoppingLists"
@@ -35,21 +35,6 @@
         :button="buttons.emptyWrapper.shoppingList"
       />
     </section>
-
-    <section class="section">
-      <SectionHeadline>{{
-        $t('myaccount.installedBase.installedBase')
-      }}</SectionHeadline>
-
-      <p>{{ $t('myaccount.installedBase.underline2') }}</p>
-      <Button
-        :label="$t('myaccount.installedBase.installedBase')"
-        icon="arrow_forward"
-        variant="secondary"
-        shape="outlined"
-      />
-      <Button icon="add" variant="secondary" shape="filled" />
-    </section>
   </div>
 </template>
 
@@ -57,7 +42,6 @@
 import { defineComponent, useAsync, useContext } from '@nuxtjs/composition-api'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper.vue'
-import Button from '~/components/atoms/Button/Button.vue'
 import { useDashboardStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
 
@@ -66,7 +50,6 @@ export default defineComponent({
   components: {
     SectionHeadline,
     EmptyWrapper,
-    Button,
   },
   setup() {
     const { i18n, localePath } = useContext()
@@ -89,7 +72,7 @@ export default defineComponent({
       emptyWrapper: {
         recentRequests: {
           size: 'normal',
-          label: i18n.t('myaccount.goToProducts'),
+          label: i18n.t('myaccount.recentRequests.goToProducts'),
           shape: 'outlined',
           variant: 'secondary',
         },
@@ -103,7 +86,7 @@ export default defineComponent({
       },
       recentRequestButtons: [
         {
-          label: i18n.t('myaccount.allRequests'),
+          label: i18n.t('myaccount.recentRequests.allRequests'),
           icon: 'arrow_forward',
           href: localePath('shop-my-account-request-history'),
           variant: 'secondary',

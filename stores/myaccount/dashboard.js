@@ -16,7 +16,7 @@ export const useDashboardStore = defineStore('accountData', () => {
       orders.value = await myAccountStore.getOrders()
     }
 
-    return orders.value?.orders?.slice(0, 3).map((order) => {
+    return orders.value?.orders?.slice(0, 4).map((order) => {
       const orderUrl = `${localePath('shop-my-account-request-history')}/${
         order.code
       }`
@@ -62,13 +62,13 @@ export const useDashboardStore = defineStore('accountData', () => {
 
   const recentRequestHeader = [
     {
-      title: 'requestNumber',
+      title: 'recentRequests.requestNumber',
       sortable: false,
       bold: true,
     },
-    'reference',
-    'date',
-    'total',
+    'recentRequests.reference',
+    'recentRequests.date',
+    'recentRequests.total',
   ]
   const recentRequestsTableHeader = recentRequestHeader.map((value) => {
     return buildTableHeaderObject(value)
@@ -109,7 +109,7 @@ export const useDashboardStore = defineStore('accountData', () => {
       shoppingLists.value = await getShoppingLists()
     }
 
-    return shoppingLists.value?.slice(0, 3).map((list) => {
+    return shoppingLists.value?.slice(0, 4).map((list) => {
       const shoppingListUrl = `${localePath(
         'shop-my-account-shopping-lists'
       )}/${list.id}`
