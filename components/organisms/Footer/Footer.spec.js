@@ -1,43 +1,53 @@
-import { createLocalVue, RouterLinkStub, shallowMount } from '@vue/test-utils'
+import { RouterLinkStub, shallowMount } from '@vue/test-utils'
 import Footer from './Footer'
 import SocialMedia from '~/components/molecules/SocialMedia/SocialMedia'
 import Link from '~/components/atoms/Link/Link'
-import newsletterContent from './partials/FooterNewsletter/FooterNewsletter.stories.content'
 
-let wrapper
+let mockConfig = {}
 
-function createComponent(propsData = {}) {
-  const stubs = { NuxtDynamic: true, NuxtLink: RouterLinkStub }
-  const localVue = createLocalVue()
-  const editable = (el, key) => (el.innerText = key.value)
-  localVue.directive('editable', editable)
-
-  const options = {
-    localVue,
-    propsData,
-    stubs,
+jest.mock('@nuxtjs/composition-api', () => {
+  const originalModule = jest.requireActual('@nuxtjs/composition-api')
+  return {
+    ...originalModule,
+    useContext: () => ({
+      $config: mockConfig,
+    }),
   }
-  wrapper = shallowMount(Footer, options)
-}
+})
 
 describe('Footer', () => {
+  let wrapper
+
+  function createComponent() {
+    wrapper = shallowMount(Footer, {
+      propsData: {},
+      stubs: {
+        NuxtDynamic: true,
+        NuxtLink: RouterLinkStub,
+      },
+    })
+  }
+
   describe('initial state', () => {
     it('should render all partials', () => {
-      const propsData = { newsletter: [newsletterContent] }
-      createComponent(propsData)
+      mockConfig = {}
+
+      createComponent()
 
       const socialMedia = wrapper.findComponent(SocialMedia)
-      const footerNewsletter = wrapper.find('[component="FooterNewsletter"]')
+      const textLink = wrapper.findComponent(Link)
 
       expect(socialMedia.exists()).toBeTruthy()
-      expect(footerNewsletter.exists()).toBeTruthy()
+      expect(textLink.exists()).toBeFalsy()
     })
 
     it('should render version info and link given development variables', () => {
-      process.env.NODE_ENV = 'development'
-      process.env.CI_COMMIT_SHORT_SHA = '12345678'
-      process.env.CI_COMMIT_REF_NAME = 'test_version_info'
-      process.env.CI_PROJECT_URL = 'https://localhost/pvac/pvweb'
+      mockConfig = {
+        NODE_ENV: 'development',
+        CI_COMMIT_SHORT_SHA: '12345678',
+        CI_COMMIT_REF_NAME: 'test_version_info',
+        CI_PROJECT_URL: 'https://localhost/pvac/pvweb',
+      }
 
       createComponent()
 
@@ -52,10 +62,10 @@ describe('Footer', () => {
     })
 
     it('should NOT render version info and link given production variables', () => {
-      process.env.NODE_ENV = 'production'
-      process.env.CI_COMMIT_SHORT_SHA = '12345678'
-      process.env.CI_PROJECT_URL = 'https://localhost/pvac/pvweb'
-      process.env.CI_COMMIT_REF_NAME = 'test_version_info'
+      mockConfig = {
+        CI_COMMIT_SHORT_SHA: '12345678',
+        CI_COMMIT_REF_NAME: 'test_version_info',
+      }
 
       createComponent()
 

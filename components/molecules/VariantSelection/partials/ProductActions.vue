@@ -62,13 +62,15 @@
           shape="outlined"
           :disabled="isMaster"
         />
+        <!-- TODO: As soon as InstalledBase are implemented please substitute the disabled attribute here with
+         :disabled="addToBaseButtonDisabled" -->
         <Button
           class="product-actions__shopping-list"
           :label="$t('product.addToInstalledBase')"
           icon="assignment"
           variant="secondary"
           shape="outlined"
-          :disabled="addToBaseButtonDisabled"
+          :disabled="true"
         />
       </template>
     </div>
@@ -96,10 +98,17 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import InformationModal from '~/components/molecules/InformationModal/InformationModal'
 import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import Button from '~/components/atoms/Button/Button.vue'
 
 export default defineComponent({
   name: 'ProductActions',
-  components: { PvInput, InformationModal, LoginToSeePricesLabel, Icon },
+  components: {
+    PvInput,
+    InformationModal,
+    LoginToSeePricesLabel,
+    Icon,
+    Button,
+  },
   setup() {
     const { i18n } = useContext()
     const userStore = useUserStore()

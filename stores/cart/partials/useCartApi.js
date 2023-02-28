@@ -261,7 +261,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     getOrCreateCart,
     mergeCarts,
     addToCart,
-    updateQuantity,
     deleteEntry,
+    updateQuantity,
   }
 }

@@ -24,10 +24,7 @@
       v-if="icon"
       :icon="icon"
       :size="iconSize"
-      :class="{
-        'button__icon--prepend': label && prependIcon,
-        'button__icon--append': label && !prependIcon,
-      }"
+      :class="{ 'button__icon--prepend': label && prependIcon }"
     />
     <!-- This makes sure there is at least whitespace as
     content in the button if no icon or label are provided -->

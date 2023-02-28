@@ -15,12 +15,12 @@
     </div>
     <CartItemCard
       v-for="(
-        { product, totalPrice, quantity, basePrice, code }, index
+        { product, quantity, basePrice, totalPrice, code }, index
       ) in getSortedProducts"
       :key="getUniqueId(code)"
       :product="product"
-      :price="basePrice"
-      :priceTotal="totalPrice"
+      :base-price="basePrice"
+      :price-total="totalPrice"
       :quantity="quantity"
       :promotion="getProductPromotions(index)"
       :is-mini-cart="isMiniCart"
@@ -58,10 +58,7 @@ export default defineComponent({
     const lastSortedBy = ref(null)
     const cartStore = useCartStore()
     const { currentCart } = storeToRefs(cartStore)
-    const {
-      deleteProductFromCartWithoutToast,
-      updateProductQuantityFromCartWithoutToast,
-    } = cartStore
+    const { deleteProductFromCart, updateProductQuantityFromCart } = cartStore
     const getUniqueId = (id) => useUniqueKey('CART_TABLE_' + id)
     const getProducts = computed(() => {
       return currentCart?.value?.entries
@@ -112,18 +109,18 @@ export default defineComponent({
 
     const findProductIndexInCart = (product) => {
       return getProducts.value.findIndex((item) => {
-        return item?.product?.code === product.code
+        return item?.product?.code === product?.code
       })
     }
 
     const updateCartQuantity = async (product) => {
       const index = findProductIndexInCart(product)
-      await updateProductQuantityFromCartWithoutToast(index, product?.quantity)
+      await updateProductQuantityFromCart(index, product?.quantity)
     }
 
     const deleteFromCart = async (product) => {
       const index = findProductIndexInCart(product)
-      await deleteProductFromCartWithoutToast(index)
+      await deleteProductFromCart(index)
     }
 
     const getProductPromotions = (index) => {

@@ -53,5 +53,14 @@
       "requestInfo": "Sie dürfen keine Anfragen senden",
       "functionalityInfo": "Sie dürfen diese Funktion nicht nutzen"
     }
-  }
+  },
+  "contact": "Kontakt",
+  "salesRepresentative": "Vertriebsingenieur",
+  "serviceHistory": {
+    "serviceRequests": "Service-Anfragen"
+  },
+  "installedBase": {
+    "installedBase": "Installed Base"
+  },
+  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!"
 }
