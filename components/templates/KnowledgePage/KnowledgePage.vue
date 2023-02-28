@@ -70,7 +70,7 @@ export default defineComponent({
     // TODO: needs to be adapted and deleted as soon as the buttons have the possibility to add an anchor link
     const enrichedStage = computed(() => {
       const newStage = unref(stage) || []
-      if (newStage.length > 0) {
+      if (newStage.length && route.value.path === '/en/knowledge') {
         delete newStage[0].stageContent[0].buttons[0].href
         newStage[0].stageContent[0].buttons[0].anchor = '#knowledge-results'
       }
