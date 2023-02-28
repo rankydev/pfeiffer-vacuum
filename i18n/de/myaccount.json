@@ -59,10 +59,12 @@
   "requestHistory": {
     "table": {
       "reference": "Referenz",
-      "requestReference": "Referenznummer:",
-      "customerReference": "Kundenreferenz:",
+      "requestNumber": "Anfragenummer",
+      "requestReference": "Referenznummer",
+      "customerReference": "Kundenreferenz",
       "requestDate": "Anfragedatum",
-      "date": "Datum"
+      "date": "Datum",
+      "requestTotal": "Total (net)"
     }
   }
 }

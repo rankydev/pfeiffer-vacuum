@@ -57,10 +57,12 @@
   "requestHistory": {
     "table": {
       "reference": "Reference",
-      "requestReference": "Request reference::",
-      "customerReference": "Customer reference:",
+      "requestNumber": "Request number",
+      "requestReference": "Request reference",
+      "customerReference": "Customer reference",
       "requestDate": "Request date",
-      "date": "Date"
+      "date": "Date",
+      "requestTotal": "Total (net)"
     }
   }
 }

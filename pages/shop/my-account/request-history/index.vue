@@ -1,13 +1,8 @@
 <template>
   <div>
     <MyAccountHeading />
-    <div
-      class="tw-flex tw-bg-pv-grey-88 tw-rounded-md tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-2xl tw-text-center"
-      style="height: 800px"
-    >
-      <div>RequestHistory</div>
-      <!-- <TableView :header="header" /> -->
-      {{ requestHistory.orders }}
+    <div>
+      <GenericTable :header="header" :table-data="tableData" />
     </div>
   </div>
 </template>
@@ -17,10 +12,12 @@ import {
   defineComponent,
   onBeforeMount,
   onServerPrefetch,
-  ref,
+  useContext,
+  computed,
 } from '@nuxtjs/composition-api'
 import MyAccountHeading from '~/components/organisms/MyAccount/partials/MyAccountHeading'
 // import TableView from '~/components/molecules/GenericTable/partials/TableView'
+import GenericTable from '~/components/molecules/GenericTable/GenericTable'
 import { useRequestHistoryStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
 
@@ -28,9 +25,12 @@ export default defineComponent({
   name: 'RequestHistory',
   components: {
     MyAccountHeading,
+    GenericTable,
     // TableView,
   },
   setup() {
+    const { i18n } = useContext()
+
     const requestHistoryStore = useRequestHistoryStore()
     const { loadRequestHistory } = requestHistoryStore
 
@@ -38,16 +38,72 @@ export default defineComponent({
     onBeforeMount(loadRequestHistory)
     onServerPrefetch(loadRequestHistory)
 
-    const header = ref([
-      { title: 'Request number' },
-      { title: 'Reference' },
-      { title: 'Date' },
-      { title: 'Total (net)' },
+    const header = computed(() => [
+      { title: i18n.t('myaccount.requestHistory.table.requestNumber') },
+      { title: i18n.t('myaccount.requestHistory.table.requestReference') },
+      { title: i18n.t('myaccount.requestHistory.table.date') },
+      { title: i18n.t('myaccount.requestHistory.table.requestTotal') },
     ])
 
-    console.log(requestHistory)
+    const tableData = computed(() => {
+      const result = []
 
-    return { requestHistory, header }
+      console.log(requestHistory.value.orders)
+      if (requestHistory.value.orders) {
+        for (const request of requestHistory.value.orders) {
+          const entries = []
+
+          entries.push({
+            text: request.code,
+          })
+          entries.push({
+            text: request.customerReference || '-',
+          })
+          entries.push({
+            text: i18n.d(new Date(request.placed), 'date'),
+          })
+          entries.push({
+            text: request.total.formattedValue,
+          })
+
+          const actions = [
+            {
+              desktop: true,
+              mobile: true,
+              label: i18n.t('cart.details'),
+              icon: 'arrow_forward',
+              variant: 'secondary',
+              shape: 'outlined',
+              href: `#`,
+              // href: `${PATH_EMPOLIS}/${request.downloadLink}`,
+              target: '_blank',
+            },
+            // {
+            //   desktop: false,
+            //   mobile: true,
+            //   label: i18n.t('product.download'),
+            //   icon: 'request_download',
+            //   variant: 'secondary',
+            //   shape: 'outlined',
+            //   href: `${PATH_EMPOLIS}/${request.downloadLink}`,
+            //   target: '_blank',
+            //   download: isStepFile(request) ? `${request.title}.stp` : null,
+            // },
+          ]
+
+          result.push({
+            entries,
+            actions,
+          })
+        }
+      }
+
+      return result
+    })
+
+    console.log(requestHistory.value.orders)
+
+    return { requestHistory, header, tableData }
   },
 })
 </script>
