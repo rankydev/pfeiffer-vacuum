@@ -21,14 +21,14 @@ export const product = {
     altText:
       'Dimensions for Duo 1.6, 1-ph Motor, 100 V, 50 Hz | 95–105 V, 60 Hz',
     format: '300Wx300H',
-    url: '/medias/?context=bWFzdGVyfGltYWdlc3w1MDA0NHxpbWFnZS9wbmd8aDRlL2gxYy84ODI0Njg2MTgyNDMwfDY4MmVkNjI2ZDJiYWY2ZDgzNWFhZTc2OTBkZDgwOWQ1ZTNmZDQzMzIyOWU1M2E4ZTdhYWUzNGY4OGY4MThmMDM',
+    url: '/medias/product-image.png',
   },
   images: [
     {
       altText: 'Duo 1.6, 1-ph Motor, 100 V, 50 Hz | 95–105 V, 60 Hz',
       format: 'product',
       imageType: 'PRIMARY',
-      url: '/medias/?context=bWFzdGVyfGltYWdlc3w0NTcwMDd8aW1hZ2UvcG5nfGgxMy9oYTEvODgyNDY4Nzk1MTkwMnxjNGJlMmFkN2RkZTBhOWNjOTdlZThjNzMyYzlhMTc5ZWQ0YmE1ZTlkOTU4NmQ4ZGY1NzI3YmY0YWI1M2ZmNTYz',
+      url: '/medias/product-image.png',
     },
   ],
   master: '77a36ee3-740c-49a9-aeba-5baebe01ff07_sample',
