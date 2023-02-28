@@ -59,6 +59,12 @@
   "lastEdited": "Last edited",
   "shoppingList": {
     "items": "items",
-    "details": "Details"
+    "details": "Details",
+    "confirmationModal": {
+      "headline": "Do you really want to delete this shopping list?",
+      "cancel": "No",
+      "confirm": "Yes",
+      "deleteSuccess": "Shopping list was deleted successfully."
+    }
   }
 }

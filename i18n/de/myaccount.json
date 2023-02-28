@@ -59,6 +59,12 @@
   "lastEdited": "Zuletzt bearbeitet",
   "shoppingList": {
     "items": "Artikel",
-    "details": "Details"
+    "details": "Details",
+    "confirmationModal": {
+      "headline": "Möchten Sie diese Einkaufsliste wirklich löschen?",
+      "cancel": "Nein",
+      "confirm": "Ja",
+      "deleteSuccess": "Einkaufsliste wurde erfolgreich gelöscht."
+    }
   }
 }

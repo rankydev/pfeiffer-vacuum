@@ -39,8 +39,20 @@
         class="shopping-list-item__buttons__delete"
         icon="delete"
         variant="secondary"
+        @click="toggleInformationModal"
       />
     </div>
+    <InformationModal
+      :is-open="isInformationModalOpen"
+      :headline="$t('myaccount.shoppingList.confirmationModal.headline')"
+      :cancel-text="$t('myaccount.shoppingList.confirmationModal.cancel')"
+      :confirm-text="$t('myaccount.shoppingList.confirmationModal.confirm')"
+      cancel-icon="close"
+      confirm-icon="check"
+      @confirm="acceptDelete"
+      @cancel="toggleInformationModal"
+      @closeModal="toggleInformationModal"
+    />
   </div>
 </template>
 
@@ -50,6 +62,8 @@ import { ref, computed, watch } from '@vue/composition-api'
 import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Button from '~/components/atoms/Button/Button.vue'
+import { useToast } from '~/composables/useToast'
+
 export default defineComponent({
   name: 'ShoppingListItem',
   components: {
@@ -69,8 +83,10 @@ export default defineComponent({
   },
   emits: ['update'],
   setup(props, { emit }) {
-    const { app } = useContext()
+    const { app, i18n } = useContext()
+    const toast = useToast()
     const selected = ref(false)
+    const isInformationModalOpen = ref(false)
     const toggleSelected = () => {
       selected.value = !selected.value
       emit('update', { selected: selected.value, list: props.list })
@@ -91,6 +107,22 @@ export default defineComponent({
       return isTabletOrMore ? 'plain' : 'outlined'
     })
 
+    const toggleInformationModal = () => {
+      isInformationModalOpen.value = !isInformationModalOpen.value
+    }
+
+    const acceptDelete = () => {
+      toggleInformationModal()
+      toast.success(
+        {
+          description: i18n.t(
+            'myaccount.shoppingList.confirmationModal.deleteSuccess'
+          ),
+        },
+        { timeout: 3000 }
+      )
+    }
+
     watch(props, (newVal, oldVal) => {
       if (newVal?.selectMode !== oldVal?.selectMode) {
         selected.value = false
@@ -102,6 +134,9 @@ export default defineComponent({
       listUrl,
       toggleSelected,
       getShapeType,
+      isInformationModalOpen,
+      acceptDelete,
+      toggleInformationModal,
     }
   },
 })
