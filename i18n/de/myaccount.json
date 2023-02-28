@@ -62,5 +62,16 @@
   "installedBase": {
     "installedBase": "Installed Base"
   },
-  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!"
+  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!",
+  "lastEdited": "Zuletzt bearbeitet",
+  "shoppingList": {
+    "items": "Artikel",
+    "details": "Details",
+    "confirmationModal": {
+      "headline": "Möchten Sie diese Einkaufsliste wirklich löschen?",
+      "cancel": "Nein",
+      "confirm": "Ja",
+      "deleteSuccess": "Einkaufsliste wurde erfolgreich gelöscht."
+    }
+  }
 }
