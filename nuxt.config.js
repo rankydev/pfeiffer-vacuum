@@ -123,6 +123,7 @@ export default {
     '@nuxtjs/i18n',
     '@nuxtjs/axios',
     'vue-toastification/nuxt',
+    '@nuxtjs/apollo',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -314,5 +315,14 @@ export default {
     webpack: {
       ignored: ['**/.git/**'],
     },
+  },
+  apollo: {
+    clientConfigs: {
+      default: '~/apollo/vacuumCalculator.config.js',
+      vacuumCalculator: '~/apollo/vacuumCalculator.config.js',
+    },
+    watchLoading: '~/apollo/loadingHandler.js',
+    errorHandler: '~/apollo/errorHandler.js',
+    includeNodeModules: true,
   },
 }

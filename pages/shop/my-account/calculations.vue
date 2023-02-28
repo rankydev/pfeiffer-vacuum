@@ -13,11 +13,17 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import MyAccountHeading from '~/components/organisms/MyAccount/partials/MyAccountHeading'
+import calculationList from '~/apollo/queries/vacuumCalculator/calculationList.gql'
 
 export default defineComponent({
   name: 'Calculations',
   components: {
     MyAccountHeading,
+  },
+  setup() {
+    // TODO: Fetch data
+    const data = useAsyncQuery(calculationList)
+    console.log('###', data)
   },
 })
 </script>
