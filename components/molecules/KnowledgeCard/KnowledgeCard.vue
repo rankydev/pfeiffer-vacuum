@@ -82,7 +82,7 @@ export default defineComponent({
     const isWebinar = computed(() => entry?.value?.type === 'WEBINAR')
     const tag = computed(() => {
       const type = isWebinar.value ? 'webinar' : 'whitepaper'
-      const transString = `entry.${type}.heading`
+      const transString = `knowledge.${type}.heading`
       const hasTag = i18n.te(transString)
       return hasTag ? i18n.t(transString) : null
     })
