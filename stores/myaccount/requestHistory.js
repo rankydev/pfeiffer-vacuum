@@ -1,8 +1,14 @@
-import { defineStore, ref } from 'pinia'
+import { defineStore } from 'pinia'
+import { ref } from '@nuxtjs/composition-api'
+import config from '~/config/hybris.config'
+import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 
 export const useRequestHistoryStore = defineStore('requestHistory', () => {
   const { axios } = useAxiosForHybris()
+  const { logger } = useLogger('requestHistoryStore')
+
+  const requestHistory = ref([])
 
   const loadRequestHistory = async (page, size = 5) => {
     try {
@@ -15,6 +21,7 @@ export const useRequestHistoryStore = defineStore('requestHistory', () => {
       })
 
       if (result && Array.isArray(result.orders) && !result.error) {
+        requestHistory.value = result
         return result
       }
     } catch (e) {
@@ -25,8 +32,6 @@ export const useRequestHistoryStore = defineStore('requestHistory', () => {
       return []
     }
   }
-
-  const requestHistory = ref([])
 
   return {
     // States

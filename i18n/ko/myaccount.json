@@ -53,5 +53,14 @@
     }
   },
   "contact": "문의하기",
-  "salesRepresentative": "영업 담당자"
+  "salesRepresentative": "영업 담당자",
+  "requestHistory": {
+    "table": {
+      "reference": "Reference",
+      "requestReference": "Request reference::",
+      "customerReference": "Customer reference:",
+      "requestDate": "Request date",
+      "date": "Date"
+    }
+  }
 }

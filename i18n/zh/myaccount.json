@@ -53,5 +53,14 @@
     }
   },
   "contact": "联系我们",
-  "salesRepresentative": "销售代表"
+  "salesRepresentative": "销售代表",
+  "requestHistory": {
+    "table": {
+      "reference": "Reference",
+      "requestReference": "Request reference::",
+      "customerReference": "Customer reference:",
+      "requestDate": "Request date",
+      "date": "Date"
+    }
+  }
 }

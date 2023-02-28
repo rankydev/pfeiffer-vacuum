@@ -55,5 +55,14 @@
     }
   },
   "contact": "Contact Us",
-  "salesRepresentative": "Sales Representative"
+  "salesRepresentative": "Sales Representative",
+  "requestHistory": {
+    "table": {
+      "reference": "Reference",
+      "requestReference": "Request reference::",
+      "customerReference": "Customer reference:",
+      "requestDate": "Request date",
+      "date": "Date"
+    }
+  }
 }
