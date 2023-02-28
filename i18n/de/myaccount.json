@@ -75,7 +75,8 @@
     "all": "Alle Einkaufslisten",
     "title": "Titel",
     "lastEdited": "Letzte Änderung",
-    "items": "Artikel"
+    "items": "Artikel",
+    "noShoppingLists": "Bisher wurden keine Einkaufslisten angelegt!"
   },
   "serviceHistory": {
     "serviceRequests": "Service-Anfragen"

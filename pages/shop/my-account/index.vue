@@ -13,7 +13,7 @@
       />
       <EmptyWrapper
         v-else
-        :button="button"
+        :button="buttons.emptyWrapper.recentRequests"
         :label="$t('myaccount.lastRequestNotFound')"
       />
     </section>
@@ -22,12 +22,17 @@
       <SectionHeadline :buttons="buttons.recentShoppingListsButtons">{{
         $t('myaccount.recentShoppingLists')
       }}</SectionHeadline>
-
       <GenericTable
         v-if="recentShoppingLists"
         :header="recentShoppingListTableHeader"
         :table-data="recentShoppingLists"
         :carousel="true"
+      />
+      <EmptyWrapper
+        v-else
+        icon="assignment"
+        label="myaccount.shoppingList.noShoppingLists"
+        :button="buttons.emptyWrapper.shoppingList"
       />
     </section>
   </div>
@@ -63,15 +68,22 @@ export default defineComponent({
       return dashBoardStore.getRecentShoppingListsTableData()
     })
 
-    const button = {
-      size: 'normal',
-      label: i18n.t('myaccount.goToProducts'),
-      shape: 'outlined',
-      variant: 'secondary',
-      prependIcon: false,
-    }
-
     const buttons = {
+      emptyWrapper: {
+        recentRequests: {
+          size: 'normal',
+          label: i18n.t('myaccount.goToProducts'),
+          shape: 'outlined',
+          variant: 'secondary',
+        },
+        shoppingList: {
+          size: 'normal',
+          label: i18n.t('myaccount.shoppingList.new'),
+          shape: 'outlined',
+          variant: 'secondary',
+          icon: 'add',
+        },
+      },
       recentRequestButtons: [
         {
           label: i18n.t('myaccount.allRequests'),
@@ -104,7 +116,6 @@ export default defineComponent({
       recentRequestsTableHeader,
       recentShoppingLists,
       recentShoppingListTableHeader,
-      button,
       buttons,
       recentShoppingListHeader,
     }
