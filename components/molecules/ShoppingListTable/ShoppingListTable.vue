@@ -1,20 +1,20 @@
 <template>
-  <div v-if="lists.length" class="shopping-lists-table">
-    <div class="shopping-lists-table__header">
-      <span class="shopping-lists-table__header__title">
-        {{ $t('myaccount.shoppinglist.title') }}
+  <div v-if="lists.length" class="shopping-list-table">
+    <div class="shopping-list-table__header">
+      <span class="shopping-list-table__header__title">
+        {{ $t('myaccount.shoppingList.title') }}
       </span>
-      <span class="shopping-lists-table__header__last-edited">
-        {{ $t('myaccount.shoppinglist.lastEdited') }}
+      <span class="shopping-list-table__header__last-edited">
+        {{ $t('myaccount.shoppingList.lastEdited') }}
       </span>
-      <span class="shopping-lists-table__header__items">
-        {{ $t('myaccount.shoppinglist.items') }}
+      <span class="shopping-list-table__header__items">
+        {{ $t('myaccount.shoppingList.items') }}
       </span>
     </div>
     <ShoppingListItem
       v-for="list in lists"
       :key="list.id"
-      class="shopping-lists-table__items"
+      class="shopping-list-table__items"
       :list="list"
       :select-mode="selectMode"
     />
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import ShoppingListItem from '~/components/molecules?'
+import ShoppingListItem from '~/components/molecules/ShoppingListItem/ShoppingListItem.vue'
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
@@ -59,3 +59,12 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss">
+.shopping-list-table {
+  &__header {
+    @apply tw-grid;
+    @apply tw-auto-rows-auto;
+    @apply tw-grid-cols-12;
+  }
+}
+</style>

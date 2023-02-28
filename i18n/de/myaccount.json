@@ -72,6 +72,8 @@
       "cancel": "Nein",
       "confirm": "Ja",
       "deleteSuccess": "Einkaufsliste wurde erfolgreich gelöscht."
-    }
+    },
+    "title": "Title",
+    "lastEdited": "Zuletzt bearbeitet"
   }
 }
