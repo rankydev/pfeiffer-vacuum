@@ -5,7 +5,6 @@ import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
 
 export * from './accountData'
-// export * from './dashboard'
 export * from './requestHistory'
 
 export const useMyAccountStore = defineStore('myaccount', () => {

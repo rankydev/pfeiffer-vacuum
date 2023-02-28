@@ -37,7 +37,6 @@ export const useRequestHistoryStore = defineStore('requestHistory', () => {
   return {
     // States
     requestHistory,
-    //Getters
     // Actions
     loadRequestHistory,
   }
