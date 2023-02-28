@@ -1,9 +1,11 @@
 <template>
-  <div>
+  <div class="request-history">
     <MyAccountHeading />
     <div>
       <GenericTable :header="header" :table-data="tableData" />
-      <Pagination :total-pages="totalPages" />
+      <div class="request-history__pagination-wrapper">
+        <Pagination :total-pages="totalPages" />
+      </div>
     </div>
   </div>
 </template>
@@ -84,7 +86,7 @@ export default defineComponent({
               label: i18n.t('cart.details'),
               icon: 'arrow_forward',
               variant: 'secondary',
-              shape: 'outlined',
+              shape: 'plain',
               href: `${
                 app.localePath('shop-my-account-request-history') +
                 '/' +
@@ -104,11 +106,20 @@ export default defineComponent({
       return result
     })
 
-    watch(route, (val1, val2) => {
-      loadRequestHistory(val1.query.currentPage || 1)
+    watch(route, (newRoute) => {
+      loadRequestHistory(newRoute.query.currentPage || 1)
     })
 
     return { requestHistory, header, tableData, totalPages }
   },
 })
 </script>
+<style lang="scss" scoped>
+.request-history {
+  &__pagination-wrapper {
+    @apply tw-flex;
+    @apply tw-justify-end;
+    @apply tw-mt-6;
+  }
+}
+</style>
