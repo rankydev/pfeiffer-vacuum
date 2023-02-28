@@ -123,18 +123,8 @@ export default {
     '@nuxtjs/i18n',
     '@nuxtjs/axios',
     'vue-toastification/nuxt',
-    [
-      'nuxt-prometheus-module',
-      {
-        path: '/metrics',
-        host: '127.0.0.1',
-        port: 9100,
-        metrics: {
-          collectDefault: true,
-          requestDuration: true,
-        },
-      },
-    ],
+    // Link to prometheus module:  https://www.npmjs.com/package/nuxt-prometheus-module
+    'nuxt-prometheus-module',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
