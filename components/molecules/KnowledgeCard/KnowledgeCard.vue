@@ -176,6 +176,14 @@ export default defineComponent({
       @apply tw-pl-0;
       @apply tw-border-0;
       @apply tw-max-w-fit;
+
+      a {
+        @apply tw-flex;
+
+        .material-icons {
+          @apply tw-ml-5;
+        }
+      }
     }
   }
 }
