@@ -3,6 +3,7 @@
     <MyAccountHeading />
     <div>
       <GenericTable :header="header" :table-data="tableData" />
+      <Pagination :total-pages="totalPages" />
     </div>
   </div>
 </template>
@@ -16,8 +17,8 @@ import {
   computed,
 } from '@nuxtjs/composition-api'
 import MyAccountHeading from '~/components/organisms/MyAccount/partials/MyAccountHeading'
-// import TableView from '~/components/molecules/GenericTable/partials/TableView'
 import GenericTable from '~/components/molecules/GenericTable/GenericTable'
+import Pagination from '~/components/molecules/Pagination/Pagination'
 import { useRequestHistoryStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
 
@@ -26,10 +27,10 @@ export default defineComponent({
   components: {
     MyAccountHeading,
     GenericTable,
-    // TableView,
+    Pagination,
   },
   setup() {
-    const { i18n } = useContext()
+    const { i18n, app } = useContext()
 
     const requestHistoryStore = useRequestHistoryStore()
     const { loadRequestHistory } = requestHistoryStore
@@ -45,10 +46,13 @@ export default defineComponent({
       { title: i18n.t('myaccount.requestHistory.table.requestTotal') },
     ])
 
+    const totalPages = computed(() => {
+      return requestHistory?.value?.pagination?.totalPages
+    })
+
     const tableData = computed(() => {
       const result = []
 
-      console.log(requestHistory.value.orders)
       if (requestHistory.value.orders) {
         for (const request of requestHistory.value.orders) {
           const entries = []
@@ -74,21 +78,13 @@ export default defineComponent({
               icon: 'arrow_forward',
               variant: 'secondary',
               shape: 'outlined',
-              href: `#`,
-              // href: `${PATH_EMPOLIS}/${request.downloadLink}`,
+              href: `${
+                app.localePath('shop-my-account-request-history') +
+                '/' +
+                request.code
+              }`,
               target: '_blank',
             },
-            // {
-            //   desktop: false,
-            //   mobile: true,
-            //   label: i18n.t('product.download'),
-            //   icon: 'request_download',
-            //   variant: 'secondary',
-            //   shape: 'outlined',
-            //   href: `${PATH_EMPOLIS}/${request.downloadLink}`,
-            //   target: '_blank',
-            //   download: isStepFile(request) ? `${request.title}.stp` : null,
-            // },
           ]
 
           result.push({
@@ -103,7 +99,7 @@ export default defineComponent({
 
     console.log(requestHistory.value.orders)
 
-    return { requestHistory, header, tableData }
+    return { requestHistory, header, tableData, totalPages }
   },
 })
 </script>
