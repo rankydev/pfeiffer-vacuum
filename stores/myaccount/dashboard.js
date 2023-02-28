@@ -2,6 +2,7 @@ import { defineStore, storeToRefs } from 'pinia'
 import { ref, useContext } from '@nuxtjs/composition-api'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useMyAccountStore } from '~/stores/myaccount'
+import { useUserStore } from '~/stores/user'
 import config from '~/config/hybris.config'
 
 export const useDashboardStore = defineStore('accountData', () => {
@@ -9,6 +10,9 @@ export const useDashboardStore = defineStore('accountData', () => {
   const myAccountStore = useMyAccountStore()
   const { i18n, localePath } = useContext()
   const { orders } = storeToRefs(myAccountStore)
+  const userStore = useUserStore()
+  const { currentUser } = storeToRefs(userStore)
+
   const shoppingLists = ref()
 
   const getRecentRequestsTableData = async () => {
@@ -143,11 +147,31 @@ export const useDashboardStore = defineStore('accountData', () => {
     })
   }
 
+  const accountDataContent = {
+    headline: i18n.t('myaccount.accountDataShort'),
+    button: {
+      icon: 'edit',
+      href: localePath('shop-my-account-account-data'),
+    },
+    subheadline:
+      [
+        currentUser.value?.title || '',
+        currentUser.value?.firstName || '',
+        currentUser.value?.lastName || '',
+      ].join(' ') || '',
+    items: [
+      { icon: 'phone', text: currentUser.value?.phone || '' },
+      { icon: 'print', text: currentUser.value?.fax || '' },
+      { icon: 'mail', text: currentUser.value?.displayUid || '' },
+    ],
+  }
+
   return {
     // States
     recentRequestsTableHeader,
     recentShoppingListTableHeader,
     recentShoppingListHeader,
+    accountDataContent,
 
     //Getters
     getRecentRequestsTableData,

@@ -35,6 +35,13 @@
         :button="buttons.emptyWrapper.shoppingList"
       />
     </section>
+
+    <section class="section">
+      <div class="information__data">
+        <InformationBox :content="accountDataContent" />
+        <InformationBox :content="accountDataContent" />
+      </div>
+    </section>
   </div>
 </template>
 
@@ -42,6 +49,7 @@
 import { defineComponent, useAsync, useContext } from '@nuxtjs/composition-api'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper.vue'
+import InformationBox from '~/components/molecules/InformationBox/InformationBox.vue'
 import { useDashboardStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
 
@@ -50,6 +58,7 @@ export default defineComponent({
   components: {
     SectionHeadline,
     EmptyWrapper,
+    InformationBox,
   },
   setup() {
     const { i18n, localePath } = useContext()
@@ -58,7 +67,10 @@ export default defineComponent({
       recentRequestsTableHeader,
       recentShoppingListTableHeader,
       recentShoppingListHeader,
+      accountDataContent,
     } = storeToRefs(dashBoardStore)
+
+    console.log('accountdatacontent', accountDataContent)
 
     const recentRequests = useAsync(() => {
       return dashBoardStore.getRecentRequestsTableData()
@@ -118,6 +130,7 @@ export default defineComponent({
       recentShoppingListTableHeader,
       buttons,
       recentShoppingListHeader,
+      accountDataContent,
     }
   },
 })
@@ -144,6 +157,20 @@ export default defineComponent({
           @apply tw-opacity-100;
         }
       }
+    }
+  }
+
+  .information__data {
+    @apply tw-flex-col;
+    @apply tw-gap-6;
+
+    @screen md {
+      @apply tw-flex;
+      @apply tw-gap-8;
+    }
+
+    .information-box {
+      @apply tw-w-full;
     }
   }
 }
