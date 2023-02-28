@@ -55,5 +55,12 @@
     }
   },
   "contact": "Kontakt",
-  "salesRepresentative": "Vertriebsingenieur"
+  "salesRepresentative": "Vertriebsingenieur",
+  "serviceHistory": {
+    "serviceRequests": "Service-Anfragen"
+  },
+  "installedBase": {
+    "installedBase": "Installed Base"
+  },
+  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!"
 }

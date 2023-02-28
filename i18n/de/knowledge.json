@@ -3,32 +3,30 @@
   "hours": "h",
   "minutes": "min",
   "allRessources": "Alle Ressourcen",
-    "whitepapers": "Whitepapers",
-    "webinars": "Webinare",
-    "search": "In Knowledge suchen ...",
-    "webinar": {
-      "heading": "Webinar",
-      "about": "Worum geht es in diesem Webinar?",
-      "tragetAudience": "Für wen ist das Webinar gedacht?",
-      "authors": "Sprecher",
-      "button": {
-        "join": "Jetzt anmelden",
-        "watch": "Webinar ansehen"
-      },
-      "waitForVod":
-        "Eine Aufzeichnung dieses Webinars wird innerhalb von fünf Tagen nach dem ursprünglichen Termin zur Verfügung stehen.",
-      "registration": {
-        "success":
-          "Sie haben sich erfolgreich für das Webinar registriert. Sie erhalten alle weiteren Details per Mail."
-      }
+  "whitepapers": "Whitepapers",
+  "webinars": "Webinare",
+  "search": "In Knowledge suchen ...",
+  "webinar": {
+    "heading": "Webinar",
+    "about": "Worum geht es in diesem Webinar?",
+    "tragetAudience": "Für wen ist das Webinar gedacht?",
+    "authors": "Sprecher",
+    "button": {
+      "join": "Jetzt anmelden",
+      "watch": "Webinar ansehen"
     },
-    "whitepaper": {
-      "heading": "Whitepaper",
-      "about": "Worum geht es in diesem Whitepaper?",
-      "tragetAudience": "Für wen ist das Whitepaper gedacht?",
-      "authors": "Autoren",
-      "button": {
-        "download": "Download"
-      }
+    "waitForVod": "Eine Aufzeichnung dieses Webinars wird innerhalb von fünf Tagen nach dem ursprünglichen Termin zur Verfügung stehen.",
+    "registration": {
+      "success": "Sie haben sich erfolgreich für das Webinar registriert. Sie erhalten alle weiteren Details per Mail."
     }
+  },
+  "whitepaper": {
+    "heading": "Whitepaper",
+    "about": "Worum geht es in diesem Whitepaper?",
+    "tragetAudience": "Für wen ist das Whitepaper gedacht?",
+    "authors": "Autoren",
+    "button": {
+      "download": "Download"
+    }
+  }
 }

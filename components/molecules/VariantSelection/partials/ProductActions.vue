@@ -62,13 +62,15 @@
           shape="outlined"
           :disabled="isMaster"
         />
+        <!-- TODO: As soon as InstalledBase are implemented please substitute the disabled attribute here with
+         :disabled="addToBaseButtonDisabled" -->
         <Button
           class="product-actions__shopping-list"
           :label="$t('product.addToInstalledBase')"
           icon="assignment"
           variant="secondary"
           shape="outlined"
-          :disabled="addToBaseButtonDisabled"
+          :disabled="true"
         />
       </template>
     </div>
