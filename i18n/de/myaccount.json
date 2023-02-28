@@ -82,7 +82,9 @@
     "serviceRequests": "Service-Anfragen"
   },
   "installedBase": {
-    "installedBase": "Installed Base"
+    "installedBase": "Installed Base",
+    "underline2": "Mit unserem VSM-Tool (Virtual Service Management) können Sie auf einfache Weise Ihre Installed Base verfolgen und Servicetickets an uns senden.",
+    "noProducts": "Ihre Installed Base ist zurzeit leer!"
   },
   "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!"
 }

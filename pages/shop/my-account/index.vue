@@ -35,6 +35,21 @@
         :button="buttons.emptyWrapper.shoppingList"
       />
     </section>
+
+    <section class="section">
+      <SectionHeadline>{{
+        $t('myaccount.installedBase.installedBase')
+      }}</SectionHeadline>
+
+      <p>{{ $t('myaccount.installedBase.underline2') }}</p>
+      <Button
+        :label="$t('myaccount.installedBase.installedBase')"
+        icon="arrow_forward"
+        variant="secondary"
+        shape="outlined"
+      />
+      <Button icon="add" variant="secondary" shape="filled" />
+    </section>
   </div>
 </template>
 
@@ -42,6 +57,7 @@
 import { defineComponent, useAsync, useContext } from '@nuxtjs/composition-api'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper.vue'
+import Button from '~/components/atoms/Button/Button.vue'
 import { useDashboardStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
 
@@ -50,6 +66,7 @@ export default defineComponent({
   components: {
     SectionHeadline,
     EmptyWrapper,
+    Button,
   },
   setup() {
     const { i18n, localePath } = useContext()
