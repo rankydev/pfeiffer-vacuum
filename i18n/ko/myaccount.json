@@ -63,6 +63,7 @@
       "requestDate": "Request date",
       "date": "Date",
       "requestTotal": "Total (net)"
-    }
+    },
+    "yourHistory": "Your request history"
   }
 }

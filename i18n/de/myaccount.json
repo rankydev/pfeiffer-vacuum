@@ -65,6 +65,7 @@
       "requestDate": "Anfragedatum",
       "date": "Datum",
       "requestTotal": "Total (net)"
-    }
+    },
+    "yourHistory": "Deine Anfragenhistorie"
   }
 }

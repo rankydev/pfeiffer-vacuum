@@ -1,6 +1,14 @@
 <template>
   <div class="request-history">
-    <MyAccountHeading />
+    <ResultHeadline
+      class="request-history__headline--desktop"
+      :headline="$t('myaccount.requestHistory.yourHistory')"
+    />
+    <ResultHeadline
+      class="request-history__headline--mobile"
+      :headline="$t('myaccount.requestHistory.yourHistory')"
+      :link="localePath('shop-my-account')"
+    />
     <div>
       <GenericTable :header="header" :table-data="tableData" />
       <div class="request-history__pagination-wrapper">
@@ -20,7 +28,7 @@ import {
   watch,
   useRoute,
 } from '@nuxtjs/composition-api'
-import MyAccountHeading from '~/components/organisms/MyAccount/partials/MyAccountHeading'
+import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 import GenericTable from '~/components/molecules/GenericTable/GenericTable'
 import Pagination from '~/components/molecules/Pagination/Pagination'
 import { useRequestHistoryStore } from '~/stores/myaccount'
@@ -29,9 +37,9 @@ import { storeToRefs } from 'pinia'
 export default defineComponent({
   name: 'RequestHistory',
   components: {
-    MyAccountHeading,
     GenericTable,
     Pagination,
+    ResultHeadline,
   },
   setup() {
     const { i18n, app } = useContext()
@@ -61,7 +69,6 @@ export default defineComponent({
       const result = []
 
       if (requestHistory.value.orders) {
-        console.log(requestHistory.value.sorts, 'SALAMI')
         for (const request of requestHistory.value.orders) {
           const entries = []
 
@@ -116,6 +123,25 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .request-history {
+  &__headline {
+    &--desktop {
+      @apply tw-hidden;
+
+      @screen lg {
+        @apply tw-flex;
+      }
+    }
+
+    &--mobile {
+      @apply tw-flex;
+      @apply tw-items-center;
+
+      @screen lg {
+        @apply tw-hidden;
+      }
+    }
+  }
+
   &__pagination-wrapper {
     @apply tw-flex;
     @apply tw-justify-end;
