@@ -7,7 +7,7 @@
       </span>
     </template>
     <template #image>
-      <ResponsiveImage v-if="image" :src="image" />
+      <ResponsiveImage v-if="image" :image="image" />
     </template>
     <template v-if="date" #subheading>
       <Icon icon="date_range" size="xsmall" />
