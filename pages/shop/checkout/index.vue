@@ -149,6 +149,7 @@ import {
 } from '@nuxtjs/composition-api'
 
 import { useCartStore } from '~/stores/cart'
+import { useOrdersStore } from '~/stores/orders'
 import { useUserStore } from '~/stores/user'
 import { useDatasourcesStore } from '~/stores/datasources'
 import { storeToRefs } from 'pinia'
@@ -200,6 +201,7 @@ export default defineComponent({
     const datasourcesStore = useDatasourcesStore()
     const { personalPrivacyLink } = storeToRefs(datasourcesStore)
 
+    const ordersStore = useOrdersStore()
     const cartStore = useCartStore()
     const { currentCart, loading: cartLoading } = storeToRefs(cartStore)
     const userStore = useUserStore()
@@ -208,6 +210,10 @@ export default defineComponent({
     const cartEntries = computed(() => currentCart.value?.entries)
     const deliveryAddress = computed(() => currentCart.value?.deliveryAddress)
     const ociBuyer = computed(() => userStore.currentUser?.ociBuyer)
+
+    const cartPromotions = computed(() => {
+      return currentCart.value?.appliedOrderPromotions || []
+    })
 
     // when entering the page loading state is already active until mounted is done
     const loading = ref(true)
@@ -287,13 +293,34 @@ export default defineComponent({
       }
     })
 
-    const cartPromotions = computed(() => {
-      return currentCart.value?.appliedOrderPromotions || []
-    })
-
     const placeOrder = async () => {
-      await Promise.allSettled(asyncRequests.value)
-      console.log('TODO: PLACE ORDER')
+      loading.value = true
+
+      try {
+        // first wait for all promises to be resolved which may be still running (set comment or reference)
+        await Promise.allSettled(asyncRequests.value)
+
+        // TODO: OCI specific tasks need to be done in PVWEB-904
+
+        // placing order in a non-oci context
+        const orderRequestResult = await ordersStore.placeOrder()
+        console.log('PLACED ORDER!!!', orderRequestResult)
+
+        // TODO: redirect to success page
+
+        // if (orderRequestResult) {
+        //   this.nextStep();
+        //   this.setLoading(false);
+        // } else {
+        //   this.$globalMessages.error(this.$t('checkout.orderNotSuccessful'));
+        //   window.scrollTo(0, 0);
+        // }
+      } catch (error) {
+        // TODO: proper error handling
+        logger.error('Error placing order', error)
+      } finally {
+        loading.value = false
+      }
     }
 
     /**
