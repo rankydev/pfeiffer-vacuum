@@ -1,21 +1,21 @@
 <template>
   <div class="shopping-list-item">
     <div class="shopping-list-item__name">
-      <span class="shopping-list-item__name__checkbox">
+      <span class="shopping-list-item__name--checkbox">
         <Checkbox
           v-if="selectMode"
-          class="shopping-list-item__name__checkbox__input"
+          class="shopping-list-item__name--checkbox__input"
           :checked="selected"
           @update="toggleSelected"
         />
         <Icon icon="assignment" />
       </span>
-      <span class="shopping-list-item__name__label" :title="list.name">
+      <span class="shopping-list-item__name--label" :title="list.name">
         {{ list.name }}
       </span>
     </div>
     <div class="shopping-list-item__last-edited">
-      <span class="shopping-list-item__last-edited__label">
+      <span class="shopping-list-item__last-edited--label">
         {{ $t('myaccount.lastEdited') }}:
       </span>
       {{ $d(new Date(list.lastModified.substring(0, 10)), 'date') }}
@@ -27,7 +27,7 @@
     </div>
     <div class="shopping-list-item__buttons">
       <Button
-        class="shopping-list-item__buttons__details"
+        class="shopping-list-item__buttons--details"
         icon="arrow_forward"
         variant="secondary"
         gap="narrow"
@@ -36,8 +36,9 @@
         :label="$t('myaccount.shoppingList.details')"
       />
       <Button
-        class="shopping-list-item__buttons__delete"
+        class="shopping-list-item__buttons--delete"
         icon="delete"
+        shape="outlined"
         variant="secondary"
         @click="toggleInformationModal"
       />
@@ -88,6 +89,7 @@ export default defineComponent({
     const selected = ref(false)
     const isInformationModalOpen = ref(false)
     const { list } = toRefs(props)
+    const { isTablet, isDesktop } = app.$breakpoints
     const toggleSelected = () => {
       selected.value = !selected.value
       emit('update', { selected: selected.value, list: list.value })
@@ -103,8 +105,7 @@ export default defineComponent({
     })
 
     const getShapeType = computed(() => {
-      const isTabletOrMore =
-        app.$breakpoints.isTablet.value || app.$breakpoints.isDesktop.value
+      const isTabletOrMore = isTablet.value || isDesktop.value
       return isTabletOrMore ? 'plain' : 'outlined'
     })
 
@@ -151,6 +152,7 @@ export default defineComponent({
   @apply tw-grid-cols-12;
   @apply tw-p-4;
   @apply tw-bg-pv-grey-96;
+  @apply tw-text-pv-grey-16;
 
   @screen md {
     @apply tw-py-7;
@@ -171,7 +173,7 @@ export default defineComponent({
       @apply tw-my-auto;
     }
 
-    &__checkbox {
+    &--checkbox {
       @apply tw-hidden;
 
       @screen md {
@@ -184,7 +186,7 @@ export default defineComponent({
       }
     }
 
-    &__label {
+    &--label {
       @apply tw-my-auto;
 
       @screen md {
@@ -207,9 +209,14 @@ export default defineComponent({
       @apply tw-pl-6;
     }
 
-    &__label {
+    @screen lg {
+      @apply tw-text-base;
+    }
+
+    &--label {
       @screen md {
         @apply tw-hidden;
+        @apply tw-text-sm;
       }
     }
   }
@@ -227,6 +234,11 @@ export default defineComponent({
       @apply tw-text-pv-black;
       @apply tw-my-auto;
       @apply tw-pl-6;
+      @apply tw-text-sm;
+    }
+
+    @screen lg {
+      @apply tw-text-base;
     }
   }
 
@@ -243,7 +255,7 @@ export default defineComponent({
       @apply tw-ml-auto;
     }
 
-    &__details {
+    &--details {
       @apply tw-mr-4;
 
       a {
@@ -261,7 +273,7 @@ export default defineComponent({
       }
     }
 
-    &__delete {
+    &--delete {
       @apply tw-max-w-fit;
 
       @screen md {

@@ -72,6 +72,15 @@
       "cancel": "No",
       "confirm": "Yes",
       "deleteSuccess": "Shopping list was deleted successfully."
+    }
+  },
+  "serviceHistory": {
+    "serviceRequests": "Service requests"
+  },
+  "installedBase": {
+    "installedBase": "Installed Base"
+  },
+  "comingSoon": "This function will be available soon!"
     },
     "title": "Title"
   }

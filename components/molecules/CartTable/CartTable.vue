@@ -14,20 +14,15 @@
       </span>
     </div>
     <CartItemCard
-      v-for="{
-        product,
-        quantity,
-        promotion,
-        basePrice,
-        totalPrice,
-        code,
-      } in getSortedProducts"
+      v-for="(
+        { product, quantity, basePrice, totalPrice, code }, index
+      ) in getSortedProducts"
       :key="getUniqueId(code)"
       :product="product"
       :base-price="basePrice"
-      :total-price="totalPrice"
+      :price-total="totalPrice"
       :quantity="quantity"
-      :promotion="promotion"
+      :promotion="getProductPromotions(index)"
       :is-mini-cart="isMiniCart"
       @update="updateCartQuantity"
       @delete="deleteFromCart"
@@ -128,6 +123,18 @@ export default defineComponent({
       await deleteProductFromCart(index)
     }
 
+    const getProductPromotions = (index) => {
+      const productPromotion = {}
+
+      currentCart?.value?.appliedProductPromotions?.forEach((item) => {
+        if (item.consumedEntries?.find((e) => e.orderEntryNumber === index)) {
+          Object.assign(productPromotion, item)
+        }
+      })
+
+      return productPromotion
+    }
+
     return {
       updateCartQuantity,
       deleteFromCart,
@@ -135,6 +142,7 @@ export default defineComponent({
       useSortByPrice,
       useSortByTotalPrice,
       getUniqueId,
+      getProductPromotions,
     }
   },
 })
@@ -164,6 +172,7 @@ export default defineComponent({
     @apply tw-text-pv-grey-32;
     @apply tw-font-normal;
     @apply tw-block;
+    @apply tw-leading-4;
 
     &:hover {
       @apply tw-text-pv-grey-48;
@@ -176,7 +185,7 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-m-auto;
     @apply tw-w-fit;
-    @apply tw-pl-4;
+    @apply tw-pl-2;
   }
 
   &__totalPrice {
@@ -185,7 +194,11 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-m-auto;
     @apply tw-w-fit;
-    @apply tw-pl-4;
+    @apply tw-pl-2;
+  }
+
+  .icon__material.icon--base {
+    @apply tw-text-base;
   }
 }
 </style>

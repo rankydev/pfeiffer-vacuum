@@ -12,7 +12,7 @@ export default {
   parameters: {
     docs: {
       description: {
-        component: 'Shopping List Item for shopping lists overview page',
+        component: 'Shopping list item for shopping lists overview page.',
       },
       source: {
         code: '<ShoppingListItem v-bind="args" />',

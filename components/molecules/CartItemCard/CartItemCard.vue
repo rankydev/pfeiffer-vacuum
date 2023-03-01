@@ -70,7 +70,7 @@
         {{ $t('cart.totalPrice') }}
       </span>
       <span class="cart-item-card-total-price__price">
-        {{ getTotalPrice }}
+        {{ totalPrice }}
       </span>
     </div>
     <Button
@@ -127,7 +127,7 @@ export default defineComponent({
       default: null,
       required: false,
     },
-    totalPrice: {
+    priceTotal: {
       type: Object,
       default: null,
       required: false,
@@ -152,7 +152,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { app, i18n } = useContext()
     const userStore = useUserStore()
-    const { basePrice, totalPrice, isMiniCart, quantity, product, promotion } =
+    const { basePrice, isMiniCart, quantity, product, promotion } =
       toRefs(props)
     const quantityModel = ref(quantity.value)
     const {
@@ -187,9 +187,7 @@ export default defineComponent({
       return getPriceString(basePrice?.value?.formattedValue)
     })
 
-    const getTotalPrice = computed(() => {
-      return getPriceString(totalPrice?.value?.formattedValue)
-    })
+    const totalPrice = computed(() => props.priceTotal?.formattedValue || '')
 
     const productImage = computed(() => {
       return product.value?.images?.[0] || null
@@ -253,7 +251,7 @@ export default defineComponent({
       updateQuantity,
       url,
       productPrice,
-      getTotalPrice,
+      totalPrice,
       details,
       isDetailsExpanded,
       toggleDetails,
