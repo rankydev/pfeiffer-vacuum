@@ -56,6 +56,7 @@ export default defineComponent({
     const { content } = toRefs(props)
     const route = useRoute()
     const context = useContext()
+    const { i18n } = context
 
     /**
      * build the cms slug
@@ -70,7 +71,7 @@ export default defineComponent({
     // TODO: needs to be adapted and deleted as soon as the buttons have the possibility to add an anchor link
     const enrichedStage = computed(() => {
       const newStage = unref(stage) || []
-      if (newStage.length && route.value.path === '/en/knowledge') {
+      if (newStage.length && route.value.path === `/${i18n.locale}/knowledge`) {
         delete newStage[0].stageContent[0].buttons[0].href
         newStage[0].stageContent[0].buttons[0].anchor = '#knowledge-results'
       }
