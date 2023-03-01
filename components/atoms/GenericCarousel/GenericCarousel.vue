@@ -94,6 +94,7 @@ export default defineComponent({
           'documentCardCarousel',
           'customContentCardCarousel',
           'accessoriesCardCarousel',
+          'tableCardCarousel',
         ].includes(val),
     },
     /**
@@ -126,7 +127,10 @@ export default defineComponent({
      */
     const { app } = useContext()
     const isBreakout = computed(() => {
-      if (props.variant === 'accessoriesCardCarousel') {
+      if (
+        props.variant === 'accessoriesCardCarousel' ||
+        props.variant === 'tableCardCarousel'
+      ) {
         return false
       }
       return !app.$breakpoints.isDesktop.value || props.isWide
@@ -253,6 +257,12 @@ export default defineComponent({
       ],
     }))
 
+    const tableCardCarouselSettings = computed(() => ({
+      slidesToShow: 1,
+      dots: true,
+      arrows: false,
+    }))
+
     /**
      * Settings for slick carousel
      * see: https://github.com/gs-shop/vue-slick-carousel/blob/master/docs/API.md#props
@@ -272,6 +282,8 @@ export default defineComponent({
       ...(props.variant === 'homeStage' && homeStageSettings.value),
       ...(props.variant === 'default' && defaultSettings.value),
       ...(props.variant === 'accessoriesCardCarousel' && defaultSettings.value),
+      ...(props.variant === 'tableCardCarousel' &&
+        tableCardCarouselSettings.value),
     }))
 
     return {

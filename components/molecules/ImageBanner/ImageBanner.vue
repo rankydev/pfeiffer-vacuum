@@ -169,6 +169,7 @@ export default defineComponent({
   &__media {
     @apply tw-w-full;
     @apply tw-object-cover;
+    @apply tw-bg-pv-white;
 
     @screen md {
       @apply tw-w-1/2;
@@ -181,23 +182,20 @@ export default defineComponent({
     }
 
     .responsive-image {
-      img {
-        @apply tw-w-full;
-        @apply tw-rounded-none;
+      @screen md {
         @apply tw-object-cover;
-        height: 385px;
+        @apply tw-h-full;
+      }
 
+      &__3-2 {
         @screen md {
-          height: 385px;
+          @apply tw-h-full;
+          @apply tw-object-cover;
+          aspect-ratio: unset;
         }
 
         @screen lg {
-          height: 530px;
-        }
-
-        @screen xl {
-          // growing proportionally to width of screen
-          height: 28vw;
+          aspect-ratio: 3/2;
         }
       }
     }

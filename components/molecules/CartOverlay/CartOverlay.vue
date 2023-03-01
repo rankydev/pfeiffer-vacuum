@@ -123,10 +123,8 @@ export default defineComponent({
     })
 
     const getTotalCartPrice = computed(() => {
-      const price = currentCart?.value?.entries?.reduce((acc, item) => {
-        return acc + item?.totalPrice?.value
-      }, 0)
-      return price > 0 ? `€ ${price.toFixed(2).toLocaleString()}` : '-'
+      const formattedSubTotal = currentCart?.value?.subTotal?.formattedValue
+      return formattedSubTotal ? formattedSubTotal : '-'
     })
 
     const closeOverlay = () => {
