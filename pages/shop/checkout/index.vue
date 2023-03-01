@@ -145,6 +145,7 @@ import {
   onMounted,
   onBeforeMount,
   ref,
+  useRouter,
 } from '@nuxtjs/composition-api'
 
 import { useCartStore } from '~/stores/cart'
@@ -189,20 +190,27 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const context = useContext()
     const { app, i18n } = useContext()
     const isMobile = app.$breakpoints.isMobile
     const { logger } = useLogger('checkout')
     const toast = useToast()
 
+    const datasourcesStore = useDatasourcesStore()
+    const { personalPrivacyLink } = storeToRefs(datasourcesStore)
+
     const cartStore = useCartStore()
     const { currentCart, loading: cartLoading } = storeToRefs(cartStore)
     const userStore = useUserStore()
-    const { userBillingAddress } = storeToRefs(userStore)
-
+    const { userBillingAddress, isLoggedIn, isApprovedUser } =
+      storeToRefs(userStore)
     const cartEntries = computed(() => currentCart.value?.entries)
     const deliveryAddress = computed(() => currentCart.value?.deliveryAddress)
     const ociBuyer = computed(() => userStore.currentUser?.ociBuyer)
+
+    // when entering the page loading state is already active until mounted is done
+    const loading = ref(true)
 
     // additional input text fields for user
     const asyncRequests = ref([])
@@ -238,13 +246,23 @@ export default defineComponent({
       }
     }
 
-    // datasources for privacy policy link
-    const datasourcesStore = useDatasourcesStore()
-    const { personalPrivacyLink } = storeToRefs(datasourcesStore)
-    onBeforeMount(datasourcesStore.loadLinksFromDatasource)
+    onBeforeMount(() => {
+      // we need a logged in approved user to do checkout. If we have none redirect to cart
+      // cart page will display information to user to log in or add company data
+      // technically this should be in a middleware. But we cannot use store in middlewares before we use nuxt 3
+      if (!isLoggedIn.value || !isApprovedUser.value) {
+        // [80/20] in PVAC the sso login is called in  this page here.
+        // this has the advantage that the user will be redirected to /shop/checkout again after login
+        // but right now the redirection after login causes weird redirection issues and user will be on a broken sso page in the end
+        // to safe time we do login on cart page now. Redirection to this page causes no issues. But user needs to click "checkout button" again
+        return router.replace({
+          path: app.localePath('shop-cart'),
+        })
+      }
 
-    // when entering the page loading state is already active until mounted is done
-    const loading = ref(true)
+      // trigger fetch for privacy page link. But no need to wait for it here
+      datasourcesStore.loadLinksFromDatasource()
+    })
 
     onMounted(async () => {
       try {

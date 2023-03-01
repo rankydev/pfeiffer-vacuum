@@ -11,6 +11,17 @@
           <ContentWrapper>
             <template v-if="cartEntries">
               <div class="cart-page">
+                <div class="cart-page__request-info">
+                  <GlobalMessage
+                    v-if="checkoutButtonDisabled"
+                    :description="
+                      $t(`myaccount.userStatus.${userStatusType}.requestInfo`)
+                    "
+                    variant="warning"
+                    :prevent-icon-change="true"
+                  />
+                </div>
+
                 <div class="cart-page__header">
                   <ResultHeadline
                     :headline="$t('cart.headline')"
@@ -58,11 +69,12 @@
 
                     <div class="cart-page__submit">
                       <Button
-                        :href="localePath('shop-checkout')"
                         :label="$t('cart.requestQuote')"
                         class="cart-page__button--submit"
                         variant="primary"
                         icon="mail_outline"
+                        :disabled="checkoutButtonDisabled"
+                        @click="handleCheckoutClick"
                       />
                     </div>
                   </div>
@@ -111,6 +123,7 @@
 import {
   defineComponent,
   useRoute,
+  useRouter,
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
@@ -126,6 +139,7 @@ import TotalNetInformation from '~/components/molecules/TotalNetInformation/Tota
 import CartTable from '~/components/molecules/CartTable/CartTable'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
+import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 
 import { storeToRefs } from 'pinia'
 
@@ -141,13 +155,21 @@ export default defineComponent({
     CartTable,
     Icon,
     PromotionLabel,
+    GlobalMessage,
   },
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const context = useContext()
     const cartStore = useCartStore()
     const userStore = useUserStore()
-
+    const {
+      isLoggedIn,
+      isApprovedUser,
+      isLeadUser,
+      isOpenUser,
+      isRejectedUser,
+    } = storeToRefs(userStore)
     const { app } = useContext()
     const { currentCart } = storeToRefs(cartStore)
 
@@ -157,6 +179,25 @@ export default defineComponent({
     const cartPromotions = computed(() => {
       return currentCart.value?.appliedOrderPromotions || []
     })
+    const checkoutButtonDisabled = computed(() => {
+      return isLoggedIn.value && !isApprovedUser.value
+    })
+
+    const userStatusType = computed(() => {
+      if (isLeadUser.value) return 'lead'
+      if (isOpenUser.value) return 'open'
+      if (isRejectedUser.value) return 'rejected'
+      return 'undefined'
+    })
+
+    const handleCheckoutClick = () => {
+      if (!isLoggedIn.value) {
+        return userStore.login()
+      }
+      if (isLoggedIn.value && isApprovedUser.value) {
+        return router.push({ path: app.localePath('shop-checkout') })
+      }
+    }
 
     /**
      * build the cms slug
@@ -173,6 +214,9 @@ export default defineComponent({
       currentCart,
       ociBuyer,
       cartPromotions,
+      checkoutButtonDisabled,
+      userStatusType,
+      handleCheckoutClick,
     }
   },
 })
@@ -194,6 +238,10 @@ export default defineComponent({
     &-headline {
       @apply tw-mb-4;
     }
+  }
+
+  &__request-info {
+    @apply tw-mb-8;
   }
 
   &__header {
