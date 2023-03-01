@@ -58,7 +58,7 @@
 
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
-import { ref, computed, watch } from '@vue/composition-api'
+import { ref, computed, watch, toRefs } from '@vue/composition-api'
 import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Button from '~/components/atoms/Button/Button.vue'
@@ -81,22 +81,23 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ['update'],
+  emits: ['update', 'delete'],
   setup(props, { emit }) {
     const { app, i18n } = useContext()
     const toast = useToast()
     const selected = ref(false)
     const isInformationModalOpen = ref(false)
+    const { list } = toRefs(props)
     const toggleSelected = () => {
       selected.value = !selected.value
-      emit('update', { selected: selected.value, list: props.list })
+      emit('update', { selected: selected.value, list: list.value })
     }
 
     const listUrl = computed(() => {
       return app.localePath({
         name: 'shop-my-account-shopping-lists-list',
         params: {
-          list: props.list.id,
+          list: list.value.id,
         },
       })
     })
@@ -121,6 +122,7 @@ export default defineComponent({
         },
         { timeout: 3000 }
       )
+      emit('delete', list.value)
     }
 
     watch(props, (newVal, oldVal) => {
@@ -222,6 +224,7 @@ export default defineComponent({
     @screen md {
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-6 tw-col-end-8;
+      @apply tw-text-pv-black;
       @apply tw-my-auto;
       @apply tw-pl-6;
     }

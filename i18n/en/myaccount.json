@@ -65,13 +65,14 @@
   "comingSoon": "This function will be available soon!",
   "lastEdited": "Last edited",
   "shoppingList": {
-    "items": "items",
+    "items": "Items",
     "details": "Details",
     "confirmationModal": {
       "headline": "Do you really want to delete this shopping list?",
       "cancel": "No",
       "confirm": "Yes",
       "deleteSuccess": "Shopping list was deleted successfully."
-    }
+    },
+    "title": "Title"
   }
 }

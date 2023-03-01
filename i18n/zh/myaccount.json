@@ -71,6 +71,7 @@
       "confirm": "是的",
       "deleteSuccess": "购物清单已成功删除"
     }
-  }
+  },
+  "title": "标题"
 }
 
