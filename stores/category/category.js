@@ -167,13 +167,18 @@ export const useCategoryStore = defineStore('category', () => {
     return text.trim().replace(/\s+/g, ' ')
   }
 
-  const loadSuggestions = async (text) => {
+  const loadSuggestions = async (text, returnResponse = false) => {
     const validText = getCleanedText(text)
 
     try {
       const res = await axios.$get(config.SUGGESTIONS_API, {
         params: { term: validText, fields: 'FULL', max: 3 },
       })
+
+      if (returnResponse) {
+        return res.suggestions || []
+      }
+
       searchSuggestions.value = res.suggestions || []
     } catch (error) {
       logger.error(error)

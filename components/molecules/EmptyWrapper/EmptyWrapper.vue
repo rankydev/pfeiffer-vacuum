@@ -43,6 +43,7 @@ export default defineComponent({
   @apply tw-text-center;
   @apply tw-bg-pv-grey-96;
   @apply tw-py-8 tw-px-4;
+  @apply tw-rounded-lg;
 
   &__big-icon {
     @apply tw-text-pv-grey-80;

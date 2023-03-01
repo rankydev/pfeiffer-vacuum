@@ -1,15 +1,3 @@
-export const currentCartSpecificPrices = {
-  hiddenUIElements: {
-    checkoutInformationSpecificPrices: false,
-    checkoutInformationDelivery: true,
-  },
-}
+export const informationType = 'price'
 
-export const currentCartDelivery = {
-  hiddenUIElements: {
-    checkoutInformationSpecificPrices: true,
-    checkoutInformationDelivery: false,
-  },
-}
-
-export default { currentCartSpecificPrices, currentCartDelivery }
+export default {}

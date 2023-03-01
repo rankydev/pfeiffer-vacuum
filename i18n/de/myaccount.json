@@ -66,5 +66,12 @@
       "confirm": "Ja",
       "deleteSuccess": "Einkaufsliste wurde erfolgreich gelöscht."
     }
-  }
+  },
+  "serviceHistory": {
+    "serviceRequests": "Service-Anfragen"
+  },
+  "installedBase": {
+    "installedBase": "Installed Base"
+  },
+  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!"
 }
