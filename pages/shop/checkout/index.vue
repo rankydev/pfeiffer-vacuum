@@ -73,6 +73,18 @@
                         <TotalNetInformation :current-cart="currentCart" />
                       </div>
 
+                      <div class="checkout__privacy-policy">
+                        <Button
+                          :href="personalPrivacyLink"
+                          :label="$t('checkout.privacyPolicyLink')"
+                          variant="secondary"
+                          prepend-icon
+                          shape="plain"
+                          icon="file_open"
+                          target="_blank"
+                        />
+                      </div>
+
                       <div class="checkout__submit">
                         <Button
                           :label="$t('checkout.completeRequest')"
@@ -131,11 +143,13 @@ import {
   useContext,
   computed,
   onMounted,
+  onBeforeMount,
   ref,
 } from '@nuxtjs/composition-api'
 
 import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
+import { useDatasourcesStore } from '~/stores/datasources'
 import { storeToRefs } from 'pinia'
 
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
@@ -224,6 +238,11 @@ export default defineComponent({
       }
     }
 
+    // datasources for privacy policy link
+    const datasourcesStore = useDatasourcesStore()
+    const { personalPrivacyLink } = storeToRefs(datasourcesStore)
+    onBeforeMount(datasourcesStore.loadLinksFromDatasource)
+
     // when entering the page loading state is already active until mounted is done
     const loading = ref(true)
 
@@ -268,6 +287,8 @@ export default defineComponent({
     })
 
     return {
+      personalPrivacyLink,
+
       customerReference,
       commentOnRequest,
       saveCommentOnRequest,
@@ -303,6 +324,10 @@ export default defineComponent({
     @screen md {
       @apply tw-flex-row;
     }
+  }
+
+  &__privacy-policy {
+    @apply tw-mb-4;
   }
 
   &__text-field-item,
