@@ -8,6 +8,8 @@ import slider from './slider.json'
 import myaccount from './myaccount.json'
 import cart from './cart.json'
 import knowledge from './knowledge.json'
+import checkout from './checkout.json'
+
 import misc from './misc.json'
 export default {
   language,
@@ -20,5 +22,6 @@ export default {
   myaccount,
   cart,
   knowledge,
+  checkout,
   misc,
 }
