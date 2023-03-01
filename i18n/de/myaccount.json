@@ -65,6 +65,7 @@
   "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!",
   "lastEdited": "Zuletzt bearbeitet",
   "shoppingList": {
+    "title": "Title",
     "items": "Artikel",
     "details": "Details",
     "confirmationModal": {
@@ -73,15 +74,5 @@
       "confirm": "Ja",
       "deleteSuccess": "Einkaufsliste wurde erfolgreich gelöscht."
     }
-  },
-  "serviceHistory": {
-    "serviceRequests": "Service-Anfragen"
-  },
-  "installedBase": {
-    "installedBase": "Installed Base"
-  },
-  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!"
-    },
-    "title": "Title"
   }
 }

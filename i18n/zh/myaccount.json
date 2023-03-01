@@ -63,6 +63,7 @@
   "comingSoon": "此功能即将推出！",
   "lastEdited": "上次编辑",
   "shoppingList": {
+    "title": "标题",
     "items": "项目",
     "details": "详情",
     "confirmationModal": {
@@ -71,13 +72,5 @@
       "confirm": "是的",
       "deleteSuccess": "购物清单已成功删除"
     }
-  },
-  "serviceHistory": {
-    "serviceRequests": "服务请求"
-  },
-  "installedBase": {
-    "installedBase": "安装基础"
-  },
-  "comingSoon": "此功能即将推出！",
-  "title": "标题"
+  }
 }

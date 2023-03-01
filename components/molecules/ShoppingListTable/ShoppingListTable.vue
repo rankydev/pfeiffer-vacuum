@@ -2,15 +2,15 @@
   <div v-if="lists.length" class="shopping-list-table">
     <div class="shopping-list-table__header">
       <span
-        class="shopping-list-table__header__title"
-        :class="{ 'shopping-list-table__header__title-active': selectMode }"
+        class="shopping-list-table__header--title"
+        :class="{ 'shopping-list-table__header--title-active': selectMode }"
       >
         {{ $t('myaccount.shoppingList.title') }}
       </span>
-      <span class="shopping-list-table__header__last-edited">
+      <span class="shopping-list-table__header--last-edited">
         {{ $t('myaccount.lastEdited') }}
       </span>
-      <span class="shopping-list-table__header__items">
+      <span class="shopping-list-table__header--items">
         {{ $t('myaccount.shoppingList.items') }}
       </span>
     </div>
@@ -79,12 +79,12 @@ export default defineComponent({
       @apply tw-grid-cols-12;
       @apply tw-pb-4;
       @apply tw-border-b tw-border-b-pv-grey-88;
-      @apply tw-text-pv-grey-32;
+      @apply tw-text-pv-grey-16;
       @apply tw-text-sm;
       @apply tw-leading-6;
     }
 
-    &__title {
+    &--title {
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-1 tw-col-end-4;
       @apply tw-ml-6;
@@ -101,7 +101,7 @@ export default defineComponent({
       }
     }
 
-    &__last-edited {
+    &--last-edited {
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-4 tw-col-end-6;
       @apply tw-ml-8;
@@ -111,7 +111,7 @@ export default defineComponent({
       }
     }
 
-    &__items {
+    &--items {
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-6 tw-col-end-8;
       @apply tw-ml-7;
