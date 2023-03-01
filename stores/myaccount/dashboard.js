@@ -147,6 +147,49 @@ export const useDashboardStore = defineStore('accountData', () => {
     })
   }
 
+  const buttons = {
+    emptyWrapper: {
+      recentRequests: {
+        size: 'normal',
+        label: i18n.t('myaccount.recentRequests.goToProducts'),
+        shape: 'outlined',
+        variant: 'secondary',
+      },
+      shoppingList: {
+        size: 'normal',
+        label: i18n.t('myaccount.shoppingList.new'),
+        shape: 'outlined',
+        variant: 'secondary',
+        icon: 'add',
+      },
+    },
+    recentRequestButtons: [
+      {
+        label: i18n.t('myaccount.recentRequests.allRequests'),
+        icon: 'arrow_forward',
+        href: localePath('shop-my-account-request-history'),
+        variant: 'secondary',
+        shape: 'plain',
+      },
+    ],
+    recentShoppingListsButtons: [
+      {
+        variant: 'secondary',
+        shape: 'plain',
+        label: i18n.t('myaccount.shoppingList.new'),
+        icon: 'add',
+        desktopOnly: true,
+      },
+      {
+        label: i18n.t('myaccount.shoppingList.all'),
+        icon: 'arrow_forward',
+        href: localePath('shop-my-account-shopping-lists'),
+        variant: 'secondary',
+        shape: 'plain',
+      },
+    ],
+  }
+
   const accountDataContent = {
     headline: i18n.t('myaccount.accountDataShort'),
     button: {
@@ -184,6 +227,7 @@ export const useDashboardStore = defineStore('accountData', () => {
       { text: userBillingAddress.value?.country?.name || '' },
       {
         icon: 'attach_money',
+        noMargin: true,
         text: currentUser.value?.orgUnit?.vatID || '',
       },
     ],
@@ -196,6 +240,7 @@ export const useDashboardStore = defineStore('accountData', () => {
     recentShoppingListHeader,
     accountDataContent,
     companyDataContent,
+    buttons,
 
     //Getters
     getRecentRequestsTableData,

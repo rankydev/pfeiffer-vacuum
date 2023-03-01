@@ -46,22 +46,20 @@
 </template>
 
 <script>
-import { defineComponent, useAsync, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync } from '@nuxtjs/composition-api'
+import { useDashboardStore } from '~/stores/myaccount'
+import { storeToRefs } from 'pinia'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper.vue'
 import InformationBox from '~/components/molecules/InformationBox/InformationBox.vue'
-import { useDashboardStore } from '~/stores/myaccount'
-import { storeToRefs } from 'pinia'
 
 export default defineComponent({
-  name: 'Dashboard',
   components: {
     SectionHeadline,
     EmptyWrapper,
     InformationBox,
   },
   setup() {
-    const { i18n, localePath } = useContext()
     const dashBoardStore = useDashboardStore()
     const {
       recentRequestsTableHeader,
@@ -69,6 +67,7 @@ export default defineComponent({
       recentShoppingListHeader,
       accountDataContent,
       companyDataContent,
+      buttons,
     } = storeToRefs(dashBoardStore)
 
     const recentRequests = useAsync(() => {
@@ -78,49 +77,6 @@ export default defineComponent({
     const recentShoppingLists = useAsync(() => {
       return dashBoardStore.getRecentShoppingListsTableData()
     })
-
-    const buttons = {
-      emptyWrapper: {
-        recentRequests: {
-          size: 'normal',
-          label: i18n.t('myaccount.recentRequests.goToProducts'),
-          shape: 'outlined',
-          variant: 'secondary',
-        },
-        shoppingList: {
-          size: 'normal',
-          label: i18n.t('myaccount.shoppingList.new'),
-          shape: 'outlined',
-          variant: 'secondary',
-          icon: 'add',
-        },
-      },
-      recentRequestButtons: [
-        {
-          label: i18n.t('myaccount.recentRequests.allRequests'),
-          icon: 'arrow_forward',
-          href: localePath('shop-my-account-request-history'),
-          variant: 'secondary',
-          shape: 'plain',
-        },
-      ],
-      recentShoppingListsButtons: [
-        {
-          variant: 'secondary',
-          shape: 'plain',
-          label: i18n.t('myaccount.shoppingList.new'),
-          icon: 'add',
-          desktopOnly: true,
-        },
-        {
-          label: i18n.t('myaccount.shoppingList.all'),
-          icon: 'arrow_forward',
-          href: localePath('shop-my-account-shopping-lists'),
-          variant: 'secondary',
-          shape: 'plain',
-        },
-      ],
-    }
 
     return {
       recentRequests,
@@ -139,7 +95,11 @@ export default defineComponent({
 <style lang="scss">
 .dashboard {
   .section {
-    @apply tw-mb-8;
+    @apply tw-mb-4;
+
+    @screen lg {
+      @apply tw-mb-8;
+    }
 
     &--last {
       @apply tw-mb-0;

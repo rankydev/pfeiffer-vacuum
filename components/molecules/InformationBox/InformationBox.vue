@@ -29,6 +29,7 @@
           v-if="item.icon"
           :icon="item.icon"
           class="information-box__icon"
+          :class="{ 'information-box__icon--no-margin': item.noMargin }"
         />
         <span>{{ item.text }}</span>
       </li>
@@ -97,6 +98,10 @@ export default defineComponent({
 
   &__icon {
     @apply tw-mr-2;
+
+    &--no-margin {
+      @apply tw-mr-0;
+    }
   }
 }
 </style>
