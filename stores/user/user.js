@@ -355,6 +355,7 @@ export const useUserStore = defineStore('user', () => {
     userCountry,
     userRegion,
     changePasswordLink,
+    keycloakInstance: computed(() => keycloakInstance.value),
 
     // actions
     loadCurrentUser,

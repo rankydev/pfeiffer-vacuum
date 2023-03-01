@@ -87,7 +87,7 @@ import Icon from '~/components/atoms/Icon/Icon'
 import { useProductStore } from '~/stores/product'
 import { useEmpolisStore } from '~/stores/empolis'
 import { sortAsString } from '~/utils/sortHelper'
-import { PATH_EMPOLIS } from '~/server/constants'
+import { useEmpolisHelper } from '~/composables/useEmpolisHelper'
 
 export default defineComponent({
   name: 'ProductFiles',
@@ -103,6 +103,7 @@ export default defineComponent({
     const { product } = useProductStore()
     const empolisStore = useEmpolisStore()
     const { i18n } = useContext()
+    const { getDownloadButtonBaseConfig } = useEmpolisHelper()
 
     const categoryFilter = ref([])
     const languageFilter = ref([])
@@ -206,10 +207,6 @@ export default defineComponent({
       return bytes.toFixed(precision) + ' ' + units[u]
     }
 
-    const isStepFile = (file) => {
-      return file.informationType?.value?.includes('Step-File')
-    }
-
     const tableHeader = computed(() => [
       {
         title: i18n.t('product.file.description'),
@@ -260,27 +257,24 @@ export default defineComponent({
           text: `~ ${formatFileSize(file.fileSize)}`,
         })
 
+        const actionBaseData = {
+          ...getDownloadButtonBaseConfig(file),
+          icon: 'file_download',
+          variant: 'secondary',
+          shape: 'outlined',
+        }
+
         const actions = [
           {
+            ...actionBaseData,
             desktop: true,
             mobile: false,
-            icon: 'file_download',
-            variant: 'secondary',
-            shape: 'outlined',
-            href: `${PATH_EMPOLIS}/${file.downloadLink}`,
-            target: '_blank',
-            download: isStepFile(file) ? `${file.title}.stp` : null,
           },
           {
+            ...actionBaseData,
             desktop: false,
             mobile: true,
             label: i18n.t('product.download'),
-            icon: 'file_download',
-            variant: 'secondary',
-            shape: 'outlined',
-            href: `${PATH_EMPOLIS}/${file.downloadLink}`,
-            target: '_blank',
-            download: isStepFile(file) ? `${file.title}.stp` : null,
           },
         ]
 
