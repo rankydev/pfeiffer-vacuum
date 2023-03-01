@@ -1,21 +1,21 @@
 <template>
   <div class="shopping-list-item">
     <div class="shopping-list-item__name">
-      <span class="shopping-list-item__name__checkbox">
+      <span class="shopping-list-item__name--checkbox">
         <Checkbox
           v-if="selectMode"
-          class="shopping-list-item__name__checkbox__input"
+          class="shopping-list-item__name--checkbox__input"
           :checked="selected"
           @update="toggleSelected"
         />
         <Icon icon="assignment" />
       </span>
-      <span class="shopping-list-item__name__label" :title="list.name">
+      <span class="shopping-list-item__name--label" :title="list.name">
         {{ list.name }}
       </span>
     </div>
     <div class="shopping-list-item__last-edited">
-      <span class="shopping-list-item__last-edited__label">
+      <span class="shopping-list-item__last-edited--label">
         {{ $t('myaccount.lastEdited') }}:
       </span>
       {{ $d(new Date(list.lastModified.substring(0, 10)), 'date') }}
@@ -27,7 +27,7 @@
     </div>
     <div class="shopping-list-item__buttons">
       <Button
-        class="shopping-list-item__buttons__details"
+        class="shopping-list-item__buttons--details"
         icon="arrow_forward"
         variant="secondary"
         gap="narrow"
@@ -36,7 +36,7 @@
         :label="$t('myaccount.shoppingList.details')"
       />
       <Button
-        class="shopping-list-item__buttons__delete"
+        class="shopping-list-item__buttons--delete"
         icon="delete"
         variant="secondary"
         @click="toggleInformationModal"
@@ -58,7 +58,7 @@
 
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
-import { ref, computed, watch } from '@vue/composition-api'
+import { ref, computed, watch, toRefs } from '@vue/composition-api'
 import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Button from '~/components/atoms/Button/Button.vue'
@@ -81,29 +81,30 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ['update'],
+  emits: ['update', 'delete'],
   setup(props, { emit }) {
     const { app, i18n } = useContext()
     const toast = useToast()
     const selected = ref(false)
     const isInformationModalOpen = ref(false)
+    const { list } = toRefs(props)
+    const { isTablet, isDesktop } = app.$breakpoints
     const toggleSelected = () => {
       selected.value = !selected.value
-      emit('update', { selected: selected.value, list: props.list })
+      emit('update', { selected: selected.value, list: list.value })
     }
 
     const listUrl = computed(() => {
       return app.localePath({
         name: 'shop-my-account-shopping-lists-list',
         params: {
-          list: props.list.id,
+          list: list.value.id,
         },
       })
     })
 
     const getShapeType = computed(() => {
-      const isTabletOrMore =
-        app.$breakpoints.isTablet.value || app.$breakpoints.isDesktop.value
+      const isTabletOrMore = isTablet.value || isDesktop.value
       return isTabletOrMore ? 'plain' : 'outlined'
     })
 
@@ -121,6 +122,7 @@ export default defineComponent({
         },
         { timeout: 3000 }
       )
+      emit('delete', list.value)
     }
 
     watch(props, (newVal, oldVal) => {
@@ -169,7 +171,7 @@ export default defineComponent({
       @apply tw-my-auto;
     }
 
-    &__checkbox {
+    &--checkbox {
       @apply tw-hidden;
 
       @screen md {
@@ -182,7 +184,7 @@ export default defineComponent({
       }
     }
 
-    &__label {
+    &--label {
       @apply tw-my-auto;
 
       @screen md {
@@ -205,7 +207,7 @@ export default defineComponent({
       @apply tw-pl-6;
     }
 
-    &__label {
+    &--label {
       @screen md {
         @apply tw-hidden;
       }
@@ -222,6 +224,7 @@ export default defineComponent({
     @screen md {
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-6 tw-col-end-8;
+      @apply tw-text-pv-black;
       @apply tw-my-auto;
       @apply tw-pl-6;
     }
@@ -240,7 +243,7 @@ export default defineComponent({
       @apply tw-ml-auto;
     }
 
-    &__details {
+    &--details {
       @apply tw-mr-4;
 
       a {
@@ -258,7 +261,7 @@ export default defineComponent({
       }
     }
 
-    &__delete {
+    &--delete {
       @apply tw-max-w-fit;
 
       @screen md {
