@@ -11,7 +11,7 @@ export const useDashboardStore = defineStore('accountData', () => {
   const { i18n, localePath } = useContext()
   const { orders } = storeToRefs(myAccountStore)
   const userStore = useUserStore()
-  const { currentUser } = storeToRefs(userStore)
+  const { currentUser, userBillingAddress } = storeToRefs(userStore)
 
   const shoppingLists = ref()
 
@@ -162,7 +162,30 @@ export const useDashboardStore = defineStore('accountData', () => {
     items: [
       { icon: 'phone', text: currentUser.value?.phone || '' },
       { icon: 'print', text: currentUser.value?.fax || '' },
-      { icon: 'mail', text: currentUser.value?.displayUid || '' },
+      { icon: 'mail_outline', text: currentUser.value?.displayUid || '' },
+    ],
+  }
+
+  const companyDataContent = {
+    headline: i18n.t('myaccount.companyData'),
+    subheadline: currentUser.value?.orgUnit.name || '',
+    items: [
+      { text: currentUser.value?.department || '' },
+      {
+        text:
+          `${userBillingAddress.value?.line1} ${userBillingAddress.value?.line2}` ||
+          '',
+      },
+      {
+        text:
+          `${userBillingAddress.value?.postalCode} ${userBillingAddress.value?.town}` ||
+          '',
+      },
+      { text: userBillingAddress.value?.country?.name || '' },
+      {
+        icon: 'attach_money',
+        text: currentUser.value?.orgUnit?.vatID || '',
+      },
     ],
   }
 
@@ -172,6 +195,7 @@ export const useDashboardStore = defineStore('accountData', () => {
     recentShoppingListTableHeader,
     recentShoppingListHeader,
     accountDataContent,
+    companyDataContent,
 
     //Getters
     getRecentRequestsTableData,

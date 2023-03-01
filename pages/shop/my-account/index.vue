@@ -36,10 +36,10 @@
       />
     </section>
 
-    <section class="section">
+    <section class="section section--last">
       <div class="information__data">
         <InformationBox :content="accountDataContent" />
-        <InformationBox :content="accountDataContent" />
+        <InformationBox :content="companyDataContent" />
       </div>
     </section>
   </div>
@@ -68,9 +68,8 @@ export default defineComponent({
       recentShoppingListTableHeader,
       recentShoppingListHeader,
       accountDataContent,
+      companyDataContent,
     } = storeToRefs(dashBoardStore)
-
-    console.log('accountdatacontent', accountDataContent)
 
     const recentRequests = useAsync(() => {
       return dashBoardStore.getRecentRequestsTableData()
@@ -131,6 +130,7 @@ export default defineComponent({
       buttons,
       recentShoppingListHeader,
       accountDataContent,
+      companyDataContent,
     }
   },
 })
@@ -140,6 +140,10 @@ export default defineComponent({
 .dashboard {
   .section {
     @apply tw-mb-8;
+
+    &--last {
+      @apply tw-mb-0;
+    }
   }
 
   .section-headline {
@@ -161,16 +165,25 @@ export default defineComponent({
   }
 
   .information__data {
-    @apply tw-flex-col;
-    @apply tw-gap-6;
-
     @screen md {
       @apply tw-flex;
+      @apply tw-gap-6;
+    }
+
+    @screen lg {
       @apply tw-gap-8;
     }
 
     .information-box {
       @apply tw-w-full;
+
+      &:first-of-type {
+        @apply tw-mb-6;
+
+        @screen md {
+          @apply tw-mb-0;
+        }
+      }
     }
   }
 }

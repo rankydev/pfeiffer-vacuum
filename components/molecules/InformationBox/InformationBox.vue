@@ -4,6 +4,7 @@
       <h3 v-if="content.headline">{{ content.headline }}</h3>
       <Button
         v-if="content.button"
+        class="information-box__button"
         :icon="icon"
         variant="secondary"
         shape="plain"
@@ -52,8 +53,6 @@ export default defineComponent({
     const icon = computed(() => props.content?.button?.icon || '')
     const link = computed(() => props.content?.button?.href || '')
 
-    console.log(props.content)
-
     return { icon, link }
   },
 })
@@ -69,10 +68,20 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-items-center;
     @apply tw-justify-between;
+    @apply tw-mb-2;
+
+    h3 {
+      @apply tw-flex-1;
+    }
   }
 
   &__button {
-    @apply tw-pr-0;
+    @apply tw-flex-none;
+  }
+
+  .button--normal.button--icon-only {
+    @apply tw-p-0;
+    @apply tw-pl-2;
   }
 
   &__subheadline {
