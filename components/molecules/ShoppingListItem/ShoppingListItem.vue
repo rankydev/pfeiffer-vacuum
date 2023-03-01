@@ -38,6 +38,7 @@
       <Button
         class="shopping-list-item__buttons--delete"
         icon="delete"
+        shape="outlined"
         variant="secondary"
         @click="toggleInformationModal"
       />
@@ -151,6 +152,7 @@ export default defineComponent({
   @apply tw-grid-cols-12;
   @apply tw-p-4;
   @apply tw-bg-pv-grey-96;
+  @apply tw-text-pv-grey-16;
 
   @screen md {
     @apply tw-py-7;
@@ -207,9 +209,14 @@ export default defineComponent({
       @apply tw-pl-6;
     }
 
+    @screen lg {
+      @apply tw-text-base;
+    }
+
     &--label {
       @screen md {
         @apply tw-hidden;
+        @apply tw-text-sm;
       }
     }
   }
@@ -227,6 +234,11 @@ export default defineComponent({
       @apply tw-text-pv-black;
       @apply tw-my-auto;
       @apply tw-pl-6;
+      @apply tw-text-sm;
+    }
+
+    @screen lg {
+      @apply tw-text-base;
     }
   }
 
