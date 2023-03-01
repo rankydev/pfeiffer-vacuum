@@ -78,10 +78,14 @@ export default defineComponent({
       @apply tw-auto-rows-auto;
       @apply tw-grid-cols-12;
       @apply tw-pb-4;
-      @apply tw-border-b tw-border-b-pv-grey-88;
-      @apply tw-text-pv-grey-16;
+      @apply tw-border-b tw-border-b-2 tw-border-b-pv-grey-88;
+      @apply tw-text-pv-grey-32;
       @apply tw-text-sm;
       @apply tw-leading-6;
+    }
+
+    @screen lg {
+      @apply tw-text-base;
     }
 
     &--title {
