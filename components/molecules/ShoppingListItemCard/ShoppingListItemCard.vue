@@ -80,6 +80,7 @@
 </template>
 
 <script>
+// Add to Lsg if its possible
 import {
   computed,
   defineComponent,
@@ -136,6 +137,7 @@ export default defineComponent({
       isRejectedUser,
       isLoggedIn,
     } = storeToRefs(userStore)
+    const { addProductToCart } = cartStore
 
     const noPriceReason = computed(() => {
       const path = 'product.login.loginToSeePrices.'
@@ -188,10 +190,7 @@ export default defineComponent({
     }
 
     const addToCart = async () => {
-      await cartStore?.addProductToCart(
-        product?.value?.code,
-        quantityModel?.value
-      )
+      await addProductToCart(product?.value?.code, quantityModel?.value)
     }
 
     const updateCartQuantity = useDebounceFn(() => {
