@@ -32,7 +32,7 @@
           class="knowledge-card__action-items-detail"
           :href="detailPageLink"
           icon="arrow_forward"
-          :label="$t('misc.details')"
+          :label="$t('knowledge.details')"
         />
         <KnowledgeAssetButton
           :webinar-registration-id="id"

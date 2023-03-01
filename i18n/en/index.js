@@ -10,7 +10,6 @@ import cart from './cart.json'
 import knowledge from './knowledge.json'
 import checkout from './checkout.json'
 
-import misc from './misc.json'
 export default {
   language,
   navigation,
@@ -23,5 +22,4 @@ export default {
   cart,
   knowledge,
   checkout,
-  misc,
 }

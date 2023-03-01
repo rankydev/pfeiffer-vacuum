@@ -8,7 +8,6 @@ import slider from './slider.json'
 import myaccount from './myaccount.json'
 import cart from './cart.json'
 import knowledge from './knowledge.json'
-import misc from './misc.json'
 import checkout from './checkout.json'
 
 export default {
@@ -22,6 +21,5 @@ export default {
   myaccount,
   cart,
   knowledge,
-  misc,
   checkout,
 }
