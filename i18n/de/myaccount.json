@@ -62,5 +62,17 @@
   "installedBase": {
     "installedBase": "Installed Base"
   },
-  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!"
+  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!",
+  "requestHistory": {
+    "table": {
+      "reference": "Referenz",
+      "requestNumber": "Anfragenummer",
+      "requestReference": "Referenznummer",
+      "customerReference": "Kundenreferenz",
+      "requestDate": "Anfragedatum",
+      "date": "Datum",
+      "requestTotal": "Total (net)"
+    },
+    "yourHistory": "Deine Anfragenhistorie"
+  }
 }
