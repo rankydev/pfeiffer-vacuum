@@ -66,6 +66,8 @@
       "date": "Datum",
       "requestTotal": "Total (net)"
     },
+    "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
+    "goToProducts": "Zu den Produkten",
     "yourHistory": "Deine Anfragenhistorie"
   }
 }

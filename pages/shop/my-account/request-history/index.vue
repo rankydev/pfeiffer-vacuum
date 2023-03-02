@@ -9,11 +9,17 @@
       :headline="$t('myaccount.requestHistory.yourHistory')"
       :link="localePath('shop-my-account')"
     />
-    <div>
+    <div v-if="tableData.length">
       <GenericTable :header="header" :table-data="tableData" />
       <div class="request-history__pagination-wrapper">
         <Pagination :total-pages="totalPages" />
       </div>
+    </div>
+    <div v-else>
+      <EmptyWrapper
+        :label="$t('myaccount.requestHistory.lastRequestNotFound')"
+        :button="button"
+      />
     </div>
   </div>
 </template>
@@ -26,11 +32,13 @@ import {
   useContext,
   computed,
   watch,
+  ref,
   useRoute,
 } from '@nuxtjs/composition-api'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 import GenericTable from '~/components/molecules/GenericTable/GenericTable'
 import Pagination from '~/components/molecules/Pagination/Pagination'
+import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper'
 import { useRequestHistoryStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
 
@@ -40,6 +48,7 @@ export default defineComponent({
     GenericTable,
     Pagination,
     ResultHeadline,
+    EmptyWrapper,
   },
   setup() {
     const { i18n, app } = useContext()
@@ -52,10 +61,19 @@ export default defineComponent({
     onBeforeMount(loadRequestHistory)
     onServerPrefetch(loadRequestHistory)
 
+    const button = ref({
+      icon: 'arrow_forward',
+      size: 'normal',
+      label: i18n.t('myaccount.requestHistory.goToProducts'),
+      shape: 'outlined',
+      variant: 'secondary',
+      href: 'shop/categories',
+      disabled: false,
+      prependIcon: false,
+    })
+
     const header = computed(() => [
-      {
-        title: i18n.t('myaccount.requestHistory.table.requestNumber'),
-      },
+      { title: i18n.t('myaccount.requestHistory.table.requestNumber') },
       { title: i18n.t('myaccount.requestHistory.table.requestReference') },
       { title: i18n.t('myaccount.requestHistory.table.date') },
       { title: i18n.t('myaccount.requestHistory.table.requestTotal') },
@@ -117,7 +135,7 @@ export default defineComponent({
       loadRequestHistory(newRoute.query.currentPage || 1)
     })
 
-    return { requestHistory, header, tableData, totalPages }
+    return { requestHistory, header, tableData, totalPages, button }
   },
 })
 </script>
