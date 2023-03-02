@@ -47,7 +47,7 @@ export const useUserStore = defineStore('user', () => {
     return currentUser.value?.registrationStatus?.code === 'LEAD'
   })
   const isOciUser = computed(() => {
-    return ociStore.checkForOciUser(auth)
+    return currentUser.value?.ociBuyer
   })
   const isRejectedUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'REJECTED'
@@ -337,7 +337,6 @@ export const useUserStore = defineStore('user', () => {
   const initializeAuth = () => {
     /* istanbul ignore else  */
     if (!ociStore.isOciPage) {
-      // && !ociStore.checkForOciUser(auth)
       createKeycloakInstance()
     } else {
       logger.trace('start')

@@ -12,18 +12,11 @@ export const useOciStore = defineStore('oci', () => {
   const returnTarget = ref(route.value.query.RETURNTARGET || '_self')
   const customerId = ref(route.value.query.customerId)
 
-  const checkForOciUser = (auth) => {
-    return auth.type === 'oci'
-  }
-
   return {
     // state
     isOciPage,
     hookUrl,
     returnTarget,
     customerId,
-
-    // getters
-    checkForOciUser,
   }
 })
