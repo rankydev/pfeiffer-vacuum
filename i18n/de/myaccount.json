@@ -74,5 +74,10 @@
       "confirm": "Ja",
       "deleteSuccess": "Einkaufsliste wurde erfolgreich gelöscht."
     }
+  },
+  "new": "Neu",
+  "select": "Auswählen",
+  "shoppingListOverviewPage": {
+    "title": "Einkaufslisten"
   }
 }

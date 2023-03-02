@@ -72,6 +72,11 @@
       "confirm": "예",
       "deleteSuccess": "쇼핑 목록이 성공적으로 삭제되었습니다."
     }
+  },
+  "new": "새로운",
+  "select": "선택",
+  "shoppingListOverviewPage": {
+    "title": "쇼핑 목록"
   }
 }
 

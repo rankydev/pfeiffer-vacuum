@@ -74,6 +74,11 @@
       "confirm": "Yes",
       "deleteSuccess": "Shopping list was deleted successfully."
     }
+  },
+  "new": "New",
+  "select": "Select",
+  "shoppingListOverviewPage": {
+    "title": "Shopping Lists"
   }
 }
 

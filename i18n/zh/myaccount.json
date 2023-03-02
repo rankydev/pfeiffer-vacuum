@@ -72,5 +72,10 @@
       "confirm": "是的",
       "deleteSuccess": "购物清单已成功删除"
     }
+  },
+  "new": "新",
+  "select": "选择",
+  "shoppingListOverviewPage": {
+    "title": "购物清单"
   }
 }
