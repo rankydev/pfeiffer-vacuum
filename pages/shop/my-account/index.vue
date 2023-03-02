@@ -22,7 +22,6 @@ export default defineComponent({
 
     const getOrders = async () => {
       const result = await myAccountStore.getOrders()
-      console.log(result)
       orders.value = result
     }
 
