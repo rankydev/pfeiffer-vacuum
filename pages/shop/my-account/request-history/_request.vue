@@ -1,8 +1,12 @@
 <template>
   <div>
     <span>{{ requestId }}</span>
-    <span>{{ currentOrder }}</span>
-    <span>salami</span>
+    <!-- <CartTable /> -->
+    <CartItemCard
+      v-for="product in productList"
+      :key="product.entryNumber"
+      v-bind="product"
+    />
   </div>
 </template>
 
@@ -11,12 +15,19 @@ import {
   defineComponent,
   useRoute,
   ref,
+  computed,
   onMounted,
 } from '@nuxtjs/composition-api'
 import { useRequestHistoryStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
+import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
+// import CartTable from '~/components/molecules/CartTable/CartTable'
 
 export default defineComponent({
+  components: {
+    CartItemCard,
+    // CartTable,
+  },
   setup() {
     const route = useRoute()
 
@@ -30,7 +41,13 @@ export default defineComponent({
       await loadOrderContent(requestId.value)
     })
 
-    return { requestId, currentOrder }
+    const productList = computed(() => {
+      return currentOrder?.value?.entries
+    })
+
+    console.log(productList)
+
+    return { requestId, currentOrder, productList }
   },
 })
 </script>
