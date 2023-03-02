@@ -1,6 +1,7 @@
 import { storeToRefs } from 'pinia'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useCookieHelper } from '~/composables/useCookieHelper'
+import { useOciStore } from '~/stores/oci'
 import { useUserStore } from '~/stores/user'
 import { useLogger } from '~/composables/useLogger'
 import config from '~/config/hybris.config'
@@ -11,8 +12,10 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
   const { logger } = useLogger('cartApi')
 
+  const ociStore = useOciStore()
+  const { customerId } = storeToRefs(ociStore)
   const userStore = useUserStore()
-  const { currentUser, customerId, isLoggedIn } = storeToRefs(userStore)
+  const { currentUser, isLoggedIn } = storeToRefs(userStore)
 
   /**
    * Cart helper functions

@@ -40,8 +40,6 @@ export const useUserStore = defineStore('user', () => {
   const billingAddress = ssrRef(null)
   const deliveryAddresses = ssrRef(null)
 
-  const customerId = computed(() => currentUser.value?.orgUnit?.customerId)
-
   const isOpenUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'OPEN'
   })
@@ -367,7 +365,7 @@ export const useUserStore = defineStore('user', () => {
       logger.trace('username and password given')
 
       // logout the user if he is already logged in
-      if (isLoggedIn) {
+      if (isLoggedIn.value) {
         logger.trace('logout already logged-in user to ensure correct login')
         logout()
       }
@@ -403,7 +401,6 @@ export const useUserStore = defineStore('user', () => {
     accountManagerData,
 
     // getters
-    customerId,
     isApprovedUser,
     isLeadUser,
     isOciUser,
