@@ -10,7 +10,12 @@
         <template #default>
           <ContentWrapper>
             <LoadingSpinner :show="loading || cartLoading">
-              <template v-if="cartEntries">
+              <Confirmation
+                v-if="placedOrder"
+                :order="placedOrder"
+                class="checkout__confirmation"
+              />
+              <template v-else-if="cartEntries">
                 <div class="checkout">
                   <div class="checkout__header">
                     <ResultHeadline :headline="$t('checkout.summary')" />
@@ -171,6 +176,7 @@ import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
 import PvInput from '@/components/atoms/FormComponents/PvInput/PvInput'
+import Confirmation from '@/components/organisms/Confirmation/Confirmation'
 
 export default defineComponent({
   name: 'Checkout',
@@ -188,6 +194,7 @@ export default defineComponent({
     PromotionLabel,
     PvTextArea,
     PvInput,
+    Confirmation,
   },
   setup() {
     const route = useRoute()
@@ -293,6 +300,8 @@ export default defineComponent({
       }
     })
 
+    const placedOrder = ref(null)
+
     const placeOrder = async () => {
       loading.value = true
 
@@ -300,24 +309,21 @@ export default defineComponent({
         // first wait for all promises to be resolved which may be still running (set comment or reference)
         await Promise.allSettled(asyncRequests.value)
 
-        // TODO: OCI specific tasks need to be done in PVWEB-904
+        // OCI specific tasks need to be done here in PVWEB-904
 
         // placing order in a non-oci context
         const orderRequestResult = await ordersStore.placeOrder()
-        console.log('PLACED ORDER!!!', orderRequestResult)
 
-        // TODO: redirect to success page
+        // request was successful but something went wrong
+        if (!orderRequestResult || orderRequestResult?.error) {
+          throw orderRequestResult?.error || 'unexpected error'
+        }
 
-        // if (orderRequestResult) {
-        //   this.nextStep();
-        //   this.setLoading(false);
-        // } else {
-        //   this.$globalMessages.error(this.$t('checkout.orderNotSuccessful'));
-        //   window.scrollTo(0, 0);
-        // }
+        // successful order response
+        placedOrder.value = orderRequestResult
       } catch (error) {
-        // TODO: proper error handling
-        logger.error('Error placing order', error)
+        // this.$globalMessages.error(this.$t('checkout.orderNotSuccessful'));
+        window.scrollTo(0, 0)
       } finally {
         loading.value = false
       }
@@ -349,6 +355,7 @@ export default defineComponent({
       userBillingAddress,
       deliveryAddress,
       cartPromotions,
+      placedOrder,
       placeOrder,
     }
   },
@@ -394,6 +401,11 @@ export default defineComponent({
   &__article-list-heading {
     @apply tw-text-2xl;
     @apply tw-mt-6 tw-mb-4;
+  }
+
+  &__confirmation {
+    @apply tw-mx-auto;
+    @apply tw-my-8;
   }
 
   &__empty {

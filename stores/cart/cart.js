@@ -15,7 +15,7 @@ import { useLogger } from '~/composables/useLogger'
 import { useToast } from '~/composables/useToast'
 
 export const useCartStore = defineStore('cart', () => {
-  const { getCookie } = useCookieHelper()
+  const { getCookie, removeCookie } = useCookieHelper()
   const { isLoggedIn } = storeToRefs(useUserStore())
   const { logger } = useLogger('cartStore')
   const toast = useToast()
@@ -38,6 +38,7 @@ export const useCartStore = defineStore('cart', () => {
     setDeliveryAddress,
     setReferenceNumber,
     setRequestComment,
+    loadCart,
   } = cartApi
 
   const initialCartLoad = async () => {
@@ -104,6 +105,12 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
+  const resetCurrentCart = async () => {
+    currentCart.value = null
+    removeCookie('cart')
+    await loadCart()
+  }
+
   onBeforeMount(initialCartLoad)
   onServerPrefetch(initialCartLoad)
 
@@ -129,5 +136,6 @@ export const useCartStore = defineStore('cart', () => {
     setRequestComment,
     deleteProductFromCart,
     updateProductQuantityFromCart,
+    resetCurrentCart,
   }
 })

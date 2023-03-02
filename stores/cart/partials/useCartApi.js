@@ -100,14 +100,18 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   const getOrCreateUserCart = async () => {
     let existingCart = null
 
-    existingCart = await axios.$get(
-      config.CARTS_CURRENT_USER_API +
-        (currentUser.value?.ociBuyer ? customerId.value : '/current'),
-      { params: { fields: 'FULL' } }
-    )
+    try {
+      existingCart = await axios.$get(
+        config.CARTS_CURRENT_USER_API +
+          (currentUser.value?.ociBuyer ? customerId.value : '/current'),
+        { params: { fields: 'FULL' } }
+      )
 
-    // Return when existing cart is valid
-    if (validateCart(existingCart)) return existingCart
+      // Return when existing cart is valid
+      if (validateCart(existingCart)) return existingCart
+    } catch (error) {
+      logger.warn('current cart could not be loaded', error)
+    }
 
     const newCart = await axios.$post(config.CARTS_CURRENT_USER_API, null, {
       params: { fields: 'FULL' },
