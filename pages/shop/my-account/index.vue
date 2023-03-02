@@ -10,6 +10,10 @@
         :header="recentRequestsTableHeader"
         :table-data="recentRequests"
         :carousel="true"
+        :secondary="{
+          position: 3,
+          active: true,
+        }"
       />
       <EmptyWrapper
         v-else
@@ -27,6 +31,10 @@
         :header="recentShoppingListTableHeader"
         :table-data="recentShoppingLists"
         :carousel="true"
+        :secondary="{
+          position: 2,
+          active: true,
+        }"
       />
       <EmptyWrapper
         v-else
