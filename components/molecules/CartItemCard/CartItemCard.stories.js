@@ -1,16 +1,19 @@
 import CartItemCard from './CartItemCard'
 import {
   product,
-  price,
+  basePrice,
+  totalPrice,
   appliedOrderPromotion,
   quantity,
 } from './CartItemCard.stories.content'
 
 const argTypes = {
   product,
-  price,
+  basePrice,
+  totalPrice,
   quantity,
   promotion: appliedOrderPromotion,
+  isMiniCart: false,
 }
 
 export default {
@@ -23,7 +26,7 @@ export default {
       },
       source: {
         appliedOrderPromotion,
-        code: '<cart-item-card v-bind="{ entry, readOnly, price, shopAttributes, promotions, showPrice }"/>',
+        code: '<cart-item-card v-bind="{ product,  basePrice, shopAttributes, promotions, totalPrice , isMiniCart }"/>',
       },
     },
   },

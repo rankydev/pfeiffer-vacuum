@@ -17,13 +17,13 @@
     DOCKER_SERVICE_NAME: ""
   script:
     - docker pull ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
-    - export container_running=`docker container list | grep ${DOCKER_SERVICE_NAME}`
-    - # check if container is running. stop and remove if so.
-      if [ -n container_running ]; then
-        docker-compose -f ${DOCKER_COMPOSE_FILENAME} stop ${DOCKER_SERVICE_NAME};
-        docker-compose -f ${DOCKER_COMPOSE_FILENAME} rm --force ${DOCKER_SERVICE_NAME};
+    - export container_running=`docker container list | grep "${DOCKER_SERVICE_NAME}"`
+    # check if containers are running. stop and remove if so.
+    - >
+      if [ -n "$container_running" ]; then
+        docker-compose -f "${DOCKER_COMPOSE_FILENAME}" rm --force --stop
       fi;
-    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up --detach --no-deps --build ${DOCKER_SERVICE_NAME}
+    - docker-compose -f ${DOCKER_COMPOSE_FILENAME} up --detach --no-deps --build
   environment:
     name: ${DOCKER_SERVICE_NAME}
     url: "https://dev2.pvac.diva-e.com"

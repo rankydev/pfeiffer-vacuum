@@ -53,5 +53,12 @@
     }
   },
   "contact": "문의하기",
-  "salesRepresentative": "영업 담당자"
+  "salesRepresentative": "영업 담당자",
+  "serviceHistory": {
+    "serviceRequests": "서비스 요청"
+  },
+  "installedBase": {
+    "installedBase": "설치 기반"
+  },
+  "comingSoon": "이 기능은 곧 사용할 수 있습니다!"
 }
