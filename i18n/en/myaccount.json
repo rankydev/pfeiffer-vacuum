@@ -76,6 +76,7 @@
     }
   },
   "new": "New",
+  "newMobile": "New shopping list",
   "select": "Select",
   "shoppingListOverviewPage": {
     "title": "Shopping Lists"

@@ -77,7 +77,7 @@ export default defineComponent({
       @apply tw-grid;
       @apply tw-auto-rows-auto;
       @apply tw-grid-cols-12;
-      @apply tw-pb-4;
+      @apply tw-py-4;
       @apply tw-border-b tw-border-b-2 tw-border-b-pv-grey-88;
       @apply tw-text-pv-grey-32;
       @apply tw-text-sm;
@@ -91,7 +91,11 @@ export default defineComponent({
     &--title {
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-1 tw-col-end-4;
-      @apply tw-ml-6;
+      @apply tw-ml-4;
+
+      @screen lg {
+        @apply tw-my-auto;
+      }
 
       &-active {
         @screen md {
@@ -109,16 +113,12 @@ export default defineComponent({
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-4 tw-col-end-6;
       @apply tw-ml-8;
-
-      @screen lg {
-        @apply tw-ml-6;
-      }
     }
 
     &--items {
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-6 tw-col-end-8;
-      @apply tw-ml-7;
+      @apply tw-ml-8;
 
       @screen lg {
         @apply tw-ml-6;

@@ -74,6 +74,7 @@
     }
   },
   "new": "新",
+  "newMobile": "新购物清单",
   "select": "选择",
   "shoppingListOverviewPage": {
     "title": "购物清单"
