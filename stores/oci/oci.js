@@ -1,12 +1,16 @@
 import { defineStore } from 'pinia'
-import { ref } from '@nuxtjs/composition-api'
+import { ref, useContext, useRoute } from '@nuxtjs/composition-api'
 
 export const useOciStore = defineStore('oci', () => {
-  const isOciPage = ref(false)
-  const hookUrl = ref('')
-  const returnTarget = ref('_self')
-  const hiddenUIElements = ref({})
-  const customerId = ref('')
+  const route = useRoute()
+  const { $config } = useContext()
+  const { CURRENT_REGION_CODE } = $config
+  const isOciPage = ref(CURRENT_REGION_CODE === 'oci')
+
+  // TODO We maybe also need to store those in cookies or storage
+  const hookUrl = ref(route.value.query.HOOK_URL)
+  const returnTarget = ref(route.value.query.RETURNTARGET || '_self')
+  const customerId = ref(route.value.query.customerId)
 
   const checkForOciUser = (auth) => {
     return auth.type === 'oci'
@@ -17,7 +21,6 @@ export const useOciStore = defineStore('oci', () => {
     isOciPage,
     hookUrl,
     returnTarget,
-    hiddenUIElements,
     customerId,
 
     // getters

@@ -1,6 +1,7 @@
 import { storeToRefs } from 'pinia'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useCookieHelper } from '~/composables/useCookieHelper'
+import { useOciStore } from '~/stores/oci'
 import { useUserStore } from '~/stores/user'
 import { useLogger } from '~/composables/useLogger'
 import config from '~/config/hybris.config'
@@ -11,8 +12,10 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
   const { logger } = useLogger('cartApi')
 
+  const ociStore = useOciStore()
+  const { customerId } = storeToRefs(ociStore)
   const userStore = useUserStore()
-  const { currentUser, customerId, isLoggedIn } = storeToRefs(userStore)
+  const { currentUser, isLoggedIn } = storeToRefs(userStore)
 
   /**
    * Cart helper functions
@@ -100,10 +103,12 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   const getOrCreateUserCart = async () => {
     let existingCart = null
 
+    logger.warn('### getOrCreateUserCart -> currentUser', currentUser.value)
     try {
       existingCart = await axios.$get(
         config.CARTS_CURRENT_USER_API +
-          (currentUser.value?.ociBuyer ? customerId.value : '/current'),
+          '/' +
+          (currentUser.value?.ociBuyer ? customerId.value : 'current'),
         { params: { fields: 'FULL' } }
       )
 
@@ -130,6 +135,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     return null
   }
+
   const getOrCreateCart = (createIfNotExist) => {
     if (isLoggedIn.value) return getOrCreateUserCart()
     return getOrCreateAnonymousCart(createIfNotExist)

@@ -54,19 +54,26 @@ export const useUserApi = () => {
   }
 
   const getAccountManager = async (currentUser) => {
-    const result = await axios.$get(
-      `${config.USER_API}/orgUnits/${currentUser.orgUnit.uid}/salesengineer`
-    )
+    try {
+      const result = await axios.$get(
+        `${config.USER_API}/orgUnits/${currentUser.orgUnit.uid}/salesengineer`
+      )
 
-    if (typeof result === 'object' && !result.error) {
-      return result
+      if (typeof result === 'object' && !result.error) {
+        return result
+      }
+
+      console.error(
+        'Error when fetching account managers. Returning empty array.',
+        result.error || 'Unknown error'
+      )
+      return null
+    } catch (e) {
+      console.error(
+        'Error when fetching account managers. Returning empty array.',
+        e || 'Unknown error'
+      )
     }
-
-    console.error(
-      'Error when fetching account managers. Returning empty array.',
-      result.error || 'Unknown error'
-    )
-    return null
   }
 
   return {
