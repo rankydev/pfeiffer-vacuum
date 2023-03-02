@@ -27,7 +27,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/m_147 Knowledge Asset Button',
+  title: 'Molecules/m_148 Knowledge Asset Button',
   component: KnowledgeAssetButton,
   parameters: {
     docs: {
