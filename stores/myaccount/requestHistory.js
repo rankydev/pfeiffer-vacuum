@@ -9,6 +9,7 @@ export const useRequestHistoryStore = defineStore('requestHistory', () => {
   const { logger } = useLogger('requestHistoryStore')
 
   const requestHistory = ref([])
+  const currentOrder = ref({})
 
   const loadRequestHistory = async (page, size = 5, sortCode) => {
     try {
@@ -34,10 +35,29 @@ export const useRequestHistoryStore = defineStore('requestHistory', () => {
     }
   }
 
+  const loadOrderContent = async (orderGuid) => {
+    try {
+      const order = await axios.$get(config.ORDER_API + '/' + orderGuid, {
+        params: {
+          fields: 'FULL',
+        },
+      })
+      currentOrder.value = order
+    } catch (e) {
+      logger.error(
+        'Error when getting content of order. Returning empty array.',
+        e ? e : ''
+      )
+      currentOrder.value = {}
+    }
+  }
+
   return {
     // States
     requestHistory,
+    currentOrder,
     // Actions
     loadRequestHistory,
+    loadOrderContent,
   }
 })
