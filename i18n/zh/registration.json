@@ -94,5 +94,20 @@
     "benefit3": "使用已安装的基础管理",
     "buttonLeft": "註冊沒有公司數據",
     "buttonRight": "添加公司信息"
+  },
+  "registrationModal": {
+    "alreadyHaveAccount": "你有一个帐户",
+    "pleaseLogIn": "请登录",
+    "signIn": "登入",
+    "pleaseSignIn": "请登录。登录后，您将被重定向回此页面。",
+    "createAccountDesktop": "创建完整帐户",
+    "createAccountMobile": "或创建新帐户",
+    "addCompanyAddressData": "您可以在此处添加您公司的地址数据。 此步骤目前是可选的。 请注意：只有拥有完整帐户，您才能查看价格并发送请求！",
+    "goToRegistration": "去注册",
+    "registerForMoreFeatures": "在我们的平台上注册以访问更多功能。",
+    "basisRegistration": "基础登记",
+    "basisRegistrationDescription": "通过基本注册，您可以查看网络研讨会和白皮书并创建购物清单。 注册后您可以返回此页面。",
+    "cancel": "取消",
+    "submit": "提交注册"
   }
 }

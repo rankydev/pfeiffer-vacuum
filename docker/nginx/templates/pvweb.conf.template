@@ -1,0 +1,60 @@
+# setup: 
+## rate limit
+limit_req_zone $binary_remote_addr zone=registration:10m rate=60r/m;
+
+server {
+
+    listen 80;
+    server_tokens off;
+    server_name localhost;
+
+    add_header Strict-Transport-Security 'max-age=31536000; includeSubDomains; preload';
+
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_proxied any;
+    gzip_types
+    text/plain text/css text/xml text/javascript application/javascript application/xml image/png image/jpeg;
+    gzip_disable "MSIE [1-6]\.";
+
+    # SAP Commerce Cloud (d)
+    location /api/shop/pfeifferwebservices/v2/pfeiffer/products/picker {
+        proxy_pass $SHOP_BASE_URL/pfeifferwebservices/v2/pfeiffer/products/picker;
+    }
+    location /api/shop/pfeifferwebservices/v2/pfeiffer/products/successor {
+        proxy_pass $SHOP_BASE_URL/pfeifferwebservices/v2/pfeiffer/products/successor;
+    }
+    location /api/shop/pfeifferwebservices/v2/pfeiffer/contact/contactQueryTypes {
+        proxy_pass $SHOP_BASE_URL/pfeifferwebservices/v2/pfeiffer/contact/contactQueryTypes;
+    }
+
+    # rate limit
+    location /api/shop/pfeifferwebservices/v2/pfeiffer/users/anonymous/orgCustomers {
+        limit_req zone=registration;
+        proxy_pass $SHOP_BASE_URL/api/shop/pfeifferwebservices/v2/pfeiffer/users/anonymous/orgCustomers;
+        limit_req_status 425;
+    }
+
+    # defaults
+    location / {
+        proxy_pass http://$HOST:$PORT;
+
+        proxy_set_header X-Forwarded-Host $http_host;
+    }
+
+    # all non-OCI traffic
+    location ~ ^/!(oci)(.*) {
+        proxy_pass http://$HOST:$PORT/global$2;
+
+        proxy_set_header X-Forwarded-Host $http_host;
+    }
+    # all OCI traffic
+    location ~ ^/(oci)(.*) {
+        proxy_pass http://$HOST:$OCI_PORT/oci$2;
+
+        proxy_set_header X-Forwarded-Host $http_host;
+    }
+
+}
+

@@ -67,5 +67,12 @@
     "lastRequestNotFound": "You have not made any requests yet!",
     "goToProducts": "Go to products",
     "yourHistory": "Your request history"
-  }
+  },
+  "serviceHistory": {
+    "serviceRequests": "服务请求"
+  },
+  "installedBase": {
+    "installedBase": "安装基础"
+  },
+  "comingSoon": "此功能即将推出！"
 }

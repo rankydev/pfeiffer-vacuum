@@ -95,9 +95,7 @@ describe('ResponsiveImage', () => {
 
         const picture = wrapper.find('.responsive-image')
 
-        expect(picture.attributes('class')).toMatch(
-          'responsive-image--corners-rounded'
-        )
+        expect(picture.attributes('class')).toMatch('responsive-image__rounded')
       })
 
       test('should not add rounded class given rounded=false', () => {
@@ -110,7 +108,7 @@ describe('ResponsiveImage', () => {
         const picture = wrapper.find('.responsive-image')
 
         expect(picture.attributes('class')).not.toMatch(
-          'responsive-image--corners-rounded'
+          'responsive-image__rounded'
         )
       })
 

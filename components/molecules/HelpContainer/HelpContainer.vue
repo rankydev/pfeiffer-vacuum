@@ -1,5 +1,8 @@
 <template>
-  <div class="help-container tw-grid-container tw-my-component-wide">
+  <div
+    id="help-block"
+    class="help-container tw-grid-container tw-my-component-wide"
+  >
     <div class="help-container__content">
       <div class="help-container__headline-wrapper">
         <div class="help-container__headline-text">

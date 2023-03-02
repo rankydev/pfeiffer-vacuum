@@ -16,6 +16,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
   const availableFilters = ref(null)
   const searchResultsLoading = ref(false)
   const searchResultsLoadingError = ref(false)
+  const searchSuggestions = ref([])
 
   const filterSuggestions = ref(null)
   const filterSuggestionsCache = ref(new Map())
@@ -250,6 +251,32 @@ export const useEmpolisStore = defineStore('empolis', () => {
     productDownloads.value = new Map()
   })
 
+  const fetchDocumentSuggestions = async (text, maxCount = 6) => {
+    try {
+      const suggestions = await axios.$post('/suggest', {
+        query: text,
+        maxCount,
+        language: language.value,
+      })
+
+      if (suggestions && Array.isArray(suggestions) && !suggestions.error) {
+        return suggestions
+      }
+
+      logger.error(
+        `Error when fetching suggestions for '${text}'. Returning empty array.`,
+        suggestions.error ? suggestions.error : ''
+      )
+      return []
+    } catch (e) {
+      logger.error(
+        `Error when fetching suggestions for '${text}'. Returning empty array.`,
+        e ? e : ''
+      )
+      return []
+    }
+  }
+
   return {
     productDownloads,
     searchResultsCache,
@@ -261,5 +288,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
     filterSuggestions,
     getProductDownloads,
     loadByPath,
+    fetchDocumentSuggestions,
+    searchSuggestions,
   }
 })

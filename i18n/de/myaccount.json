@@ -69,5 +69,12 @@
     "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
     "goToProducts": "Zu den Produkten",
     "yourHistory": "Deine Anfragenhistorie"
-  }
+  },
+  "serviceHistory": {
+    "serviceRequests": "Service-Anfragen"
+  },
+  "installedBase": {
+    "installedBase": "Installed Base"
+  },
+  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!"
 }

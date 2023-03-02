@@ -69,5 +69,12 @@
     "lastRequestNotFound": "You have not made any requests yet!",
     "goToProducts": "Go to products",
     "yourHistory": "Your request history"
-  }
+  },
+  "serviceHistory": {
+    "serviceRequests": "Service requests"
+  },
+  "installedBase": {
+    "installedBase": "Installed Base"
+  },
+  "comingSoon": "This function will be available soon!"
 }
