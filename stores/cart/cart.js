@@ -49,6 +49,8 @@ export const useCartStore = defineStore('cart', () => {
 
       let tempCart = await getOrCreateCart(!isLoggedIn.value)
       if (tempCart) currentCart.value = tempCart
+    } catch (error) {
+      logger.error('initial cart load failed', error)
     } finally {
       loading.value = false
     }

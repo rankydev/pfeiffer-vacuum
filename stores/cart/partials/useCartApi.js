@@ -110,7 +110,15 @@ export const useCartApi = (currentCart, currentCartGuid) => {
       // Return when existing cart is valid
       if (validateCart(existingCart)) return existingCart
     } catch (error) {
-      logger.warn('current cart could not be loaded', error)
+      if (error?.status === 400 || error?.status === 404) {
+        // in this case there is probably an old cart (cart after placeOrder f.e.) which is not longer valid or does not exist
+        // do not exit the function but create a fresh cart below which will replace the invalid current one
+        logger.warn('current cart could not be loaded', error)
+      } else {
+        // in this case something unexpected happend.
+        // we should not create a new cart since the old one may be still valid and something else went wrong
+        throw error
+      }
     }
 
     const newCart = await axios.$post(config.CARTS_CURRENT_USER_API, null, {

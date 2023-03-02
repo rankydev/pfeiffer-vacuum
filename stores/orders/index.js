@@ -12,7 +12,7 @@ export const useOrdersStore = defineStore('orders', () => {
 
   const placeOrder = async () => {
     try {
-      const result = axios.$post(
+      const result = await axios.$post(
         config.ORDER_API,
         {},
         {

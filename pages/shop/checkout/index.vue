@@ -322,9 +322,12 @@ export default defineComponent({
         // successful order response
         placedOrder.value = orderRequestResult
       } catch (error) {
-        // this.$globalMessages.error(this.$t('checkout.orderNotSuccessful'));
-        window.scrollTo(0, 0)
+        logger.error('error placing order', error)
+        toast.error({
+          description: i18n.t('checkout.orderNotSuccessful'),
+        })
       } finally {
+        window.scrollTo(0, 0)
         loading.value = false
       }
     }
