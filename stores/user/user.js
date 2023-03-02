@@ -31,6 +31,7 @@ export const useUserStore = defineStore('user', () => {
     isLoginProcess,
     isLoggedIn,
     createKeycloakInstance,
+    setCookiesAndSaveAuthData,
     removeCookiesAndDeleteAuthData,
   } = useKeycloak()
   const isLoading = ref(false)
@@ -294,6 +295,26 @@ export const useUserStore = defineStore('user', () => {
     await keycloakInstance.value.login(options)
   }
 
+  const addHoursToCurrentDate = (hours) => {
+    return new Date().setHours(new Date().getHours() + hours)
+  }
+
+  const createBasicAuthToken = (username, password) => {
+    const token = Buffer.from(`${username}:${password}`).toString('base64')
+    return {
+      access_token: token,
+      token_type: 'Basic',
+      validUntil: addHoursToCurrentDate(24),
+      type: 'oci',
+    }
+  }
+
+  const loginWithBasicAuth = (username, password) => {
+    logger.debug('loginWithBasicAuth')
+    const token = createBasicAuthToken(username, password)
+    setCookiesAndSaveAuthData(token)
+  }
+
   const logout = async () => {
     logger.debug('logout')
 
@@ -315,10 +336,49 @@ export const useUserStore = defineStore('user', () => {
     isLoading.value = false
   }
 
-  /* istanbul ignore else  */
-  if (!ociStore.isOciPage && !ociStore.checkForOciUser(auth)) {
-    createKeycloakInstance()
+  const initializeAuth = () => {
+    /* istanbul ignore else  */
+    if (!ociStore.isOciPage) {
+      // && !ociStore.checkForOciUser(auth)
+      createKeycloakInstance()
+    } else {
+      logger.trace('start')
+      const { username, password } = route.value.query
+
+      logger.trace('Query: ', route.value.query)
+
+      // only react on oci page
+      // if (!isOciPage) {
+      //   logger.trace('No OCI-page');
+      //   // logout the user if a ssr request with an active oci session happens
+      //   if (process.server && store.getters.isOciUser) {
+      //     logger.trace('Logout OCI-user');
+      //     $authApi.logout();
+      //   }
+      //   return;
+      // }
+
+      logger.trace('is OCI-page')
+
+      // check if the required credentils are given
+      if (!username || !password) {
+        return
+      }
+      logger.trace('username and password given')
+
+      // logout the user if he is already logged in
+      if (isLoggedIn) {
+        logger.trace('logout already logged-in user to ensure correct login')
+        logout()
+      }
+
+      logger.trace('login with basic auth')
+      // log the user in with the basic auth credentials
+      loginWithBasicAuth(username, password)
+    }
   }
+
+  initializeAuth()
 
   // the initial store initialization
   /* istanbul ignore else  */

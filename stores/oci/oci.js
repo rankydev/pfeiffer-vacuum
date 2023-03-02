@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
-import { ref } from '@nuxtjs/composition-api'
+import { ref, useContext } from '@nuxtjs/composition-api'
 
 export const useOciStore = defineStore('oci', () => {
-  const isOciPage = ref(false)
+  const { $config } = useContext()
+  const { CURRENT_REGION_CODE } = $config
+  const isOciPage = ref(CURRENT_REGION_CODE === 'oci')
   const hookUrl = ref('')
   const returnTarget = ref('_self')
   const hiddenUIElements = ref({})

@@ -100,24 +100,31 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   const getOrCreateUserCart = async () => {
     let existingCart = null
 
-    existingCart = await axios.$get(
-      config.CARTS_CURRENT_USER_API +
-        (currentUser.value?.ociBuyer ? customerId.value : '/current'),
-      { params: { fields: 'FULL' } }
-    )
+    logger.warn('### getOrCreateUserCart -> currentUser', currentUser.value)
+    try {
+      existingCart = await axios.$get(
+        config.CARTS_CURRENT_USER_API +
+          '/' +
+          (currentUser.value?.ociBuyer ? customerId.value : 'current'),
+        { params: { fields: 'FULL' } }
+      )
 
-    // Return when existing cart is valid
-    if (validateCart(existingCart)) return existingCart
+      // Return when existing cart is valid
+      if (validateCart(existingCart)) return existingCart
 
-    const newCart = await axios.$post(config.CARTS_CURRENT_USER_API, null, {
-      params: { fields: 'FULL' },
-    })
+      const newCart = await axios.$post(config.CARTS_CURRENT_USER_API, null, {
+        params: { fields: 'FULL' },
+      })
 
-    // Return when new cart is valid
-    if (validateCart(newCart)) return newCart
+      // Return when new cart is valid
+      if (validateCart(newCart)) return newCart
 
-    return null
+      return null
+    } catch (e) {
+      logger.error('Could not get cart', e)
+    }
   }
+
   const getOrCreateCart = (createIfNotExist) => {
     if (isLoggedIn.value) return getOrCreateUserCart()
     return getOrCreateAnonymousCart(createIfNotExist)
