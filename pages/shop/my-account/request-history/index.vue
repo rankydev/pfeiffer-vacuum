@@ -69,6 +69,7 @@ export default defineComponent({
       const result = []
 
       if (requestHistory.value.orders) {
+        console.log(requestHistory.value.orders)
         for (const request of requestHistory.value.orders) {
           const entries = []
 
