@@ -129,6 +129,9 @@ import {
 } from '@nuxtjs/composition-api'
 import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
+import { usePageStore, CMS_PAGE } from '~/stores/page'
+import { storeToRefs } from 'pinia'
+
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
@@ -140,8 +143,6 @@ import CartTable from '~/components/molecules/CartTable/CartTable'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
-
-import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'Cart',
@@ -206,6 +207,9 @@ export default defineComponent({
     const slugs = computed(() => {
       return buildSlugs(route.value.path)
     })
+
+    const pageStore = usePageStore()
+    pageStore.setPageType(CMS_PAGE)
 
     return {
       cartEntries,

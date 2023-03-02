@@ -157,6 +157,7 @@ import { useCartStore } from '~/stores/cart'
 import { useOrdersStore } from '~/stores/orders'
 import { useUserStore } from '~/stores/user'
 import { useDatasourcesStore } from '~/stores/datasources'
+import { usePageStore, CMS_PAGE } from '~/stores/page'
 import { storeToRefs } from 'pinia'
 
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
@@ -339,6 +340,9 @@ export default defineComponent({
     const slugs = computed(() => {
       return buildSlugs(route.value.path)
     })
+
+    const pageStore = usePageStore()
+    pageStore.setPageType(CMS_PAGE)
 
     return {
       personalPrivacyLink,
