@@ -1,5 +1,5 @@
 <template>
-  <GenericCard href="detailPageLink" image-size="cover">
+  <GenericCard :href="detailPageLink" image-size="cover">
     <template v-if="tag" #tag>
       <span class="knowledge-card__tag">
         <Icon :icon="tagIcon" size="xsmall" class="knowledge-card__tag-icon" />
@@ -95,8 +95,13 @@ export default defineComponent({
     })
     const date = computed(() => {
       const dateValue = entry?.value?.date
-      const dateType = isWebinar?.value ? 'full-timezone' : 'date'
-      return dateValue ? i18n.d(new Date(dateValue), dateType) : ''
+      const dateType = isWebinar?.value ? 'dateTime' : 'date'
+      const timeTranslation = isWebinar?.value
+        ? ` ${i18n.t('knowledge.clock')}`
+        : ''
+      return dateValue
+        ? `${i18n.d(new Date(dateValue), dateType)}${timeTranslation}`
+        : ''
     })
     const slug = computed(() => {
       return entry?.value?.slug

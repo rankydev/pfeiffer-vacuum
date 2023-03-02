@@ -37,3 +37,11 @@ const Template = (args) => ({
 
 export const Default = Template.bind({})
 Default.args = {}
+
+export const Webinar = Template.bind({})
+Webinar.args = {
+  entry: {
+    ...content,
+    type: 'WEBINAR',
+  },
+}
