@@ -71,6 +71,8 @@
       "date": "Date",
       "requestTotal": "Total (net)"
     },
+    "lastRequestNotFound": "You have not made any requests yet!",
+    "goToProducts": "Go to products",
     "yourHistory": "Your request history"
   }
 }
