@@ -49,6 +49,9 @@ export default defineComponent({
     order: {
       type: Object,
       required: true,
+      default: () => ({
+        code: '123456789',
+      }),
     },
   },
 })
@@ -60,6 +63,7 @@ export default defineComponent({
   @apply tw-text-center;
   @apply tw-w-fit;
   @apply tw-m-4;
+  margin: 0 auto;
 
   &__headline {
     @apply tw-col-span-12;
