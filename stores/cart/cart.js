@@ -7,6 +7,7 @@ import {
   useContext,
   watch,
   ref,
+  useRouter,
 } from '@nuxtjs/composition-api'
 import { useCartApi } from './partials/useCartApi'
 import { useCookieHelper } from '~/composables/useCookieHelper'
@@ -16,10 +17,13 @@ import { useToast } from '~/composables/useToast'
 
 export const useCartStore = defineStore('cart', () => {
   const { getCookie, removeCookie } = useCookieHelper()
-  const { isLoggedIn } = storeToRefs(useUserStore())
+  const userStore = useUserStore()
+  const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText } =
+    storeToRefs(userStore)
   const { logger } = useLogger('cartStore')
   const toast = useToast()
-  const { i18n } = useContext()
+  const { i18n, app } = useContext()
+  const router = useRouter()
 
   // State
   const currentCart = ssrRef({})
@@ -113,6 +117,21 @@ export const useCartStore = defineStore('cart', () => {
     await loadCart()
   }
 
+  const handleCheckoutClick = () => {
+    if (!isLoggedIn.value) {
+      return userStore.login()
+    }
+    if (isLoggedIn.value && isApprovedUser.value) {
+      return router.push({ path: app.localePath('shop-checkout') })
+    } else {
+      toast.warning({
+        description: i18n.t(
+          `myaccount.userStatus.${userStatusTypeForInfoText.value}.requestInfo`
+        ),
+      })
+    }
+  }
+
   onBeforeMount(initialCartLoad)
   onServerPrefetch(initialCartLoad)
 
@@ -138,6 +157,7 @@ export const useCartStore = defineStore('cart', () => {
     setRequestComment,
     deleteProductFromCart,
     updateProductQuantityFromCart,
+    handleCheckoutClick,
     resetCurrentCart,
   }
 })

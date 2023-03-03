@@ -62,6 +62,13 @@ export const useUserStore = defineStore('user', () => {
       currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
   )
 
+  const userStatusTypeForInfoText = computed(() => {
+    if (isLeadUser.value) return 'lead'
+    if (isOpenUser.value) return 'open'
+    if (isRejectedUser.value) return 'rejected'
+    return 'undefined'
+  })
+
   const accountManagerData = ref(null)
 
   const loadAccountManagerData = async () => {
@@ -356,6 +363,7 @@ export const useUserStore = defineStore('user', () => {
     isOpenUser,
     isRejectedUser,
     isLoggedIn,
+    userStatusTypeForInfoText,
     isLoading,
     userBillingAddress,
     userCountry,
