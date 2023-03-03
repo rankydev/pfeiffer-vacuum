@@ -14,7 +14,6 @@ export default {
       filetypes: ['images'],
       description: 'Image for this Webinar',
       display_name: 'Image',
-      asset_folder_id: 71985,
       required: true,
     },
     languages: {
