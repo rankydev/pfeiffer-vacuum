@@ -219,7 +219,7 @@ export const useUserStore = defineStore('user', () => {
   const loadDeliveryAddresses = async () => {
     try {
       const result = await userApi.getUserDeliveryAddresses()
-      deliveryAddresses.value = {
+      const mappedAddresses = {
         addresses: result.addresses
           .map((item) => {
             return {
@@ -229,6 +229,8 @@ export const useUserStore = defineStore('user', () => {
           })
           .sort((a, b) => b.defaultShippingAddress - a.defaultShippingAddress),
       }
+      deliveryAddresses.value = mappedAddresses
+      return mappedAddresses.addresses
     } catch (e) {
       logger.error(
         `Error when fetching billing address for user. Returning empty object.`,
@@ -278,13 +280,6 @@ export const useUserStore = defineStore('user', () => {
     if (!deliveryAddresses.value?.addresses?.length) return null
     return deliveryAddresses.value.addresses.find(
       (deliveryAddress) => deliveryAddress.id === id
-    )
-  }
-
-  const getDefaultDeliveryAddress = () => {
-    if (!deliveryAddresses.value?.addresses?.length) return null
-    return deliveryAddresses.value.addresses.find(
-      (deliveryAddress) => deliveryAddress.defaultShippingAddress
     )
   }
 
@@ -380,7 +375,6 @@ export const useUserStore = defineStore('user', () => {
     deleteDeliveryAddress,
     setDefaultDeliveryAddress,
     getDeliveryAddressByID,
-    getDefaultDeliveryAddress,
     loadAddressData,
     register,
   }
