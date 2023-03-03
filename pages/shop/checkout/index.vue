@@ -284,7 +284,7 @@ export default defineComponent({
         // load all availables addresses
         const sortedAddresses = await userStore.loadDeliveryAddresses()
 
-        if (!sortedAddresses?.length) {
+        if (sortedAddresses?.length) {
           await cartStore.setDeliveryAddress(sortedAddresses[0])
           logger.trace(
             `Successfully set [${
@@ -293,16 +293,11 @@ export default defineComponent({
                 : 'first found'
             } delivery address] as cart delivery address.`
           )
-        } else if (
-          userBillingAddress.value &&
-          Object.keys(userBillingAddress.value).length
-        ) {
-          await cartStore.setDeliveryAddress(userBillingAddress.value)
-          logger.trace(
-            'Successfully set [billing address] as cart delivery address.'
-          )
         } else {
-          throw 'no delivery address nor billing address found'
+          toast.warning({
+            description: i18n.t('checkout.deliveryAddressMissing'),
+          })
+          throw 'no delivery address found'
         }
       } catch (error) {
         logger.error('could not set delivery address.', error)
