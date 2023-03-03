@@ -25,7 +25,7 @@
                     {{ $t('checkout.checkDetails') }}
                   </div>
 
-                  <div class="checkout__addresses">
+                  <div v-if="!isOciUser" class="checkout__addresses">
                     <AddressCard
                       :address="deliveryAddress || {}"
                       :headline="$t('checkout.deliveryAddress')"
@@ -41,7 +41,7 @@
                     />
                   </div>
 
-                  <div class="checkout__text-fields">
+                  <div v-if="!isOciUser" class="checkout__text-fields">
                     <PvInput
                       v-model="customerReference"
                       :label="$t('checkout.reference')"
@@ -60,10 +60,13 @@
                     <h3>{{ $t('checkout.articleList') }}</h3>
                   </div>
 
-                  <CartTable :cart="cartEntries" :edit-mode="false" />
+                  <CartTable :edit-mode="false" />
 
-                  <div class="checkout__info">
-                    <div v-show="!ociBuyer" class="checkout__information">
+                  <div
+                    class="checkout__info"
+                    :class="{ 'checkout__info--oci': isOciUser }"
+                  >
+                    <div v-if="!isOciUser" class="checkout__information">
                       <PromotionLabel
                         v-for="(promotion, index) in cartPromotions"
                         :key="index"
@@ -92,7 +95,13 @@
 
                       <div class="checkout__submit">
                         <Button
-                          :label="$t('checkout.completeRequest')"
+                          :label="
+                            $t(
+                              isOciUser
+                                ? 'checkout.transmitCart'
+                                : 'checkout.completeRequest'
+                            )
+                          "
                           class="checkout__button--submit"
                           variant="primary"
                           icon="mail_outline"
@@ -213,11 +222,10 @@ export default defineComponent({
     const cartStore = useCartStore()
     const { currentCart, loading: cartLoading } = storeToRefs(cartStore)
     const userStore = useUserStore()
-    const { userBillingAddress, isLoggedIn, isApprovedUser } =
+    const { userBillingAddress, isLoggedIn, isApprovedUser, isOciUser } =
       storeToRefs(userStore)
     const cartEntries = computed(() => currentCart.value?.entries)
     const deliveryAddress = computed(() => currentCart.value?.deliveryAddress)
-    const ociBuyer = computed(() => userStore.currentUser?.ociBuyer)
 
     const cartPromotions = computed(() => {
       return currentCart.value?.appliedOrderPromotions || []
@@ -358,7 +366,7 @@ export default defineComponent({
       slugs,
       isMobile,
       currentCart,
-      ociBuyer,
+      isOciUser,
       userBillingAddress,
       deliveryAddress,
       cartPromotions,
@@ -481,6 +489,10 @@ export default defineComponent({
     @screen md {
       @apply tw-flex tw-justify-between;
       @apply tw-gap-6;
+    }
+
+    &--oci {
+      @apply tw-justify-end;
     }
   }
 

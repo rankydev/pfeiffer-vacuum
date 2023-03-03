@@ -47,7 +47,7 @@ export const useUserStore = defineStore('user', () => {
     return currentUser.value?.registrationStatus?.code === 'LEAD'
   })
   const isOciUser = computed(() => {
-    return ociStore.checkForOciUser(auth)
+    return currentUser.value?.ociBuyer
   })
   const isRejectedUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'REJECTED'
@@ -208,10 +208,7 @@ export const useUserStore = defineStore('user', () => {
       const result = await userApi.getUserBillingAddress()
       billingAddress.value = result
     } catch (e) {
-      logger.error(
-        `Error when fetching billing address for user. Returning empty object.`,
-        e
-      )
+      logger.error(`Error fetching billing address for user.`, e)
     }
   }
 
@@ -229,10 +226,7 @@ export const useUserStore = defineStore('user', () => {
           .sort((a, b) => b.defaultShippingAddress - a.defaultShippingAddress),
       }
     } catch (e) {
-      logger.error(
-        `Error when fetching billing address for user. Returning empty object.`,
-        e
-      )
+      logger.error(`Error fetching delivery address for user`, e)
     }
   }
 

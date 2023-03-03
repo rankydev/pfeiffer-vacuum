@@ -15,7 +15,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   const ociStore = useOciStore()
   const { customerId } = storeToRefs(ociStore)
   const userStore = useUserStore()
-  const { currentUser, isLoggedIn } = storeToRefs(userStore)
+  const { currentUser, isLoggedIn, isOciUser } = storeToRefs(userStore)
 
   /**
    * Cart helper functions
@@ -43,7 +43,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
    */
   const getCartUrl = () => {
     if (isLoggedIn.value) {
-      if (currentUser.value?.ociBuyer)
+      if (isOciUser.value)
         return config.CARTS_CURRENT_USER_API + '/' + customerId.value
       return config.CARTS_CURRENT_USER_API + '/current'
     } else if (currentCart.value) {
@@ -108,7 +108,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
       existingCart = await axios.$get(
         config.CARTS_CURRENT_USER_API +
           '/' +
-          (currentUser.value?.ociBuyer ? customerId.value : 'current'),
+          (isOciUser.value ? customerId.value : 'current'),
         { params: { fields: 'FULL' } }
       )
 
