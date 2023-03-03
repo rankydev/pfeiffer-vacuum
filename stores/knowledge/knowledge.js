@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { useLogger } from '~/composables/useLogger'
 import config from '~/config/hybris.config'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
+import { joinURL } from 'ufo'
 
 export const useKnowledgeStore = defineStore('knowledge', () => {
   const { logger } = useLogger('knowledgeStore')
@@ -19,7 +20,13 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
     return true
   }
 
+  const getHybrisDetails = async (type = 'whitepaper', id) => {
+    const path = joinURL(config.KNOWLEDGE_API, type, id)
+    return await axios.$get(path)
+  }
+
   return {
     registerForWebinar,
+    getHybrisDetails,
   }
 })

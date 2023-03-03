@@ -99,10 +99,7 @@ export default defineComponent({
       window.open(props.assetUrl, '_blank').focus()
     }
 
-    const showLoginModal = () => {
-      // ToDo: open LoginModal PVWEB-933
-      emit('openModal')
-    }
+    const showLoginModal = () => emit('openModal')
 
     const registerWebinar = async () => {
       try {
