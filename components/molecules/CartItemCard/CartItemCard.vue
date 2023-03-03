@@ -82,6 +82,7 @@
       @click="addToShoppingList"
     />
     <Button
+      v-if="variant !== 'requestHistory'"
       class="cart-item-card-delete"
       variant="secondary"
       shape="plain"
@@ -89,7 +90,8 @@
       @click="deleteFromCart"
     />
     <Button
-      class="shopping-list-item-card__actions__add-to-cart"
+      v-if="variant === 'requestHistory'"
+      class="cart-item-card-add-to-cart"
       icon="shopping_cart"
       :label="$t('product.addToCart')"
       @click="addToCart"
@@ -152,6 +154,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
       required: false,
+    },
+    variant: {
+      type: String,
+      default: '',
     },
   },
   emits: ['addToShoppingList', 'update', 'delete'],
@@ -421,6 +427,15 @@ export default defineComponent({
     @apply tw-mb-3;
     @apply tw-mt-4;
   }
+
+  &-add-to-cart {
+    @apply tw-row-start-6 tw-row-end-7;
+    @apply tw-col-start-1 tw-col-end-13;
+    @apply tw-w-fit;
+    @apply tw-mx-auto;
+    @apply tw-mb-3;
+    @apply tw-mt-4;
+  }
 }
 
 .cart-item-card-desktop {
@@ -549,11 +564,30 @@ export default defineComponent({
     &-add-article {
       @screen md {
         @apply tw-mx-0;
+        @apply tw-row-start-6 tw-row-end-7;
+        @apply tw-col-start-1 tw-col-end-5;
+        @apply tw-mb-3;
+        @apply tw-mt-4;
       }
 
       @screen lg {
         @apply tw-row-start-4 tw-row-end-5;
-        @apply tw-col-start-2 tw-col-end-13;
+        @apply tw-col-start-2 tw-col-end-5;
+      }
+    }
+
+    &-add-to-cart {
+      @screen md {
+        @apply tw-mx-0;
+        @apply tw-row-start-6 tw-row-end-7;
+        @apply tw-col-start-6 tw-col-end-9;
+        @apply tw-mb-3;
+        @apply tw-mt-4;
+      }
+
+      @screen lg {
+        @apply tw-row-start-4 tw-row-end-5;
+        @apply tw-col-start-6 tw-col-end-8;
       }
     }
   }

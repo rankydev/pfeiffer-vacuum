@@ -18,7 +18,7 @@
         </span>
       </div>
       <div v-for="product in productList" :key="product.entryNumber">
-        <CartItemCard v-bind="product" />
+        <CartItemCard v-bind="product" variant="requestHistory" />
       </div>
     </div>
   </div>
@@ -36,12 +36,10 @@ import {
 import { useRequestHistoryStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
 import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
-// import CartTable from '~/components/molecules/CartTable/CartTable'
 
 export default defineComponent({
   components: {
     CartItemCard,
-    // CartTable,
   },
   setup() {
     const { i18n, app } = useContext()
