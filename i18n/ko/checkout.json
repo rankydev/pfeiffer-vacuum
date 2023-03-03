@@ -1,8 +1,8 @@
 {
-  "requestSuccess": "Ihre Anfrage wurde gesendet!",
-  "requestDescription": "Vielen Dank für Ihre Anfrage. Wir werden uns so schnell wie möglich mit Ihnen in Verbindung setzen.",
-  "requestNumber": "Ihre Anfragenummer ist",
-  "requestSupport": "Bitte geben Sie diese Nummer bei allen Support Anfragen an",
-  "viewRequest": "Anfrage anzeigen",
-  "backToHomepage": "Zurück zur Startseite"
+  "requestSuccess": "문의가 전송되었습니다!",
+  "requestDescription": "문의해 주셔서 감사합니다. 최대한 빨리 연락드리겠습니다.",
+  "requestNumber": "귀하의 요청 번호는",
+  "requestSupport": "모든 지원 요청에 이 번호를 포함하십시오.",
+  "viewRequest": "요청 표시",
+  "backToHomepage": "홈페이지로 돌아 가기"
 }

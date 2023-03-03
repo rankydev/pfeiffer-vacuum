@@ -57,5 +57,8 @@
   },
   "contactPersons": {
     "contactButton": "Nachricht senden"
+  },
+  "confirmationPage": {
+    "nextRequestButton": "Nächste Anfrage"
   }
 }

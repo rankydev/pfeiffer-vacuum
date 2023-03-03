@@ -57,5 +57,8 @@
   },
   "contactPersons": {
     "contactButton": "发信息"
+  },
+  "confirmationPage": {
+    "nextRequestButton": "下一个请求"
   }
 }

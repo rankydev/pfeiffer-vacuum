@@ -1,8 +1,8 @@
 {
-  "requestSuccess": "Ihre Anfrage wurde gesendet!",
-  "requestDescription": "Vielen Dank für Ihre Anfrage. Wir werden uns so schnell wie möglich mit Ihnen in Verbindung setzen.",
-  "requestNumber": "Ihre Anfragenummer ist",
-  "requestSupport": "Bitte geben Sie diese Nummer bei allen Support Anfragen an",
-  "viewRequest": "Anfrage anzeigen",
-  "backToHomepage": "Zurück zur Startseite"
+  "requestSuccess": "你的询问已发送！",
+  "requestDescription": "感谢您的查询。我们会尽快与您联系。",
+  "requestNumber": "您的申请编号是",
+  "requestSupport": "请在所有支持请求中包含此号码",
+  "viewRequest": "显示请求",
+  "backToHomepage": "返回首页"
 }

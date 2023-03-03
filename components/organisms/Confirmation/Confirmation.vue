@@ -34,7 +34,7 @@
           $t(
             confirmationType === 'CHECKOUT'
               ? 'checkout.viewRequest'
-              : 'Nächste Anfrage'
+              : 'form.confirmationPage.nextRequestButton'
           )
         "
       />
