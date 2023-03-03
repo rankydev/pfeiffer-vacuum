@@ -88,6 +88,12 @@
       icon="delete"
       @click="deleteFromCart"
     />
+    <Button
+      class="shopping-list-item-card__actions__add-to-cart"
+      icon="shopping_cart"
+      :label="$t('product.addToCart')"
+      @click="addToCart"
+    />
   </div>
 </template>
 
