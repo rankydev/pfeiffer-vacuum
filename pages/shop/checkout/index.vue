@@ -284,6 +284,10 @@ export default defineComponent({
         // load all availables addresses
         const sortedAddresses = await userStore.loadDeliveryAddresses()
 
+        if (!sortedAddresses) {
+          throw 'error loading addresses'
+        }
+
         if (sortedAddresses?.length) {
           await cartStore.setDeliveryAddress(sortedAddresses[0])
           logger.trace(

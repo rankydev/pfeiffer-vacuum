@@ -236,6 +236,7 @@ export const useUserStore = defineStore('user', () => {
         `Error when fetching billing address for user. Returning empty object.`,
         e
       )
+      return null
     }
   }
 
