@@ -288,22 +288,34 @@ export default defineComponent({
 
     onMounted(async () => {
       try {
-        // When entering the checkout page we want to grab the default delivery address from user and set as delivery address for cart
-        await userStore.loadDeliveryAddresses()
-        const defaultDeliveryAddress = userStore.getDefaultDeliveryAddress()
+        // When entering the checkout page we want to set delivery address from user as delivery address for cart
+        // load all availables addresses
+        const sortedAddresses = await userStore.loadDeliveryAddresses()
 
-        if (defaultDeliveryAddress) {
-          await cartStore.setDeliveryAddress(defaultDeliveryAddress)
+        if (!sortedAddresses) {
+          throw 'error loading addresses'
+        }
+
+        if (sortedAddresses?.length) {
+          await cartStore.setDeliveryAddress(sortedAddresses[0])
           logger.trace(
-            'Successfully set default delivery address as cart delivery address.'
+            `Successfully set [${
+              sortedAddresses[0].defaultShippingAddress
+                ? 'default'
+                : 'first found'
+            } delivery address] as cart delivery address.`
           )
         } else {
-          logger.warn(
-            'did not find a default delivery address. Cannot set cart delivery address.'
-          )
+          toast.warning({
+            description: i18n.t('checkout.deliveryAddressMissing'),
+          })
+          throw 'no delivery address found'
         }
       } catch (error) {
         logger.error('could not set delivery address.', error)
+        toast.error({
+          description: i18n.t('checkout.setDeliveryAddressError'),
+        })
       } finally {
         loading.value = false
       }

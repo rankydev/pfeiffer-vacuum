@@ -6,6 +6,7 @@
   "billingAddress": "청구 주소",
   "billingAddressMissing": "사용자의 청구 주소를 찾을 수 없습니다. 파이퍼 베큠 서비스에 문의하십시오.",
   "deliveryAddress": "배송 주소",
+  "deliveryAddressMissing": "배송 주소를 찾을 수 없습니다. 먼저 계정을 생성하고 체크아웃으로 돌아오십시오.",
   "company": "회사",
   "firstName": "이름",
   "lastName": "성",

@@ -15,7 +15,9 @@
                   <GlobalMessage
                     v-if="checkoutButtonDisabled"
                     :description="
-                      $t(`myaccount.userStatus.${userStatusType}.requestInfo`)
+                      $t(
+                        `myaccount.userStatus.${userStatusTypeForInfoText}.requestInfo`
+                      )
                     "
                     variant="warning"
                     :prevent-icon-change="true"
@@ -125,7 +127,6 @@
 import {
   defineComponent,
   useRoute,
-  useRouter,
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
@@ -162,18 +163,11 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute()
-    const router = useRouter()
     const context = useContext()
     const cartStore = useCartStore()
     const userStore = useUserStore()
-    const {
-      isLoggedIn,
-      isApprovedUser,
-      isLeadUser,
-      isOpenUser,
-      isRejectedUser,
-      isOciUser,
-    } = storeToRefs(userStore)
+    const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText, isOciUser } =
+      storeToRefs(userStore)
     const { app } = useContext()
     const { currentCart } = storeToRefs(cartStore)
 
@@ -185,23 +179,6 @@ export default defineComponent({
     const checkoutButtonDisabled = computed(() => {
       return isLoggedIn.value && !isApprovedUser.value
     })
-
-    const userStatusType = computed(() => {
-      if (isLeadUser.value) return 'lead'
-      if (isOpenUser.value) return 'open'
-      if (isRejectedUser.value) return 'rejected'
-      return 'undefined'
-    })
-
-    const handleCheckoutClick = () => {
-      if (!isLoggedIn.value) {
-        return userStore.login()
-      }
-      if (isLoggedIn.value && isApprovedUser.value) {
-        return router.push({ path: app.localePath('shop-checkout') })
-      }
-    }
-
     /**
      * build the cms slug
      */
@@ -221,8 +198,8 @@ export default defineComponent({
       isOciUser,
       cartPromotions,
       checkoutButtonDisabled,
-      userStatusType,
-      handleCheckoutClick,
+      userStatusTypeForInfoText,
+      handleCheckoutClick: cartStore.handleCheckoutClick,
     }
   },
 })

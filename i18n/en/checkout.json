@@ -6,6 +6,7 @@
   "billingAddress": "Billing address",
   "billingAddressMissing": "No billing address was found for your user. Please contact the Pfeiffer Vacuum Service.",
   "deliveryAddress": "Delivery address",
+  "deliveryAddressMissing": "No delivery address found. Please create one first and come back to checkout.",
   "company": "Company",
   "firstName": "First name",
   "lastName": "Last name",

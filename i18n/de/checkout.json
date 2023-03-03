@@ -6,6 +6,7 @@
   "billingAddress": "Rechnungsadresse",
   "billingAddressMissing": "Es wurde keine Rechnungsadresse gefunden. Bitte kontaktieren Sie den Pfeiffer Vacuum Kundenservice.",
   "deliveryAddress": "Lieferadresse",
+  "deliveryAddressMissing": "Keine Lieferadresse gefunden. Bitte erstellen Sie zuerst eine und kommen dann zurück zum Checkout.",
   "company": "Firma",
   "firstName": "Vorname",
   "lastName": "Nachname",
