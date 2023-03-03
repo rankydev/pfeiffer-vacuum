@@ -8,7 +8,10 @@
         {{ $t('checkout.requestDescription') }}
       </div>
     </div>
-    <div class="confirmation__requestNumber">
+    <div
+      v-if="confirmationType === 'CHECKOUT'"
+      class="confirmation__requestNumber"
+    >
       <Icon icon="check" class="confirmation__requestNumber--icon" />
       <h3 class="confirmation__requestNumber--subline tw-font-normal">
         {{ $t('checkout.requestNumber') }}
@@ -21,14 +24,24 @@
     <div class="confirmation__buttons">
       <Button
         variant="secondary"
-        :to="localePath('shop-my-account-request-history') + '/' + order.code"
+        :href="
+          confirmationType === 'CHECKOUT'
+            ? localePath('shop-my-account-request-history') + '/' + order.code
+            : localePath('/contact')
+        "
         icon="arrow_forward"
-        :label="$t('checkout.viewRequest')"
+        :label="
+          $t(
+            confirmationType === 'CHECKOUT'
+              ? 'checkout.viewRequest'
+              : 'Nächste Anfrage'
+          )
+        "
       />
       <Button
         variant="secondary"
         shape="outlined"
-        :to="localePath('shop')"
+        :href="localePath('/')"
         icon="arrow_back"
         :label="$t('checkout.backToHomepage')"
         :prepend-icon="true"
@@ -48,10 +61,13 @@ export default defineComponent({
   props: {
     order: {
       type: Object,
-      required: true,
-      default: () => ({
-        code: '123456789',
-      }),
+      required: false,
+      default: () => ({ code: '123456789' }),
+    },
+    confirmationType: {
+      type: String,
+      validator: (val) => ['CONTACT', 'CHECKOUT'].includes(val),
+      default: 'CONTACT',
     },
   },
 })
