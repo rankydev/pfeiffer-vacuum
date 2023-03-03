@@ -1,5 +1,9 @@
 <template>
   <div>
+    <ResultHeadline
+      :headline="headline"
+      :link="localePath('shop-my-account-request-history')"
+    />
     <span>{{ requestId }}</span>
     <!-- <CartTable /> -->
     <CartItemCard
@@ -14,6 +18,7 @@
 import {
   defineComponent,
   useRoute,
+  useContext,
   ref,
   computed,
   onMounted,
@@ -29,6 +34,7 @@ export default defineComponent({
     // CartTable,
   },
   setup() {
+    const { i18n, app } = useContext()
     const route = useRoute()
 
     const requestHistoryStore = useRequestHistoryStore()
@@ -36,6 +42,11 @@ export default defineComponent({
     const { currentOrder } = storeToRefs(requestHistoryStore)
 
     const requestId = ref(route.value.params.request)
+
+    const headline = ref(
+      i18n.t('myaccount.requestHistory.table.requestReference') +
+        `: ${requestId.value}`
+    )
 
     onMounted(async () => {
       await loadOrderContent(requestId.value)
@@ -45,9 +56,13 @@ export default defineComponent({
       return currentOrder?.value?.entries
     })
 
-    console.log(productList)
+    const orderDate = computed(() => {
+      return currentOrder?.value?.created
+    })
 
-    return { requestId, currentOrder, productList }
+    console.log(orderDate)
+
+    return { requestId, currentOrder, productList, orderDate, headline }
   },
 })
 </script>
