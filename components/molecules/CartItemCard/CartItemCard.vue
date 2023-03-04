@@ -74,6 +74,7 @@
       </span>
     </div>
     <Button
+      v-if="isLoggedIn"
       class="cart-item-card-add-article"
       variant="secondary"
       shape="plain"

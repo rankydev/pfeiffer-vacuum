@@ -43,10 +43,12 @@
       class="shop-navigation__shopping-cart tw-flex"
     >
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
-      <!-- TODO: Add correct cart item count indicator -->
-      <span class="shop-navigation__shopping-cart-count-indicator">{{
-        cartItemCount
-      }}</span>
+      <span
+        class="shop-navigation__shopping-cart-count-indicator"
+        v-if="cartItemCount"
+      >
+        {{ cartItemCount }}
+      </span>
     </Link>
 
     <CartOverlay :is-open="isOverlayOpen" @close="closeOverlay" />
