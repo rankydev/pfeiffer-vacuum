@@ -20,10 +20,21 @@ export default defineComponent({
   components: {
     MyAccountHeading,
   },
-  setup() {
-    // TODO: Fetch data
-    const data = useAsyncQuery(calculationList)
-    console.log('###', data)
+  apollo: {
+    calculationList: {
+      query: calculationList,
+      client: 'vacuumCalculator',
+      prefetch: true,
+      variables() {
+        return {
+          start: 0,
+          limit: 9,
+        }
+      },
+      error(e) {
+        console.error(e)
+      },
+    },
   },
 })
 </script>

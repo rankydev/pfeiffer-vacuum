@@ -1,27 +1,34 @@
+import { useUserStore } from '~/stores/user'
+import { storeToRefs } from 'pinia'
+
 export default (context) => {
   return {
     httpEndpoint: () => {
-      const { req } = context;
+      const { req } = context
       if (req) {
         // server side
-        return req.protocol + '://' + req.get('host');
+        return req.protocol + '://' + req.get('host')
       }
       if (window) {
         // client side
-        return window.location.protocol + '//' + window.location.host;
+        return window.location.protocol + '//' + window.location.host
       }
     },
     browserHttpEndpoint: '/api/vacuumCalc/graphql',
     httpLinkOptions: {
       headers: {
-        'Accept-Language': context?.store?.state?.language === 'de' ? 'de' : 'en'
-      }
+        // TODO LANG
+        'Accept-Language': 'en',
+      },
     },
     getAuth: () => {
-      const { store } = context;
-      const authObject = store.state.auth;
+      const userStore = useUserStore()
+      const { auth } = storeToRefs(userStore)
+
       // eslint-disable-next-line camelcase
-      return authObject ? `${authObject?.token_type} ${authObject?.access_token}` : null;
-    }
-  };
-};
+      return auth.value
+        ? `${auth.value?.token_type} ${auth.value?.access_token}`
+        : null
+    },
+  }
+}
