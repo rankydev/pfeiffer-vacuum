@@ -1,56 +1,58 @@
 <template>
-  <ContentWrapper
-    v-bind="contentWrapperProps"
-    ref="wrapper"
-    v-editable="(infinite, isWide, autoplay, autoplaySpeedMilliseconds)"
-    class="carousel"
-  >
-    <VueSlickCarousel
-      ref="carousel"
-      v-bind="settings"
-      :infinite="infinite"
-      :autoplay="autoplay"
-      :wait-for-animate="false"
-      :autoplay-speed="autoplaySpeedMilliseconds"
-      :class="[
-        'carousel__slider',
-        `carousel__slider--${variant}`,
-        { 'carousel__slider--wide': isBreakout },
-        { 'carousel__slider--gaps': settings.slidesToShow > 1 },
-      ]"
+  <client-only>
+    <ContentWrapper
+      v-bind="contentWrapperProps"
+      ref="wrapper"
+      v-editable="(infinite, isWide, autoplay, autoplaySpeedMilliseconds)"
+      class="carousel"
     >
-      <!-- @slot carousel slides -->
-      <slot name="slides">
-        <!-- empty element is needed, so the slider doesn't throw an error  -->
-        <div />
-      </slot>
+      <VueSlickCarousel
+        ref="carousel"
+        v-bind="settings"
+        :infinite="infinite"
+        :autoplay="autoplay"
+        :wait-for-animate="false"
+        :autoplay-speed="autoplaySpeedMilliseconds"
+        :class="[
+          'carousel__slider',
+          `carousel__slider--${variant}`,
+          { 'carousel__slider--wide': isBreakout },
+          { 'carousel__slider--gaps': settings.slidesToShow > 1 },
+        ]"
+      >
+        <!-- @slot carousel slides -->
+        <slot name="slides">
+          <!-- empty element is needed, so the slider doesn't throw an error  -->
+          <div />
+        </slot>
 
-      <template #prevArrow="{ currentSlide }">
-        <Button
-          class="carousel__arrow-prev"
-          :class="{
-            'carousel__arrow-prev--hide':
-              !infinite && isFirstSlide(currentSlide),
-          }"
-          variant="secondary"
-          icon="arrow_back_ios"
-          cutaway="right"
-        />
-      </template>
-      <template #nextArrow="{ currentSlide, slideCount }">
-        <Button
-          class="carousel__arrow-next"
-          :class="{
-            'carousel__arrow-next--hide':
-              !infinite && isLastSlide(currentSlide, slideCount),
-          }"
-          variant="secondary"
-          icon="arrow_forward_ios"
-          cutaway="left"
-        />
-      </template>
-    </VueSlickCarousel>
-  </ContentWrapper>
+        <template #prevArrow="{ currentSlide }">
+          <Button
+            class="carousel__arrow-prev"
+            :class="{
+              'carousel__arrow-prev--hide':
+                !infinite && isFirstSlide(currentSlide),
+            }"
+            variant="secondary"
+            icon="arrow_back_ios"
+            cutaway="right"
+          />
+        </template>
+        <template #nextArrow="{ currentSlide, slideCount }">
+          <Button
+            class="carousel__arrow-next"
+            :class="{
+              'carousel__arrow-next--hide':
+                !infinite && isLastSlide(currentSlide, slideCount),
+            }"
+            variant="secondary"
+            icon="arrow_forward_ios"
+            cutaway="left"
+          />
+        </template>
+      </VueSlickCarousel>
+    </ContentWrapper>
+  </client-only>
 </template>
 <script>
 import {
