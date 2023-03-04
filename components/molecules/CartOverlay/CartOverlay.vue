@@ -150,9 +150,6 @@ export default defineComponent({
         showInfo.value = true
         isAddedToCart.value = false
       }
-      setTimeout(() => {
-        showInfo.value = false
-      }, 3000)
     })
 
     return {
