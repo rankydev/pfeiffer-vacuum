@@ -44,8 +44,8 @@
     >
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
       <span
-        class="shop-navigation__shopping-cart-count-indicator"
         v-if="cartItemCount"
+        class="shop-navigation__shopping-cart-count-indicator"
       >
         {{ cartItemCount }}
       </span>
