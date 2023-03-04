@@ -95,13 +95,18 @@ export default defineComponent({
     })
     const date = computed(() => {
       const dateValue = entry?.value?.date
-      const dateType = isWebinar?.value ? 'dateTime' : 'date'
-      const timeTranslation = isWebinar?.value
-        ? ` ${i18n.t('knowledge.clock')}`
-        : ''
-      return dateValue
-        ? `${i18n.d(new Date(dateValue), dateType)}${timeTranslation}`
-        : ''
+      const dateType = isWebinar?.value ? 'full-timezone' : 'date'
+      const hasDate = i18n.te('knowledge.clock')
+      let dateLabel = (
+        dateValue ? i18n.d(new Date(dateValue), dateType) : ''
+      ).replace(',', ' |')
+      if (hasDate) {
+        dateLabel = dateLabel.replace(
+          /(.*\s)(.*)/,
+          `$1${i18n.t('knowledge.clock')}`
+        )
+      }
+      return dateLabel
     })
     const slug = computed(() => {
       return entry?.value?.slug
