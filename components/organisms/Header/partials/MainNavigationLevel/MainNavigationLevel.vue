@@ -1,6 +1,6 @@
 <template>
-  <client-only>
-    <div :class="`${prefix}__wrapper`">
+  <div :class="`${prefix}__wrapper`">
+    <client-only>
       <ul
         ref="menu"
         :class="{
@@ -160,8 +160,8 @@
           />
         </li>
       </ul>
-    </div>
-  </client-only>
+    </client-only>
+  </div>
 </template>
 
 <script>
