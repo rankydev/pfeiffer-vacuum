@@ -83,6 +83,14 @@ export const dateTimeFormats = {
       minute: 'numeric',
       timeZoneName: 'short',
     },
+    'full-timezone': {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: 'numeric',
+      minute: 'numeric',
+      timeZoneName: 'short',
+    },
   },
   en: {
     date: {
@@ -121,6 +129,14 @@ export const dateTimeFormats = {
       minute: 'numeric',
     },
     dateTimeTimezone: {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: 'numeric',
+      minute: 'numeric',
+      timeZoneName: 'short',
+    },
+    'full-timezone': {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',

@@ -21,14 +21,14 @@
     <div class="confirmation__buttons">
       <Button
         variant="secondary"
-        :to="localePath('shop-my-account-request-history') + '/' + order.code"
+        :href="localePath('shop-my-account-request-history') + '/' + order.code"
         icon="arrow_forward"
         :label="$t('checkout.viewRequest')"
       />
       <Button
         variant="secondary"
         shape="outlined"
-        :to="localePath('shop')"
+        :href="localePath('/')"
         icon="arrow_back"
         :label="$t('checkout.backToHomepage')"
         :prepend-icon="true"
@@ -59,7 +59,6 @@ export default defineComponent({
   @apply tw-grid tw-grid-cols-12;
   @apply tw-text-center;
   @apply tw-w-fit;
-  @apply tw-m-4;
 
   &__headline {
     @apply tw-col-span-12;
