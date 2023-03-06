@@ -47,7 +47,7 @@
     <section class="section section--last">
       <div class="information__data">
         <InformationBox :content="accountDataContent" />
-        <InformationBox :content="companyDataContent" />
+        <InformationBox v-if="isApprovedUser" :content="companyDataContent" />
       </div>
     </section>
   </div>
@@ -56,11 +56,11 @@
 <script>
 import { defineComponent, useAsync } from '@nuxtjs/composition-api'
 import { useDashboardStore } from '~/stores/myaccount'
+import { useUserStore } from '~/stores/user'
 import { storeToRefs } from 'pinia'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper.vue'
 import InformationBox from '~/components/molecules/InformationBox/InformationBox.vue'
-
 export default defineComponent({
   components: {
     SectionHeadline,
@@ -69,6 +69,8 @@ export default defineComponent({
   },
   setup() {
     const dashBoardStore = useDashboardStore()
+    const userStore = useUserStore()
+
     const {
       recentRequestsTableHeader,
       recentShoppingListTableHeader,
@@ -77,6 +79,8 @@ export default defineComponent({
       companyDataContent,
       buttons,
     } = storeToRefs(dashBoardStore)
+
+    const { isApprovedUser } = storeToRefs(userStore)
 
     const recentRequests = useAsync(() => {
       return dashBoardStore.getRecentRequestsTableData()
@@ -95,6 +99,7 @@ export default defineComponent({
       recentShoppingListHeader,
       accountDataContent,
       companyDataContent,
+      isApprovedUser,
     }
   },
 })
@@ -134,7 +139,7 @@ export default defineComponent({
 
   .information__data {
     @screen md {
-      @apply tw-flex;
+      @apply tw-grid tw-grid-cols-2;
       @apply tw-gap-6;
     }
 

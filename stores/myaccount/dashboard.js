@@ -152,6 +152,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
       recentRequests: {
         size: 'normal',
         label: i18n.t('myaccount.recentRequests.goToProducts'),
+        href: localePath('shop-categories'),
         shape: 'outlined',
         variant: 'secondary',
       },
@@ -224,7 +225,14 @@ export const useDashboardStore = defineStore('dashboard', () => {
           `${userBillingAddress.value?.postalCode} ${userBillingAddress.value?.town}` ||
           '',
       },
-      { text: userBillingAddress.value?.country?.name || '' },
+      {
+        text: userBillingAddress.value?.region
+          ? `${userBillingAddress.value?.country?.name}, ${
+              userBillingAddress.value?.region?.name ||
+              userBillingAddress.value?.region
+            }`
+          : userBillingAddress.value?.country?.name || '',
+      },
       {
         icon: 'attach_money',
         noMargin: true,

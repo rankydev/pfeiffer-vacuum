@@ -106,7 +106,7 @@ export default {
     }
 
     const sortedData = computed(() => {
-      return tableData.value.slice().sort((a, b) => {
+      return tableData.value?.slice().sort((a, b) => {
         if (sorting.value.id !== null) {
           switch (sortingStates[sorting.value.state]) {
             case 'neutral':
