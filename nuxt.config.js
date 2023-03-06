@@ -324,14 +324,15 @@ export default {
       reportOnly: false,
       hashAlgorithm: 'sha256',
       policies: {
-        'default-src': ["'self'"],
-        'img-src': ["'self'", 'https:'],
+        'default-src': ["'self'", 'data:'],
+        'img-src': ["'self'", 'https:', 'data:'],
         'style-src': ["'self'", "'unsafe-inline'"],
         'script-src': [
           "'self'",
           "'unsafe-inline'",
           "'unsafe-eval'",
           '*.usercentrics.eu',
+          'www.googletagmanager.com',
         ],
         'connect-src': [
           "'self'",
