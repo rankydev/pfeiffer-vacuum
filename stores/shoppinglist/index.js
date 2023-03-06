@@ -1,1 +1,1 @@
-export * from './shoppinglist.js'
+export * from './shoppinglists.js'
