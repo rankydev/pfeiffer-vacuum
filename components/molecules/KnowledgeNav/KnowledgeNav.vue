@@ -4,14 +4,14 @@
       <div class="knowledge-nav__content">
         <NuxtLink
           class="knowledge-nav__item"
-          :to="localePath('knowledge-whitepapers')"
+          :to="localePath('/knowledge/whitepapers/')"
         >
           <Icon icon="library_books" />
           <span>{{ $t('knowledge.whitepapers') }}</span>
         </NuxtLink>
         <NuxtLink
           class="knowledge-nav__item"
-          :to="localePath('knowledge-webinars')"
+          :to="localePath('/knowledge/webinars/')"
         >
           <Icon icon="video_library" />
           <span>{{ $t('knowledge.webinars') }}</span>
