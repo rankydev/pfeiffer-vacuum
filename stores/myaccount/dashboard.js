@@ -5,7 +5,7 @@ import { useMyAccountStore } from '~/stores/myaccount'
 import { useUserStore } from '~/stores/user'
 import config from '~/config/hybris.config'
 
-export const useDashboardStore = defineStore('accountData', () => {
+export const useDashboardStore = defineStore('dashboard', () => {
   const { axios } = useAxiosForHybris()
   const myAccountStore = useMyAccountStore()
   const { i18n, localePath } = useContext()
