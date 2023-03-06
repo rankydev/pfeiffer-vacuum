@@ -62,5 +62,30 @@
   "installedBase": {
     "installedBase": "Installed Base"
   },
-  "comingSoon": "This function will be available soon!"
+  "comingSoon": "This function will be available soon!",
+  "calculations": {
+    "headline": "Calculations",
+    "date": "Date",
+    "delete": "Delete",
+    "deleteConfirmation": "Do you really want to delete this calculation?",
+    "done": "Done",
+    "name": "Name",
+    "networkError": "Something went wrong. Please try again later.",
+    "new": "New calculation",
+    "noCalculations": "You have not created any calculations yet!",
+    "select": "Select",
+    "title": "Calculations",
+    "to": "To the result",
+    "mode": "Calculation mode",
+    "modes": {
+      "pumpFinder": "Find a pump solution",
+      "fixedPumpSystem": "Given vacuum system"
+    },
+    "type": "Calculation type",
+    "types": {
+      "chamberEvacuation": "Evacuation"
+    },
+    "detailPageLink": "Details",
+    "deleteSuccess": "Calculation was deleted."
+  }
 }

@@ -62,5 +62,30 @@
   "installedBase": {
     "installedBase": "Installed Base"
   },
-  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!"
+  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!",
+  "calculations": {
+    "headline": "Berechnung",
+    "date": "Datum",
+    "delete": "Löschen",
+    "deleteConfirmation": "Möchten Sie diese Berechnung wirklich löschen?",
+    "done": "Fertig",
+    "name": "Name",
+    "networkError": "Etwas ist schiefgelaufen. Bitte versuche es später erneut.",
+    "new": "Neue Berechnung",
+    "noCalculations": "Bisher wurden keine Berechnungen durchgeführt!",
+    "select": "Auswählen",
+    "title": "Berechnungen",
+    "to": "Zum Ergebnis",
+    "mode": "Berechnungsmodus",
+    "modes": {
+      "pumpFinder": "Pumplösung finden",
+      "fixedPumpSystem": "Vorgegebenes Vakuumsystem"
+    },
+    "type": "Berechnungstyp",
+    "types": {
+      "chamberEvacuation": "Evakuierung"
+    },
+    "detailPageLink": "Details",
+    "deleteSuccess": "Berechnung wurde gelöscht"
+  }
 }
