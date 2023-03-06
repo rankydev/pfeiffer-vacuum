@@ -78,10 +78,24 @@ export const useUserStore = defineStore('user', () => {
   const userRegion = computed(() => userBillingAddress.value?.region || {})
 
   const changePasswordLink = computed(() => {
-    const keycloakBaseUrl = ctx.$config.KEYCLOAK_BASE_URL + 'realms/'
-    const keycloackRealm = ctx.$config.KEYCLOAK_REALM_NAME
-    const language = `kc_locale=${ctx.i18n.locale}`
-    return `${keycloakBaseUrl}${keycloackRealm}/account/password?${language}`
+    const { $config, i18n, app } = ctx
+    const { localePath } = app
+
+    const keycloakBaseUrl = $config.KEYCLOAK_BASE_URL + 'realms/'
+    const keycloackRealm = $config.KEYCLOAK_REALM_NAME
+    const keycloakClientId = $config.KEYCLOAK_CLIENT_ID
+    const language = `kc_locale=${i18n.locale}`
+
+    const url = joinURL(
+      $config.baseURL,
+      router?.options.base,
+      localePath({
+        path: route.value.path,
+        query: { ...route.value.query },
+      })
+    )
+
+    return `${keycloakBaseUrl}${keycloackRealm}/account/password?${language}&referrer=${keycloakClientId}&referrer_uri=${url}`
   })
 
   watch(auth, async (newAuth) => {
