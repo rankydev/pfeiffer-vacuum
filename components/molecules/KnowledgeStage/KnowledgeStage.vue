@@ -46,21 +46,14 @@
         />
       </div>
     </div>
-    <KnowledgeModal :is-open="isModalOpen" @closeModal="toggleModal(false)" />
   </div>
 </template>
 
 <script>
-import {
-  defineComponent,
-  computed,
-  useContext,
-  ref,
-} from '@nuxtjs/composition-api'
+import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Icon from '~/components/atoms/Icon/Icon'
 import KnowledgeAssetButton from '~/components/molecules/KnowledgeAssetButton/KnowledgeAssetButton.vue'
-import KnowledgeModal from '~/components/molecules/KnowledgeModal/KnowledgeModal'
 
 export default defineComponent({
   name: 'KnowledgeStage',
@@ -68,7 +61,6 @@ export default defineComponent({
     ResponsiveImage,
     Icon,
     KnowledgeAssetButton,
-    KnowledgeModal,
   },
   props: {
     image: {
@@ -111,8 +103,6 @@ export default defineComponent({
   setup(props) {
     const { i18n } = useContext()
 
-    const isModalOpen = ref(false)
-
     const isValidDate = (d) => d instanceof Date && !isNaN(d)
 
     const dateObj = computed(() => new Date(props.date))
@@ -127,9 +117,7 @@ export default defineComponent({
     const showDuration = computed(
       () => !!(!props.isWhitepaper || props.duration !== '')
     )
-    const showDate = computed(() => !!(props.fixedDate !== ''))
-
-    const toggleModal = (state) => (isModalOpen.value = state)
+    const showDate = computed(() => props.fixedDate !== '')
 
     return {
       fixedDate,
@@ -138,9 +126,6 @@ export default defineComponent({
       showDuration,
       showDate,
       dateObj,
-      isModalOpen,
-
-      toggleModal,
     }
   },
 })
