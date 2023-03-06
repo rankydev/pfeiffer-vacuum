@@ -344,7 +344,7 @@ export default {
           'sso.pfeiffer-vacuum.com',
           'app.usercentrics.eu',
         ],
-        'form-action': ["'self'"],
+        // 'form-action': ["'self'"], // disabled for OCI Checkout: PVWEB-904
         'frame-ancestors': ["'none'"],
         'object-src': ["'none'"],
         'base-uri': [baseURL],
