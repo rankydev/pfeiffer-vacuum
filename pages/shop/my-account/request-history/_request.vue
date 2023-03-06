@@ -1,20 +1,22 @@
 <template>
-  <div>
+  <div class="request-history-detail-page">
     <ResultHeadline
       :headline="headline"
       :link="localePath('shop-my-account-request-history')"
     />
     <span>{{ $t('myaccount.requestHistory.table.requestDate') }}</span>
-    <span>{{ $d(orderDate, 'date') }}</span>
-    <div class="cart-item-wrapper">
-      <div class="cart-item-header">
-        <div class="cart-item-header__quantity">
+    <span class="request-history-detail-page__date">{{
+      $d(orderDate, 'date')
+    }}</span>
+    <div>
+      <div class="request-history-detail-page-table-header">
+        <div class="request-history-detail-page-table-header__quantity">
           <span>{{ $t('cart.quantity') }}</span>
         </div>
-        <span class="cart-item-header__price">
+        <span class="request-history-detail-page-table-header__price">
           {{ $t('cart.pricePerUnit') }}
         </span>
-        <span class="cart-item-header__totalPrice">
+        <span class="request-history-detail-page-table-header__totalPrice">
           {{ $t('cart.totalPrice') }}
         </span>
       </div>
@@ -81,56 +83,62 @@ export default defineComponent({
 })
 </script>
 <style lang="scss">
-.cart-item-header {
-  @apply tw-hidden;
-  @apply tw-border-b tw-border-b-pv-grey-80;
-
-  @screen lg {
-    @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
-    @apply tw-pb-4;
+.request-history-detail-page {
+  &__date {
+    @apply tw-font-bold;
   }
 
-  &__quantity {
-    @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-9 tw-col-end-10;
-    @apply tw-flex;
-    @apply tw-my-auto;
-    @apply tw-text-pv-grey-32;
-  }
+  &-table-header {
+    @apply tw-hidden;
+    @apply tw-border-b tw-border-b-pv-grey-80;
 
-  &__price,
-  &__totalPrice {
-    @apply tw-cursor-pointer;
-    @apply tw-text-pv-grey-32;
-    @apply tw-font-normal;
-    @apply tw-block;
-    @apply tw-leading-4;
-
-    &:hover {
-      @apply tw-text-pv-grey-48;
+    @screen lg {
+      @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
+      @apply tw-pb-4;
     }
-  }
 
-  &__price {
-    @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-10 tw-col-end-11;
-    @apply tw-flex;
-    @apply tw-m-auto;
-    @apply tw-w-fit;
-    @apply tw-pl-2;
-  }
+    &__quantity {
+      @apply tw-row-start-1 tw-row-end-1;
+      @apply tw-col-start-9 tw-col-end-10;
+      @apply tw-flex;
+      @apply tw-my-auto;
+      @apply tw-text-pv-grey-32;
+    }
 
-  &__totalPrice {
-    @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-11 tw-col-end-12;
-    @apply tw-flex;
-    @apply tw-m-auto;
-    @apply tw-w-fit;
-    @apply tw-pl-2;
-  }
+    &__price,
+    &__totalPrice {
+      @apply tw-cursor-pointer;
+      @apply tw-text-pv-grey-32;
+      @apply tw-font-normal;
+      @apply tw-block;
+      @apply tw-leading-4;
 
-  .icon__material.icon--base {
-    @apply tw-text-base;
+      &:hover {
+        @apply tw-text-pv-grey-48;
+      }
+    }
+
+    &__price {
+      @apply tw-row-start-1 tw-row-end-1;
+      @apply tw-col-start-10 tw-col-end-11;
+      @apply tw-flex;
+      @apply tw-m-auto;
+      @apply tw-w-fit;
+      @apply tw-pl-2;
+    }
+
+    &__totalPrice {
+      @apply tw-row-start-1 tw-row-end-1;
+      @apply tw-col-start-11 tw-col-end-12;
+      @apply tw-flex;
+      @apply tw-m-auto;
+      @apply tw-w-fit;
+      @apply tw-pl-2;
+    }
+
+    .icon__material.icon--base {
+      @apply tw-text-base;
+    }
   }
 }
 </style>
