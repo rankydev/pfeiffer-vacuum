@@ -31,7 +31,8 @@
   "saveCartToList": "将购物车保存到列表",
   "getProductHelp": "获取产品帮助",
   "list": {
-    "addArticle": "添加到购物清单"
+    "addArticle": "添加到购物清单",
+    "addToAnotherList": "添加到其他购物清单"
   },
   "productPrice": "价格",
   "totalPrice": "总",

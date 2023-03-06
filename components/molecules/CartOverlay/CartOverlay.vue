@@ -54,6 +54,7 @@
             class="cart-overlay-content__navigation-checkout"
             :label="$t('cart.checkout')"
             icon="arrow_forward"
+            @click="handleCheckoutClick"
           />
           <Button
             class="cart-overlay-content__navigation-edit"
@@ -166,6 +167,7 @@ export default defineComponent({
       isLoggedIn,
       showInfo,
       isAddedToCart,
+      handleCheckoutClick: cartStore.handleCheckoutClick,
     }
   },
 })
