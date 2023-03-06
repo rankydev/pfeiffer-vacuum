@@ -4,7 +4,8 @@
       :headline="headline"
       :link="localePath('shop-my-account-request-history')"
     />
-    <span>{{ requestId }}</span>
+    <span>{{ $t('myaccount.requestHistory.table.requestDate') }}</span>
+    <span>{{ $d(orderDate, 'date') }}</span>
     <div class="cart-item-wrapper">
       <div class="cart-item-header">
         <div class="cart-item-header__quantity">
@@ -18,7 +19,11 @@
         </span>
       </div>
       <div v-for="product in productList" :key="product.entryNumber">
-        <CartItemCard v-bind="product" variant="requestHistory" />
+        <ShoppingListItemCard
+          v-bind="product"
+          :is-read-only="true"
+          variant="requestHistory"
+        />
       </div>
     </div>
   </div>
@@ -35,11 +40,11 @@ import {
 } from '@nuxtjs/composition-api'
 import { useRequestHistoryStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
-import CartItemCard from '~/components/molecules/CartItemCard/CartItemCard'
+import ShoppingListItemCard from '~/components/molecules/ShoppingListItemCard/ShoppingListItemCard'
 
 export default defineComponent({
   components: {
-    CartItemCard,
+    ShoppingListItemCard,
   },
   setup() {
     const { i18n, app } = useContext()
@@ -65,14 +70,11 @@ export default defineComponent({
     })
 
     const orderDate = computed(() => {
-      return currentOrder?.value?.created
+      if (currentOrder?.value?.created) {
+        return new Date(currentOrder?.value?.created)
+      }
+      return null
     })
-
-    const addToCart = async (product) => {
-      await addProductToCart(product?.value?.code, quantityModel?.value)
-    }
-
-    console.log(orderDate)
 
     return { requestId, currentOrder, productList, orderDate, headline }
   },
