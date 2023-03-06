@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  dev2-nginx:
+    image: "nginx:1.23"
+    restart: always
+    #ports:
+    #  - '80:80'
+    network_mode: host
+    volumes:
+    - ./nginx/templates:/etc/nginx/templates      
+    environment:
+    - NGINX_ENVSUBST_TEMPLATE_DIR=/etc/nginx/templates
+    - NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx/conf.d
+    # custom environment variables / project
+    - SHOP_BASE_URL
+    - HOST=127.0.0.1
+    - OCI_HOST=127.0.0.1
+    - PORT
+    - OCI_PORT
