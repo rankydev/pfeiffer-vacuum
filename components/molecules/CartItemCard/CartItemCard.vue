@@ -31,13 +31,15 @@
     />
     <div v-if="details && isDetailsExpanded" class="cart-item-card-details">
       <template v-for="detail in details">
-        <Tag
-          v-for="(variant, id) in detail.variationValues"
-          :key="detail.code + id"
-          class="cart-item-card-details__detail"
-          :label="detail.name"
-          :content="variant.displayValue"
-        />
+        <template v-for="(variant, id) in detail.variationValues">
+          <Tag
+            v-if="variant.selected"
+            :key="detail.code + id"
+            class="cart-item-card-details__detail"
+            :label="detail.name"
+            :content="variant.displayValue"
+          />
+        </template>
       </template>
     </div>
     <PromotionLabel
@@ -74,6 +76,7 @@
       </span>
     </div>
     <Button
+      v-if="isLoggedIn"
       class="cart-item-card-add-article"
       variant="secondary"
       shape="plain"
