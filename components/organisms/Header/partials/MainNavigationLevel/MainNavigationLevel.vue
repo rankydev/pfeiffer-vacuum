@@ -35,30 +35,26 @@
             "
           >
             <span :class="`${prefix}__label`">{{ entry.label }}</span>
-            <client-only>
-              <Icon
-                v-if="isMobile && hasSubmenu(entry)"
-                :class="`${prefix}__icon`"
-                :icon="activeElement === idx ? 'expand_less' : 'expand_more'"
-              />
-            </client-only>
+            <Icon
+              v-if="isMobile && hasSubmenu(entry)"
+              :class="`${prefix}__icon`"
+              :icon="activeElement === idx ? 'expand_less' : 'expand_more'"
+            />
           </Link>
-          <client-only>
-            <Component
-              :is="isMobile || level === 0 ? 'AnimatedCollapse' : 'div'"
-              v-if="hasSubmenu(entry)"
-              speed="medium"
-            >
-              <MainNavigationLevel
-                v-if="activeElement === idx"
-                :current-entry="entry"
-                :level="level + 1"
-                :navigation-entries="entry.navigationEntries"
-                @mouseenter.native="isHovered = false"
-                @mouseleave.native="isHovered = true"
-              />
-            </Component>
-          </client-only>
+          <Component
+            :is="isMobile || level === 0 ? 'AnimatedCollapse' : 'div'"
+            v-if="hasSubmenu(entry)"
+            speed="medium"
+          >
+            <MainNavigationLevel
+              v-if="activeElement === idx"
+              :current-entry="entry"
+              :level="level + 1"
+              :navigation-entries="entry.navigationEntries"
+              @mouseenter.native="isHovered = false"
+              @mouseleave.native="isHovered = true"
+            />
+          </Component>
         </li>
 
         <template v-if="level > 0 && isMobile && !hasActiveElement">
