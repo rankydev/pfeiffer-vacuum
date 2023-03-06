@@ -186,10 +186,10 @@ export default defineComponent({
     appearance: none;
 
     &:focus {
-      @apply tw-border-pv-black;
+      @apply tw-border-pv-grey-16;
       @apply tw-ring-0;
-      @apply tw-text-pv-black;
-      @apply tw-shadow-border-black;
+      @apply tw-text-pv-grey-16;
+      @apply tw-shadow-border-grey-16;
 
       // safari fix to prevent focus outline
       outline: 0;
