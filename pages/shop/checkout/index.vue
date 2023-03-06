@@ -167,6 +167,7 @@ import { useOrdersStore } from '~/stores/orders'
 import { useUserStore } from '~/stores/user'
 import { useDatasourcesStore } from '~/stores/datasources'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
+import { useOciStore } from '~/stores/oci'
 import { storeToRefs } from 'pinia'
 
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
@@ -214,6 +215,8 @@ export default defineComponent({
     const isMobile = app.$breakpoints.isMobile
     const { logger } = useLogger('checkout')
     const toast = useToast()
+    const ociStore = useOciStore()
+    const { savelyEncodedHookUrl, returnTarget } = storeToRefs(ociStore)
 
     const datasourcesStore = useDatasourcesStore()
     const { personalPrivacyLink } = storeToRefs(datasourcesStore)
@@ -332,18 +335,36 @@ export default defineComponent({
         // first wait for all promises to be resolved which may be still running (set comment or reference)
         await Promise.allSettled(asyncRequests.value)
 
-        // OCI specific tasks need to be done here in PVWEB-904
+        if (isOciUser.value) {
+          if (savelyEncodedHookUrl.value && returnTarget.value) {
+            // OCI specific placeOrder
+            const ociPunchoutFormContent = await ordersStore.placeOciOrder()
 
-        // placing order in a non-oci context
-        const orderRequestResult = await ordersStore.placeOrder()
+            // generate a form which is submitted with oci specific parameters
+            const form = document.createElement('form')
+            form.setAttribute('method', 'post')
+            form.setAttribute('action', savelyEncodedHookUrl.value)
+            form.setAttribute('target', returnTarget.value)
+            form.innerHTML = ociPunchoutFormContent
+            document.body.appendChild(form)
+            form.submit() // TODO: this violates content security header
 
-        // request was successful but something went wrong
-        if (!orderRequestResult || orderRequestResult?.error) {
-          throw orderRequestResult?.error || 'unexpected error'
+            // TODO: what happens then?
+          } else {
+            throw 'OCI checkout error: no hookURL or returnTarget defined'
+          }
+        } else {
+          // placing a regular order in a non-OCI context
+          const orderRequestResult = await ordersStore.placeOrder()
+
+          // request was successful but something went wrong
+          if (!orderRequestResult || orderRequestResult?.error) {
+            throw orderRequestResult?.error || 'unexpected error'
+          }
+
+          // successful order response
+          placedOrder.value = orderRequestResult
         }
-
-        // successful order response
-        placedOrder.value = orderRequestResult
       } catch (error) {
         logger.error('error placing order', error)
         toast.error({

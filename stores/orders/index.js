@@ -1,13 +1,16 @@
-import { defineStore, storeToRefs } from 'pinia'
-import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import config from '~/config/hybris.config'
+import { defineStore, storeToRefs } from 'pinia'
+import { useOciStore } from '~/stores/oci'
 import { useCartStore } from '~/stores/cart'
+import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useLogger } from '~/composables/useLogger'
 
 export const useOrdersStore = defineStore('orders', () => {
   const { axios } = useAxiosForHybris()
   const cartStore = useCartStore()
   const { currentCart } = storeToRefs(cartStore)
+  const ociStore = useOciStore()
+  const { customerId } = storeToRefs(ociStore)
   const { logger } = useLogger('ordersStore')
 
   const placeOrder = async () => {
@@ -34,7 +37,26 @@ export const useOrdersStore = defineStore('orders', () => {
     }
   }
 
+  const placeOciOrder = async () => {
+    try {
+      // TODO: clarify: Naming "customerId" is misleading. API docs say this url part is "cartId"
+      const result = await axios.$post(
+        `${config.OCI_ORDER_API}/${customerId.value}/oci-punchout`
+      )
+
+      if (!result.error) {
+        return result.formParams
+      }
+
+      throw result.error
+    } catch (error) {
+      logger.error('Error when creating oci order.', error)
+      throw error
+    }
+  }
+
   return {
     placeOrder,
+    placeOciOrder,
   }
 })
