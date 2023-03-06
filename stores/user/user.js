@@ -24,7 +24,7 @@ export const useUserStore = defineStore('user', () => {
   const router = useRouter()
   const route = useRoute()
   const userApi = useUserApi()
-  const ociStore = useOciStore()
+  const { isOciPage, saveOciParams } = useOciStore()
   const {
     keycloakInstance,
     auth,
@@ -34,8 +34,8 @@ export const useUserStore = defineStore('user', () => {
     setCookiesAndSaveAuthData,
     removeCookiesAndDeleteAuthData,
   } = useKeycloak()
-  const isLoading = ref(false)
 
+  const isLoading = ref(false)
   const currentUser = ssrRef(null)
   const billingAddress = ssrRef(null)
   const deliveryAddresses = ssrRef(null)
@@ -307,10 +307,18 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  const loginWithBasicAuth = (username, password) => {
+  const loginForOci = (
+    username,
+    password,
+    HOOK_URL,
+    RETURNTARGET,
+    customerId
+  ) => {
     logger.debug('loginWithBasicAuth')
     const token = createBasicAuthToken(username, password)
+
     setCookiesAndSaveAuthData(token)
+    saveOciParams(HOOK_URL, RETURNTARGET, customerId, token.validUntil)
   }
 
   const logout = async () => {
@@ -335,56 +343,47 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const initializeAuth = () => {
-    /* istanbul ignore else  */
-    if (!ociStore.isOciPage) {
-      createKeycloakInstance()
-    } else {
-      logger.trace('start')
-      const { username, password } = route.value.query
-
-      logger.trace('Query: ', route.value.query)
-
-      // only react on oci page
-      // if (!isOciPage) {
-      //   logger.trace('No OCI-page');
-      //   // logout the user if a ssr request with an active oci session happens
-      //   if (process.server && store.getters.isOciUser) {
-      //     logger.trace('Logout OCI-user');
-      //     $authApi.logout();
-      //   }
-      //   return;
-      // }
-
-      logger.trace('is OCI-page')
+    if (isOciPage) {
+      const { username, password, HOOK_URL, RETURNTARGET, customerId } =
+        route.value.query
 
       // check if the required credentils are given
-      if (!username || !password) {
-        return
-      }
-      logger.trace('username and password given')
+      if (username && password) {
+        // logout the user if he is already logged in
+        if (isLoggedIn.value) {
+          logger.trace('logout already logged-in user to ensure correct login')
+          logout()
+        }
 
-      // logout the user if he is already logged in
-      if (isLoggedIn.value) {
-        logger.trace('logout already logged-in user to ensure correct login')
+        logger.trace('login with basic auth')
+        // log the user in with the basic auth credentials
+        loginForOci(username, password, HOOK_URL, RETURNTARGET, customerId)
+      }
+
+      if (!isLoggedIn.value && process.client) {
+        window.location.href = window.location.href.replace('/oci/', '/global/')
+      }
+    } else {
+      createKeycloakInstance()
+
+      // logout the user if a ssr request with an active oci session happens
+      if (process.server && isOciUser.value) {
+        logger.trace('Logout OCI-user')
         logout()
       }
-
-      logger.trace('login with basic auth')
-      // log the user in with the basic auth credentials
-      loginWithBasicAuth(username, password)
     }
   }
-
-  initializeAuth()
 
   // the initial store initialization
   /* istanbul ignore else  */
   if (!currentUser.value) {
     onBeforeMount(async () => {
+      initializeAuth()
       await loadCurrentUser()
       await loadAccountManagerData()
     })
     onServerPrefetch(async () => {
+      initializeAuth()
       await loadCurrentUser()
       await loadAccountManagerData()
     })

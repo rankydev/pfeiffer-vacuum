@@ -103,7 +103,6 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   const getOrCreateUserCart = async () => {
     let existingCart = null
 
-    logger.warn('### getOrCreateUserCart -> currentUser', currentUser.value)
     try {
       existingCart = await axios.$get(
         config.CARTS_CURRENT_USER_API +
