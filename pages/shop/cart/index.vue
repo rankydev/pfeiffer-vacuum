@@ -11,6 +11,19 @@
           <ContentWrapper>
             <template v-if="cartEntries">
               <div class="cart-page">
+                <div class="cart-page__request-info">
+                  <GlobalMessage
+                    v-if="checkoutButtonDisabled"
+                    :description="
+                      $t(
+                        `myaccount.userStatus.${userStatusTypeForInfoText}.requestInfo`
+                      )
+                    "
+                    variant="warning"
+                    :prevent-icon-change="true"
+                  />
+                </div>
+
                 <div class="cart-page__header">
                   <ResultHeadline
                     :headline="$t('cart.headline')"
@@ -57,13 +70,13 @@
                     </div>
 
                     <div class="cart-page__submit">
-                      <!-- TODO: add correct route after implementation -->
                       <Button
-                        :href="localePath('/')"
                         :label="$t('cart.requestQuote')"
                         class="cart-page__button--submit"
                         variant="primary"
                         icon="mail_outline"
+                        :disabled="checkoutButtonDisabled"
+                        @click="handleCheckoutClick"
                       />
                     </div>
                   </div>
@@ -117,6 +130,9 @@ import {
 } from '@nuxtjs/composition-api'
 import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
+import { usePageStore, CMS_PAGE } from '~/stores/page'
+import { storeToRefs } from 'pinia'
+
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
@@ -127,8 +143,7 @@ import TotalNetInformation from '~/components/molecules/TotalNetInformation/Tota
 import CartTable from '~/components/molecules/CartTable/CartTable'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
-
-import { storeToRefs } from 'pinia'
+import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 
 export default defineComponent({
   name: 'Cart',
@@ -142,13 +157,15 @@ export default defineComponent({
     CartTable,
     Icon,
     PromotionLabel,
+    GlobalMessage,
   },
   setup() {
     const route = useRoute()
     const context = useContext()
     const cartStore = useCartStore()
     const userStore = useUserStore()
-
+    const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText } =
+      storeToRefs(userStore)
     const { app } = useContext()
     const { currentCart } = storeToRefs(cartStore)
 
@@ -158,7 +175,9 @@ export default defineComponent({
     const cartPromotions = computed(() => {
       return currentCart.value?.appliedOrderPromotions || []
     })
-
+    const checkoutButtonDisabled = computed(() => {
+      return isLoggedIn.value && !isApprovedUser.value
+    })
     /**
      * build the cms slug
      */
@@ -167,6 +186,9 @@ export default defineComponent({
       return buildSlugs(route.value.path)
     })
 
+    const pageStore = usePageStore()
+    pageStore.setPageType(CMS_PAGE)
+
     return {
       cartEntries,
       slugs,
@@ -174,6 +196,9 @@ export default defineComponent({
       currentCart,
       ociBuyer,
       cartPromotions,
+      checkoutButtonDisabled,
+      userStatusTypeForInfoText,
+      handleCheckoutClick: cartStore.handleCheckoutClick,
     }
   },
 })
@@ -195,6 +220,10 @@ export default defineComponent({
     &-headline {
       @apply tw-mb-4;
     }
+  }
+
+  &__request-info {
+    @apply tw-mb-8;
   }
 
   &__header {
