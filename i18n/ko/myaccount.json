@@ -73,6 +73,7 @@
     },
     "lastRequestNotFound": "You have not made any requests yet!",
     "goToProducts": "Go to products",
-    "yourHistory": "Your request history"
+    "yourHistory": "Your request history",
+    "addToCartBtn": "Add complete request to cart"
   }
 }

@@ -75,6 +75,7 @@
     },
     "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
     "goToProducts": "Zu den Produkten",
-    "yourHistory": "Deine Anfragenhistorie"
+    "yourHistory": "Deine Anfragenhistorie",
+    "addToCartBtn": "Füge komplette Anfrage zum Warenkorb hinzu"
   }
 }

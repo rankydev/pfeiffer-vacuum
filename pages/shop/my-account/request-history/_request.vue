@@ -28,6 +28,33 @@
         />
       </div>
     </div>
+    <div class="request-history-detail-page-total">
+      <div class="request-history-detail-page-total__back-btn">
+        <Button
+          :href="localePath('shop-my-account-request-history')"
+          :label="$t('myaccount.addressDataAddPageLinkBtn')"
+          variant="secondary"
+          shape="plain"
+          icon="arrow_back"
+          :prepend-icon="true"
+        />
+      </div>
+      <div class="request-history-detail-page-total__wrapper-total-net">
+        <div class="request-history-detail-page-total__total-net">
+          <TotalNetInformation :current-cart="currentOrder" />
+        </div>
+
+        <div class="request-history-detail-page-total__total-net-btn">
+          <!-- TODO: add correct route after implementation -->
+          <Button
+            :href="localePath('/')"
+            :label="$t('myaccount.requestHistory.addToCartBtn')"
+            variant="primary"
+            icon="mail_outline"
+          />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -43,10 +70,12 @@ import {
 import { useRequestHistoryStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
 import ShoppingListItemCard from '~/components/molecules/ShoppingListItemCard/ShoppingListItemCard'
+import TotalNetInformation from '~/components/molecules/TotalNetInformation/TotalNetInformation.vue'
 
 export default defineComponent({
   components: {
     ShoppingListItemCard,
+    TotalNetInformation,
   },
   setup() {
     const { i18n, app } = useContext()
@@ -77,6 +106,8 @@ export default defineComponent({
       }
       return null
     })
+
+    console.log(currentOrder, 'currVal')
 
     return { requestId, currentOrder, productList, orderDate, headline }
   },
@@ -138,6 +169,46 @@ export default defineComponent({
 
     .icon__material.icon--base {
       @apply tw-text-base;
+    }
+  }
+
+  &-total {
+    @apply tw-flex;
+    @apply tw-flex-col-reverse;
+
+    @screen md {
+      @apply tw-flex-row;
+    }
+
+    &__back-btn {
+      @apply tw-items-end;
+      @apply tw-mx-auto;
+
+      @screen md {
+        @apply tw-w-full;
+        @apply tw-flex;
+        @apply tw-w-1/2;
+      }
+    }
+
+    &__wrapper-total-net {
+      @apply tw-w-full;
+
+      @screen md {
+        @apply tw-w-1/2;
+        @apply tw-ml-6;
+      }
+    }
+
+    &__total-net {
+      @apply tw-my-6;
+    }
+
+    &__total-net-btn {
+      @apply tw-w-full;
+      @apply tw-flex;
+      @apply tw-flex-col;
+      @apply tw-mt-6;
     }
   }
 }
