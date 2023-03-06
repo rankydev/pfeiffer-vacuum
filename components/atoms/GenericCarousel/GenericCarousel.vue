@@ -18,6 +18,7 @@
         { 'carousel__slider--wide': isBreakout },
         { 'carousel__slider--gaps': settings.slidesToShow > 1 },
       ]"
+      @init="onSliderInit"
     >
       <!-- @slot carousel slides -->
       <slot name="slides">
@@ -267,7 +268,7 @@ export default defineComponent({
      * Settings for slick carousel
      * see: https://github.com/gs-shop/vue-slick-carousel/blob/master/docs/API.md#props
      */
-    const settings = computed(() => ({
+    const settings = ref({
       arrows: true,
       edgeFriction: 0.35,
       pauseOnFocus: true,
@@ -275,16 +276,27 @@ export default defineComponent({
       slidesToScroll: 1,
       initialSlide: 0,
       swipeToSlide: true,
-      ...(props.variant === 'documentCardCarousel' &&
-        documentCardCarouselSettings.value),
-      ...(props.variant === 'customContentCardCarousel' &&
-        customContentCardCarouselSettings.value),
-      ...(props.variant === 'homeStage' && homeStageSettings.value),
-      ...(props.variant === 'default' && defaultSettings.value),
-      ...(props.variant === 'accessoriesCardCarousel' && defaultSettings.value),
-      ...(props.variant === 'tableCardCarousel' &&
-        tableCardCarouselSettings.value),
-    }))
+    })
+
+    /**
+     * Merging the settings together when the slider gets initialized.
+     * This was a fix for hydration issues due to the responsive array in the settings object.
+     */
+    const onSliderInit = () => {
+      settings.value = {
+        ...settings.value,
+        ...(props.variant === 'documentCardCarousel' &&
+          documentCardCarouselSettings.value),
+        ...(props.variant === 'customContentCardCarousel' &&
+          customContentCardCarouselSettings.value),
+        ...(props.variant === 'homeStage' && homeStageSettings.value),
+        ...(props.variant === 'default' && defaultSettings.value),
+        ...(props.variant === 'accessoriesCardCarousel' &&
+          defaultSettings.value),
+        ...(props.variant === 'tableCardCarousel' &&
+          tableCardCarouselSettings.value),
+      }
+    }
 
     return {
       wrapper,
@@ -295,6 +307,7 @@ export default defineComponent({
       isFirstSlide,
       isLastSlide,
       autoplaySpeedMilliseconds,
+      onSliderInit,
     }
   },
 })

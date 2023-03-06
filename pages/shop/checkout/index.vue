@@ -33,7 +33,7 @@
                       class="checkout__address-item"
                     />
                     <AddressCard
-                      :address="userBillingAddress || {}"
+                      :address="billingAddress || {}"
                       :headline="$t('checkout.billingAddress')"
                       :is-billing-address="true"
                       :editable="false"
@@ -222,7 +222,7 @@ export default defineComponent({
     const cartStore = useCartStore()
     const { currentCart, loading: cartLoading } = storeToRefs(cartStore)
     const userStore = useUserStore()
-    const { userBillingAddress, isLoggedIn, isApprovedUser, isOciUser } =
+    const { billingAddress, isLoggedIn, isApprovedUser, isOciUser } =
       storeToRefs(userStore)
     const cartEntries = computed(() => currentCart.value?.entries)
     const deliveryAddress = computed(() => currentCart.value?.deliveryAddress)
@@ -284,6 +284,8 @@ export default defineComponent({
 
       // trigger fetch for privacy page link. But no need to wait for it here
       datasourcesStore.loadLinksFromDatasource()
+      // trigger fetch for billing address to be sure its here for the card
+      userStore.loadBillingAddress()
     })
 
     onMounted(async () => {
@@ -379,7 +381,7 @@ export default defineComponent({
       isMobile,
       currentCart,
       isOciUser,
-      userBillingAddress,
+      billingAddress,
       deliveryAddress,
       cartPromotions,
       placedOrder,

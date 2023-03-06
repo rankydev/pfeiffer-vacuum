@@ -28,7 +28,7 @@
       <Button
         variant="secondary"
         shape="outlined"
-        :href="localePath('shop')"
+        :href="localePath('/')"
         icon="arrow_back"
         :label="$t('checkout.backToHomepage')"
         :prepend-icon="true"
