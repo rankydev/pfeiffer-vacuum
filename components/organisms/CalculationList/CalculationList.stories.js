@@ -7,7 +7,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/o_120 Calculation List',
+  title: 'Organisms/o_120 Calculation List',
   component: CalculationList,
   parameters: {
     docs: {
