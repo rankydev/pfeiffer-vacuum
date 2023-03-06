@@ -1,6 +1,16 @@
 <template>
   <GenericSidebar :is-open="open" position="right" @closeSidebar="closeOverlay">
-    {{ currentShoppingLists }}
+    <div class="shopping-list-overlay__header">
+      <h2 class="shopping-list-overlay__header--title">
+        <span>{{ $t('myaccount.shoppingList.selectAList') }}</span>
+        <span
+          v-if="currentShoppingLists.length"
+          class="shopping-list-overlay__header--title-count"
+        >
+          ({{ currentShoppingLists.length }})
+        </span>
+      </h2>
+    </div>
     <ShoppingListTable :lists="currentShoppingLists" />
   </GenericSidebar>
 </template>
@@ -29,13 +39,12 @@ export default defineComponent({
     const closeOverlay = () => {
       open.value = false
     }
-
     const { currentShoppingLists } = useShoppingLists()
 
     return {
       closeOverlay,
-      currentShoppingLists,
       open,
+      currentShoppingLists,
     }
   },
 })

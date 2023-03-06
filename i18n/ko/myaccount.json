@@ -71,7 +71,8 @@
       "cancel": "아니요",
       "confirm": "예",
       "deleteSuccess": "쇼핑 목록이 성공적으로 삭제되었습니다."
-    }
+    },
+    "selectAList": "쇼핑 목록 선택"
   }
 }
 

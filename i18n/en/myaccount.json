@@ -73,7 +73,8 @@
       "cancel": "No",
       "confirm": "Yes",
       "deleteSuccess": "Shopping list was deleted successfully."
-    }
+    },
+    "selectAList": "Select a list"
   }
 }
 

@@ -1,10 +1,5 @@
-import { defineStore, storeToRefs } from 'pinia'
-import {
-  onBeforeMount,
-  onServerPrefetch,
-  ref,
-  watch,
-} from '@nuxtjs/composition-api'
+import { defineStore } from 'pinia'
+import { onMounted, ref, watch } from '@nuxtjs/composition-api'
 import { useShoppingListsApi } from './partials/useShoppingListsApi'
 import { useUserStore } from '@/stores/user'
 
@@ -12,23 +7,22 @@ export const useShoppingLists = defineStore('shoppinglist', () => {
   const shoppingListsApi = useShoppingListsApi()
   const currentShoppingLists = ref([])
   const { getShoppingLists } = shoppingListsApi
-  const { isLoggedIn } = storeToRefs(useUserStore())
-
-  console.log('isLoggedIn', isLoggedIn)
+  const userStore = useUserStore()
 
   const initialShoppingListsLoad = async () => {
-    if (!isLoggedIn.value) return []
-    currentShoppingLists.value = await getShoppingLists()[0]?.entries
-    console.log('currentShoppingLists.value', currentShoppingLists.value)
+    const shoppingLists = await getShoppingLists()
+    if (shoppingLists.length > 0) {
+      currentShoppingLists.value = shoppingLists
+    }
   }
 
-  onBeforeMount(initialShoppingListsLoad())
-  onServerPrefetch(initialShoppingListsLoad())
-
-  watch(isLoggedIn, async (newVal) => {
-    console.log('isLoggedIn changed', newVal)
-    await initialShoppingListsLoad()
+  watch(userStore, (newValue) => {
+    if (newValue.isLoggedIn) {
+      initialShoppingListsLoad()
+    }
   })
+
+  onMounted(initialShoppingListsLoad)
 
   return {
     currentShoppingLists,

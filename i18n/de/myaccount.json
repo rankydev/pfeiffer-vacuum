@@ -73,6 +73,7 @@
       "cancel": "Nein",
       "confirm": "Ja",
       "deleteSuccess": "Einkaufsliste wurde erfolgreich gelöscht."
-    }
+    },
+    "selectAList": "Wählen Sie eine Liste aus"
   }
 }
