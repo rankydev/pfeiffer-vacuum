@@ -8,7 +8,7 @@
           :checked="selected"
           @update="toggleSelected"
         />
-        <Icon icon="assignment" />
+        <Icon icon="calculate" />
       </span>
       <span class="calculation-list-item__title--label" :title="item.title">
         {{ item.title }}
