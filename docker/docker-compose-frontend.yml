@@ -61,7 +61,6 @@ services:
       - EMPOLIS_CLIENT_ID=${EMPOLIS_CLIENT_ID}
       - EMPOLIS_CLIENT_SECRET=${EMPOLIS_CLIENT_SECRET}
       - STORYBLOK_API_BASE_URL=${STORYBLOK_API_BASE_URL}
-      - DISABLE_SECURITY_POLICY_FORM_ACTION_SELF=${DISABLE_SECURITY_POLICY_FORM_ACTION_SELF}
       # vsm
       #- VSM_BASE_URL=https://testing-pv.vsm-cloud.com
       #- VSM_TECHNICAL_USER_TOKEN=10fff01e72e34e4fe33fbc84e5c6aa80017aac08
@@ -130,6 +129,7 @@ services:
       # Google Tag Manager for Google Analytics
       - GOOGLE_TAG_MANAGER_ID=${GOOGLE_TAG_MANAGER_ID}
       - STORYBLOK_API_BASE_URL=${STORYBLOK_API_BASE_URL}
+      - DISABLE_SECURITY_POLICY_FORM_ACTION_SELF=true
       # vsm
       #- VSM_BASE_URL=https://testing-pv.vsm-cloud.com
       #- VSM_TECHNICAL_USER_TOKEN=10fff01e72e34e4fe33fbc84e5c6aa80017aac08
