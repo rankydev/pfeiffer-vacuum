@@ -63,16 +63,13 @@ export const useUserApi = () => {
         return result
       }
 
-      console.error(
-        'Error when fetching account managers. Returning empty array.',
-        result.error || 'Unknown error'
-      )
-      return null
+      throw result.error || 'Unknown error'
     } catch (e) {
       console.error(
-        'Error when fetching account managers. Returning empty array.',
+        'Error when fetching account managers. Returning null.',
         e || 'Unknown error'
       )
+      return null
     }
   }
 
