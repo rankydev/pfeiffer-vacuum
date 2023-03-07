@@ -2,7 +2,7 @@ import PriceInformation from '~/components/molecules/PriceInformation/PriceInfor
 import { informationType } from '~/components/molecules/PriceInformation/PriceInformation.stories.content'
 
 export default {
-  title: 'Molecules/m_143 PriceInformation',
+  title: 'Molecules/m_145 PriceInformation',
   component: PriceInformation,
   parameters: {
     docs: {

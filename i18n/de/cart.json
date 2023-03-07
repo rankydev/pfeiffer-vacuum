@@ -43,7 +43,7 @@
   "addToCartError": "Beim Hinzufügen des Gegenstandes zum Warenkorb ist ein Fehler aufgetreten",
   "pricePerUnit": "Preis / Stück",
   "editCart": "Warenkorb bearbeiten",
-  "checkout": "Zur Kasse",
+  "checkout": "Angebot anfragen",
   "shoppingCart": "Warenkorb",
   "deleteFromCartSuccess": "Artikel erfolgreich aus dem Warenkorb entfernt",
   "deleteFromCartError": "Beim Entfernen des Produktes aus dem Warenkorb ist ein Fehler aufgetreten",
