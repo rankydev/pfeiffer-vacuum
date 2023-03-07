@@ -94,6 +94,9 @@
   "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!",
   "requestHistory": {
     "table": {
+      "quantity": "Anzahl",
+      "totalPrice": "Gesamt",
+      "pricePerUnit": "Preis / Stück",
       "reference": "Referenz",
       "requestNumber": "Anfragenummer",
       "requestReference": "Referenznummer",

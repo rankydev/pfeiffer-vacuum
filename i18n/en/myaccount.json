@@ -94,7 +94,10 @@
   "comingSoon": "This function will be available soon!",
   "requestHistory": {
     "table": {
-      "reference": "Reference",
+      "quantity": "Quantity",
+      "totalPrice": "Total Price",
+      "pricePerUnit": "Price / PU",
+      "reference": "Referenz",
       "requestNumber": "Request number",
       "requestReference": "Request reference",
       "customerReference": "Customer reference",

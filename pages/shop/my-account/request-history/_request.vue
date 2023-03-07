@@ -11,13 +11,13 @@
     <div>
       <div class="request-history-detail-page-table-header">
         <div class="request-history-detail-page-table-header__quantity">
-          <span>{{ $t('cart.quantity') }}</span>
+          <span>{{ $t('myaccount.requestHistory.table.quantity') }}</span>
         </div>
         <span class="request-history-detail-page-table-header__price">
-          {{ $t('cart.pricePerUnit') }}
+          {{ $t('myaccount.requestHistory.table.pricePerUnit') }}
         </span>
         <span class="request-history-detail-page-table-header__totalPrice">
-          {{ $t('cart.totalPrice') }}
+          {{ $t('myaccount.requestHistory.table.totalPrice') }}
         </span>
       </div>
       <div v-for="product in productList" :key="product.entryNumber">

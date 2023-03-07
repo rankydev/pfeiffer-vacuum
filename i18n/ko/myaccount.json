@@ -92,18 +92,21 @@
   "comingSoon": "이 기능은 곧 사용할 수 있습니다!",
   "requestHistory": {
     "table": {
-      "reference": "Reference",
-      "requestNumber": "Request number:",
-      "requestReference": "Request reference",
-      "customerReference": "Customer reference",
-      "requestDate": "Request date",
-      "date": "Date",
-      "requestTotal": "Total (net)"
+      "quantity": "수량",
+      "totalPrice": "총 가격",
+      "pricePerUnit": "가격 / 푸",
+      "reference": "참조",
+      "requestNumber": "요청 번호:",
+      "requestReference": "참조 요청",
+      "customerReference": "고객 참조",
+      "requestDate": "요청 날짜",
+      "date": "날짜",
+      "requestTotal": "합계(순)"
     },
-    "lastRequestNotFound": "You have not made any requests yet!",
-    "goToProducts": "Go to products",
-    "yourHistory": "Your request history",
-    "addToCartBtn": "Add complete request to cart"
+    "lastRequestNotFound": "아직 요청을 하지 않았습니다!",
+    "goToProducts": "제품으로 이동",
+    "yourHistory": "귀하의 요청 내역",
+    "addToCartBtn": "장바구니에 전체 요청 추가"
   },
   "lastEdited": "마지막으로 수정한 날짜"
 }
