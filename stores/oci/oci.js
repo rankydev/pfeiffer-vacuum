@@ -18,31 +18,12 @@ export const useOciStore = defineStore('oci', () => {
     customerIdentifier,
     validUntil
   ) => {
-    // uni Lund does not send customerId it will send buyercookie
-    const buyercookie = getParameterByName('buyercookie', HOOK_URL)
-    const customerIdToSave = buyercookie || customerIdentifier
-
     setCookie('oci.HOOK_URL', HOOK_URL, new Date(validUntil))
     hookUrl.value = HOOK_URL
     setCookie('oci.RETURNTARGET', RETURNTARGET, new Date(validUntil))
     returnTarget.value = RETURNTARGET
-    setCookie('oci.customerId', customerIdToSave, new Date(validUntil))
-    customerId.value = customerIdToSave
-  }
-
-  // extracts parameter (name) from url string
-  const getParameterByName = (name, url) => {
-    name = name.replace(/[[\]]/g, '\\$&')
-    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
-    const results = regex.exec(url)
-
-    if (!results) {
-      return null
-    }
-    if (!results[2]) {
-      return ''
-    }
-    return decodeURIComponent(results[2].replace(/\+/g, ' '))
+    setCookie('oci.customerId', customerIdentifier, new Date(validUntil))
+    customerId.value = customerIdentifier
   }
 
   return {
