@@ -43,16 +43,15 @@
         <div class="request-history-detail-page-total__total-net">
           <TotalNetInformation :current-cart="currentOrder" />
         </div>
-
-        <div class="request-history-detail-page-total__total-net-btn">
-          <!-- TODO: add correct route after implementation -->
+        <!-- TODO: implement Button in PVWEB-981 here  -->
+        <!-- <div class="request-history-detail-page-total__total-net-btn">
           <Button
-            :href="localePath('/')"
             :label="$t('myaccount.requestHistory.addToCartBtn')"
             variant="primary"
             icon="mail_outline"
+            @click="addToCart"
           />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -107,9 +106,13 @@ export default defineComponent({
       return null
     })
 
-    console.log(currentOrder, 'currVal')
-
-    return { requestId, currentOrder, productList, orderDate, headline }
+    return {
+      requestId,
+      currentOrder,
+      productList,
+      orderDate,
+      headline,
+    }
   },
 })
 </script>
