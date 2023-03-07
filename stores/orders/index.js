@@ -44,6 +44,7 @@ export const useOrdersStore = defineStore('orders', () => {
       )
 
       if (!result.error) {
+        cartStore.resetCurrentCart()
         return result.formParams
       }
 
