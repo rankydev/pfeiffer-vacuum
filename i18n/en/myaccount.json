@@ -56,6 +56,28 @@
   },
   "contact": "Contact Us",
   "salesRepresentative": "Sales Representative",
+  "recentRequests": {
+    "recentRequests": "Recent requests",
+    "allRequests": "All requests",
+    "newServiceRequest": "New service request",
+    "allServiceRequests": "All service requests",
+    "lastRequestNotFound": "You have not made any requests yet!",
+    "goToProducts": "Go to products",
+    "requestNumber": "Request number",
+    "reference": "Reference",
+    "date": "Date",
+    "total": "Total (Net)"
+  },
+  "shoppingList": {
+    "new": "New shopping list",
+    "all": "All shopping lists",
+    "title": "Title",
+    "lastEdited": "Last edited",
+    "items": "Items",
+    "noShoppingLists": "You have not created any shopping lists yet!",
+    "recentShoppingLists": "Recent shopping lists"
+  },
+  "details": "Details",
   "serviceHistory": {
     "serviceRequests": "Service requests"
   },

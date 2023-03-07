@@ -56,6 +56,28 @@
   },
   "contact": "Kontakt",
   "salesRepresentative": "Vertriebsingenieur",
+  "recentRequests": {
+    "recentRequests": "Letzte Bestellanfragen",
+    "allRequests": "Alle Anfragen",
+    "newServiceRequest": "Neue Service-Anfrage",
+    "allServiceRequests": "Alle Service-Anfragen",
+    "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
+    "goToProducts": "Zu den Produkten",
+    "requestNumber": "Anfragennummer",
+    "reference": "Referenz",
+    "date": "Datum",
+    "total": "Gesamt (Netto)"
+  },
+  "shoppingList": {
+    "new": "Neue Einkaufsliste",
+    "all": "Alle Einkaufslisten",
+    "title": "Titel",
+    "lastEdited": "Letzte Änderung",
+    "items": "Artikel",
+    "noShoppingLists": "Bisher wurden keine Einkaufslisten angelegt!",
+    "recentShoppingLists": "Letzte Einkaufslisten"
+  },
+  "details": "Details",
   "serviceHistory": {
     "serviceRequests": "Service-Anfragen"
   },
