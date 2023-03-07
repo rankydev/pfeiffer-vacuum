@@ -19,6 +19,16 @@
       v-bind="item"
       :name="item.uiComponent || item.component"
     />
+    <KnowledgeAssetButton
+      class="knowledge-details__asset-button-bottom"
+      :type="isWhitepaper ? 'WHITEPAPER' : 'WEBINAR'"
+      :webinar-registration-id="isWhitepaper ? null : hybrisContent.id"
+      date
+      :asset-url="hybrisContent.assetURL"
+      :is-detail-page="true"
+      @openModal="toggleModal(true)"
+    />
+    <KnowledgeModal :is-open="isModalOpen" @closeModal="toggleModal(false)" />
   </div>
 </template>
 <script>
@@ -32,10 +42,12 @@ import {
 import { useKnowledgeStore } from '~/stores/knowledge'
 import { useRoute } from '@nuxtjs/composition-api'
 import KnowledgeStage from '~/components/molecules/KnowledgeStage/KnowledgeStage'
+import KnowledgeAssetButton from '~/components/molecules/KnowledgeAssetButton/KnowledgeAssetButton'
+import KnowledgeModal from '~/components/molecules/KnowledgeModal/KnowledgeModal'
 
 export default {
   name: 'KnowledgeDetails',
-  components: { KnowledgeStage },
+  components: { KnowledgeStage, KnowledgeAssetButton, KnowledgeModal },
   props: {
     content: {
       type: Object,
@@ -45,6 +57,7 @@ export default {
   setup(props) {
     const route = useRoute()
     const { content } = toRefs(props)
+    const isModalOpen = ref(false)
 
     const knowledgeStore = useKnowledgeStore()
     const hybrisContent = ref({})
@@ -61,10 +74,18 @@ export default {
       hybrisContent.value = res
     }
 
+    const toggleModal = (state) => (isModalOpen.value = state)
+
     onBeforeMount(getHybrisData)
     onServerPrefetch(getHybrisData)
 
-    return { hybrisContent, isWhitepaper }
+    return {
+      hybrisContent,
+      isWhitepaper,
+      isModalOpen,
+
+      toggleModal,
+    }
   },
 }
 </script>
@@ -72,6 +93,10 @@ export default {
 .knowledge-details {
   &__stage {
     @apply tw-mb-12;
+  }
+
+  &__asset-button-bottom {
+    @apply tw-mt-6;
   }
 }
 </style>
