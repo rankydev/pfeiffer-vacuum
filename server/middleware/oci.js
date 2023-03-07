@@ -1,3 +1,11 @@
+import {
+  OCI_USERNAME,
+  OCI_PASSWORD,
+  OCI_HOOK_URL,
+  OCI_RETURN_TARGET,
+  OCI_CUSTOMER_ID,
+} from '../constants.js'
+
 const express = require('express')
 const app = express()
 app.set('x-powered-by', false)
@@ -19,19 +27,19 @@ function getParameterByName(name, url) {
 
 app.use('/oci', express.urlencoded({ extended: true }))
 app.post('/oci', (req, res) => {
-  const username = req.body.username
-  const password = req.body.password
-  const hookUrl = req.body.HOOK_URL
+  const username = req.body[OCI_USERNAME]
+  const password = req.body[OCI_PASSWORD]
+  const hookUrl = req.body[OCI_HOOK_URL]
 
   // uni Lund does not send customerId it will send buyercookie
   const buyercookie = getParameterByName('buyercookie', hookUrl)
-  const customerId = buyercookie || req.body.customerId
+  const customerId = buyercookie || req.body[OCI_CUSTOMER_ID]
 
-  const returntarget = req.body.RETURNTARGET
-    ? req.body.RETURNTARGET
+  const returntarget = req.body[OCI_RETURN_TARGET]
+    ? req.body[OCI_RETURN_TARGET]
     : req.body.returntarget
   res.redirect(
-    `/oci/en?username=${username}&password=${password}&HOOK_URL=${hookUrl}&customerId=${customerId}&RETURNTARGET=${returntarget}`
+    `/oci/en?${OCI_USERNAME}=${username}&${OCI_PASSWORD}=${password}&${OCI_HOOK_URL}=${hookUrl}&${OCI_CUSTOMER_ID}=${customerId}&${OCI_RETURN_TARGET}=${returntarget}`
   )
 })
 

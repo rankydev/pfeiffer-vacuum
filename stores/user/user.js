@@ -16,6 +16,13 @@ import { useLogger } from '~/composables/useLogger'
 import { useOciStore } from '~/stores/oci'
 import { joinURL } from 'ufo'
 import { useToast } from '~/composables/useToast'
+import {
+  OCI_USERNAME,
+  OCI_PASSWORD,
+  OCI_HOOK_URL,
+  OCI_RETURN_TARGET,
+  OCI_CUSTOMER_ID,
+} from '~/server/constants.js'
 
 export const useUserStore = defineStore('user', () => {
   const { logger } = useLogger('userStore')
@@ -310,15 +317,15 @@ export const useUserStore = defineStore('user', () => {
   const loginForOci = (
     username,
     password,
-    HOOK_URL,
-    RETURNTARGET,
+    hookUrl,
+    returnTarget,
     customerId
   ) => {
-    logger.debug('loginWithBasicAuth')
+    logger.debug('OCI login')
     const token = createBasicAuthToken(username, password)
 
     setCookiesAndSaveAuthData(token)
-    saveOciParams(HOOK_URL, RETURNTARGET, customerId, token.validUntil)
+    saveOciParams(hookUrl, returnTarget, customerId, token.validUntil)
   }
 
   const logout = async () => {
@@ -344,8 +351,11 @@ export const useUserStore = defineStore('user', () => {
 
   const initializeAuth = async () => {
     if (isOciPage) {
-      const { username, password, HOOK_URL, RETURNTARGET, customerId } =
-        route.value.query
+      const username = route.value.query[OCI_USERNAME]
+      const password = route.value.query[OCI_PASSWORD]
+      const hookUrl = route.value.query[OCI_HOOK_URL]
+      const returnTarget = route.value.query[OCI_RETURN_TARGET]
+      const customerId = route.value.query[OCI_CUSTOMER_ID]
 
       // check if the required credentils are given
       if (username && password) {
@@ -359,7 +369,7 @@ export const useUserStore = defineStore('user', () => {
 
         logger.trace('login with basic auth')
         // log the user in with the basic auth credentials
-        loginForOci(username, password, HOOK_URL, RETURNTARGET, customerId)
+        loginForOci(username, password, hookUrl, returnTarget, customerId)
       }
 
       if (!isLoggedIn.value && process.client) {
