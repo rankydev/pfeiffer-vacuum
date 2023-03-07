@@ -72,7 +72,9 @@
       "confirm": "예",
       "deleteSuccess": "쇼핑 목록이 성공적으로 삭제되었습니다."
     },
-    "selectAList": "쇼핑 목록 선택"
+    "selectAList": "쇼핑 목록 선택",
+    "add": "새 목록에 추가",
+    "back": "뒤로"
   }
 }
 
