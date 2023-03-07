@@ -216,7 +216,7 @@
       @apply tw-bg-pv-white;
       @apply tw-pb-20;
 
-      &:after {
+      &::after {
         @apply tw-absolute;
         content: '';
         height: 3.5rem;
@@ -241,7 +241,7 @@
     &__wrapper {
       @apply tw-left-1/4;
 
-      &:after {
+      &::after {
         width: calc(33% - 0.1rem);
       }
     }
