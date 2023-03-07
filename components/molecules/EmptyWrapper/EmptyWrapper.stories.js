@@ -17,7 +17,7 @@ const argTypes = {
 }
 
 export default {
-  title: 'Molecules/m_142 Empty Wrapper',
+  title: 'Molecules/m_143 Empty Wrapper',
   component: EmptyWrapper,
   parameters: {
     docs: {
