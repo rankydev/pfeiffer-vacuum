@@ -9,7 +9,7 @@ export const useOciStore = defineStore('oci', () => {
   const isOciPage = ref(CURRENT_REGION_CODE === 'oci')
 
   const hookUrl = ref(getCookie('oci.HOOK_URL'))
-  const returnTarget = ref(getCookie('oci.RETURNTARGET') || '_self')
+  const returnTarget = ref(getCookie('oci.RETURNTARGET', '_self'))
   const customerId = ref(getCookie('oci.customerId'))
 
   const saveOciParams = (
@@ -21,7 +21,7 @@ export const useOciStore = defineStore('oci', () => {
     setCookie('oci.HOOK_URL', HOOK_URL, new Date(validUntil))
     hookUrl.value = HOOK_URL
     setCookie('oci.RETURNTARGET', RETURNTARGET, new Date(validUntil))
-    returnTarget.value = RETURNTARGET
+    returnTarget.value = RETURNTARGET || '_self'
     setCookie('oci.customerId', customerIdentifier, new Date(validUntil))
     customerId.value = customerIdentifier
   }
