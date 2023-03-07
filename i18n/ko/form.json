@@ -57,8 +57,5 @@
   },
   "contactPersons": {
     "contactButton": "문자 보내"
-  },
-  "confirmationPage": {
-    "nextRequestButton": "다음 요청"
   }
 }

@@ -1,24 +1,50 @@
 <template>
   <div class="confirmation">
     <h2 class="confirmation__headline">
-      {{ $t('checkout.requestSuccess') }}
+      {{
+        $t(
+          confirmationType === 'CHECKOUT'
+            ? 'checkout.requestSuccess'
+            : 'contact.confirmationPage.requestSuccess'
+        )
+      }}
     </h2>
     <div class="confirmation__description">
       <div>
-        {{ $t('checkout.requestDescription') }}
+        {{
+          $t(
+            confirmationType === 'CHECKOUT'
+              ? 'checkout.requestDescription'
+              : 'contact.confirmationPage.requestDescription'
+          )
+        }}
       </div>
     </div>
-    <div
-      v-if="confirmationType === 'CHECKOUT'"
-      class="confirmation__requestNumber"
-    >
+    <div class="confirmation__requestNumber">
       <Icon icon="check" class="confirmation__requestNumber--icon" />
       <h3 class="confirmation__requestNumber--subline tw-font-normal">
-        {{ $t('checkout.requestNumber') }}
+        {{
+          $t(
+            confirmationType === 'CHECKOUT'
+              ? 'checkout.requestNumber'
+              : 'contact.confirmationPage.thankYou'
+          )
+        }}
       </h3>
-      <h3 class="confirmation__requestNumber--subline">{{ order.code }}</h3>
+      <h3
+        v-if="confirmationType === 'CHECKOUT'"
+        class="confirmation__requestNumber--subline"
+      >
+        {{ order.code }}
+      </h3>
       <h5 class="confirmation__requestNumber--subline">
-        {{ $t('checkout.requestSupport') }}
+        {{
+          $t(
+            confirmationType === 'CHECKOUT'
+              ? 'checkout.requestSupport'
+              : 'contact.confirmationPage.requestProgress'
+          )
+        }}
       </h5>
     </div>
     <div class="confirmation__buttons">
@@ -34,7 +60,7 @@
           $t(
             confirmationType === 'CHECKOUT'
               ? 'checkout.viewRequest'
-              : 'form.confirmationPage.nextRequestButton'
+              : 'contact.confirmationPage.nextRequestButton'
           )
         "
       />
@@ -80,6 +106,10 @@ export default defineComponent({
   @apply tw-w-fit;
   @apply tw-m-4;
   margin: 0 auto;
+
+  @screen md {
+    max-width: 75%;
+  }
 
   &__headline {
     @apply tw-col-span-12;
