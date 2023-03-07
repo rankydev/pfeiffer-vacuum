@@ -60,5 +60,17 @@
   "installedBase": {
     "installedBase": "安装基础"
   },
-  "comingSoon": "此功能即将推出！"
+  "comingSoon": "此功能即将推出！",
+  "lastEdited": "上次编辑",
+  "shoppingList": {
+    "title": "标题",
+    "items": "项目",
+    "details": "详情",
+    "confirmationModal": {
+      "headline": "你真的要删除这个购物清单吗？",
+      "cancel": "不",
+      "confirm": "是的",
+      "deleteSuccess": "购物清单已成功删除"
+    }
+  }
 }

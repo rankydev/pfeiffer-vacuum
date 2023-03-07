@@ -62,5 +62,18 @@
   "installedBase": {
     "installedBase": "Installed Base"
   },
-  "comingSoon": "This function will be available soon!"
+  "comingSoon": "This function will be available soon!",
+  "lastEdited": "Last edited",
+  "shoppingList": {
+    "title": "Title",
+    "items": "Items",
+    "details": "Details",
+    "confirmationModal": {
+      "headline": "Do you really want to delete this shopping list?",
+      "cancel": "No",
+      "confirm": "Yes",
+      "deleteSuccess": "Shopping list was deleted successfully."
+    }
+  }
 }
+
