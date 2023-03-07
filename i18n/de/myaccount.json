@@ -60,11 +60,11 @@
     "table": {
       "reference": "Referenz",
       "requestNumber": "Anfragenummer",
-      "requestReference": "Referenznummer",
+      "requestReference": "Referenz",
       "customerReference": "Kundenreferenz",
       "requestDate": "Anfragedatum",
       "date": "Datum",
-      "requestTotal": "Total (net)"
+      "requestTotal": "Gesamt (Netto)"
     },
     "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
     "goToProducts": "Zu den Produkten",

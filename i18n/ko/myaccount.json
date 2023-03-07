@@ -58,7 +58,7 @@
     "table": {
       "reference": "Reference",
       "requestNumber": "Request number:",
-      "requestReference": "Request reference",
+      "requestReference": "Reference",
       "customerReference": "Customer reference",
       "requestDate": "Request date",
       "date": "Date",
