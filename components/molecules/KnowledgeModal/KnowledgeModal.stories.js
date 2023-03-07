@@ -2,7 +2,7 @@ import KnowledgeModal from './KnowledgeModal'
 import { ref } from '@nuxtjs/composition-api'
 
 export default {
-  title: 'Molecules/m_147 Knowledge Modal',
+  title: 'Molecules/m_150 Knowledge Modal',
   component: KnowledgeModal,
   parameters: {
     docs: {
