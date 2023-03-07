@@ -28,5 +28,7 @@
     "button": {
       "download": "Download"
     }
-  }
+  },
+  "details": "Details",
+  "clock" : "Uhr"
 }

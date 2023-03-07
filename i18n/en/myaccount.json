@@ -56,17 +56,26 @@
   },
   "contact": "Contact Us",
   "salesRepresentative": "Sales Representative",
-  "serviceHistory": {
-    "serviceRequests": "Service requests"
+  "recentRequests": {
+    "recentRequests": "Recent requests",
+    "allRequests": "All requests",
+    "newServiceRequest": "New service request",
+    "allServiceRequests": "All service requests",
+    "lastRequestNotFound": "You have not made any requests yet!",
+    "goToProducts": "Go to products",
+    "requestNumber": "Request number",
+    "reference": "Reference",
+    "date": "Date",
+    "total": "Total (Net)"
   },
-  "installedBase": {
-    "installedBase": "Installed Base"
-  },
-  "comingSoon": "This function will be available soon!",
-  "lastEdited": "Last edited",
   "shoppingList": {
+    "new": "New shopping list",
+    "all": "All shopping lists",
     "title": "Title",
+    "lastEdited": "Last edited",
     "items": "Items",
+    "noShoppingLists": "You have not created any shopping lists yet!",
+    "recentShoppingLists": "Recent shopping lists",
     "details": "Details",
     "confirmationModal": {
       "headline": "Do you really want to delete this shopping list?",
@@ -77,6 +86,14 @@
     "selectAList": "Select a list",
     "add": "Add to new list",
     "back": "Back"
-  }
+  },
+  "details": "Details",
+  "serviceHistory": {
+    "serviceRequests": "Service requests"
+  },
+  "installedBase": {
+    "installedBase": "Installed Base"
+  },
+  "comingSoon": "This function will be available soon!",
+  "lastEdited": "Last edited"
 }
-
