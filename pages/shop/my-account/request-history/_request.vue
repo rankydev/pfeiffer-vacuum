@@ -77,7 +77,7 @@ export default defineComponent({
     TotalNetInformation,
   },
   setup() {
-    const { i18n, app } = useContext()
+    const { i18n } = useContext()
     const route = useRoute()
 
     const requestHistoryStore = useRequestHistoryStore()
