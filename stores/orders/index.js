@@ -39,7 +39,6 @@ export const useOrdersStore = defineStore('orders', () => {
 
   const placeOciOrder = async () => {
     try {
-      // TODO: clarify: Naming "customerId" is misleading. API docs say this url part is "cartId"
       const result = await axios.$post(
         `${config.OCI_ORDER_API}/${customerId.value}/oci-punchout`
       )

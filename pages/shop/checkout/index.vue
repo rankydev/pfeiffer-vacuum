@@ -311,16 +311,22 @@ export default defineComponent({
             } delivery address] as cart delivery address.`
           )
         } else {
-          toast.warning({
-            description: i18n.t('checkout.deliveryAddressMissing'),
-          })
+          // for OCI users we have silent errors because deliveryAddress is not required
+          if (!isOciUser.value) {
+            toast.warning({
+              description: i18n.t('checkout.deliveryAddressMissing'),
+            })
+          }
           throw 'no delivery address found'
         }
       } catch (error) {
         logger.error('could not set delivery address.', error)
-        toast.error({
-          description: i18n.t('checkout.setDeliveryAddressError'),
-        })
+        // for OCI users we have silent errors because deliveryAddress is not required
+        if (!isOciUser.value) {
+          toast.error({
+            description: i18n.t('checkout.setDeliveryAddressError'),
+          })
+        }
       } finally {
         loading.value = false
       }
@@ -347,9 +353,7 @@ export default defineComponent({
             form.setAttribute('target', returnTarget.value)
             form.innerHTML = ociPunchoutFormContent
             document.body.appendChild(form)
-            form.submit() // TODO: this violates content security header
-
-            // TODO: what happens then?
+            form.submit()
           } else {
             throw 'OCI checkout error: no hookURL or returnTarget defined'
           }
