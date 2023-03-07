@@ -75,7 +75,14 @@
     "lastEdited": "Last edited",
     "items": "Items",
     "noShoppingLists": "You have not created any shopping lists yet!",
-    "recentShoppingLists": "Recent shopping lists"
+    "recentShoppingLists": "Recent shopping lists",
+    "details": "Details",
+    "confirmationModal": {
+      "headline": "Do you really want to delete this shopping list?",
+      "cancel": "No",
+      "confirm": "Yes",
+      "deleteSuccess": "Shopping list was deleted successfully."
+    }
   },
   "details": "Details",
   "serviceHistory": {
@@ -85,17 +92,5 @@
     "installedBase": "Installed Base"
   },
   "comingSoon": "This function will be available soon!",
-  "lastEdited": "Last edited",
-  "shoppingList": {
-    "title": "Title",
-    "items": "Items",
-    "details": "Details",
-    "confirmationModal": {
-      "headline": "Do you really want to delete this shopping list?",
-      "cancel": "No",
-      "confirm": "Yes",
-      "deleteSuccess": "Shopping list was deleted successfully."
-    }
-  }
+  "lastEdited": "Last edited"
 }
-
