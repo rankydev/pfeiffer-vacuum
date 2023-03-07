@@ -3,7 +3,7 @@ import KnowledgeNav from './KnowledgeNav.vue'
 const argTypes = {}
 
 export default {
-  title: 'Molecules/m_146 KnowledgeNav',
+  title: 'Molecules/m_147 KnowledgeNav',
   component: KnowledgeNav,
   parameters: {
     docs: {
