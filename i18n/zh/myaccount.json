@@ -73,7 +73,14 @@
     "lastEdited": "最后编辑",
     "items": "商品",
     "noShoppingLists": "您还没有创建任何购物清单！",
-    "recentShoppingLists": "最近的购物清单"
+    "recentShoppingLists": "最近的购物清单",
+    "details": "详情",
+    "confirmationModal": {
+      "headline": "你真的要删除这个购物清单吗？",
+      "cancel": "不",
+      "confirm": "是的",
+      "deleteSuccess": "购物清单已成功删除"
+    }
   },
   "details": "细节，详情",
   "serviceHistory": {
@@ -83,16 +90,5 @@
     "installedBase": "安装基础"
   },
   "comingSoon": "此功能即将推出！",
-  "lastEdited": "上次编辑",
-  "shoppingList": {
-    "title": "标题",
-    "items": "项目",
-    "details": "详情",
-    "confirmationModal": {
-      "headline": "你真的要删除这个购物清单吗？",
-      "cancel": "不",
-      "confirm": "是的",
-      "deleteSuccess": "购物清单已成功删除"
-    }
-  }
+  "lastEdited": "上次编辑"
 }
