@@ -62,6 +62,13 @@ export const useUserStore = defineStore('user', () => {
       currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
   )
 
+  const userStatusTypeForInfoText = computed(() => {
+    if (isLeadUser.value) return 'lead'
+    if (isOpenUser.value) return 'open'
+    if (isRejectedUser.value) return 'rejected'
+    return 'undefined'
+  })
+
   const accountManagerData = ref(null)
 
   const loadAccountManagerData = async () => {
@@ -219,7 +226,7 @@ export const useUserStore = defineStore('user', () => {
   const loadDeliveryAddresses = async () => {
     try {
       const result = await userApi.getUserDeliveryAddresses()
-      deliveryAddresses.value = {
+      const mappedAddresses = {
         addresses: result.addresses
           .map((item) => {
             return {
@@ -229,11 +236,14 @@ export const useUserStore = defineStore('user', () => {
           })
           .sort((a, b) => b.defaultShippingAddress - a.defaultShippingAddress),
       }
+      deliveryAddresses.value = mappedAddresses
+      return mappedAddresses.addresses
     } catch (e) {
       logger.error(
         `Error when fetching billing address for user. Returning empty object.`,
         e
       )
+      return null
     }
   }
 
@@ -243,10 +253,12 @@ export const useUserStore = defineStore('user', () => {
 
   const createDeliveryAddress = async (address) => {
     await userApi.createUserDeliveryAddress(address)
+    loadCurrentUser()
   }
 
   const updateDeliveryAddress = async (id, address) => {
     await userApi.updateUserDeliveryAddress(id, address)
+    loadCurrentUser()
   }
 
   const deleteDeliveryAddress = async (id) => {
@@ -265,6 +277,7 @@ export const useUserStore = defineStore('user', () => {
       await userApi.setUserDefaultDeliveryAddress(id)
       // refetch delivery addresses
       loadDeliveryAddresses()
+      loadCurrentUser()
     } catch (e) {
       logger.error(`Error when setting default delivery address.`, e)
       throw e
@@ -350,6 +363,7 @@ export const useUserStore = defineStore('user', () => {
     isOpenUser,
     isRejectedUser,
     isLoggedIn,
+    userStatusTypeForInfoText,
     isLoading,
     userBillingAddress,
     userCountry,

@@ -8,7 +8,7 @@
       @click.prevent="$emit('update', $event.target.checked)"
     />
     <Icon icon="check" class="checkbox__tick" />
-    {{ label }}
+    <span v-if="label">{{ label }}</span>
   </label>
 </template>
 <script>
@@ -22,7 +22,8 @@ export default {
   props: {
     label: {
       type: String,
-      required: true,
+      required: false,
+      default: null,
     },
     checked: {
       type: Boolean,

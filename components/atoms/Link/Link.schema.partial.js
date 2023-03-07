@@ -12,6 +12,7 @@ export default {
       'ContactPage',
       'Page',
       'EcomPage',
+      'KnowledgePage',
     ],
   },
   target: {

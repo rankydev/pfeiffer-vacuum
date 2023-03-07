@@ -1,7 +1,10 @@
 <template>
   <div
     class="cart-item-card"
-    :class="{ 'cart-item-card-desktop': !isMiniCart }"
+    :class="{
+      'cart-item-card-desktop': !isMiniCart,
+      'cart-item-card--edit-mode': editMode,
+    }"
   >
     <div v-if="productImage" class="cart-item-card-image">
       <Link :href="url">
@@ -31,13 +34,15 @@
     />
     <div v-if="details && isDetailsExpanded" class="cart-item-card-details">
       <template v-for="detail in details">
-        <Tag
-          v-for="(variant, id) in detail.variationValues"
-          :key="detail.code + id"
-          class="cart-item-card-details__detail"
-          :label="detail.name"
-          :content="variant.displayValue"
-        />
+        <template v-for="(variant, id) in detail.variationValues">
+          <Tag
+            v-if="variant.selected"
+            :key="detail.code + id"
+            class="cart-item-card-details__detail"
+            :label="detail.name"
+            :content="variant.displayValue"
+          />
+        </template>
       </template>
     </div>
     <PromotionLabel
@@ -46,12 +51,19 @@
       :subline="getPromotion"
     />
     <PvInput
+      v-if="editMode"
       v-model="quantityModel"
       input-type="number"
       class="cart-item-card-quantity"
       :disabled="isInactive"
       @input="updateQuantity"
     />
+    <div v-else class="cart-item-card-quantity cart-item-card-quantity--fixed">
+      <span class="cart-item-card-quantity__label">
+        {{ $t('cart.quantity') }}
+      </span>
+      {{ quantity }}
+    </div>
     <div
       v-if="!isLoggedIn || !isPriceVisible"
       class="cart-item-card-price-error"
@@ -74,6 +86,7 @@
       </span>
     </div>
     <Button
+      v-if="isLoggedIn"
       class="cart-item-card-add-article"
       variant="secondary"
       shape="plain"
@@ -82,6 +95,7 @@
       @click="addToShoppingList"
     />
     <Button
+      v-if="editMode"
       class="cart-item-card-delete"
       variant="secondary"
       shape="plain"
@@ -146,6 +160,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
       required: false,
+    },
+    editMode: {
+      type: Boolean,
+      default: true,
     },
   },
   emits: ['addToShoppingList', 'update', 'delete'],
@@ -330,6 +348,7 @@ export default defineComponent({
     &__label {
       @apply tw-text-xs;
       @apply tw-ml-2;
+      @apply tw-text-pv-grey-48;
     }
 
     &__price {
@@ -347,6 +366,7 @@ export default defineComponent({
 
     &__label {
       @apply tw-text-xs;
+      @apply tw-text-pv-grey-48;
     }
 
     &__price {
@@ -427,6 +447,18 @@ export default defineComponent({
 }
 
 .cart-item-card-desktop {
+  &.cart-item-card {
+    @apply tw-grid-cols-12;
+
+    @screen lg {
+      @apply tw-grid-cols-11;
+    }
+
+    &--edit-mode {
+      @apply tw-grid-cols-12;
+    }
+  }
+
   .cart-item-card {
     @screen lg {
       @apply tw-grid-rows-3;
@@ -461,6 +493,28 @@ export default defineComponent({
     }
 
     &-quantity {
+      &--fixed {
+        @apply tw-items-center;
+        @apply tw-justify-start;
+        @apply tw-w-full;
+        @apply tw-mt-4;
+        @apply tw-h-12;
+
+        @screen lg {
+          @apply tw-justify-center;
+
+          .cart-item-card-quantity__label {
+            @apply tw-hidden;
+          }
+        }
+      }
+
+      &__label {
+        @apply tw-text-xs;
+        @apply tw-mr-2;
+        @apply tw-text-pv-grey-48;
+      }
+
       @screen lg {
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-9 tw-col-end-10;
