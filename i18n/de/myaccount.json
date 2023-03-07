@@ -87,5 +87,17 @@
     },
     "detailPageLink": "Details",
     "deleteSuccess": "Berechnung wurde gelöscht"
+  },
+  "lastEdited": "Zuletzt bearbeitet",
+  "shoppingList": {
+    "title": "Title",
+    "items": "Artikel",
+    "details": "Details",
+    "confirmationModal": {
+      "headline": "Möchten Sie diese Einkaufsliste wirklich löschen?",
+      "cancel": "Nein",
+      "confirm": "Ja",
+      "deleteSuccess": "Einkaufsliste wurde erfolgreich gelöscht."
+    }
   }
 }
