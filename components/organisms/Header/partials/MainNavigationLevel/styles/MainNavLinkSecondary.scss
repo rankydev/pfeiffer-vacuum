@@ -62,18 +62,20 @@
       @apply tw-grow;
     }
 
-    a{
+    a {
       @apply tw-w-full tw-justify-center;
     }
   }
 
   @screen md {
-    @include hide-scrollbar;
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-w-1/2;
     @apply tw-pl-8 tw-pt-4;
     padding-bottom: 88px;
+    max-height: calc(
+      100vh - 200px
+    ); // subtract 200px for header height and 48px for the space under the nav
 
     &__element {
       @apply tw-border-b-0;
@@ -125,6 +127,9 @@
 
   @screen lg {
     @apply tw-w-1/4;
+    max-height: calc(
+      100vh - 230px
+    ); // subtract 230px for header height and 48px for the space under the nav
 
     &__buttons {
       @apply tw-w-1/4;
@@ -189,13 +194,40 @@
     @apply tw-w-full tw-h-full;
     @apply tw-overflow-auto;
 
+    &::-webkit-scrollbar-track {
+      @apply tw-bg-pv-white;
+    }
+
+    &::-webkit-scrollbar {
+      @apply tw-bg-pv-white;
+      width: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply tw-bg-pv-red;
+    }
+
     &__wrapper {
       @apply tw-absolute;
       @apply tw-top-0 tw-bottom-0;
       @apply tw-left-1/2 tw-right-0;
       @apply tw-pl-0;
       @apply tw-overflow-hidden;
-      @apply tw-bg-pv-grey-96;
+      @apply tw-bg-pv-white;
+      @apply tw-pb-20;
+
+      &:after {
+        @apply tw-absolute;
+        content: '';
+        height: 3.5rem;
+        width: calc(100% - 0.1rem);
+        bottom: 5rem;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.51) 0%,
+          #ffffff 62.5%
+        );
+      }
     }
 
     &__buttons {
@@ -208,6 +240,10 @@
 
     &__wrapper {
       @apply tw-left-1/4;
+
+      &:after {
+        width: calc(33% - 0.1rem);
+      }
     }
   }
 }
