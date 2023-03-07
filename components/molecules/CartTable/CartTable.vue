@@ -1,6 +1,10 @@
 <template>
   <div class="cart-item-wrapper">
-    <div v-if="!isMiniCart" class="cart-item-header">
+    <div
+      v-if="!isMiniCart"
+      class="cart-item-header"
+      :class="{ 'cart-item-header--edit-mode': editMode }"
+    >
       <div class="cart-item-header__quantity">
         <span>{{ $t('cart.quantity') }}</span>
       </div>
@@ -15,15 +19,16 @@
     </div>
     <CartItemCard
       v-for="(
-        { product, quantity, basePrice, totalPrice, code }, index
+        { product, quantity, basePrice, totalPrice }, index
       ) in getSortedProducts"
-      :key="getUniqueId(code)"
+      :key="product.code"
       :product="product"
       :base-price="basePrice"
       :price-total="totalPrice"
       :quantity="quantity"
       :promotion="getProductPromotions(index)"
       :is-mini-cart="isMiniCart"
+      :edit-mode="editMode"
       @update="updateCartQuantity"
       @delete="deleteFromCart"
     />
@@ -49,6 +54,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
       required: false,
+    },
+    editMode: {
+      type: Boolean,
+      default: true,
     },
   },
   emits: ['update', 'addToShoppingList'],
@@ -148,14 +157,18 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .cart-item-header {
   @apply tw-hidden;
-  @apply tw-border-b tw-border-b-pv-grey-80;
 
   @screen lg {
-    @apply tw-grid tw-grid-rows-1 tw-grid-cols-12;
+    @apply tw-grid tw-grid-rows-1 tw-grid-cols-11;
+    @apply tw-border-b tw-border-b-pv-grey-80;
     @apply tw-pb-4;
+  }
+
+  &--edit-mode {
+    @apply tw-grid-cols-12;
   }
 
   &__quantity {

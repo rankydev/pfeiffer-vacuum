@@ -43,8 +43,12 @@
       class="shop-navigation__shopping-cart tw-flex"
     >
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
-      <!-- TODO: Add correct cart item count indicator -->
-      <span>{{ cartItemCount }}</span>
+      <span
+        v-if="cartItemCount"
+        class="shop-navigation__shopping-cart-count-indicator"
+      >
+        {{ cartItemCount }}
+      </span>
     </Link>
 
     <CartOverlay :is-open="isOverlayOpen" @close="closeOverlay" />
@@ -192,6 +196,25 @@ export default defineComponent({
     @screen lg {
       @apply tw-ml-6;
     }
+  }
+
+  &__shopping-cart-count-indicator {
+    @apply tw-bg-pv-yellow;
+    @apply tw-text-pv-black;
+    @apply tw-inline-block;
+    @apply tw-relative;
+    @apply tw-w-6;
+    @apply tw-h-6;
+    @apply tw-border-2;
+    @apply tw-rounded-xl;
+    @apply tw-p-0;
+    @apply tw-text-xs;
+    @apply tw-leading-5;
+    @apply tw-font-bold;
+    @apply tw-text-center;
+    top: -16px;
+    left: -12px;
+    border-color: transparent;
   }
 
   &__account,

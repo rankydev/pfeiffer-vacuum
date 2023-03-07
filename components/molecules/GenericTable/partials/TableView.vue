@@ -14,7 +14,10 @@
           ]"
           @click="isSortable(entry) ? changeSorting(i) : null"
         >
-          {{ entry.title }}
+          <span v-if="entry.bold" class="table-view__head-entry--bold">{{
+            entry.title
+          }}</span>
+          <span v-else>{{ entry.title }}</span>
           <Icon
             v-if="isSortable(entry)"
             class="table-view__sort-icon"
@@ -39,7 +42,20 @@
           :key="`row${i}-${j}`"
           class="table-view__cell"
         >
-          {{ typeof cell === 'object' ? cell.text : cell }}
+          <Icon
+            v-if="cell.icon"
+            class="table-view__icon"
+            :icon="cell.icon"
+            variant="secondary"
+            shape="outlined"
+          />
+          <span
+            v-if="typeof cell === 'object' && cell.bold"
+            class="table-view__cell table-view__cell--bold"
+          >
+            {{ cell.text }}
+          </span>
+          <span v-else>{{ typeof cell === 'object' ? cell.text : cell }}</span>
           <span v-if="cell.marginal" class="table-view__cell-marginal">
             {{ cell.marginal }}
           </span>
@@ -90,7 +106,7 @@ export default {
     }
 
     const sortedData = computed(() => {
-      return tableData.value.slice().sort((a, b) => {
+      return tableData.value?.slice().sort((a, b) => {
         if (sorting.value.id !== null) {
           switch (sortingStates[sorting.value.state]) {
             case 'neutral':
@@ -151,7 +167,8 @@ export default {
       @apply tw-cursor-pointer;
     }
 
-    &--active {
+    &--active,
+    &--bold {
       @apply tw-font-bold;
     }
   }
@@ -180,6 +197,14 @@ export default {
       @apply tw-justify-end tw-items-center;
       @apply tw-gap-2;
       @apply tw-text-right;
+    }
+
+    &--bold {
+      @apply tw-font-bold;
+    }
+
+    .icon__material.icon--base {
+      @apply tw-align-bottom;
     }
   }
 }

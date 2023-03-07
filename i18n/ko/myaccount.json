@@ -54,11 +54,41 @@
   },
   "contact": "문의하기",
   "salesRepresentative": "영업 담당자",
+  "recentRequests": {
+    "recentRequests": "최근 요청",
+    "allRequests": "모든 요청",
+    "newServiceRequest": "새 서비스 요청",
+    "allServiceRequests": "모든 요청",
+    "lastRequestNotFound": "어떠한 요청도 아직 하지 않았습니다!",
+    "goToProducts": "제품으로 이동",
+    "requestNumber": "요청 번호",
+    "reference": "참조",
+    "date": "날짜",
+    "total": "합계(순가격)"
+  },
+  "shoppingList": {
+    "new": "새 쇼핑 목록",
+    "all": "모든 쇼핑 목록",
+    "title": "쇼핑 목록",
+    "lastEdited": "마지막으로 편집됨",
+    "items": "품목",
+    "noShoppingLists": "어떠한 쇼핑 목록도 아직 만들지 않았습니다!",
+    "recentShoppingLists": "최근 쇼핑 목록",
+    "details": "세부 정보",
+    "confirmationModal": {
+      "headline": "이 쇼핑 목록을 정말로 삭제 하시겠습니까?",
+      "cancel": "아니요",
+      "confirm": "예",
+      "deleteSuccess": "쇼핑 목록이 성공적으로 삭제되었습니다."
+    }
+  },
+  "details": "세부 정보",
   "serviceHistory": {
     "serviceRequests": "서비스 요청"
   },
   "installedBase": {
     "installedBase": "설치 기반"
   },
-  "comingSoon": "이 기능은 곧 사용할 수 있습니다!"
+  "comingSoon": "이 기능은 곧 사용할 수 있습니다!",
+  "lastEdited": "마지막으로 수정한 날짜"
 }
