@@ -89,6 +89,7 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import { useInputValidator } from '~/composables/useValidator'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({
   components: {
@@ -192,8 +193,14 @@ export default defineComponent({
      */
     'submit',
   ],
-  setup(props) {
-    const internalValue = ref(props.value)
+  setup(props, { emit }) {
+    const sanitizer = useSanitizer()
+    const internalValue = computed({
+      get: () => props.value,
+      set: (newVal) => {
+        emit('input', sanitizer.clear(newVal))
+      },
+    })
     const inputType = ref(props.visibility ? 'text' : 'password')
 
     const validation = ref(useInputValidator(props.rules, internalValue))
