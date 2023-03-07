@@ -336,6 +336,7 @@ export default defineComponent({
 
     const placeOrder = async () => {
       loading.value = true
+      let keepLoadingStatusAfterFinish = false
 
       try {
         // first wait for all promises to be resolved which may be still running (set comment or reference)
@@ -354,6 +355,8 @@ export default defineComponent({
             form.innerHTML = ociPunchoutFormContent
             document.body.appendChild(form)
             form.submit()
+            // 1:1 migrate from PVAC. Loading status is not removed after form submit
+            keepLoadingStatusAfterFinish = true
           } else {
             throw 'OCI checkout error: no hookURL or returnTarget defined'
           }
@@ -376,7 +379,9 @@ export default defineComponent({
         })
       } finally {
         window.scrollTo(0, 0)
-        loading.value = false
+        if (!keepLoadingStatusAfterFinish) {
+          loading.value = false
+        }
       }
     }
 
