@@ -56,7 +56,7 @@ export const useShoppingListsApi = () => {
     })
 
     if (typeof result === 'object' && !result.error) {
-      return result.id
+      return result
     }
 
     logger.error(

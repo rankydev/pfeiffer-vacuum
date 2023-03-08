@@ -107,7 +107,15 @@
     },
     "selectAList": "选择一个清单",
     "add": "添加到新列表",
-    "back": "返回"
+    "back": "返回列表",
+    "name": "名称",
+    "namePlaceholder": "新的购物清单名称",
+    "description": "描述",
+    "descriptionPlaceholder": "此描述仅在“我的帐户”中可读。",
+    "save": "保存并关闭",
+    "info": "您选择的产品将自动添加到这个新列表中。",
+    "close": "关闭",
+    "addNewList": "添加新购物清单"
   },
   "details": "细节，详情",
   "serviceHistory": {

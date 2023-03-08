@@ -110,7 +110,15 @@
     },
     "selectAList": "Wählen Sie eine Liste aus",
     "add": "Zu neuer Liste hinzufügen",
-    "back": "Zurück"
+    "back": "Zurück zu den Listen",
+    "name": "Name",
+    "namePlaceholder": "Neuer Name der Einkaufsliste",
+    "description": "Beschreibung",
+    "descriptionPlaceholder": "Diese Beschreibung ist nur in Ihrem \"Mein Konto\" lesbar.",
+    "save": "Speichern und schließen",
+    "info": "Ihr ausgewähltes Produkt wird automatisch zu dieser neuen Liste hinzugefügt.",
+    "close": "Schließen",
+    "addNewList": "Neue Einkaufsliste hinzufügen"
   },
   "details": "Details",
   "serviceHistory": {

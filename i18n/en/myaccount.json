@@ -110,7 +110,15 @@
     },
     "selectAList": "Select a list",
     "add": "Add to new list",
-    "back": "Back"
+    "back": "Back to lists",
+    "name": "Name",
+    "namePlaceholder": "New shopping list name",
+    "description": "Description",
+    "descriptionPlaceholder": "This description is readable only in your my Account.",
+    "save": "Save and close",
+    "info": "Your selected product will be added to this new list automatically.",
+    "close": "Close",
+    "addNewList": "Add new shopping list"
   },
   "details": "Details",
   "serviceHistory": {
