@@ -333,6 +333,7 @@ export default {
           "'unsafe-inline'",
           "'unsafe-eval'",
           '*.usercentrics.eu',
+          '*.storyblok.com',
         ],
         'connect-src': [
           "'self'",
@@ -346,7 +347,6 @@ export default {
           'app.usercentrics.eu',
         ],
         'form-action': ["'self'"],
-        'frame-ancestors': ["'none'"],
         'object-src': ["'none'"],
         'base-uri': [baseURL],
         // TODO If we have sentry, we can add this:
@@ -355,5 +355,8 @@ export default {
         //]
       },
     },
+  },
+  helmet: {
+    frameguard: false,
   },
 }
