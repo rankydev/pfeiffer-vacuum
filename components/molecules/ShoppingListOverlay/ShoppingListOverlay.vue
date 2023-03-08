@@ -89,10 +89,10 @@
 
 <script>
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import GenericSidebar from '@/components/molecules/GenericSidebar/GenericSidebar.vue'
-import { useShoppingLists } from '@/stores/shoppinglists'
-import Button from '@/components/atoms/Button/Button.vue'
-import PvInput from '@/components/atoms/FormComponents/PvInput/PvInput.vue'
+import GenericSidebar from '~/components/molecules/GenericSidebar/GenericSidebar.vue'
+import { useShoppingLists } from '~/stores/shoppinglists'
+import Button from '~/components/atoms/Button/Button.vue'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
