@@ -333,6 +333,7 @@ export default {
           "'unsafe-inline'",
           "'unsafe-eval'",
           '*.usercentrics.eu',
+          '*.storyblok.com',
         ],
         'connect-src': [
           "'self'",
@@ -350,7 +351,6 @@ export default {
             ? '*'
             : "'self'",
         ], // disabled for OCI Checkout: PVWEB-904
-        'frame-ancestors': ["'none'"],
         'object-src': ["'none'"],
         'base-uri': [baseURL],
         // TODO If we have sentry, we can add this:
@@ -359,5 +359,8 @@ export default {
         //]
       },
     },
+  },
+  helmet: {
+    frameguard: false,
   },
 }
