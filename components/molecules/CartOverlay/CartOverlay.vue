@@ -47,7 +47,7 @@
             />
           </template>
           <div class="cart-overlay-content__total">
-            <div class="cart-overlay-content__total--row">
+            <div class="cart-overlay-content__total--row" v-if="hasPromotion">
               <span class="cart-overlay-content__total-discount">
                 {{ $t('cart.orderDiscount') }}
               </span>
