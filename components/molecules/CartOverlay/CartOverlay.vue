@@ -150,12 +150,12 @@ export default defineComponent({
       return currentCart?.value?.totalItems || 0
     })
 
-    const hasPromotion = computed(() => {
-      return currentCart?.value?.appliedOrderPromotions.length
-    })
-
     const promotions = computed(() => {
       return currentCart?.value?.appliedOrderPromotions
+    })
+
+    const hasPromotion = computed(() => {
+      return promotions.value?.length
     })
 
     const totalDiscounts = computed(() => {

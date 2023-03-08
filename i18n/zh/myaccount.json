@@ -66,6 +66,30 @@
     "date": "日期",
     "total": "Total (Net)"
   },
+  "calculations": {
+    "date": "日期",
+    "delete": "删除",
+    "deleteConfirmation": "您真的要删除此计算吗？",
+    "done": "完毕",
+    "name": "名称",
+    "networkError": "出了点问题。 请稍后再试。",
+    "new": "新的计算",
+    "noCalculations": "您还没有创建任何计算！",
+    "select": "选择",
+    "title": "计算",
+    "to": "到结果",
+    "mode": "计算模式",
+    "modes": {
+      "pumpFinder": "寻找泵解决方案",
+      "fixedPumpSystem": "给定真空系统"
+    },
+    "type": "计算类型",
+    "types": {
+      "chamberEvacuation": "抽真空"
+    },
+    "detailPageLink": "详情",
+    "deleteSuccess": "计算方式被删除。"
+  },
   "shoppingList": {
     "new": "新的购物清单",
     "all": "所有购物清单",

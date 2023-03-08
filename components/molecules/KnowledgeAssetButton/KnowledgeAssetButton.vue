@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div class="knowledge-asset-button">
     <!-- register for webinar button -->
     <Button
       v-if="isFutureEvent && isWebinar"
+      class="knowledge-asset-button__button"
       :label="isDetailPage ? $t('knowledge.webinar.button.join') : ''"
       variant="primary"
       icon="person_add"
@@ -12,6 +13,7 @@
     <!-- watch webinar button -->
     <template v-else-if="isWebinar">
       <Button
+        class="knowledge-asset-button__button"
         :label="isDetailPage ? $t('knowledge.webinar.button.watch') : ''"
         :disabled="!hasAsset"
         variant="primary"
@@ -26,6 +28,7 @@
     <!-- download whitepaper button -->
     <Button
       v-else-if="isWhitepaper && hasAsset"
+      class="knowledge-asset-button__button"
       :label="isDetailPage ? $t('knowledge.whitepaper.button.download') : ''"
       variant="primary"
       icon="get_app"
@@ -99,10 +102,7 @@ export default defineComponent({
       window.open(props.assetUrl, '_blank').focus()
     }
 
-    const showLoginModal = () => {
-      // ToDo: open LoginModal PVWEB-933
-      emit('openModal')
-    }
+    const showLoginModal = () => emit('openModal')
 
     const registerWebinar = async () => {
       try {
@@ -143,10 +143,22 @@ export default defineComponent({
   },
 })
 </script>
-<style land="scss" scoped>
-.knowledge-btn-icon {
-  @apply tw-bg-pv-yellow;
-  @apply tw-rounded-md;
-  @apply tw-p-4;
+<style lang="scss" scoped>
+.knowledge-asset-button {
+  @apply tw-flex;
+  @apply tw-w-full;
+
+  &__button {
+    @apply tw-w-full;
+  }
+
+  @screen md {
+    @apply tw-flex;
+    @apply tw-w-auto;
+
+    &__button {
+      @apply tw-w-auto;
+    }
+  }
 }
 </style>

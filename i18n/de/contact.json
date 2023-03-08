@@ -1,0 +1,9 @@
+{
+  "confirmationPage": {
+    "requestSuccess": "Ihre Anfrage wurde erfolgreich gesendet",
+    "requestDescription": "Vielen Dank für Ihre Anfrage. Wir haben eine Kopie Ihrer Anfrage an Ihre E-Mail-Adresse gesendet. Wir werden Sie so schnell wie möglich kontaktieren.",
+    "thankYou": "Vielen Dank!",
+    "requestProgress": "Ihre Anfrage wird so schnell wie möglich von unserem Service Team bearbeitet",
+    "nextRequestButton": "Nächste Anfrage"
+  }
+}

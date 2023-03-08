@@ -13,6 +13,7 @@
               <Confirmation
                 v-if="placedOrder"
                 :order="placedOrder"
+                confirmation-type="CHECKOUT"
                 class="checkout__confirmation"
               />
               <template v-else-if="cartEntries">
