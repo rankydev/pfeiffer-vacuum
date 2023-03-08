@@ -7,15 +7,22 @@ import {
   onServerPrefetch,
   ssrRef,
   ref,
+  watch,
 } from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
 import { useKeycloak } from './partials/useKeycloak'
 import { useUserApi } from './partials/useUserApi'
-import { watch } from '@nuxtjs/composition-api'
 import { useLogger } from '~/composables/useLogger'
 import { useOciStore } from '~/stores/oci'
 import { joinURL } from 'ufo'
 import { useToast } from '~/composables/useToast'
+import {
+  OCI_USERNAME,
+  OCI_PASSWORD,
+  OCI_HOOK_URL,
+  OCI_RETURN_TARGET,
+  OCI_CUSTOMER_ID,
+} from '~/server/constants.js'
 
 export const useUserStore = defineStore('user', () => {
   const { logger } = useLogger('userStore')
@@ -317,15 +324,15 @@ export const useUserStore = defineStore('user', () => {
   const loginForOci = (
     username,
     password,
-    HOOK_URL,
-    RETURNTARGET,
+    hookUrl,
+    returnTarget,
     customerId
   ) => {
-    logger.debug('loginWithBasicAuth')
+    logger.debug('OCI login')
     const token = createBasicAuthToken(username, password)
 
     setCookiesAndSaveAuthData(token)
-    saveOciParams(HOOK_URL, RETURNTARGET, customerId, token.validUntil)
+    saveOciParams(hookUrl, returnTarget, customerId, token.validUntil)
   }
 
   const logout = async () => {
@@ -349,22 +356,27 @@ export const useUserStore = defineStore('user', () => {
     isLoading.value = false
   }
 
-  const initializeAuth = () => {
+  const initializeAuth = async () => {
     if (isOciPage) {
-      const { username, password, HOOK_URL, RETURNTARGET, customerId } =
-        route.value.query
+      const username = route.value.query[OCI_USERNAME]
+      const password = route.value.query[OCI_PASSWORD]
+      const hookUrl = route.value.query[OCI_HOOK_URL]
+      const returnTarget = route.value.query[OCI_RETURN_TARGET]
+      const customerId = route.value.query[OCI_CUSTOMER_ID]
 
       // check if the required credentils are given
       if (username && password) {
         // logout the user if he is already logged in
         if (isLoggedIn.value) {
-          logger.trace('logout already logged-in user to ensure correct login')
-          logout()
+          logger.trace(
+            'Logout already logged-in user to ensure correct OCI login'
+          )
+          await logout()
         }
 
         logger.trace('login with basic auth')
         // log the user in with the basic auth credentials
-        loginForOci(username, password, HOOK_URL, RETURNTARGET, customerId)
+        loginForOci(username, password, hookUrl, returnTarget, customerId)
       }
 
       if (!isLoggedIn.value && process.client) {
@@ -375,8 +387,8 @@ export const useUserStore = defineStore('user', () => {
 
       // logout the user if a ssr request with an active oci session happens
       if (process.server && isOciUser.value) {
-        logger.trace('Logout OCI-user')
-        logout()
+        logger.trace('Logout OCI user because this is not a OCI page')
+        await logout()
       }
     }
   }
@@ -385,12 +397,12 @@ export const useUserStore = defineStore('user', () => {
   /* istanbul ignore else  */
   if (!currentUser.value) {
     onBeforeMount(async () => {
-      initializeAuth()
+      await initializeAuth()
       await loadCurrentUser()
       await loadAccountManagerData()
     })
     onServerPrefetch(async () => {
-      initializeAuth()
+      await initializeAuth()
       await loadCurrentUser()
       await loadAccountManagerData()
     })

@@ -284,6 +284,7 @@ export default {
   },
   // Will register file from project server/middleware directory to handle API calls
   serverMiddleware: [
+    { prefix: false, handler: '~/server/middleware/oci.js' },
     ...(isStorybook
       ? []
       : [

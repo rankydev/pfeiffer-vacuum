@@ -15,7 +15,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   const ociStore = useOciStore()
   const { customerId } = storeToRefs(ociStore)
   const userStore = useUserStore()
-  const { currentUser, isLoggedIn, isOciUser } = storeToRefs(userStore)
+  const { isLoggedIn, isOciUser } = storeToRefs(userStore)
 
   /**
    * Cart helper functions

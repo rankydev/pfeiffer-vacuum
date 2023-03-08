@@ -4,7 +4,7 @@ import content from './ContactCard.stories.content'
 const { companyName, tags, street, postalCode, city, country, phone } = content
 
 export default {
-  title: 'Molecules/m_147 ContactCard',
+  title: 'Molecules/m_148 ContactCard',
   component: ContactCard,
   parameters: {
     docs: {

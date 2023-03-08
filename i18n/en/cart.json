@@ -43,7 +43,7 @@
   "addToCartError": "An error occured while adding item to shopping cart",
   "pricePerUnit": "Price / PU",
   "editCart": "Edit cart",
-  "checkout": "Go to Checkout",
+  "checkout": "Request Quote",
   "shoppingCart": "Shopping Cart",
   "deleteFromCartSuccess": "Item successfully removed from cart",
   "deleteFromCartError": "An error occured while deleting product from cart",
