@@ -20,7 +20,7 @@
         icon="play_circle_outline"
         @click="() => (isLoggedIn ? openAsset() : showLoginModal())"
       />
-      <div v-if="!hasAsset && isDetailPage" class="tw-mt-4">
+      <div v-if="!hasAsset && isDetailPage">
         {{ $t('knowledge.webinar.waitForVod') }}
       </div>
     </template>
@@ -145,15 +145,16 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .knowledge-asset-button {
-  @apply tw-flex;
+  @apply tw-flex tw-flex-col;
   @apply tw-w-full;
+  @apply tw-gap-4;
 
   &__button {
-    @apply tw-w-full;
+    @apply tw-flex;
   }
 
   @screen md {
-    @apply tw-flex;
+    @apply tw-flex-row;
     @apply tw-w-auto;
 
     &__button {

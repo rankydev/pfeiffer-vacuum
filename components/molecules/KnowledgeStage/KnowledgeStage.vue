@@ -117,7 +117,7 @@ export default defineComponent({
     const showDuration = computed(
       () => !!(!props.isWhitepaper || props.duration !== '')
     )
-    const showDate = computed(() => props.fixedDate !== '')
+    const showDate = computed(() => !!(fixedDate.value !== ''))
 
     return {
       fixedDate,

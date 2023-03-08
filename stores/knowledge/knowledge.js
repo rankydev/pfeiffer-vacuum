@@ -2,11 +2,12 @@ import { defineStore } from 'pinia'
 import { useLogger } from '~/composables/useLogger'
 import config from '~/config/hybris.config'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
-import { ref } from '@nuxtjs/composition-api'
+import { useRoute, ref } from '@nuxtjs/composition-api'
 import { joinURL } from 'ufo'
 export const useKnowledgeStore = defineStore('knowledge', () => {
   const { logger } = useLogger('knowledgeStore')
   const { axios } = useAxiosForHybris()
+  const route = useRoute()
 
   const searchResults = ref([])
 
@@ -22,10 +23,21 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
     return true
   }
 
-  const knowledgeSearch = async (type) => {
+  const knowledgeSearch = async (type = 'ALL') => {
+    const searchTerm = route.value.query.searchTerm || null
+    const currentPage = route.value.query.currentPage - 1 || 0
+    const pageSize = route.value.query.pageSize || 12
     const path = `${config.KNOWLEDGE_API}/search`
+
     await axios
-      .$get(path, { type: type || null })
+      .$get(path, {
+        params: {
+          type,
+          currentPage,
+          pageSize,
+          searchTerm,
+        },
+      })
       .then((res) => {
         searchResults.value = res
       })
