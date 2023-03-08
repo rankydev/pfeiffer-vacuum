@@ -38,22 +38,44 @@
           v-if="!isLoggedIn"
           class="cart-overlay-content__hide-price"
         />
-        <div v-else class="cart-overlay-content__total">
-          <span class="cart-overlay-content__total-label">
-            {{ $t('cart.overall1') }}
-          </span>
-          <span class="cart-overlay-content__total-tax">
-            {{ $t('cart.overall2') }}
-          </span>
-          <span class="cart-overlay-content__total-value">
-            {{ getTotalCartPrice }}
-          </span>
+        <div v-else class="cart-overlay-content__sticky-bar">
+          <template v-if="hasPromotion">
+            <PromotionLabel
+              v-for="promotion in promotions"
+              :key="promotion.promotion.code"
+              :subline="promotion.description"
+            />
+          </template>
+          <div class="cart-overlay-content__total">
+            <div class="cart-overlay-content__total--row">
+              <span class="cart-overlay-content__total-discount">
+                {{ $t('cart.orderDiscount') }}
+              </span>
+              <span class="cart-overlay-content__total-discount">{{
+                totalDiscounts
+              }}</span>
+            </div>
+            <div class="cart-overlay-content__total--row">
+              <div>
+                <span class="cart-overlay-content__total-label">
+                  {{ $t('cart.overall1') }}
+                </span>
+                <span class="cart-overlay-content__total-tax">
+                  {{ $t('cart.overall2') }}
+                </span>
+              </div>
+              <span class="cart-overlay-content__total-value">
+                {{ getTotalCartPrice }}
+              </span>
+            </div>
+          </div>
         </div>
         <div class="cart-overlay-content__navigation">
           <Button
             class="cart-overlay-content__navigation-checkout"
             :label="$t('cart.checkout')"
             icon="arrow_forward"
+            @click="handleCheckoutClick"
           />
           <Button
             class="cart-overlay-content__navigation-edit"
@@ -93,11 +115,17 @@ import CartTable from '../CartTable/CartTable.vue'
 import { useCartStore } from '@/stores/cart'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
+import GenericSidebar from '~/components/molecules/GenericSidebar/GenericSidebar'
+import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
 
 export default defineComponent({
   name: 'CartOverlay',
   components: {
+    PromotionLabel,
     CartTable,
+    GenericSidebar,
+    LoginToSeePricesLabel,
   },
   props: {
     isOpen: {
@@ -120,6 +148,18 @@ export default defineComponent({
 
     const getTotalCartUniqueItems = computed(() => {
       return currentCart?.value?.totalItems || 0
+    })
+
+    const hasPromotion = computed(() => {
+      return currentCart?.value?.appliedOrderPromotions.length
+    })
+
+    const promotions = computed(() => {
+      return currentCart?.value?.appliedOrderPromotions
+    })
+
+    const totalDiscounts = computed(() => {
+      return `- ${currentCart?.value?.totalDiscounts.formattedValue}`
     })
 
     const getTotalCartPrice = computed(() => {
@@ -150,14 +190,14 @@ export default defineComponent({
         showInfo.value = true
         isAddedToCart.value = false
       }
-      setTimeout(() => {
-        showInfo.value = false
-      }, 3000)
     })
 
     return {
       currentCart,
       isMiniCart,
+      hasPromotion,
+      promotions,
+      totalDiscounts,
       closeOverlay,
       goToCart,
       getTotalCartUniqueItems,
@@ -166,6 +206,7 @@ export default defineComponent({
       isLoggedIn,
       showInfo,
       isAddedToCart,
+      handleCheckoutClick: cartStore.handleCheckoutClick,
     }
   },
 })
@@ -213,14 +254,13 @@ export default defineComponent({
     @apply tw-p-4;
     @apply tw-flex;
     @apply tw-flex-col;
-    @apply tw-h-[calc(100%-60px)];
+    @apply tw-h-[calc(100%-140px)];
 
     &__table {
       @apply tw-p-4;
       @apply tw-bg-pv-white;
       @apply tw-overflow-y-auto;
       @apply tw-overflow-x-hidden;
-      @apply tw-border-b-2 tw-border-b-pv-black;
       @apply tw-h-full;
     }
 
@@ -233,21 +273,31 @@ export default defineComponent({
       @apply tw-border-b-2 tw-border-b-pv-black;
     }
 
+    &__sticky-bar {
+      @apply tw-h-fit;
+      @apply tw-pt-4;
+    }
+
     &__total {
-      @apply tw-flex;
-      @apply tw-border-b-2 tw-border-b-pv-black;
+      @apply tw-mt-4;
       @apply tw-py-4;
+      @apply tw-border-t-2 tw-border-t-pv-black;
+      @apply tw-border-b-2 tw-border-b-pv-black;
       @apply tw-text-base;
       @apply tw-leading-6;
       @apply tw-font-bold;
-      @apply tw-h-[60px];
+
+      &--row {
+        @apply tw-flex;
+        @apply tw-justify-between;
+      }
 
       &-tax {
         @apply tw-font-normal;
       }
 
-      &-value {
-        @apply tw-ml-auto;
+      &-discount {
+        @apply tw-text-pv-warning;
       }
     }
 
