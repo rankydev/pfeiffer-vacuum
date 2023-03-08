@@ -346,7 +346,7 @@ export default {
           'app.usercentrics.eu',
         ],
         'form-action': ["'self'"],
-        'frame-ancestors': ["'none'"],
+        'frame-ancestors': ["'self'"],
         'object-src': ["'none'"],
         'base-uri': [baseURL],
         // TODO If we have sentry, we can add this:
