@@ -65,7 +65,7 @@ export const useCartStore = defineStore('cart', () => {
 
     if (currentCartGuid.value !== cartCookie?.guid) {
       currentCart.value = await mergeCarts(
-        cartCookie.guid,
+        cartCookie?.guid,
         currentCartGuid.value
       )
     }
