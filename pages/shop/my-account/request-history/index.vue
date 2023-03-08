@@ -1,5 +1,12 @@
 <template>
   <div class="request-history">
+    <GlobalMessage
+      v-if="!isApprovedUser"
+      class="request-history__warning-unapproved"
+      :description="$t(`myaccount.userStatus.open.functionalityInfo`)"
+      variant="warning"
+      :prevent-icon-change="true"
+    />
     <ResultHeadline
       class="request-history__headline--desktop"
       :headline="$t('myaccount.requestHistory.yourHistory')"
@@ -9,7 +16,7 @@
       :headline="$t('myaccount.requestHistory.yourHistory')"
       :link="localePath('shop-my-account')"
     />
-    <div v-if="tableData.length">
+    <div v-if="tableData.length && isApprovedUser">
       <GenericTable :header="header" :table-data="tableData" />
       <div class="request-history__pagination-wrapper">
         <Pagination :total-pages="totalPages" />
@@ -39,8 +46,11 @@ import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline
 import GenericTable from '~/components/molecules/GenericTable/GenericTable'
 import Pagination from '~/components/molecules/Pagination/Pagination'
 import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper'
+import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
+
 import { useRequestHistoryStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
 
 export default defineComponent({
   name: 'RequestHistory',
@@ -49,10 +59,14 @@ export default defineComponent({
     Pagination,
     ResultHeadline,
     EmptyWrapper,
+    GlobalMessage,
   },
   setup() {
     const { i18n, app } = useContext()
     const route = useRoute()
+    const userStore = useUserStore()
+
+    const { isApprovedUser } = storeToRefs(userStore)
 
     const requestHistoryStore = useRequestHistoryStore()
     const { loadRequestHistory } = requestHistoryStore
@@ -135,12 +149,23 @@ export default defineComponent({
       loadRequestHistory(newRoute.query.currentPage || 1)
     })
 
-    return { requestHistory, header, tableData, totalPages, button }
+    return {
+      requestHistory,
+      header,
+      tableData,
+      totalPages,
+      button,
+      isApprovedUser,
+    }
   },
 })
 </script>
 <style lang="scss" scoped>
 .request-history {
+  &__warning-unapproved {
+    @apply tw-mb-6;
+  }
+
   &__headline {
     &--desktop {
       @apply tw-hidden;
@@ -162,8 +187,12 @@ export default defineComponent({
 
   &__pagination-wrapper {
     @apply tw-flex;
-    @apply tw-justify-end;
+    @apply tw-justify-center;
     @apply tw-mt-6;
+
+    @screen md {
+      @apply tw-justify-end;
+    }
   }
 }
 </style>
