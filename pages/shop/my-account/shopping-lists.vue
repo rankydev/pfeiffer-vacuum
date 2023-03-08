@@ -1,23 +1,36 @@
 <template>
   <div>
-    <MyAccountHeading />
-    <div
-      class="tw-flex tw-bg-pv-grey-88 tw-rounded-md tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-2xl tw-text-center"
-      style="height: 800px"
-    >
-      <div>ShoppingLists</div>
+    <div class="shopping-lists-account-header">
+      <Button
+        class="shopping-list-overlay__footer--forward"
+        :label="
+          isAddMode
+            ? $t('myaccount.shoppingList.save')
+            : $t('myaccount.shoppingList.add')
+        "
+        :icon="isAddMode ? 'save' : 'add'"
+        shape="filled"
+        variant="secondary"
+        @click="handleForward"
+      />
     </div>
+    <ShoppingListTable :lists="shoppingLists" />
   </div>
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import MyAccountHeading from '~/components/organisms/MyAccount/partials/MyAccountHeading'
+import { useShoppingLists } from '@/stores/shoppinglists'
+import ShoppingListTable from '~/components/molecules/ShoppingListTable/ShoppingListTable.vue'
 
 export default defineComponent({
   name: 'ShoppingLists',
   components: {
-    MyAccountHeading,
+    ShoppingListTable,
+  },
+  setup() {
+    const { shoppingLists } = useShoppingLists()
+    return { shoppingLists }
   },
 })
 </script>
