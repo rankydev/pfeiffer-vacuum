@@ -70,11 +70,66 @@
     "goToProducts": "Zu den Produkten",
     "yourHistory": "Deine Anfragenhistorie"
   },
+  "recentRequests": {
+    "recentRequests": "Letzte Bestellanfragen",
+    "allRequests": "Alle Anfragen",
+    "newServiceRequest": "Neue Service-Anfrage",
+    "allServiceRequests": "Alle Service-Anfragen",
+    "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
+    "goToProducts": "Zu den Produkten",
+    "requestNumber": "Anfragennummer",
+    "reference": "Referenz",
+    "date": "Datum",
+    "total": "Gesamt (Netto)"
+  },
+  "calculations": {
+    "headline": "Berechnung",
+    "date": "Datum",
+    "delete": "Löschen",
+    "deleteConfirmation": "Möchten Sie diese Berechnung wirklich löschen?",
+    "done": "Fertig",
+    "name": "Name",
+    "networkError": "Etwas ist schiefgelaufen. Bitte versuche es später erneut.",
+    "new": "Neue Berechnung",
+    "noCalculations": "Bisher wurden keine Berechnungen durchgeführt!",
+    "select": "Auswählen",
+    "title": "Berechnungen",
+    "to": "Zum Ergebnis",
+    "mode": "Berechnungsmodus",
+    "modes": {
+      "pumpFinder": "Pumplösung finden",
+      "fixedPumpSystem": "Vorgegebenes Vakuumsystem"
+    },
+    "type": "Berechnungstyp",
+    "types": {
+      "chamberEvacuation": "Evakuierung"
+    },
+    "detailPageLink": "Details",
+    "deleteSuccess": "Berechnung wurde gelöscht"
+  },
+  "shoppingList": {
+    "new": "Neue Einkaufsliste",
+    "all": "Alle Einkaufslisten",
+    "title": "Titel",
+    "lastEdited": "Letzte Änderung",
+    "items": "Artikel",
+    "noShoppingLists": "Bisher wurden keine Einkaufslisten angelegt!",
+    "recentShoppingLists": "Letzte Einkaufslisten",
+    "details": "Details",
+    "confirmationModal": {
+      "headline": "Möchten Sie diese Einkaufsliste wirklich löschen?",
+      "cancel": "Nein",
+      "confirm": "Ja",
+      "deleteSuccess": "Einkaufsliste wurde erfolgreich gelöscht."
+    }
+  },
+  "details": "Details",
   "serviceHistory": {
     "serviceRequests": "Service-Anfragen"
   },
   "installedBase": {
     "installedBase": "Installed Base"
   },
-  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!"
+  "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!",
+  "lastEdited": "Zuletzt bearbeitet"
 }

@@ -6,11 +6,13 @@ import config from '~/config/hybris.config'
 
 export * from './accountData'
 export * from './requestHistory'
+export * from './dashboard'
 
 export const useMyAccountStore = defineStore('myaccount', () => {
   const { logger } = useLogger('myAccountStore')
   const { axios } = useAxiosForHybris()
   const menuItems = ref([])
+  const orders = ref([])
 
   const hydrateMenuItems = (links) => {
     if (links?.length) {
@@ -35,6 +37,7 @@ export const useMyAccountStore = defineStore('myaccount', () => {
       })
 
       if (result && Array.isArray(result.orders) && !result.error) {
+        orders.value = result
         return result
       }
     } catch (e) {
@@ -49,6 +52,7 @@ export const useMyAccountStore = defineStore('myaccount', () => {
   return {
     // States
     menuItems,
+    orders,
 
     //Getters
     getOrders,
