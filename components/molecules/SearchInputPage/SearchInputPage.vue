@@ -1,5 +1,5 @@
 <template>
-  <div class="search-input-page">
+  <div v-if="showDocumentSearchTab" class="search-input-page">
     <PvInput
       ref="pvInput"
       v-model="searchTerm"
@@ -47,6 +47,12 @@ export default defineComponent({
   components: {
     PvInput,
     SearchSuggestions,
+  },
+  props: {
+    showDocumentSearchTab: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['searchTermChange'],
   setup(props, { emit }) {

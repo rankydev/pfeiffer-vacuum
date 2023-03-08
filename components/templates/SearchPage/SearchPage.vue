@@ -30,6 +30,7 @@
             />
             <div class="search-page__search-input">
               <SearchInputPage
+                :show-document-search-tab="showDocumentSearchTab"
                 @searchTermChange="(value) => (searchTerm = value)"
               />
             </div>
