@@ -23,6 +23,7 @@
       <div v-for="product in productList" :key="product.entryNumber">
         <ShoppingListItemCard
           v-bind="product"
+          :price-total="product.totalPrice"
           :is-read-only="true"
           variant="requestHistory"
         />
