@@ -48,7 +48,7 @@
         :placeholder="$t('myaccount.shoppingList.namePlaceholder')"
         @input="inputName"
       />
-      <PvInput
+      <PvTextArea
         class="shopping-list-overlay__content-add--description"
         :label="$t('myaccount.shoppingList.description')"
         :placeholder="$t('myaccount.shoppingList.descriptionPlaceholder')"
@@ -93,11 +93,14 @@ import GenericSidebar from '~/components/molecules/GenericSidebar/GenericSidebar
 import { useShoppingLists } from '~/stores/shoppinglists'
 import Button from '~/components/atoms/Button/Button.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
+import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea.vue'
+
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'ShoppingListOverlay',
   components: {
+    PvTextArea,
     PvInput,
     GenericSidebar,
     Button,
@@ -123,11 +126,13 @@ export default defineComponent({
       description.value = value
     }
     const newShoppingList = async () => {
-      await shoppingListsStore.createNewListAndAddProduct(
-        name.value,
-        description.value
-      )
-      closeSidebar()
+      if (name.value) {
+        await shoppingListsStore.createNewListAndAddProduct(
+          name.value,
+          description.value
+        )
+        closeSidebar()
+      }
     }
     const addToShoppingList = async (listId) => {
       await shoppingListsStore.addToShoppingList(listId)
@@ -233,6 +238,10 @@ export default defineComponent({
       @apply tw-text-pv-grey-16;
       @apply tw-mb-4;
       @apply tw-max-h-6;
+
+      .button__label {
+        @apply tw-overflow-hidden;
+      }
     }
   }
 

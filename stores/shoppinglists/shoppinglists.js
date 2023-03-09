@@ -18,6 +18,10 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     productAmount.value = amount
   }
 
+  const setProduct = (productVar) => {
+    product.value = productVar
+  }
+
   const productId = computed(() => {
     return product.value?.code || -1
   })
@@ -87,5 +91,6 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     addToShoppingList,
     setProductAmount,
     createNewListAndAddProduct,
+    setProduct,
   }
 })
