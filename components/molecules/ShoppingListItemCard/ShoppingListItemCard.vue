@@ -568,18 +568,18 @@ export default defineComponent({
   }
 
   &__actions {
-    @apply tw-row-start-3 tw-row-end-4;
+    @apply tw-row-start-5 tw-row-end-6;
     @apply tw-col-start-1 tw-col-end-13;
     @apply tw-flex tw-flex-col;
     @apply tw-py-4;
 
     @screen md {
-      @apply tw-row-start-4 tw-row-end-5;
+      @apply tw-row-start-5 tw-row-end-6;
       @apply tw-flex-row;
     }
 
     @screen lg {
-      @apply tw-row-start-3 tw-row-end-4;
+      @apply tw-row-start-4 tw-row-end-5;
       @apply tw-col-start-2 tw-col-end-13;
       @apply tw-pb-6;
     }
@@ -606,7 +606,7 @@ export default defineComponent({
   }
 
   &__promotion {
-    @apply tw-row-start-5 tw-row-end-6;
+    @apply tw-row-start-4 tw-row-end-5;
     @apply tw-col-start-1 tw-col-end-13;
     @apply tw-w-fit;
     @apply tw-h-fit;
