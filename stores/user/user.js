@@ -93,13 +93,15 @@ export const useUserStore = defineStore('user', () => {
     const keycloakClientId = $config.KEYCLOAK_CLIENT_ID
     const language = `kc_locale=${i18n.locale}`
 
-    const url = joinURL(
-      $config.baseURL,
-      router?.options.base,
-      localePath({
-        path: route.value.path,
-        query: { ...route.value.query },
-      })
+    const url = encodeURIComponent(
+      joinURL(
+        $config.baseURL,
+        router?.options.base,
+        localePath({
+          path: route.value.path,
+          query: { ...route.value.query },
+        })
+      )
     )
 
     return `${keycloakBaseUrl}${keycloackRealm}/account/password?${language}&referrer=${keycloakClientId}&referrer_uri=${url}`
