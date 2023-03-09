@@ -20,9 +20,10 @@
           {{ $t('myaccount.requestHistory.table.totalPrice') }}
         </span>
       </div>
-      <div v-for="product in productList" :key="product.entryNumber">
+      <div v-for="(product, index) in productList" :key="product.entryNumber">
         <ShoppingListItemCard
           v-bind="product"
+          :promotion="getProductPromotions(index)"
           :price-total="product.totalPrice"
           :is-read-only="true"
           variant="requestHistory"
@@ -107,12 +108,25 @@ export default defineComponent({
       return null
     })
 
+    const getProductPromotions = (index) => {
+      const productPromotion = {}
+
+      currentOrder?.value?.appliedProductPromotions?.forEach((item) => {
+        if (item.consumedEntries?.find((e) => e.orderEntryNumber === index)) {
+          Object.assign(productPromotion, item)
+        }
+      })
+
+      return productPromotion
+    }
+
     return {
       requestId,
       currentOrder,
       productList,
       orderDate,
       headline,
+      getProductPromotions,
     }
   },
 })
@@ -134,7 +148,7 @@ export default defineComponent({
 
     &__quantity {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-9 tw-col-end-10;
+      @apply tw-col-start-10 tw-col-end-11;
       @apply tw-flex;
       @apply tw-my-auto;
       @apply tw-text-pv-grey-32;
@@ -155,7 +169,7 @@ export default defineComponent({
 
     &__price {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-10 tw-col-end-11;
+      @apply tw-col-start-11 tw-col-end-12;
       @apply tw-flex;
       @apply tw-m-auto;
       @apply tw-w-fit;
@@ -164,7 +178,7 @@ export default defineComponent({
 
     &__totalPrice {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-11 tw-col-end-12;
+      @apply tw-col-start-12 tw-col-end-12;
       @apply tw-flex;
       @apply tw-m-auto;
       @apply tw-w-fit;

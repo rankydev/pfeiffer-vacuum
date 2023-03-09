@@ -19,15 +19,22 @@
     </div>
     <div v-if="details" class="shopping-list-item-card__details">
       <template v-for="detail in details">
-        <Tag
-          v-for="(variant, id) in detail.variationValues"
-          :key="detail.code + id"
-          class="shopping-list-item-card__details__detail"
-          :label="detail.name"
-          :content="variant.displayValue"
-        />
+        <template v-for="(variant, id) in detail.variationValues">
+          <Tag
+            v-if="variant.selected"
+            :key="detail.code + id"
+            class="shopping-list-item-card__details__detail"
+            :label="detail.name"
+            :content="variant.displayValue"
+          />
+        </template>
       </template>
     </div>
+    <PromotionLabel
+      v-if="promotion"
+      class="shopping-list-item-card__promotion"
+      :subline="getPromotion"
+    />
     <div
       class="shopping-list-item-card__quantity"
       :class="{ 'shopping-list-item-card__quantity__read-only': isReadOnly }"
@@ -170,13 +177,18 @@ export default defineComponent({
       default: false,
       required: false,
     },
+    promotion: {
+      type: Object,
+      default: null,
+      required: false,
+    },
   },
   emits: ['addToShoppingList', 'delete', 'update'],
   setup(props, { emit }) {
     const { app, i18n } = useContext()
     const userStore = useUserStore()
     const cartStore = useCartStore()
-    const { basePrice, quantity, product } = toRefs(props)
+    const { basePrice, quantity, product, promotion } = toRefs(props)
     const quantityModel = ref(quantity?.value)
     const {
       isApprovedUser,
@@ -228,6 +240,10 @@ export default defineComponent({
     const details = computed(
       () => product?.value?.variationMatrix?.variationAttributes
     )
+
+    const getPromotion = computed(() => {
+      return promotion.value?.description
+    })
 
     const addToShoppingList = () => {
       emit('addToShoppingList', {
@@ -283,6 +299,7 @@ export default defineComponent({
       noPriceReason,
       addToCart,
       totalPrice,
+      getPromotion,
     }
   },
 })
@@ -585,6 +602,20 @@ export default defineComponent({
       @screen md {
         @apply tw-ml-6;
       }
+    }
+  }
+
+  &__promotion {
+    @apply tw-row-start-5 tw-row-end-6;
+    @apply tw-col-start-1 tw-col-end-13;
+    @apply tw-w-fit;
+    @apply tw-h-fit;
+    @apply tw-mt-4;
+    @apply tw-py-1;
+
+    @screen lg {
+      @apply tw-row-start-3 tw-row-end-4;
+      @apply tw-col-start-2 tw-col-end-13;
     }
   }
 }
