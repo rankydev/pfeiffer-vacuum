@@ -20,7 +20,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-      <div class="documentation-preview">
+      <div class="documentation-preview" style="max-width: 720px">
         <PromotionTeaser v-bind="args" />
       </div>
     `,
