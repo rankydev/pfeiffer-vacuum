@@ -42,18 +42,18 @@
         {{ $t('myaccount.shoppingList.info') }}
       </p>
       <PvInput
+        v-model="name"
         class="shopping-list-overlay__content-add--name"
         :label="$t('myaccount.shoppingList.name')"
         :required="true"
         :placeholder="$t('myaccount.shoppingList.namePlaceholder')"
-        @input="inputName"
       />
       <PvTextArea
+        v-model="description"
         class="shopping-list-overlay__content-add--description"
         :label="$t('myaccount.shoppingList.description')"
         :placeholder="$t('myaccount.shoppingList.descriptionPlaceholder')"
         :is-textarea="true"
-        @input="inputDescription"
       />
     </div>
 
@@ -119,12 +119,6 @@ export default defineComponent({
     const toggleAddMode = () => {
       isAddMode.value = !isAddMode.value
     }
-    const inputName = (value) => {
-      name.value = value
-    }
-    const inputDescription = (value) => {
-      description.value = value
-    }
     const newShoppingList = async () => {
       if (name.value) {
         await shoppingListsStore.createNewListAndAddProduct(
@@ -156,13 +150,13 @@ export default defineComponent({
       shoppingLists,
       isAddMode,
       toggleAddMode,
-      inputName,
-      inputDescription,
       handleForward,
       handleBack,
       isOverlayOpen,
       closeSidebar,
       addToShoppingList,
+      name,
+      description,
     }
   },
 })
