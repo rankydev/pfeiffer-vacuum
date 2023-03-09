@@ -346,6 +346,7 @@ export default {
           'app.usercentrics.eu',
         ],
         'form-action': ["'self'"],
+        'frame-ancestors': ["'self'", 'https://app.storyblok.com'],
         'object-src': ["'none'"],
         'base-uri': [baseURL],
         // TODO If we have sentry, we can add this:
