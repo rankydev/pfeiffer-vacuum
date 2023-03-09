@@ -3,6 +3,9 @@ import {
   PATH_SHOP,
   PATH_SHOP_IMAGES,
   PATH_DATASOURCES,
+  PATH_STORYBLOK_API,
+  PATH_STORYBLOK_ASSETS,
+  PATH_STORYBLOK_IMAGES,
 } from './server/constants.js'
 import {
   languageCodes,
@@ -182,6 +185,9 @@ export default {
 
   // TXP-CMS Storyblok Configuration, see: https://txp-cms.dev/integrations/storyblok
   storyblok: {
+    endpoint: `${baseURL}/${
+      process.env.CURRENT_REGION_CODE || process.env.DEFAULT_REGION_CODE
+    }${PATH_STORYBLOK_API}`,
     accessToken: process.env.STORYBLOK_ACCESS_TOKEN,
     version: process.env.STORYBLOK_VERSION,
     defaultLanguage: defaultLanguageCode,
@@ -278,8 +284,7 @@ export default {
       },
     },
     storyblok: {
-      baseURL:
-        process.env.STORYBLOK_IMAGE_BASE_URL || 'https://img2.storyblok.com',
+      baseURL: PATH_STORYBLOK_IMAGES,
     },
   },
   // Will register file from project server/middleware directory to handle API calls
@@ -299,6 +304,18 @@ export default {
     {
       path: PATH_SHOP_IMAGES,
       handler: '~/server/middleware/shop-images.js',
+    },
+    {
+      path: PATH_STORYBLOK_IMAGES,
+      handler: '~/server/middleware/storyblok-images.js',
+    },
+    {
+      path: PATH_STORYBLOK_ASSETS,
+      handler: '~/server/middleware/storyblok-assets.js',
+    },
+    {
+      path: PATH_STORYBLOK_API,
+      handler: '~/server/middleware/storyblok-api.js',
     },
     {
       path: PATH_EMPOLIS,

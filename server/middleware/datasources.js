@@ -15,7 +15,7 @@ const regionCodes = nuxtConfig.publicRuntimeConfig.REGION_CODES
 const regionsForRegex = regionCodes.replaceAll(',', '|')
 
 export default createProxyMiddleware({
-  target: `${nuxtConfig.privateRuntimeConfig.STORYBLOK_API_BASE_URL}`,
+  target: `${nuxtConfig.privateRuntimeConfig.STORYBLOK_API_BASE_URL}/cdn`,
   changeOrigin: true,
   agent,
   pathRewrite: { [`^(/(${regionsForRegex}))${PATH_DATASOURCES}`]: '/' },
