@@ -77,6 +77,12 @@ export default defineComponent({
   &__button {
     @screen sm {
       @apply tw-flex;
+
+      a {
+        @apply tw-flex;
+        @apply tw-justify-between;
+        @apply tw-w-full;
+      }
     }
   }
 }

@@ -186,7 +186,7 @@ import Link from '~/components/atoms/Link/Link.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
 import Button from '~/components/atoms/Button/Button.vue'
-import PromotionTeaser from '~/components/organisms/PromotionTeaser/PromotionTeaser.vue'
+import PromotionTeaser from '~/components/molecules/PromotionTeaser/PromotionTeaser.vue'
 
 import { useMenuStore } from '~/stores/menu'
 import { useUserStore } from '~/stores/user'
