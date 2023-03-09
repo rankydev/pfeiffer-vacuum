@@ -59,5 +59,17 @@
         "text": "您未被允许查看价格"
       }
     }
+  },
+  "errorHandling": {
+    "multiProductHeadline": "We could not load any products.",
+    "singleProductHeadline": "We could not load this product.",
+    "customerSupport": {
+      "text": "Please come back later or contact",
+      "link": "customer support."
+    },
+    "loadingScreen": {
+      "multiProductHeadline": "Products are loaded...",
+      "singleProductHeadline": "Product is loading..."
+    }
   }
 }

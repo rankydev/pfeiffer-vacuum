@@ -109,6 +109,12 @@ import {
   useContext,
   ref,
 } from '@nuxtjs/composition-api'
+import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
+import { useErrorHandler } from '~/composables/useErrorHandler'
+import { useStoryblokData } from '~/composables/useStoryblokData'
+import { useCategoryStore } from '~/stores/category/category'
+import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
+import { useEmpolisStore } from '~/stores/empolis'
 
 import Page from '~/components/templates/Page/Page'
 import Button from '~/components/atoms/Button/Button'
@@ -119,13 +125,6 @@ import SearchResult from '~/components/organisms/SearchResult/SearchResult'
 import DocumentSearchResult from '~/components/organisms/DocumentSearchResult/DocumentSearchResult'
 import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
 import SearchInputPage from '~/components/molecules/SearchInputPage/SearchInputPage'
-
-import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
-import { useErrorHandler } from '~/composables/useErrorHandler'
-import { useStoryblokData } from '~/composables/useStoryblokData'
-import { useCategoryStore } from '~/stores/category/category'
-import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
-import { useEmpolisStore } from '~/stores/empolis'
 
 export default defineComponent({
   name: 'CategoryShopPage',

@@ -1,37 +1,26 @@
 <template>
   <div
-    class="error-handling"
+    class="loading-screen"
     :class="{ 'error-handling--grey-bg': greyBackground }"
   >
-    <Icon class="error-handling__icon" :icon="icon" />
-    <span class="error-handling__headline">
-      {{ $t(headline) }}
+    <LoadingSpinner class="loading-screen__loading-spinner" />
+    <span class="loading-screen__headline">
+      {{ headline }}
     </span>
-    <CustomerSupportLink />
   </div>
 </template>
 
 <script>
-import Icon from '~/components/atoms/Icon/Icon.vue'
-import CustomerSupportLink from '~/components/molecules/ErrorHandling/partials/CustomerSupportLink'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  name: 'ErrorHandling',
+  name: 'LoadingScreen',
   components: {
-    Icon,
-    CustomerSupportLink,
+    LoadingSpinner,
   },
   props: {
-    icon: {
-      type: String,
-      default: 'description',
-    },
     headline: {
-      type: String,
-      required: true,
-    },
-    subline: {
       type: String,
       required: true,
     },
@@ -44,26 +33,26 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.error-handling {
+.loading-screen {
   @apply tw-flex tw-flex-col;
   @apply tw-justify-center tw-items-center;
   @apply tw-text-center;
   @apply tw-text-pv-grey-16;
-  @apply tw-py-[274px] tw-px-4;
+  @apply tw-px-4;
+  @apply tw-py-[278px];
   @apply tw-rounded-lg;
 
   &--grey-bg {
     @apply tw-bg-pv-grey-96;
   }
 
-  &__icon {
-    @apply tw-text-pv-red;
+  &__loading-spinner {
+    @apply tw-pt-1;
   }
 
   &__headline {
     @apply tw-font-bold;
-    @apply tw-mb-2;
-    @apply tw-mt-[26px];
+    @apply tw-mt-6;
   }
 }
 </style>

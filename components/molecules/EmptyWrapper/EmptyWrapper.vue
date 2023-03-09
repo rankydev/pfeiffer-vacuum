@@ -38,7 +38,7 @@ export default defineComponent({
 
 <style lang="scss">
 .empty-wrapper {
-  @apply tw-flex  tw-flex-col;
+  @apply tw-flex tw-flex-col;
   @apply tw-justify-center tw-items-center;
   @apply tw-text-center;
   @apply tw-bg-pv-grey-96;
