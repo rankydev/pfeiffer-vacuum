@@ -74,24 +74,23 @@ import {
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
-
 import { storeToRefs } from 'pinia'
 import { useProductStore, useVariationmatrixStore } from '~/stores/product'
 import { useUserStore } from '~/stores/user'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
-
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
-
-import Page from '~/components/templates/Page/Page'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+import VariantSelection from '~/components/molecules/VariantSelection/VariantSelection'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
-import VariantSelection from '~/components/molecules/VariantSelection/VariantSelection'
+import Page from '~/components/templates/Page/Page'
 
 export default defineComponent({
   name: 'ProductShopPage',
   components: {
+    ResponsiveImage,
     Page,
     DetailTabs,
     ImageGallery,
