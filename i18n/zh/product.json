@@ -68,8 +68,8 @@
       "link": "客户支持。"
     },
     "loadingScreen": {
-      "multiProductHeadline": "Products are loaded...",
-      "singleProductHeadline": "Product is loading..."
+      "multiProductHeadline": "产品加载中...",
+      "singleProductHeadline": "产品正在加载.."
     }
   }
 }

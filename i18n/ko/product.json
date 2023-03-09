@@ -68,8 +68,8 @@
       "link": "고객 지원."
     },
     "loadingScreen": {
-      "multiProductHeadline": "Products are loaded...",
-      "singleProductHeadline": "Product is loading..."
+      "multiProductHeadline": "제품이 로드되었습니다...",
+      "singleProductHeadline": "제품 로드 중입니다.."
     }
   }
 }

@@ -141,8 +141,8 @@
     "multiProductHeadline": "We could not load any products.",
     "singleProductHeadline": "We could not load this product.",
     "customerSupport": {
-      "text": "Bitte kommen Sie später wieder oder kontaktieren Sie unseren",
-      "link": "Kundendienst."
+      "text": "Please come back later or contact",
+      "link": "customer support."
     },
     "loadingScreen": {
       "multiProductHeadline": "Products are loaded...",
