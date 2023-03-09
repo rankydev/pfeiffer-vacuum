@@ -121,7 +121,20 @@
       "cancel": "No",
       "confirm": "Yes",
       "deleteSuccess": "Shopping list was deleted successfully."
-    }
+    },
+    "selectAList": "Select a list",
+    "add": "Add to new list",
+    "addSuccessful": "Product was added to shopping list successfully.",
+    "addError": "Product could not be added to shopping list.",
+    "back": "Back to lists",
+    "name": "Name",
+    "namePlaceholder": "New shopping list name",
+    "description": "Description",
+    "descriptionPlaceholder": "This description is readable only in your my Account.",
+    "save": "Save and close",
+    "info": "Your selected product will be added to this new list automatically.",
+    "close": "Close",
+    "addNewList": "Add new shopping list"
   },
   "details": "Details",
   "serviceHistory": {
