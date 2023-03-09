@@ -1,22 +1,25 @@
 <template>
-  <div class="empty-wrapper">
-    <Icon class="empty-wrapper__big-icon" :icon="icon" size="xlarge" />
-    <span class="empty-wrapper__label">
-      {{ $t(label) }}
+  <div
+    class="error-handling"
+    :class="{ 'error-handling--grey-bg': greyBackground }"
+  >
+    <Icon class="error-handling__icon" :icon="icon" />
+    <span class="error-handling__headline">
+      {{ $t(headline) }}
     </span>
-    <Button v-if="button.variant" v-bind="button" />
+    <span class="error-handling__subline">
+      {{ $t(subline) }}
+    </span>
   </div>
 </template>
 
 <script>
-import Button from '~/components/atoms/Button/Button.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  name: 'EmptyWrapper',
+  name: 'ErrorHandling',
   components: {
-    Button,
     Icon,
   },
   props: {
@@ -24,34 +27,40 @@ export default defineComponent({
       type: String,
       default: 'description',
     },
-    label: {
+    headline: {
       type: String,
       required: true,
     },
-    button: {
-      type: Object,
-      default: () => ({}),
+    subline: {
+      type: String,
+      required: true,
+    },
+    greyBackground: {
+      type: Boolean,
+      default: true,
     },
   },
 })
 </script>
 
 <style lang="scss">
-.empty-wrapper {
+.error-handling {
   @apply tw-flex  tw-flex-col;
   @apply tw-justify-center tw-items-center;
   @apply tw-text-center;
-  @apply tw-bg-pv-grey-96;
   @apply tw-py-8 tw-px-4;
   @apply tw-rounded-lg;
 
-  &__big-icon {
-    @apply tw-text-pv-grey-80;
-    @apply tw-mb-3;
-    @apply tw-max-h-16;
+  &--grey-bg {
+    @apply tw-bg-pv-grey-96;
   }
 
-  &__label {
+  &__icon {
+    @apply tw-text-pv-red;
+    @apply tw-mb-3;
+  }
+
+  &__headline {
     @apply tw-font-bold;
     @apply tw-mb-4;
   }
