@@ -89,7 +89,7 @@ services:
     image: "${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}"
     deploy:
       mode: replicated
-      replicas: ${CONTAINER_REPLICAS}
+      replicas: ${OCI_CONTAINER_REPLICAS}
       placement:
         max_replicas_per_node: ${CONTAINER_REPLICAS_PER_NODE}
       update_config:

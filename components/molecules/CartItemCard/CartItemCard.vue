@@ -1,7 +1,10 @@
 <template>
   <div
     class="cart-item-card"
-    :class="{ 'cart-item-card-desktop': !isMiniCart }"
+    :class="{
+      'cart-item-card-desktop': !isMiniCart,
+      'cart-item-card--edit-mode': editMode,
+    }"
   >
     <div v-if="productImage" class="cart-item-card-image">
       <Link :href="url">
@@ -31,13 +34,15 @@
     />
     <div v-if="details && isDetailsExpanded" class="cart-item-card-details">
       <template v-for="detail in details">
-        <Tag
-          v-for="(variant, id) in detail.variationValues"
-          :key="detail.code + id"
-          class="cart-item-card-details__detail"
-          :label="detail.name"
-          :content="variant.displayValue"
-        />
+        <template v-for="(variant, id) in detail.variationValues">
+          <Tag
+            v-if="variant.selected"
+            :key="detail.code + id"
+            class="cart-item-card-details__detail"
+            :label="detail.name"
+            :content="variant.displayValue"
+          />
+        </template>
       </template>
     </div>
     <PromotionLabel
@@ -46,12 +51,19 @@
       :subline="getPromotion"
     />
     <PvInput
+      v-if="editMode"
       v-model="quantityModel"
       input-type="number"
       class="cart-item-card-quantity"
       :disabled="isInactive"
       @input="updateQuantity"
     />
+    <div v-else class="cart-item-card-quantity cart-item-card-quantity--fixed">
+      <span class="cart-item-card-quantity__label">
+        {{ $t('cart.quantity') }}
+      </span>
+      {{ quantity }}
+    </div>
     <div
       v-if="!isLoggedIn || !isPriceVisible"
       class="cart-item-card-price-error"
@@ -74,6 +86,7 @@
       </span>
     </div>
     <Button
+      v-if="isLoggedIn"
       class="cart-item-card-add-article"
       variant="secondary"
       shape="plain"
@@ -83,6 +96,7 @@
     />
     <Button
       class="cart-item-card-delete"
+      :class="{ 'cart-item-card-delete-invisible': !editMode }"
       variant="secondary"
       shape="plain"
       icon="delete"
@@ -103,6 +117,8 @@ import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
+import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
 import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
@@ -116,6 +132,8 @@ export default defineComponent({
     ResponsiveImage,
     PvInput,
     Tag,
+    PromotionLabel,
+    LoginToSeePricesLabel,
   },
   props: {
     product: {
@@ -146,6 +164,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
       required: false,
+    },
+    editMode: {
+      type: Boolean,
+      default: true,
     },
   },
   emits: ['addToShoppingList', 'update', 'delete'],
@@ -271,9 +293,12 @@ export default defineComponent({
 
 <style lang="scss">
 .cart-item-card {
-  @apply tw-grid tw-grid-cols-12 tw-auto-rows-auto;
-  @apply tw-border-b tw-border-b-pv-grey-80;
-  @apply tw-mt-6;
+  @apply tw-grid;
+  grid-template-columns: repeat(8, 1fr) 13.2% 10.87% 12.4%;
+  @apply tw-auto-rows-auto;
+  @apply tw-border-b-2 tw-border-b-pv-grey-80;
+  @apply tw-pt-6;
+  @apply tw-text-pv-grey-16;
 
   &-image {
     @apply tw-row-start-1 tw-row-end-2;
@@ -298,14 +323,6 @@ export default defineComponent({
     }
   }
 
-  &-quantity {
-    @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-1 tw-col-end-5;
-    @apply tw-mt-4;
-    @apply tw-flex;
-    @apply tw-pr-1;
-  }
-
   &-price-error {
     @apply tw-row-start-2 tw-row-end-3;
     @apply tw-col-start-5 tw-col-end-13;
@@ -319,17 +336,27 @@ export default defineComponent({
     }
   }
 
-  &-price {
+  &-quantity,
+  &-price,
+  &-total-price {
     @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-5 tw-col-end-13;
-    @apply tw-leading-6;
     @apply tw-flex;
+  }
+
+  &-price,
+  &-total-price {
+    @apply tw-leading-6;
+    @apply tw-col-start-5 tw-col-end-13;
     @apply tw-ml-auto;
-    @apply tw-mt-4;
+
+    @screen lg {
+      margin-left: unset;
+      @apply tw-my-auto;
+    }
 
     &__label {
       @apply tw-text-xs;
-      @apply tw-ml-2;
+      @apply tw-text-pv-grey-48;
     }
 
     &__price {
@@ -337,22 +364,26 @@ export default defineComponent({
     }
   }
 
-  &-total-price {
-    @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-5 tw-col-end-13;
-    @apply tw-leading-6;
-    @apply tw-flex;
-    @apply tw-mt-auto;
-    @apply tw-ml-auto;
+  &-quantity {
+    @apply tw-col-start-1 tw-col-end-5;
+    @apply tw-mt-4;
+    @apply tw-pr-1;
+  }
+
+  &-price {
+    @apply tw-mt-4;
 
     &__label {
-      @apply tw-text-xs;
+      @apply tw-ml-2;
     }
+  }
+
+  &-total-price {
+    @apply tw-mt-auto;
 
     &__price {
       @apply tw-text-base;
       @apply tw-font-bold;
-      @apply tw-ml-2;
     }
   }
 
@@ -361,6 +392,11 @@ export default defineComponent({
     @apply tw-col-start-12 tw-col-end-13;
     @apply tw-mb-auto;
     @apply tw-ml-auto;
+    padding: 0 !important;
+
+    &-invisible {
+      @apply tw-hidden;
+    }
   }
 
   &-details-button {
@@ -452,6 +488,28 @@ export default defineComponent({
     }
 
     &-quantity {
+      &--fixed {
+        @apply tw-items-center;
+        @apply tw-justify-start;
+        @apply tw-w-full;
+        @apply tw-mt-4;
+        @apply tw-h-12;
+
+        @screen lg {
+          @apply tw-justify-center;
+
+          .cart-item-card-quantity__label {
+            @apply tw-hidden;
+          }
+        }
+      }
+
+      &__label {
+        @apply tw-text-xs;
+        @apply tw-mr-2;
+        @apply tw-text-pv-grey-48;
+      }
+
       @screen lg {
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-9 tw-col-end-10;
@@ -479,7 +537,6 @@ export default defineComponent({
         @apply tw-col-start-10 tw-col-end-11;
         @apply tw-text-lg;
         @apply tw-leading-7;
-        @apply tw-mx-auto;
       }
 
       &__label {
@@ -499,7 +556,6 @@ export default defineComponent({
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-11 tw-col-end-12;
         @apply tw-mt-auto;
-        @apply tw-mx-auto;
       }
 
       &__label {

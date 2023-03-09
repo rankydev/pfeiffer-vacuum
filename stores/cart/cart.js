@@ -6,6 +6,8 @@ import {
   ssrRef,
   useContext,
   watch,
+  ref,
+  useRouter,
 } from '@nuxtjs/composition-api'
 import { useCartApi } from './partials/useCartApi'
 import { useCookieHelper } from '~/composables/useCookieHelper'
@@ -14,14 +16,18 @@ import { useLogger } from '~/composables/useLogger'
 import { useToast } from '~/composables/useToast'
 
 export const useCartStore = defineStore('cart', () => {
-  const { getCookie } = useCookieHelper()
-  const { isLoggedIn } = storeToRefs(useUserStore())
+  const { getCookie, removeCookie } = useCookieHelper()
+  const userStore = useUserStore()
+  const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText } =
+    storeToRefs(userStore)
   const { logger } = useLogger('cartStore')
   const toast = useToast()
-  const { i18n } = useContext()
+  const { i18n, app } = useContext()
+  const router = useRouter()
 
   // State
   const currentCart = ssrRef({})
+  const loading = ref(false)
 
   // Getters
   const currentCartGuid = computed(() => currentCart.value?.guid)
@@ -33,14 +39,25 @@ export const useCartStore = defineStore('cart', () => {
     addToCart,
     updateQuantity,
     deleteEntry,
+    setDeliveryAddress,
+    setReferenceNumber,
+    setRequestComment,
+    loadCart,
   } = cartApi
 
   const initialCartLoad = async () => {
-    const anonymousCartCookie = JSON.parse(getCookie('cart', null))
-    if (anonymousCartCookie) currentCart.value = anonymousCartCookie
+    try {
+      loading.value = true
+      const anonymousCartCookie = JSON.parse(getCookie('cart', null))
+      if (anonymousCartCookie) currentCart.value = anonymousCartCookie
 
-    let tempCart = await getOrCreateCart(!isLoggedIn.value)
-    if (tempCart) currentCart.value = tempCart
+      let tempCart = await getOrCreateCart(!isLoggedIn.value)
+      if (tempCart) currentCart.value = tempCart
+    } catch (error) {
+      logger.error('initial cart load failed', error)
+    } finally {
+      loading.value = false
+    }
   }
 
   const mergeCartsAfterLogin = async () => {
@@ -48,7 +65,7 @@ export const useCartStore = defineStore('cart', () => {
 
     if (currentCartGuid.value !== cartCookie?.guid) {
       currentCart.value = await mergeCarts(
-        cartCookie.guid,
+        cartCookie?.guid,
         currentCartGuid.value
       )
     }
@@ -94,6 +111,27 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
+  const resetCurrentCart = async () => {
+    currentCart.value = null
+    removeCookie('cart')
+    await loadCart()
+  }
+
+  const handleCheckoutClick = () => {
+    if (!isLoggedIn.value) {
+      return userStore.login()
+    }
+    if (isLoggedIn.value && isApprovedUser.value) {
+      return router.push({ path: app.localePath('shop-checkout') })
+    } else {
+      toast.warning({
+        description: i18n.t(
+          `myaccount.userStatus.${userStatusTypeForInfoText.value}.requestInfo`
+        ),
+      })
+    }
+  }
+
   onBeforeMount(initialCartLoad)
   onServerPrefetch(initialCartLoad)
 
@@ -107,13 +145,19 @@ export const useCartStore = defineStore('cart', () => {
   return {
     // State
     currentCart,
+    loading,
 
     // Getters
     currentCartGuid,
 
     // Actions
     addProductToCart,
+    setDeliveryAddress,
+    setReferenceNumber,
+    setRequestComment,
     deleteProductFromCart,
     updateProductQuantityFromCart,
+    handleCheckoutClick,
+    resetCurrentCart,
   }
 })

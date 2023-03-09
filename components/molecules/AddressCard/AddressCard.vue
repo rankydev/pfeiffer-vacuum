@@ -210,11 +210,11 @@ export default defineComponent({
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-justify-between;
+  @apply tw-text-pv-grey-16;
 
   &__headline {
-    @apply tw-text-2xl;
+    @apply tw-text-xl;
     @apply tw-font-bold;
-    @apply tw-text-pv-black;
     @apply tw-mb-4;
   }
 
