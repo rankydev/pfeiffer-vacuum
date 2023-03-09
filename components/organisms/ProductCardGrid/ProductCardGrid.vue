@@ -38,8 +38,6 @@ export default {
 
 <style lang="scss">
 .product-card-grid {
-  @apply tw-py-12;
-
   &__products {
     @apply tw-grid tw-grid-cols-1 tw-gap-4;
 

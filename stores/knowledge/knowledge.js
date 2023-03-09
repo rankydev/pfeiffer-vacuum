@@ -2,14 +2,24 @@ import { defineStore } from 'pinia'
 import { useLogger } from '~/composables/useLogger'
 import config from '~/config/hybris.config'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
-import { useRoute, ref } from '@nuxtjs/composition-api'
+import { useRoute, ref, computed } from '@nuxtjs/composition-api'
 import { joinURL } from 'ufo'
 export const useKnowledgeStore = defineStore('knowledge', () => {
   const { logger } = useLogger('knowledgeStore')
   const { axios } = useAxiosForHybris()
   const route = useRoute()
 
+  const isLoading = ref(false)
   const searchResults = ref([])
+
+  /**
+   * Page type check
+   */
+  const isOverviewPage = computed(
+    () => !isWhitepapers.value && !isWebinars.value
+  )
+  const isWhitepapers = computed(() => route.value.path.includes('whitepapers'))
+  const isWebinars = computed(() => route.value.path.includes('webinars'))
 
   const registerForWebinar = async (id) => {
     const path = `${config.KNOWLEDGE_API}/webinar/${id}/register`
@@ -23,7 +33,15 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
     return true
   }
 
-  const knowledgeSearch = async (type = 'ALL') => {
+  const knowledgeType = computed(() => {
+    if (isWhitepapers.value) return 'WHITEPAPER'
+    if (isWebinars.value) return 'WEBINAR'
+    return 'ALL'
+  })
+
+  const knowledgeSearch = async () => {
+    isLoading.value = true
+
     const searchTerm = route.value.query.searchTerm || null
     const currentPage = route.value.query.currentPage - 1 || 0
     const pageSize = route.value.query.pageSize || 12
@@ -32,7 +50,7 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
     await axios
       .$get(path, {
         params: {
-          type,
+          type: knowledgeType.value,
           currentPage,
           pageSize,
           searchTerm,
@@ -48,6 +66,9 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
         )
         searchResults.value = []
       })
+      .finally(() => {
+        isLoading.value = false
+      })
   }
 
   const getHybrisDetails = async (type = 'whitepaper', id) => {
@@ -57,6 +78,10 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
 
   return {
     searchResults,
+    isLoading,
+    isOverviewPage,
+    isWhitepapers,
+    isWebinars,
 
     registerForWebinar,
     getHybrisDetails,

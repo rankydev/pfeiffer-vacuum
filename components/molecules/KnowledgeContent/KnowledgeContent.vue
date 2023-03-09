@@ -9,17 +9,21 @@
       :link="backLink"
     />
     <ContentWrapper breakout>
-      <div class="knowledge-content__results">
-        <ContentWrapper>
-          <ProductCardGrid :use-knowledge-card="true" :products="documents" />
-          <CategoryPageSizeSelection
-            :active="activePageSize"
-            :knowledge-mode="true"
-            @change="handlePageSizeChange"
-          />
-          <Pagination :total-pages="totalPages" />
-        </ContentWrapper>
-      </div>
+      <LoadingSpinner :show="isLoading">
+        <div class="knowledge-content__results">
+          <ContentWrapper>
+            <ProductCardGrid :use-knowledge-card="true" :products="documents" />
+            <div class="knowledge-content__bottom-actions">
+              <CategoryPageSizeSelection
+                :active="activePageSize"
+                :knowledge-mode="true"
+                @change="handlePageSizeChange"
+              />
+              <Pagination :total-pages="totalPages" />
+            </div>
+          </ContentWrapper>
+        </div>
+      </LoadingSpinner>
     </ContentWrapper>
   </div>
 </template>
@@ -40,6 +44,7 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 import ProductCardGrid from '~/components/organisms/ProductCardGrid/ProductCardGrid'
 import Pagination from '~/components/molecules/Pagination/Pagination'
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import { storeToRefs } from 'pinia'
 
 export default {
@@ -51,6 +56,7 @@ export default {
     ProductCardGrid,
     Pagination,
     CategoryPageSizeSelection,
+    LoadingSpinner,
   },
   setup() {
     const route = useRoute()
@@ -58,7 +64,13 @@ export default {
     const { localePath, i18n } = useContext()
     const knowledgeStore = useKnowledgeStore()
     const { knowledgeSearch } = knowledgeStore
-    const { searchResults } = storeToRefs(knowledgeStore)
+    const {
+      searchResults,
+      isLoading,
+      isOverviewPage,
+      isWhitepapers,
+      isWebinars,
+    } = storeToRefs(knowledgeStore)
 
     /**
      * Knowledge search result entries
@@ -66,17 +78,6 @@ export default {
     const documents = computed(
       () => searchResults.value?.knowledgeDocuments || []
     )
-
-    /**
-     * Page type check
-     */
-    const isOverviewPage = computed(
-      () => !isWhitepapers.value && !isWebinars.value
-    )
-    const isWhitepapers = computed(() =>
-      route.value.path.includes('whitepapers')
-    )
-    const isWebinars = computed(() => route.value.path.includes('webinars'))
 
     /**
      * Headline parameters
@@ -127,6 +128,7 @@ export default {
       totalPages,
       totalResults,
       activePageSize,
+      isLoading,
 
       handlePageSizeChange,
     }
@@ -140,7 +142,13 @@ export default {
   }
 
   &__results {
+    @apply tw-py-12;
     @apply tw-bg-pv-grey-96;
+  }
+
+  &__bottom-actions {
+    @apply tw-flex tw-justify-between tw-items-center;
+    @apply tw-mt-4;
   }
 }
 </style>
