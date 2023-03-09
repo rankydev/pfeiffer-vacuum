@@ -31,10 +31,6 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    subline: {
-      type: String,
-      required: true,
-    },
     greyBackground: {
       type: Boolean,
       default: true,
