@@ -31,8 +31,15 @@
       </div>
     </div>
     <div class="request-history-detail-page-total">
-      <div class="request-history-detail-page-total__back-btn">
+      <div class="request-history-detail-page-total__promotion-wrapper">
+        <PromotionLabel
+          v-for="promotion in promotions"
+          :key="promotion.promotion.code"
+          class="request-history-detail-page-total__promotion request-history-detail-page-total__promotion--desktop"
+          :subline="promotion.description"
+        />
         <Button
+          class="request-history-detail-page-total__back-btn"
           :href="localePath('shop-my-account-request-history')"
           :label="$t('myaccount.addressDataAddPageLinkBtn')"
           variant="secondary"
@@ -43,6 +50,12 @@
       </div>
       <div class="request-history-detail-page-total__wrapper-total-net">
         <div class="request-history-detail-page-total__total-net">
+          <PromotionLabel
+            v-for="promotion in promotions"
+            :key="promotion.promotion.code"
+            class="request-history-detail-page-total__promotion--mobile"
+            :subline="promotion.description"
+          />
           <TotalNetInformation :current-cart="currentOrder" />
         </div>
         <!-- TODO: implement Button in PVWEB-981 here  -->
@@ -120,12 +133,22 @@ export default defineComponent({
       return productPromotion
     }
 
+    const promotions = computed(() => {
+      return currentOrder?.value?.appliedOrderPromotions
+    })
+
+    const hasPromotion = computed(() => {
+      return promotions.value?.length
+    })
+
     return {
       requestId,
       currentOrder,
       productList,
       orderDate,
       headline,
+      promotions,
+      hasPromotion,
       getProductPromotions,
     }
   },
@@ -198,15 +221,41 @@ export default defineComponent({
       @apply tw-flex-row;
     }
 
-    &__back-btn {
-      @apply tw-items-end;
-      @apply tw-mx-auto;
+    &__promotion-wrapper {
+      @apply tw-flex;
+      @apply tw-flex-col;
+      @apply tw-justify-between;
 
       @screen md {
         @apply tw-w-full;
-        @apply tw-flex;
         @apply tw-w-1/2;
       }
+    }
+
+    &__promotion {
+      @apply tw-mt-6;
+
+      &--desktop {
+        @apply tw-hidden;
+
+        @screen md {
+          @apply tw-flex;
+        }
+      }
+
+      &--mobile {
+        @apply tw-flex;
+        @apply tw-mb-6;
+
+        @screen md {
+          @apply tw-hidden;
+        }
+      }
+    }
+
+    &__back-btn {
+      @apply tw-flex;
+      @apply tw-justify-start;
     }
 
     &__wrapper-total-net {
