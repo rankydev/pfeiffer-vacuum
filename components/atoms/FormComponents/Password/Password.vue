@@ -16,7 +16,7 @@
             : 'pv-password__element--NotValidated',
         ]"
         :placeholder="placeholder"
-        @keypress.enter="$emit('submit', $event)"
+        @keypress.enter="$emit('submit', internalValue)"
         @focus="$emit('focus', true)"
         @blur="$emit('focus', false)"
         @input="

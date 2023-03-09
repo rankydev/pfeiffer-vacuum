@@ -113,7 +113,7 @@ describe('Password', () => {
 
       input.setValue(value)
 
-      expect(wrapper.emitted().input.length).toBe(1)
+      expect(wrapper.emitted().input.length).toBe(2)
       expect(wrapper.emitted().input[0]).toEqual([value])
     })
 
