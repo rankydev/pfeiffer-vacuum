@@ -19,7 +19,7 @@
               </h1>
               <Button
                 :label="$t('cart.getProductHelp')"
-                :href="localePath('/contact/')"
+                :href="localePath('/contact')"
                 variant="secondary"
                 shape="outlined"
                 icon="help"

@@ -47,7 +47,7 @@
                       :inverted="true"
                       :label="$t('cart.getProductHelp')"
                       icon="help"
-                      :href="localePath('/contact/')"
+                      :href="localePath('/contact')"
                     />
                   </div>
                 </div>
