@@ -349,11 +349,6 @@ export default defineComponent({
     @apply tw-col-start-5 tw-col-end-13;
     @apply tw-ml-auto;
 
-    @screen lg {
-      margin-left: unset;
-      @apply tw-my-auto;
-    }
-
     &__label {
       @apply tw-text-xs;
       @apply tw-text-pv-grey-48;
