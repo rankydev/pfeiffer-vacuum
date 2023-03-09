@@ -137,8 +137,8 @@
     }
   },
   "errorHandling": {
-    "multiProductHeadline": "We could not load any products.",
-    "singleProductHeadline": "We could not load this product.",
+    "multiProductHeadline": "Wir konnten keine Produkte laden.",
+    "singleProductHeadline": "Wir konnten dieses Produkt nicht laden.",
     "customerSupport": {
       "text": "Please come back later or contact",
       "link": "customer support."

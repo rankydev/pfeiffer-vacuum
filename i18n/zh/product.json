@@ -61,11 +61,11 @@
     }
   },
   "errorHandling": {
-    "multiProductHeadline": "We could not load any products.",
-    "singleProductHeadline": "We could not load this product.",
+    "multiProductHeadline": "我们无法加载任何产品。",
+    "singleProductHeadline": "我们无法加载此产品。",
     "customerSupport": {
-      "text": "Please come back later or contact",
-      "link": "customer support."
+      "text": "请稍后回来或联系",
+      "link": "客户支持。"
     },
     "loadingScreen": {
       "multiProductHeadline": "Products are loaded...",

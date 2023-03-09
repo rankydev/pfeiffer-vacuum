@@ -61,11 +61,11 @@
     }
   },
   "errorHandling": {
-    "multiProductHeadline": "We could not load any products.",
-    "singleProductHeadline": "We could not load this product.",
+    "multiProductHeadline": "제품을 로드할 수 없습니다.",
+    "singleProductHeadline": "이 제품을 로드할 수 없습니다.",
     "customerSupport": {
-      "text": "Please come back later or contact",
-      "link": "customer support."
+      "text": "나중에 다시 오시거나 연락주세요",
+      "link": "고객 지원."
     },
     "loadingScreen": {
       "multiProductHeadline": "Products are loaded...",
