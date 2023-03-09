@@ -1,20 +1,16 @@
 <template>
   <div class="request-history">
-    <GlobalMessage
-      v-if="!isApprovedUser"
-      class="request-history__warning-unapproved"
-      :description="$t(`myaccount.userStatus.open.functionalityInfo`)"
-      variant="warning"
-      :prevent-icon-change="true"
-    />
     <ResultHeadline
-      class="request-history__headline--desktop"
-      :headline="$t('myaccount.requestHistory.yourHistory')"
-    />
-    <ResultHeadline
-      class="request-history__headline--mobile"
+      class="request-history__headline"
       :headline="$t('myaccount.requestHistory.yourHistory')"
       :link="localePath('shop-my-account')"
+    />
+    <GlobalMessage
+      v-if="infoMessage"
+      class="request-history__warning-unapproved"
+      :description="infoMessage"
+      variant="warning"
+      :prevent-icon-change="true"
     />
     <div v-if="tableData.length && isApprovedUser">
       <GenericTable :header="header" :table-data="tableData" />
@@ -66,7 +62,8 @@ export default defineComponent({
     const route = useRoute()
     const userStore = useUserStore()
 
-    const { isApprovedUser } = storeToRefs(userStore)
+    const { isApprovedUser, isLeadUser, isOpenUser, isRejectedUser } =
+      storeToRefs(userStore)
 
     const requestHistoryStore = useRequestHistoryStore()
     const { loadRequestHistory } = requestHistoryStore
@@ -74,6 +71,23 @@ export default defineComponent({
     const { requestHistory } = storeToRefs(requestHistoryStore)
     onBeforeMount(loadRequestHistory)
     onServerPrefetch(loadRequestHistory)
+
+    const infoMessage = computed(() => {
+      if (isOpenUser.value) {
+        return i18n.t('myaccount.userStatus.open.functionalityInfo')
+      }
+      if (isLeadUser.value) {
+        return i18n.t('myaccount.userStatus.lead.functionalityInfo')
+      }
+      if (isRejectedUser.value) {
+        return i18n.t('myaccount.userStatus.rejected.functionalityInfo')
+      }
+      // Fallback for any case of not approved user that isn't covert by the cases above
+      if (!isApprovedUser.value) {
+        return i18n.t('myaccount.userStatus.rejected.functionalityInfo')
+      }
+      return null
+    })
 
     const button = ref({
       icon: 'arrow_forward',
@@ -152,6 +166,7 @@ export default defineComponent({
     return {
       requestHistory,
       header,
+      infoMessage,
       tableData,
       totalPages,
       button,
@@ -167,22 +182,8 @@ export default defineComponent({
   }
 
   &__headline {
-    &--desktop {
-      @apply tw-hidden;
-
-      @screen lg {
-        @apply tw-flex;
-      }
-    }
-
-    &--mobile {
-      @apply tw-flex;
-      @apply tw-items-center;
-
-      @screen lg {
-        @apply tw-hidden;
-      }
-    }
+    @apply tw-flex;
+    @apply tw-items-center;
   }
 
   &__pagination-wrapper {
