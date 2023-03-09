@@ -61,7 +61,12 @@
                       :key="index"
                       :subline="promotion.description"
                     />
-                    <PriceInformation information-type="price" />
+                    <client-only>
+                      <PriceInformation
+                        v-if="!isMobile"
+                        information-type="price"
+                      />
+                    </client-only>
                   </div>
 
                   <div class="cart-page__actions">
@@ -206,8 +211,6 @@ export default defineComponent({
 
 <style lang="scss">
 .cart-page {
-  @apply tw-pt-6;
-
   &__empty {
     @apply tw-text-center;
     @apply tw-pb-12;

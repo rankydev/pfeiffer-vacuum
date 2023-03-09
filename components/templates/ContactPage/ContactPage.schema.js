@@ -13,7 +13,11 @@ export default {
       type: 'bloks',
       display_name: 'Content',
       restrict_components: true,
-      component_whitelist: ['ContactFormSection', 'AnchorWrapper'],
+      component_whitelist: [
+        'ContactFormSection',
+        'AnchorWrapper',
+        'Confirmation',
+      ],
     },
     ...Seo,
     ...Social,

@@ -1,29 +1,34 @@
 <template>
   <div class="confirmation">
     <h2 class="confirmation__headline">
-      {{ $t('checkout.requestSuccess') }}
+      {{ pageContents.headline }}
     </h2>
     <div class="confirmation__description">
       <div>
-        {{ $t('checkout.requestDescription') }}
+        {{ pageContents.description }}
       </div>
     </div>
     <div class="confirmation__requestNumber">
       <Icon icon="check" class="confirmation__requestNumber--icon" />
       <h3 class="confirmation__requestNumber--subline tw-font-normal">
-        {{ $t('checkout.requestNumber') }}
+        {{ pageContents.requestNumberSubline }}
       </h3>
-      <h3 class="confirmation__requestNumber--subline">{{ order.code }}</h3>
+      <h3
+        v-if="confirmationType === 'CHECKOUT'"
+        class="confirmation__requestNumber--subline"
+      >
+        {{ order.code }}
+      </h3>
       <h5 class="confirmation__requestNumber--subline">
-        {{ $t('checkout.requestSupport') }}
+        {{ pageContents.requestSupportSubline }}
       </h5>
     </div>
     <div class="confirmation__buttons">
       <Button
         variant="secondary"
-        :href="localePath('shop-my-account-request-history') + '/' + order.code"
+        :href="pageContents.href"
         icon="arrow_forward"
-        :label="$t('checkout.viewRequest')"
+        :label="pageContents.buttonLabel"
       />
       <Button
         variant="secondary"
@@ -38,7 +43,12 @@
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useContext,
+  toRefs,
+  computed,
+} from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import Icon from '~/components/atoms/Icon/Icon'
 
@@ -48,8 +58,45 @@ export default defineComponent({
   props: {
     order: {
       type: Object,
-      required: true,
+      required: false,
+      default: () => ({}),
     },
+    confirmationType: {
+      type: String,
+      validator: (val) => ['CONTACT', 'CHECKOUT'].includes(val),
+      default: 'CONTACT',
+    },
+  },
+  setup(props) {
+    const { app, i18n } = useContext()
+    const { confirmationType } = toRefs(props)
+
+    const checkoutContents = {
+      headline: i18n.t('checkout.requestSuccess'),
+      description: i18n.t('checkout.requestDescription'),
+      requestNumberSubline: i18n.t('checkout.requestNumber'),
+      requestSupportSubline: i18n.t('checkout.requestSupport'),
+      buttonLabel: i18n.t('checkout.viewRequest'),
+      href: `${app.localePath('shop-my-account-request-history')}/${
+        props.order.code
+      }`,
+    }
+
+    const contactContents = {
+      headline: i18n.t('contact.confirmationPage.requestSuccess'),
+      description: i18n.t('contact.confirmationPage.requestDescription'),
+      requestNumberSubline: i18n.t('contact.confirmationPage.thankYou'),
+      requestSupportSubline: i18n.t('contact.confirmationPage.requestProgress'),
+      buttonLabel: i18n.t('contact.confirmationPage.nextRequestButton'),
+      href: app.localePath('/contact'),
+    }
+
+    const pageContents = computed(() => {
+      if (confirmationType.value === 'CHECKOUT') return checkoutContents
+      return contactContents
+    })
+
+    return { pageContents }
   },
 })
 </script>
@@ -59,6 +106,12 @@ export default defineComponent({
   @apply tw-grid tw-grid-cols-12;
   @apply tw-text-center;
   @apply tw-w-fit;
+  @apply tw-m-4;
+  margin: 0 auto;
+
+  @screen md {
+    max-width: 75%;
+  }
 
   &__headline {
     @apply tw-col-span-12;
