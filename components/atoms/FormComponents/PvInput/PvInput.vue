@@ -3,7 +3,6 @@
     <PvLabel :optional="!required" :label="label" />
     <div class="pv-input__wrapper">
       <input
-        v-if="!isTextarea"
         v-bind="{ placeholder, disabled, ...$attrs }"
         ref="input"
         v-model="internalValue"
@@ -22,26 +21,6 @@
           validation.validateInput()
         "
       />
-      <textarea
-        v-else
-        v-bind="{ placeholder, disabled, ...$attrs }"
-        ref="input"
-        v-model="internalValue"
-        :required="required"
-        class="pv-input__element"
-        :class="{
-          'pv-input__element--icon': icon,
-          'pv-input__element--error': !!validation.getError(),
-        }"
-        :placeholder="placeholder"
-        @keypress.enter="$emit('submit', internalValue)"
-        @focus="$emit('focus', true)"
-        @blur="
-          $emit('focus', false)
-          validation.validateInput()
-        "
-      />
-
       <Icon
         v-if="icon || validation.getError()"
         class="pv-input__icon"
@@ -129,10 +108,6 @@ export default defineComponent({
     rules: {
       type: Object,
       default: () => ({}),
-    },
-    isTextarea: {
-      type: Boolean,
-      default: false,
     },
   },
   emits: [

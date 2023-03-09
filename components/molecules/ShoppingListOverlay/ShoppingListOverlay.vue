@@ -42,18 +42,18 @@
         {{ $t('myaccount.shoppingList.info') }}
       </p>
       <PvInput
+        v-model="name"
         class="shopping-list-overlay__content-add--name"
         :label="$t('myaccount.shoppingList.name')"
         :required="true"
         :placeholder="$t('myaccount.shoppingList.namePlaceholder')"
-        @input="inputName"
       />
-      <PvInput
+      <PvTextArea
+        v-model="description"
         class="shopping-list-overlay__content-add--description"
         :label="$t('myaccount.shoppingList.description')"
         :placeholder="$t('myaccount.shoppingList.descriptionPlaceholder')"
         :is-textarea="true"
-        @input="inputDescription"
       />
     </div>
 
@@ -89,15 +89,18 @@
 
 <script>
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import GenericSidebar from '@/components/molecules/GenericSidebar/GenericSidebar.vue'
-import { useShoppingLists } from '@/stores/shoppinglists'
-import Button from '@/components/atoms/Button/Button.vue'
-import PvInput from '@/components/atoms/FormComponents/PvInput/PvInput.vue'
+import GenericSidebar from '~/components/molecules/GenericSidebar/GenericSidebar.vue'
+import { useShoppingLists } from '~/stores/shoppinglists'
+import Button from '~/components/atoms/Button/Button.vue'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
+import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea.vue'
+
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'ShoppingListOverlay',
   components: {
+    PvTextArea,
     PvInput,
     GenericSidebar,
     Button,
@@ -116,18 +119,14 @@ export default defineComponent({
     const toggleAddMode = () => {
       isAddMode.value = !isAddMode.value
     }
-    const inputName = (value) => {
-      name.value = value
-    }
-    const inputDescription = (value) => {
-      description.value = value
-    }
     const newShoppingList = async () => {
-      await shoppingListsStore.createNewListAndAddProduct(
-        name.value,
-        description.value
-      )
-      closeSidebar()
+      if (name.value) {
+        await shoppingListsStore.createNewListAndAddProduct(
+          name.value,
+          description.value
+        )
+        closeSidebar()
+      }
     }
     const addToShoppingList = async (listId) => {
       await shoppingListsStore.addToShoppingList(listId)
@@ -151,13 +150,13 @@ export default defineComponent({
       shoppingLists,
       isAddMode,
       toggleAddMode,
-      inputName,
-      inputDescription,
       handleForward,
       handleBack,
       isOverlayOpen,
       closeSidebar,
       addToShoppingList,
+      name,
+      description,
     }
   },
 })
@@ -233,6 +232,10 @@ export default defineComponent({
       @apply tw-text-pv-grey-16;
       @apply tw-mb-4;
       @apply tw-max-h-6;
+
+      .button__label {
+        @apply tw-overflow-hidden;
+      }
     }
   }
 

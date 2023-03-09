@@ -31,6 +31,7 @@
       :edit-mode="editMode"
       @update="updateCartQuantity"
       @delete="deleteFromCart"
+      @addToShoppingList="addToShoppingList"
     />
   </div>
 </template>
@@ -42,6 +43,7 @@ import useUniqueKey from '~/composables/useUniqueKey'
 import Icon from '~/components/atoms/Icon/Icon'
 import { useCartStore } from '~/stores/cart'
 import { storeToRefs } from 'pinia'
+import { useShoppingLists } from '~/stores/shoppinglists'
 
 export default defineComponent({
   name: 'CartTable',
@@ -68,6 +70,7 @@ export default defineComponent({
     const cartStore = useCartStore()
     const { currentCart } = storeToRefs(cartStore)
     const { deleteProductFromCart, updateProductQuantityFromCart } = cartStore
+    const shopppingListStore = useShoppingLists()
     const getUniqueId = (id) => useUniqueKey('CART_TABLE_' + id)
     const getProducts = computed(() => {
       return currentCart?.value?.entries
@@ -143,6 +146,11 @@ export default defineComponent({
 
       return productPromotion
     }
+    const addToShoppingList = (product) => {
+      shopppingListStore.setProductAmount(product?.quantity)
+      shopppingListStore.setProduct(product)
+      shopppingListStore.toggleOverlay()
+    }
 
     return {
       updateCartQuantity,
@@ -152,6 +160,7 @@ export default defineComponent({
       useSortByTotalPrice,
       getUniqueId,
       getProductPromotions,
+      addToShoppingList,
     }
   },
 })
