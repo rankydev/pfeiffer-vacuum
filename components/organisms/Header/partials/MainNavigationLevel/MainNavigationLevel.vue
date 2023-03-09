@@ -84,6 +84,15 @@
               @click.native="closeMenu"
             />
           </li>
+
+          <template
+            v-if="
+              currentEntry.showPromotionTeaser &&
+              currentEntry.promotionTeaser.length
+            "
+          >
+            <PromotionTeaser :content="currentEntry.promotionTeaser" />
+          </template>
         </template>
 
         <template v-if="level > 0 && !isMobile">
@@ -177,6 +186,7 @@ import Link from '~/components/atoms/Link/Link.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
 import Button from '~/components/atoms/Button/Button.vue'
+import PromotionTeaser from '~/components/organisms/PromotionTeaser/PromotionTeaser.vue'
 
 import { useMenuStore } from '~/stores/menu'
 import { useUserStore } from '~/stores/user'
@@ -188,6 +198,7 @@ export default defineComponent({
     Link,
     AnimatedCollapse,
     Button,
+    PromotionTeaser,
   },
   props: {
     currentEntry: {
