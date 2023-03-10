@@ -1,7 +1,7 @@
 <template>
   <div
     class="knowledge-asset-button"
-    :class="{ 'knowledge-asset-button': !preventFullWidth }"
+    :class="{ 'knowledge-asset-button--full': !preventFullWidth }"
   >
     <!-- register for webinar button -->
     <Button
