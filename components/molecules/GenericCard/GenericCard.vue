@@ -83,6 +83,7 @@ export default defineComponent({
 
 <style lang="scss">
 @import '/assets/scss/mixins';
+@import '/assets/scss/z-index';
 
 $card-image-height: 200px;
 
@@ -153,6 +154,7 @@ $card-image-height: 200px;
     @apply tw-text-xs;
     @apply tw-py-1 tw-px-1.5;
     @apply tw-font-bold;
+    z-index: $generic-card-tag;
   }
 
   &__subheading {

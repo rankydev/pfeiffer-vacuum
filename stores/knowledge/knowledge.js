@@ -2,15 +2,16 @@ import { defineStore } from 'pinia'
 import { useLogger } from '~/composables/useLogger'
 import config from '~/config/hybris.config'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
-import { useRoute, ref, computed } from '@nuxtjs/composition-api'
+import { useRoute, ref, computed, useContext } from '@nuxtjs/composition-api'
 import { joinURL } from 'ufo'
 export const useKnowledgeStore = defineStore('knowledge', () => {
   const { logger } = useLogger('knowledgeStore')
   const { axios } = useAxiosForHybris()
+  const { localePath, i18n } = useContext()
   const route = useRoute()
 
   const isLoading = ref(false)
-  const searchResults = ref([])
+  const searchResults = ref({})
 
   /**
    * Page type check
@@ -20,6 +21,28 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
   )
   const isWhitepapers = computed(() => route.value.path.includes('whitepapers'))
   const isWebinars = computed(() => route.value.path.includes('webinars'))
+
+  /**
+   * Headline parameters
+   */
+  const resultHeadline = computed(() => {
+    if (isWhitepapers.value) return i18n.t('knowledge.whitepapers')
+    if (isWebinars.value) return i18n.t('knowledge.webinars')
+    return i18n.t('knowledge.allRessources')
+  })
+  const backLink = computed(() =>
+    !isOverviewPage.value ? localePath('knowledge') : null
+  )
+
+  const knowledgeType = computed(() => {
+    if (isWhitepapers.value) return 'WHITEPAPER'
+    if (isWebinars.value) return 'WEBINAR'
+    return 'ALL'
+  })
+
+  const filterEntries = computed(
+    () => searchResults.value?.filter?.filter((e) => e.code !== 'type') || []
+  )
 
   const registerForWebinar = async (id) => {
     const path = `${config.KNOWLEDGE_API}/webinar/${id}/register`
@@ -33,16 +56,10 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
     return true
   }
 
-  const knowledgeType = computed(() => {
-    if (isWhitepapers.value) return 'WHITEPAPER'
-    if (isWebinars.value) return 'WEBINAR'
-    return 'ALL'
-  })
-
   const knowledgeSearch = async () => {
     isLoading.value = true
 
-    const searchTerm = route.value.query.searchTerm || null
+    const searchTerm = route.value.query.searchTerm || undefined
     const currentPage = route.value.query.currentPage - 1 || 0
     const pageSize = route.value.query.pageSize || 12
     const path = `${config.KNOWLEDGE_API}/search`
@@ -50,6 +67,7 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
     await axios
       .$get(path, {
         params: {
+          ...route.value.query,
           type: knowledgeType.value,
           currentPage,
           pageSize,
@@ -64,7 +82,7 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
           'Error when fetching knowledge entries. Returning empty array.',
           error
         )
-        searchResults.value = []
+        searchResults.value = {}
       })
       .finally(() => {
         isLoading.value = false
@@ -82,6 +100,9 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
     isOverviewPage,
     isWhitepapers,
     isWebinars,
+    resultHeadline,
+    backLink,
+    filterEntries,
 
     registerForWebinar,
     getHybrisDetails,

@@ -12,6 +12,30 @@
       <LoadingSpinner :show="isLoading">
         <div class="knowledge-content__results">
           <ContentWrapper>
+            <div class="knowledge-content__top-actions">
+              <div class="knowledge-content__filters">
+                <PvSelect
+                  v-for="filter in filterEntries"
+                  :key="filter.code"
+                  :value="(filter.values || []).filter((e) => e.selected)"
+                  option-label="name"
+                  :placeholder="filter.name"
+                  :multiple="true"
+                  :options="filter.values || []"
+                  class="knowledge-content__multiselect"
+                  @input="handleFilterInput(filter.code, $event)"
+                />
+              </div>
+              <div class="knowledge-content__search-input">
+                <SearchInput
+                  :value="searchTerm"
+                  :clear-after-submit="false"
+                  :placeholder="$t('knowledge.search')"
+                  :disable-suggestions="true"
+                  @submit="handleTermChange"
+                />
+              </div>
+            </div>
             <ProductCardGrid :use-knowledge-card="true" :products="documents" />
             <div class="knowledge-content__bottom-actions">
               <CategoryPageSizeSelection
@@ -32,7 +56,6 @@ import {
   computed,
   useRoute,
   useRouter,
-  useContext,
   onBeforeMount,
   onServerPrefetch,
   watch,
@@ -45,6 +68,8 @@ import ProductCardGrid from '~/components/organisms/ProductCardGrid/ProductCardG
 import Pagination from '~/components/molecules/Pagination/Pagination'
 import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
+import SearchInput from '~/components/molecules/SearchInput/SearchInput'
+import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import { storeToRefs } from 'pinia'
 
 export default {
@@ -57,38 +82,30 @@ export default {
     Pagination,
     CategoryPageSizeSelection,
     LoadingSpinner,
+    SearchInput,
+    PvSelect,
   },
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const { localePath, i18n } = useContext()
     const knowledgeStore = useKnowledgeStore()
     const { knowledgeSearch } = knowledgeStore
     const {
       searchResults,
       isLoading,
       isOverviewPage,
-      isWhitepapers,
-      isWebinars,
+      resultHeadline,
+      backLink,
+      filterEntries,
     } = storeToRefs(knowledgeStore)
+
+    const searchTerm = computed(() => route.value.query.searchTerm || '')
 
     /**
      * Knowledge search result entries
      */
     const documents = computed(
       () => searchResults.value?.knowledgeDocuments || []
-    )
-
-    /**
-     * Headline parameters
-     */
-    const resultHeadline = computed(() => {
-      if (isWhitepapers.value) return i18n.t('knowledge.whitepapers')
-      if (isWebinars.value) return i18n.t('knowledge.webinars')
-      return i18n.t('knowledge.allRessources')
-    })
-    const backLink = computed(() =>
-      !isOverviewPage.value ? localePath('knowledge') : null
     )
 
     /**
@@ -103,13 +120,47 @@ export default {
     const totalResults = computed(
       () => searchResults.value?.pagination?.totalCount || 0
     )
+
+    const currentRoute = computed(() => {
+      const { hash, params, path } = route.value
+      return { hash, params, path }
+    })
+
     const handlePageSizeChange = (e) => {
-      const { hash, params, path, query } = route.value
+      const { query } = route.value
       router.push({
-        hash,
-        params,
-        path,
+        ...currentRoute.value,
         query: { ...query, currentPage: 1, pageSize: e },
+      })
+    }
+
+    const handleTermChange = (e) => {
+      const { query } = route.value
+      router.push({
+        ...currentRoute.value,
+        query: {
+          ...query,
+          currentPage: 1,
+          searchTerm: e.length ? e : undefined,
+        },
+      })
+    }
+
+    const handleFilterInput = (code, val) => {
+      const { query } = route.value
+      const newQuery = { ...query, currentPage: 1 }
+      const selectedValues = []
+
+      console.log(val)
+
+      val.forEach((item) => selectedValues.push(item.code))
+
+      if (val.length) newQuery[code] = selectedValues.join(',')
+      else delete newQuery[code]
+
+      router.push({
+        ...currentRoute.value,
+        query: newQuery,
       })
     }
 
@@ -120,6 +171,7 @@ export default {
     })
 
     return {
+      // Getters
       documents,
       searchResults,
       isOverviewPage,
@@ -129,8 +181,13 @@ export default {
       totalResults,
       activePageSize,
       isLoading,
+      filterEntries,
+      searchTerm,
 
+      // Actions
       handlePageSizeChange,
+      handleTermChange,
+      handleFilterInput,
     }
   },
 }
@@ -146,9 +203,47 @@ export default {
     @apply tw-bg-pv-grey-96;
   }
 
+  &__top-actions {
+    @apply tw-flex tw-justify-between;
+    @apply tw-mb-4;
+    @apply tw-gap-4;
+  }
+
+  &__filters {
+    @apply tw-flex;
+    @apply tw-gap-2;
+  }
+
+  &__search-input {
+    @apply tw-w-64;
+  }
+
   &__bottom-actions {
     @apply tw-flex tw-justify-between tw-items-center;
     @apply tw-mt-4;
+  }
+
+  &__multiselect {
+    @apply tw-inline-block;
+
+    .vs__dropdown-toggle {
+      @apply tw-p-2;
+      @apply tw-text-xs;
+    }
+
+    &--name {
+      input {
+        @apply tw-w-0;
+
+        &:focus {
+          @apply tw-w-0;
+        }
+      }
+
+      li {
+        @apply tw-whitespace-nowrap;
+      }
+    }
   }
 }
 </style>

@@ -7,7 +7,13 @@
       </span>
     </template>
     <template #image>
-      <ResponsiveImage v-if="image" :image="image" />
+      <ResponsiveImage
+        v-if="image"
+        :image="image"
+        aspect-ratio="3:2"
+        :rounded="false"
+        :mode-full="true"
+      />
     </template>
     <template v-if="date" #subheading>
       <Icon icon="date_range" size="xsmall" />
@@ -91,7 +97,7 @@ export default defineComponent({
     })
     const image = computed(() => {
       const imageUrl = entry?.value?.imageURL
-      return imageUrl || null
+      return { originalFilename: imageUrl || null }
     })
     const date = computed(() => {
       const dateValue = entry?.value?.date
