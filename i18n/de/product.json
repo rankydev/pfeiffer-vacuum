@@ -32,8 +32,7 @@
     "size": "Größe",
     "category": "Kategorie",
     "results": "{count} von {total} Ergebnissen",
-    "filter": "Filtern",
-    "loadingScreen": "Wait, our downloads will soon be available for you..."
+    "filter": "Filtern"
   },
   "download": "Download",
   "noDownloads": "Keine Downloads verfügbar",
@@ -144,6 +143,7 @@
       "text": "Bitte kommen Sie später wieder oder kontaktieren Sie unseren",
       "link": "Kundendienst."
     },
+    "noDownloadsAvailable": "Wir konnten keine Downloads laden.",
     "loadingScreen": {
       "multiProductHeadline": "Produkte werden geladen...",
       "singleProductHeadline": "Produkt wird geladen..."
