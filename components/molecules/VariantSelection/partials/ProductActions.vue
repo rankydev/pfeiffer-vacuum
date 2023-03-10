@@ -61,6 +61,7 @@
           variant="secondary"
           shape="outlined"
           :disabled="isMaster"
+          @click="addToProductList"
         />
         <!-- TODO: As soon as InstalledBase are implemented please substitute the disabled attribute here with
          :disabled="addToBaseButtonDisabled" -->
@@ -93,6 +94,7 @@ import {
 import { useUserStore } from '~/stores/user'
 import { useProductStore } from '~/stores/product'
 import { useCartStore } from '~/stores/cart'
+import { useShoppingLists } from '~/stores/shoppinglists'
 import { storeToRefs } from 'pinia'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import InformationModal from '~/components/molecules/InformationModal/InformationModal'
@@ -115,6 +117,7 @@ export default defineComponent({
     const productStore = useProductStore()
     const cartStore = useCartStore()
     const { product, productType, price } = storeToRefs(productStore)
+    const shopppingListStore = useShoppingLists()
     const {
       isApprovedUser,
       isLeadUser,
@@ -187,6 +190,11 @@ export default defineComponent({
       )
     }
 
+    const addToProductList = () => {
+      shopppingListStore.setProductAmount(userSelectedOrderQuantity.value)
+      shopppingListStore.toggleOverlay()
+    }
+
     return {
       userStore,
       isLoggedIn,
@@ -205,6 +213,7 @@ export default defineComponent({
       userSelectedOrderQuantity,
       toggleModal,
       addToCart,
+      addToProductList,
     }
   },
 })

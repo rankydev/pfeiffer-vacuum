@@ -1,43 +1,28 @@
 import { defineStore } from 'pinia'
 import { ref } from '@nuxtjs/composition-api'
+import config from '~/config/hybris.config'
 import { useLogger } from '~/composables/useLogger'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
-import config from '~/config/hybris.config'
 
-export * from './accountData'
-export * from './requestHistory'
-export * from './dashboard'
-
-export const useMyAccountStore = defineStore('myaccount', () => {
-  const { logger } = useLogger('myAccountStore')
+export const useRequestHistoryStore = defineStore('requestHistory', () => {
   const { axios } = useAxiosForHybris()
-  const menuItems = ref([])
-  const orders = ref([])
+  const { logger } = useLogger('requestHistoryStore')
 
-  const hydrateMenuItems = (links) => {
-    if (links?.length) {
-      menuItems.value = links.map((item) => {
-        return {
-          label: item.label,
-          href: item.href,
-          icon: item.icon,
-        }
-      })
-    }
-  }
+  const requestHistory = ref([])
 
-  const getOrders = async (page, size = 5) => {
+  const loadRequestHistory = async (page, size = 5, sortCode) => {
     try {
       const result = await axios.$get(config.ORDER_API, {
         params: {
           fields: 'FULL',
           pageSize: size,
           currentPage: page - 1 || 0,
+          sort: sortCode,
         },
       })
 
       if (result && Array.isArray(result.orders) && !result.error) {
-        orders.value = result
+        requestHistory.value = result
         return result
       }
     } catch (e) {
@@ -51,13 +36,8 @@ export const useMyAccountStore = defineStore('myaccount', () => {
 
   return {
     // States
-    menuItems,
-    orders,
-
-    //Getters
-    getOrders,
-
+    requestHistory,
     // Actions
-    hydrateMenuItems,
+    loadRequestHistory,
   }
 })

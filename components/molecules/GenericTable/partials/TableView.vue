@@ -185,11 +185,19 @@ export default {
     @apply tw-p-4;
     @apply tw-text-pv-grey-16;
 
+    &-wrapper {
+      @apply tw-flex;
+    }
+
     &-marginal {
       @apply tw-block;
       @apply tw-text-pv-grey-48;
       @apply tw-text-xs;
       @apply tw-leading-6;
+    }
+
+    &-icon {
+      @apply tw-mr-3;
     }
 
     &--action {

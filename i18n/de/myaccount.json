@@ -56,6 +56,20 @@
   },
   "contact": "Kontakt",
   "salesRepresentative": "Vertriebsingenieur",
+  "requestHistory": {
+    "table": {
+      "reference": "Referenz",
+      "requestNumber": "Anfragenummer",
+      "requestReference": "Referenz",
+      "customerReference": "Kundenreferenz",
+      "requestDate": "Anfragedatum",
+      "date": "Datum",
+      "requestTotal": "Gesamt (Netto)"
+    },
+    "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
+    "goToProducts": "Zu den Produkten",
+    "yourHistory": "Deine Anfragenhistorie"
+  },
   "recentRequests": {
     "recentRequests": "Letzte Bestellanfragen",
     "allRequests": "Alle Anfragen",
@@ -107,7 +121,20 @@
       "cancel": "Nein",
       "confirm": "Ja",
       "deleteSuccess": "Einkaufsliste wurde erfolgreich gelöscht."
-    }
+    },
+    "selectAList": "Wählen Sie eine Liste aus",
+    "add": "Zu neuer Liste hinzufügen",
+    "addSuccessful": "Produkt wurde erfolgreich zur Einkaufsliste hinzugefügt.",
+    "addError": "Produkt konnte nicht zur Einkaufsliste hinzugefügt werden.",
+    "back": "Zurück zu den Listen",
+    "name": "Name",
+    "namePlaceholder": "Neuer Name der Einkaufsliste",
+    "description": "Beschreibung",
+    "descriptionPlaceholder": "Diese Beschreibung ist nur in Ihrem \"Mein Konto\" lesbar.",
+    "save": "Speichern und schließen",
+    "info": "Ihr ausgewähltes Produkt wird automatisch zu dieser neuen Liste hinzugefügt.",
+    "close": "Schließen",
+    "addNewList": "Neue Einkaufsliste hinzufügen"
   },
   "details": "Details",
   "serviceHistory": {
