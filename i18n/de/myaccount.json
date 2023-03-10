@@ -56,6 +56,20 @@
   },
   "contact": "Kontakt",
   "salesRepresentative": "Vertriebsingenieur",
+  "requestHistory": {
+    "table": {
+      "reference": "Referenz",
+      "requestNumber": "Anfragenummer",
+      "requestReference": "Referenz",
+      "customerReference": "Kundenreferenz",
+      "requestDate": "Anfragedatum",
+      "date": "Datum",
+      "requestTotal": "Gesamt (Netto)"
+    },
+    "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
+    "goToProducts": "Zu den Produkten",
+    "yourHistory": "Deine Anfragenhistorie"
+  },
   "recentRequests": {
     "recentRequests": "Letzte Bestellanfragen",
     "allRequests": "Alle Anfragen",

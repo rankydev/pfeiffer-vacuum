@@ -54,6 +54,20 @@
   },
   "contact": "联系我们",
   "salesRepresentative": "销售代表",
+  "requestHistory": {
+    "table": {
+      "reference": "Reference",
+      "requestNumber": "Request number",
+      "requestReference": "Reference",
+      "customerReference": "Customer reference",
+      "requestDate": "Request date",
+      "date": "Date",
+      "requestTotal": "Total (net)"
+    },
+    "lastRequestNotFound": "You have not made any requests yet!",
+    "goToProducts": "Go to products",
+    "yourHistory": "Your request history"
+  },
   "recentRequests": {
     "recentRequests": "最近的请求",
     "allRequests": "所有请求",

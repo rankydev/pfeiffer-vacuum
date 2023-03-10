@@ -56,6 +56,20 @@
   },
   "contact": "Contact Us",
   "salesRepresentative": "Sales Representative",
+  "requestHistory": {
+    "table": {
+      "reference": "Reference",
+      "requestNumber": "Request number",
+      "requestReference": "Reference",
+      "customerReference": "Customer reference",
+      "requestDate": "Request date",
+      "date": "Date",
+      "requestTotal": "Total (net)"
+    },
+    "lastRequestNotFound": "You have not made any requests yet!",
+    "goToProducts": "Go to products",
+    "yourHistory": "Your request history"
+  },
   "recentRequests": {
     "recentRequests": "Recent requests",
     "allRequests": "All requests",
