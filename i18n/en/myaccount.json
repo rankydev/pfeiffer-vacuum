@@ -130,5 +130,23 @@
     "installedBase": "Installed Base"
   },
   "comingSoon": "This function will be available soon!",
+  "requestHistory": {
+    "table": {
+      "quantity": "Quantity",
+      "totalPrice": "Total Price",
+      "pricePerUnit": "Price / PU",
+      "reference": "Referenz",
+      "requestNumber": "Request number",
+      "requestReference": "Request reference",
+      "customerReference": "Customer reference",
+      "requestDate": "Request date",
+      "date": "Date",
+      "requestTotal": "Total (net)"
+    },
+    "lastRequestNotFound": "You have not made any requests yet!",
+    "goToProducts": "Go to products",
+    "yourHistory": "Your request history",
+    "addToCartBtn": "Add complete request to cart"
+  },
   "lastEdited": "Last edited"
 }
