@@ -3,6 +3,7 @@ import {
   PATH_SHOP,
   PATH_SHOP_IMAGES,
   PATH_DATASOURCES,
+  PATH_VACUUM_CALC,
 } from './server/constants.js'
 import {
   languageCodes,
@@ -263,6 +264,7 @@ export default {
     // SAP Commerce Cloud
     SHOP_BASE_URL: process.env.SHOP_BASE_URL,
     SHOP_IMAGE_URL: process.env.SHOP_IMAGE_URL,
+    VACUUM_CALCULATOR_BASE_URL: process.env.VACUUM_CALCULATOR_BASE_URL,
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
@@ -308,6 +310,10 @@ export default {
     {
       path: PATH_DATASOURCES,
       handler: '~/server/middleware/datasources.js',
+    },
+    {
+      path: PATH_VACUUM_CALC,
+      handler: '~/server/middleware/shop-vacuum-calc.js',
     },
   ],
   watchers: {
