@@ -25,6 +25,8 @@ export const useRequestHistoryStore = defineStore('requestHistory', () => {
       if (result && Array.isArray(result.orders) && !result.error) {
         requestHistory.value = result
         return result
+      } else {
+        throw result.error || 'unknown error'
       }
     } catch (e) {
       logger.error(
