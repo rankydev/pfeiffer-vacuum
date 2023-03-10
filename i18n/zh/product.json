@@ -23,7 +23,8 @@
     "size": "尺寸",
     "category": "类别 ",
     "results": "{count}个结果中的{total}个",
-    "filter": "筛选"
+    "filter": "筛选",
+    "loadingScreen": "Wait, our downloads will soon be available for you..."
   },
   "downloads": "下载",
   "download": "下载",

@@ -48,6 +48,7 @@
               <div class="search-page__search-result">
                 <ContentWrapper v-if="currentTabSelected === 'products'">
                   <SearchResult
+                    v-if="products && !hasError"
                     persist-category-name-as-query-param
                     v-bind="{
                       products,
@@ -57,6 +58,10 @@
                       currentQuery,
                       sorts,
                     }"
+                  />
+                  <ErrorHandling
+                    v-else
+                    :headline="$t('product.errorHandling.multiProductHeadline')"
                   />
                 </ContentWrapper>
                 <ContentWrapper v-else no-padding>
@@ -69,6 +74,7 @@
           <div v-else class="category-page__search-result">
             <ContentWrapper>
               <SearchResult
+                v-if="products && !hasError"
                 v-bind="{
                   products,
                   pagination,
@@ -77,6 +83,10 @@
                   currentQuery,
                   sorts,
                 }"
+              />
+              <ErrorHandling
+                v-else
+                :headline="$t('product.errorHandling.multiProductHeadline')"
               />
             </ContentWrapper>
           </div>
@@ -111,7 +121,6 @@ import {
   ref,
 } from '@nuxtjs/composition-api'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
-import { useErrorHandler } from '~/composables/useErrorHandler'
 import { useStoryblokData } from '~/composables/useStoryblokData'
 import { useCategoryStore } from '~/stores/category/category'
 import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
@@ -151,7 +160,6 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const context = useContext()
-    const { redirectOnError } = useErrorHandler()
 
     /**
      * page type handling
@@ -196,9 +204,16 @@ export default defineComponent({
      */
     const categoryStore = useCategoryStore()
     const empolisStore = useEmpolisStore()
+
+    const hasError = ref(false)
+
     const loadSearchResults = async () => {
       if (currentTabSelected.value === 'products') {
-        await redirectOnError(categoryStore.loadByPath)
+        try {
+          await categoryStore.loadByPath()
+        } catch (e) {
+          hasError.value = true
+        }
       } else if (currentTabSelected.value === 'documents') {
         await empolisStore.loadByPath()
       }
@@ -259,6 +274,7 @@ export default defineComponent({
       metaData,
       currentTabSelected,
       tabNavigationItems,
+      hasError,
       selectTab,
     }
   },

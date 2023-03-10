@@ -32,7 +32,8 @@
     "size": "Größe",
     "category": "Kategorie",
     "results": "{count} von {total} Ergebnissen",
-    "filter": "Filtern"
+    "filter": "Filtern",
+    "loadingScreen": "Wait, our downloads will soon be available for you..."
   },
   "download": "Download",
   "noDownloads": "Keine Downloads verfügbar",

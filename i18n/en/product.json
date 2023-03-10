@@ -33,7 +33,8 @@
     "size": "Size",
     "category": "Category",
     "results": "{count} of {total} results",
-    "filter": "Filter"
+    "filter": "Filter",
+    "loadingScreen": "Wait, our downloads will soon be available for you..."
   },
   "download": "Download",
   "noDownloads": "No downloads available",
