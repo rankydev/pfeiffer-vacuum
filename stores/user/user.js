@@ -238,10 +238,7 @@ export const useUserStore = defineStore('user', () => {
       const result = await userApi.getUserBillingAddress()
       billingAddress.value = result
     } catch (e) {
-      logger.error(
-        `Error when fetching billing address for user. Returning empty object.`,
-        e
-      )
+      logger.error(`Error fetching billing address for user.`, e)
     }
   }
 
@@ -261,10 +258,7 @@ export const useUserStore = defineStore('user', () => {
       deliveryAddresses.value = mappedAddresses
       return mappedAddresses.addresses
     } catch (e) {
-      logger.error(
-        `Error when fetching billing address for user. Returning empty object.`,
-        e
-      )
+      logger.error(`Error fetching delivery addresses for user.`, e)
       return null
     }
   }

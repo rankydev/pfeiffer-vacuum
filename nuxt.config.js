@@ -355,7 +355,11 @@ export default {
           'sso.pfeiffer-vacuum.com',
           'app.usercentrics.eu',
         ],
-        'form-action': ["'self'"],
+        'form-action': [
+          process.env.DISABLE_SECURITY_POLICY_FORM_ACTION_SELF === 'true'
+            ? '*'
+            : "'self'",
+        ], // disabled for OCI Checkout: PVWEB-904
         'object-src': ["'none'"],
         'base-uri': [baseURL],
         // TODO If we have sentry, we can add this:

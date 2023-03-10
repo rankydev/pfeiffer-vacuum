@@ -52,10 +52,10 @@
                   </div>
                 </div>
 
-                <CartTable :cart="cartEntries" />
+                <CartTable />
 
                 <div class="cart-page__info">
-                  <div v-show="!ociBuyer" class="cart-page__information">
+                  <div v-show="!isOciUser" class="cart-page__information">
                     <PromotionLabel
                       v-for="(promotion, index) in cartPromotions"
                       :key="index"
@@ -76,7 +76,9 @@
 
                     <div class="cart-page__submit">
                       <Button
-                        :label="$t('cart.requestQuote')"
+                        :label="
+                          $t(isOciUser ? 'cart.checkout' : 'cart.requestQuote')
+                        "
                         class="cart-page__button--submit"
                         variant="primary"
                         icon="mail_outline"
@@ -168,14 +170,13 @@ export default defineComponent({
     const context = useContext()
     const cartStore = useCartStore()
     const userStore = useUserStore()
-    const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText } =
+    const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText, isOciUser } =
       storeToRefs(userStore)
     const { app } = useContext()
     const { currentCart } = storeToRefs(cartStore)
 
     const isMobile = app.$breakpoints.isMobile
     const cartEntries = computed(() => currentCart.value.entries)
-    const ociBuyer = computed(() => userStore.currentUser?.ociBuyer)
     const cartPromotions = computed(() => {
       return currentCart.value?.appliedOrderPromotions || []
     })
@@ -198,7 +199,7 @@ export default defineComponent({
       slugs,
       isMobile,
       currentCart,
-      ociBuyer,
+      isOciUser,
       cartPromotions,
       checkoutButtonDisabled,
       userStatusTypeForInfoText,
