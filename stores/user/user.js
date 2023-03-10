@@ -43,7 +43,7 @@ export const useUserStore = defineStore('user', () => {
   } = useKeycloak()
 
   const isLoading = ref(false)
-  const currentUser = ssrRef(null)
+  const currentUser = ref(null)
   const billingAddress = ssrRef(null)
   const deliveryAddresses = ssrRef(null)
 
