@@ -446,6 +446,15 @@ export default defineComponent({
     @apply tw-mb-3;
     @apply tw-mt-4;
   }
+
+  &-add-to-cart {
+    @apply tw-row-start-6 tw-row-end-7;
+    @apply tw-col-start-1 tw-col-end-13;
+    @apply tw-w-fit;
+    @apply tw-mx-auto;
+    @apply tw-mb-3;
+    @apply tw-mt-4;
+  }
 }
 
 .cart-item-card-desktop {

@@ -56,20 +56,6 @@
   },
   "contact": "Kontakt",
   "salesRepresentative": "Vertriebsingenieur",
-  "requestHistory": {
-    "table": {
-      "reference": "Referenz",
-      "requestNumber": "Anfragenummer",
-      "requestReference": "Referenz",
-      "customerReference": "Kundenreferenz",
-      "requestDate": "Anfragedatum",
-      "date": "Datum",
-      "requestTotal": "Gesamt (Netto)"
-    },
-    "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
-    "goToProducts": "Zu den Produkten",
-    "yourHistory": "Deine Anfragenhistorie"
-  },
   "recentRequests": {
     "recentRequests": "Letzte Bestellanfragen",
     "allRequests": "Alle Anfragen",
@@ -144,5 +130,23 @@
     "installedBase": "Installed Base"
   },
   "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!",
+  "requestHistory": {
+    "table": {
+      "quantity": "Anzahl",
+      "totalPrice": "Gesamt",
+      "pricePerUnit": "Preis / Stück",
+      "reference": "Referenz",
+      "requestNumber": "Anfragenummer",
+      "requestReference": "Referenznummer",
+      "customerReference": "Kundenreferenz",
+      "requestDate": "Anfragedatum",
+      "date": "Datum",
+      "requestTotal": "Gesamt (Netto)"
+    },
+    "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
+    "goToProducts": "Zu den Produkten",
+    "yourHistory": "Deine Anfragenhistorie",
+    "addToCartBtn": "Füge komplette Anfrage zum Warenkorb hinzu"
+  },
   "lastEdited": "Zuletzt bearbeitet"
 }
