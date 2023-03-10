@@ -532,6 +532,7 @@ export default defineComponent({
         @apply tw-col-start-10 tw-col-end-11;
         @apply tw-text-lg;
         @apply tw-leading-7;
+        margin-left: unset;
       }
 
       &__label {
@@ -550,7 +551,8 @@ export default defineComponent({
       @screen lg {
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-11 tw-col-end-12;
-        @apply tw-mt-auto;
+        margin-left: unset;
+        @apply tw-my-auto;
       }
 
       &__label {
