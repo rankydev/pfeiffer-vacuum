@@ -1,11 +1,7 @@
 import ErrorHandling from '~/components/molecules/ErrorHandling/ErrorHandling.vue'
-import { headline, icon } from './ErrorHandling.stories.content'
+import { headline } from './ErrorHandling.stories.content'
 
 const argTypes = {
-  icon: {
-    defaultValue: icon,
-    control: { type: 'text' },
-  },
   headline: {
     defaultValue: headline,
     control: { type: 'text' },

@@ -3,7 +3,7 @@
     class="error-handling"
     :class="{ 'error-handling--grey-bg': greyBackground }"
   >
-    <Icon class="error-handling__icon" :icon="icon" />
+    <Icon class="error-handling__icon" icon="cloud_off" />
     <span class="error-handling__headline">
       {{ $t(headline) }}
     </span>
@@ -23,10 +23,6 @@ export default defineComponent({
     CustomerSupportLink,
   },
   props: {
-    icon: {
-      type: String,
-      default: 'description',
-    },
     headline: {
       type: String,
       required: true,
