@@ -5,6 +5,7 @@
   "scripts": {
     "prepare": "node bin/prepare.js",
     "dev": "nuxt",
+    "dev:oci": "DEFAULT_REGION_CODE=oci CURRENT_REGION_CODE=oci DISABLE_SECURITY_POLICY_FORM_ACTION_SELF=true nuxt",
     "build": "nuxt build",
     "build:standalone": "nuxt build --standalone",
     "start": "nuxt start",
