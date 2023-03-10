@@ -346,7 +346,6 @@ export default {
           'app.usercentrics.eu',
         ],
         'form-action': ["'self'"],
-        'frame-ancestors': ["'none'"],
         'object-src': ["'none'"],
         'base-uri': [baseURL],
         // TODO If we have sentry, we can add this:
@@ -355,5 +354,8 @@ export default {
         //]
       },
     },
+  },
+  helmet: {
+    frameguard: false,
   },
 }

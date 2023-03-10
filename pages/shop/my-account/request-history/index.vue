@@ -1,15 +1,18 @@
 <template>
   <div class="request-history">
     <ResultHeadline
-      class="request-history__headline--desktop"
-      :headline="$t('myaccount.requestHistory.yourHistory')"
-    />
-    <ResultHeadline
-      class="request-history__headline--mobile"
+      class="request-history__headline"
       :headline="$t('myaccount.requestHistory.yourHistory')"
       :link="localePath('shop-my-account')"
     />
-    <div v-if="tableData.length">
+    <GlobalMessage
+      v-if="infoMessage"
+      class="request-history__warning-unapproved"
+      :description="infoMessage"
+      variant="warning"
+      :prevent-icon-change="true"
+    />
+    <div v-if="tableData.length && isApprovedUser">
       <GenericTable :header="header" :table-data="tableData" />
       <div class="request-history__pagination-wrapper">
         <Pagination :total-pages="totalPages" />
@@ -39,8 +42,11 @@ import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline
 import GenericTable from '~/components/molecules/GenericTable/GenericTable'
 import Pagination from '~/components/molecules/Pagination/Pagination'
 import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper'
+import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
+
 import { useRequestHistoryStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
+import { useUserStore } from '~/stores/user'
 
 export default defineComponent({
   name: 'RequestHistory',
@@ -49,10 +55,15 @@ export default defineComponent({
     Pagination,
     ResultHeadline,
     EmptyWrapper,
+    GlobalMessage,
   },
   setup() {
     const { i18n, app } = useContext()
     const route = useRoute()
+    const userStore = useUserStore()
+
+    const { isApprovedUser, isLeadUser, isOpenUser, isRejectedUser } =
+      storeToRefs(userStore)
 
     const requestHistoryStore = useRequestHistoryStore()
     const { loadRequestHistory } = requestHistoryStore
@@ -60,6 +71,23 @@ export default defineComponent({
     const { requestHistory } = storeToRefs(requestHistoryStore)
     onBeforeMount(loadRequestHistory)
     onServerPrefetch(loadRequestHistory)
+
+    const infoMessage = computed(() => {
+      if (isOpenUser.value) {
+        return i18n.t('myaccount.userStatus.open.functionalityInfo')
+      }
+      if (isLeadUser.value) {
+        return i18n.t('myaccount.userStatus.lead.functionalityInfo')
+      }
+      if (isRejectedUser.value) {
+        return i18n.t('myaccount.userStatus.rejected.functionalityInfo')
+      }
+      // Fallback for any case of not approved user that isn't covert by the cases above
+      if (!isApprovedUser.value) {
+        return i18n.t('myaccount.userStatus.rejected.functionalityInfo')
+      }
+      return null
+    })
 
     const button = ref({
       icon: 'arrow_forward',
@@ -135,35 +163,37 @@ export default defineComponent({
       loadRequestHistory(newRoute.query.currentPage || 1)
     })
 
-    return { requestHistory, header, tableData, totalPages, button }
+    return {
+      requestHistory,
+      header,
+      infoMessage,
+      tableData,
+      totalPages,
+      button,
+      isApprovedUser,
+    }
   },
 })
 </script>
 <style lang="scss" scoped>
 .request-history {
+  &__warning-unapproved {
+    @apply tw-mb-6;
+  }
+
   &__headline {
-    &--desktop {
-      @apply tw-hidden;
-
-      @screen lg {
-        @apply tw-flex;
-      }
-    }
-
-    &--mobile {
-      @apply tw-flex;
-      @apply tw-items-center;
-
-      @screen lg {
-        @apply tw-hidden;
-      }
-    }
+    @apply tw-flex;
+    @apply tw-items-center;
   }
 
   &__pagination-wrapper {
     @apply tw-flex;
-    @apply tw-justify-end;
+    @apply tw-justify-center;
     @apply tw-mt-6;
+
+    @screen md {
+      @apply tw-justify-end;
+    }
   }
 }
 </style>
