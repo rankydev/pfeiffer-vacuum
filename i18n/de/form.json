@@ -44,7 +44,8 @@
   "validationErrorMessages": {
     "required": "Wert ist erforderlich",
     "requiredNameOrCompany": "Firmenname oder Vor- und Nachname erforderlich",
-    "email": "Der Wert ist keine gültige E-Mail-Adresse"
+    "email": "Der Wert ist keine gültige E-Mail-Adresse",
+    "warning": "Bitte überprüfen Sie Ihre Eingaben"
   },
   "message": {
     "success": "Ihre Anfrage wurde erfolgreich gesendet",

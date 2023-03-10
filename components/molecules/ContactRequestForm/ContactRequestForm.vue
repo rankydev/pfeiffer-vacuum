@@ -103,6 +103,10 @@ export default defineComponent({
               description: i18n.t('form.message.error'),
             })
           })
+      } else {
+        toast.warning({
+          description: i18n.t('form.validationErrorMessages.warning'),
+        })
       }
     }
 
