@@ -29,10 +29,11 @@
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { useInputValidator } from '~/composables/useValidator'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
-import { useInputValidator } from '~/composables/useValidator'
 
 export default defineComponent({
   name: 'PvTextArea',
@@ -98,10 +99,11 @@ export default defineComponent({
     'input',
   ],
   setup(props, { emit }) {
+    const sanitizer = useSanitizer()
     const internalValue = computed({
       get: () => props.value,
       set: (newVal) => {
-        emit('input', newVal)
+        emit('input', sanitizer.clear(newVal))
       },
     })
 
