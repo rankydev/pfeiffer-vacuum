@@ -17,6 +17,8 @@ import {
 // only set to true during LSG build. Otherwise should default to false
 const isStorybook = process.env.STORYBOOK || false
 const baseURL = process.env.BASE_URL || 'http://localhost:3000'
+const regionBase =
+  process.env.CURRENT_REGION_CODE || process.env.DEFAULT_REGION_CODE
 
 export default {
   srcDir: '',
@@ -72,9 +74,7 @@ export default {
 
   ...(!isStorybook && {
     router: {
-      base: `/${
-        process.env.CURRENT_REGION_CODE || process.env.DEFAULT_REGION_CODE
-      }/`,
+      base: `/${regionBase}/`,
       extendRoutes(routes) {
         // add root page to the routed object
         routes.push({
@@ -185,9 +185,7 @@ export default {
 
   // TXP-CMS Storyblok Configuration, see: https://txp-cms.dev/integrations/storyblok
   storyblok: {
-    endpoint: `${baseURL}/${
-      process.env.CURRENT_REGION_CODE || process.env.DEFAULT_REGION_CODE
-    }${PATH_STORYBLOK_API}`,
+    endpoint: `${baseURL}/${regionBase}${PATH_STORYBLOK_API}`,
     accessToken: process.env.STORYBLOK_ACCESS_TOKEN,
     version: process.env.STORYBLOK_VERSION,
     defaultLanguage: defaultLanguageCode,
@@ -223,7 +221,7 @@ export default {
     DEFAULT_LANGUAGE_CODE: defaultLanguageCode,
     REGION_CODES: process.env.REGION_CODES || 'global',
     DEFAULT_REGION_CODE: process.env.DEFAULT_REGION_CODE || 'global',
-    CURRENT_REGION_CODE: process.env.CURRENT_REGION_CODE || 'global',
+    CURRENT_REGION_CODE: regionBase || 'global',
     USERCENTRICS_PRIVACY_PATH: process.env.USERCENTRICS_PRIVACY_PATH,
     GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
     // keycloak
@@ -284,7 +282,7 @@ export default {
       },
     },
     storyblok: {
-      baseURL: PATH_STORYBLOK_IMAGES,
+      baseURL: `/${regionBase}${PATH_STORYBLOK_IMAGES}`,
     },
   },
   // Will register file from project server/middleware directory to handle API calls

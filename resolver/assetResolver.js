@@ -1,4 +1,8 @@
 const IMAGE_SERVICE = '//img2.storyblok.com/'
+import {
+  getRelativeStoryblokAssetLink,
+  getProxyStoryBlokAssetLink,
+} from '~/utils/storyblok'
 
 const endsWith = (pattern) => (string) =>
   new RegExp(`${pattern}$`, 'i').test(string)
@@ -21,10 +25,13 @@ export const render = ({ node, assets = [] }) => {
 
   if (isImage(node)) {
     if (node.filename && node.filename.startsWith(IMAGE_SERVICE)) {
-      return node
+      return node // TODO: cannot find a image which has this case...
     }
 
-    node.originalFilename = node.filename
+    // this one is used as "normal" asset url. But now using our proxy instead of storyblok url
+    node.originalFilename = getProxyStoryBlokAssetLink(node.filename)
+    // this relative path should be used for nuxt-image. It has its own base url in nuxt.config.js
+    node.originalFilenameRelative = getRelativeStoryblokAssetLink(node.filename)
     node.originalResolution = getImageResolution(node.filename)
   }
 
