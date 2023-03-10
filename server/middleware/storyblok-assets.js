@@ -16,4 +16,7 @@ export default createProxyMiddleware({
   changeOrigin: true,
   agent,
   pathRewrite: { [`^(/(${regionsForRegex}))?${PATH_STORYBLOK_ASSETS}`]: '/' },
+  onProxyReq: (proxyReq) => {
+    proxyReq.removeHeader('cookie')
+  },
 })
