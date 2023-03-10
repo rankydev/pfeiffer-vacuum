@@ -36,6 +36,10 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
       {
+        type: 'application/javascript',
+        innerHTML: `window.UC_UI_DOMAINS = { crossDomainConsentSharingIFrame: '${baseURL}/${process.env.DEFAULT_REGION_CODE}/cross-domain-bridge.html' };`,
+      },
+      {
         src: 'https://app.usercentrics.eu/browser-ui/latest/loader.js',
         id: 'usercentrics-cmp',
         'data-settings-id': process.env.USERCENTRICS_ID,
@@ -335,10 +339,14 @@ export default {
           '*.usercentrics.eu',
           '*.storyblok.com',
           'www.googletagmanager.com',
+          'www.google-analytics.com',
+          'api.privacyhub.pro',
         ],
         'connect-src': [
           "'self'",
           '*.usercentrics.eu',
+          'region1.analytics.google.com', // google analytics
+          '*.doubleclick.net', // google analytics
           '*.storyblok.com', // TODO Should be removed with PVWEB-955 since we don't want links to Storyblok directly
           'sso.pfeiffer-vacuum.com',
         ],

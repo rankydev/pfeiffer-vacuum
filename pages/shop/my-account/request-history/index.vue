@@ -145,7 +145,7 @@ export default defineComponent({
                 '/' +
                 request.code
               }`,
-              target: '_blank',
+              target: '_self',
             },
           ]
 

@@ -9,7 +9,7 @@
         <div class="knowledge-modal__content">
           <div v-if="!isMobile" class="knowledge-modal__registration-form">
             <CreateAccount
-              :headline="$t('registration.registrationModal.basisRegistration')"
+              headline="registration.registrationModal.basisRegistration"
               :description="
                 $t(
                   'registration.registrationModal.basisRegistrationDescription'
@@ -50,6 +50,7 @@
 </template>
 <script>
 import { computed, ref, useContext } from '@nuxtjs/composition-api'
+import Button from '~/components/atoms/Button/Button'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
 import CreateAccount from '~/components/molecules/CreateAccount/CreateAccount'
 import ContentCTABox from '~/components/molecules/ContentCTABox/ContentCTABox'
@@ -60,7 +61,13 @@ import { useVuelidate } from '@vuelidate/core'
 
 export default {
   name: 'KnowledgeModal',
-  components: { GenericModal, CreateAccount, ContentCTABox, ContentWrapper },
+  components: {
+    Button,
+    GenericModal,
+    CreateAccount,
+    ContentCTABox,
+    ContentWrapper,
+  },
   props: {
     isOpen: {
       type: Boolean,
