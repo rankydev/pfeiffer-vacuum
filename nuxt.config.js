@@ -337,10 +337,14 @@ export default {
           "'unsafe-eval'",
           '*.usercentrics.eu',
           'www.googletagmanager.com',
+          'www.google-analytics.com',
+          'api.privacyhub.pro',
         ],
         'connect-src': [
           "'self'",
           '*.usercentrics.eu',
+          'region1.analytics.google.com', // google analytics
+          '*.doubleclick.net', // google analytics
           '*.storyblok.com', // TODO Should be removed with PVWEB-955 since we don't want links to Storyblok directly
           'sso.pfeiffer-vacuum.com',
         ],
