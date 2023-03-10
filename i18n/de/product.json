@@ -143,10 +143,6 @@
       "text": "Bitte kommen Sie später wieder oder kontaktieren Sie unseren",
       "link": "Kundendienst."
     },
-    "noDownloadsAvailable": "Wir konnten keine Downloads laden.",
-    "loadingScreen": {
-      "multiProductHeadline": "Produkte werden geladen...",
-      "singleProductHeadline": "Produkt wird geladen..."
-    }
+    "noDownloadsAvailable": "Wir konnten keine Downloads laden."
   }
 }

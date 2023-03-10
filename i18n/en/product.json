@@ -144,10 +144,6 @@
       "text": "Please come back later or contact",
       "link": "customer support."
     },
-    "noDownloadsAvailable": "We could not load any downloads.",
-    "loadingScreen": {
-      "multiProductHeadline": "Products are loaded...",
-      "singleProductHeadline": "Product is loading..."
-    }
+    "noDownloadsAvailable": "We could not load any downloads."
   }
 }

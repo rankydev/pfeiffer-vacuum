@@ -67,10 +67,6 @@
       "text": "请稍后回来或联系",
       "link": "客户支持。"
     },
-    "noDownloadsAvailable": "我们无法加载任何下载内容。",
-    "loadingScreen": {
-      "multiProductHeadline": "产品加载中...",
-      "singleProductHeadline": "产品正在加载..."
-    }
+    "noDownloadsAvailable": "我们无法加载任何下载内容。"
   }
 }
