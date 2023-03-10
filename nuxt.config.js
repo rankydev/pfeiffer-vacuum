@@ -36,6 +36,10 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
       {
+        type: 'application/javascript',
+        innerHTML: `window.UC_UI_DOMAINS = { crossDomainConsentSharingIFrame: '${baseURL}/${process.env.DEFAULT_REGION_CODE}/cross-domain-bridge.html' };`,
+      },
+      {
         src: 'https://app.usercentrics.eu/browser-ui/latest/loader.js',
         id: 'usercentrics-cmp',
         'data-settings-id': process.env.USERCENTRICS_ID,

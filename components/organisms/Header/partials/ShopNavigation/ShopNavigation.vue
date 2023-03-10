@@ -52,6 +52,7 @@
     </Link>
 
     <CartOverlay :is-open="isOverlayOpen" @close="closeOverlay" />
+    <ShoppingListOverlay />
   </div>
 </template>
 
@@ -73,6 +74,7 @@ import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue
 import MyAccountNavigation from '~/components/organisms/MyAccount/partials/MyAccountNavigation/MyAccountNavigation.vue'
 import Popup from '~/components/atoms/Popup/Popup.vue'
 import { storeToRefs } from 'pinia'
+import ShoppingListOverlay from '~/components/molecules/ShoppingListOverlay/ShoppingListOverlay.vue'
 
 export default defineComponent({
   components: {
@@ -81,6 +83,7 @@ export default defineComponent({
     LoadingSpinner,
     MyAccountNavigation,
     Popup,
+    ShoppingListOverlay,
   },
   setup() {
     const router = useRouter()
