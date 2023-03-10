@@ -13,15 +13,16 @@ export const useOciStore = defineStore('oci', () => {
   const { CURRENT_REGION_CODE } = $config
   const isOciPage = ref(CURRENT_REGION_CODE === 'oci')
 
-  const hookUrl = ref(getCookie(`oci.${OCI_HOOK_URL}`, ''))
+  const hookUrl = ref(getCookie(`oci.${OCI_HOOK_URL}`))
   const returnTarget = ref(getCookie(`oci.${OCI_RETURN_TARGET}`, '_self'))
-  const customerId = ref(getCookie(`oci.${OCI_CUSTOMER_ID}`, ''))
+  const customerId = ref(getCookie(`oci.${OCI_CUSTOMER_ID}`))
 
   const savelyEncodedHookUrl = computed(() => {
-    // NOTE: this logic is migratet 1:1 from PVAC
     let targetUrl = hookUrl.value
+    if (!targetUrl) return ''
     let saveHookUrl = ''
 
+    // NOTE: this logic is migratet 1:1 from PVAC
     // If the hook url provided by SAP does contain another url a query parameter
     // we need to seperate this query parameter and encode it seperately, otherwise
     // SAP will not redirect the data correctly
