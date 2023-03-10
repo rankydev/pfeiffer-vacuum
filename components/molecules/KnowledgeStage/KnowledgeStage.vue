@@ -31,7 +31,6 @@
                 date
                 :asset-url="assetUrl"
                 :is-detail-page="isDetailPage"
-                @openModal="toggleModal(true)"
               />
             </div>
           </div>

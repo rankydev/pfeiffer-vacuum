@@ -13,19 +13,21 @@
         <div class="knowledge-content__results">
           <ContentWrapper>
             <div class="knowledge-content__top-actions">
-              <div class="knowledge-content__filters">
-                <PvSelect
-                  v-for="filter in filterEntries"
-                  :key="filter.code"
-                  :value="(filter.values || []).filter((e) => e.selected)"
-                  option-label="name"
-                  :placeholder="filter.name"
-                  :multiple="true"
-                  :options="filter.values || []"
-                  class="knowledge-content__multiselect"
-                  @input="handleFilterInput(filter.code, $event)"
-                />
-              </div>
+              <FilterModal label="Filter">
+                <div class="knowledge-content__filters">
+                  <PvSelect
+                    v-for="filter in filterEntries"
+                    :key="filter.code"
+                    :value="(filter.values || []).filter((e) => e.selected)"
+                    option-label="name"
+                    :placeholder="filter.name"
+                    :multiple="true"
+                    :options="filter.values || []"
+                    class="knowledge-content__multiselect"
+                    @input="handleFilterInput(filter.code, $event)"
+                  />
+                </div>
+              </FilterModal>
               <div class="knowledge-content__search-input">
                 <SearchInput
                   :value="searchTerm"
@@ -49,6 +51,7 @@
         </div>
       </LoadingSpinner>
     </ContentWrapper>
+    <KnowledgeModal :is-open="isModalOpen" @closeModal="toggleModal(false)" />
   </div>
 </template>
 <script>
@@ -70,6 +73,8 @@ import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSe
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import SearchInput from '~/components/molecules/SearchInput/SearchInput'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
+import FilterModal from '~/components/molecules/FilterModal/FilterModal'
+import KnowledgeModal from '~/components/molecules/KnowledgeModal/KnowledgeModal'
 import { storeToRefs } from 'pinia'
 
 export default {
@@ -84,6 +89,8 @@ export default {
     LoadingSpinner,
     SearchInput,
     PvSelect,
+    FilterModal,
+    KnowledgeModal,
   },
   setup() {
     const route = useRoute()
@@ -97,6 +104,7 @@ export default {
       resultHeadline,
       backLink,
       filterEntries,
+      isModalOpen,
     } = storeToRefs(knowledgeStore)
 
     const searchTerm = computed(() => route.value.query.searchTerm || '')
@@ -164,6 +172,8 @@ export default {
       })
     }
 
+    const toggleModal = (state) => (isModalOpen.value = state)
+
     onBeforeMount(knowledgeSearch)
     onServerPrefetch(knowledgeSearch)
     watch(route, () => {
@@ -188,6 +198,7 @@ export default {
       handlePageSizeChange,
       handleTermChange,
       handleFilterInput,
+      toggleModal,
     }
   },
 }
@@ -205,17 +216,31 @@ export default {
 
   &__top-actions {
     @apply tw-flex tw-justify-between;
+    @apply tw-flex-col;
     @apply tw-mb-4;
     @apply tw-gap-4;
+
+    @screen md {
+      @apply tw-flex-row;
+    }
   }
 
   &__filters {
     @apply tw-flex;
+    @apply tw-flex-col;
     @apply tw-gap-2;
+
+    @screen md {
+      @apply tw-flex-row;
+    }
   }
 
   &__search-input {
-    @apply tw-w-64;
+    @apply tw-w-full;
+
+    @screen md {
+      @apply tw-w-64;
+    }
   }
 
   &__bottom-actions {
@@ -224,24 +249,26 @@ export default {
   }
 
   &__multiselect {
-    @apply tw-inline-block;
+    @screen md {
+      @apply tw-inline-block;
 
-    .vs__dropdown-toggle {
-      @apply tw-p-2;
-      @apply tw-text-xs;
-    }
-
-    &--name {
-      input {
-        @apply tw-w-0;
-
-        &:focus {
-          @apply tw-w-0;
-        }
+      .vs__dropdown-toggle {
+        @apply tw-p-2;
+        @apply tw-text-xs;
       }
 
-      li {
-        @apply tw-whitespace-nowrap;
+      &--name {
+        input {
+          @apply tw-w-0;
+
+          &:focus {
+            @apply tw-w-0;
+          }
+        }
+
+        li {
+          @apply tw-whitespace-nowrap;
+        }
       }
     }
   }

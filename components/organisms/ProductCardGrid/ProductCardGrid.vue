@@ -1,6 +1,11 @@
 <template>
   <div class="product-card-grid">
-    <ul class="product-card-grid__products">
+    <ul
+      class="product-card-grid__products"
+      :class="`product-card-grid__products--${
+        useKnowledgeCard ? 'knowledge' : 'category'
+      }`"
+    >
       <li v-for="(product, index) in products" :key="index">
         <component
           :is="useKnowledgeCard ? 'KnowledgeCard' : 'ProductCard'"
@@ -42,7 +47,13 @@ export default {
     @apply tw-grid tw-grid-cols-1 tw-gap-4;
 
     @screen md {
-      @apply tw-grid-cols-4;
+      @apply tw-grid-cols-3;
+    }
+
+    &--knowledge {
+      @screen lg {
+        @apply tw-grid-cols-4;
+      }
     }
   }
 }

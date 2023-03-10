@@ -11,6 +11,7 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
   const route = useRoute()
 
   const isLoading = ref(false)
+  const isModalOpen = ref(false)
   const searchResults = ref({})
 
   /**
@@ -103,6 +104,7 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
     resultHeadline,
     backLink,
     filterEntries,
+    isModalOpen,
 
     registerForWebinar,
     getHybrisDetails,

@@ -45,6 +45,7 @@
           :type="type"
           :date="date"
           :asset-url="assetUrl"
+          :prevent-full-width="true"
         />
       </div>
     </template>

@@ -26,7 +26,6 @@
       date
       :asset-url="hybrisContent.assetURL"
       :is-detail-page="true"
-      @openModal="toggleModal(true)"
     />
     <KnowledgeModal :is-open="isModalOpen" @closeModal="toggleModal(false)" />
   </div>
@@ -44,6 +43,7 @@ import { useRoute } from '@nuxtjs/composition-api'
 import KnowledgeStage from '~/components/molecules/KnowledgeStage/KnowledgeStage'
 import KnowledgeAssetButton from '~/components/molecules/KnowledgeAssetButton/KnowledgeAssetButton'
 import KnowledgeModal from '~/components/molecules/KnowledgeModal/KnowledgeModal'
+import { storeToRefs } from 'pinia'
 
 export default {
   name: 'KnowledgeDetails',
@@ -57,9 +57,9 @@ export default {
   setup(props) {
     const route = useRoute()
     const { content } = toRefs(props)
-    const isModalOpen = ref(false)
 
     const knowledgeStore = useKnowledgeStore()
+    const { isModalOpen } = storeToRefs(knowledgeStore)
     const hybrisContent = ref({})
 
     const isWhitepaper = computed(

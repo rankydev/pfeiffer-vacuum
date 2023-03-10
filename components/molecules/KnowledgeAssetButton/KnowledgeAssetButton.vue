@@ -1,5 +1,8 @@
 <template>
-  <div class="knowledge-asset-button">
+  <div
+    class="knowledge-asset-button"
+    :class="{ 'knowledge-asset-button': !preventFullWidth }"
+  >
     <!-- register for webinar button -->
     <Button
       v-if="isFutureEvent && isWebinar"
@@ -76,9 +79,12 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    preventFullWidth: {
+      type: Boolean,
+      default: false,
+    },
   },
-  emits: ['openModal'],
-  setup(props, { emit }) {
+  setup(props) {
     const { i18n } = useContext()
     const toast = useToast()
 
@@ -87,6 +93,7 @@ export default defineComponent({
 
     const knowledgeStore = useKnowledgeStore()
     const { registerForWebinar } = knowledgeStore
+    const { isModalOpen } = storeToRefs(knowledgeStore)
 
     const buttonLabel = ref(
       props.isDetailPage ? i18n.t('knowledge.webinar.button.join') : ''
@@ -102,7 +109,9 @@ export default defineComponent({
       window.open(props.assetUrl, '_blank').focus()
     }
 
-    const showLoginModal = () => emit('openModal')
+    const showLoginModal = () => {
+      isModalOpen.value = true
+    }
 
     const registerWebinar = async () => {
       try {
@@ -136,6 +145,8 @@ export default defineComponent({
       isFutureEvent,
       hasAsset,
       isLoggedIn,
+      isModalOpen,
+
       openAsset,
       showLoginModal,
       registerWebinar,
@@ -146,8 +157,11 @@ export default defineComponent({
 <style lang="scss" scoped>
 .knowledge-asset-button {
   @apply tw-flex tw-flex-col;
-  @apply tw-w-full;
   @apply tw-gap-4;
+
+  &--full {
+    @apply tw-w-full;
+  }
 
   &__button {
     @apply tw-flex;
