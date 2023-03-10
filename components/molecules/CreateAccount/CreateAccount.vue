@@ -1,7 +1,7 @@
 <template>
   <div class="create-account">
     <h2>
-      {{ headline }}
+      {{ $t(headline) }}
     </h2>
 
     <p v-if="description">{{ description }}</p>
