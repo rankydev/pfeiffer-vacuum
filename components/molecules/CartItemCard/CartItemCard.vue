@@ -1,7 +1,10 @@
 <template>
   <div
     class="cart-item-card"
-    :class="{ 'cart-item-card-desktop': !isMiniCart }"
+    :class="{
+      'cart-item-card-desktop': !isMiniCart,
+      'cart-item-card--edit-mode': editMode,
+    }"
   >
     <div v-if="productImage" class="cart-item-card-image">
       <Link :href="url">
@@ -21,7 +24,7 @@
       </p>
     </div>
     <Button
-      v-if="isMiniCart"
+      v-if="details && isMiniCart"
       class="cart-item-card-details-button"
       variant="secondary"
       shape="plain"
@@ -29,15 +32,17 @@
       :label="$t('cart.details')"
       @click="toggleDetails"
     />
-    <div v-if="isDetailsExpanded && details" class="cart-item-card-details">
+    <div v-if="details && isDetailsExpanded" class="cart-item-card-details">
       <template v-for="detail in details">
-        <Tag
-          v-for="(variant, id) in detail.variationValues"
-          :key="detail.code + id"
-          class="cart-item-card-details__detail"
-          :label="detail.name"
-          :content="variant.displayValue"
-        />
+        <template v-for="(variant, id) in detail.variationValues">
+          <Tag
+            v-if="variant.selected"
+            :key="detail.code + id"
+            class="cart-item-card-details__detail"
+            :label="detail.name"
+            :content="variant.displayValue"
+          />
+        </template>
       </template>
     </div>
     <PromotionLabel
@@ -46,12 +51,19 @@
       :subline="getPromotion"
     />
     <PvInput
+      v-if="editMode"
       v-model="quantityModel"
       input-type="number"
       class="cart-item-card-quantity"
       :disabled="isInactive"
       @input="updateQuantity"
     />
+    <div v-else class="cart-item-card-quantity cart-item-card-quantity--fixed">
+      <span class="cart-item-card-quantity__label">
+        {{ $t('cart.quantity') }}
+      </span>
+      {{ quantity }}
+    </div>
     <div
       v-if="!isLoggedIn || !isPriceVisible"
       class="cart-item-card-price-error"
@@ -74,6 +86,7 @@
       </span>
     </div>
     <Button
+      v-if="isLoggedIn"
       class="cart-item-card-add-article"
       variant="secondary"
       shape="plain"
@@ -83,6 +96,7 @@
     />
     <Button
       class="cart-item-card-delete"
+      :class="{ 'cart-item-card-delete-invisible': !editMode }"
       variant="secondary"
       shape="plain"
       icon="delete"
@@ -98,15 +112,17 @@ import {
   ref,
   toRefs,
   useContext,
-  watch,
 } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
+import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
 import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useDebounceFn } from '@vueuse/core'
 
 export default defineComponent({
   name: 'CartItemCard',
@@ -116,13 +132,20 @@ export default defineComponent({
     ResponsiveImage,
     PvInput,
     Tag,
+    PromotionLabel,
+    LoginToSeePricesLabel,
   },
   props: {
     product: {
       type: Object,
       required: true,
     },
-    price: {
+    basePrice: {
+      type: Object,
+      default: null,
+      required: false,
+    },
+    priceTotal: {
       type: Object,
       default: null,
       required: false,
@@ -142,12 +165,17 @@ export default defineComponent({
       default: false,
       required: false,
     },
+    editMode: {
+      type: Boolean,
+      default: true,
+    },
   },
-  emits: ['addToShoppingList', 'delete', 'add', 'remove'],
+  emits: ['addToShoppingList', 'update', 'delete'],
   setup(props, { emit }) {
     const { app, i18n } = useContext()
     const userStore = useUserStore()
-    const { price, isMiniCart, quantity, product, promotion } = toRefs(props)
+    const { basePrice, isMiniCart, quantity, product, promotion } =
+      toRefs(props)
     const quantityModel = ref(quantity.value)
     const {
       isApprovedUser,
@@ -159,7 +187,7 @@ export default defineComponent({
 
     const noPriceReason = computed(() => {
       const path = 'product.login.loginToSeePrices.'
-      if (!price.value) return i18n.t('product.priceOnRequest')
+      if (!basePrice.value) return i18n.t('product.priceOnRequest')
       if (isLeadUser.value) return i18n.t(path + 'lead')
       if (isOpenUser.value) return i18n.t(path + 'open')
       if (isRejectedUser.value) return i18n.t(path + 'rejected')
@@ -167,26 +195,24 @@ export default defineComponent({
     })
 
     const isPriceVisible = computed(
-      () => !!(price.value && isApprovedUser.value)
+      () => !!(basePrice.value && isApprovedUser.value)
     )
 
     const getPriceString = (priceValue) => {
-      if (price.value === null) {
+      if (basePrice.value === null || !priceValue) {
         return '-'
       }
-      return `€ ${priceValue.toFixed(2).toLocaleString()}`
+      return priceValue
     }
 
     const productPrice = computed(() => {
-      return getPriceString(price.value?.value)
+      return getPriceString(basePrice?.value?.formattedValue)
     })
 
-    const totalPrice = computed(() => {
-      return getPriceString(quantityModel.value * price.value?.value)
-    })
+    const totalPrice = computed(() => props.priceTotal?.formattedValue || '')
 
     const productImage = computed(() => {
-      return product.value?.images[0]
+      return product.value?.images?.[0] || null
     })
 
     const productName = computed(() => {
@@ -206,17 +232,19 @@ export default defineComponent({
       isDetailsExpanded.value = !isDetailsExpanded.value
     }
     const addToShoppingList = () => {
-      emit('addToShoppingList', product.value)
+      emit('addToShoppingList', {
+        ...product.value,
+        quantity: quantityModel.value,
+      })
     }
     const deleteFromCart = () => {
-      emit('delete', product.value)
+      emit('delete', { ...product.value, quantity: quantityModel.value })
     }
-    const addToCart = () => {
-      emit('add', product.value)
-    }
-    const removeFromCart = () => {
-      emit('remove', product.value)
-    }
+
+    const updateCartQuantity = useDebounceFn(() => {
+      emit('update', { ...product.value, quantity: quantityModel.value })
+    }, 500)
+
     const url = computed(() =>
       app.localePath({
         name: 'shop-products-product',
@@ -236,14 +264,8 @@ export default defineComponent({
       } else {
         quantityModel.value = 1
       }
+      updateCartQuantity()
     }
-    watch(quantityModel, (newValue, oldValue) => {
-      if (newValue > oldValue) {
-        addToCart()
-      } else {
-        removeFromCart()
-      }
-    })
 
     return {
       quantityModel,
@@ -271,9 +293,12 @@ export default defineComponent({
 
 <style lang="scss">
 .cart-item-card {
-  @apply tw-grid tw-grid-cols-12 tw-auto-rows-auto;
-  @apply tw-border-b tw-border-b-pv-grey-80;
-  @apply tw-mt-6;
+  @apply tw-grid;
+  grid-template-columns: repeat(8, 1fr) 13.2% 10.87% 12.4%;
+  @apply tw-auto-rows-auto;
+  @apply tw-border-b-2 tw-border-b-pv-grey-80;
+  @apply tw-pt-6;
+  @apply tw-text-pv-grey-16;
 
   &-image {
     @apply tw-row-start-1 tw-row-end-2;
@@ -298,14 +323,6 @@ export default defineComponent({
     }
   }
 
-  &-quantity {
-    @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-1 tw-col-end-5;
-    @apply tw-mt-4;
-    @apply tw-flex;
-    @apply tw-pr-1;
-  }
-
   &-price-error {
     @apply tw-row-start-2 tw-row-end-3;
     @apply tw-col-start-5 tw-col-end-13;
@@ -319,17 +336,22 @@ export default defineComponent({
     }
   }
 
-  &-price {
+  &-quantity,
+  &-price,
+  &-total-price {
     @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-5 tw-col-end-13;
-    @apply tw-leading-6;
     @apply tw-flex;
+  }
+
+  &-price,
+  &-total-price {
+    @apply tw-leading-6;
+    @apply tw-col-start-5 tw-col-end-13;
     @apply tw-ml-auto;
-    @apply tw-mt-4;
 
     &__label {
       @apply tw-text-xs;
-      @apply tw-ml-2;
+      @apply tw-text-pv-grey-48;
     }
 
     &__price {
@@ -337,22 +359,26 @@ export default defineComponent({
     }
   }
 
-  &-total-price {
-    @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-5 tw-col-end-13;
-    @apply tw-leading-6;
-    @apply tw-flex;
-    @apply tw-mt-auto;
-    @apply tw-ml-auto;
+  &-quantity {
+    @apply tw-col-start-1 tw-col-end-5;
+    @apply tw-mt-4;
+    @apply tw-pr-1;
+  }
+
+  &-price {
+    @apply tw-mt-4;
 
     &__label {
-      @apply tw-text-xs;
+      @apply tw-ml-2;
     }
+  }
+
+  &-total-price {
+    @apply tw-mt-auto;
 
     &__price {
       @apply tw-text-base;
       @apply tw-font-bold;
-      @apply tw-ml-2;
     }
   }
 
@@ -361,6 +387,11 @@ export default defineComponent({
     @apply tw-col-start-12 tw-col-end-13;
     @apply tw-mb-auto;
     @apply tw-ml-auto;
+    padding: 0 !important;
+
+    &-invisible {
+      @apply tw-hidden;
+    }
   }
 
   &-details-button {
@@ -415,6 +446,15 @@ export default defineComponent({
     @apply tw-mb-3;
     @apply tw-mt-4;
   }
+
+  &-add-to-cart {
+    @apply tw-row-start-6 tw-row-end-7;
+    @apply tw-col-start-1 tw-col-end-13;
+    @apply tw-w-fit;
+    @apply tw-mx-auto;
+    @apply tw-mb-3;
+    @apply tw-mt-4;
+  }
 }
 
 .cart-item-card-desktop {
@@ -452,6 +492,28 @@ export default defineComponent({
     }
 
     &-quantity {
+      &--fixed {
+        @apply tw-items-center;
+        @apply tw-justify-start;
+        @apply tw-w-full;
+        @apply tw-mt-4;
+        @apply tw-h-12;
+
+        @screen lg {
+          @apply tw-justify-center;
+
+          .cart-item-card-quantity__label {
+            @apply tw-hidden;
+          }
+        }
+      }
+
+      &__label {
+        @apply tw-text-xs;
+        @apply tw-mr-2;
+        @apply tw-text-pv-grey-48;
+      }
+
       @screen lg {
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-9 tw-col-end-10;
@@ -479,7 +541,7 @@ export default defineComponent({
         @apply tw-col-start-10 tw-col-end-11;
         @apply tw-text-lg;
         @apply tw-leading-7;
-        @apply tw-mx-auto;
+        margin-left: unset;
       }
 
       &__label {
@@ -498,8 +560,8 @@ export default defineComponent({
       @screen lg {
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-11 tw-col-end-12;
-        @apply tw-mt-auto;
-        @apply tw-mx-auto;
+        margin-left: unset;
+        @apply tw-my-auto;
       }
 
       &__label {

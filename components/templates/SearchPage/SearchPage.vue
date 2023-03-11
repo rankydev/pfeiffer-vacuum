@@ -28,6 +28,12 @@
               :back-button-override-query-params="{ currentPage: 1 }"
               class="search-page__result-headline"
             />
+            <div class="search-page__search-input">
+              <SearchInputPage
+                v-if="showDocumentSearchTab"
+                @searchTermChange="(value) => (searchTerm = value)"
+              />
+            </div>
           </ContentWrapper>
 
           <GenericTabs
@@ -40,9 +46,8 @@
           >
             <template #activeTabContent>
               <div class="search-page__search-result">
-                <ContentWrapper>
+                <ContentWrapper v-if="currentTabSelected === 'products'">
                   <SearchResult
-                    v-if="currentTabSelected === 'products'"
                     persist-category-name-as-query-param
                     v-bind="{
                       products,
@@ -53,9 +58,9 @@
                       sorts,
                     }"
                   />
-                  <div v-else>
-                    <DocumentSearchResult />
-                  </div>
+                </ContentWrapper>
+                <ContentWrapper v-else no-padding>
+                  <DocumentSearchResult />
                 </ContentWrapper>
               </div>
             </template>
@@ -103,6 +108,7 @@ import {
   useRouter,
   useRoute,
   useContext,
+  ref,
 } from '@nuxtjs/composition-api'
 
 import Page from '~/components/templates/Page/Page'
@@ -113,6 +119,7 @@ import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline
 import SearchResult from '~/components/organisms/SearchResult/SearchResult'
 import DocumentSearchResult from '~/components/organisms/DocumentSearchResult/DocumentSearchResult'
 import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
+import SearchInputPage from '~/components/molecules/SearchInputPage/SearchInputPage'
 
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { useErrorHandler } from '~/composables/useErrorHandler'
@@ -130,6 +137,7 @@ export default defineComponent({
     OnPageNavigation,
     ResultHeadline,
     GenericTabs,
+    SearchInputPage,
     SearchResult,
     DocumentSearchResult,
   },
@@ -217,8 +225,7 @@ export default defineComponent({
     /**
      * category data
      */
-    const headline = computed(() => categoryStore.categoryName)
-    const searchTerm = computed(() => categoryStore.searchTerm || '')
+    const searchTerm = ref(route.value.query.searchTerm || '')
     const link = computed(() => categoryStore.parentCategoryPath)
     const count = computed(() => categoryStore.result?.pagination?.totalResults)
     const products = computed(() => categoryStore.result?.products)
@@ -228,15 +235,18 @@ export default defineComponent({
     const currentQuery = computed(() => categoryStore.result?.currentQuery)
     const sorts = computed(() => categoryStore.result?.sorts)
     const metaData = computed(() => categoryStore.metaData)
+    const headline = computed(() =>
+      route.value.query?.searchType === 'documents'
+        ? context.i18n.t('category.documents.allDocuments')
+        : categoryStore.categoryName
+    )
 
     return {
       slug,
       fallbackSlug,
       language,
-
       hasLink,
       href,
-
       headline,
       searchTerm,
       link,
@@ -248,7 +258,6 @@ export default defineComponent({
       currentQuery,
       sorts,
       metaData,
-
       currentTabSelected,
       tabNavigationItems,
       selectTab,
@@ -277,8 +286,25 @@ export default defineComponent({
     }
   }
 
-  &__search-result {
-    @apply tw-bg-pv-grey-96;
+  &__search {
+    &-result {
+      @apply tw-bg-pv-grey-96;
+    }
+
+    &-input {
+      @apply tw-relative;
+      @apply tw-mb-4;
+      @apply tw-mx-auto;
+
+      @screen md {
+        max-width: 534px;
+      }
+
+      @screen lg {
+        @apply tw-mb-8;
+        max-width: 672px;
+      }
+    }
   }
 }
 

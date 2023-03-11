@@ -1,20 +1,14 @@
 import PriceInformation from '~/components/molecules/PriceInformation/PriceInformation.vue'
-import {
-  currentCartSpecificPrices,
-  currentCartDelivery,
-} from '~/components/molecules/PriceInformation/PriceInformation.stories.content'
+import { informationType } from '~/components/molecules/PriceInformation/PriceInformation.stories.content'
 
 export default {
-  title: 'Molecules/m_143 PriceInformation',
+  title: 'Molecules/m_145 PriceInformation',
   component: PriceInformation,
   parameters: {
     docs: {
       description: {
         component:
-          'This component is intended to display further information about the price in the cart.',
-      },
-      source: {
-        code: '<PriceInformation v-bind="{ currentCart }"  />',
+          'This component is intended to display further price or delivery information in the cart. The content is based on the prop "informationType". Provide a valid informationType to display the correct information. Valid types are: "price" and "delivery"',
       },
     },
   },
@@ -27,13 +21,11 @@ const Template = (args) => ({
   },
   template: `
   <div class="documentation-preview">
-    <PriceInformation v-bind="args"/>
+    <PriceInformation v-bind="args" />
   </div>
 `,
 })
 
-export const SpecificPrices = Template.bind({})
-SpecificPrices.args = { currentCart: currentCartSpecificPrices }
+export const Default = Template.bind({})
 
-export const Delivery = Template.bind({})
-Delivery.args = { currentCart: currentCartDelivery }
+Default.args = { informationType }

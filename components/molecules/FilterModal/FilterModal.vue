@@ -8,7 +8,7 @@
         shape="outlined"
         icon="filter_list"
         @click="isOpen = true"
-      ></Button>
+      />
       <GenericModal
         class="filter-modal"
         :is-open="isOpen"
@@ -30,7 +30,7 @@
               shape="filled"
               icon="filter_list"
               @click="close"
-            ></Button>
+            />
           </div>
         </div>
       </GenericModal>

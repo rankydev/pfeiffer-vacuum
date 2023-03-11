@@ -60,6 +60,15 @@ export default defineComponent({
   @apply tw-rounded-md;
   @apply tw-p-6;
   @apply tw-flex tw-flex-col;
+  @apply tw-w-full;
+
+  @screen md {
+    @apply tw-w-1/2;
+  }
+
+  @screen lg {
+    @apply tw-w-full;
+  }
 
   &__headline-with-icon {
     @apply tw-flex;

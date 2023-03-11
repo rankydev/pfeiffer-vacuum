@@ -2,7 +2,7 @@
   <picture
     v-if="src && !imageLoadingError"
     class="responsive-image"
-    :class="{ 'responsive-image--corners-rounded': rounded }"
+    :class="{ 'responsive-image__rounded': rounded }"
   >
     <source
       v-for="webpSource in webpSources"

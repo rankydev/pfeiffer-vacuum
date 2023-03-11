@@ -1,64 +1,66 @@
 <template>
-  <ContentCTABox :headline="headline" :description="description" />
+  <ContentCTABox
+    v-if="validType"
+    :headline="headline"
+    :description="description"
+  />
 </template>
 
 <script>
-import {
-  computed,
-  defineComponent,
-  toRefs,
-  useContext,
-} from '@nuxtjs/composition-api'
+import { computed, defineComponent, useContext } from '@nuxtjs/composition-api'
 import ContentCTABox from '~/components/molecules/ContentCTABox/ContentCTABox'
 
 export default defineComponent({
   name: 'PriceInformation',
   components: { ContentCTABox },
   props: {
-    currentCart: {
-      type: Object,
-      default: () => ({}),
+    informationType: {
+      type: String,
+      required: true,
     },
   },
   setup(props) {
     const { i18n } = useContext()
-    const { currentCart } = toRefs(props)
 
-    const isPriceInformation = computed(
-      () =>
-        !currentCart.value.hiddenUIElements.checkoutInformationSpecificPrices
-    )
-    const isDeliveryInformation = computed(
-      () => !currentCart.value.hiddenUIElements.checkoutInformationDelivery
-    )
+    const validType = computed(() => {
+      return (
+        props.informationType === 'price' ||
+        props.informationType === 'delivery'
+      )
+    })
+
+    const availableHeadlines = {
+      price: i18n.t('cart.priceInformationHeadline'),
+      delivery: i18n.t('cart.deliveryNote'),
+    }
+
+    const buildDescriptionObject = (key) => {
+      return {
+        component: 'Richtext',
+        richtext: i18n.t(`cart.${key}`),
+      }
+    }
+
+    const availableDescriptions = {
+      price: [
+        buildDescriptionObject('priceInformation1'),
+        buildDescriptionObject('priceInformation2'),
+      ],
+      delivery: [buildDescriptionObject('deliveryDetails')],
+    }
 
     const headline = computed(() => {
-      if (isPriceInformation.value)
-        return i18n.t('cart.priceInformationHeadline')
-
-      if (isDeliveryInformation.value) return i18n.t('cart.deliveryNote')
-
-      return ''
+      return validType.value ? availableHeadlines[props.informationType] : ''
     })
 
     const description = computed(() => {
-      if (isPriceInformation.value)
-        return [
-          { component: 'Richtext', richtext: i18n.t('cart.priceInformation1') },
-          { component: 'Richtext', richtext: i18n.t('cart.priceInformation2') },
-        ]
-
-      if (isDeliveryInformation.value)
-        return [
-          { component: 'Richtext', richtext: i18n.t('cart.deliveryDetails') },
-        ]
-
-      return ''
+      return validType.value ? availableDescriptions[props.informationType] : ''
     })
 
     return {
       headline,
       description,
+      validType,
     }
   },
 })

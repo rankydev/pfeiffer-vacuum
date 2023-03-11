@@ -38,6 +38,7 @@
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
@@ -135,10 +136,11 @@ export default defineComponent({
     'input',
   ],
   setup(props, { emit }) {
+    const sanitizer = useSanitizer()
     const internalValue = computed({
       get: () => props.value,
       set: (newVal) => {
-        emit('input', newVal)
+        emit('input', sanitizer.clear(newVal))
       },
     })
 
@@ -186,10 +188,10 @@ export default defineComponent({
     appearance: none;
 
     &:focus {
-      @apply tw-border-pv-black;
+      @apply tw-border-pv-grey-16;
       @apply tw-ring-0;
-      @apply tw-text-pv-black;
-      @apply tw-shadow-border-black;
+      @apply tw-text-pv-grey-16;
+      @apply tw-shadow-border-grey-16;
 
       // safari fix to prevent focus outline
       outline: 0;

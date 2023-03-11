@@ -2,6 +2,7 @@ import {
   computed,
   useContext,
   useRoute,
+  useRouter,
   onBeforeMount,
   onServerPrefetch,
   ssrRef,
@@ -20,6 +21,7 @@ export const useUserStore = defineStore('user', () => {
   const { logger } = useLogger('userStore')
   const toast = useToast()
   const ctx = useContext()
+  const router = useRouter()
   const route = useRoute()
   const userApi = useUserApi()
   const ociStore = useOciStore()
@@ -60,6 +62,13 @@ export const useUserStore = defineStore('user', () => {
       currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
   )
 
+  const userStatusTypeForInfoText = computed(() => {
+    if (isLeadUser.value) return 'lead'
+    if (isOpenUser.value) return 'open'
+    if (isRejectedUser.value) return 'rejected'
+    return 'undefined'
+  })
+
   const accountManagerData = ref(null)
 
   const loadAccountManagerData = async () => {
@@ -76,10 +85,26 @@ export const useUserStore = defineStore('user', () => {
   const userRegion = computed(() => userBillingAddress.value?.region || {})
 
   const changePasswordLink = computed(() => {
-    const keycloakBaseUrl = ctx.$config.KEYCLOAK_BASE_URL + 'realms/'
-    const keycloackRealm = ctx.$config.KEYCLOAK_REALM_NAME
-    const language = `kc_locale=${ctx.i18n.locale}`
-    return `${keycloakBaseUrl}${keycloackRealm}/account/password?${language}`
+    const { $config, i18n, app } = ctx
+    const { localePath } = app
+
+    const keycloakBaseUrl = $config.KEYCLOAK_BASE_URL + 'realms/'
+    const keycloackRealm = $config.KEYCLOAK_REALM_NAME
+    const keycloakClientId = $config.KEYCLOAK_CLIENT_ID
+    const language = `kc_locale=${i18n.locale}`
+
+    const url = encodeURIComponent(
+      joinURL(
+        $config.baseURL,
+        router?.options.base,
+        localePath({
+          path: route.value.path,
+          query: { ...route.value.query },
+        })
+      )
+    )
+
+    return `${keycloakBaseUrl}${keycloackRealm}/account/password?${language}&referrer=${keycloakClientId}&referrer_uri=${url}`
   })
 
   watch(auth, async (newAuth) => {
@@ -136,6 +161,57 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const register = async (data, isLiteRegistration = true) => {
+    const customerData = {
+      ...data.value.personalData,
+      ...data.value.companyData,
+      companyAddressCountryIso: data.value.personalData.address.country.isocode,
+      companyAddressRegion: data.value.personalData.address.region?.isocode,
+      companyAlreadyCustomer:
+        data.value.companyData?.companyAlreadyCustomer || false,
+    }
+
+    await userApi
+      .register(customerData)
+      .then(() => {
+        let successPagePath = '/shop/register/success'
+        if (isLiteRegistration) {
+          successPagePath += '?type=lite'
+        }
+        router.push(ctx.app.localePath(successPagePath))
+      })
+      .catch((err) => {
+        err?.data?.errors.forEach((error) => {
+          switch (error.type) {
+            case 'CustomerAlreadyExistsError':
+              toast.error({
+                description: ctx.i18n.t(
+                  'form.message.error.customerAlreadyExists'
+                ),
+              })
+              break
+            case 'CustomerInconsistentError':
+              toast.error({
+                description: ctx.i18n.t(
+                  'form.message.error.customerInconsistentError'
+                ),
+              })
+              break
+            case 'B2bRegistrationFailedError':
+              toast.error({
+                description: ctx.i18n.t('form.message.error.technicalError'),
+              })
+              break
+            default:
+              toast.error({
+                description: ctx.i18n.t('form.message.error.defaultError'),
+              })
+              break
+          }
+        })
+      })
+  }
+
   const addCompanyData = async (data) => {
     isLoading.value = true
     let res
@@ -166,7 +242,7 @@ export const useUserStore = defineStore('user', () => {
   const loadDeliveryAddresses = async () => {
     try {
       const result = await userApi.getUserDeliveryAddresses()
-      deliveryAddresses.value = {
+      const mappedAddresses = {
         addresses: result.addresses
           .map((item) => {
             return {
@@ -176,11 +252,14 @@ export const useUserStore = defineStore('user', () => {
           })
           .sort((a, b) => b.defaultShippingAddress - a.defaultShippingAddress),
       }
+      deliveryAddresses.value = mappedAddresses
+      return mappedAddresses.addresses
     } catch (e) {
       logger.error(
         `Error when fetching billing address for user. Returning empty object.`,
         e
       )
+      return null
     }
   }
 
@@ -190,10 +269,12 @@ export const useUserStore = defineStore('user', () => {
 
   const createDeliveryAddress = async (address) => {
     await userApi.createUserDeliveryAddress(address)
+    loadCurrentUser()
   }
 
   const updateDeliveryAddress = async (id, address) => {
     await userApi.updateUserDeliveryAddress(id, address)
+    loadCurrentUser()
   }
 
   const deleteDeliveryAddress = async (id) => {
@@ -212,6 +293,7 @@ export const useUserStore = defineStore('user', () => {
       await userApi.setUserDefaultDeliveryAddress(id)
       // refetch delivery addresses
       loadDeliveryAddresses()
+      loadCurrentUser()
     } catch (e) {
       logger.error(`Error when setting default delivery address.`, e)
       throw e
@@ -228,10 +310,10 @@ export const useUserStore = defineStore('user', () => {
   const login = async () => {
     logger.debug('login')
     const { i18n, app } = ctx
-    const { router, localePath } = app
+    const { localePath } = app
     const url = joinURL(
       window.location.origin,
-      router.options.base,
+      router?.options.base,
       localePath({
         path: route.value.path,
         query: { ...route.value.query, isLoginProcess: true },
@@ -255,8 +337,8 @@ export const useUserStore = defineStore('user', () => {
     } else {
       // redirect here, if no keycloak instance is available.
       const { app } = ctx
-      const { router, localePath } = app
-      return router.push(localePath('/'))
+      const { localePath } = app
+      return router?.push(localePath('/'))
     }
 
     isLoading.value = false
@@ -297,11 +379,13 @@ export const useUserStore = defineStore('user', () => {
     isOpenUser,
     isRejectedUser,
     isLoggedIn,
+    userStatusTypeForInfoText,
     isLoading,
     userBillingAddress,
     userCountry,
     userRegion,
     changePasswordLink,
+    keycloakInstance: computed(() => keycloakInstance.value),
 
     // actions
     loadCurrentUser,
@@ -317,6 +401,6 @@ export const useUserStore = defineStore('user', () => {
     setDefaultDeliveryAddress,
     getDeliveryAddressByID,
     loadAddressData,
-    register: userApi.register,
+    register,
   }
 })

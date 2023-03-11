@@ -61,9 +61,15 @@ export default defineComponent({
     const addressDataBasePath = context.app.localePath(
       'shop-my-account-address-data'
     )
+    const requestHistoryBasePath = context.app.localePath(
+      'shop-my-account-request-history'
+    )
     let path = route.value.path
     if (path.startsWith(addressDataBasePath)) {
       path = addressDataBasePath
+    }
+    if (path.startsWith(requestHistoryBasePath)) {
+      path = requestHistoryBasePath
     }
 
     const { buildSlugs } = useStoryblokSlugBuilder({ root: context })

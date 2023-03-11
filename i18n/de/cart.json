@@ -1,15 +1,12 @@
 {
   "overall1": "Gesamt",
   "overall2": "(Netto)",
-  "orderDiscount": "Order discount",
+  "orderDiscount": "Rabatt",
   "priceInformationHeadline": "Informationen über Preise",
-  "priceInformation1":
-  "Der hier angezeigte Online-Preis ist ein Referenzpreis, der keine Fracht, Zölle und Steuern enthält und nicht in allen Landeswährungen gepflegt wird.",
-  "priceInformation2":
-  "Um Ihr individuelles Angebot (in Ihrer Landeswährung) zu erhalten, senden Sie uns bitte Ihre Anfrage, so dass Ihnen Ihr lokales Pfeiffer Vacuum Unternehmen / Partnerunternehmen ein individuelles Angebot mit Ihren Preisen zur Verfügung stellen kann.",
+  "priceInformation1": "Der hier angezeigte Online-Preis ist ein Referenzpreis, der keine Fracht, Zölle und Steuern enthält und nicht in allen Landeswährungen gepflegt wird.",
+  "priceInformation2": "Um Ihr individuelles Angebot (in Ihrer Landeswährung) zu erhalten, senden Sie uns bitte Ihre Anfrage, so dass Ihnen Ihr lokales Pfeiffer Vacuum Unternehmen / Partnerunternehmen ein individuelles Angebot mit Ihren Preisen zur Verfügung stellen kann.",
   "deliveryNote": "Liefertermin",
-  "deliveryDetails":
-  "Bitte senden Sie uns Ihre Anfrage damit wir die genauen Liefertermin für Sie ermitteln können",
+  "deliveryDetails": "Bitte senden Sie uns Ihre Anfrage damit wir die genauen Liefertermin für Sie ermitteln können",
   "userStatus": {
     "lead": {
       "priceInfo": {
@@ -19,8 +16,7 @@
     },
     "open": {
       "priceInfo": {
-        "text":
-        "Bitte warten Sie bis ihr Profil akzeptiert wurde um Preise zu sehen"
+        "text": "Bitte warten Sie bis ihr Profil akzeptiert wurde um Preise zu sehen"
       }
     },
     "rejected": {
@@ -29,15 +25,30 @@
       }
     }
   },
+  "headline": "Warenkorb",
+  "requestQuote": "Angebot anfordern",
+  "continueShopping": "Weiter einkaufen",
+  "saveCartToList": "Als Liste speichern",
+  "getProductHelp": "Hilfe zum Produkt",
   "list": {
-    "addArticle": "Zur Einkausliste hinzufügen"
+    "addArticle": "Zur Einkaufsliste hinzufügen",
+    "addToAnotherList": "Zu einer anderen Einkaufsliste hinzufügen"
   },
   "productPrice": "Preis",
   "totalPrice": "Gesamt",
   "quantity": "Anzahl",
   "priceOnRequest": "Preis auf Anfrage",
   "details": "Details",
-  "addToCartSuccess": "Produkt erfolgreich zum Warenkorb hinzugefügt",
-  "addToCartError": "Beim Hinzufügen des Produktes zum Warenkorb ist ein Fehler aufgetreten",
-  "pricePerUnit": "Preis / Stück"
+  "addToCartSuccess": "Artikel wurde erfolgreich in den Warenkorb gelegt",
+  "addToCartError": "Beim Hinzufügen des Gegenstandes zum Warenkorb ist ein Fehler aufgetreten",
+  "pricePerUnit": "Preis / Stück",
+  "editCart": "Warenkorb bearbeiten",
+  "checkout": "Angebot anfragen",
+  "shoppingCart": "Warenkorb",
+  "deleteFromCartSuccess": "Artikel erfolgreich aus dem Warenkorb entfernt",
+  "deleteFromCartError": "Beim Entfernen des Produktes aus dem Warenkorb ist ein Fehler aufgetreten",
+  "updateCartError": "Beim Aktualisieren des Warenkorbs ist ein Fehler aufgetreten",
+  "cartEmpty": "Bitte legen Sie einen Artikel in den Warenkorb.",
+  "emptyMessage": "Bitte legen Sie einen Artikel in den Warenkorb.",
+  "showAllProducts": "Alle Produkte anzeigen"
 }

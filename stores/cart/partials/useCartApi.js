@@ -100,14 +100,29 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   const getOrCreateUserCart = async () => {
     let existingCart = null
 
-    existingCart = await axios.$get(
-      config.CARTS_CURRENT_USER_API +
-        (currentUser.value?.ociBuyer ? customerId.value : '/current'),
-      { params: { fields: 'FULL' } }
-    )
+    try {
+      existingCart = await axios.$get(
+        config.CARTS_CURRENT_USER_API +
+          (currentUser.value?.ociBuyer ? customerId.value : '/current'),
+        { params: { fields: 'FULL' } }
+      )
 
-    // Return when existing cart is valid
-    if (validateCart(existingCart)) return existingCart
+      // Return when existing cart is valid
+      if (validateCart(existingCart)) return existingCart
+    } catch (error) {
+      if (error?.status === 400 || error?.status === 404) {
+        // in this case there is probably an old cart (cart after placeOrder f.e.) which is not longer valid or does not exist
+        // do not exit the function but create a fresh cart below which will replace the invalid current one
+        logger.warn(
+          'current cart could not be loaded. A new cart will be created now.',
+          error
+        )
+      } else {
+        // in this case something unexpected happend.
+        // we should not create a new cart since the old one may be still valid and something else went wrong
+        throw error
+      }
+    }
 
     const newCart = await axios.$post(config.CARTS_CURRENT_USER_API, null, {
       params: { fields: 'FULL' },
@@ -167,11 +182,9 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     return false
   }
 
-  // TODO: currently not used, activate when needed
-  /*
   const deleteEntry = async (entryNumber) => {
     const result = await axios.delete(
-      getCartUrl() + '/entries/' + entryNumber,
+      getCartUrl() + '/entries/' + Number(entryNumber),
       {}
     )
 
@@ -201,13 +214,10 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     return false
   }
-   */
 
   /**
    * Handle additional information
    */
-  // TODO: currently not used, activate when needed
-  /*
   const setDeliveryAddress = async (address) => {
     await loadCart(true)
 
@@ -217,7 +227,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     )
 
     if (result && typeof result === 'object' && !result.error) {
-      await store.dispatch('loadCurrentCart', false) // refresh cart in store
+      await loadCart(false)
       return result
     }
 
@@ -236,15 +246,12 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     if (result && result.status === 200 && !result.error) {
       await loadCart(false)
-
-      return true
     }
-
-    return false
   }
 
   const setRequestComment = async (comment) => {
     await loadCart(true)
+
     const result = await axios.post(
       getCartUrl() + '/comment',
       JSON.stringify(comment),
@@ -253,16 +260,18 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     if (result && result.status === 200 && !result.error) {
       await loadCart(false)
-      return true
     }
-
-    return false
   }
-   */
 
   return {
     getOrCreateCart,
     mergeCarts,
+    loadCart,
     addToCart,
+    deleteEntry,
+    setDeliveryAddress,
+    setReferenceNumber,
+    setRequestComment,
+    updateQuantity,
   }
 }

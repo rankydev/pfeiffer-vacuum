@@ -1,45 +1,46 @@
 <template>
   <div :class="`${prefix}__wrapper`">
-    <ul
-      ref="menu"
-      :class="{
-        [prefix]: true,
-        [`${prefix}--passive`]: hasActiveElement,
-      }"
-      @mouseenter="isHovered = true"
-      @mouseleave="isHovered = false"
-    >
-      <li
-        v-for="(entry, idx) in navigationEntries"
-        :key="idx"
+    <client-only>
+      <ul
+        ref="menu"
         :class="{
-          [`${prefix}__element`]: true,
-          ['md:tw-hidden']: entry.component === 'MainNavLinkMobile',
+          [prefix]: true,
+          [`${prefix}--passive`]: hasActiveElement,
         }"
+        @mouseenter="isHovered = true"
+        @mouseleave="isHovered = false"
       >
-        <Link
+        <li
+          v-for="(entry, idx) in navigationEntries"
+          :key="idx"
           :class="{
-            [`${prefix}__link`]: true,
-            [`${prefix}__link--passive`]: ![null, idx].includes(activeElement),
-            [`${prefix}__link--active`]:
-              activeElement === idx ||
-              (prefix === 'primary-nav-0' && selectedPrimaryLink === idx),
+            [`${prefix}__element`]: true,
+            ['md:tw-hidden']: entry.component === 'MainNavLinkMobile',
           }"
-          v-bind="entry"
-          :before-navigation="
-            () => (!hasSubmenu(entry) ? closeMenu() || true : toggleActive(idx))
-          "
         >
-          <span :class="`${prefix}__label`">{{ entry.label }}</span>
-          <client-only>
+          <Link
+            :class="{
+              [`${prefix}__link`]: true,
+              [`${prefix}__link--passive`]: ![null, idx].includes(
+                activeElement
+              ),
+              [`${prefix}__link--active`]:
+                activeElement === idx ||
+                (prefix === 'primary-nav-0' && selectedPrimaryLink === idx),
+            }"
+            v-bind="entry"
+            :before-navigation="
+              () =>
+                !hasSubmenu(entry) ? closeMenu() || true : toggleActive(idx)
+            "
+          >
+            <span :class="`${prefix}__label`">{{ entry.label }}</span>
             <Icon
               v-if="isMobile && hasSubmenu(entry)"
               :class="`${prefix}__icon`"
               :icon="activeElement === idx ? 'expand_less' : 'expand_more'"
             />
-          </client-only>
-        </Link>
-        <client-only>
+          </Link>
           <Component
             :is="isMobile || level === 0 ? 'AnimatedCollapse' : 'div'"
             v-if="hasSubmenu(entry)"
@@ -54,108 +55,108 @@
               @mouseleave.native="isHovered = true"
             />
           </Component>
-        </client-only>
-      </li>
+        </li>
 
-      <template v-if="level > 0 && isMobile && !hasActiveElement">
-        <li>
-          <Link
-            :href="currentEntry.href"
-            :class="[`${prefix}__link`]"
-            @click.native="closeMenu"
+        <template v-if="level > 0 && isMobile && !hasActiveElement">
+          <li>
+            <Link
+              :href="currentEntry.href"
+              :class="[`${prefix}__link`]"
+              @click.native="closeMenu"
+            >
+              <span :class="`${prefix}__label`">{{
+                $t('navigation.button.articleOverview.label') +
+                ' ' +
+                currentEntry.label
+              }}</span>
+              <Icon :class="`${prefix}__icon`" icon="arrow_forward" />
+            </Link>
+          </li>
+
+          <li
+            v-if="currentEntry.shopLink"
+            :class="`${prefix}__shop-button--mobile`"
           >
-            <span :class="`${prefix}__label`">{{
-              $t('navigation.button.articleOverview.label') +
-              ' ' +
-              currentEntry.label
-            }}</span>
-            <Icon :class="`${prefix}__icon`" icon="arrow_forward" />
+            <Button
+              size="small"
+              :label="$t('navigation.button.shop.label')"
+              :href="currentEntry.shopLink"
+              @click.native="closeMenu"
+            />
+          </li>
+        </template>
+
+        <template v-if="level > 0 && !isMobile">
+          <li
+            v-if="
+              (isTablet && !hasActiveElement) ||
+              (isDesktop &&
+                (isHovered || (!hasActiveElement && !$parent.isHovered)))
+            "
+            :class="`${prefix}__buttons`"
+          >
+            <Button
+              variant="secondary"
+              shape="outlined"
+              size="small"
+              :label="$t('navigation.button.overview.label')"
+              :href="currentEntry.href"
+              @click.native="closeMenu"
+            />
+
+            <Button
+              v-if="currentEntry.shopLink"
+              size="small"
+              :label="$t('navigation.button.shop.label')"
+              :href="currentEntry.shopLink"
+              @click.native="closeMenu"
+            />
+          </li>
+        </template>
+
+        <li v-if="level === 0 && isMobile">
+          <Link
+            v-for="item in flyoutLinks"
+            :key="item._uid"
+            v-bind="item"
+            :class="[`${prefix}__flyout-entry`, `${prefix}__link`]"
+          >
+            <Icon :icon="item.icon" />
+            <span>{{ item.label }}</span>
           </Link>
+          <div
+            v-if="loggedInOrInLoginProcess"
+            :class="[`${prefix}__flyout-entry`, `${prefix}__link`]"
+            @click="navigateToMyAccount"
+          >
+            <Icon icon="person" />
+            <span v-if="currentUser">{{ currentUser.name }}</span>
+          </div>
         </li>
 
         <li
-          v-if="currentEntry.shopLink"
-          :class="`${prefix}__shop-button--mobile`"
-        >
-          <Button
-            size="small"
-            :label="$t('navigation.button.shop.label')"
-            :href="currentEntry.shopLink"
-            @click.native="closeMenu"
-          />
-        </li>
-      </template>
-
-      <template v-if="level > 0 && !isMobile">
-        <li
-          v-if="
-            (isTablet && !hasActiveElement) ||
-            (isDesktop &&
-              (isHovered || (!hasActiveElement && !$parent.isHovered)))
-          "
-          :class="`${prefix}__buttons`"
+          v-if="level === 0 && isMobile"
+          :class="`${prefix}__login-button-wrapper`"
         >
           <Button
             variant="secondary"
             shape="outlined"
-            size="small"
-            :label="$t('navigation.button.overview.label')"
-            :href="currentEntry.href"
-            @click.native="closeMenu"
-          />
-
-          <Button
-            v-if="currentEntry.shopLink"
-            size="small"
-            :label="$t('navigation.button.shop.label')"
-            :href="currentEntry.shopLink"
-            @click.native="closeMenu"
+            :icon="loggedInOrInLoginProcess ? 'logout' : 'person'"
+            :label="
+              $t(
+                loggedInOrInLoginProcess
+                  ? 'navigation.button.logout.mobileLabel'
+                  : 'navigation.button.signIn.label'
+              )
+            "
+            :class="`${prefix}__login-button`"
+            @click.native="
+              loggedInOrInLoginProcess ? logout() : handleMyAccount()
+            "
           />
         </li>
-      </template>
-
-      <li v-if="level === 0 && isMobile">
-        <Link
-          v-for="item in flyoutLinks"
-          :key="item._uid"
-          v-bind="item"
-          :class="[`${prefix}__flyout-entry`, `${prefix}__link`]"
-        >
-          <Icon :icon="item.icon" />
-          <span>{{ item.label }}</span>
-        </Link>
-        <div
-          v-if="loggedInOrInLoginProcess"
-          :class="[`${prefix}__flyout-entry`, `${prefix}__link`]"
-          @click="navigateToMyAccount"
-        >
-          <Icon icon="person" />
-          <span v-if="currentUser">{{ currentUser.name }}</span>
-        </div>
-      </li>
-
-      <li
-        v-if="level === 0 && isMobile"
-        :class="`${prefix}__login-button-wrapper`"
-      >
-        <Button
-          variant="secondary"
-          shape="outlined"
-          :icon="loggedInOrInLoginProcess ? 'logout' : 'person'"
-          :label="
-            $t(
-              loggedInOrInLoginProcess
-                ? 'navigation.button.logout.mobileLabel'
-                : 'navigation.button.signIn.label'
-            )
-          "
-          :class="`${prefix}__login-button`"
-          @click.native="
-            loggedInOrInLoginProcess ? logout() : handleMyAccount()
-          "
-        />
-      </li>
-    </ul>
+      </ul>
+    </client-only>
   </div>
 </template>
 

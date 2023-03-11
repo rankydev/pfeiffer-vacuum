@@ -2,7 +2,7 @@ import TotalNetInformation from '~/components/molecules/TotalNetInformation/Tota
 import { currentCart } from '~/components/molecules/TotalNetInformation/TotalNetInformation.stories.content'
 
 export default {
-  title: 'Molecules/m_141 TotalNetInformation',
+  title: 'Molecules/m_142 TotalNetInformation',
   component: TotalNetInformation,
   parameters: {
     docs: {
