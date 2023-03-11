@@ -13,7 +13,7 @@
         <div class="knowledge-content__results">
           <ContentWrapper>
             <div class="knowledge-content__top-actions">
-              <FilterModal label="Filter">
+              <FilterModal :label="$t('knowledge.filter')">
                 <div class="knowledge-content__filters">
                   <PvSelect
                     v-for="filter in filterEntries"
@@ -159,8 +159,6 @@ export default {
       const newQuery = { ...query, currentPage: 1 }
       const selectedValues = []
 
-      console.log(val)
-
       val.forEach((item) => selectedValues.push(item.code))
 
       if (val.length) newQuery[code] = selectedValues.join(',')
@@ -193,6 +191,7 @@ export default {
       isLoading,
       filterEntries,
       searchTerm,
+      isModalOpen,
 
       // Actions
       handlePageSizeChange,
