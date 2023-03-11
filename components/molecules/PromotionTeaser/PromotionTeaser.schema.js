@@ -9,20 +9,18 @@ export default {
       translatable: true,
       required: true,
       display_name: 'Headline',
-      max_length: '30',
       pos: 1,
     },
     subline: {
       type: 'text',
       translatable: true,
       display_name: 'Subheadline',
-      max_length: '50',
       pos: 2,
     },
     teaserText: {
       ...Richtext.schema.richtext,
       display_name: 'Teaser Text',
-      max_length: '350',
+      max_length: '450',
       pos: 3,
     },
     image: {

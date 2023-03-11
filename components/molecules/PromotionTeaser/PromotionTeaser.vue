@@ -73,6 +73,7 @@ export default defineComponent({
     }
 
     @screen lg {
+      @apply tw-p-8;
       @apply tw-bg-pv-white;
     }
   }
@@ -88,6 +89,7 @@ export default defineComponent({
   &__richtext {
     @apply tw-hidden;
     @apply tw-mb-2;
+    @apply tw-text-pv-grey-16;
 
     @screen md {
       @apply tw-block;
