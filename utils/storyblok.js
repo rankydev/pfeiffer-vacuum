@@ -1,9 +1,9 @@
-const STORYBLOK_ASSET_URL = 'a.storyblok.com'
 import { PATH_STORYBLOK_ASSETS } from '~/server/constants.js'
 import nuxtConfig from '../nuxt.config'
 
 const replaceStoryblokLinks = (string, replacer) => {
   // hit https://<url>, http://<url> or //<url>
+  const STORYBLOK_ASSET_URL = 'a.storyblok.com'
   const re = new RegExp(`(https?:)?\\/\\/${STORYBLOK_ASSET_URL}`, 'g')
   return string.replace(re, replacer)
 }
