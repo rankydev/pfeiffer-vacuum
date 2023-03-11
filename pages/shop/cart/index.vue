@@ -33,6 +33,7 @@
                   <div class="cart-page__buttons">
                     <!-- TODO: add correct route after shopping list implementation -->
                     <Button
+                      v-if="!isOciUser"
                       class="cart-page__button--save"
                       variant="secondary"
                       :label="$t('cart.saveCartToList')"
