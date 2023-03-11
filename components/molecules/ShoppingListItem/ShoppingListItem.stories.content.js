@@ -264,3 +264,5 @@ export const list = {
   name: 'PVWEB-1218-2',
 }
 export const selectMode = false
+
+export default {}

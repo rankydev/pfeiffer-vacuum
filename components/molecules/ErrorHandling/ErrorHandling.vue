@@ -5,7 +5,7 @@
   >
     <Icon class="error-handling__icon" icon="cloud_off" />
     <span class="error-handling__headline">
-      {{ $t(headline) }}
+      {{ headline }}
     </span>
     <CustomerSupportLink />
   </div>
