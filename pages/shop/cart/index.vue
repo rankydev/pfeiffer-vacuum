@@ -55,7 +55,10 @@
 
                 <CartTable />
 
-                <div class="cart-page__info">
+                <div
+                  class="cart-page__info"
+                  :class="{ 'cart-page__info--oci': isOciUser }"
+                >
                   <div v-show="!isOciUser" class="cart-page__information">
                     <PromotionLabel
                       v-for="(promotion, index) in cartPromotions"
@@ -282,6 +285,10 @@ export default defineComponent({
     @screen md {
       @apply tw-flex tw-justify-between;
       @apply tw-gap-6;
+    }
+
+    &--oci {
+      @apply tw-justify-end;
     }
   }
 
