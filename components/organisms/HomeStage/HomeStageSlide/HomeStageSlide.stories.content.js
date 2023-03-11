@@ -7,7 +7,8 @@ const requiredContent = {
     focus: null,
     title: '',
     originalFilename:
-      'https://a.storyblok.com/f/156817/2560x1138/8e3823801e/sky.jpg',
+      '/global/cms/assets/f/156817/2560x1138/8e3823801e/sky.jpg',
+    originalFilenameRelative: '/f/156817/2560x1138/8e3823801e/sky.jpg',
     copyright: '',
     fieldtype: 'asset',
   },
@@ -44,7 +45,9 @@ export const homeStageSlideContent = {
     focus: null,
     title: '',
     originalFilename:
-      'https://a.storyblok.com/f/156817/2699x1800/6d91cb1a0f/astronaut-min.png',
+      '/global/cms/assets/f/156817/2699x1800/6d91cb1a0f/astronaut-min.png',
+    originalFilenameRelative:
+      '/f/156817/2699x1800/6d91cb1a0f/astronaut-min.png',
     copyright: null,
     fieldtype: 'asset',
   },
@@ -59,7 +62,8 @@ export const homeStageSecondSlideContent = {
     focus: null,
     title: '',
     originalFilename:
-      'https://a.storyblok.com/f/158540/2699x1800/349cc6dbbf/everest-min.png',
+      '/global/cms/assets/f/158540/2699x1800/349cc6dbbf/everest-min.png',
+    originalFilenameRelative: '/f/158540/2699x1800/349cc6dbbf/everest-min.png',
     copyright: null,
     fieldtype: 'asset',
   },
@@ -74,7 +78,8 @@ export const homeStageThirdSlideContent = {
     focus: null,
     title: '',
     originalFilename:
-      'https://a.storyblok.com/f/158540/2699x1800/d793f38761/aurora-min.png',
+      '/global/cms/assets/f/158540/2699x1800/d793f38761/aurora-min.png',
+    originalFilenameRelative: '/f/158540/2699x1800/d793f38761/aurora-min.png',
     copyright: null,
     fieldtype: 'asset',
   },
