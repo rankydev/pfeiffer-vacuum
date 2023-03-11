@@ -31,6 +31,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .login-to-see-prices-label {
   @apply tw-font-bold;
+  @apply tw-text-pv-grey-16;
 
   &__login-link {
     @apply tw-cursor-pointer;

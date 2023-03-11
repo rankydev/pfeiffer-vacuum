@@ -5,7 +5,7 @@
         <span class="product-actions__order-number-headline">
           {{ $t('product.articleNumber') }}
         </span>
-        <span>{{ orderNumber }}</span>
+        <span class="tw-text-pv-grey-16">{{ orderNumber }}</span>
       </div>
       <div
         :class="[
