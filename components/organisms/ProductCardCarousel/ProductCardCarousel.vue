@@ -14,7 +14,14 @@
 
 <script>
 import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
-import { ref, defineComponent, useAsync } from '@nuxtjs/composition-api'
+import {
+  ref,
+  defineComponent,
+  onServerPrefetch,
+  onBeforeMount,
+  watch,
+  useRoute,
+} from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/product'
 
 export default defineComponent({
@@ -66,6 +73,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const route = useRoute()
     const productStore = useProductStore()
 
     const slides = ref(props.slides.slice(0, 16))
@@ -73,18 +81,24 @@ export default defineComponent({
     // Extracted codes from slides
     const productCodes = slides.value.map((e) => e.product?.code)
 
-    // Enriched slides with hybris data
-    const enrichedSlides = useAsync(async () => {
-      // Fetched hybris products
-      let fetchedProducts = await productStore.getProducts(productCodes)
+    let enrichedSlides = ref([])
 
-      return slides.value.map((e) => ({
+    const fetchProducts = async () => {
+      const tempProducts = await productStore.getProducts(productCodes)
+
+      enrichedSlides.value = slides.value.map((e) => ({
         ...e,
         product: {
-          ...fetchedProducts?.find((i) => i.code === e.product.code),
+          ...tempProducts?.find((i) => i.code === e.product.code),
         },
       }))
-    }, String(productCodes) || 'empty')
+    }
+
+    onServerPrefetch(fetchProducts)
+    onBeforeMount(fetchProducts)
+    watch(route, () => {
+      fetchProducts()
+    })
 
     return { enrichedSlides }
   },
