@@ -269,7 +269,6 @@ export default {
     EMPOLIS_CLIENT_ID: process.env.EMPOLIS_CLIENT_ID,
     EMPOLIS_CLIENT_SECRET: process.env.EMPOLIS_CLIENT_SECRET,
     // storyblok
-    STORYBLOK_API_BASE_URL: process.env.STORYBLOK_API_BASE_URL,
     STORYBLOK_ACCESS_TOKEN: process.env.STORYBLOK_ACCESS_TOKEN,
     // SAP Commerce Cloud
     SHOP_BASE_URL: process.env.SHOP_BASE_URL,
