@@ -1,4 +1,3 @@
-const IMAGE_SERVICE = '//img2.storyblok.com/'
 import {
   getRelativeStoryblokAssetLink,
   getProxyStoryBlokAssetLink,
@@ -24,6 +23,8 @@ export const render = ({ node, assets = [] }) => {
   const assetMetaInfo = assets.find((asset) => asset.id === node.id) || {}
 
   if (isImage(node)) {
+    const IMAGE_SERVICE = '//img2.storyblok.com/'
+
     if (
       node.filename &&
       node.filename.startsWith(IMAGE_SERVICE) &&
