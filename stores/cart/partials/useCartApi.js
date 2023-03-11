@@ -98,9 +98,14 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   }
 
   const createUserCart = async () => {
-    return await axios.$post(config.CARTS_CURRENT_USER_API, null, {
-      params: { fields: 'FULL' },
-    })
+    try {
+      return await axios.$post(config.CARTS_CURRENT_USER_API, null, {
+        params: { fields: 'FULL' },
+      })
+    } catch (e) {
+      logger.error(e)
+      return null
+    }
   }
 
   const getOrCreateUserCart = async () => {
