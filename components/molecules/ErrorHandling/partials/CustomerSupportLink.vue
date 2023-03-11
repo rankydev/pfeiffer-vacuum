@@ -14,7 +14,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import Link from '~/components/atoms/Link/Link.vue'
 
 export default defineComponent({
-  name: 'ErrorHandling',
+  name: 'CustomerSupportLink',
   components: { Link },
 })
 </script>
