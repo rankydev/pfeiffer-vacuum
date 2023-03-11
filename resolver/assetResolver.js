@@ -1,4 +1,3 @@
-const IMAGE_SERVICE = '//img2.storyblok.com/'
 import {
   getRelativeStoryblokAssetLink,
   getProxyStoryBlokAssetLink,
@@ -24,10 +23,6 @@ export const render = ({ node, assets = [] }) => {
   const assetMetaInfo = assets.find((asset) => asset.id === node.id) || {}
 
   if (isImage(node)) {
-    if (node.filename && node.filename.startsWith(IMAGE_SERVICE)) {
-      return node // TODO: cannot find a image which has this case...
-    }
-
     // this one is used as "normal" asset url. But now using our proxy instead of storyblok url
     node.originalFilename = getProxyStoryBlokAssetLink(node.filename)
     // this relative path should be used for nuxt-image. It has its own base url in nuxt.config.js
