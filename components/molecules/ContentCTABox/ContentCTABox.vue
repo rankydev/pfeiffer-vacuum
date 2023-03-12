@@ -47,6 +47,14 @@ export default {
   &__headline,
   &__description {
     @apply tw-mb-4;
+    @apply tw-leading-6;
+    @apply tw-text-pv-grey-16;
+  }
+
+  &__description {
+    @screen lg {
+      @apply tw-text-base;
+    }
   }
 }
 </style>

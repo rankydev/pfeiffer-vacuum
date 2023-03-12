@@ -41,13 +41,13 @@
 
                     <Button
                       v-show="!isMobile"
-                      anchor="#help-block"
                       class="cart-page__button"
                       variant="secondary"
                       shape="outlined"
                       :inverted="true"
                       :label="$t('cart.getProductHelp')"
                       icon="help"
+                      :href="localePath('/contact')"
                     />
                   </div>
                 </div>
@@ -61,7 +61,12 @@
                       :key="index"
                       :subline="promotion.description"
                     />
-                    <PriceInformation information-type="price" />
+                    <client-only>
+                      <PriceInformation
+                        v-if="!isMobile"
+                        information-type="price"
+                      />
+                    </client-only>
                   </div>
 
                   <div class="cart-page__actions">
@@ -132,10 +137,9 @@ import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
 import { storeToRefs } from 'pinia'
-
+import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import PriceInformation from '~/components/molecules/PriceInformation/PriceInformation.vue'
@@ -206,8 +210,6 @@ export default defineComponent({
 
 <style lang="scss">
 .cart-page {
-  @apply tw-pt-6;
-
   &__empty {
     @apply tw-text-center;
     @apply tw-pb-12;

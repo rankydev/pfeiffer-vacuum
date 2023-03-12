@@ -54,6 +54,20 @@
   },
   "contact": "문의하기",
   "salesRepresentative": "영업 담당자",
+  "requestHistory": {
+    "table": {
+      "reference": "Reference",
+      "requestNumber": "Request number:",
+      "requestReference": "Reference",
+      "customerReference": "Customer reference",
+      "requestDate": "Request date",
+      "date": "Date",
+      "requestTotal": "Total (net)"
+    },
+    "lastRequestNotFound": "You have not made any requests yet!",
+    "goToProducts": "Go to products",
+    "yourHistory": "Your request history"
+  },
   "recentRequests": {
     "recentRequests": "최근 요청",
     "allRequests": "모든 요청",
@@ -112,7 +126,7 @@
     },
     "selectAList": "쇼핑 목록 선택",
     "add": "새 목록에 추가",
-    "addSuccessful": "귀하의 제품이 {listName} 목록에 추가되었습니다.",
+    "addSuccessful": "제품이 쇼핑 목록에 성공적으로 추가되었습니다.",
     "addError": "제품을 쇼핑 목록에 추가할 수 없습니다.",
     "back": "목록으로 돌아가기",
     "name": "이름",

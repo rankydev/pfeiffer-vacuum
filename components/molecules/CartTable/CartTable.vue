@@ -6,7 +6,7 @@
       :class="{ 'cart-item-header--edit-mode': editMode }"
     >
       <div class="cart-item-header__quantity">
-        <span>{{ $t('cart.quantity') }}</span>
+        {{ $t('cart.quantity') }}
       </div>
       <span class="cart-item-header__price" @click="useSortByPrice">
         {{ $t('cart.pricePerUnit') }}
@@ -17,6 +17,7 @@
         <Icon icon="unfold_more" />
       </span>
     </div>
+    <div class="cart-item-separator" />
     <CartItemCard
       v-for="(
         { product, quantity, basePrice, totalPrice }, index
@@ -169,58 +170,59 @@ export default defineComponent({
 <style lang="scss" scoped>
 .cart-item-header {
   @apply tw-hidden;
+  @apply tw-border-b-2 tw-border-b-pv-grey-80;
 
   @screen lg {
-    @apply tw-grid tw-grid-rows-1 tw-grid-cols-11;
-    @apply tw-border-b tw-border-b-pv-grey-80;
+    @apply tw-grid;
+    grid-template-columns: repeat(8, 1fr) 13.2% 10.87% 12.4% 1.79%;
     @apply tw-pb-4;
   }
 
-  &--edit-mode {
-    @apply tw-grid-cols-12;
-  }
-
-  &__quantity {
+  &__quantity,
+  &__price,
+  &__totalPrice {
     @apply tw-row-start-1 tw-row-end-1;
-    @apply tw-col-start-9 tw-col-end-10;
     @apply tw-flex;
-    @apply tw-my-auto;
     @apply tw-text-pv-grey-32;
+    @apply tw-my-auto;
   }
 
   &__price,
   &__totalPrice {
     @apply tw-cursor-pointer;
-    @apply tw-text-pv-grey-32;
     @apply tw-font-normal;
     @apply tw-block;
     @apply tw-leading-4;
+    @apply tw-w-fit;
 
     &:hover {
       @apply tw-text-pv-grey-48;
     }
   }
 
+  &__quantity {
+    @apply tw-col-start-9 tw-col-end-10;
+  }
+
   &__price {
-    @apply tw-row-start-1 tw-row-end-1;
     @apply tw-col-start-10 tw-col-end-11;
-    @apply tw-flex;
-    @apply tw-m-auto;
-    @apply tw-w-fit;
-    @apply tw-pl-2;
   }
 
   &__totalPrice {
-    @apply tw-row-start-1 tw-row-end-1;
     @apply tw-col-start-11 tw-col-end-12;
-    @apply tw-flex;
-    @apply tw-m-auto;
-    @apply tw-w-fit;
-    @apply tw-pl-2;
   }
+}
 
-  .icon__material.icon--base {
-    @apply tw-text-base;
+.cart-item-separator {
+  @apply tw-w-full;
+  @apply tw-border-b-2 tw-border-b-pv-grey-80;
+
+  @screen lg {
+    @apply tw-hidden;
   }
+}
+
+.icon__material.icon--base {
+  @apply tw-text-base;
 }
 </style>

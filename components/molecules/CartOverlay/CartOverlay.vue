@@ -47,7 +47,7 @@
             />
           </template>
           <div class="cart-overlay-content__total">
-            <div class="cart-overlay-content__total--row">
+            <div v-if="hasPromotion" class="cart-overlay-content__total--row">
               <span class="cart-overlay-content__total-discount">
                 {{ $t('cart.orderDiscount') }}
               </span>
@@ -150,16 +150,16 @@ export default defineComponent({
       return currentCart?.value?.totalItems || 0
     })
 
-    const hasPromotion = computed(() => {
-      return currentCart?.value?.appliedOrderPromotions?.length
-    })
-
     const promotions = computed(() => {
       return currentCart?.value?.appliedOrderPromotions
     })
 
+    const hasPromotion = computed(() => {
+      return promotions.value?.length
+    })
+
     const totalDiscounts = computed(() => {
-      return `- ${currentCart?.value?.totalDiscounts.formattedValue}`
+      return `- ${currentCart?.value?.totalDiscounts?.formattedValue}`
     })
 
     const getTotalCartPrice = computed(() => {

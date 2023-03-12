@@ -18,7 +18,8 @@
                 {{ (productStore.product || {}).name }}
               </h1>
               <Button
-                label="Hilfe zum Produkt"
+                :label="$t('cart.getProductHelp')"
+                :href="localePath('/contact')"
                 variant="secondary"
                 shape="outlined"
                 icon="help"
@@ -74,29 +75,33 @@ import {
   useContext,
   computed,
 } from '@nuxtjs/composition-api'
-
 import { storeToRefs } from 'pinia'
 import { useProductStore, useVariationmatrixStore } from '~/stores/product'
 import { useUserStore } from '~/stores/user'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
-
 import { useErrorHandler } from '~/composables/useErrorHandler'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 
-import Page from '~/components/templates/Page/Page'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+import Button from '~/components/atoms/Button/Button'
 import DetailTabs from '~/components/molecules/DetailTabs/DetailTabs'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import VariantSelection from '~/components/molecules/VariantSelection/VariantSelection'
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
-import VariantSelection from '~/components/molecules/VariantSelection/VariantSelection'
+import Page from '~/components/templates/Page/Page'
 
 export default defineComponent({
   name: 'ProductShopPage',
   components: {
+    Button,
     Page,
     DetailTabs,
     ImageGallery,
     RecommendedAccessories,
     VariantSelection,
+    ContentWrapper,
+    ResponsiveImage,
   },
   setup() {
     const route = useRoute()

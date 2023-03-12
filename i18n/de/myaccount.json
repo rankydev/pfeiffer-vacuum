@@ -110,7 +110,7 @@
     },
     "selectAList": "Wählen Sie eine Liste aus",
     "add": "Zu neuer Liste hinzufügen",
-    "addSuccessful": "Ihr Produkt wurde der Liste {listName} hinzugefügt.",
+    "addSuccessful": "Produkt wurde erfolgreich zur Einkaufsliste hinzugefügt.",
     "addError": "Produkt konnte nicht zur Einkaufsliste hinzugefügt werden.",
     "back": "Zurück zu den Listen",
     "name": "Name",
@@ -130,6 +130,24 @@
     "installedBase": "Installed Base"
   },
   "comingSoon": "Diese Funktion wird in Kürze verfügbar sein!",
+  "requestHistory": {
+    "table": {
+      "quantity": "Anzahl",
+      "totalPrice": "Gesamt",
+      "pricePerUnit": "Preis / Stück",
+      "reference": "Referenz",
+      "requestNumber": "Anfragenummer",
+      "requestReference": "Referenznummer",
+      "customerReference": "Kundenreferenz",
+      "requestDate": "Anfragedatum",
+      "date": "Datum",
+      "requestTotal": "Gesamt (Netto)"
+    },
+    "lastRequestNotFound": "Es wurden keine Bestellanfragen gefunden!",
+    "goToProducts": "Zu den Produkten",
+    "yourHistory": "Deine Anfragenhistorie",
+    "addToCartBtn": "Füge komplette Anfrage zum Warenkorb hinzu"
+  },
   "lastEdited": "Zuletzt bearbeitet",
   "new": "Neu",
   "newMobile": "Neue Einkaufsliste",
