@@ -132,7 +132,11 @@
   "newMobile": "새로운 쇼핑 목록",
   "select": "선택",
   "shoppingListOverviewPage": {
-    "title": "쇼핑 목록"
-  }
+    "title": "쇼핑 목록",
+    "discard": "버리다",
+    "deleteList": "쇼핑 목록 삭제",
+    "emptyList": "아직 쇼핑 목록을 제출하지 않았습니다!"
+  },
+  "backToDashboard": "대시보드로 돌아가기"
 }
 

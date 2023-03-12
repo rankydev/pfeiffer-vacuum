@@ -135,6 +135,10 @@
   "newMobile": "Neue Einkaufsliste",
   "select": "Auswählen",
   "shoppingListOverviewPage": {
-    "title": "Einkaufslisten"
-  }
+    "title": "Einkaufslisten",
+    "discard": "Abbrechen",
+    "deleteList": "Liste löschen",
+    "emptyList": "Sie haben noch keine Einkaufslisten erstellt!"
+  },
+  "backToDashboard": "Zurück zum Dashboard"
 }

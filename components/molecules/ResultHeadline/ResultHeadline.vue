@@ -103,13 +103,13 @@ export default defineComponent({
   }
 
   &--with-link {
-    @apply tw-items-baseline;
-
     @screen md {
       @apply tw-items-center;
     }
 
     .result-headline__content {
+      @apply tw-my-auto;
+
       @screen md {
         @apply tw-flex;
         @apply tw-items-center;

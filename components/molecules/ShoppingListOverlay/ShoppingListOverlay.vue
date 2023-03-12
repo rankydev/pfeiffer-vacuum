@@ -32,6 +32,7 @@
         :label="name"
         icon="assignment"
         shape="outlined"
+        prepend-icon
         variant="variant-selection-preselected"
         class="shopping-ist-overlay__content--item"
         @click="addToShoppingList(id)"
@@ -108,16 +109,19 @@ export default defineComponent({
   setup() {
     const nameVar = ref('')
     const descriptionVar = ref('')
-    const isAddMode = ref(false)
     const shoppingListsStore = useShoppingLists()
-    const { shoppingLists, isOverlayOpen } = storeToRefs(shoppingListsStore)
+    const { shoppingLists, isOverlayOpen, isAddMode } =
+      storeToRefs(shoppingListsStore)
 
     const closeSidebar = () => {
       shoppingListsStore.toggleOverlay()
+      if (isAddMode.value) {
+        toggleAddMode()
+      }
     }
 
     const toggleAddMode = () => {
-      isAddMode.value = !isAddMode.value
+      shoppingListsStore.toggleAddMode()
     }
     const newShoppingList = async () => {
       if (nameVar.value) {
@@ -146,6 +150,7 @@ export default defineComponent({
         closeSidebar()
       }
     }
+
     return {
       shoppingLists,
       isAddMode,
@@ -232,6 +237,7 @@ export default defineComponent({
       @apply tw-text-pv-grey-16;
       @apply tw-mb-4;
       @apply tw-max-h-6;
+      @apply tw-justify-start;
 
       .button__label {
         @apply tw-overflow-hidden;

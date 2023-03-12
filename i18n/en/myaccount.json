@@ -135,7 +135,11 @@
   "newMobile": "New shopping list",
   "select": "Select",
   "shoppingListOverviewPage": {
-    "title": "Shopping Lists"
-  }
+    "title": "Shopping Lists",
+    "discard": "Discard",
+    "deleteList": "Delete list",
+    "emptyList": "You have not created any shopping lists yet!"
+  },
+  "backToDashboard": "Back to dashboard"
 }
 

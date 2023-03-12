@@ -28,7 +28,7 @@
 
 <script>
 import ShoppingListItem from '~/components/molecules/ShoppingListItem/ShoppingListItem.vue'
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'ShoppingListTable',
@@ -47,21 +47,12 @@ export default defineComponent({
   },
   emits: ['delete', 'update'],
   setup(props, { emit }) {
-    const deleteList = ref([])
-
     const deleteListItem = (listItem) => {
       emit('delete', listItem)
     }
 
     const updateDeleteList = (listItem) => {
-      if (listItem.selected) {
-        deleteList.value.push(listItem.list)
-      } else {
-        deleteList.value = deleteList.value.filter(
-          (list) => list?.id !== listItem.list?.id
-        )
-      }
-      emit('update', deleteList.value)
+      emit('update', listItem)
     }
 
     return { deleteListItem, updateDeleteList }

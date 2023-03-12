@@ -132,6 +132,10 @@
   "newMobile": "新购物清单",
   "select": "选择",
   "shoppingListOverviewPage": {
-    "title": "购物清单"
-  }
+    "title": "购物清单",
+    "discard": "丢弃",
+    "deleteList": "删除购物清单",
+    "emptyList": "您还没有认证任何购物清单"
+  },
+  "backToDashboard": "返回仪表板"
 }

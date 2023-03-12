@@ -106,10 +106,28 @@ export const useShoppingListsApi = () => {
     return null
   }
 
+  /**
+   * Delete the specified shopping list
+   * @param {*} id
+   */
+  const deleteShoppingList = async (id) => {
+    const result = await axios.$delete(`${config.SHOPPING_LISTS}/${id}`)
+
+    if (result.error) {
+      logger.error(
+        'Error when deleting shopping list.',
+        result.error ? result.error : ''
+      )
+    }
+
+    return null
+  }
+
   return {
     getShoppingLists,
     getShoppingList,
     createNewList,
     addToShoppingList,
+    deleteShoppingList,
   }
 }

@@ -1,50 +1,136 @@
 <template>
   <div class="shopping-list-overview-page">
     <div class="shopping-list-overview-page__header">
-      <h1 class="shopping-list-overview-page__header--title">
-        {{ $t('myaccount.shoppingListOverviewPage.title') }}
-      </h1>
-      <Button
-        class="shopping-list-overview-page__header--select"
-        icon="list"
-        shape="outlined"
-        gap="narrow"
-        :label="$t('myaccount.select')"
-        variant="secondary"
-        @click="toggleSelectMode"
+      <ResultHeadline
+        class="shopping-list-overview-page__header--headline"
+        :headline="$t('myaccount.shoppingListOverviewPage.title')"
+        :link="localePath('shop-my-account')"
       />
+      <div
+        v-if="!isShoppingListEmpty"
+        class="shopping-list-overview-page__header--nav"
+      >
+        <Button
+          class="shopping-list-overview-page__header--nav__select"
+          :icon="isSelectedListEmpty ? 'list' : 'close'"
+          shape="outlined"
+          gap="narrow"
+          :label="
+            isSelectedListEmpty
+              ? $t('myaccount.select')
+              : $t('myaccount.shoppingListOverviewPage.discard')
+          "
+          variant="secondary"
+          @click="toggleSelectMode"
+        />
+        <Button
+          class="shopping-list-overview-page__header--nav__new"
+          :icon="isSelectedListEmpty ? 'add' : 'delete'"
+          gap="narrow"
+          :label="
+            isSelectedListEmpty
+              ? textBySizeNew
+              : $t('myaccount.shoppingListOverviewPage.deleteList')
+          "
+          variant="secondary"
+          @click="openNewShoppingList"
+        />
+      </div>
+    </div>
+    <div v-if="isShoppingListEmpty" class="shopping-list-overview-page__empty">
+      <Icon
+        class="shopping-list-overview-page__empty--icon"
+        icon="assignment"
+        size="xlarge"
+      />
+      <p class="shopping-list-overview-page__empty--text">
+        {{ $t('myaccount.shoppingListOverviewPage.emptyList') }}
+      </p>
       <Button
-        class="shopping-list-item__buttons--new"
+        class="shopping-list-overview-page__empty--new"
         icon="add"
         gap="narrow"
+        shape="outlined"
         :label="textBySizeNew"
         variant="secondary"
+        @click="openNewShoppingList"
       />
     </div>
-    <ShoppingListTabe
+    <ShoppingListTable
+      v-if="!isShoppingListEmpty"
       class="shopping-list-overview-page__table"
-      :lists="shoppingLists"
+      :lists="shoppingListsByPage"
       :select-mode="isSelectMode"
+      @delete="deleteShoppingList"
+      @update="updateSelectedLists"
+    />
+    <Pagination
+      v-if="!isShoppingListEmpty"
+      class="shopping-list-overview-page__pagination"
+      :total-pages="totalPages"
+    />
+    <Button
+      shape="plain"
+      variant="secondary"
+      class="shopping-list-overview-page__back-button"
+      :label="$t('myaccount.backToDashboard')"
+      icon="arrow_back"
+      :prepend-icon="true"
+      gap="narrow"
+      @click="goToMyAccount"
     />
   </div>
 </template>
 
 <script>
-import { defineComponent, useContext, ref } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useContext,
+  ref,
+  useRouter,
+  useRoute,
+  watch,
+  onMounted,
+} from '@nuxtjs/composition-api'
 import { computed } from '@vue/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
-import ShoppingListTabe from '~/components/molecules/ShoppingListTable/ShoppingListTable.vue'
-import { lists } from '~/components/molecules/ShoppingListTable/ShoppingListTable.stories.content'
+import ShoppingListTable from '~/components/molecules/ShoppingListTable/ShoppingListTable.vue'
+import { useShoppingLists } from '~/stores/shoppinglists'
+import { storeToRefs } from 'pinia'
+import Pagination from '~/components/molecules/Pagination/Pagination.vue'
+import Icon from '~/components/atoms/Icon/Icon.vue'
+import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
+
 export default defineComponent({
   name: 'ShoppingListOverviewPage',
-  components: { Button, ShoppingListTabe },
+  components: { Button, ShoppingListTable, Pagination, Icon, ResultHeadline },
   setup() {
     const { app, i18n } = useContext()
+    const router = useRouter()
+    const route = useRoute()
     const { isMobile } = app.$breakpoints
     const isSelectMode = ref(false)
-    const shoppingLists = ref(lists)
+    const shoppingListsStore = useShoppingLists()
+    const { shoppingLists } = storeToRefs(shoppingListsStore)
+    const selectedList = ref([])
+    const currentPage = ref(1)
+    const ITEMS_PER_PAGE = 7
+    const totalPages = computed(() => {
+      return Math.ceil(shoppingLists.value.length / ITEMS_PER_PAGE)
+    })
+
+    const shoppingListsByPage = computed(() => {
+      return shoppingLists.value.slice(
+        (currentPage.value - 1) * ITEMS_PER_PAGE,
+        currentPage.value * ITEMS_PER_PAGE
+      )
+    })
+
     const toggleSelectMode = () => {
       isSelectMode.value = !isSelectMode.value
+      if (!isSelectMode.value) {
+        clearSelectedLists()
+      }
     }
     const textBySizeNew = computed(() => {
       return isMobile.value
@@ -52,49 +138,215 @@ export default defineComponent({
         : i18n.t('myaccount.new')
     })
 
-    return { textBySizeNew, toggleSelectMode, shoppingLists, isSelectMode }
+    const openNewShoppingList = () => {
+      shoppingListsStore.toggleAddMode()
+      shoppingListsStore.toggleOverlay()
+    }
+
+    const updateSelectedLists = (shoppingList) => {
+      if (shoppingList.selected) {
+        selectedList.value.push(shoppingList.list)
+      } else {
+        selectedList.value = selectedList.value.filter(
+          (list) => list.id !== shoppingList.list.id
+        )
+      }
+    }
+
+    const clearSelectedLists = () => {
+      selectedList.value = []
+    }
+
+    const deleteShoppingList = async (shoppingList) => {
+      const id = shoppingList?.id
+      await shoppingListsStore.deleteShoppingList(id)
+    }
+
+    const deleteSelectedLists = () => {
+      shoppingLists.value.forEach(async (shoppingList) => {
+        if (shoppingList.selected) {
+          await shoppingListsStore.deleteShoppingList(shoppingList.id)
+        }
+      })
+      clearSelectedLists()
+    }
+
+    const isSelectedListEmpty = computed(() => {
+      return selectedList.value.length === 0
+    })
+
+    const isShoppingListEmpty = computed(() => {
+      return shoppingLists.value.length === 0
+    })
+
+    const goToMyAccount = () => {
+      router.push({
+        path: app.localePath('shop-my-account'),
+      })
+    }
+
+    const setCurrentPage = () => {
+      const queryPage = route.value?.query?.currentPage
+      if (queryPage && queryPage <= totalPages.value) {
+        currentPage.value = queryPage
+      }
+      if (queryPage && queryPage > totalPages.value) {
+        currentPage.value = totalPages.value - 1
+      }
+    }
+
+    watch(route, () => {
+      setCurrentPage()
+    })
+
+    onMounted(() => {
+      setCurrentPage()
+    })
+
+    return {
+      textBySizeNew,
+      toggleSelectMode,
+      shoppingLists,
+      isSelectMode,
+      openNewShoppingList,
+      deleteShoppingList,
+      updateSelectedLists,
+      deleteSelectedLists,
+      isSelectedListEmpty,
+      isShoppingListEmpty,
+      goToMyAccount,
+      totalPages,
+      shoppingListsByPage,
+    }
   },
 })
 </script>
 
 <style lang="scss">
 .shopping-list-overview-page {
+  @apply tw-flex;
+  @apply tw-flex-col;
+
   &__header {
     @apply tw-flex;
+    @apply tw-flex-col;
 
-    &--title {
-      @apply tw-hidden;
+    @screen lg {
+      @apply tw-flex-row;
+      @apply tw-items-start;
+    }
 
+    &--headline {
       @screen lg {
-        @apply tw-block;
+        @apply tw-my-auto;
+
+        .result-headline__icon {
+          @apply tw-hidden;
+        }
       }
     }
 
-    &--select {
-      @apply tw-hidden;
+    &--nav {
+      @apply tw-flex;
+      @apply tw-flex-col;
 
       @screen md {
-        @apply tw-flex;
-        @apply tw-ml-auto;
-        @apply tw-mr-2;
+        @apply tw-flex-row;
       }
+
+      @screen lg {
+        @apply tw-ml-auto;
+        @apply tw-my-auto;
+      }
+
+      &__select {
+        @apply tw-hidden;
+
+        @screen md {
+          @apply tw-flex;
+          @apply tw-ml-auto;
+          @apply tw-mr-2;
+          @apply tw-w-[123px];
+        }
+
+        @screen lg {
+          @apply tw-w-[86px];
+        }
+      }
+
+      &__new {
+        @screen md {
+          @apply tw-w-[123px];
+        }
+
+        @screen lg {
+          @apply tw-w-[86px];
+        }
+      }
+    }
+  }
+
+  &__empty {
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-items-center;
+    @apply tw-justify-center;
+    @apply tw-bg-pv-grey-96;
+    @apply tw-p-6;
+    @apply tw-rounded-lg;
+
+    &--icon {
+      @apply tw-text-pv-grey-80;
+    }
+
+    &--text {
+      @apply tw-text-center;
+      @apply tw-text-sm;
+      @apply tw-font-bold;
+      @apply tw-mt-4;
     }
 
     &--new {
+      @apply tw-mt-4;
+      @apply tw-text-pv-grey-16;
+    }
+  }
+
+  &__pagination {
+    @apply tw-mt-2;
+    @apply tw-w-full;
+
+    @screen md {
+      @apply tw-w-fit;
       @apply tw-ml-auto;
+    }
+
+    .pagination__list {
+      @apply tw-w-full;
+    }
+
+    .pagination__icon {
+      @apply tw-h-12;
+      @apply tw-w-12;
+
+      @screen md {
+        @apply tw-h-10;
+        @apply tw-w-10;
+      }
+    }
+
+    .pagination__counter {
+      @apply tw-h-12;
       @apply tw-w-full;
     }
   }
 
-  &__table {
-    @apply tw-mt-4;
+  &__back-button {
+    @apply tw-mt-6;
+    @apply tw-mx-auto;
 
     @screen md {
-      @apply tw-mt-6;
-    }
-
-    @screen lg {
-      @apply tw-mt-[38px];
+      @apply tw-hidden;
     }
   }
 }
