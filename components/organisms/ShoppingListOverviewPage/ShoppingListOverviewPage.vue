@@ -230,19 +230,21 @@ export default defineComponent({
   &__header {
     @apply tw-flex;
     @apply tw-flex-col;
+    @apply tw-mb-4;
 
-    @screen lg {
+    @screen md {
       @apply tw-flex-row;
       @apply tw-items-start;
+      @apply tw-mb-6;
+    }
+
+    @screen lg {
+      @apply tw-mb-8;
     }
 
     &--headline {
-      @screen lg {
+      @screen md {
         @apply tw-my-auto;
-
-        .result-headline__icon {
-          @apply tw-hidden;
-        }
       }
     }
 
@@ -252,9 +254,6 @@ export default defineComponent({
 
       @screen md {
         @apply tw-flex-row;
-      }
-
-      @screen lg {
         @apply tw-ml-auto;
         @apply tw-my-auto;
       }
