@@ -130,7 +130,7 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
   const deleteShoppingList = async (listId) => {
     await shoppingListsApi.deleteShoppingList(listId)
     currentShoppingLists.value = currentShoppingLists.value.filter(
-      (list) => list.id !== listId
+      (list) => list?.id !== listId
     )
   }
 
