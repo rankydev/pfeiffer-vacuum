@@ -151,7 +151,7 @@ export default defineComponent({
     })
 
     const hasPromotion = computed(() => {
-      return currentCart?.value?.appliedOrderPromotions.length
+      return currentCart?.value?.appliedOrderPromotions?.length
     })
 
     const promotions = computed(() => {

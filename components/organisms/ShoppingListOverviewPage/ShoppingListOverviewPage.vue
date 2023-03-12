@@ -139,7 +139,7 @@ export default defineComponent({
     })
 
     const openNewShoppingList = () => {
-      shoppingListsStore.toggleAddMode()
+      shoppingListsStore.newListMode()
       shoppingListsStore.toggleOverlay()
     }
 

@@ -1,14 +1,10 @@
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useLogger } from '~/composables/useLogger'
 import config from '~/config/hybris.config'
-import { useToast } from '~/composables/useToast'
-import { useContext } from '@nuxtjs/composition-api'
 
 export const useShoppingListsApi = () => {
   const { axios } = useAxiosForHybris()
   const { logger } = useLogger('shoppingList')
-  const toast = useToast()
-  const { i18n } = useContext()
 
   /**
    * Gets all current shopping lists
@@ -84,24 +80,12 @@ export const useShoppingListsApi = () => {
     )
 
     if (result.status === 201) {
-      toast.success(
-        {
-          description: i18n.t('myaccount.shoppingList.addSuccessful'),
-        },
-        { timeout: 3000 }
-      )
       return result
     }
 
     logger.error(
       'Error when adding to shopping list. Returning false.',
       result.error ? result.error : ''
-    )
-    toast.error(
-      {
-        description: i18n.t('myaccount.shoppingList.addError'),
-      },
-      { timeout: 3000 }
     )
     return null
   }

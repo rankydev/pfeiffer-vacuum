@@ -110,7 +110,7 @@
     },
     "selectAList": "Select a list",
     "add": "Add to new list",
-    "addSuccessful": "Product was added to shopping list successfully.",
+    "addSuccessful": "Your product has been added to {listName} successfully.",
     "addError": "Product could not be added to shopping list.",
     "back": "Back to lists",
     "name": "Name",

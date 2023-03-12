@@ -112,7 +112,7 @@
     },
     "selectAList": "쇼핑 목록 선택",
     "add": "새 목록에 추가",
-    "addSuccessful": "제품이 쇼핑 목록에 성공적으로 추가되었습니다.",
+    "addSuccessful": "귀하의 제품이 {listName} 목록에 추가되었습니다.",
     "addError": "제품을 쇼핑 목록에 추가할 수 없습니다.",
     "back": "목록으로 돌아가기",
     "name": "이름",

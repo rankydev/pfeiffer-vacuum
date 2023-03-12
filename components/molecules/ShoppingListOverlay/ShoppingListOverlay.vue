@@ -9,13 +9,13 @@
       <h2 class="shopping-list-overlay__header--title">
         <span>
           {{
-            isAddMode
-              ? $t('myaccount.shoppingList.addNewList')
-              : $t('myaccount.shoppingList.selectAList')
+            isBasicMode
+              ? $t('myaccount.shoppingList.selectAList')
+              : $t('myaccount.shoppingList.addNewList')
           }}
         </span>
         <span
-          v-if="shoppingLists.length && !isAddMode"
+          v-if="shoppingLists.length && isBasicMode"
           class="shopping-list-overlay__header--title-count"
         >
           ({{ shoppingLists.length }})
@@ -23,7 +23,7 @@
       </h2>
     </div>
     <div
-      v-if="shoppingLists && !isAddMode"
+      v-if="shoppingLists && isBasicMode"
       class="shopping-list-overlay__content"
     >
       <Button
@@ -110,42 +110,58 @@ export default defineComponent({
     const nameVar = ref('')
     const descriptionVar = ref('')
     const shoppingListsStore = useShoppingLists()
-    const { shoppingLists, isOverlayOpen, isAddMode } =
-      storeToRefs(shoppingListsStore)
+    const {
+      shoppingLists,
+      isOverlayOpen,
+      isAddMode,
+      isNewListMode,
+      isBasicMode,
+    } = storeToRefs(shoppingListsStore)
+
+    const clearForm = () => {
+      nameVar.value = ''
+      descriptionVar.value = ''
+    }
 
     const closeSidebar = () => {
       shoppingListsStore.toggleOverlay()
-      if (isAddMode.value) {
-        toggleAddMode()
-      }
+      shoppingListsStore.basicMode()
+      clearForm()
     }
 
-    const toggleAddMode = () => {
-      shoppingListsStore.toggleAddMode()
-    }
     const newShoppingList = async () => {
-      if (nameVar.value) {
+      if (!nameVar.value) {
+        return
+      }
+      if (isAddMode.value) {
         await shoppingListsStore.createNewListAndAddProduct(
           nameVar.value,
           descriptionVar.value
         )
-        closeSidebar()
       }
+      if (isNewListMode.value) {
+        await shoppingListsStore.createNewList(
+          nameVar.value,
+          descriptionVar.value
+        )
+      }
+      closeSidebar()
     }
     const addToShoppingList = async (listId) => {
       await shoppingListsStore.addToShoppingList(listId)
       closeSidebar()
     }
     const handleForward = async () => {
-      if (!isAddMode.value) {
-        toggleAddMode()
+      if (isBasicMode.value) {
+        shoppingListsStore.addMode()
       } else {
         await newShoppingList()
       }
     }
     const handleBack = () => {
       if (isAddMode.value) {
-        toggleAddMode()
+        shoppingListsStore.basicMode()
+        clearForm()
       } else {
         closeSidebar()
       }
@@ -154,7 +170,6 @@ export default defineComponent({
     return {
       shoppingLists,
       isAddMode,
-      toggleAddMode,
       handleForward,
       handleBack,
       isOverlayOpen,
@@ -162,6 +177,8 @@ export default defineComponent({
       addToShoppingList,
       nameVar,
       descriptionVar,
+      isNewListMode,
+      isBasicMode,
     }
   },
 })

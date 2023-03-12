@@ -110,7 +110,7 @@
     },
     "selectAList": "Wählen Sie eine Liste aus",
     "add": "Zu neuer Liste hinzufügen",
-    "addSuccessful": "Produkt wurde erfolgreich zur Einkaufsliste hinzugefügt.",
+    "addSuccessful": "Ihr Produkt wurde der Liste {listName} hinzugefügt.",
     "addError": "Produkt konnte nicht zur Einkaufsliste hinzugefügt werden.",
     "back": "Zurück zu den Listen",
     "name": "Name",
