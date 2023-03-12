@@ -16,7 +16,7 @@
     </div>
     <ShoppingListItem
       v-for="list in lists"
-      :key="list.id"
+      :key="getUniqueId(list.id)"
       class="shopping-list-table__items"
       :list="list"
       :select-mode="selectMode"
@@ -29,6 +29,7 @@
 <script>
 import ShoppingListItem from '~/components/molecules/ShoppingListItem/ShoppingListItem.vue'
 import { defineComponent } from '@nuxtjs/composition-api'
+import useUniqueKey from '~/composables/useUniqueKey'
 
 export default defineComponent({
   name: 'ShoppingListTable',
@@ -47,6 +48,7 @@ export default defineComponent({
   },
   emits: ['delete', 'update'],
   setup(props, { emit }) {
+    const getUniqueId = (id) => useUniqueKey('SHOPPING_LIST_TABLE_' + id)
     const deleteListItem = (listItem) => {
       emit('delete', listItem)
     }
@@ -55,7 +57,7 @@ export default defineComponent({
       emit('update', listItem)
     }
 
-    return { deleteListItem, updateDeleteList }
+    return { deleteListItem, updateDeleteList, getUniqueId }
   },
 })
 </script>

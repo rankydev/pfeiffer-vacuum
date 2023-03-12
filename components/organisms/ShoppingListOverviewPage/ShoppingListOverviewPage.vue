@@ -33,7 +33,7 @@
               : $t('myaccount.shoppingListOverviewPage.deleteList')
           "
           variant="secondary"
-          @click="openNewShoppingList"
+          @click="createDeleteLists"
         />
       </div>
     </div>
@@ -138,9 +138,13 @@ export default defineComponent({
         : i18n.t('myaccount.new')
     })
 
-    const openNewShoppingList = () => {
-      shoppingListsStore.newListMode()
-      shoppingListsStore.toggleOverlay()
+    const createDeleteLists = () => {
+      if (isSelectMode.value) {
+        deleteSelectedLists()
+      } else {
+        shoppingListsStore.newListMode()
+        shoppingListsStore.toggleOverlay()
+      }
     }
 
     const updateSelectedLists = (shoppingList) => {
@@ -163,12 +167,10 @@ export default defineComponent({
     }
 
     const deleteSelectedLists = () => {
-      shoppingLists.value.forEach(async (shoppingList) => {
-        if (shoppingList.selected) {
-          await shoppingListsStore.deleteShoppingList(shoppingList.id)
-        }
+      selectedList.value.forEach(async (shoppingList) => {
+        await shoppingListsStore.deleteShoppingList(shoppingList.id)
       })
-      clearSelectedLists()
+      toggleSelectMode()
     }
 
     const isSelectedListEmpty = computed(() => {
@@ -208,7 +210,7 @@ export default defineComponent({
       toggleSelectMode,
       shoppingLists,
       isSelectMode,
-      openNewShoppingList,
+      createDeleteLists,
       deleteShoppingList,
       updateSelectedLists,
       deleteSelectedLists,
@@ -260,6 +262,7 @@ export default defineComponent({
 
       &__select {
         @apply tw-hidden;
+        @apply tw-min-w-fit;
 
         @screen md {
           @apply tw-flex;
@@ -274,6 +277,8 @@ export default defineComponent({
       }
 
       &__new {
+        @apply tw-min-w-fit;
+
         @screen md {
           @apply tw-w-[123px];
         }
