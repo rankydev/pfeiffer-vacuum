@@ -1,6 +1,4 @@
 <template>
-  <!-- TODO: Do we need a transition on language change? If yes, then we have to check why we always scroll down to the bottom with this transition -->
-  <!-- Transition name="page" -->
   <div :key="$i18n.locale" class="default-layout">
     <CmsQuery
       :handle-preview-events="false"
@@ -59,21 +57,17 @@
       </template>
     </CmsQuery>
   </div>
-  <!-- /Transition -->
 </template>
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { usePageStore, CMS_PAGE } from '~/stores/page'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   scrollToTop: true,
   setup() {
-    const pageStore = usePageStore()
-
-    // TODO Is this even correct here?
-    pageStore.setPageType(CMS_PAGE)
-
-    const slug = ref('/global/templates/defaultpageconfiguration')
+    // please note: Defining this here in default page template (used for root of all pages) means:
+    // header / footer / stickybar is loaded once and will be same for all pages
+    // Only variable parts are now in page.vue: stage / body
+    const slug = '/global/templates/defaultpageconfiguration'
 
     return {
       slug,
@@ -104,7 +98,7 @@ html {
 
 .default-layout {
   &__content {
-    // TODO:  Navigating between pages without a min-height leed to an "empty" content area for a moment and then the footer is visible directly under the header. Check if this is the best way to solve this problem.
+    //  Navigating between pages without a min-height leed to an "empty" content area for a moment and then the footer is visible directly under the header
     min-height: 80vh;
   }
 }
