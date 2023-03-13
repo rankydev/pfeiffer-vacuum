@@ -364,9 +364,10 @@ export default defineComponent({
     @apply tw-mt-4;
     @apply tw-flex;
     @apply tw-pr-1;
+
     @screen lg {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-10 tw-col-end-11;
+      @apply tw-col-start-8 tw-col-end-9;
       @apply tw-w-20;
       @apply tw-my-auto;
       @apply tw-ml-auto;
@@ -377,7 +378,7 @@ export default defineComponent({
       @apply tw-flex;
 
       @screen lg {
-        @apply tw-col-start-10 tw-col-end-11;
+        @apply tw-col-start-8 tw-col-end-9;
         @apply tw-ml-auto;
         @apply tw-mr-8;
       }
@@ -458,7 +459,7 @@ export default defineComponent({
 
     @screen lg {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-11 tw-col-end-12;
+      @apply tw-col-start-9 tw-col-end-11;
       @apply tw-text-lg;
       @apply tw-leading-7;
       @apply tw-m-auto;
@@ -490,14 +491,14 @@ export default defineComponent({
       }
 
       @screen lg {
-        @apply tw-col-start-11 tw-col-end-12;
+        @apply tw-col-start-9 tw-col-end-11;
       }
     }
   }
 
   &__total-price {
     @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-10 tw-col-end-13;
+    @apply tw-col-start-5 tw-col-end-13;
     @apply tw-leading-6;
     @apply tw-flex;
     @apply tw-mt-auto;
@@ -505,7 +506,7 @@ export default defineComponent({
 
     @screen lg {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-12 tw-col-end-13;
+      @apply tw-col-start-11 tw-col-end-13;
       @apply tw-my-auto;
     }
 
