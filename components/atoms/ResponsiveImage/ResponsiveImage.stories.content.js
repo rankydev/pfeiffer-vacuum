@@ -26,7 +26,8 @@ export default {
     filenamePreload:
       '//img2.storyblok.com/40x34/f/152940/1280x1110/5204b446e7/pfeiffer01.jpeg',
     originalFilename:
-      'https://a.storyblok.com/f/152940/1280x1110/5204b446e7/pfeiffer01.jpeg',
+      '/api/cms/assets/f/152940/1280x1110/5204b446e7/pfeiffer01.jpeg',
+    originalFilenameRelative: '/f/152940/1280x1110/5204b446e7/pfeiffer01.jpeg',
     originalResolution: {
       width: 1280,
       height: 1110,

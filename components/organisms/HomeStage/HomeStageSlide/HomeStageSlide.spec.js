@@ -64,7 +64,7 @@ describe('HomeStageSlide', () => {
       const interlayImageWrapper = wrapper.findComponent(nuxtImg)
 
       expect(interlayImageWrapper.vm.src).toEqual(
-        propsData.interlay.originalFilename
+        propsData.interlay.originalFilenameRelative
       )
     })
 
