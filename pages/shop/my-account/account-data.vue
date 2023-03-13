@@ -198,6 +198,10 @@ export default defineComponent({
 
       if (!hasValidationErrors.value) {
         saveCompanyData()
+      } else {
+        toast.warning({
+          description: i18n.t('form.validationErrorMessages.warning'),
+        })
       }
     }
 
@@ -210,6 +214,10 @@ export default defineComponent({
           ...updatedData.value,
         })
         isEditMode.value = false
+      } else {
+        toast.warning({
+          description: i18n.t('form.validationErrorMessages.warning'),
+        })
       }
     }
 
