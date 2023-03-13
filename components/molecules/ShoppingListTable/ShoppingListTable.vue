@@ -122,6 +122,10 @@ export default defineComponent({
   &__items {
     @apply tw-mb-6;
 
+    &:last-child {
+      @apply tw-mb-0;
+    }
+
     @screen md {
       @apply tw-mb-0;
 

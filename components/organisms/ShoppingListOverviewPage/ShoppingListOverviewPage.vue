@@ -317,10 +317,11 @@ export default defineComponent({
   }
 
   &__pagination {
-    @apply tw-mt-2;
+    @apply tw-mt-6;
     @apply tw-w-full;
 
     @screen md {
+      @apply tw-mt-4;
       @apply tw-w-fit;
       @apply tw-ml-auto;
     }

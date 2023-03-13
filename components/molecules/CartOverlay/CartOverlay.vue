@@ -118,6 +118,7 @@ import { useUserStore } from '~/stores/user'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 import GenericSidebar from '~/components/molecules/GenericSidebar/GenericSidebar'
 import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
+import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
   name: 'CartOverlay',
@@ -126,6 +127,7 @@ export default defineComponent({
     CartTable,
     GenericSidebar,
     LoginToSeePricesLabel,
+    Button,
   },
   props: {
     isOpen: {
