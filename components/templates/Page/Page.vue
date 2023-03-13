@@ -1,5 +1,8 @@
 <template>
-  <div class="page-template">
+  <div
+    class="page-template"
+    :class="{ 'page-template--min-height': minHeightPage }"
+  >
     <slot>
       <main>
         <nuxt-dynamic
@@ -42,6 +45,10 @@ export default defineComponent({
       type: Object,
       default: null,
     },
+    minHeightPage: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props) {
     const { content, metaData } = toRefs(props)
@@ -67,7 +74,10 @@ export default defineComponent({
 .page-template {
   @apply tw-flex;
   @apply tw-flex-col;
-  @apply tw-min-h-screen;
   @apply tw-overflow-x-hidden;
+
+  &--min-height {
+    @apply tw-min-h-screen;
+  }
 }
 </style>
