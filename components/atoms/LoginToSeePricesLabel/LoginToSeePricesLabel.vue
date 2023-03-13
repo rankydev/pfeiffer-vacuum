@@ -10,7 +10,7 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '~/stores/user'
 
 export default defineComponent({
   name: 'LoginToSeePricesLabel',
