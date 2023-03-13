@@ -158,5 +158,9 @@
     "deleteList": "Delete list",
     "emptyList": "You have not created any shopping lists yet!"
   },
-  "backToDashboard": "Back to dashboard"
+  "backToDashboard": "Back to dashboard",
+  "editList": "Edit list",
+  "saveChanges": "Save changes",
+  "backToOverview": "Back to overview",
+  "addAllToCart": "Add all products to cart"
 }

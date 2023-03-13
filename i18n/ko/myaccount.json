@@ -151,6 +151,10 @@
     "deleteList": "쇼핑 목록 삭제",
     "emptyList": "아직 쇼핑 목록을 제출하지 않았습니다!"
   },
-  "backToDashboard": "대시보드로 돌아가기"
+  "backToDashboard": "대시보드로 돌아가기",
+  "editList": "쇼핑 목록 편집",
+  "saveChanges": "변경 사항 저장",
+  "backToOverview": "목록으로 돌아가기",
+  "addAllToCart": "장바구니에 모든 제품 추가"
 }
 

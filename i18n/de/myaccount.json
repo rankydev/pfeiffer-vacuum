@@ -158,5 +158,9 @@
     "deleteList": "Liste löschen",
     "emptyList": "Sie haben noch keine Einkaufslisten erstellt!"
   },
-  "backToDashboard": "Zurück zum Dashboard"
+  "backToDashboard": "Zurück zum Dashboard",
+  "editList": "Liste bearbeiten",
+  "saveChanges": "Änderungen speichern",
+  "backToOverview": "Zurück zur Übersicht",
+  "addAllToCart": "Alle Produkte in den Warenkorb legen"
 }

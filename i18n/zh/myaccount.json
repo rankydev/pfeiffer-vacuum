@@ -155,5 +155,9 @@
     "deleteList": "删除购物清单",
     "emptyList": "您还没有认证任何购物清单"
   },
-  "backToDashboard": "返回仪表板"
+  "backToDashboard": "返回仪表板",
+  "editList": "编辑购物清单",
+  "saveChanges": "保存更改",
+  "backToOverview": "返回概览",
+  "addAllToCart": "将所有产品添加到购物车"
 }
