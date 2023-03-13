@@ -107,6 +107,5 @@ metadataTest:
     - key: STORYBLOK_API_BASE_URL
       value: "${STORYBLOK_API_BASE_URL}"
 
-  exposedPorts: ["3000"]
   cmd: ["npm", "start"]
   workdir: "/opt/pvac-frontend"

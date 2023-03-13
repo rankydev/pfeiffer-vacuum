@@ -316,6 +316,4 @@ COPY /.env.template ./
 RUN cat .env.template | envsubst >> .env
 RUN rm .env.template
 
-EXPOSE 3000
-
 CMD [ "npm", "start" ]
