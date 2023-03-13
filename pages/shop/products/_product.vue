@@ -6,13 +6,9 @@
     :language="language"
   >
     <template #default="{ result: { data } }">
-      <Page
-        v-if="data && productStore.product"
-        v-bind="data"
-        :meta-data="productStore.metaData"
-      >
+      <Page v-if="data" v-bind="data" :meta-data="productStore.metaData">
         <ContentWrapper>
-          <div class="product-page">
+          <div v-if="productStore.product && !hasError" class="product-page">
             <div class="product-page__headline-wrapper">
               <h1 class="product-page__headline">
                 {{ (productStore.product || {}).name }}
@@ -57,8 +53,16 @@
               />
             </div>
           </div>
+          <ErrorHandling
+            v-else
+            :headline="$t('product.errorHandling.singleProductHeadline')"
+            :grey-background="false"
+          />
         </ContentWrapper>
-        <DetailTabs class="product-page__detail-tabs" />
+        <DetailTabs
+          v-if="productStore.product && !hasError"
+          class="product-page__detail-tabs"
+        />
       </Page>
     </template>
   </CmsQuery>
@@ -74,12 +78,12 @@ import {
   onServerPrefetch,
   useContext,
   computed,
+  ref,
 } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import { useProductStore, useVariationmatrixStore } from '~/stores/product'
 import { useUserStore } from '~/stores/user'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
-import { useErrorHandler } from '~/composables/useErrorHandler'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
@@ -106,7 +110,6 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const context = useContext()
-    const { redirectOnError } = useErrorHandler()
 
     /**
      * Set the type of the pages, enabling components
@@ -124,8 +127,14 @@ export default defineComponent({
     const { productReferencesRecommendedAccessories } =
       storeToRefs(productStore)
 
+    const hasError = ref(false)
+
     const loadProduct = async () => {
-      await redirectOnError(productStore.loadByPath)
+      try {
+        await productStore.loadByPath()
+      } catch (e) {
+        hasError.value = true
+      }
     }
 
     onServerPrefetch(async () => await loadProduct())
@@ -195,6 +204,7 @@ export default defineComponent({
       variationmatrixStore,
       sortedImages,
       productReferencesRecommendedAccessories,
+      hasError,
     }
   },
 })

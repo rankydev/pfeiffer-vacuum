@@ -9,17 +9,29 @@
       :infinite="infinite"
       :slides="enrichedSlides"
     />
+    <div v-else>
+      <div class="product-card-carousel__error-wrapper">
+        <h2>{{ headline }}</h2>
+        <Button v-if="button.length" v-bind="button" />
+      </div>
+      <ErrorHandling
+        :headline="$t('product.errorHandling.multiProductHeadline')"
+        class="product-card-carousel__error-handling"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
 import { ref, defineComponent, useAsync } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/product'
+import Button from '~/components/atoms/Button/Button'
+import ErrorHandling from '~/components/molecules/ErrorHandling/ErrorHandling'
+import ContentCarousel from '~/components/organisms/ContentCarousel/ContentCarousel'
 
 export default defineComponent({
   name: 'ProductCardCarousel',
-  components: { ContentCarousel },
+  components: { Button, ErrorHandling, ContentCarousel },
   props: {
     /**
      * Headline of the carousel
@@ -78,6 +90,10 @@ export default defineComponent({
       // Fetched hybris products
       let fetchedProducts = await productStore.getProducts(productCodes)
 
+      if (!fetchedProducts.length) {
+        return []
+      }
+
       return slides.value.map((e) => ({
         ...e,
         product: {
@@ -90,3 +106,21 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.product-card-carousel {
+  &__error-wrapper {
+    @apply tw-flex tw-justify-between;
+    @apply tw-mt-8;
+    @apply tw-mb-6;
+  }
+
+  &__error-handling {
+    @apply tw-mb-8;
+
+    &.error-handling {
+      @apply tw-py-[204px];
+    }
+  }
+}
+</style>
