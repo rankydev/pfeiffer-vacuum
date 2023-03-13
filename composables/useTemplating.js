@@ -1,5 +1,4 @@
 import { ref, watch } from '@nuxtjs/composition-api'
-// TODO With the changes I made this composable seems obsolete - check if we need it, espacially if something is done here that is missing in the other code
 const useTemplating = (content) => {
   const top = ref(undefined)
   const header = ref(undefined)
