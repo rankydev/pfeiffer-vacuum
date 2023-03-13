@@ -1,7 +1,7 @@
 <template>
   <div class="product-card-carousel">
     <ContentCarousel
-      v-if="(enrichedSlides || []).length && !hasError"
+      v-if="(enrichedSlides || []).length"
       :headline="headline"
       :button="button"
       :autoplay="autoplay"
@@ -85,8 +85,6 @@ export default defineComponent({
     // Extracted codes from slides
     const productCodes = slides.value.map((e) => e.product?.code)
 
-    const hasError = ref(false)
-
     // Enriched slides with hybris data
     const enrichedSlides = useAsync(async () => {
       // Fetched hybris products
@@ -104,7 +102,7 @@ export default defineComponent({
       }))
     }, String(productCodes) || 'empty')
 
-    return { enrichedSlides, hasError }
+    return { enrichedSlides }
   },
 })
 </script>
