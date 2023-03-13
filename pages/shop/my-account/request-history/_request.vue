@@ -171,7 +171,7 @@ export default defineComponent({
 
     &__quantity {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-10 tw-col-end-11;
+      @apply tw-col-start-8 tw-col-end-9;
       @apply tw-flex;
       @apply tw-my-auto;
       @apply tw-text-pv-grey-32;
@@ -192,7 +192,7 @@ export default defineComponent({
 
     &__price {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-11 tw-col-end-12;
+      @apply tw-col-start-10 tw-col-end-11;
       @apply tw-flex;
       @apply tw-m-auto;
       @apply tw-w-fit;
