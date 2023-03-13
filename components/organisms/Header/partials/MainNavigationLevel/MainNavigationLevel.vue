@@ -84,6 +84,27 @@
               @click.native="closeMenu"
             />
           </li>
+
+          <template
+            v-if="
+              currentEntry.showPromotionTeaser &&
+              currentEntry.promotionTeaser.length
+            "
+          >
+            <PromotionTeaser :content="currentEntry.promotionTeaser" />
+          </template>
+        </template>
+
+        <template v-if="level === 1 && !isMobile && !hasActiveElement">
+          <div
+            v-if="
+              currentEntry.showPromotionTeaser &&
+              currentEntry.promotionTeaser.length
+            "
+            class="main-navigation__promotion-teaser"
+          >
+            <PromotionTeaser :content="currentEntry.promotionTeaser" />
+          </div>
         </template>
 
         <template v-if="level > 0 && !isMobile">
@@ -177,6 +198,7 @@ import Link from '~/components/atoms/Link/Link.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
 import Button from '~/components/atoms/Button/Button.vue'
+import PromotionTeaser from '~/components/molecules/PromotionTeaser/PromotionTeaser.vue'
 
 import { useMenuStore } from '~/stores/menu'
 import { useUserStore } from '~/stores/user'
@@ -188,6 +210,7 @@ export default defineComponent({
     Link,
     AnimatedCollapse,
     Button,
+    PromotionTeaser,
   },
   props: {
     currentEntry: {
@@ -310,4 +333,19 @@ export default defineComponent({
 <style lang="scss">
 @import './styles/MainNavLinkPrimary';
 @import './styles/MainNavLinkSecondary';
+
+.main-navigation {
+  &__promotion-teaser {
+    @apply tw-absolute;
+    @apply tw-top-0;
+    @apply tw-right-0;
+    @apply tw-w-1/2;
+    @apply tw-h-full;
+    max-width: 720px;
+
+    @screen lg {
+      @apply tw-bg-pv-white;
+    }
+  }
+}
 </style>

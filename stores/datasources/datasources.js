@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useContext, ssrRef, computed } from '@nuxtjs/composition-api'
 import { useAxiosForDatasources } from '~/composables/useAxiosForDatasources'
+import { getProxyStoryBlokAssetLink } from '~/utils/storyblok'
 
 export const useDatasourcesStore = defineStore('datasources', () => {
   const { axios } = useAxiosForDatasources()
@@ -28,7 +29,9 @@ export const useDatasourcesStore = defineStore('datasources', () => {
             (e) => e.name === 'personal data privacy'
           ) || {}
         files.value = {
-          personalPrivacyLink: link.dimension_value || link.value || '',
+          personalPrivacyLink: getProxyStoryBlokAssetLink(
+            link.dimension_value || link.value || ''
+          ),
         }
       })
       .catch((error) => {
