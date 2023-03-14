@@ -105,6 +105,7 @@ import RegistrationCompanyDataForm from '~/components/molecules/RegistrationComp
 import RegistrationPageDataProtection from '~/components/organisms/RegistrationPage/RegistrationPageDataProtection/RegistrationPageDataProtection'
 import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
+import { useToast } from '~/composables/useToast'
 
 export default defineComponent({
   name: 'AccountData',
@@ -134,6 +135,7 @@ export default defineComponent({
       isRejectedUser,
     } = storeToRefs(userStore)
     const { updateCurrentUser } = userStore
+    const toast = useToast()
 
     // Get data from accountDataStore
     const accountDataStore = useAccountDataStore()
