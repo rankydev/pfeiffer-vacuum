@@ -2,20 +2,23 @@ import { useContext } from '@nuxtjs/composition-api'
 import qs from 'qs'
 import { useUserStore } from '~/stores/user'
 import { useLogger } from './useLogger'
+import { useCookieHelper } from '~/composables/useCookieHelper'
 
 export const useAxiosInterceptors = () => {
   const { logger } = useLogger('useAxiosInterceptors')
   const { i18n } = useContext()
   const userStore = useUserStore()
+  const { getCookie } = useCookieHelper()
 
   const addAuthHeader = function (config) {
     logger.debug('addAuthHeader', userStore.isLoggedIn)
 
     if (userStore.isLoggedIn) {
-      const authObject = userStore.auth
-      logger.trace('AuthObject: ', authObject)
-      config.headers.Authorization = `${authObject.token_type} ${authObject.access_token}`
-      logger.trace('Authorization Header Set')
+      // use auth values from cookie instead of store. This might be more bullet proof since cookies are shared between tabs and store is not
+      config.headers.Authorization = `${getCookie(
+        'auth.tokenType'
+      )} ${getCookie('auth.accessToken')}`
+      logger.trace('Authorization Header set from cookie values')
     }
 
     logger.trace('Headers: ', config.headers)

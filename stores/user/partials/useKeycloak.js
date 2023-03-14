@@ -142,6 +142,30 @@ export const useKeycloak = () => {
     logger.debug('Keycloak initialized')
   }
 
+  const forceTokenRefreshAndUpdate = async () => {
+    try {
+      logger.trace('forceTokenRefreshAndUpdate -> triggered by interceptor')
+      // first call refresh function. Just to make sure our token was not just expired
+      const refreshed = await keycloakInstance?.value?.updateToken()
+      logger.trace(
+        'forceTokenRefreshAndUpdate -> updateToken call did update token',
+        refreshed
+      )
+
+      // now insure we have most current token values in store
+      // store might not be up to date if onTokenExpired event was not fired for whatever reason
+      const token = reconstructToken()
+      setCookiesAndSaveAuthData(token)
+      logger.trace(
+        'forceTokenRefreshAndUpdate -> ensured most recent token information was saved in cookies and store'
+      )
+      return token.access_token
+    } catch (error) {
+      logger.error('forceTokenRefreshAndUpdate -> failed', error)
+      throw error
+    }
+  }
+
   const kcOnAuthSuccess = async () => {
     logger.debug('kcOnAuthSuccess')
     isLoginProcess.value = true
@@ -230,10 +254,11 @@ export const useKeycloak = () => {
   return {
     keycloakInstance,
     auth,
+    isLoggedIn,
+    isLoginProcess,
     createKeycloakInstance,
     setCookiesAndSaveAuthData,
     removeCookiesAndDeleteAuthData,
-    isLoggedIn,
-    isLoginProcess,
+    forceTokenRefreshAndUpdate,
   }
 }
