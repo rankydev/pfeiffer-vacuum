@@ -215,8 +215,6 @@ export default defineComponent({
       return product.value?.images?.[0] || null
     })
 
-    console.log(productImage.value, 'IMAGE')
-
     const productName = computed(() => {
       return product.value?.name || ''
     })
