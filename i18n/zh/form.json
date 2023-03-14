@@ -44,7 +44,8 @@
   "validationErrorMessages": {
     "required": "值是必需的",
     "requiredNameOrCompany": "需要公司或名字和姓氏",
-    "email": "值不是有效的电子邮件地址"
+    "email": "值不是有效的电子邮件地址",
+    "warning": "请填写所有必填数据"
   },
   "message": {
     "success": "您的请求已发送成功！",
