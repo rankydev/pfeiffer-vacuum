@@ -23,7 +23,9 @@
       {{ name }}
     </template>
     <template #tags>
-      <Tag v-for="(tagItem, idx) in tags" :key="idx" :content="tagItem" />
+      <div class="knowledge-card__tags">
+        <Tag v-for="(tagItem, idx) in tags" :key="idx" :content="tagItem" />
+      </div>
     </template>
     <template #description>
       <!-- eslint-disable-next-line vue/no-v-html -->
@@ -43,7 +45,7 @@
         <KnowledgeAssetButton
           :webinar-registration-id="id"
           :type="type"
-          :date="date"
+          :date="entry.date"
           :asset-url="assetUrl"
           :prevent-full-width="true"
         />
@@ -182,6 +184,11 @@ export default defineComponent({
     &-label {
       @apply tw-my-auto;
     }
+  }
+
+  &__tags {
+    @apply tw-flex;
+    @apply tw-gap-1;
   }
 
   &__action-items {

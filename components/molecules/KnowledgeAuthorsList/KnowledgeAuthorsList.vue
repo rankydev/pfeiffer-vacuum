@@ -1,7 +1,7 @@
 <template>
   <div class="knowledge-authors-list">
     <h2 class="knowledge-authors-list__headline">
-      {{ isWhitepaper ? 'Whitepapers' : 'Webinars' }}
+      {{ isWhitepaper ? $t('knowledge.authors') : $t('knowledge.speaker') }}
     </h2>
     <div class="knowledge-authors-list__authorlist">
       <KnowledgeAuthor

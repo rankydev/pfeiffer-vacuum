@@ -28,9 +28,10 @@
               <KnowledgeAssetButton
                 :type="isWhitepaper ? 'WHITEPAPER' : 'WEBINAR'"
                 :webinar-registration-id="webinarRegistrationId"
-                date
+                :date="date"
                 :asset-url="assetUrl"
                 :is-detail-page="isDetailPage"
+                :use-loading-spinner="true"
               />
             </div>
           </div>
@@ -245,6 +246,7 @@ export default defineComponent({
     &.responsive-image {
       img {
         @apply tw-w-full;
+        @apply tw-h-full;
         @apply tw-rounded-none;
         @apply tw-object-cover;
 
@@ -254,11 +256,6 @@ export default defineComponent({
 
         @screen lg {
           height: 400px;
-        }
-
-        @screen xl {
-          // growing proportionally to width of screen
-          height: 28vw;
         }
       }
     }

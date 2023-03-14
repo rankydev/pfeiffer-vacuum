@@ -23,9 +23,19 @@
       class="knowledge-details__asset-button-bottom"
       :type="isWhitepaper ? 'WHITEPAPER' : 'WEBINAR'"
       :webinar-registration-id="isWhitepaper ? null : hybrisContent.id"
-      date
+      :date="hybrisContent.date"
       :asset-url="hybrisContent.assetURL"
       :is-detail-page="true"
+      :use-loading-spinner="true"
+    />
+    <Button
+      class="knowledge-details__back-to-overview"
+      label="Back to overview"
+      :prepend-icon="true"
+      icon="arrow_back"
+      variant="secondary"
+      shape="plain"
+      :href="localePath('/knowledge')"
     />
     <KnowledgeModal :is-open="isModalOpen" @closeModal="toggleModal(false)" />
   </div>
@@ -43,11 +53,12 @@ import { useRoute } from '@nuxtjs/composition-api'
 import KnowledgeStage from '~/components/molecules/KnowledgeStage/KnowledgeStage'
 import KnowledgeAssetButton from '~/components/molecules/KnowledgeAssetButton/KnowledgeAssetButton'
 import KnowledgeModal from '~/components/molecules/KnowledgeModal/KnowledgeModal'
+import Button from '~/components/atoms/Button/Button'
 import { storeToRefs } from 'pinia'
 
 export default {
   name: 'KnowledgeDetails',
-  components: { KnowledgeStage, KnowledgeAssetButton, KnowledgeModal },
+  components: { KnowledgeStage, KnowledgeAssetButton, KnowledgeModal, Button },
   props: {
     content: {
       type: Object,
@@ -97,6 +108,16 @@ export default {
 
   &__asset-button-bottom {
     @apply tw-mt-6;
+  }
+
+  &__back-to-overview {
+    @apply tw-w-full;
+    @apply tw-justify-center;
+    @apply tw-mt-4;
+
+    @screen md {
+      @apply tw-hidden;
+    }
   }
 }
 </style>

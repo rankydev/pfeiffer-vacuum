@@ -4,11 +4,14 @@ import config from '~/config/hybris.config'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useRoute, ref, computed, useContext } from '@nuxtjs/composition-api'
 import { joinURL } from 'ufo'
+import { useToast } from '~/composables/useToast'
+
 export const useKnowledgeStore = defineStore('knowledge', () => {
   const { logger } = useLogger('knowledgeStore')
   const { axios } = useAxiosForHybris()
   const { localePath, i18n } = useContext()
   const route = useRoute()
+  const toast = useToast()
 
   const isLoading = ref(false)
   const isModalOpen = ref(false)
@@ -22,6 +25,12 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
   )
   const isWhitepapers = computed(() => route.value.path.includes('whitepapers'))
   const isWebinars = computed(() => route.value.path.includes('webinars'))
+
+  const searchPlaceholder = computed(() => {
+    if (isWhitepapers.value) return i18n.t('knowledge.searchWhitepapers')
+    if (isWebinars.value) return i18n.t('knowledge.searchWebinars')
+    return i18n.t('knowledge.search')
+  })
 
   /**
    * Headline parameters
@@ -46,15 +55,50 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
   )
 
   const registerForWebinar = async (id) => {
+    isLoading.value = true
     const path = `${config.KNOWLEDGE_API}/webinar/${id}/register`
-    const result = await axios.$post(path, {})
 
-    if (![409, 200, 201].includes(result.status || 500)) {
-      const error = new Error('GoToWebinar registration failed')
-      logger.error(error, result)
-      throw error
-    }
-    return true
+    await axios
+      .$post(path, {})
+      .then((data) => {
+        toast.success(
+          {
+            description: i18n.t('knowledge.webinar.registration.success'),
+          },
+          {
+            timeout: 8000,
+          }
+        )
+      })
+      .catch((e) => {
+        const error = new Error('GoToWebinar registration failed')
+        logger.error(error, e)
+
+        if (e.data?.errors?.[0]?.type === 'AlreadyExistsError') {
+          toast.warning(
+            {
+              description: i18n.t(
+                'knowledge.webinar.registration.alreadyExists'
+              ),
+            },
+            {
+              timeout: 8000,
+            }
+          )
+        } else {
+          toast.error(
+            {
+              description: i18n.t('knowledge.webinar.registration.error'),
+            },
+            {
+              timeout: 8000,
+            }
+          )
+        }
+      })
+      .finally(() => {
+        isLoading.value = false
+      })
   }
 
   const knowledgeSearch = async () => {
@@ -105,6 +149,7 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
     backLink,
     filterEntries,
     isModalOpen,
+    searchPlaceholder,
 
     registerForWebinar,
     getHybrisDetails,

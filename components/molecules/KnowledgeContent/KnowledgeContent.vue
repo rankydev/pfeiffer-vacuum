@@ -32,7 +32,7 @@
                 <SearchInput
                   :value="searchTerm"
                   :clear-after-submit="false"
-                  :placeholder="$t('knowledge.search')"
+                  :placeholder="searchPlaceholder"
                   :disable-suggestions="true"
                   @submit="handleTermChange"
                 />
@@ -105,6 +105,7 @@ export default {
       backLink,
       filterEntries,
       isModalOpen,
+      searchPlaceholder,
     } = storeToRefs(knowledgeStore)
 
     const searchTerm = computed(() => route.value.query.searchTerm || '')
@@ -192,6 +193,7 @@ export default {
       filterEntries,
       searchTerm,
       isModalOpen,
+      searchPlaceholder,
 
       // Actions
       handlePageSizeChange,
