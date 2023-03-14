@@ -61,7 +61,7 @@
   </Transition>
 </template>
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   scrollToTop: true,
@@ -69,7 +69,9 @@ export default defineComponent({
     // please note: Defining this here in default page template (used for root of all pages) means:
     // header / footer / stickybar is loaded once and will be same for all pages
     // Only variable parts are now in page.vue: stage / body
-    const slug = '/global/templates/defaultpageconfiguration'
+    const { $config } = useContext()
+    const { CURRENT_REGION_CODE } = $config
+    const slug = `/${CURRENT_REGION_CODE}/templates/defaultpageconfiguration`
 
     return {
       slug,
