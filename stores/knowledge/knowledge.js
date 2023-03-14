@@ -60,7 +60,7 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
 
     await axios
       .$post(path, {})
-      .then((data) => {
+      .then(() => {
         toast.success(
           {
             description: i18n.t('knowledge.webinar.registration.success'),
