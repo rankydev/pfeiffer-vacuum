@@ -100,7 +100,7 @@ export default defineComponent({
           .catch(() => {
             loading.value = false
             toast.error({
-              description: i18n.t('form.message.error'),
+              description: i18n.t('form.message.error.defaultError'),
             })
           })
       }

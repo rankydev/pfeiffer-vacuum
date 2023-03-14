@@ -796,3 +796,5 @@ export const lists = [
   },
 ]
 export const selectMode = false
+
+export default {}

@@ -147,13 +147,12 @@ export default defineComponent({
       isLeadUser,
       isOpenUser,
       isRejectedUser,
+      isOciUser,
     } = storeToRefs(userStore)
     const { addProductToCart } = cartStore
 
     const hasAddToListButton = computed(() => {
-      // TODO: Once OCI is implemented extend this computed again
-      // return isLoggedIn.value && !ociStore.checkForOciUser
-      return isLoggedIn.value
+      return isLoggedIn.value && !isOciUser.value
     })
     const isPriceVisible = computed(() => {
       return product.value?.price?.value && isApprovedUser.value
