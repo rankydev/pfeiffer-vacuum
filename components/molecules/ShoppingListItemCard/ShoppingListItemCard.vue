@@ -2,10 +2,12 @@
   <div class="shopping-list-item-card">
     <div v-if="productImage" class="shopping-list-item-card__image">
       <Link :href="url">
-        <ResponsiveImage
-          :image="productImage"
+        <NuxtImg
+          v-if="productImage.url"
+          :src="productImage.url"
+          :alt="productImage.altText || ''"
+          :title="productImage.title || ''"
           provider="hybris"
-          aspect-ratio="1:1"
         />
       </Link>
     </div>
@@ -136,7 +138,6 @@ import {
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
@@ -148,7 +149,6 @@ export default defineComponent({
   components: {
     Button,
     Link,
-    ResponsiveImage,
     PvInput,
     Tag,
   },
