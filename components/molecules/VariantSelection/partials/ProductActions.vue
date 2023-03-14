@@ -53,7 +53,7 @@
         :disabled="isMaster"
         @click="addToCart"
       />
-      <template v-if="isLoggedIn">
+      <template v-if="isLoggedIn && !isOciUser">
         <Button
           class="product-actions__installed-base"
           icon="fact_check"
@@ -124,6 +124,7 @@ export default defineComponent({
       isOpenUser,
       isRejectedUser,
       isLoggedIn,
+      isOciUser,
     } = storeToRefs(userStore)
     const { addProductToCart } = cartStore
 
@@ -199,6 +200,7 @@ export default defineComponent({
       userStore,
       isLoggedIn,
       isApprovedUser,
+      isOciUser,
       orderNumber,
       productPrice,
       isPriceVisible,

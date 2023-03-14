@@ -231,6 +231,7 @@ export const useKeycloak = () => {
     keycloakInstance,
     auth,
     createKeycloakInstance,
+    setCookiesAndSaveAuthData,
     removeCookiesAndDeleteAuthData,
     isLoggedIn,
     isLoginProcess,

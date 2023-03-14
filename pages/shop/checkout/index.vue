@@ -26,7 +26,7 @@
                     {{ $t('checkout.checkDetails') }}
                   </div>
 
-                  <div class="checkout__addresses">
+                  <div v-if="!isOciUser" class="checkout__addresses">
                     <AddressCard
                       :address="deliveryAddress || {}"
                       :headline="$t('checkout.deliveryAddress')"
@@ -42,7 +42,7 @@
                     />
                   </div>
 
-                  <div class="checkout__text-fields">
+                  <div v-if="!isOciUser" class="checkout__text-fields">
                     <PvInput
                       v-model="customerReference"
                       :label="$t('checkout.reference')"
@@ -61,10 +61,13 @@
                     <h3>{{ $t('checkout.articleList') }}</h3>
                   </div>
 
-                  <CartTable :cart="cartEntries" :edit-mode="false" />
+                  <CartTable :edit-mode="false" />
 
-                  <div class="checkout__info">
-                    <div v-show="!ociBuyer" class="checkout__information">
+                  <div
+                    class="checkout__info"
+                    :class="{ 'checkout__info--oci': isOciUser }"
+                  >
+                    <div v-if="!isOciUser" class="checkout__information">
                       <PromotionLabel
                         v-for="(promotion, index) in cartPromotions"
                         :key="index"
@@ -93,7 +96,13 @@
 
                       <div class="checkout__submit">
                         <Button
-                          :label="$t('checkout.completeRequest')"
+                          :label="
+                            $t(
+                              isOciUser
+                                ? 'checkout.transmitCart'
+                                : 'checkout.completeRequest'
+                            )
+                          "
                           class="checkout__button--submit"
                           variant="primary"
                           icon="mail_outline"
@@ -159,6 +168,7 @@ import { useOrdersStore } from '~/stores/orders'
 import { useUserStore } from '~/stores/user'
 import { useDatasourcesStore } from '~/stores/datasources'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
+import { useOciStore } from '~/stores/oci'
 import { storeToRefs } from 'pinia'
 
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
@@ -206,6 +216,8 @@ export default defineComponent({
     const isMobile = app.$breakpoints.isMobile
     const { logger } = useLogger('checkout')
     const toast = useToast()
+    const ociStore = useOciStore()
+    const { savelyEncodedHookUrl, returnTarget } = storeToRefs(ociStore)
 
     const datasourcesStore = useDatasourcesStore()
     const { personalPrivacyLink } = storeToRefs(datasourcesStore)
@@ -214,11 +226,10 @@ export default defineComponent({
     const cartStore = useCartStore()
     const { currentCart, loading: cartLoading } = storeToRefs(cartStore)
     const userStore = useUserStore()
-    const { billingAddress, isLoggedIn, isApprovedUser } =
+    const { billingAddress, isLoggedIn, isApprovedUser, isOciUser } =
       storeToRefs(userStore)
     const cartEntries = computed(() => currentCart.value?.entries)
     const deliveryAddress = computed(() => currentCart.value?.deliveryAddress)
-    const ociBuyer = computed(() => userStore.currentUser?.ociBuyer)
 
     const cartPromotions = computed(() => {
       return currentCart.value?.appliedOrderPromotions || []
@@ -301,16 +312,22 @@ export default defineComponent({
             } delivery address] as cart delivery address.`
           )
         } else {
-          toast.warning({
-            description: i18n.t('checkout.deliveryAddressMissing'),
-          })
+          // for OCI users we have silent errors because deliveryAddress is not required
+          if (!isOciUser.value) {
+            toast.warning({
+              description: i18n.t('checkout.deliveryAddressMissing'),
+            })
+          }
           throw 'no delivery address found'
         }
       } catch (error) {
         logger.error('could not set delivery address.', error)
-        toast.error({
-          description: i18n.t('checkout.setDeliveryAddressError'),
-        })
+        // for OCI users we have silent errors because deliveryAddress is not required
+        if (!isOciUser.value) {
+          toast.error({
+            description: i18n.t('checkout.setDeliveryAddressError'),
+          })
+        }
       } finally {
         loading.value = false
       }
@@ -320,23 +337,42 @@ export default defineComponent({
 
     const placeOrder = async () => {
       loading.value = true
+      let keepLoadingStatusAfterFinish = false
 
       try {
         // first wait for all promises to be resolved which may be still running (set comment or reference)
         await Promise.allSettled(asyncRequests.value)
 
-        // OCI specific tasks need to be done here in PVWEB-904
+        if (isOciUser.value) {
+          if (savelyEncodedHookUrl.value && returnTarget.value) {
+            // OCI specific placeOrder
+            const ociPunchoutFormContent = await ordersStore.placeOciOrder()
 
-        // placing order in a non-oci context
-        const orderRequestResult = await ordersStore.placeOrder()
+            // generate a form which is submitted with oci specific parameters
+            const form = document.createElement('form')
+            form.setAttribute('method', 'post')
+            form.setAttribute('action', savelyEncodedHookUrl.value)
+            form.setAttribute('target', returnTarget.value)
+            form.innerHTML = ociPunchoutFormContent
+            document.body.appendChild(form)
+            form.submit()
+            // 1:1 migrate from PVAC. Loading status is not removed after form submit
+            keepLoadingStatusAfterFinish = true
+          } else {
+            throw 'OCI checkout error: no hookURL or returnTarget defined'
+          }
+        } else {
+          // placing a regular order in a non-OCI context
+          const orderRequestResult = await ordersStore.placeOrder()
 
-        // request was successful but something went wrong
-        if (!orderRequestResult || orderRequestResult?.error) {
-          throw orderRequestResult?.error || 'unexpected error'
+          // request was successful but something went wrong
+          if (!orderRequestResult || orderRequestResult?.error) {
+            throw orderRequestResult?.error || 'unexpected error'
+          }
+
+          // successful order response
+          placedOrder.value = orderRequestResult
         }
-
-        // successful order response
-        placedOrder.value = orderRequestResult
       } catch (error) {
         logger.error('error placing order', error)
         toast.error({
@@ -344,7 +380,9 @@ export default defineComponent({
         })
       } finally {
         window.scrollTo(0, 0)
-        loading.value = false
+        if (!keepLoadingStatusAfterFinish) {
+          loading.value = false
+        }
       }
     }
 
@@ -373,7 +411,7 @@ export default defineComponent({
       slugs,
       isMobile,
       currentCart,
-      ociBuyer,
+      isOciUser,
       billingAddress,
       deliveryAddress,
       cartPromotions,
@@ -496,6 +534,10 @@ export default defineComponent({
     @screen md {
       @apply tw-flex tw-justify-between;
       @apply tw-gap-6;
+    }
+
+    &--oci {
+      @apply tw-justify-end;
     }
   }
 

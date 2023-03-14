@@ -86,7 +86,7 @@
       </span>
     </div>
     <Button
-      v-if="isLoggedIn"
+      v-if="isLoggedIn && !isOciUser"
       class="cart-item-card-add-article"
       variant="secondary"
       shape="plain"
@@ -183,6 +183,7 @@ export default defineComponent({
       isOpenUser,
       isRejectedUser,
       isLoggedIn,
+      isOciUser,
     } = storeToRefs(userStore)
 
     const noPriceReason = computed(() => {
@@ -286,6 +287,7 @@ export default defineComponent({
       isPriceVisible,
       noPriceReason,
       getPromotion,
+      isOciUser,
     }
   },
 })
@@ -297,7 +299,7 @@ export default defineComponent({
   grid-template-columns: repeat(8, 1fr) 13.2% 10.87% 12.4%;
   @apply tw-auto-rows-auto;
   @apply tw-border-b-2 tw-border-b-pv-grey-80;
-  @apply tw-pt-6;
+  @apply tw-py-6;
   @apply tw-text-pv-grey-16;
 
   &-image {
@@ -443,7 +445,6 @@ export default defineComponent({
     @apply tw-col-start-1 tw-col-end-13;
     @apply tw-w-fit;
     @apply tw-mx-auto;
-    @apply tw-mb-3;
     @apply tw-mt-4;
   }
 

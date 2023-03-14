@@ -162,9 +162,8 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
    */
   const setHybrisSelectionAsUserInput = (matrix) => {
     matrix.variationAttributes?.forEach((el) => {
-      selectedAttributes.value[el.code] = el.variationValues.find(
-        (e) => e.selected
-      ).value
+      const selectedValue = el.variationValues.find((e) => e?.selected)
+      selectedAttributes.value[el.code] = selectedValue?.value
     })
   }
 

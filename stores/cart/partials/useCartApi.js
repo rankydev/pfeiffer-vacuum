@@ -1,6 +1,7 @@
 import { storeToRefs } from 'pinia'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useCookieHelper } from '~/composables/useCookieHelper'
+import { useOciStore } from '~/stores/oci'
 import { useUserStore } from '~/stores/user'
 import { useLogger } from '~/composables/useLogger'
 import config from '~/config/hybris.config'
@@ -11,8 +12,10 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
   const { logger } = useLogger('cartApi')
 
+  const ociStore = useOciStore()
+  const { customerId } = storeToRefs(ociStore)
   const userStore = useUserStore()
-  const { currentUser, customerId, isLoggedIn } = storeToRefs(userStore)
+  const { isLoggedIn, isOciUser } = storeToRefs(userStore)
 
   /**
    * Cart helper functions
@@ -40,7 +43,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
    */
   const getCartUrl = () => {
     if (isLoggedIn.value) {
-      if (currentUser.value?.ociBuyer)
+      if (isOciUser.value)
         return config.CARTS_CURRENT_USER_API + '/' + customerId.value
       return config.CARTS_CURRENT_USER_API + '/current'
     } else if (currentCart.value) {
@@ -103,7 +106,8 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     try {
       existingCart = await axios.$get(
         config.CARTS_CURRENT_USER_API +
-          (currentUser.value?.ociBuyer ? customerId.value : '/current'),
+          '/' +
+          (isOciUser.value ? customerId.value : 'current'),
         { params: { fields: 'FULL' } }
       )
 
@@ -133,6 +137,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
     return null
   }
+
   const getOrCreateCart = (createIfNotExist) => {
     if (isLoggedIn.value) return getOrCreateUserCart()
     return getOrCreateAnonymousCart(createIfNotExist)

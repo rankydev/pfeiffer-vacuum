@@ -1,8 +1,8 @@
 <template>
   <div class="shop-navigation">
     <client-only>
-      <Popup>
-        <template v-if="!isOciUser" #activator="{ togglePopup }">
+      <Popup v-if="!isOciUser">
+        <template #activator="{ togglePopup }">
           <LoadingSpinner :show="isLoginProcess">
             <Button
               shape="plain"
