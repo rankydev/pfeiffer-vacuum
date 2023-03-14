@@ -497,7 +497,7 @@ export default defineComponent({
 
   &__total-price {
     @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-10 tw-col-end-13;
+    @apply tw-col-start-5 tw-col-end-13;
     @apply tw-leading-6;
     @apply tw-flex;
     @apply tw-mt-auto;

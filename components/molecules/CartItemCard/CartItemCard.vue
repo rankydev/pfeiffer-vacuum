@@ -8,10 +8,12 @@
   >
     <div v-if="productImage" class="cart-item-card-image">
       <Link :href="url">
-        <ResponsiveImage
-          :image="productImage"
+        <NuxtImg
+          v-if="productImage.url"
+          :src="productImage.url"
+          :alt="productImage.altText || ''"
+          :title="productImage.title || ''"
           provider="hybris"
-          aspect-ratio="1:1"
         />
       </Link>
     </div>
@@ -116,7 +118,6 @@ import {
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
 import Tag from '~/components/atoms/Tag/Tag'
@@ -129,7 +130,6 @@ export default defineComponent({
   components: {
     Button,
     Link,
-    ResponsiveImage,
     PvInput,
     Tag,
     PromotionLabel,
@@ -214,6 +214,8 @@ export default defineComponent({
     const productImage = computed(() => {
       return product.value?.images?.[0] || null
     })
+
+    console.log(productImage.value, 'IMAGE')
 
     const productName = computed(() => {
       return product.value?.name || ''
