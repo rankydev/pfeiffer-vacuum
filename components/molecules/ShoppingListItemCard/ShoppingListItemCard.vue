@@ -2,12 +2,11 @@
   <div class="shopping-list-item-card">
     <div v-if="productImage" class="shopping-list-item-card__image">
       <Link :href="url">
-        <NuxtImg
-          v-if="productImage.url"
-          :src="productImage.url"
-          :alt="productImage.altText || ''"
-          :title="productImage.title || ''"
+        <ResponsiveImage
+          :image="productImage"
           provider="hybris"
+          :mode-full="true"
+          :contain-image="true"
         />
       </Link>
     </div>
@@ -139,6 +138,7 @@ import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import Tag from '~/components/atoms/Tag/Tag'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useDebounceFn } from '@vueuse/core'
@@ -151,6 +151,7 @@ export default defineComponent({
     Link,
     PvInput,
     Tag,
+    ResponsiveImage,
   },
   props: {
     product: {
@@ -317,8 +318,10 @@ export default defineComponent({
 
   &__image {
     @apply tw-row-start-1 tw-row-end-2;
-    @apply tw-col-start-1 tw-col-end-3;
+    @apply tw-col-start-1 tw-col-end-4;
     @apply tw-flex;
+    height: 80px;
+
     @screen md {
       @apply tw-col-end-2;
     }

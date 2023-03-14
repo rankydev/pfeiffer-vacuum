@@ -8,12 +8,11 @@
   >
     <div v-if="productImage" class="cart-item-card-image">
       <Link :href="url">
-        <NuxtImg
-          v-if="productImage.url"
-          :src="productImage.url"
-          :alt="productImage.altText || ''"
-          :title="productImage.title || ''"
+        <ResponsiveImage
+          :image="productImage"
           provider="hybris"
+          :mode-full="true"
+          :contain-image="true"
         />
       </Link>
     </div>
@@ -120,6 +119,7 @@ import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
@@ -134,6 +134,7 @@ export default defineComponent({
     Tag,
     PromotionLabel,
     LoginToSeePricesLabel,
+    ResponsiveImage,
   },
   props: {
     product: {
@@ -302,8 +303,9 @@ export default defineComponent({
 
   &-image {
     @apply tw-row-start-1 tw-row-end-2;
-    @apply tw-col-start-1 tw-col-end-3;
+    @apply tw-col-start-1 tw-col-end-4;
     @apply tw-flex;
+    height: 80px;
   }
 
   &-title {
