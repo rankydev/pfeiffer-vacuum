@@ -126,21 +126,23 @@ import { useCategoryStore } from '~/stores/category/category'
 import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
 import { useEmpolisStore } from '~/stores/empolis'
 
-import Page from '~/components/templates/Page/Page'
 import Button from '~/components/atoms/Button/Button'
+import ErrorHandling from '~/components/molecules/ErrorHandling/ErrorHandling'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
-import SearchResult from '~/components/organisms/SearchResult/SearchResult'
-import DocumentSearchResult from '~/components/organisms/DocumentSearchResult/DocumentSearchResult'
 import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
 import SearchInputPage from '~/components/molecules/SearchInputPage/SearchInputPage'
+import SearchResult from '~/components/organisms/SearchResult/SearchResult'
+import DocumentSearchResult from '~/components/organisms/DocumentSearchResult/DocumentSearchResult'
+import Page from '~/components/templates/Page/Page'
 
 export default defineComponent({
   name: 'CategoryShopPage',
   components: {
     Page,
     Button,
+    ErrorHandling,
     ContentWrapper,
     OnPageNavigation,
     ResultHeadline,
