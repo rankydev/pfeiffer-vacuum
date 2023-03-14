@@ -71,11 +71,18 @@ const useMeta = (content = {}, defaultSlug, translatedSlugs) => {
 
 export default useMeta
 
-function getImageUrl(image, fallbackImageUrl, width, height, imageService) {
-  return image && image.filename
-    ? 'https:' +
+function getImageUrl(
+  image,
+  fallbackImageUrl,
+  width,
+  height,
+  imageService,
+  baseUrl
+) {
+  return image && image.originalFilename
+    ? baseUrl +
         imageService.getResponsiveImageUrl(
-          image.filename,
+          image.originalFilename,
           width,
           height,
           'jpeg'
@@ -100,7 +107,8 @@ function addOpenGraph(
     ogFallbackImage,
     1200,
     630,
-    imageService
+    imageService,
+    baseUrl
   )
 
   return [
@@ -139,7 +147,8 @@ function addTwitter(
     twitterFallbackImage,
     280,
     150,
-    imageService
+    imageService,
+    baseUrl
   )
 
   return [
