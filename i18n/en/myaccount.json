@@ -162,5 +162,6 @@
   "editList": "Edit list",
   "saveChanges": "Save changes",
   "backToOverview": "Back to overview",
-  "addAllToCart": "Add all products to cart"
+  "addAllToCart": "Add all products to cart",
+  "descriptionOptional": "This description is optional."
 }

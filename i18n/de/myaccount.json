@@ -162,5 +162,6 @@
   "editList": "Liste bearbeiten",
   "saveChanges": "Änderungen speichern",
   "backToOverview": "Zurück zur Übersicht",
-  "addAllToCart": "Alle Produkte in den Warenkorb legen"
+  "addAllToCart": "Alle Produkte in den Warenkorb legen",
+  "descriptionOptional": "Diese Beschreibung ist optional."
 }

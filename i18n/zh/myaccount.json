@@ -159,5 +159,6 @@
   "editList": "编辑购物清单",
   "saveChanges": "保存更改",
   "backToOverview": "返回概览",
-  "addAllToCart": "将所有产品添加到购物车"
+  "addAllToCart": "将所有产品添加到购物车",
+  "descriptionOptional": "此说明是可选的。"
 }

@@ -1,49 +1,60 @@
 <template>
   <div class="shopping-list-detail-page">
-    <div class="shopping-list-detail-page__header">
+    <div
+      class="shopping-list-detail-page__header"
+      :class="{ 'shopping-list-detail-page__header-active': isEditMode }"
+    >
       <ResultHeadline
         class="shopping-list-detail-page__header--headline"
         :headline="$t('myaccount.shoppingListOverviewPage.title')"
         :link="localePath('shop-my-account')"
       />
-      <div class="shopping-list-detail-page__header--nav">
-        <div class="shopping-list-detail-page__header--nav__edit">
-          <PvInput
-            v-model="nameVar"
-            class="shopping-list-overlay__content-add--name"
-            :label="$t('myaccount.shoppingList.name')"
-            :required="true"
-            :placeholder="$t('myaccount.shoppingList.namePlaceholder')"
-          />
-          <PvTextArea
-            v-model="descriptionVar"
-            class="shopping-list-overlay__content-add--description"
-            :label="$t('myaccount.shoppingList.description')"
-            :placeholder="$t('myaccount.shoppingList.descriptionPlaceholder')"
-            :is-textarea="true"
-          />
-        </div>
-
+      <PvInput
+        v-if="isEditMode"
+        v-model="nameVar"
+        class="shopping-list-detail-page__header-active--edit-name"
+        :label="$t('myaccount.shoppingList.name')"
+        :required="true"
+        :placeholder="$t('myaccount.shoppingList.namePlaceholder')"
+      />
+      <PvTextArea
+        v-if="isEditMode"
+        v-model="descriptionVar"
+        class="shopping-list-detail-page__header-active--edit-description"
+        :label="$t('myaccount.shoppingList.description')"
+        :placeholder="$t('myaccount.descriptionOptional')"
+        :is-textarea="true"
+      />
+      <div
+        class="shopping-list-detail-page__header--nav"
+        :class="{ 'shopping-list-detail-page__header-active--nav': isEditMode }"
+      >
         <Button
           class="shopping-list-detail-page__header--nav__select"
-          :icon="isEditList ? 'edit' : 'close'"
+          :class="{
+            'shopping-list-detail-page__header-active--nav__select': isEditMode,
+          }"
+          :icon="isEditMode ? 'close' : 'edit'"
           shape="outlined"
           gap="narrow"
           :label="
-            isEditList
-              ? $t('myaccount.editList')
-              : $t('myaccount.shoppingListOverviewPage.discard')
+            isEditMode
+              ? $t('myaccount.shoppingListOverviewPage.discard')
+              : $t('myaccount.editList')
           "
           variant="secondary"
-          @click="toggleEditList"
+          @click="toggleEditMode"
         />
         <Button
           class="shopping-list-detail-page__header--nav__new"
-          :icon="isEditList ? 'delete' : 'delete'"
+          :class="{
+            'shopping-list-detail-page__header-active--nav__new': isEditMode,
+          }"
+          :icon="isEditMode ? 'save' : 'delete'"
           gap="narrow"
           :label="
-            isEditList
-              ? $t('myaccount.shoppingListOverviewPage.deleteList')
+            isEditMode
+              ? $t('myaccount.saveChanges')
               : $t('myaccount.shoppingListOverviewPage.deleteList')
           "
           variant="secondary"
@@ -74,7 +85,12 @@
 </template>
 
 <script>
-import { defineComponent, useContext, useRouter } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  useContext,
+  useRouter,
+  ref,
+} from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
 import PvInput from '@/components/atoms/FormComponents/PvInput/PvInput.vue'
@@ -90,11 +106,11 @@ export default defineComponent({
   setup() {
     const nameVar = ref('')
     const descriptionVar = ref('')
-    const isEditList = ref(false)
+    const isEditMode = ref(false)
     const router = useRouter()
     const { app } = useContext()
-    const toggleEditList = () => {
-      isEditList.value = !isEditList.value
+    const toggleEditMode = () => {
+      isEditMode.value = !isEditMode.value
     }
     const goToShoppingListOverview = () => {
       router.push({
@@ -104,8 +120,8 @@ export default defineComponent({
     return {
       nameVar,
       descriptionVar,
-      isEditList,
-      toggleEditList,
+      isEditMode,
+      toggleEditMode,
       goToShoppingListOverview,
     }
   },
@@ -118,22 +134,20 @@ export default defineComponent({
   @apply tw-flex-col;
 
   &__header {
-    @apply tw-flex;
-    @apply tw-flex-col;
-    @apply tw-mb-4;
+    @apply tw-grid;
 
     @screen md {
-      @apply tw-flex-row;
       @apply tw-items-start;
-      @apply tw-mb-6;
-    }
-
-    @screen lg {
-      @apply tw-mb-8;
     }
 
     &--headline {
+      @apply tw-flex;
+      @apply tw-row-start-1 tw-row-end-2;
+      @apply tw-col-start-1 tw-col-end-13;
+      @apply tw-mb-0;
+
       @screen md {
+        @apply tw-col-start-1 tw-col-end-11;
         @apply tw-my-auto;
       }
     }
@@ -141,105 +155,94 @@ export default defineComponent({
     &--nav {
       @apply tw-flex;
       @apply tw-flex-col;
+      @apply tw-row-start-2 tw-row-end-3;
+      @apply tw-col-start-1 tw-col-end-13;
+      @apply tw-mt-6;
 
       @screen md {
         @apply tw-flex-row;
+        @apply tw-row-start-1 tw-row-end-2;
+        @apply tw-col-start-11 tw-col-end-13;
+        @apply tw-mt-0;
         @apply tw-ml-auto;
-        @apply tw-my-auto;
       }
 
       &__select {
-        @apply tw-hidden;
+        @apply tw-mb-4;
         @apply tw-min-w-fit;
+        @apply tw-w-[123px];
 
         @screen md {
-          @apply tw-flex;
-          @apply tw-ml-auto;
+          @apply tw-mb-0;
           @apply tw-mr-2;
-          @apply tw-w-[123px];
         }
 
         @screen lg {
-          @apply tw-w-[86px];
+          @apply tw-w-fit;
         }
       }
 
       &__new {
         @apply tw-min-w-fit;
-
-        @screen md {
-          @apply tw-w-[123px];
-        }
+        @apply tw-w-[123px];
 
         @screen lg {
-          @apply tw-w-[86px];
+          @apply tw-w-fit;
         }
       }
     }
   }
 
-  &__empty {
-    @apply tw-flex;
-    @apply tw-flex-col;
-    @apply tw-items-center;
-    @apply tw-justify-center;
-    @apply tw-bg-pv-grey-96;
-    @apply tw-p-6;
-    @apply tw-rounded-lg;
-
-    &--icon {
-      @apply tw-text-pv-grey-80;
-    }
-
-    &--text {
-      @apply tw-text-center;
-      @apply tw-text-sm;
-      @apply tw-font-bold;
-      @apply tw-mt-4;
-    }
-
-    &--new {
-      @apply tw-mt-4;
-      @apply tw-text-pv-grey-16;
-    }
-  }
-
-  &__pagination {
-    @apply tw-mt-6;
-    @apply tw-w-full;
-
-    @screen md {
-      @apply tw-mt-4;
-      @apply tw-w-fit;
-      @apply tw-ml-auto;
-    }
-
-    .pagination__list {
-      @apply tw-w-full;
-    }
-
-    .pagination__icon {
-      @apply tw-h-12;
-      @apply tw-w-12;
+  &__header-active {
+    &--edit-name {
+      @apply tw-flex;
+      @apply tw-flex-col;
+      @apply tw-row-start-2 tw-row-end-3;
+      @apply tw-col-start-1 tw-col-end-13;
+      @apply tw-mt-6;
 
       @screen md {
-        @apply tw-h-10;
-        @apply tw-w-10;
+        @apply tw-row-start-1 tw-row-end-2;
+        @apply tw-col-start-1 tw-col-end-11;
+        @apply tw-mt-0;
+        @apply tw-max-w-[280px];
+      }
+
+      @screen lg {
+        @apply tw-max-w-[420px];
       }
     }
 
-    .pagination__counter {
-      @apply tw-h-12;
-      @apply tw-w-full;
+    &--edit-description {
+      @apply tw-flex;
+      @apply tw-flex-col;
+      @apply tw-row-start-3 tw-row-end-4;
+      @apply tw-col-start-1 tw-col-end-13;
+      @apply tw-mt-4;
+
+      .pv-textarea__input {
+        @apply tw-h-28;
+      }
     }
-  }
 
-  &__back-button {
-    @apply tw-mt-6;
-    @apply tw-mx-auto;
+    &--nav {
+      @apply tw-row-start-4 tw-row-end-5;
+      @apply tw-mt-4;
 
-    @screen md {
-      @apply tw-hidden;
+      @screen md {
+        @apply tw-row-start-1 tw-row-end-2;
+        @apply tw-col-start-11 tw-col-end-13;
+        @apply tw-mt-0;
+        @apply tw-ml-auto;
+      }
+
+      &__select {
+        @apply tw-w-auto;
+      }
+
+      &__new {
+        @apply tw-w-auto;
+      }
     }
   }
 }

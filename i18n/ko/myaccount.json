@@ -155,6 +155,7 @@
   "editList": "쇼핑 목록 편집",
   "saveChanges": "변경 사항 저장",
   "backToOverview": "목록으로 돌아가기",
-  "addAllToCart": "장바구니에 모든 제품 추가"
+  "addAllToCart": "장바구니에 모든 제품 추가",
+  "descriptionOptional": "이 설명은 선택 사항입니다."
 }
 
