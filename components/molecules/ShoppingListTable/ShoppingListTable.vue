@@ -83,7 +83,7 @@ export default defineComponent({
 
     &--title {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-1 tw-col-end-4;
+      @apply tw-col-start-1 tw-col-end-7;
       @apply tw-ml-4;
 
       @screen lg {
@@ -92,30 +92,27 @@ export default defineComponent({
 
       &-active {
         @screen md {
-          @apply tw-mx-auto;
+          @apply tw-col-start-2 tw-col-end-7;
+          @apply tw-ml-8;
         }
 
         @screen lg {
-          @apply tw-ml-3;
-          @apply tw-mr-0;
+          @apply tw-col-start-1 tw-col-end-7;
+          @apply tw-ml-4;
         }
       }
     }
 
     &--last-edited {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-4 tw-col-end-6;
+      @apply tw-col-start-7 tw-col-end-9;
       @apply tw-ml-8;
     }
 
     &--items {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-6 tw-col-end-8;
+      @apply tw-col-start-9 tw-col-end-11;
       @apply tw-ml-8;
-
-      @screen lg {
-        @apply tw-ml-6;
-      }
     }
   }
 

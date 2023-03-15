@@ -61,11 +61,7 @@
     <div class="shopping-list-overlay__footer">
       <Button
         class="shopping-list-overlay__footer--forward"
-        :label="
-          isAddMode
-            ? $t('myaccount.shoppingList.save')
-            : $t('myaccount.shoppingList.add')
-        "
+        :label="forwardButtonText"
         :icon="isAddMode ? 'save' : 'add'"
         shape="filled"
         variant="secondary"
@@ -89,7 +85,12 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
 import GenericSidebar from '~/components/molecules/GenericSidebar/GenericSidebar.vue'
 import { useShoppingLists } from '~/stores/shoppinglists'
 import Button from '~/components/atoms/Button/Button.vue'
@@ -107,6 +108,7 @@ export default defineComponent({
     Button,
   },
   setup() {
+    const { i18n } = useContext()
     const nameVar = ref('')
     const descriptionVar = ref('')
     const shoppingListsStore = useShoppingLists()
@@ -158,6 +160,16 @@ export default defineComponent({
         await newShoppingList()
       }
     }
+    const forwardButtonText = computed(() => {
+      if (isAddMode.value) {
+        return i18n.t('myaccount.shoppingList.save')
+      }
+      if (isNewListMode.value) {
+        return i18n.t('myaccount.shoppingList.save')
+      }
+      return i18n.t('myaccount.shoppingList.add')
+    })
+
     const handleBack = () => {
       if (isAddMode.value) {
         shoppingListsStore.basicMode()
@@ -179,6 +191,7 @@ export default defineComponent({
       descriptionVar,
       isNewListMode,
       isBasicMode,
+      forwardButtonText,
     }
   },
 })
