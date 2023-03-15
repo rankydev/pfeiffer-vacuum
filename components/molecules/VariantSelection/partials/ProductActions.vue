@@ -5,7 +5,7 @@
         <span class="product-actions__order-number-headline">
           {{ $t('product.articleNumber') }}
         </span>
-        <span>{{ orderNumber }}</span>
+        <span class="product-actions__order-number">{{ orderNumber }}</span>
       </div>
       <div
         :class="[
@@ -241,6 +241,7 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-col-span-2;
+    @apply tw-text-pv-grey-16;
   }
 
   &__order-number-headline {
@@ -278,6 +279,7 @@ export default defineComponent({
 
     &-value {
       @apply tw-font-bold;
+      @apply tw-text-pv-grey-16;
     }
   }
 
