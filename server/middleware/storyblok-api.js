@@ -17,9 +17,12 @@ const regionsForRegex = regionCodes.replaceAll(',', '|')
 export default createProxyMiddleware({
   target: PATH_STORYBLOK_API_REDIRECT,
   changeOrigin: true,
+  followRedirects: true,
   agent,
   pathRewrite: { [`^(/(${regionsForRegex}))?${PATH_STORYBLOK_API}`]: '/' },
   onProxyReq: (proxyReq) => {
-    proxyReq.removeHeader('cookie')
+    if (proxyReq.getHeader('cookie')) {
+      proxyReq.removeHeader('cookie')
+    }
   },
 })
