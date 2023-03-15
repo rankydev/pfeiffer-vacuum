@@ -1,7 +1,7 @@
 <template>
   <div class="knowledge-authors-list">
     <h2 class="knowledge-authors-list__headline">
-      {{ isWhitepaper ? $t('knowledge.authors') : $t('knowledge.speaker') }}
+      {{ isWhitepapers ? $t('knowledge.authors') : $t('knowledge.speaker') }}
     </h2>
     <div class="knowledge-authors-list__authorlist">
       <KnowledgeAuthor
@@ -19,19 +19,26 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import KnowledgeAuthor from '~/components/molecules/KnowledgeAuthor/KnowledgeAuthor'
+import { useKnowledgeStore } from '~/stores/knowledge'
+import { storeToRefs } from 'pinia'
+
 export default defineComponent({
   name: 'KnowledgeAuthorsList',
   components: { KnowledgeAuthor },
   props: {
-    isWhitepaper: {
-      type: Boolean,
-      default: false,
-    },
     authorcardlist: {
       type: Array,
       required: true,
       default: () => [],
     },
+  },
+  setup() {
+    const knowledgeStore = useKnowledgeStore()
+    const { isWhitepapers } = storeToRefs(knowledgeStore)
+
+    return {
+      isWhitepapers,
+    }
   },
 })
 </script>
