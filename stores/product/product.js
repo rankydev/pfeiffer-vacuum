@@ -30,6 +30,8 @@ export const useProductStore = defineStore('product', () => {
   const accessoriesGroups = ref([])
   const productReferences = ref([])
 
+  const isLoadingProduct = ref(false)
+
   const breadcrumb = computed(() => {
     const cmsPrefix = cmsStore.breadcrumb.slice(0, 1)
     const categoryPath = product.value?.categoryPath || []
@@ -167,11 +169,13 @@ export const useProductStore = defineStore('product', () => {
   }
 
   const loadProduct = async (id) => {
+    isLoadingProduct.value = true
     const url = joinURL(config.PRODUCTS_API, id)
     const result = await axios.$get(url, {
       params: { fields: 'FULL' },
     })
     product.value = result
+    isLoadingProduct.value = false
   }
 
   const loadProductReferences = async (id) => {
@@ -223,6 +227,8 @@ export const useProductStore = defineStore('product', () => {
   }
 
   const hydrateVariationMatrix = async () => {
+    isLoadingProduct.value = true
+
     // When product is type master or variant, save master id for matrix
     if (
       ['MASTERPRODUCT', 'VARIANTPRODUCT'].includes(product.value?.productType)
@@ -269,6 +275,8 @@ export const useProductStore = defineStore('product', () => {
       // needs to be called even if product data was already loaded (SSR) because prices can only be loaded client side
       pricesStore.loadAllPrices(),
     ])
+
+    isLoadingProduct.value = false
   }
 
   return {
@@ -290,6 +298,7 @@ export const useProductStore = defineStore('product', () => {
     productReferencesSpareParts,
     productReferencesConsumables,
     productReferencesRecommendedAccessories,
+    isLoadingProduct,
     getProducts,
     loadByPath,
     loadProductAccessories,
