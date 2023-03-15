@@ -17,7 +17,12 @@
             </div>
           </div>
           <div v-if="showDuration" class="knowledge-stage__date-duration">
-            <Icon class="knowledge-stage__date-icon" icon="timer" />
+            <Icon
+              class="knowledge-stage__date-icon"
+              icon="timer_outlined"
+              size="small"
+              type="svg"
+            />
             <p>{{ duration }}</p>
           </div>
         </div>
