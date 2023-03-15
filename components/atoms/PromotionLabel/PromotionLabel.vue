@@ -23,13 +23,9 @@ export default defineComponent({
 
     const { isApprovedUser, isLoggedIn } = storeToRefs(userStore)
 
-    const showPromotion = computed(() => {
-      if (isApprovedUser.value && isLoggedIn.value) {
-        return true
-      } else {
-        return false
-      }
-    })
+    const showPromotion = computed(
+      () => isApprovedUser.value && isLoggedIn.value
+    )
 
     return {
       isApprovedUser,
