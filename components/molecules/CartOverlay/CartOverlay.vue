@@ -112,7 +112,7 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 import CartTable from '../CartTable/CartTable.vue'
-import { useCartStore } from '@/stores/cart'
+import { useCartStore } from '~/stores/cart'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'

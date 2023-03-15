@@ -51,9 +51,9 @@
         icon="add"
         gap="narrow"
         shape="outlined"
-        :label="textBySizeNew"
+        :label="$t('myaccount.newLists')"
         variant="secondary"
-        @click="openNewShoppingList"
+        @click="createDeleteLists"
       />
     </div>
     <ShoppingListTable

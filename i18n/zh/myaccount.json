@@ -107,7 +107,7 @@
     },
     "selectAList": "选择一个清单",
     "add": "添加到新列表",
-    "addSuccessful": "您的产品已添加到 {listName} 列表中。",
+    "addSuccessful": "您的产品已添加到{listName}列表中。",
     "addError": "无法添加产品到购物清单。",
     "back": "返回列表",
     "name": "名称",
@@ -148,6 +148,7 @@
   "lastEdited": "上次编辑",
   "new": "新",
   "newMobile": "新购物清单",
+  "newLists": "新的购物清单",
   "select": "选择",
   "shoppingListOverviewPage": {
     "title": "购物清单",

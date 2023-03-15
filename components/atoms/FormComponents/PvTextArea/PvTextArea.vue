@@ -127,17 +127,17 @@ export default defineComponent({
     @apply tw-border-2;
     @apply tw-rounded-md;
     @apply tw-border-pv-grey-80;
-    @apply tw-text-pv-black;
+    @apply tw-text-pv-grey-16;
     @apply tw-w-full;
 
     &:focus {
-      @apply tw-border-pv-black;
-      @apply tw-text-pv-black;
+      @apply tw-border-pv-grey-16;
+      @apply tw-text-pv-grey-16;
       outline: 0;
     }
 
     &:focus + .pv-textarea__icon-error {
-      @apply tw-text-pv-black;
+      @apply tw-text-pv-grey-16;
     }
 
     &:disabled {

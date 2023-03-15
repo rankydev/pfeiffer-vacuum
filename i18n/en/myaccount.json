@@ -110,7 +110,7 @@
     },
     "selectAList": "Select a list",
     "add": "Add to new list",
-    "addSuccessful": "Your product has been added to {listName} successfully.",
+    "addSuccessful": "Your product has been added to {listName} list",
     "addError": "Product could not be added to shopping list.",
     "back": "Back to lists",
     "name": "Name",
@@ -151,6 +151,7 @@
   "lastEdited": "Last edited",
   "new": "New",
   "newMobile": "New shopping list",
+  "newLists": "New shopping lists",
   "select": "Select",
   "shoppingListOverviewPage": {
     "title": "Shopping Lists",

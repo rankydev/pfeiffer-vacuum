@@ -224,7 +224,7 @@ export default defineComponent({
     @screen md {
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-6 tw-col-end-9;
-      @apply tw-text-pv-black;
+      @apply tw-text-pv-grey-16;
       @apply tw-my-auto;
       @apply tw-pl-6;
       @apply tw-text-sm;
@@ -244,7 +244,7 @@ export default defineComponent({
     @screen md {
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-9 tw-col-end-10;
-      @apply tw-text-pv-black;
+      @apply tw-text-pv-grey-16;
       @apply tw-my-auto;
       @apply tw-pl-6;
       @apply tw-text-sm;
