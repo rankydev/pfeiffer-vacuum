@@ -2,6 +2,7 @@ import { defineStore, storeToRefs } from 'pinia'
 import { computed, onMounted, ref, watch } from '@nuxtjs/composition-api'
 import { useShoppingListsApi } from './partials/useShoppingListsApi'
 import { useUserStore } from '~/stores/user'
+import { useCartStore } from '~/stores/cart'
 import { useProductStore } from '~/stores/product'
 import { useToast } from '~/composables/useToast'
 import { useContext } from '@nuxtjs/composition-api'
@@ -17,6 +18,9 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
 
   const userStore = useUserStore()
   const { isLoggedIn } = storeToRefs(userStore)
+
+  const cartStore = useCartStore()
+  const { currentCart } = storeToRefs(cartStore)
 
   const productStore = useProductStore()
   const { product } = storeToRefs(productStore)
@@ -91,6 +95,23 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     }
   }
 
+  const updateQuantity = async (listId, entryId, amount) => {
+    const result = await shoppingListsApi.updateQuantity(
+      listId,
+      entryId,
+      amount
+    )
+    if (result) {
+      await initialShoppingListsLoad()
+    }
+  }
+
+  const addListToCart = async (listId) => {
+    const cartId = currentCart.value?.code
+    await shoppingListsApi.addListToCart(listId, cartId)
+    await cartStore.resetCurrentCart()
+  }
+
   const shoppingLists = computed(() => {
     return currentShoppingLists.value
   })
@@ -139,10 +160,9 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
   }
 
   const updateShoppingList = async (listId, name, description) => {
-    //await shoppingListsApi.updateShoppingList(listId, name, description)
+    await shoppingListsApi.updateShoppingList(listId, name, description)
     currentShoppingLists.value = currentShoppingLists.value.map((list) => {
       if (list?.id === listId) {
-        console.log(list)
         return {
           ...list,
           name,
@@ -151,6 +171,10 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
       }
       return list
     })
+  }
+
+  const deleteEntry = async (listId, entryId) => {
+    await shoppingListsApi.deleteEntry(listId, entryId)
   }
 
   watch(isLoggedIn, async () => {
@@ -180,5 +204,8 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     isBasicMode,
     getShoppingListById,
     updateShoppingList,
+    updateQuantity,
+    addListToCart,
+    deleteEntry,
   }
 })

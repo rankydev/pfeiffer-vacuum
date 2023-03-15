@@ -367,7 +367,7 @@ export default defineComponent({
 
     @screen lg {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-8 tw-col-end-9;
+      @apply tw-col-start-8 tw-col-end-10;
       @apply tw-w-20;
       @apply tw-my-auto;
       @apply tw-ml-auto;
@@ -453,13 +453,13 @@ export default defineComponent({
     @apply tw-items-center;
 
     @screen md {
-      @apply tw-mt-auto;
+      @apply tw-my-auto;
       @apply tw-items-end;
     }
 
     @screen lg {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-9 tw-col-end-11;
+      @apply tw-col-start-10 tw-col-end-12;
       @apply tw-text-lg;
       @apply tw-leading-7;
       @apply tw-m-auto;
@@ -536,6 +536,7 @@ export default defineComponent({
     @apply tw-col-start-12 tw-col-end-13;
     @apply tw-mb-auto;
     @apply tw-ml-auto;
+    padding: 0 !important;
 
     @screen lg {
       @apply tw-mt-auto;

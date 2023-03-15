@@ -130,6 +130,72 @@ export const useShoppingListsApi = () => {
     return false
   }
 
+  /**
+   * Update quantity for entry
+   * @param {*} listId
+   * @param {*} code
+   * @param {*} amount
+   */
+  const updateQuantity = async (listId, code, amount) => {
+    const result = await axios.$put(
+      `${config.SHOPPING_LISTS}/${listId}/entries/${code}`,
+      { amount }
+    )
+
+    if (!result.error) {
+      return true
+    }
+
+    logger.error(
+      'Error when updating shopping list entry. Returning false.',
+      result.error ? result.error : ''
+    )
+    return false
+  }
+
+  /**
+   * Adds all entries of the shopping list to the cart
+   * @param {*} listId
+   * @param {*} code
+   */
+  const addListToCart = async (listId, code) => {
+    const result = await axios.$post(
+      `${config.SHOPPING_LISTS}/${listId}/add2cart/${code}`,
+      null
+    )
+
+    if (!result.error) {
+      return true
+    }
+
+    logger.error(
+      'Error when adding shopping list to cart. Returning false.',
+      result.error ? result.error : ''
+    )
+    return false
+  }
+
+  /**
+   * Delete entry from shopping list
+   * @param {*} listId
+   * @param {*} code
+   */
+  const deleteEntry = async (listId, code) => {
+    const result = await axios.$delete(
+      `${config.SHOPPING_LISTS}/${listId}/entries/${code}`
+    )
+
+    if (typeof result === 'object' && !result.error) {
+      return true
+    }
+
+    logger.error(
+      'Error when deleting shopping list entry. Returning false.',
+      result.error ? result.error : ''
+    )
+    return false
+  }
+
   return {
     getShoppingLists,
     getShoppingList,
@@ -137,5 +203,8 @@ export const useShoppingListsApi = () => {
     addToShoppingList,
     deleteShoppingList,
     updateShoppingList,
+    updateQuantity,
+    addListToCart,
+    deleteEntry,
   }
 }

@@ -7,7 +7,7 @@
       <ResultHeadline
         v-if="!isEditMode"
         class="shopping-list-detail-page__header--headline"
-        :headline="name"
+        :headline="nameVar"
         :link="localePath('shop-my-account')"
       />
       <PvInput
@@ -72,24 +72,27 @@
         :products="products"
         :is-sortable="true"
         @update="updateProduct"
+        @delete="deleteProduct"
       />
     </div>
-    <Button
-      class="shopping-list-detail-page__add-to-cart"
-      icon="shopping_cart"
-      :label="$t('myaccount.addAllToCart')"
-      @click="addAllToCart"
-    />
-    <Button
-      shape="plain"
-      variant="secondary"
-      class="shopping-list-detail-page__back"
-      :label="$t('myaccount.backToOverview')"
-      icon="arrow_back"
-      :prepend-icon="true"
-      gap="narrow"
-      @click="goToShoppingListOverview"
-    />
+    <div class="shopping-list-detail-page__bottom-nav">
+      <Button
+        class="shopping-list-detail-page__bottom-nav--add-to-cart"
+        icon="shopping_cart"
+        :label="$t('myaccount.addAllToCart')"
+        @click="addAllToCart"
+      />
+      <Button
+        shape="plain"
+        variant="secondary"
+        class="shopping-list-detail-page__bottom-nav--back"
+        :label="$t('myaccount.backToOverview')"
+        icon="arrow_back"
+        :prepend-icon="true"
+        gap="narrow"
+        @click="goToShoppingListOverview"
+      />
+    </div>
   </div>
 </template>
 
@@ -108,7 +111,7 @@ import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea.vue'
 import { useShoppingLists } from '~/stores/shoppinglists'
-import { useCartStore } from '@/stores/cart'
+import ShoppingList from '~/components/molecules/ShoppingList/ShoppingList.vue'
 export default defineComponent({
   name: 'ShoppingListDetailPage',
   components: {
@@ -116,19 +119,16 @@ export default defineComponent({
     Button,
     ResultHeadline,
     PvTextArea,
+    ShoppingList,
   },
   setup() {
     const { app } = useContext()
     const router = useRouter()
     const route = useRoute()
     const shoppingListsStore = useShoppingLists()
-    const cartStore = useCartStore()
-    const { addProductToCart } = cartStore
-
     const nameVar = ref('')
     const descriptionVar = ref('')
     const isEditMode = ref(false)
-    const changedProducts = ref([])
 
     const shoppingList = ref({})
 
@@ -141,29 +141,20 @@ export default defineComponent({
       })
     }
 
-    const name = computed(() => {
-      return shoppingList.value?.name || ''
-    })
-
-    const updateProduct = (cartItem) => {
-      const foundProduct = changedProducts.value.find(
-        (product) => product?.code === cartItem?.code
-      )
-      if (foundProduct) {
-        foundProduct.quantity = cartItem.quantity
-      } else {
-        changedProducts.value.push(cartItem)
-      }
+    const updateProduct = async (cartItem) => {
+      const id = route?.value?.params?.list
+      const code = cartItem?.code
+      const quantity = cartItem?.quantity
+      await shoppingListsStore.updateQuantity(id, code, quantity)
     }
 
     const products = computed(() => {
       return shoppingList.value?.entries || []
     })
 
-    const addAllToCart = () => {
-      changedProducts.value.forEach((product) => {
-        addProductToCart(product?.code, product?.quantity)
-      })
+    const addAllToCart = async () => {
+      const id = route?.value?.params?.list
+      await shoppingListsStore.addListToCart(id)
     }
 
     const deleteShoppingList = () => {
@@ -175,33 +166,35 @@ export default defineComponent({
     const initShoppingList = () => {
       const id = route?.value?.params?.list
       shoppingList.value = shoppingListsStore.getShoppingListById(id)
+      nameVar.value = shoppingList.value?.name || ''
+      descriptionVar.value = shoppingList.value?.description || ''
     }
 
-    const updateShoppingList = () => {
+    const updateShoppingList = async () => {
       const id = route?.value?.params?.list
-      shoppingListsStore.updateShoppingList(
+      await shoppingListsStore.updateShoppingList(
         id,
         nameVar.value,
         descriptionVar.value
       )
     }
 
-    const resetInput = () => {
-      nameVar.value = shoppingList.value?.name || null
-      descriptionVar.value = shoppingList.value?.description || null
-    }
-
-    const actionButton = () => {
+    const actionButton = async () => {
       if (isEditMode.value && nameVar.value) {
-        updateShoppingList()
+        await updateShoppingList()
         toggleEditMode()
       } else {
         deleteShoppingList()
       }
     }
 
+    const deleteProduct = async (cartItem) => {
+      const id = route?.value?.params?.list
+      const code = cartItem?.code
+      await shoppingListsStore.deleteEntry(id, code)
+    }
+
     const changeButton = () => {
-      resetInput()
       toggleEditMode()
     }
 
@@ -214,13 +207,13 @@ export default defineComponent({
       isEditMode,
       toggleEditMode,
       goToShoppingListOverview,
-      name,
       products,
       updateProduct,
       addAllToCart,
       deleteShoppingList,
       actionButton,
       changeButton,
+      deleteProduct,
     }
   },
 })
@@ -375,14 +368,34 @@ export default defineComponent({
     }
   }
 
-  &__add-to-cart {
-    @apply tw-mt-4;
-  }
+  &__bottom-nav {
+    @apply tw-flex;
+    @apply tw-flex-col;
 
-  &__back {
-    @apply tw-mt-4;
-    @apply tw-w-fit;
-    @apply tw-mx-auto;
+    @screen md {
+      @apply tw-flex-row-reverse;
+      @apply tw-mt-6;
+    }
+
+    &--add-to-cart {
+      @apply tw-mt-4;
+
+      @screen md {
+        @apply tw-mt-0;
+        @apply tw-ml-auto;
+      }
+    }
+
+    &--back {
+      @apply tw-mt-4;
+      @apply tw-w-fit;
+      @apply tw-mx-auto;
+
+      @screen md {
+        @apply tw-mt-0;
+        @apply tw-ml-0;
+      }
+    }
   }
 }
 </style>
