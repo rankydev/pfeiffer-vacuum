@@ -1,63 +1,62 @@
 <template>
   <Transition name="page">
-    <div :key="$i18n.locale" class="default-layout">
-      <CmsQuery
-        :handle-preview-events="false"
-        :slug="slug"
-        :language="$i18n.locale"
-      >
-        <template #default="{ result: { data } }">
-          <div>
-            <div v-if="data && data.content" id="main-content">
-              <slot name="header">
+    <CmsQuery
+      :key="$i18n.locale"
+      :handle-preview-events="false"
+      :slug="slug"
+      :language="$i18n.locale"
+    >
+      <template #default="{ result: { data } }">
+        <div>
+          <div v-if="data && data.content">
+            <slot name="header">
+              <nuxt-dynamic
+                v-for="item in data.content.top"
+                :key="item._uid"
+                v-editable="item"
+                v-bind="item"
+                :name="item.uiComponent || item.component"
+              />
+
+              <nuxt-dynamic
+                v-for="item in data.content.header"
+                :key="item._uid"
+                v-bind="item"
+                :name="item.uiComponent || item.component"
+              />
+            </slot>
+
+            <slot name="onPageNavigation">
+              <OnPageNavigation v-bind="(data.content.quicklinks || [])[0]" />
+            </slot>
+
+            <Nuxt class="default-layout__content" />
+
+            <slot name="footer">
+              <ContentWrapper>
                 <nuxt-dynamic
-                  v-for="item in data.content.top"
+                  v-for="item in data.content.bottom"
                   :key="item._uid"
                   v-editable="item"
                   v-bind="item"
                   :name="item.uiComponent || item.component"
                 />
+              </ContentWrapper>
 
-                <nuxt-dynamic
-                  v-for="item in data.content.header"
-                  :key="item._uid"
-                  v-bind="item"
-                  :name="item.uiComponent || item.component"
-                />
-              </slot>
-
-              <slot name="onPageNavigation">
-                <OnPageNavigation v-bind="(data.content.quicklinks || [])[0]" />
-              </slot>
-
-              <Nuxt class="default-layout__content" />
-
-              <slot name="footer">
-                <ContentWrapper>
-                  <nuxt-dynamic
-                    v-for="item in data.content.bottom"
-                    :key="item._uid"
-                    v-editable="item"
-                    v-bind="item"
-                    :name="item.uiComponent || item.component"
-                  />
-                </ContentWrapper>
-
-                <nuxt-dynamic
-                  v-for="item in data.content.footer"
-                  :key="item._uid"
-                  v-bind="item"
-                  :name="item.uiComponent || item.component"
-                />
-              </slot>
-              <StickyBar v-bind="data.content.stickyBar">
-                <slot name="stickyBar" />
-              </StickyBar>
-            </div>
+              <nuxt-dynamic
+                v-for="item in data.content.footer"
+                :key="item._uid"
+                v-bind="item"
+                :name="item.uiComponent || item.component"
+              />
+            </slot>
+            <StickyBar v-bind="data.content.stickyBar">
+              <slot name="stickyBar" />
+            </StickyBar>
           </div>
-        </template>
-      </CmsQuery>
-    </div>
+        </div>
+      </template>
+    </CmsQuery>
   </Transition>
 </template>
 <script>
