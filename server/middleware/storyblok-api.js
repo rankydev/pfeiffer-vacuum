@@ -5,6 +5,7 @@ import {
   PATH_STORYBLOK_API_REDIRECT,
 } from '../constants.js'
 import nuxtConfig from '../../nuxt.config'
+import { removeCookie } from './utils/onProxyReq.js'
 
 const agent = new https.Agent({
   keepAlive: true,
@@ -20,9 +21,5 @@ export default createProxyMiddleware({
   followRedirects: true,
   agent,
   pathRewrite: { [`^(/(${regionsForRegex}))?${PATH_STORYBLOK_API}`]: '/' },
-  onProxyReq: (proxyReq) => {
-    if (proxyReq.getHeader('cookie')) {
-      proxyReq.removeHeader('cookie')
-    }
-  },
+  onProxyReq: removeCookie,
 })
