@@ -1,0 +1,9 @@
+{
+  "confirmationPage": {
+    "requestSuccess": "귀하의 요청이 성공적으로 전송되었습니다",
+    "requestDescription": "문의해 주셔서 감사합니다. 귀하의 이메일 주소로 귀하의 요청 사본을 보냈습니다. 최대한 빨리 연락드리겠습니다.",
+    "thankYou": "매우 감사합니다!",
+    "requestProgress": "귀하의 요청은 서비스 팀에서 최대한 빨리 처리됩니다.",
+    "nextRequestButton": "다음 요청"
+  }
+}

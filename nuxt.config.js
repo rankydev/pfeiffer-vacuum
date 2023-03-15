@@ -3,6 +3,9 @@ import {
   PATH_SHOP,
   PATH_SHOP_IMAGES,
   PATH_DATASOURCES,
+  PATH_STORYBLOK_API,
+  PATH_STORYBLOK_ASSETS,
+  PATH_STORYBLOK_IMAGES,
 } from './server/constants.js'
 import {
   languageCodes,
@@ -14,6 +17,8 @@ import {
 // only set to true during LSG build. Otherwise should default to false
 const isStorybook = process.env.STORYBOOK || false
 const baseURL = process.env.BASE_URL || 'http://localhost:3000'
+const regionBase =
+  process.env.CURRENT_REGION_CODE || process.env.DEFAULT_REGION_CODE
 
 export default {
   srcDir: '',
@@ -35,6 +40,10 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
     script: [
+      {
+        type: 'application/javascript',
+        innerHTML: `window.UC_UI_DOMAINS = { crossDomainConsentSharingIFrame: '${baseURL}/${process.env.DEFAULT_REGION_CODE}/cross-domain-bridge.html' };`,
+      },
       {
         src: 'https://app.usercentrics.eu/browser-ui/latest/loader.js',
         id: 'usercentrics-cmp',
@@ -69,9 +78,7 @@ export default {
 
   ...(!isStorybook && {
     router: {
-      base: `/${
-        process.env.CURRENT_REGION_CODE || process.env.DEFAULT_REGION_CODE
-      }/`,
+      base: `/${regionBase}/`,
       extendRoutes(routes) {
         // add root page to the routed object
         routes.push({
@@ -182,6 +189,7 @@ export default {
 
   // TXP-CMS Storyblok Configuration, see: https://txp-cms.dev/integrations/storyblok
   storyblok: {
+    endpoint: `${baseURL}/${regionBase}${PATH_STORYBLOK_API}`,
     accessToken: process.env.STORYBLOK_ACCESS_TOKEN,
     version: process.env.STORYBLOK_VERSION,
     defaultLanguage: defaultLanguageCode,
@@ -217,7 +225,7 @@ export default {
     DEFAULT_LANGUAGE_CODE: defaultLanguageCode,
     REGION_CODES: process.env.REGION_CODES || 'global',
     DEFAULT_REGION_CODE: process.env.DEFAULT_REGION_CODE || 'global',
-    CURRENT_REGION_CODE: process.env.CURRENT_REGION_CODE || 'global',
+    CURRENT_REGION_CODE: regionBase || 'global',
     USERCENTRICS_PRIVACY_PATH: process.env.USERCENTRICS_PRIVACY_PATH,
     GOOGLE_TAG_MANAGER_ID: process.env.GOOGLE_TAG_MANAGER_ID,
     // keycloak
@@ -261,7 +269,6 @@ export default {
     EMPOLIS_CLIENT_ID: process.env.EMPOLIS_CLIENT_ID,
     EMPOLIS_CLIENT_SECRET: process.env.EMPOLIS_CLIENT_SECRET,
     // storyblok
-    STORYBLOK_API_BASE_URL: process.env.STORYBLOK_API_BASE_URL,
     STORYBLOK_ACCESS_TOKEN: process.env.STORYBLOK_ACCESS_TOKEN,
     // SAP Commerce Cloud
     SHOP_BASE_URL: process.env.SHOP_BASE_URL,
@@ -278,12 +285,12 @@ export default {
       },
     },
     storyblok: {
-      baseURL:
-        process.env.STORYBLOK_IMAGE_BASE_URL || 'https://img2.storyblok.com',
+      baseURL: `/${regionBase}${PATH_STORYBLOK_IMAGES}`,
     },
   },
   // Will register file from project server/middleware directory to handle API calls
   serverMiddleware: [
+    { prefix: false, handler: '~/server/middleware/oci.js' },
     ...(isStorybook
       ? []
       : [
@@ -299,6 +306,18 @@ export default {
     {
       path: PATH_SHOP_IMAGES,
       handler: '~/server/middleware/shop-images.js',
+    },
+    {
+      path: PATH_STORYBLOK_IMAGES,
+      handler: '~/server/middleware/storyblok-images.js',
+    },
+    {
+      path: PATH_STORYBLOK_ASSETS,
+      handler: '~/server/middleware/storyblok-assets.js',
+    },
+    {
+      path: PATH_STORYBLOK_API,
+      handler: '~/server/middleware/storyblok-api.js',
     },
     {
       path: PATH_EMPOLIS,
@@ -324,19 +343,24 @@ export default {
       reportOnly: false,
       hashAlgorithm: 'sha256',
       policies: {
-        'default-src': ["'self'"],
-        'img-src': ["'self'", 'https:'],
+        'default-src': ["'self'", 'data:', 'fonts.gstatic.com'], // TODO fonts.gstatic.com should be removed with PVWEB-982
+        'img-src': ["'self'", 'https:', 'data:'],
         'style-src': ["'self'", "'unsafe-inline'"],
         'script-src': [
           "'self'",
           "'unsafe-inline'",
           "'unsafe-eval'",
           '*.usercentrics.eu',
+          '*.storyblok.com',
+          'www.googletagmanager.com',
+          'www.google-analytics.com',
+          'api.privacyhub.pro',
         ],
         'connect-src': [
           "'self'",
           '*.usercentrics.eu',
-          '*.storyblok.com', // TODO Should be removed with PVWEB-955 since we don't want links to Storyblok directly
+          'region1.analytics.google.com', // google analytics
+          '*.doubleclick.net', // google analytics
           'sso.pfeiffer-vacuum.com',
         ],
         'frame-src': [
@@ -344,8 +368,11 @@ export default {
           'sso.pfeiffer-vacuum.com',
           'app.usercentrics.eu',
         ],
-        'form-action': ["'self'"],
-        'frame-ancestors': ["'none'"],
+        'form-action': [
+          process.env.DISABLE_SECURITY_POLICY_FORM_ACTION_SELF === 'true'
+            ? '*'
+            : "'self'",
+        ], // disabled for OCI Checkout: PVWEB-904
         'object-src': ["'none'"],
         'base-uri': [baseURL],
         // TODO If we have sentry, we can add this:
@@ -354,5 +381,8 @@ export default {
         //]
       },
     },
+  },
+  helmet: {
+    frameguard: false,
   },
 }

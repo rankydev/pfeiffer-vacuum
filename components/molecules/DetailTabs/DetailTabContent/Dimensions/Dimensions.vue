@@ -22,11 +22,11 @@
         <div
           class="dimensions-tab__feature-col"
           v-html="sanitizer.inline(feature.name)"
-        ></div>
+        />
         <div
           class="dimensions-tab__feature-col"
           v-html="sanitizer.block(getFeatureText(feature))"
-        ></div>
+        />
         <!-- eslint-enable vue/no-v-html -->
       </div>
     </div>

@@ -36,10 +36,12 @@ import {
   onBeforeMount,
   ref,
   useContext,
+  useRouter,
 } from '@nuxtjs/composition-api'
 import GeneralRequest from '~/components/molecules/ContactRequestForm/partials/GeneralRequest/GeneralRequest'
 import TopicRequest from '~/components/molecules/ContactRequestForm/partials/TopicRequest/TopicRequest'
 import Button from '~/components/atoms/Button/Button.vue'
+import Link from '~/components/atoms/Link/Link.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import useVuelidate from '@vuelidate/core'
 import { useToast } from '~/composables/useToast'
@@ -53,6 +55,7 @@ export default defineComponent({
     GeneralRequest,
     TopicRequest,
     Button,
+    Link,
   },
   props: {
     /**
@@ -67,6 +70,8 @@ export default defineComponent({
   setup(_, { emit }) {
     const loading = ref(false)
     const { i18n } = useContext()
+    const ctx = useContext()
+    const router = useRouter()
     const contactStore = useContactStore()
     const datasourcesStore = useDatasourcesStore()
     const { files } = storeToRefs(datasourcesStore)
@@ -88,21 +93,20 @@ export default defineComponent({
           .then(() => {
             loading.value = false
             emit('close')
-            toast.success(
-              {
-                description: i18n.t('form.message.success'),
-              },
-              {
-                timeout: 8000,
-              }
-            )
+            const successPagePath = '/contact/success'
+            router.push(ctx.app.localePath(successPagePath))
           })
+
           .catch(() => {
             loading.value = false
             toast.error({
-              description: i18n.t('form.message.error'),
+              description: i18n.t('form.message.error.defaultError'),
             })
           })
+      } else {
+        toast.warning({
+          description: i18n.t('form.validationErrorMessages.warning'),
+        })
       }
     }
 

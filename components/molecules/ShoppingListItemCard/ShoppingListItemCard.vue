@@ -5,7 +5,8 @@
         <ResponsiveImage
           :image="productImage"
           provider="hybris"
-          aspect-ratio="1:1"
+          :mode-full="true"
+          :contain-image="true"
         />
       </Link>
     </div>
@@ -19,25 +20,53 @@
     </div>
     <div v-if="details" class="shopping-list-item-card__details">
       <template v-for="detail in details">
-        <Tag
-          v-for="(variant, id) in detail.variationValues"
-          :key="detail.code + id"
-          class="shopping-list-item-card__details__detail"
-          :label="detail.name"
-          :content="variant.displayValue"
-        />
+        <template v-for="(variant, id) in detail.variationValues">
+          <Tag
+            v-if="variant.selected"
+            :key="detail.code + id"
+            class="shopping-list-item-card__details__detail"
+            :label="detail.name"
+            :content="variant.displayValue"
+          />
+        </template>
       </template>
     </div>
-    <PvInput
-      v-model="quantityModel"
-      input-type="number"
-      class="shopping-list-item-card__quantity"
-      :disabled="isInactive"
-      @input="updateQuantity"
+    <PromotionLabel
+      v-if="promotion"
+      class="shopping-list-item-card__promotion"
+      :subline="getPromotion"
     />
+    <div
+      class="shopping-list-item-card__quantity"
+      :class="{ 'shopping-list-item-card__quantity__read-only': isReadOnly }"
+    >
+      <div
+        v-if="isReadOnly"
+        class="shopping-list-item-card__quantity__read-only__wrapper"
+      >
+        <span
+          class="shopping-list-item-card__quantity__read-only__wrapper__label"
+        >
+          {{ $t('cart.quantity') }}
+        </span>
+        <span
+          class="shopping-list-item-card__quantity__read-only__wrapper__quantity"
+        >
+          {{ quantity }}
+        </span>
+      </div>
+      <PvInput
+        v-else
+        v-model="quantityModel"
+        input-type="number"
+        :disabled="isInactive"
+        @input="updateQuantity"
+      />
+    </div>
     <div
       v-if="!isLoggedIn || !isPriceVisible"
       class="shopping-list-item-card__price-error"
+      :class="{ 'shopping-list-item-card__price-error__read-only': isReadOnly }"
     >
       <LoginToSeePricesLabel v-if="!isLoggedIn" />
       <span v-else>{{ noPriceReason }}</span>
@@ -45,6 +74,7 @@
     <div
       v-if="isLoggedIn && isPriceVisible"
       class="shopping-list-item-card__price"
+      :class="{ 'shopping-list-item-card__price__read-only': isReadOnly }"
     >
       <span class="shopping-list-item-card__price__label">
         {{ $t('cart.productPrice') }}
@@ -53,7 +83,19 @@
         {{ productPrice }}
       </span>
     </div>
+    <div
+      v-if="isReadOnly && isLoggedIn && isPriceVisible"
+      class="shopping-list-item-card__total-price"
+    >
+      <span class="shopping-list-item-card__total-price__label">
+        {{ $t('cart.overall1') }}
+      </span>
+      <span class="shopping-list-item-card__total-price__price">
+        {{ totalPrice }}
+      </span>
+    </div>
     <Button
+      v-if="!isReadOnly"
       class="shopping-list-item-card__delete"
       variant="secondary"
       shape="plain"
@@ -66,7 +108,11 @@
         variant="secondary"
         shape="plain"
         icon="assignment"
-        :label="$t('cart.list.addToAnotherList')"
+        :label="
+          isReadOnly
+            ? $t('cart.list.addArticle')
+            : $t('cart.list.addToAnotherList')
+        "
         @click="addToShoppingList"
       />
       <Button
@@ -91,8 +137,8 @@ import {
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Tag from '~/components/atoms/Tag/Tag'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useDebounceFn } from '@vueuse/core'
@@ -103,9 +149,9 @@ export default defineComponent({
   components: {
     Button,
     Link,
-    ResponsiveImage,
     PvInput,
     Tag,
+    ResponsiveImage,
   },
   props: {
     product: {
@@ -117,9 +163,24 @@ export default defineComponent({
       default: null,
       required: false,
     },
+    priceTotal: {
+      type: Object,
+      default: null,
+      required: false,
+    },
     quantity: {
       type: Number,
       default: 1,
+      required: false,
+    },
+    isReadOnly: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    promotion: {
+      type: Object,
+      default: null,
       required: false,
     },
   },
@@ -128,7 +189,7 @@ export default defineComponent({
     const { app, i18n } = useContext()
     const userStore = useUserStore()
     const cartStore = useCartStore()
-    const { basePrice, quantity, product } = toRefs(props)
+    const { basePrice, quantity, product, promotion } = toRefs(props)
     const quantityModel = ref(quantity?.value)
     const {
       isApprovedUser,
@@ -163,6 +224,8 @@ export default defineComponent({
       return getPriceString(basePrice?.value?.formattedValue)
     })
 
+    const totalPrice = computed(() => props.priceTotal?.formattedValue || '')
+
     const productImage = computed(() => {
       return product?.value?.images?.[0] || null
     })
@@ -178,6 +241,10 @@ export default defineComponent({
     const details = computed(
       () => product?.value?.variationMatrix?.variationAttributes
     )
+
+    const getPromotion = computed(() => {
+      return promotion.value?.description
+    })
 
     const addToShoppingList = () => {
       emit('addToShoppingList', {
@@ -232,6 +299,8 @@ export default defineComponent({
       isPriceVisible,
       noPriceReason,
       addToCart,
+      totalPrice,
+      getPromotion,
     }
   },
 })
@@ -241,11 +310,18 @@ export default defineComponent({
 .shopping-list-item-card {
   @apply tw-grid tw-grid-cols-12 tw-auto-rows-auto;
   @apply tw-border-b tw-border-b-pv-grey-80;
+  @apply tw-mt-4;
+
+  @screen lg {
+    @apply tw-mt-6;
+  }
 
   &__image {
     @apply tw-row-start-1 tw-row-end-2;
-    @apply tw-col-start-1 tw-col-end-3;
+    @apply tw-col-start-1 tw-col-end-4;
     @apply tw-flex;
+    height: 80px;
+
     @screen md {
       @apply tw-col-end-2;
     }
@@ -291,11 +367,51 @@ export default defineComponent({
     @apply tw-mt-4;
     @apply tw-flex;
     @apply tw-pr-1;
+
     @screen lg {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-9 tw-col-end-10;
+      @apply tw-col-start-8 tw-col-end-9;
       @apply tw-w-20;
       @apply tw-my-auto;
+      @apply tw-ml-auto;
+      @apply tw-mr-2;
+    }
+
+    &__read-only {
+      @apply tw-flex;
+
+      @screen lg {
+        @apply tw-col-start-8 tw-col-end-9;
+        @apply tw-ml-auto;
+        @apply tw-mr-8;
+      }
+
+      &__wrapper {
+        @apply tw-flex;
+
+        @screen lg {
+          @apply tw-ml-auto;
+        }
+
+        &__label {
+          @apply tw-text-xs;
+          @apply tw-text-pv-grey-48;
+          @apply tw-mt-1;
+
+          @screen lg {
+            @apply tw-hidden;
+          }
+        }
+
+        &__quantity {
+          @apply tw-ml-2;
+
+          @screen lg {
+            @apply tw-ml-auto;
+            @apply tw-text-lg;
+          }
+        }
+      }
     }
   }
 
@@ -307,14 +423,26 @@ export default defineComponent({
 
     @screen lg {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-10 tw-col-end-12;
-      @apply tw-m-auto;
+      @apply tw-col-start-11 tw-col-end-12;
+      @apply tw-my-auto;
+      @apply tw-ml-4;
     }
 
     .login-to-see-prices-label {
       text-align: end;
       @apply tw-my-auto;
       @apply tw-ml-auto;
+
+      @screen lg {
+        @apply tw-text-center;
+      }
+    }
+
+    &__read-only {
+      @screen lg {
+        @apply tw-col-start-11 tw-col-end-13;
+        @apply tw-m-auto;
+      }
     }
   }
 
@@ -334,7 +462,7 @@ export default defineComponent({
 
     @screen lg {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-11 tw-col-end-12;
+      @apply tw-col-start-9 tw-col-end-11;
       @apply tw-text-lg;
       @apply tw-leading-7;
       @apply tw-m-auto;
@@ -344,6 +472,7 @@ export default defineComponent({
     &__label {
       @apply tw-text-xs;
       @apply tw-ml-2;
+      @apply tw-text-pv-grey-48;
 
       @screen lg {
         @apply tw-hidden;
@@ -352,6 +481,56 @@ export default defineComponent({
 
     &__price {
       @apply tw-ml-2;
+    }
+
+    &__read-only {
+      @apply tw-mt-4;
+      @apply tw-mb-6;
+
+      @screen md {
+        @apply tw-col-start-5 tw-col-end-10;
+        @apply tw-mt-0;
+        @apply tw-mb-0;
+      }
+
+      @screen lg {
+        @apply tw-col-start-9 tw-col-end-11;
+      }
+    }
+  }
+
+  &__total-price {
+    @apply tw-row-start-2 tw-row-end-3;
+    @apply tw-col-start-5 tw-col-end-13;
+    @apply tw-leading-6;
+    @apply tw-flex;
+    @apply tw-mt-auto;
+    @apply tw-ml-auto;
+
+    @screen lg {
+      @apply tw-row-start-1 tw-row-end-1;
+      @apply tw-col-start-11 tw-col-end-13;
+      @apply tw-my-auto;
+    }
+
+    &__label {
+      @apply tw-text-xs;
+      @apply tw-text-pv-grey-48;
+
+      @screen lg {
+        @apply tw-hidden;
+      }
+    }
+
+    &__price {
+      @apply tw-text-base;
+      @apply tw-font-bold;
+      @apply tw-ml-2;
+
+      @screen lg {
+        @apply tw-text-lg;
+        @apply tw-font-normal;
+      }
     }
   }
 
@@ -393,18 +572,18 @@ export default defineComponent({
   }
 
   &__actions {
-    @apply tw-row-start-3 tw-row-end-4;
+    @apply tw-row-start-5 tw-row-end-6;
     @apply tw-col-start-1 tw-col-end-13;
     @apply tw-flex tw-flex-col;
     @apply tw-py-4;
 
     @screen md {
-      @apply tw-row-start-4 tw-row-end-5;
+      @apply tw-row-start-5 tw-row-end-6;
       @apply tw-flex-row;
     }
 
     @screen lg {
-      @apply tw-row-start-3 tw-row-end-4;
+      @apply tw-row-start-4 tw-row-end-5;
       @apply tw-col-start-2 tw-col-end-13;
       @apply tw-pb-6;
     }
@@ -427,6 +606,20 @@ export default defineComponent({
       @screen md {
         @apply tw-ml-6;
       }
+    }
+  }
+
+  &__promotion {
+    @apply tw-row-start-4 tw-row-end-5;
+    @apply tw-col-start-1 tw-col-end-13;
+    @apply tw-w-fit;
+    @apply tw-h-fit;
+    @apply tw-mt-4;
+    @apply tw-py-1;
+
+    @screen lg {
+      @apply tw-row-start-3 tw-row-end-4;
+      @apply tw-col-start-2 tw-col-end-13;
     }
   }
 }

@@ -47,7 +47,7 @@
             />
           </template>
           <div class="cart-overlay-content__total">
-            <div class="cart-overlay-content__total--row">
+            <div v-if="hasPromotion" class="cart-overlay-content__total--row">
               <span class="cart-overlay-content__total-discount">
                 {{ $t('cart.orderDiscount') }}
               </span>
@@ -73,7 +73,7 @@
         <div class="cart-overlay-content__navigation">
           <Button
             class="cart-overlay-content__navigation-checkout"
-            :label="$t('cart.checkout')"
+            :label="$t(isOciUser ? 'cart.checkout' : 'cart.requestQuote')"
             icon="arrow_forward"
             @click="handleCheckoutClick"
           />
@@ -112,9 +112,10 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 import CartTable from '../CartTable/CartTable.vue'
-import { useCartStore } from '@/stores/cart'
+import { useCartStore } from '~/stores/cart'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import Button from '~/components/atoms/Button/Button'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 import GenericSidebar from '~/components/molecules/GenericSidebar/GenericSidebar'
 import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
@@ -122,6 +123,7 @@ import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/Logi
 export default defineComponent({
   name: 'CartOverlay',
   components: {
+    Button,
     PromotionLabel,
     CartTable,
     GenericSidebar,
@@ -142,7 +144,7 @@ export default defineComponent({
     const cartStore = useCartStore()
     const { currentCart } = storeToRefs(cartStore)
     const userStore = useUserStore()
-    const { isLoggedIn } = storeToRefs(userStore)
+    const { isLoggedIn, isOciUser } = storeToRefs(userStore)
     const showInfo = ref(false)
     const isAddedToCart = ref(false)
 
@@ -150,16 +152,16 @@ export default defineComponent({
       return currentCart?.value?.totalItems || 0
     })
 
-    const hasPromotion = computed(() => {
-      return currentCart?.value?.appliedOrderPromotions.length
-    })
-
     const promotions = computed(() => {
       return currentCart?.value?.appliedOrderPromotions
     })
 
+    const hasPromotion = computed(() => {
+      return promotions.value?.length
+    })
+
     const totalDiscounts = computed(() => {
-      return `- ${currentCart?.value?.totalDiscounts.formattedValue}`
+      return `- ${currentCart?.value?.totalDiscounts?.formattedValue}`
     })
 
     const getTotalCartPrice = computed(() => {
@@ -204,6 +206,7 @@ export default defineComponent({
       getTotalCartPrice,
       goToShop,
       isLoggedIn,
+      isOciUser,
       showInfo,
       isAddedToCart,
       handleCheckoutClick: cartStore.handleCheckoutClick,

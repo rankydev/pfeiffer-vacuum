@@ -1,5 +1,8 @@
 <template>
-  <div class="document-search-result tw-grid-container">
+  <div
+    v-if="!searchResultsLoadingError"
+    class="document-search-result tw-grid-container"
+  >
     <div class="document-search-result__sidebar">
       <div class="advanced-search__info">
         <div class="advanced-search__headline">
@@ -71,6 +74,12 @@
       </client-only>
     </div>
   </div>
+  <ErrorHandling
+    v-else
+    :headline="$t('product.errorHandling.noDownloadsAvailable')"
+    :grey-background="false"
+    class="document-search-result__error-handling"
+  />
 </template>
 
 <script>
@@ -85,18 +94,20 @@ import { useEmpolisStore } from '~/stores/empolis'
 import { PAGE_SIZE_DEFAULT } from '~/config/pagination.config'
 import { useEmpolisHelper } from '~/composables/useEmpolisHelper'
 
-import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
-import DocumentSearchItem from '~/components/molecules/DocumentSearchItem/DocumentSearchItem.vue'
-import DocumentSearchFilters from '~/components/organisms/DocumentSearchFilters/DocumentSearchFilters.vue'
-import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
-import Pagination from '~/components/molecules/Pagination/Pagination.vue'
-import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
+import ErrorHandling from '~/components/molecules/ErrorHandling/ErrorHandling'
+import DocumentSearchItem from '~/components/molecules/DocumentSearchItem/DocumentSearchItem.vue'
+import CategoryPageSizeSelection from '~/components/molecules/CategoryPageSizeSelection/CategoryPageSizeSelection.vue'
+import Pagination from '~/components/molecules/Pagination/Pagination.vue'
+import DocumentSearchFilters from '~/components/organisms/DocumentSearchFilters/DocumentSearchFilters.vue'
+import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 
 export default defineComponent({
   name: 'DocumentSearchResult',
   components: {
+    ErrorHandling,
     LoadingSpinner,
     DocumentSearchItem,
     DocumentSearchFilters,
@@ -285,6 +296,13 @@ export default defineComponent({
 
     @screen md {
       @apply tw-my-0;
+    }
+  }
+
+  &__error-handling {
+    &.error-handling {
+      @apply tw-pt-[52px];
+      @apply tw-pb-[48px];
     }
   }
 }

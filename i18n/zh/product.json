@@ -59,5 +59,14 @@
         "text": "您未被允许查看价格"
       }
     }
+  },
+  "errorHandling": {
+    "multiProductHeadline": "我们无法加载任何产品。",
+    "singleProductHeadline": "我们无法加载此产品。",
+    "customerSupport": {
+      "text": "请稍后回来或联系",
+      "link": "客户支持。"
+    },
+    "noDownloadsAvailable": "我们无法加载任何下载内容。"
   }
 }

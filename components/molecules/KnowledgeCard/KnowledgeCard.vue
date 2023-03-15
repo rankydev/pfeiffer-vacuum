@@ -29,7 +29,7 @@
     </template>
     <template #description>
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <p v-html="summary" />
+      <p v-html="sanitizer.inline(summary)" />
     </template>
     <template #actionItems>
       <div class="knowledge-card__action-items">
@@ -61,6 +61,7 @@ import {
   toRefs,
   useContext,
 } from '@nuxtjs/composition-api'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
@@ -87,6 +88,7 @@ export default defineComponent({
   },
   setup(props) {
     const { entry } = toRefs(props)
+    const sanitizer = useSanitizer()
     const { localePath, i18n } = useContext()
     const isWebinar = computed(() => entry?.value?.type === 'WEBINAR')
     const tag = computed(() => {
@@ -146,6 +148,7 @@ export default defineComponent({
       return entry?.value?.assetURL
     })
     return {
+      sanitizer,
       isWebinar,
       tagIcon,
       image,

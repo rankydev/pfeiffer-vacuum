@@ -185,6 +185,10 @@ export default defineComponent({
             loading.value = false
           }
         }
+      } else {
+        toast.warning({
+          description: i18n.t('form.validationErrorMessages.warning'),
+        })
       }
     }
 

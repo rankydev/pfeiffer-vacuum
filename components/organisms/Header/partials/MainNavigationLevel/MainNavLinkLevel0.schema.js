@@ -23,6 +23,19 @@ export default {
       component_whitelist: ['MainNavLinkLevel1'],
       description: 'Navigation entries displayed on first level.',
     },
+    showPromotionTeaser: {
+      type: 'boolean',
+      display_name: 'Promotion Teaser',
+      description: 'Display Promotion Teaser',
+      default_value: false,
+    },
+    promotionTeaser: {
+      type: 'bloks',
+      maximum: 1,
+      restrict_components: true,
+      component_whitelist: ['PromotionTeaser'],
+      description: 'Promotion Teaser content',
+    },
     useHybrisCategories: {
       type: 'boolean',
       display_name: 'Use Hybris Category Tree?',

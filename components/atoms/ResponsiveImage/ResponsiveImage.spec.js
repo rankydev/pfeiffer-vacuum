@@ -152,7 +152,7 @@ describe('ResponsiveImage', () => {
       const ResponsiveImageWrapper = wrapper.findComponent(nuxtImg)
 
       expect(ResponsiveImageWrapper.vm.src).toEqual(
-        propsData.image.originalFilename || propsData.image.url
+        propsData.image.originalFilenameRelative || propsData.image.url
       )
     })
 

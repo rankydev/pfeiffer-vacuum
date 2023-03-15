@@ -29,7 +29,10 @@
       :title="title"
       :provider="provider"
       :loading="lazy ? 'lazy' : undefined"
-      :class="`responsive-image__${aspectRatioString}`"
+      :class="[
+        `responsive-image__${aspectRatioString}`,
+        { 'responsive-image__contain': containImage },
+      ]"
       @error="handleImageError"
     />
     <div v-if="withGradient" class="responsive-image__gradient-overlay"></div>
@@ -113,6 +116,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    containImage: {
+      type: Boolean,
+      default: false,
+    },
     rounded: {
       type: Boolean,
       default: true,
@@ -192,6 +199,10 @@ export default defineComponent({
     @apply tw-relative;
     @apply tw-overflow-hidden;
     @apply tw-w-full;
+  }
+
+  &__contain {
+    @apply tw-object-contain;
   }
 
   &__1-1 {

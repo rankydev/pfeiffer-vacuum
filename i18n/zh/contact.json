@@ -1,0 +1,9 @@
+{
+  "confirmationPage": {
+    "requestSuccess": "您的申请已经成功发送",
+    "requestDescription": "感谢您的查询。我们已将您的请求副本发送到您的电子邮件地址。我们会尽快与您联系。",
+    "thankYou": "非常感谢！",
+    "requestProgress": "我们的服务团队将尽快处理您的请求",
+    "nextRequestButton": "下一个请求"
+  }
+}

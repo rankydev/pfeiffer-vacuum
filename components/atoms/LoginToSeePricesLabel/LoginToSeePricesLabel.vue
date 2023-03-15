@@ -10,7 +10,7 @@
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '~/stores/user'
 
 export default defineComponent({
   name: 'LoginToSeePricesLabel',
@@ -31,6 +31,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .login-to-see-prices-label {
   @apply tw-font-bold;
+  @apply tw-text-pv-grey-16;
 
   &__login-link {
     @apply tw-cursor-pointer;

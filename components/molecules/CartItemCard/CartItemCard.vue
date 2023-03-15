@@ -11,7 +11,8 @@
         <ResponsiveImage
           :image="productImage"
           provider="hybris"
-          aspect-ratio="1:1"
+          :mode-full="true"
+          :contain-image="true"
         />
       </Link>
     </div>
@@ -86,7 +87,7 @@
       </span>
     </div>
     <Button
-      v-if="isLoggedIn"
+      v-if="isLoggedIn && !isOciUser"
       class="cart-item-card-add-article"
       variant="secondary"
       shape="plain"
@@ -95,8 +96,8 @@
       @click="addToShoppingList"
     />
     <Button
-      v-if="editMode"
       class="cart-item-card-delete"
+      :class="{ 'cart-item-card-delete-invisible': !editMode }"
       variant="secondary"
       shape="plain"
       icon="delete"
@@ -113,23 +114,28 @@ import {
   toRefs,
   useContext,
 } from '@nuxtjs/composition-api'
-import Button from '~/components/atoms/Button/Button'
-import Link from '~/components/atoms/Link/Link'
-import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
-import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useDebounceFn } from '@vueuse/core'
+
+import Button from '~/components/atoms/Button/Button'
+import Link from '~/components/atoms/Link/Link'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
+import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
+import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+import Tag from '~/components/atoms/Tag/Tag'
 
 export default defineComponent({
   name: 'CartItemCard',
   components: {
     Button,
     Link,
-    ResponsiveImage,
     PvInput,
     Tag,
+    PromotionLabel,
+    LoginToSeePricesLabel,
+    ResponsiveImage,
   },
   props: {
     product: {
@@ -179,6 +185,7 @@ export default defineComponent({
       isOpenUser,
       isRejectedUser,
       isLoggedIn,
+      isOciUser,
     } = storeToRefs(userStore)
 
     const noPriceReason = computed(() => {
@@ -282,6 +289,7 @@ export default defineComponent({
       isPriceVisible,
       noPriceReason,
       getPromotion,
+      isOciUser,
     }
   },
 })
@@ -289,14 +297,18 @@ export default defineComponent({
 
 <style lang="scss">
 .cart-item-card {
-  @apply tw-grid tw-grid-cols-12 tw-auto-rows-auto;
-  @apply tw-border-b tw-border-b-pv-grey-80;
-  @apply tw-mt-6;
+  @apply tw-grid;
+  grid-template-columns: repeat(8, 1fr) 13.2% 10.87% 12.4%;
+  @apply tw-auto-rows-auto;
+  @apply tw-border-b-2 tw-border-b-pv-grey-80;
+  @apply tw-py-6;
+  @apply tw-text-pv-grey-16;
 
   &-image {
     @apply tw-row-start-1 tw-row-end-2;
-    @apply tw-col-start-1 tw-col-end-3;
+    @apply tw-col-start-1 tw-col-end-4;
     @apply tw-flex;
+    height: 80px;
   }
 
   &-title {
@@ -316,14 +328,6 @@ export default defineComponent({
     }
   }
 
-  &-quantity {
-    @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-1 tw-col-end-5;
-    @apply tw-mt-4;
-    @apply tw-flex;
-    @apply tw-pr-1;
-  }
-
   &-price-error {
     @apply tw-row-start-2 tw-row-end-3;
     @apply tw-col-start-5 tw-col-end-13;
@@ -337,17 +341,21 @@ export default defineComponent({
     }
   }
 
-  &-price {
+  &-quantity,
+  &-price,
+  &-total-price {
     @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-5 tw-col-end-13;
-    @apply tw-leading-6;
     @apply tw-flex;
+  }
+
+  &-price,
+  &-total-price {
+    @apply tw-leading-6;
+    @apply tw-col-start-5 tw-col-end-13;
     @apply tw-ml-auto;
-    @apply tw-mt-4;
 
     &__label {
       @apply tw-text-xs;
-      @apply tw-ml-2;
       @apply tw-text-pv-grey-48;
     }
 
@@ -356,23 +364,26 @@ export default defineComponent({
     }
   }
 
-  &-total-price {
-    @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-5 tw-col-end-13;
-    @apply tw-leading-6;
-    @apply tw-flex;
-    @apply tw-mt-auto;
-    @apply tw-ml-auto;
+  &-quantity {
+    @apply tw-col-start-1 tw-col-end-5;
+    @apply tw-mt-4;
+    @apply tw-pr-1;
+  }
+
+  &-price {
+    @apply tw-mt-4;
 
     &__label {
-      @apply tw-text-xs;
-      @apply tw-text-pv-grey-48;
+      @apply tw-ml-2;
     }
+  }
+
+  &-total-price {
+    @apply tw-mt-auto;
 
     &__price {
       @apply tw-text-base;
       @apply tw-font-bold;
-      @apply tw-ml-2;
     }
   }
 
@@ -381,6 +392,11 @@ export default defineComponent({
     @apply tw-col-start-12 tw-col-end-13;
     @apply tw-mb-auto;
     @apply tw-ml-auto;
+    padding: 0 !important;
+
+    &-invisible {
+      @apply tw-hidden;
+    }
   }
 
   &-details-button {
@@ -432,24 +448,20 @@ export default defineComponent({
     @apply tw-col-start-1 tw-col-end-13;
     @apply tw-w-fit;
     @apply tw-mx-auto;
+    @apply tw-mt-4;
+  }
+
+  &-add-to-cart {
+    @apply tw-row-start-6 tw-row-end-7;
+    @apply tw-col-start-1 tw-col-end-13;
+    @apply tw-w-fit;
+    @apply tw-mx-auto;
     @apply tw-mb-3;
     @apply tw-mt-4;
   }
 }
 
 .cart-item-card-desktop {
-  &.cart-item-card {
-    @apply tw-grid-cols-12;
-
-    @screen lg {
-      @apply tw-grid-cols-11;
-    }
-
-    &--edit-mode {
-      @apply tw-grid-cols-12;
-    }
-  }
-
   .cart-item-card {
     @screen lg {
       @apply tw-grid-rows-3;
@@ -533,7 +545,7 @@ export default defineComponent({
         @apply tw-col-start-10 tw-col-end-11;
         @apply tw-text-lg;
         @apply tw-leading-7;
-        @apply tw-mx-auto;
+        margin-left: unset;
       }
 
       &__label {
@@ -552,8 +564,8 @@ export default defineComponent({
       @screen lg {
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-11 tw-col-end-12;
-        @apply tw-mt-auto;
-        @apply tw-mx-auto;
+        margin-left: unset;
+        @apply tw-my-auto;
       }
 
       &__label {

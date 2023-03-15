@@ -204,9 +204,13 @@ $card-image-height: 200px;
     }
   }
 
+  &__action-items {
+    @apply tw-text-pv-grey-16;
+  }
+
   &__content {
     @apply tw-flex tw-flex-col tw-flex-auto;
-    @apply tw-text-pv-black;
+    @apply tw-text-pv-grey-16;
 
     &:hover {
       @apply tw-no-underline;
