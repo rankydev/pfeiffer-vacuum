@@ -49,7 +49,12 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  computed,
+  useContext,
+} from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import Richtext from '~/components/atoms/Richtext/Richtext'
 import ContentCTABox from '~/components/molecules/ContentCTABox/ContentCTABox'
@@ -61,6 +66,7 @@ import HintModal from '~/components/organisms/RegistrationPage/HintModal/HintMod
 import useVuelidate from '@vuelidate/core'
 import { useUserStore } from '~/stores/user'
 import { useCTABoxHelper } from './partials/useCTABoxHelper'
+import { useToast } from '~/composables/useToast'
 
 export default defineComponent({
   name: 'RegistrationPage',
@@ -82,6 +88,8 @@ export default defineComponent({
     const requestData = ref({ personalData: {}, companyData: {} })
     const modalIsOpen = ref(false)
     const isCompanyAddressFormVisible = ref(false)
+    const toast = useToast()
+    const { i18n } = useContext()
 
     const hasCountrySelectionData = computed(() => {
       if (!requestData.value.personalData?.address) return false
@@ -150,6 +158,10 @@ export default defineComponent({
         loading.value = true
         await userStore.register(requestData)
         loading.value = false
+      } else {
+        toast.warning({
+          description: i18n.t('form.validationErrorMessages.warning'),
+        })
       }
     }
 

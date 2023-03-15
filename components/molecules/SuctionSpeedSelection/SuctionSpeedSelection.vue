@@ -250,12 +250,10 @@ export default defineComponent({
   &__divider-line {
     @apply tw-flex tw-self-center;
     @apply tw-w-4;
-    height: 2px;
+    @apply tw-h-[2px];
     @apply tw-relative;
-    @apply tw-text-pv-grey-16;
-    @apply tw-bg-pv-black;
-    @apply tw-ml-4;
-    @apply tw-mr-4;
+    @apply tw-bg-pv-grey-16;
+    @apply tw-mx-4;
   }
 
   &__input-wrapper {

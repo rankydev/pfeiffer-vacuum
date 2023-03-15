@@ -63,6 +63,7 @@ import { ref, computed, watch, toRefs } from '@vue/composition-api'
 import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Button from '~/components/atoms/Button/Button.vue'
+import InformationModal from '~/components/molecules/InformationModal/InformationModal.vue'
 import { useToast } from '~/composables/useToast'
 
 export default defineComponent({
@@ -71,6 +72,7 @@ export default defineComponent({
     Checkbox,
     Icon,
     Button,
+    InformationModal,
   },
   props: {
     list: {
@@ -231,7 +233,7 @@ export default defineComponent({
     @screen md {
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-6 tw-col-end-8;
-      @apply tw-text-pv-black;
+      @apply tw-text-pv-grey-16;
       @apply tw-my-auto;
       @apply tw-pl-6;
       @apply tw-text-sm;

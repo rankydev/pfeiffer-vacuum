@@ -178,7 +178,7 @@ export default defineComponent({
   &__element {
     @apply tw-block;
     @apply tw-w-full;
-    @apply tw-text-pv-black;
+    @apply tw-text-pv-grey-16;
     @apply tw-px-4;
     @apply tw-py-3;
     @apply tw-shadow-border-grey-80;
@@ -207,7 +207,7 @@ export default defineComponent({
     }
 
     &:focus + .pv-input__icon {
-      @apply tw-text-pv-black;
+      @apply tw-text-pv-grey-16;
     }
 
     &--icon {

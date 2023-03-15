@@ -58,6 +58,7 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 import { getKnowledgeData } from './KnowledgeModal.data'
 import { useUserStore } from '~/stores/user'
 import { useVuelidate } from '@vuelidate/core'
+import { useToast } from '~/composables/useToast'
 
 export default {
   name: 'KnowledgeModal',
@@ -81,6 +82,7 @@ export default {
     const v = useVuelidate()
     const { ctaBoxContents } = getKnowledgeData()
     const requestData = ref({ personalData: {}, companyData: {} })
+    const toast = useToast()
 
     const selectedCountry = computed(() => {
       const country = requestData.value.personalData.address?.country
@@ -103,6 +105,10 @@ export default {
 
       if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
         await userStore.register(requestData)
+      } else {
+        toast.warning({
+          description: i18n.t('form.validationErrorMessages.warning'),
+        })
       }
     }
 
