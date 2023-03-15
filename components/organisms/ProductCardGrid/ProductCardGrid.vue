@@ -1,8 +1,19 @@
 <template>
   <div class="product-card-grid">
-    <ul class="product-card-grid__products">
-      <li v-for="product in products" :key="product.code">
-        <ProductCard :product="product" />
+    <ul
+      class="product-card-grid__products"
+      :class="`product-card-grid__products--${
+        useKnowledgeCard ? 'knowledge' : 'category'
+      }`"
+    >
+      <li v-for="(product, index) in products" :key="index">
+        <component
+          :is="useKnowledgeCard ? 'KnowledgeCard' : 'ProductCard'"
+          v-bind="{
+            product: useKnowledgeCard ? null : product,
+            entry: useKnowledgeCard ? product : null,
+          }"
+        />
       </li>
     </ul>
   </div>
@@ -10,15 +21,21 @@
 
 <script>
 import ProductCard from '~/components/molecules/ProductCard/ProductCard.vue'
+import KnowledgeCard from '~/components/molecules/KnowledgeCard/KnowledgeCard'
 
 export default {
   components: {
     ProductCard,
+    KnowledgeCard,
   },
   props: {
     products: {
       type: Array,
       required: true,
+    },
+    useKnowledgeCard: {
+      type: Boolean,
+      default: false,
     },
   },
 }
@@ -31,6 +48,12 @@ export default {
 
     @screen md {
       @apply tw-grid-cols-3;
+    }
+
+    &--knowledge {
+      @screen lg {
+        @apply tw-grid-cols-4;
+      }
     }
   }
 }
