@@ -107,11 +107,35 @@ export const useShoppingListsApi = () => {
     return null
   }
 
+  /**
+   * Updates the information for a shopping list
+   * @param {*} id
+   * @param {*} title
+   * @param {*} description
+   */
+  const updateShoppingList = async (id, title, description) => {
+    const result = await axios.$put(`${config.SHOPPING_LISTS}/${id}`, {
+      name: title,
+      description,
+    })
+
+    if (typeof result === 'object' && !result.error) {
+      return true
+    }
+
+    logger.error(
+      'Error when updating shopping list. Returning false.',
+      result.error ? result.error : ''
+    )
+    return false
+  }
+
   return {
     getShoppingLists,
     getShoppingList,
     createNewList,
     addToShoppingList,
     deleteShoppingList,
+    updateShoppingList,
   }
 }

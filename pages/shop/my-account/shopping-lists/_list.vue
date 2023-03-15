@@ -5,8 +5,9 @@
       :class="{ 'shopping-list-detail-page__header-active': isEditMode }"
     >
       <ResultHeadline
+        v-if="!isEditMode"
         class="shopping-list-detail-page__header--headline"
-        :headline="$t('myaccount.shoppingListOverviewPage.title')"
+        :headline="name"
         :link="localePath('shop-my-account')"
       />
       <PvInput
@@ -43,7 +44,7 @@
               : $t('myaccount.editList')
           "
           variant="secondary"
-          @click="toggleEditMode"
+          @click="changeButton"
         />
         <Button
           class="shopping-list-detail-page__header--nav__new"
@@ -58,23 +59,31 @@
               : $t('myaccount.shoppingListOverviewPage.deleteList')
           "
           variant="secondary"
-          @click="createDeleteLists"
+          @click="actionButton"
         />
       </div>
     </div>
+    <div class="shopping-list-detail-page__list">
+      <h3 class="shopping-list-detail-page__list--title">
+        {{ $t('cart.articleList') }}
+      </h3>
+      <ShoppingList
+        class="shopping-list-detail-page__list--list"
+        :products="products"
+        :is-sortable="true"
+        @update="updateProduct"
+      />
+    </div>
     <Button
-      shape="plain"
-      variant="secondary"
-      class="shopping-list-detail-page__add-button"
-      :label="$t('myaccount.addAllToCart')"
+      class="shopping-list-detail-page__add-to-cart"
       icon="shopping_cart"
-      gap="narrow"
-      @click="goToShoppingListOverview"
+      :label="$t('myaccount.addAllToCart')"
+      @click="addAllToCart"
     />
     <Button
       shape="plain"
       variant="secondary"
-      class="shopping-list-detail-page__back-button"
+      class="shopping-list-detail-page__back"
       :label="$t('myaccount.backToOverview')"
       icon="arrow_back"
       :prepend-icon="true"
@@ -90,13 +99,18 @@ import {
   useContext,
   useRouter,
   ref,
+  useRoute,
+  onMounted,
+  computed,
 } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
-import PvInput from '@/components/atoms/FormComponents/PvInput/PvInput.vue'
-import PvTextArea from '@/components/atoms/FormComponents/PvTextArea/PvTextArea.vue'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
+import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea.vue'
+import { useShoppingLists } from '~/stores/shoppinglists'
+import { useCartStore } from '@/stores/cart'
 export default defineComponent({
-  name: 'ShoppingListOverviewPage',
+  name: 'ShoppingListDetailPage',
   components: {
     PvInput,
     Button,
@@ -104,25 +118,109 @@ export default defineComponent({
     PvTextArea,
   },
   setup() {
+    const { app } = useContext()
+    const router = useRouter()
+    const route = useRoute()
+    const shoppingListsStore = useShoppingLists()
+    const cartStore = useCartStore()
+    const { addProductToCart } = cartStore
+
     const nameVar = ref('')
     const descriptionVar = ref('')
     const isEditMode = ref(false)
-    const router = useRouter()
-    const { app } = useContext()
+    const changedProducts = ref([])
+
+    const shoppingList = ref({})
+
     const toggleEditMode = () => {
       isEditMode.value = !isEditMode.value
     }
     const goToShoppingListOverview = () => {
       router.push({
-        path: app.localePath('shop-my-account'),
+        path: app.localePath('shop-my-account-shopping-lists'),
       })
     }
+
+    const name = computed(() => {
+      return shoppingList.value?.name || ''
+    })
+
+    const updateProduct = (cartItem) => {
+      const foundProduct = changedProducts.value.find(
+        (product) => product?.code === cartItem?.code
+      )
+      if (foundProduct) {
+        foundProduct.quantity = cartItem.quantity
+      } else {
+        changedProducts.value.push(cartItem)
+      }
+    }
+
+    const products = computed(() => {
+      return shoppingList.value?.entries || []
+    })
+
+    const addAllToCart = () => {
+      changedProducts.value.forEach((product) => {
+        addProductToCart(product?.code, product?.quantity)
+      })
+    }
+
+    const deleteShoppingList = () => {
+      const id = route?.value?.params?.list
+      shoppingListsStore.deleteShoppingList(id)
+      goToShoppingListOverview()
+    }
+
+    const initShoppingList = () => {
+      const id = route?.value?.params?.list
+      shoppingList.value = shoppingListsStore.getShoppingListById(id)
+    }
+
+    const updateShoppingList = () => {
+      const id = route?.value?.params?.list
+      shoppingListsStore.updateShoppingList(
+        id,
+        nameVar.value,
+        descriptionVar.value
+      )
+    }
+
+    const resetInput = () => {
+      nameVar.value = shoppingList.value?.name || null
+      descriptionVar.value = shoppingList.value?.description || null
+    }
+
+    const actionButton = () => {
+      if (isEditMode.value && nameVar.value) {
+        updateShoppingList()
+        toggleEditMode()
+      } else {
+        deleteShoppingList()
+      }
+    }
+
+    const changeButton = () => {
+      resetInput()
+      toggleEditMode()
+    }
+
+    onMounted(() => {
+      initShoppingList()
+    })
     return {
       nameVar,
       descriptionVar,
       isEditMode,
       toggleEditMode,
       goToShoppingListOverview,
+      name,
+      products,
+      updateProduct,
+      addAllToCart,
+      deleteShoppingList,
+      actionButton,
+      changeButton,
     }
   },
 })
@@ -244,6 +342,47 @@ export default defineComponent({
         @apply tw-w-auto;
       }
     }
+  }
+
+  &__list {
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-mt-6;
+
+    @screen md {
+      @apply tw-mt-8;
+    }
+
+    &--title {
+      @apply tw-mt-6;
+      @apply tw-text-lg;
+      @apply tw-leading-7;
+      @apply tw-pb-4;
+      @apply tw-border-b tw-border-b-pv-grey-80;
+
+      @screen md {
+        @apply tw-mt-0;
+      }
+
+      @screen lg {
+        @apply tw-text-xl;
+        @apply tw-leading-9;
+      }
+    }
+
+    &--list {
+      @apply tw-mt-4;
+    }
+  }
+
+  &__add-to-cart {
+    @apply tw-mt-4;
+  }
+
+  &__back {
+    @apply tw-mt-4;
+    @apply tw-w-fit;
+    @apply tw-mx-auto;
   }
 }
 </style>

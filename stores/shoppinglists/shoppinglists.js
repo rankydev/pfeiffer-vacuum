@@ -134,6 +134,25 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     )
   }
 
+  const getShoppingListById = (listId) => {
+    return currentShoppingLists.value.find((list) => list?.id === listId)
+  }
+
+  const updateShoppingList = async (listId, name, description) => {
+    //await shoppingListsApi.updateShoppingList(listId, name, description)
+    currentShoppingLists.value = currentShoppingLists.value.map((list) => {
+      if (list?.id === listId) {
+        console.log(list)
+        return {
+          ...list,
+          name,
+          description,
+        }
+      }
+      return list
+    })
+  }
+
   watch(isLoggedIn, async () => {
     await initialShoppingListsLoad()
   })
@@ -159,5 +178,7 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     isAddMode,
     isNewListMode,
     isBasicMode,
+    getShoppingListById,
+    updateShoppingList,
   }
 })
