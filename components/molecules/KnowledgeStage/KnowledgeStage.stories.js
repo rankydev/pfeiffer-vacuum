@@ -2,7 +2,7 @@ import KnowledgeStage from '~/components/molecules/KnowledgeStage/KnowledgeStage
 import {
   image,
   date,
-  isWhitepaper,
+  isWhitePaper,
   minutes,
   hours,
   headline,
@@ -18,8 +18,8 @@ const argTypes = {
     defaultValue: date,
     control: { type: 'datetime' },
   },
-  isWhitepaper: {
-    defaultValue: isWhitepaper,
+  isWhitePaper: {
+    defaultValue: isWhitePaper,
     control: { type: 'boolean' },
   },
   minutes: {
@@ -62,13 +62,13 @@ const Template = (args) => ({
     }
   },
   template: `
-  <div class="documentation-preview">
+    <div class="documentation-preview">
     <KnowledgeStage v-bind="args"/>
-  </div>
-`,
+    </div>
+  `,
 })
 
 export const Default = Template.bind({})
 
 export const Whitepaper = Template.bind({})
-Whitepaper.args = { isWhitepaper: true }
+Whitepaper.args = { isWhitePaper: true }

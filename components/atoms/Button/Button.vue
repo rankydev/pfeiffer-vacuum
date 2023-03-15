@@ -64,6 +64,11 @@ export default defineComponent({
 .button {
   all: unset;
 
+  a {
+    @apply tw-flex;
+    @apply tw-gap-x-3;
+  }
+
   @apply tw-rounded-md;
   @apply tw-inline-flex;
   @apply tw-items-center;
