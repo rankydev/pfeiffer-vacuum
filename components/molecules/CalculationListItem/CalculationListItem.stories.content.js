@@ -14,3 +14,5 @@ export const item = {
   },
   __typename: 'Calculation',
 }
+
+export default {}

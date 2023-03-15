@@ -166,7 +166,6 @@ export default defineComponent({
   @apply tw-p-6;
   @apply tw-bg-pv-grey-96;
   @apply tw-rounded-lg;
-  min-height: 400px;
 
   &__headline {
     @apply tw-flex;

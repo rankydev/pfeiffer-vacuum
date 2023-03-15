@@ -20,11 +20,16 @@ export const usePricesStore = defineStore('prices', () => {
 
   const loadPrice = async (productId, uid) => {
     const url = joinURL(config.PRODUCTS_API, productId, uid, 'price')
-    const result = await axios.$get(url, {
-      params: { fields: 'FULL' },
-    })
 
-    price.value = result
+    try {
+      const result = await axios.$get(url, {
+        params: { fields: 'FULL' },
+      })
+      price.value = result
+    } catch (e) {
+      logger.error(e)
+      price.value = null
+    }
   }
 
   const loadProductReferenceGroupsPrices = async (productId, uid) => {

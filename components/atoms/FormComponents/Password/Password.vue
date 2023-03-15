@@ -310,7 +310,7 @@ export default defineComponent({
   &__element {
     @apply tw-block;
     @apply tw-w-full;
-    @apply tw-text-pv-black;
+    @apply tw-text-pv-grey-16;
     @apply tw-px-3;
     @apply tw-py-2;
     @apply tw-border-2;
@@ -320,7 +320,7 @@ export default defineComponent({
       @apply tw-rounded-md;
 
       &:focus {
-        @apply tw-border-pv-black;
+        @apply tw-border-pv-grey-16;
       }
     }
 
@@ -334,8 +334,8 @@ export default defineComponent({
       }
 
       &:focus {
-        @apply tw-border-t-pv-black;
-        @apply tw-border-x-pv-black;
+        @apply tw-border-t-pv-grey-16;
+        @apply tw-border-x-pv-grey-16;
       }
     }
 
@@ -347,12 +347,12 @@ export default defineComponent({
     &:focus {
       @apply tw-ring-0;
       @apply tw-outline-0;
-      @apply tw-text-pv-black;
+      @apply tw-text-pv-grey-16;
       outline: 0;
     }
 
     &:focus + .pv-password__icon {
-      @apply tw-text-pv-black;
+      @apply tw-text-pv-grey-16;
     }
 
     &:disabled {

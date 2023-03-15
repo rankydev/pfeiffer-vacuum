@@ -32,6 +32,9 @@ jest.mock('@nuxtjs/composition-api', () => {
           t: (key) => key,
           locale: '',
         },
+        $config: {
+          CURRENT_REGION_CODE: 'global',
+        },
       }
     },
     useRoute: () => ({ value: {} }),

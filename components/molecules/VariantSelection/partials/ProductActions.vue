@@ -5,7 +5,7 @@
         <span class="product-actions__order-number-headline">
           {{ $t('product.articleNumber') }}
         </span>
-        <span>{{ orderNumber }}</span>
+        <span class="product-actions__order-number">{{ orderNumber }}</span>
       </div>
       <div
         :class="[
@@ -53,7 +53,7 @@
         :disabled="isMaster"
         @click="addToCart"
       />
-      <template v-if="isLoggedIn">
+      <template v-if="isLoggedIn && !isOciUser">
         <Button
           class="product-actions__installed-base"
           icon="fact_check"
@@ -124,6 +124,7 @@ export default defineComponent({
       isOpenUser,
       isRejectedUser,
       isLoggedIn,
+      isOciUser,
     } = storeToRefs(userStore)
     const { addProductToCart } = cartStore
 
@@ -145,7 +146,9 @@ export default defineComponent({
 
     const productPrice = computed(() =>
       price.value
-        ? price.value?.formattedValue || ''
+        ? price.value?.value === 0
+          ? i18n.t('product.priceOnRequest')
+          : price.value?.formattedValue || ''
         : i18n.t('product.priceOnRequest')
     )
 
@@ -199,6 +202,7 @@ export default defineComponent({
       userStore,
       isLoggedIn,
       isApprovedUser,
+      isOciUser,
       orderNumber,
       productPrice,
       isPriceVisible,
@@ -239,6 +243,7 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-col-span-2;
+    @apply tw-text-pv-grey-16;
   }
 
   &__order-number-headline {
@@ -276,6 +281,7 @@ export default defineComponent({
 
     &-value {
       @apply tw-font-bold;
+      @apply tw-text-pv-grey-16;
     }
   }
 

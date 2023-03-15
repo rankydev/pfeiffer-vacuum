@@ -135,5 +135,14 @@
         "text": "Sie dürfen keine Preise sehen"
       }
     }
+  },
+  "errorHandling": {
+    "multiProductHeadline": "Wir konnten keine Produkte laden.",
+    "singleProductHeadline": "Wir konnten dieses Produkt nicht laden.",
+    "customerSupport": {
+      "text": "Bitte kommen Sie später wieder oder kontaktieren Sie unseren",
+      "link": "Kundendienst."
+    },
+    "noDownloadsAvailable": "Wir konnten keine Downloads laden."
   }
 }

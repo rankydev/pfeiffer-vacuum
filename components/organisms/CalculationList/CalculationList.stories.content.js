@@ -29,3 +29,5 @@ export const lists = [
     __typename: 'Calculation',
   },
 ]
+
+export default {}

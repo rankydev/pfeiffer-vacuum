@@ -5,7 +5,8 @@
         <ResponsiveImage
           :image="productImage"
           provider="hybris"
-          aspect-ratio="1:1"
+          :mode-full="true"
+          :contain-image="true"
         />
       </Link>
     </div>
@@ -136,8 +137,8 @@ import {
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Tag from '~/components/atoms/Tag/Tag'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useDebounceFn } from '@vueuse/core'
@@ -148,9 +149,9 @@ export default defineComponent({
   components: {
     Button,
     Link,
-    ResponsiveImage,
     PvInput,
     Tag,
+    ResponsiveImage,
   },
   props: {
     product: {
@@ -317,8 +318,10 @@ export default defineComponent({
 
   &__image {
     @apply tw-row-start-1 tw-row-end-2;
-    @apply tw-col-start-1 tw-col-end-3;
+    @apply tw-col-start-1 tw-col-end-4;
     @apply tw-flex;
+    height: 80px;
+
     @screen md {
       @apply tw-col-end-2;
     }
@@ -364,9 +367,10 @@ export default defineComponent({
     @apply tw-mt-4;
     @apply tw-flex;
     @apply tw-pr-1;
+
     @screen lg {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-10 tw-col-end-11;
+      @apply tw-col-start-8 tw-col-end-9;
       @apply tw-w-20;
       @apply tw-my-auto;
       @apply tw-ml-auto;
@@ -377,7 +381,7 @@ export default defineComponent({
       @apply tw-flex;
 
       @screen lg {
-        @apply tw-col-start-10 tw-col-end-11;
+        @apply tw-col-start-8 tw-col-end-9;
         @apply tw-ml-auto;
         @apply tw-mr-8;
       }
@@ -458,7 +462,7 @@ export default defineComponent({
 
     @screen lg {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-11 tw-col-end-12;
+      @apply tw-col-start-9 tw-col-end-11;
       @apply tw-text-lg;
       @apply tw-leading-7;
       @apply tw-m-auto;
@@ -490,14 +494,14 @@ export default defineComponent({
       }
 
       @screen lg {
-        @apply tw-col-start-11 tw-col-end-12;
+        @apply tw-col-start-9 tw-col-end-11;
       }
     }
   }
 
   &__total-price {
     @apply tw-row-start-2 tw-row-end-3;
-    @apply tw-col-start-10 tw-col-end-13;
+    @apply tw-col-start-5 tw-col-end-13;
     @apply tw-leading-6;
     @apply tw-flex;
     @apply tw-mt-auto;
@@ -505,7 +509,7 @@ export default defineComponent({
 
     @screen lg {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-12 tw-col-end-13;
+      @apply tw-col-start-11 tw-col-end-13;
       @apply tw-my-auto;
     }
 

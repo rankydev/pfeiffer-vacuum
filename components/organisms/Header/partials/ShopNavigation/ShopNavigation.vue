@@ -1,8 +1,8 @@
 <template>
   <div class="shop-navigation">
     <client-only>
-      <Popup>
-        <template v-if="!isOciUser" #activator="{ togglePopup }">
+      <Popup v-if="!isOciUser">
+        <template #activator="{ togglePopup }">
           <LoadingSpinner :show="isLoginProcess">
             <Button
               shape="plain"
@@ -69,9 +69,11 @@ import { useUserStore } from '~/stores/user'
 import { useCartStore } from '~/stores/cart'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import Link from '~/components/atoms/Link/Link.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import MyAccountNavigation from '~/components/organisms/MyAccount/partials/MyAccountNavigation/MyAccountNavigation.vue'
+import CartOverlay from '~/components/molecules/CartOverlay/CartOverlay.vue'
 import Popup from '~/components/atoms/Popup/Popup.vue'
 import { storeToRefs } from 'pinia'
 import ShoppingListOverlay from '~/components/molecules/ShoppingListOverlay/ShoppingListOverlay.vue'
@@ -79,10 +81,12 @@ import ShoppingListOverlay from '~/components/molecules/ShoppingListOverlay/Shop
 export default defineComponent({
   components: {
     Icon,
+    Link,
     Button,
     LoadingSpinner,
     MyAccountNavigation,
     Popup,
+    CartOverlay,
     ShoppingListOverlay,
   },
   setup() {
@@ -203,7 +207,7 @@ export default defineComponent({
 
   &__shopping-cart-count-indicator {
     @apply tw-bg-pv-yellow;
-    @apply tw-text-pv-black;
+    @apply tw-text-pv-grey-16;
     @apply tw-inline-block;
     @apply tw-relative;
     @apply tw-w-6;

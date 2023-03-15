@@ -11,7 +11,8 @@
         <ResponsiveImage
           :image="productImage"
           provider="hybris"
-          aspect-ratio="1:1"
+          :mode-full="true"
+          :contain-image="true"
         />
       </Link>
     </div>
@@ -86,7 +87,7 @@
       </span>
     </div>
     <Button
-      v-if="isLoggedIn"
+      v-if="isLoggedIn && !isOciUser"
       class="cart-item-card-add-article"
       variant="secondary"
       shape="plain"
@@ -113,27 +114,28 @@ import {
   toRefs,
   useContext,
 } from '@nuxtjs/composition-api'
-import Button from '~/components/atoms/Button/Button'
-import Link from '~/components/atoms/Link/Link'
-import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
-import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
-import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
-import Tag from '~/components/atoms/Tag/Tag'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
 import { useDebounceFn } from '@vueuse/core'
+
+import Button from '~/components/atoms/Button/Button'
+import Link from '~/components/atoms/Link/Link'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
+import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
+import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
+import Tag from '~/components/atoms/Tag/Tag'
 
 export default defineComponent({
   name: 'CartItemCard',
   components: {
     Button,
     Link,
-    ResponsiveImage,
     PvInput,
     Tag,
     PromotionLabel,
     LoginToSeePricesLabel,
+    ResponsiveImage,
   },
   props: {
     product: {
@@ -183,6 +185,7 @@ export default defineComponent({
       isOpenUser,
       isRejectedUser,
       isLoggedIn,
+      isOciUser,
     } = storeToRefs(userStore)
 
     const noPriceReason = computed(() => {
@@ -286,6 +289,7 @@ export default defineComponent({
       isPriceVisible,
       noPriceReason,
       getPromotion,
+      isOciUser,
     }
   },
 })
@@ -297,13 +301,14 @@ export default defineComponent({
   grid-template-columns: repeat(8, 1fr) 13.2% 10.87% 12.4%;
   @apply tw-auto-rows-auto;
   @apply tw-border-b-2 tw-border-b-pv-grey-80;
-  @apply tw-pt-6;
+  @apply tw-py-6;
   @apply tw-text-pv-grey-16;
 
   &-image {
     @apply tw-row-start-1 tw-row-end-2;
-    @apply tw-col-start-1 tw-col-end-3;
+    @apply tw-col-start-1 tw-col-end-4;
     @apply tw-flex;
+    height: 80px;
   }
 
   &-title {
@@ -443,7 +448,6 @@ export default defineComponent({
     @apply tw-col-start-1 tw-col-end-13;
     @apply tw-w-fit;
     @apply tw-mx-auto;
-    @apply tw-mb-3;
     @apply tw-mt-4;
   }
 

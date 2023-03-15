@@ -54,7 +54,7 @@ export const useEmpolisStore = defineStore('empolis', () => {
     searchResultsLoadingError.value = false
 
     try {
-      // first get translates filters filters
+      // first get translates filters
       const activeFiltersRes = await getTranslatedFilters(filtersFromQuery)
 
       // then fetch all available filters dependent on the current items
