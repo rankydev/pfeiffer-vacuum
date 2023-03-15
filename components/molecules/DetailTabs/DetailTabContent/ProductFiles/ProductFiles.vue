@@ -67,7 +67,7 @@
         </h4>
       </div>
       <ErrorHandling
-        v-else
+        v-else-if="!loading"
         :headline="$t('product.errorHandling.noDownloadsAvailable')"
         :grey-background="false"
         class="product-files__error-handling"
