@@ -73,7 +73,7 @@
         <div class="cart-overlay-content__navigation">
           <Button
             class="cart-overlay-content__navigation-checkout"
-            :label="$t('cart.checkout')"
+            :label="$t(isOciUser ? 'cart.checkout' : 'cart.requestQuote')"
             icon="arrow_forward"
             @click="handleCheckoutClick"
           />
@@ -144,7 +144,7 @@ export default defineComponent({
     const cartStore = useCartStore()
     const { currentCart } = storeToRefs(cartStore)
     const userStore = useUserStore()
-    const { isLoggedIn } = storeToRefs(userStore)
+    const { isLoggedIn, isOciUser } = storeToRefs(userStore)
     const showInfo = ref(false)
     const isAddedToCart = ref(false)
 
@@ -206,6 +206,7 @@ export default defineComponent({
       getTotalCartPrice,
       goToShop,
       isLoggedIn,
+      isOciUser,
       showInfo,
       isAddedToCart,
       handleCheckoutClick: cartStore.handleCheckoutClick,

@@ -124,10 +124,15 @@ export const useCategoryStore = defineStore('category', () => {
   )
 
   const loadCategoryTree = async () => {
-    const res = await axios.get(joinURL(config.PRODUCTS_API, 'search'), {
-      params: { fields: 'FULL', categoryTreeDepth: 2 },
-    })
-    categoryTree.value = res.data?.categorySubtree || []
+    try {
+      const res = await axios.get(joinURL(config.PRODUCTS_API, 'search'), {
+        params: { fields: 'FULL', categoryTreeDepth: 2 },
+      })
+      categoryTree.value = res.data?.categorySubtree
+    } catch (e) {
+      logger.error(e)
+      categoryTree.value = []
+    }
   }
 
   const loadProducts = async () => {

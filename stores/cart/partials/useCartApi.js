@@ -1,6 +1,7 @@
 import { storeToRefs } from 'pinia'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useCookieHelper } from '~/composables/useCookieHelper'
+import { useOciStore } from '~/stores/oci'
 import { useUserStore } from '~/stores/user'
 import { useLogger } from '~/composables/useLogger'
 import config from '~/config/hybris.config'
@@ -11,8 +12,10 @@ export const useCartApi = (currentCart, currentCartGuid) => {
 
   const { logger } = useLogger('cartApi')
 
+  const ociStore = useOciStore()
+  const { customerId } = storeToRefs(ociStore)
   const userStore = useUserStore()
-  const { currentUser, customerId, isLoggedIn } = storeToRefs(userStore)
+  const { isLoggedIn, isOciUser } = storeToRefs(userStore)
 
   /**
    * Cart helper functions
@@ -40,7 +43,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
    */
   const getCartUrl = () => {
     if (isLoggedIn.value) {
-      if (currentUser.value?.ociBuyer)
+      if (isOciUser.value)
         return config.CARTS_CURRENT_USER_API + '/' + customerId.value
       return config.CARTS_CURRENT_USER_API + '/current'
     } else if (currentCart.value) {
@@ -97,13 +100,25 @@ export const useCartApi = (currentCart, currentCartGuid) => {
     return null
   }
 
+  const createUserCart = async () => {
+    try {
+      return await axios.$post(config.CARTS_CURRENT_USER_API, null, {
+        params: { fields: 'FULL' },
+      })
+    } catch (e) {
+      logger.error(e)
+      return null
+    }
+  }
+
   const getOrCreateUserCart = async () => {
     let existingCart = null
 
     try {
       existingCart = await axios.$get(
         config.CARTS_CURRENT_USER_API +
-          (currentUser.value?.ociBuyer ? customerId.value : '/current'),
+          '/' +
+          (isOciUser.value ? customerId.value : 'current'),
         { params: { fields: 'FULL' } }
       )
 
@@ -111,28 +126,27 @@ export const useCartApi = (currentCart, currentCartGuid) => {
       if (validateCart(existingCart)) return existingCart
     } catch (error) {
       if (error?.status === 400 || error?.status === 404) {
-        // in this case there is probably an old cart (cart after placeOrder f.e.) which is not longer valid or does not exist
+        // in this case there is probably an old cart (cart after placeOrder f.e.) which is no longer valid or does not exist
         // do not exit the function but create a fresh cart below which will replace the invalid current one
         logger.warn(
           'current cart could not be loaded. A new cart will be created now.',
           error
         )
       } else {
-        // in this case something unexpected happend.
+        // in this case something unexpected happened.
         // we should not create a new cart since the old one may be still valid and something else went wrong
         throw error
       }
     }
 
-    const newCart = await axios.$post(config.CARTS_CURRENT_USER_API, null, {
-      params: { fields: 'FULL' },
-    })
+    const newCart = await createUserCart()
 
     // Return when new cart is valid
     if (validateCart(newCart)) return newCart
 
     return null
   }
+
   const getOrCreateCart = (createIfNotExist) => {
     if (isLoggedIn.value) return getOrCreateUserCart()
     return getOrCreateAnonymousCart(createIfNotExist)
