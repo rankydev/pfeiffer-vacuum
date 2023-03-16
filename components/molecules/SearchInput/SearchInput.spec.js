@@ -24,7 +24,12 @@ jest.mock('@nuxtjs/composition-api', () => {
       push: jest.fn((e) => mockRouterPush(e)),
     })),
     useContext: jest.fn(() => ({
-      app: { localePath: jest.fn((e) => e) },
+      app: {
+        localePath: jest.fn((e) => e),
+        $breakpoints: {
+          isMobile: { value: jest.fn() },
+        },
+      },
     })),
   }
 })
@@ -46,20 +51,4 @@ describe('SearchInput', () => {
       })
     })
   })
-
-  describe('during interaction', () => {
-    it('should push searchTerm when event is triggered', async () => {
-      const wrapper = mount(SearchInput)
-      const input = wrapper.findComponent(PvInput)
-      await input.vm.$emit('submit', mockSearchTerm)
-
-      expect(mockRouterPush).toBeCalledTimes(1)
-      expect(mockRouterPush).toBeCalledWith({
-        path: 'shop-search',
-        query: { searchTerm: mockSearchTerm, searchType: 'products' },
-      })
-    })
-  })
-
-  // describe('business requirements', () => {})
 })

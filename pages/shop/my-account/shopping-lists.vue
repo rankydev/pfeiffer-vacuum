@@ -1,23 +1,14 @@
 <template>
-  <div>
-    <MyAccountHeading />
-    <div
-      class="tw-flex tw-bg-pv-grey-88 tw-rounded-md tw-items-center tw-justify-center tw-font-bold tw-text-pv-white tw-text-2xl tw-text-center"
-      style="height: 800px"
-    >
-      <div>ShoppingLists</div>
-    </div>
-  </div>
+  <ShoppingListOverviewPage />
 </template>
 
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
-import MyAccountHeading from '~/components/organisms/MyAccount/partials/MyAccountHeading'
-
+import ShoppingListOverviewPage from '~/components/organisms/ShoppingListOverviewPage/ShoppingListOverviewPage.vue'
 export default defineComponent({
   name: 'ShoppingLists',
   components: {
-    MyAccountHeading,
+    ShoppingListOverviewPage,
   },
 })
 </script>

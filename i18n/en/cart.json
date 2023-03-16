@@ -3,13 +3,10 @@
   "overall2": "(Net)",
   "orderDiscount": "Order discount",
   "priceInformationHeadline": "Information about prices",
-  "priceInformation1":
-  "The here shown Online Price is a reference price that does not include freight, customs and taxes and is not maintained in all global currencies.",
-  "priceInformation2":
-  "To get your individual offer (in your local currency), please send us your request, so that your local Pfeiffer Vacuum Company / Partner Company will then provide you with your individual offer and pricing.",
+  "priceInformation1": "The here shown Online Price is a reference price that does not include freight, customs and taxes and is not maintained in all global currencies.",
+  "priceInformation2": "To get your individual offer (in your local currency), please send us your request, so that your local Pfeiffer Vacuum Company / Partner Company will then provide you with your individual offer and pricing.",
   "deliveryNote": "Expected Delivery",
-  "deliveryDetails":
-  "Please send us your inquiry, so that we can inform you about an exact delivery time.",
+  "deliveryDetails": "Please send us your inquiry, so that we can inform you about an exact delivery time.",
   "userStatus": {
     "lead": {
       "priceInfo": {
@@ -28,11 +25,17 @@
       }
     }
   },
+  "headline": "Shopping Cart",
+  "requestQuote": "Request quote",
+  "continueShopping": "Continue Shopping",
+  "saveCartToList": "Save cart to list",
+  "getProductHelp": "Get product help",
   "list": {
-    "addArticle": "Add to shopping list"
+    "addArticle": "Add to shopping list",
+    "addToAnotherList": "Add to another shopping list"
   },
   "productPrice": "Price",
-  "totalPrice": "Total Price",
+  "totalPrice": "Total",
   "quantity": "Quantity",
   "priceOnRequest": "Price on request",
   "details": "Details",
@@ -40,11 +43,12 @@
   "addToCartError": "An error occured while adding item to shopping cart",
   "pricePerUnit": "Price / PU",
   "editCart": "Edit cart",
-  "checkout": "Go to Checkout",
+  "checkout": "Request Quote",
   "shoppingCart": "Shopping Cart",
   "deleteFromCartSuccess": "Item successfully removed from cart",
   "deleteFromCartError": "An error occured while deleting product from cart",
   "updateCartError": "An error occured while updating cart",
   "cartEmpty": "Please add an item to the shopping cart.",
+  "emptyMessage": "Please add an item to the shopping cart.",
   "showAllProducts": "Show all products"
 }

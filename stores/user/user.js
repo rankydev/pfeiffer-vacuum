@@ -7,15 +7,22 @@ import {
   onServerPrefetch,
   ssrRef,
   ref,
+  watch,
 } from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
 import { useKeycloak } from './partials/useKeycloak'
 import { useUserApi } from './partials/useUserApi'
-import { watch } from '@nuxtjs/composition-api'
 import { useLogger } from '~/composables/useLogger'
 import { useOciStore } from '~/stores/oci'
 import { joinURL } from 'ufo'
 import { useToast } from '~/composables/useToast'
+import {
+  OCI_USERNAME,
+  OCI_PASSWORD,
+  OCI_HOOK_URL,
+  OCI_RETURN_TARGET,
+  OCI_CUSTOMER_ID,
+} from '~/server/constants.js'
 
 export const useUserStore = defineStore('user', () => {
   const { logger } = useLogger('userStore')
@@ -24,22 +31,21 @@ export const useUserStore = defineStore('user', () => {
   const router = useRouter()
   const route = useRoute()
   const userApi = useUserApi()
-  const ociStore = useOciStore()
+  const { isOciPage, saveOciParams } = useOciStore()
   const {
     keycloakInstance,
     auth,
     isLoginProcess,
     isLoggedIn,
     createKeycloakInstance,
+    setCookiesAndSaveAuthData,
     removeCookiesAndDeleteAuthData,
   } = useKeycloak()
-  const isLoading = ref(false)
 
-  const currentUser = ssrRef(null)
+  const isLoading = ref(false)
+  const currentUser = ref(null)
   const billingAddress = ssrRef(null)
   const deliveryAddresses = ssrRef(null)
-
-  const customerId = computed(() => currentUser.value?.orgUnit?.customerId)
 
   const isOpenUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'OPEN'
@@ -48,7 +54,7 @@ export const useUserStore = defineStore('user', () => {
     return currentUser.value?.registrationStatus?.code === 'LEAD'
   })
   const isOciUser = computed(() => {
-    return ociStore.checkForOciUser(auth)
+    return currentUser.value?.ociBuyer
   })
   const isRejectedUser = computed(() => {
     return currentUser.value?.registrationStatus?.code === 'REJECTED'
@@ -61,6 +67,13 @@ export const useUserStore = defineStore('user', () => {
     () =>
       currentUser.value?.orgUnit?.addresses?.find((e) => e.billingAddress) || {}
   )
+
+  const userStatusTypeForInfoText = computed(() => {
+    if (isLeadUser.value) return 'lead'
+    if (isOpenUser.value) return 'open'
+    if (isRejectedUser.value) return 'rejected'
+    return 'undefined'
+  })
 
   const accountManagerData = ref(null)
 
@@ -78,10 +91,26 @@ export const useUserStore = defineStore('user', () => {
   const userRegion = computed(() => userBillingAddress.value?.region || {})
 
   const changePasswordLink = computed(() => {
-    const keycloakBaseUrl = ctx.$config.KEYCLOAK_BASE_URL + 'realms/'
-    const keycloackRealm = ctx.$config.KEYCLOAK_REALM_NAME
-    const language = `kc_locale=${ctx.i18n.locale}`
-    return `${keycloakBaseUrl}${keycloackRealm}/account/password?${language}`
+    const { $config, i18n, app } = ctx
+    const { localePath } = app
+
+    const keycloakBaseUrl = $config.KEYCLOAK_BASE_URL + 'realms/'
+    const keycloackRealm = $config.KEYCLOAK_REALM_NAME
+    const keycloakClientId = $config.KEYCLOAK_CLIENT_ID
+    const language = `kc_locale=${i18n.locale}`
+
+    const url = encodeURIComponent(
+      joinURL(
+        $config.baseURL,
+        router?.options.base,
+        localePath({
+          path: route.value.path,
+          query: { ...route.value.query },
+        })
+      )
+    )
+
+    return `${keycloakBaseUrl}${keycloackRealm}/account/password?${language}&referrer=${keycloakClientId}&referrer_uri=${url}`
   })
 
   watch(auth, async (newAuth) => {
@@ -209,17 +238,14 @@ export const useUserStore = defineStore('user', () => {
       const result = await userApi.getUserBillingAddress()
       billingAddress.value = result
     } catch (e) {
-      logger.error(
-        `Error when fetching billing address for user. Returning empty object.`,
-        e
-      )
+      logger.error(`Error fetching billing address for user.`, e)
     }
   }
 
   const loadDeliveryAddresses = async () => {
     try {
       const result = await userApi.getUserDeliveryAddresses()
-      deliveryAddresses.value = {
+      const mappedAddresses = {
         addresses: result.addresses
           .map((item) => {
             return {
@@ -229,11 +255,11 @@ export const useUserStore = defineStore('user', () => {
           })
           .sort((a, b) => b.defaultShippingAddress - a.defaultShippingAddress),
       }
+      deliveryAddresses.value = mappedAddresses
+      return mappedAddresses.addresses
     } catch (e) {
-      logger.error(
-        `Error when fetching billing address for user. Returning empty object.`,
-        e
-      )
+      logger.error(`Error fetching delivery addresses for user.`, e)
+      return null
     }
   }
 
@@ -243,10 +269,12 @@ export const useUserStore = defineStore('user', () => {
 
   const createDeliveryAddress = async (address) => {
     await userApi.createUserDeliveryAddress(address)
+    loadCurrentUser()
   }
 
   const updateDeliveryAddress = async (id, address) => {
     await userApi.updateUserDeliveryAddress(id, address)
+    loadCurrentUser()
   }
 
   const deleteDeliveryAddress = async (id) => {
@@ -265,6 +293,7 @@ export const useUserStore = defineStore('user', () => {
       await userApi.setUserDefaultDeliveryAddress(id)
       // refetch delivery addresses
       loadDeliveryAddresses()
+      loadCurrentUser()
     } catch (e) {
       logger.error(`Error when setting default delivery address.`, e)
       throw e
@@ -294,6 +323,34 @@ export const useUserStore = defineStore('user', () => {
     await keycloakInstance.value.login(options)
   }
 
+  const addHoursToCurrentDate = (hours) => {
+    return new Date().setHours(new Date().getHours() + hours)
+  }
+
+  const createBasicAuthToken = (username, password) => {
+    const token = Buffer.from(`${username}:${password}`).toString('base64')
+    return {
+      access_token: token,
+      token_type: 'Basic',
+      validUntil: addHoursToCurrentDate(24),
+      type: 'oci',
+    }
+  }
+
+  const loginForOci = (
+    username,
+    password,
+    hookUrl,
+    returnTarget,
+    customerId
+  ) => {
+    logger.debug('OCI login')
+    const token = createBasicAuthToken(username, password)
+
+    setCookiesAndSaveAuthData(token)
+    saveOciParams(hookUrl, returnTarget, customerId, token.validUntil)
+  }
+
   const logout = async () => {
     logger.debug('logout')
 
@@ -315,19 +372,53 @@ export const useUserStore = defineStore('user', () => {
     isLoading.value = false
   }
 
-  /* istanbul ignore else  */
-  if (!ociStore.isOciPage && !ociStore.checkForOciUser(auth)) {
-    createKeycloakInstance()
+  const initializeAuth = async () => {
+    if (isOciPage) {
+      const username = route.value.query[OCI_USERNAME]
+      const password = route.value.query[OCI_PASSWORD]
+      const hookUrl = route.value.query[OCI_HOOK_URL]
+      const returnTarget = route.value.query[OCI_RETURN_TARGET]
+      const customerId = route.value.query[OCI_CUSTOMER_ID]
+
+      // check if the required credentils are given
+      if (username && password) {
+        // logout the user if he is already logged in
+        if (isLoggedIn.value) {
+          logger.trace(
+            'Logout already logged-in user to ensure correct OCI login'
+          )
+          await logout()
+        }
+
+        logger.trace('login with basic auth')
+        // log the user in with the basic auth credentials
+        loginForOci(username, password, hookUrl, returnTarget, customerId)
+      }
+
+      if (!isLoggedIn.value && process.client) {
+        window.location.href = window.location.href.replace('/oci/', '/global/')
+      }
+    } else {
+      createKeycloakInstance()
+
+      // logout the user if a ssr request with an active oci session happens
+      if (process.server && isOciUser.value) {
+        logger.trace('Logout OCI user because this is not a OCI page')
+        await logout()
+      }
+    }
   }
 
   // the initial store initialization
   /* istanbul ignore else  */
   if (!currentUser.value) {
     onBeforeMount(async () => {
+      await initializeAuth()
       await loadCurrentUser()
       await loadAccountManagerData()
     })
     onServerPrefetch(async () => {
+      await initializeAuth()
       await loadCurrentUser()
       await loadAccountManagerData()
     })
@@ -343,18 +434,19 @@ export const useUserStore = defineStore('user', () => {
     accountManagerData,
 
     // getters
-    customerId,
     isApprovedUser,
     isLeadUser,
     isOciUser,
     isOpenUser,
     isRejectedUser,
     isLoggedIn,
+    userStatusTypeForInfoText,
     isLoading,
     userBillingAddress,
     userCountry,
     userRegion,
     changePasswordLink,
+    keycloakInstance: computed(() => keycloakInstance.value),
 
     // actions
     loadCurrentUser,

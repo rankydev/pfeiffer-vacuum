@@ -1,6 +1,6 @@
-import Seo from '../Page/PageSeo.schema.partial.js'
-import Social from '../Page/PageSocial.schema.partial.js'
-import Page from '../Page/Page.schema.js'
+import Seo from '~/components/templates/Page/PageSeo.schema.partial.js'
+import Social from '~/components/templates/Page/PageSocial.schema.partial.js'
+import Page from '~/components/templates/Page/Page.schema.js'
 
 export default {
   name: 'KnowledgePage',
@@ -12,6 +12,7 @@ export default {
       display_name: 'Stage',
       restrict_components: true,
       component_whitelist: ['Stage'],
+      maximum: 1,
     },
     ...Seo,
     ...Social,

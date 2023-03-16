@@ -20,13 +20,13 @@ export default defineComponent({
     Icon,
   },
   props: {
-    label: {
-      type: String,
-      required: true,
-    },
     icon: {
       type: String,
       default: 'description',
+    },
+    label: {
+      type: String,
+      required: true,
     },
     button: {
       type: Object,
@@ -38,11 +38,12 @@ export default defineComponent({
 
 <style lang="scss">
 .empty-wrapper {
-  @apply tw-flex  tw-flex-col;
+  @apply tw-flex tw-flex-col;
   @apply tw-justify-center tw-items-center;
   @apply tw-text-center;
   @apply tw-bg-pv-grey-96;
   @apply tw-py-8 tw-px-4;
+  @apply tw-rounded-lg;
 
   &__big-icon {
     @apply tw-text-pv-grey-80;

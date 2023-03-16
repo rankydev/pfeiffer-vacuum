@@ -53,5 +53,108 @@
     }
   },
   "contact": "联系我们",
-  "salesRepresentative": "销售代表"
+  "salesRepresentative": "销售代表",
+  "recentRequests": {
+    "recentRequests": "最近的请求",
+    "allRequests": "所有请求",
+    "newServiceRequest": "新的服务请求",
+    "allServiceRequests": "所有请求",
+    "lastRequestNotFound": "您还没有提出任何请求！",
+    "goToProducts": "转到产品",
+    "requestNumber": "请求编号",
+    "reference": "参考",
+    "date": "日期",
+    "total": "总计（净额）"
+  },
+  "calculations": {
+    "date": "日期",
+    "delete": "删除",
+    "deleteConfirmation": "您真的要删除此计算吗？",
+    "done": "完毕",
+    "name": "名称",
+    "networkError": "出了点问题。 请稍后再试。",
+    "new": "新的计算",
+    "noCalculations": "您还没有创建任何计算！",
+    "select": "选择",
+    "title": "计算",
+    "to": "到结果",
+    "mode": "计算模式",
+    "modes": {
+      "pumpFinder": "寻找泵解决方案",
+      "fixedPumpSystem": "给定真空系统"
+    },
+    "type": "计算类型",
+    "types": {
+      "chamberEvacuation": "抽真空"
+    },
+    "detailPageLink": "详情",
+    "deleteSuccess": "计算方式被删除。"
+  },
+  "shoppingList": {
+    "new": "新的购物清单",
+    "all": "所有购物清单",
+    "title": "名称",
+    "lastEdited": "最后编辑",
+    "items": "商品",
+    "noShoppingLists": "您还没有创建任何购物清单！",
+    "recentShoppingLists": "最近的购物清单",
+    "details": "详情",
+    "confirmationModal": {
+      "headline": "你真的要删除这个购物清单吗？",
+      "cancel": "不",
+      "confirm": "是的",
+      "deleteSuccess": "购物清单已成功删除"
+    },
+    "selectAList": "选择一个清单",
+    "add": "添加到新列表",
+    "addSuccessful": "您的产品已添加到{listName}列表中。",
+    "addError": "无法添加产品到购物清单。",
+    "back": "返回列表",
+    "name": "名称",
+    "namePlaceholder": "新的购物清单名称",
+    "description": "描述",
+    "descriptionPlaceholder": "此描述仅在“我的帐户”中可读。",
+    "save": "保存并关闭",
+    "info": "您选择的产品将自动添加到这个新列表中。",
+    "close": "关闭",
+    "addNewList": "添加新购物清单"
+  },
+  "details": "细节，详情",
+  "serviceHistory": {
+    "serviceRequests": "服务请求"
+  },
+  "installedBase": {
+    "installedBase": "安装基础"
+  },
+  "comingSoon": "此功能即将推出！",
+  "requestHistory": {
+    "table": {
+      "quantity": "数量",
+      "totalPrice": "总价",
+      "pricePerUnit": "价格 / 浦",
+      "reference": "参考",
+      "requestNumber": "申请号码",
+      "requestReference": "请求参考",
+      "customerReference": "客户参考",
+      "requestDate": "查询日期",
+      "date": "日期",
+      "requestTotal": "总计（净额）"
+    },
+    "lastRequestNotFound": "您还没有提出任何要求!",
+    "goToProducts": "转到产品",
+    "yourHistory": "您的请求历史",
+    "addToCartBtn": "将完整的请求添加到购物车"
+  },
+  "lastEdited": "上次编辑",
+  "new": "新",
+  "newMobile": "新购物清单",
+  "newLists": "新的购物清单",
+  "select": "选择",
+  "shoppingListOverviewPage": {
+    "title": "购物清单",
+    "discard": "丢弃",
+    "deleteList": "删除购物清单",
+    "emptyList": "您还没有认证任何购物清单"
+  },
+  "backToDashboard": "返回仪表板"
 }

@@ -6,22 +6,19 @@
           <h1>{{ headline }}</h1>
         </div>
         <div class="knowledge-stage__date">
-          <div class="knowledge-stage__date-day">
+          <div v-if="showDate" class="knowledge-stage__date-day">
             <Icon class="knowledge-stage__date-icon" icon="date_range" />
-            <p>{{ $d(fixedDate, 'date') }}</p>
+            <p>{{ fixedDate }}</p>
             <div v-if="!isWhitepaper" class="knowledge-stage__date-time">
               <p class="knowledge-stage__date-divider">|</p>
               <p class="knowledge-stage__space">
-                {{ $d(fixedDate, 'time') }} {{ $t('knowledge.time') }}
+                {{ fixedTime }} {{ $t('knowledge.time') }}
               </p>
             </div>
           </div>
           <div v-if="showDuration" class="knowledge-stage__date-duration">
             <Icon class="knowledge-stage__date-icon" icon="timer" />
-            <p>{{ hours }}</p>
-            <p class="knowledge-stage__space">{{ $t('knowledge.hours') }}</p>
-            <p>{{ minutes }}</p>
-            <p>{{ $t('knowledge.minutes') }}</p>
+            <p>{{ duration }}</p>
           </div>
         </div>
         <div class="knowledge-stage__summary">
@@ -31,9 +28,10 @@
               <KnowledgeAssetButton
                 :type="isWhitepaper ? 'WHITEPAPER' : 'WEBINAR'"
                 :webinar-registration-id="webinarRegistrationId"
-                date
+                :date="date"
                 :asset-url="assetUrl"
                 :is-detail-page="isDetailPage"
+                :use-loading-spinner="true"
               />
             </div>
           </div>
@@ -52,7 +50,7 @@
 </template>
 
 <script>
-import { defineComponent, computed, ref } from '@nuxtjs/composition-api'
+import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Icon from '~/components/atoms/Icon/Icon'
 import KnowledgeAssetButton from '~/components/molecules/KnowledgeAssetButton/KnowledgeAssetButton.vue'
@@ -89,11 +87,7 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    minutes: {
-      type: String,
-      default: '',
-    },
-    hours: {
+    duration: {
       type: String,
       default: '',
     },
@@ -107,44 +101,31 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const dateObj = new Date(props.date)
-    /**
-     * Workaround to make sure the date works in Safari:
-     * https://stackoverflow.com/questions/4310953/invalid-date-in-safari
-     */
-    const fixedDate = computed(() => new Date(props.date.replace(/-/g, '/')))
-    const fixedTime = ref(
-      dateObj.toLocaleTimeString([], {
-        hour: '2-digit',
-        minute: '2-digit',
-      })
+    const { i18n } = useContext()
+
+    const isValidDate = (d) => d instanceof Date && !isNaN(d)
+
+    const dateObj = computed(() => new Date(props.date))
+    const fixedDate = computed(() =>
+      isValidDate(dateObj.value) ? i18n.d(dateObj.value, 'date') : ''
+    )
+    const fixedTime = computed(() =>
+      isValidDate(dateObj.value) ? i18n.d(dateObj.value, 'time') : ''
     )
 
-    const showTime = computed(() => {
-      if (props.isWhitepaper) {
-        return false
-      } else if (fixedTime.value === '00:00') {
-        return false
-      } else {
-        return true
-      }
-    })
-
-    const showDuration = computed(() => {
-      if (props.isWhitepaper) {
-        return false
-      } else if (props.minutes === '' && props.hours === '') {
-        return false
-      } else {
-        return true
-      }
-    })
+    const showTime = computed(() => !props.isWhitepaper)
+    const showDuration = computed(
+      () => !!(!props.isWhitepaper || props.duration !== '')
+    )
+    const showDate = computed(() => !!(fixedDate.value !== ''))
 
     return {
       fixedDate,
       fixedTime,
       showTime,
       showDuration,
+      showDate,
+      dateObj,
     }
   },
 })
@@ -265,6 +246,7 @@ export default defineComponent({
     &.responsive-image {
       img {
         @apply tw-w-full;
+        @apply tw-h-full;
         @apply tw-rounded-none;
         @apply tw-object-cover;
 
@@ -274,11 +256,6 @@ export default defineComponent({
 
         @screen lg {
           height: 400px;
-        }
-
-        @screen xl {
-          // growing proportionally to width of screen
-          height: 28vw;
         }
       }
     }

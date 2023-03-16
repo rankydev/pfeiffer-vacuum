@@ -3,10 +3,10 @@
     ref="pvInput"
     v-model="searchTerm"
     icon="search"
-    :placeholder="$t('form.input.search.placeholder')"
+    :placeholder="placeholder || $t('form.input.search.placeholder')"
     @submit="pushSearchTerm"
     @click:icon="pushSearchTerm"
-    @input="loadSuggestions"
+    @input="handleInput"
     @focus="emitFocus"
   />
 </template>
@@ -14,8 +14,6 @@
 <script>
 import {
   defineComponent,
-  useRouter,
-  useRoute,
   useContext,
   onMounted,
   ref,
@@ -28,33 +26,51 @@ export default defineComponent({
   components: {
     PvInput,
   },
+  props: {
+    value: {
+      type: String,
+      default: '',
+    },
+    clearAfterSubmit: {
+      type: Boolean,
+      default: true,
+    },
+    disableSuggestions: {
+      type: Boolean,
+      default: false,
+    },
+    placeholder: {
+      type: String,
+      default: undefined,
+    },
+  },
   emits: ['submit', 'focus'],
   setup(props, { emit }) {
-    const router = useRouter()
-    const route = useRoute()
-    const { app } = useContext()
     const categoryStore = useCategoryStore()
+    const { loadSuggestions, blurSuggestions } = categoryStore
+    const { app } = useContext()
+    const isMobile = ref(app.$breakpoints.isMobile)
 
     const pvInput = ref(null)
-
-    const { loadSuggestions, blurSuggestions } = categoryStore
-
-    const searchTerm = ref(route.value.query.searchTerm || '')
+    const searchTerm = ref(props.value)
 
     const pushSearchTerm = (e) => {
-      emit('submit')
-      router.push({
-        path: app.localePath('shop-search'),
-        query: { searchTerm: e.length ? e : undefined, searchType: 'products' },
-      })
+      emit('submit', e)
+      if (props.clearAfterSubmit) searchTerm.value = ''
     }
 
     const emitFocus = (val) => {
       emit('focus', val)
     }
 
+    const handleInput = () => {
+      if (!props.disableSuggestions) loadSuggestions()
+    }
+
     onMounted(() => {
-      pvInput.value.$refs.input.focus()
+      if (isMobile.value) {
+        pvInput.value.$refs.input.focus()
+      }
     })
 
     return {
@@ -63,7 +79,9 @@ export default defineComponent({
       loadSuggestions,
       blurSuggestions,
       pvInput,
+
       emitFocus,
+      handleInput,
     }
   },
 })

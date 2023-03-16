@@ -125,7 +125,7 @@ export default defineComponent({
     @apply tw-leading-6;
     @apply tw-py-3;
     @apply tw-px-4;
-    @apply tw-text-pv-black;
+    @apply tw-text-pv-grey-16;
   }
 }
 </style>

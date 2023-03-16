@@ -7,7 +7,7 @@
     <span class="filter-tag__text">
       {{ `${filter}: ` }}
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <span class="filter-tag__value" v-html="sanitizer.inline(value)"></span>
+      <span class="filter-tag__value" v-html="sanitizer.inline(value)" />
     </span>
     <Icon
       class="filter-tag__icon"

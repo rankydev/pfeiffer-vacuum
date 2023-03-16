@@ -28,6 +28,12 @@
               :back-button-override-query-params="{ currentPage: 1 }"
               class="search-page__result-headline"
             />
+            <div class="search-page__search-input">
+              <SearchInputPage
+                v-if="showDocumentSearchTab"
+                @searchTermChange="(value) => (searchTerm = value)"
+              />
+            </div>
           </ContentWrapper>
 
           <GenericTabs
@@ -40,9 +46,9 @@
           >
             <template #activeTabContent>
               <div class="search-page__search-result">
-                <ContentWrapper>
+                <ContentWrapper v-if="currentTabSelected === 'products'">
                   <SearchResult
-                    v-if="currentTabSelected === 'products'"
+                    v-if="products && !hasError"
                     persist-category-name-as-query-param
                     v-bind="{
                       products,
@@ -53,9 +59,13 @@
                       sorts,
                     }"
                   />
-                  <div v-else>
-                    <DocumentSearchResult />
-                  </div>
+                  <ErrorHandling
+                    v-else
+                    :headline="$t('product.errorHandling.multiProductHeadline')"
+                  />
+                </ContentWrapper>
+                <ContentWrapper v-else no-padding>
+                  <DocumentSearchResult />
                 </ContentWrapper>
               </div>
             </template>
@@ -64,6 +74,7 @@
           <div v-else class="category-page__search-result">
             <ContentWrapper>
               <SearchResult
+                v-if="products && !hasError"
                 v-bind="{
                   products,
                   pagination,
@@ -72,6 +83,10 @@
                   currentQuery,
                   sorts,
                 }"
+              />
+              <ErrorHandling
+                v-else
+                :headline="$t('product.errorHandling.multiProductHeadline')"
               />
             </ContentWrapper>
           </div>
@@ -103,33 +118,36 @@ import {
   useRouter,
   useRoute,
   useContext,
+  ref,
 } from '@nuxtjs/composition-api'
-
-import Page from '~/components/templates/Page/Page'
-import Button from '~/components/atoms/Button/Button'
-import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation'
-import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
-import SearchResult from '~/components/organisms/SearchResult/SearchResult'
-import DocumentSearchResult from '~/components/organisms/DocumentSearchResult/DocumentSearchResult'
-import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
-
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
-import { useErrorHandler } from '~/composables/useErrorHandler'
 import { useStoryblokData } from '~/composables/useStoryblokData'
 import { useCategoryStore } from '~/stores/category/category'
 import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
 import { useEmpolisStore } from '~/stores/empolis'
+
+import Button from '~/components/atoms/Button/Button'
+import ErrorHandling from '~/components/molecules/ErrorHandling/ErrorHandling'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation'
+import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
+import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
+import SearchInputPage from '~/components/molecules/SearchInputPage/SearchInputPage'
+import SearchResult from '~/components/organisms/SearchResult/SearchResult'
+import DocumentSearchResult from '~/components/organisms/DocumentSearchResult/DocumentSearchResult'
+import Page from '~/components/templates/Page/Page'
 
 export default defineComponent({
   name: 'CategoryShopPage',
   components: {
     Page,
     Button,
+    ErrorHandling,
     ContentWrapper,
     OnPageNavigation,
     ResultHeadline,
     GenericTabs,
+    SearchInputPage,
     SearchResult,
     DocumentSearchResult,
   },
@@ -144,7 +162,6 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const context = useContext()
-    const { redirectOnError } = useErrorHandler()
 
     /**
      * page type handling
@@ -189,9 +206,16 @@ export default defineComponent({
      */
     const categoryStore = useCategoryStore()
     const empolisStore = useEmpolisStore()
+
+    const hasError = ref(false)
+
     const loadSearchResults = async () => {
       if (currentTabSelected.value === 'products') {
-        await redirectOnError(categoryStore.loadByPath)
+        try {
+          await categoryStore.loadByPath()
+        } catch (e) {
+          hasError.value = true
+        }
       } else if (currentTabSelected.value === 'documents') {
         await empolisStore.loadByPath()
       }
@@ -217,8 +241,7 @@ export default defineComponent({
     /**
      * category data
      */
-    const headline = computed(() => categoryStore.categoryName)
-    const searchTerm = computed(() => categoryStore.searchTerm || '')
+    const searchTerm = ref(route.value.query.searchTerm || '')
     const link = computed(() => categoryStore.parentCategoryPath)
     const count = computed(() => categoryStore.result?.pagination?.totalResults)
     const products = computed(() => categoryStore.result?.products)
@@ -228,15 +251,18 @@ export default defineComponent({
     const currentQuery = computed(() => categoryStore.result?.currentQuery)
     const sorts = computed(() => categoryStore.result?.sorts)
     const metaData = computed(() => categoryStore.metaData)
+    const headline = computed(() =>
+      route.value.query?.searchType === 'documents'
+        ? context.i18n.t('category.documents.allDocuments')
+        : categoryStore.categoryName
+    )
 
     return {
       slug,
       fallbackSlug,
       language,
-
       hasLink,
       href,
-
       headline,
       searchTerm,
       link,
@@ -248,9 +274,9 @@ export default defineComponent({
       currentQuery,
       sorts,
       metaData,
-
       currentTabSelected,
       tabNavigationItems,
+      hasError,
       selectTab,
     }
   },
@@ -277,8 +303,25 @@ export default defineComponent({
     }
   }
 
-  &__search-result {
-    @apply tw-bg-pv-grey-96;
+  &__search {
+    &-result {
+      @apply tw-bg-pv-grey-96;
+    }
+
+    &-input {
+      @apply tw-relative;
+      @apply tw-mb-4;
+      @apply tw-mx-auto;
+
+      @screen md {
+        max-width: 534px;
+      }
+
+      @screen lg {
+        @apply tw-mb-8;
+        max-width: 672px;
+      }
+    }
   }
 }
 

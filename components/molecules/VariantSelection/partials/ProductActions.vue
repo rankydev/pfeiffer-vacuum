@@ -5,7 +5,7 @@
         <span class="product-actions__order-number-headline">
           {{ $t('product.articleNumber') }}
         </span>
-        <span>{{ orderNumber }}</span>
+        <span class="product-actions__order-number">{{ orderNumber }}</span>
       </div>
       <div
         :class="[
@@ -53,7 +53,7 @@
         :disabled="isMaster"
         @click="addToCart"
       />
-      <template v-if="isLoggedIn">
+      <template v-if="isLoggedIn && !isOciUser">
         <Button
           class="product-actions__installed-base"
           icon="fact_check"
@@ -61,14 +61,17 @@
           variant="secondary"
           shape="outlined"
           :disabled="isMaster"
+          @click="addToProductList"
         />
+        <!-- TODO: As soon as InstalledBase are implemented please substitute the disabled attribute here with
+         :disabled="addToBaseButtonDisabled" -->
         <Button
           class="product-actions__shopping-list"
           :label="$t('product.addToInstalledBase')"
           icon="assignment"
           variant="secondary"
           shape="outlined"
-          :disabled="addToBaseButtonDisabled"
+          :disabled="true"
         />
       </template>
     </div>
@@ -91,6 +94,7 @@ import {
 import { useUserStore } from '~/stores/user'
 import { useProductStore } from '~/stores/product'
 import { useCartStore } from '~/stores/cart'
+import { useShoppingLists } from '~/stores/shoppinglists'
 import { storeToRefs } from 'pinia'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import InformationModal from '~/components/molecules/InformationModal/InformationModal'
@@ -113,12 +117,14 @@ export default defineComponent({
     const productStore = useProductStore()
     const cartStore = useCartStore()
     const { product, productType, price } = storeToRefs(productStore)
+    const shopppingListStore = useShoppingLists()
     const {
       isApprovedUser,
       isLeadUser,
       isOpenUser,
       isRejectedUser,
       isLoggedIn,
+      isOciUser,
     } = storeToRefs(userStore)
     const { addProductToCart } = cartStore
 
@@ -140,7 +146,9 @@ export default defineComponent({
 
     const productPrice = computed(() =>
       price.value
-        ? price.value?.formattedValue || ''
+        ? price.value?.value === 0
+          ? i18n.t('product.priceOnRequest')
+          : price.value?.formattedValue || ''
         : i18n.t('product.priceOnRequest')
     )
 
@@ -185,10 +193,16 @@ export default defineComponent({
       )
     }
 
+    const addToProductList = () => {
+      shopppingListStore.setProductAmount(userSelectedOrderQuantity.value)
+      shopppingListStore.toggleOverlay()
+    }
+
     return {
       userStore,
       isLoggedIn,
       isApprovedUser,
+      isOciUser,
       orderNumber,
       productPrice,
       isPriceVisible,
@@ -203,6 +217,7 @@ export default defineComponent({
       userSelectedOrderQuantity,
       toggleModal,
       addToCart,
+      addToProductList,
     }
   },
 })
@@ -228,6 +243,7 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-col-span-2;
+    @apply tw-text-pv-grey-16;
   }
 
   &__order-number-headline {
@@ -265,6 +281,7 @@ export default defineComponent({
 
     &-value {
       @apply tw-font-bold;
+      @apply tw-text-pv-grey-16;
     }
   }
 

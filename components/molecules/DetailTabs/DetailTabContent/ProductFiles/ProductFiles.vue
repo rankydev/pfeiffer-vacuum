@@ -1,7 +1,7 @@
 <template>
   <div class="product-files">
     <LoadingSpinner :show="loading">
-      <div v-if="files.length">
+      <div v-if="files.length && !hasError">
         <div class="product-files__filter-wrapper">
           <FilterModal :label="$t('product.file.filter')">
             <div class="product-files__filter">
@@ -60,12 +60,18 @@
 
         <GenericTable :header="tableHeader" :table-data="tableData" />
       </div>
-      <div v-if="!files.length && !loading">
+      <div v-else-if="!files.length && !loading && !hasError">
         <Icon class="product-files__downloads-icon" icon="file_download" />
         <h4 class="tw-text-center">
           {{ $t('product.noDownloads') }}
         </h4>
       </div>
+      <ErrorHandling
+        v-else-if="!loading"
+        :headline="$t('product.errorHandling.noDownloadsAvailable')"
+        :grey-background="false"
+        class="product-files__error-handling"
+      />
     </LoadingSpinner>
   </div>
 </template>
@@ -78,29 +84,34 @@ import {
   computed,
   onBeforeMount,
 } from '@nuxtjs/composition-api'
-import FilterTag from '~/components/atoms/FilterTag/FilterTag'
-import FilterModal from '~/components/molecules/FilterModal/FilterModal'
-import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
-import GenericTable from '~/components/molecules/GenericTable/GenericTable'
-import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import { useProductStore } from '~/stores/product'
 import { useEmpolisStore } from '~/stores/empolis'
 import { sortAsString } from '~/utils/sortHelper'
-import { PATH_EMPOLIS } from '~/server/constants'
+import { useEmpolisHelper } from '~/composables/useEmpolisHelper'
+import FilterTag from '~/components/atoms/FilterTag/FilterTag'
+import Icon from '~/components/atoms/Icon/Icon'
+import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
+import FilterModal from '~/components/molecules/FilterModal/FilterModal'
+import GenericTable from '~/components/molecules/GenericTable/GenericTable'
+import ErrorHandling from '~/components/molecules/ErrorHandling/ErrorHandling'
 
 export default defineComponent({
   name: 'ProductFiles',
   components: {
-    GenericTable,
+    Icon,
     PvSelect,
     FilterTag,
-    FilterModal,
     LoadingSpinner,
+    ErrorHandling,
+    GenericTable,
+    FilterModal,
   },
   setup() {
     const { product } = useProductStore()
     const empolisStore = useEmpolisStore()
     const { i18n } = useContext()
+    const { getDownloadButtonBaseConfig } = useEmpolisHelper()
 
     const categoryFilter = ref([])
     const languageFilter = ref([])
@@ -170,12 +181,18 @@ export default defineComponent({
       return Array.from(result)
     })
 
+    const hasError = ref(false)
+
     const getProductDownloads = async () => {
       if (product.orderNumber) {
         loading.value = true
-        files.value = await empolisStore.getProductDownloads(
-          product.orderNumber
-        )
+        try {
+          files.value = await empolisStore.getProductDownloads(
+            product.orderNumber
+          )
+        } catch (e) {
+          hasError.value = true
+        }
         loading.value = false
       } else {
         files.value = []
@@ -202,10 +219,6 @@ export default defineComponent({
       )
 
       return bytes.toFixed(precision) + ' ' + units[u]
-    }
-
-    const isStepFile = (file) => {
-      return file.informationType?.value?.includes('Step-File')
     }
 
     const tableHeader = computed(() => [
@@ -258,27 +271,24 @@ export default defineComponent({
           text: `~ ${formatFileSize(file.fileSize)}`,
         })
 
+        const actionBaseData = {
+          ...getDownloadButtonBaseConfig(file),
+          icon: 'file_download',
+          variant: 'secondary',
+          shape: 'outlined',
+        }
+
         const actions = [
           {
+            ...actionBaseData,
             desktop: true,
             mobile: false,
-            icon: 'file_download',
-            variant: 'secondary',
-            shape: 'outlined',
-            href: `${PATH_EMPOLIS}/${file.downloadLink}`,
-            target: '_blank',
-            download: isStepFile(file) ? `${file.title}.stp` : null,
           },
           {
+            ...actionBaseData,
             desktop: false,
             mobile: true,
             label: i18n.t('product.download'),
-            icon: 'file_download',
-            variant: 'secondary',
-            shape: 'outlined',
-            href: `${PATH_EMPOLIS}/${file.downloadLink}`,
-            target: '_blank',
-            download: isStepFile(file) ? `${file.title}.stp` : null,
           },
         ]
 
@@ -296,6 +306,7 @@ export default defineComponent({
       languageFilter,
       loading,
       files,
+      hasError,
 
       availableCategories,
       availableLanguages,
@@ -363,6 +374,13 @@ export default defineComponent({
     @apply tw-block;
     @apply tw-text-center;
     @apply tw-text-5xl;
+  }
+
+  &__error-handling {
+    &.error-handling {
+      @apply tw-pt-[52px];
+      @apply tw-pb-[48px];
+    }
   }
 }
 </style>
