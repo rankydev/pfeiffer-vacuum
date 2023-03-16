@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 
 export default (context) => {
   return {
-    httpEndpoint: 'http://localhost:3000',
+    httpEndpoint: 'https://dev2.pvac.diva-e.com',
     browserHttpEndpoint: '/api/vacuumCalc/graphql',
     httpLinkOptions: {
       headers: {
