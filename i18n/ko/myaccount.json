@@ -150,7 +150,8 @@
     "title": "쇼핑 목록",
     "discard": "버리다",
     "deleteList": "쇼핑 목록 삭제",
-    "emptyList": "아직 쇼핑 목록을 제출하지 않았습니다!"
+    "emptyList": "아직 쇼핑 목록을 제출하지 않았습니다!",
+    "emptyShoppingList": "아직 쇼핑 목록에 제품이 없습니다!"
   },
   "backToDashboard": "대시보드로 돌아가기",
   "editList": "쇼핑 목록 편집",

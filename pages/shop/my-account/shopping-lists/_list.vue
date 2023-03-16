@@ -76,6 +76,16 @@
         @addToShoppingList="addToShoppingList"
       />
     </div>
+    <div v-else class="shopping-list-detail-page__empty">
+      <Icon
+        class="shopping-list-detail-page__empty--icon"
+        icon="assignment"
+        size="xlarge"
+      />
+      <p class="shopping-list-detail-page__empty--text">
+        {{ $t('myaccount.shoppingListOverviewPage.emptyShoppingList') }}
+      </p>
+    </div>
     <div class="shopping-list-detail-page__bottom-nav">
       <Button
         v-if="countProductsString"
@@ -436,6 +446,28 @@ export default defineComponent({
         @apply tw-mt-0;
         @apply tw-ml-0;
       }
+    }
+  }
+
+  &__empty {
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-items-center;
+    @apply tw-justify-center;
+    @apply tw-bg-pv-grey-96;
+    @apply tw-p-6;
+    @apply tw-rounded-lg;
+    @apply tw-mt-4;
+
+    &--icon {
+      @apply tw-text-pv-grey-80;
+    }
+
+    &--text {
+      @apply tw-text-center;
+      @apply tw-text-sm;
+      @apply tw-font-bold;
+      @apply tw-mt-4;
     }
   }
 }

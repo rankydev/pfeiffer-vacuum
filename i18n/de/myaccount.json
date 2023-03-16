@@ -157,7 +157,8 @@
     "title": "Einkaufslisten",
     "discard": "Abbrechen",
     "deleteList": "Liste löschen",
-    "emptyList": "Sie haben noch keine Einkaufslisten erstellt!"
+    "emptyList": "Sie haben noch keine Einkaufslisten erstellt!",
+    "emptyShoppingList": "You don't have any products in your shopping list yet!"
   },
   "backToDashboard": "Zurück zum Dashboard",
   "editList": "Liste bearbeiten",

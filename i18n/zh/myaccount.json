@@ -154,7 +154,8 @@
     "title": "购物清单",
     "discard": "丢弃",
     "deleteList": "删除购物清单",
-    "emptyList": "您还没有认证任何购物清单"
+    "emptyList": "您还没有认证任何购物清单",
+    "emptyShoppingList": "您的购物清单中还没有任何产品！"
   },
   "backToDashboard": "返回仪表板",
   "editList": "编辑购物清单",
