@@ -15,6 +15,7 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
   const currentShoppingLists = ref([])
   const overlayState = ref(false)
   const stateMode = ref('basic')
+  const addAllMode = ref(false)
 
   const userStore = useUserStore()
   const { isLoggedIn } = storeToRefs(userStore)
@@ -53,6 +54,8 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     if (shoppingList !== -1) {
       currentShoppingLists.value.push(shoppingList)
     }
+
+    return shoppingList
   }
 
   const addToShoppingList = async (
@@ -136,6 +139,10 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     stateMode.value = 'newList'
   }
 
+  const toggleAddAllMode = () => {
+    addAllMode.value = !addAllMode.value
+  }
+
   const isAddMode = computed(() => {
     return stateMode.value === 'add'
   })
@@ -146,6 +153,10 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
 
   const isBasicMode = computed(() => {
     return stateMode.value === 'basic'
+  })
+
+  const isAddAllMode = computed(() => {
+    return addAllMode.value
   })
 
   const deleteShoppingList = async (listId) => {
@@ -175,6 +186,12 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
 
   const deleteEntry = async (listId, entryId) => {
     await shoppingListsApi.deleteEntry(listId, entryId)
+  }
+
+  const saveCartToShoppingList = async (listId) => {
+    const cartId = currentCart.value?.code
+    await shoppingListsApi.saveCartAsList(listId, cartId)
+    await initialShoppingListsLoad()
   }
 
   watch(isLoggedIn, async () => {
@@ -207,5 +224,8 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     updateQuantity,
     addListToCart,
     deleteEntry,
+    saveCartToShoppingList,
+    isAddAllMode,
+    toggleAddAllMode,
   }
 })

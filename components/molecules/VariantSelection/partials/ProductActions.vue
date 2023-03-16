@@ -191,6 +191,7 @@ export default defineComponent({
         product.value?.code,
         userSelectedOrderQuantity.value
       )
+      cartStore.toggleCartOverlay()
     }
 
     const addToProductList = () => {

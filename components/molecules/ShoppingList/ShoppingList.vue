@@ -24,7 +24,7 @@
       :base-price="price"
       :price-total="totalPrice"
       :is-read-only="!isSortable"
-      @add-to-shopping-list="addToShoppingList"
+      @addToShoppingList="addToShoppingList"
       @delete="deleteFromCart"
       @update="updateCartQuantity"
     />

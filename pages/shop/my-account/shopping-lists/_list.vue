@@ -7,7 +7,7 @@
       <ResultHeadline
         v-if="!isEditMode"
         class="shopping-list-detail-page__header--headline"
-        :headline="nameVar"
+        :headline="nameVar + countProductsString"
         :link="localePath('shop-my-account')"
       />
       <PvInput
@@ -44,7 +44,7 @@
               : $t('myaccount.editList')
           "
           variant="secondary"
-          @click="changeButton"
+          @click="toggleEditMode"
         />
         <Button
           class="shopping-list-detail-page__header--nav__new"
@@ -63,7 +63,7 @@
         />
       </div>
     </div>
-    <div class="shopping-list-detail-page__list">
+    <div v-if="countProductsString" class="shopping-list-detail-page__list">
       <h3 class="shopping-list-detail-page__list--title">
         {{ $t('cart.articleList') }}
       </h3>
@@ -73,10 +73,12 @@
         :is-sortable="true"
         @update="updateProduct"
         @delete="deleteProduct"
+        @addToShoppingList="addToShoppingList"
       />
     </div>
     <div class="shopping-list-detail-page__bottom-nav">
       <Button
+        v-if="countProductsString"
         class="shopping-list-detail-page__bottom-nav--add-to-cart"
         icon="shopping_cart"
         :label="$t('myaccount.addAllToCart')"
@@ -93,6 +95,17 @@
         @click="goToShoppingListOverview"
       />
     </div>
+    <InformationModal
+      :is-open="isInformationModalOpen"
+      :headline="$t('myaccount.shoppingList.confirmationModal.headline')"
+      :cancel-text="$t('myaccount.shoppingList.confirmationModal.cancel')"
+      :confirm-text="$t('myaccount.shoppingList.confirmationModal.confirm')"
+      cancel-icon="close"
+      confirm-icon="check"
+      @confirm="acceptDelete"
+      @cancel="toggleInformationModal"
+      @closeModal="toggleInformationModal"
+    />
   </div>
 </template>
 
@@ -112,6 +125,8 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea.vue'
 import { useShoppingLists } from '~/stores/shoppinglists'
 import ShoppingList from '~/components/molecules/ShoppingList/ShoppingList.vue'
+import { useCartStore } from '@/stores/cart'
+
 export default defineComponent({
   name: 'ShoppingListDetailPage',
   components: {
@@ -126,11 +141,29 @@ export default defineComponent({
     const router = useRouter()
     const route = useRoute()
     const shoppingListsStore = useShoppingLists()
+    const cartStore = useCartStore()
+
     const nameVar = ref('')
     const descriptionVar = ref('')
     const isEditMode = ref(false)
-
     const shoppingList = ref({})
+    const isInformationModalOpen = ref(false)
+
+    const initShoppingList = () => {
+      const id = route?.value?.params?.list
+      shoppingList.value = shoppingListsStore.getShoppingListById(id)
+      nameVar.value = shoppingList.value?.name || ''
+      descriptionVar.value = shoppingList.value?.description || ''
+    }
+
+    const toggleInformationModal = () => {
+      isInformationModalOpen.value = !isInformationModalOpen.value
+    }
+
+    const acceptDelete = () => {
+      deleteShoppingList()
+      toggleInformationModal()
+    }
 
     const toggleEditMode = () => {
       isEditMode.value = !isEditMode.value
@@ -155,19 +188,13 @@ export default defineComponent({
     const addAllToCart = async () => {
       const id = route?.value?.params?.list
       await shoppingListsStore.addListToCart(id)
+      cartStore.toggleCartOverlay()
     }
 
     const deleteShoppingList = () => {
       const id = route?.value?.params?.list
       shoppingListsStore.deleteShoppingList(id)
       goToShoppingListOverview()
-    }
-
-    const initShoppingList = () => {
-      const id = route?.value?.params?.list
-      shoppingList.value = shoppingListsStore.getShoppingListById(id)
-      nameVar.value = shoppingList.value?.name || ''
-      descriptionVar.value = shoppingList.value?.description || ''
     }
 
     const updateShoppingList = async () => {
@@ -184,7 +211,7 @@ export default defineComponent({
         await updateShoppingList()
         toggleEditMode()
       } else {
-        deleteShoppingList()
+        toggleInformationModal()
       }
     }
 
@@ -192,11 +219,21 @@ export default defineComponent({
       const id = route?.value?.params?.list
       const code = cartItem?.code
       await shoppingListsStore.deleteEntry(id, code)
+      shoppingList.value.entries = shoppingList.value?.entries?.filter(
+        (item) => item?.product?.code !== code
+      )
     }
 
-    const changeButton = () => {
-      toggleEditMode()
+    const addToShoppingList = (cartItem) => {
+      shoppingListsStore.setProductAmount(cartItem?.quantity)
+      shoppingListsStore.setProduct(cartItem)
+      shoppingListsStore.toggleOverlay()
     }
+
+    const countProductsString = computed(() => {
+      const productCount = shoppingList.value?.entries?.length || 0
+      return productCount ? ` (${productCount})` : ''
+    })
 
     onMounted(() => {
       initShoppingList()
@@ -212,8 +249,12 @@ export default defineComponent({
       addAllToCart,
       deleteShoppingList,
       actionButton,
-      changeButton,
       deleteProduct,
+      isInformationModalOpen,
+      toggleInformationModal,
+      acceptDelete,
+      addToShoppingList,
+      countProductsString,
     }
   },
 })

@@ -196,6 +196,23 @@ export const useShoppingListsApi = () => {
     return false
   }
 
+  const saveCartAsList = async (listId, cartId) => {
+    const result = await axios.$post(
+      `${config.CARTS_CURRENT_USER_API}/${cartId}/add2list/${listId}`,
+      null
+    )
+
+    if (!result.error) {
+      return result
+    }
+
+    logger.error(
+      'Error when saving cart to shopping lists Returning false.',
+      result.error ? result.error : ''
+    )
+    return null
+  }
+
   return {
     getShoppingLists,
     getShoppingList,
@@ -206,5 +223,6 @@ export const useShoppingListsApi = () => {
     updateQuantity,
     addListToCart,
     deleteEntry,
+    saveCartAsList,
   }
 }

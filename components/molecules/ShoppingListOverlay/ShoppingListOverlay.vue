@@ -118,6 +118,7 @@ export default defineComponent({
       isAddMode,
       isNewListMode,
       isBasicMode,
+      isAddAllMode,
     } = storeToRefs(shoppingListsStore)
 
     const clearForm = () => {
@@ -135,11 +136,19 @@ export default defineComponent({
       if (!nameVar.value) {
         return
       }
-      if (isAddMode.value) {
+      if (isAddMode.value && !isAddAllMode.value) {
         await shoppingListsStore.createNewListAndAddProduct(
           nameVar.value,
           descriptionVar.value
         )
+      }
+      if (isAddAllMode.value && isAddAllMode.value) {
+        const list = await shoppingListsStore.createNewList(
+          nameVar.value,
+          descriptionVar.value
+        )
+        const listId = list?.id
+        await shoppingListsStore.saveCartToShoppingList(listId)
       }
       if (isNewListMode.value) {
         await shoppingListsStore.createNewList(
@@ -150,7 +159,12 @@ export default defineComponent({
       closeSidebar()
     }
     const addToShoppingList = async (listId) => {
-      await shoppingListsStore.addToShoppingList(listId)
+      if (isAddAllMode.value) {
+        await shoppingListsStore.saveCartToShoppingList(listId)
+        shoppingListsStore.toggleAddAllMode()
+      } else {
+        await shoppingListsStore.addToShoppingList(listId)
+      }
       closeSidebar()
     }
     const handleForward = async () => {

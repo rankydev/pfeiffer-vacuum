@@ -28,9 +28,14 @@ export const useCartStore = defineStore('cart', () => {
   // State
   const currentCart = ssrRef({})
   const loading = ref(false)
+  const isCartOverlayOenState = ref(false)
 
   // Getters
   const currentCartGuid = computed(() => currentCart.value?.guid)
+
+  const isCartOverlayOpen = computed(() => {
+    return isCartOverlayOenState.value
+  })
 
   const cartApi = useCartApi(currentCart, currentCartGuid)
   const {
@@ -132,6 +137,10 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
+  const toggleCartOverlay = () => {
+    isCartOverlayOenState.value = !isCartOverlayOenState.value
+  }
+
   onBeforeMount(initialCartLoad)
   onServerPrefetch(initialCartLoad)
 
@@ -149,6 +158,7 @@ export const useCartStore = defineStore('cart', () => {
 
     // Getters
     currentCartGuid,
+    isCartOverlayOpen,
 
     // Actions
     addProductToCart,
@@ -159,5 +169,6 @@ export const useCartStore = defineStore('cart', () => {
     updateProductQuantityFromCart,
     handleCheckoutClick,
     resetCurrentCart,
+    toggleCartOverlay,
   }
 })

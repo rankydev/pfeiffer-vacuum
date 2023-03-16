@@ -51,7 +51,7 @@
       </span>
     </Link>
 
-    <CartOverlay :is-open="isOverlayOpen" @close="closeOverlay" />
+    <CartOverlay />
     <ShoppingListOverlay />
   </div>
 </template>
@@ -62,8 +62,6 @@ import {
   defineComponent,
   useContext,
   useRouter,
-  ref,
-  watch,
 } from '@nuxtjs/composition-api'
 import { useUserStore } from '~/stores/user'
 import { useCartStore } from '~/stores/cart'
@@ -125,17 +123,6 @@ export default defineComponent({
       }
     }
 
-    const isOverlayOpen = ref(false)
-    const closeOverlay = () => {
-      isOverlayOpen.value = false
-    }
-
-    watch(currentCart, (newValue, oldValue) => {
-      if (newValue?.totalUnitCount > oldValue?.totalUnitCount) {
-        isOverlayOpen.value = true
-      }
-    })
-
     return {
       // getters
       isOciUser,
@@ -147,8 +134,6 @@ export default defineComponent({
       isLoggedIn,
       isLoginProcess,
       cartItemCount,
-      isOverlayOpen,
-      closeOverlay,
 
       logout: userStore.logout,
       handleMyAccount,

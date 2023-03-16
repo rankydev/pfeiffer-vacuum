@@ -258,6 +258,7 @@ export default defineComponent({
 
     const addToCart = async () => {
       await addProductToCart(product?.value?.code, quantityModel?.value)
+      cartStore.toggleCartOverlay()
     }
 
     const updateCartQuantity = useDebounceFn(() => {
