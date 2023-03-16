@@ -110,7 +110,7 @@
     },
     "selectAList": "Wählen Sie eine Liste aus",
     "add": "Zu neuer Liste hinzufügen",
-    "addSuccessful": "Produkt wurde erfolgreich zur Einkaufsliste hinzugefügt.",
+    "addSuccessful": " Ihr Produkt wurde der Liste {listName} hinzugefügt",
     "addError": "Produkt konnte nicht zur Einkaufsliste hinzugefügt werden.",
     "back": "Zurück zu den Listen",
     "name": "Name",
@@ -148,5 +148,16 @@
     "yourHistory": "Deine Anfragenhistorie",
     "addToCartBtn": "Füge komplette Anfrage zum Warenkorb hinzu"
   },
-  "lastEdited": "Zuletzt bearbeitet"
+  "lastEdited": "Zuletzt bearbeitet",
+  "new": "Neu",
+  "newMobile": "Neue Einkaufsliste",
+  "newLists": "Neue Einkaufslisten",
+  "select": "Auswählen",
+  "shoppingListOverviewPage": {
+    "title": "Einkaufslisten",
+    "discard": "Abbrechen",
+    "deleteList": "Liste löschen",
+    "emptyList": "Sie haben noch keine Einkaufslisten erstellt!"
+  },
+  "backToDashboard": "Zurück zum Dashboard"
 }

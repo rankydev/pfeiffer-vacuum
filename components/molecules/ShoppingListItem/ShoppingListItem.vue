@@ -156,10 +156,6 @@ export default defineComponent({
   @apply tw-bg-pv-grey-96;
   @apply tw-text-pv-grey-16;
 
-  @screen md {
-    @apply tw-py-7;
-  }
-
   &__name {
     @apply tw-row-start-1 tw-row-end-2;
     @apply tw-col-start-1 tw-col-end-13;
@@ -169,7 +165,7 @@ export default defineComponent({
     @apply tw-flex;
 
     @screen md {
-      @apply tw-col-start-1 tw-col-end-4;
+      @apply tw-col-start-1 tw-col-end-7;
       @apply tw-overflow-x-clip;
       @apply tw-w-full;
       @apply tw-my-auto;
@@ -206,7 +202,7 @@ export default defineComponent({
 
     @screen md {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-4 tw-col-end-6;
+      @apply tw-col-start-7 tw-col-end-9;
       @apply tw-my-auto;
       @apply tw-pl-6;
     }
@@ -232,10 +228,10 @@ export default defineComponent({
 
     @screen md {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-6 tw-col-end-8;
+      @apply tw-col-start-9 tw-col-end-11;
       @apply tw-text-pv-grey-16;
       @apply tw-my-auto;
-      @apply tw-pl-6;
+      @apply tw-pl-8;
       @apply tw-text-sm;
     }
 
@@ -252,7 +248,7 @@ export default defineComponent({
 
     @screen md {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-8 tw-col-end-13;
+      @apply tw-col-start-11 tw-col-end-13;
       @apply tw-my-auto;
       @apply tw-ml-auto;
     }

@@ -107,7 +107,7 @@
     },
     "selectAList": "选择一个清单",
     "add": "添加到新列表",
-    "addSuccessful": "产品已成功添加到购物清单。",
+    "addSuccessful": "您的产品已添加到{listName}列表中。",
     "addError": "无法添加产品到购物清单。",
     "back": "返回列表",
     "name": "名称",
@@ -145,5 +145,16 @@
     "yourHistory": "您的请求历史",
     "addToCartBtn": "将完整的请求添加到购物车"
   },
-  "lastEdited": "上次编辑"
+  "lastEdited": "上次编辑",
+  "new": "新",
+  "newMobile": "新购物清单",
+  "newLists": "新的购物清单",
+  "select": "选择",
+  "shoppingListOverviewPage": {
+    "title": "购物清单",
+    "discard": "丢弃",
+    "deleteList": "删除购物清单",
+    "emptyList": "您还没有认证任何购物清单"
+  },
+  "backToDashboard": "返回仪表板"
 }
