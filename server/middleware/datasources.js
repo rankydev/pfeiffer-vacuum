@@ -3,6 +3,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware'
 import https from 'https'
 import nuxtConfig from '../../nuxt.config'
 import { PATH_DATASOURCES, PATH_STORYBLOK_API_REDIRECT } from '../constants.js'
+import { removeCookie } from './utils/onProxyReq'
 
 const { logger } = useLogger('datasources-proxy')
 
@@ -32,7 +33,8 @@ export default createProxyMiddleware({
     } else {
       proxyReq.path = `${proxyReq.path}&token=${cmsToken}`
     }
-    proxyReq.removeHeader('cookie')
+
+    removeCookie(proxyReq)
 
     logger.trace('new path: ', proxyReq.path)
   },
