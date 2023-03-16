@@ -68,69 +68,9 @@ export const useAxiosInterceptors = () => {
     return response
   }
 
-  /**
-   * Interceptor to handle failed shop responses
-   * @param error
-   * @return resolved promise with error data
-   */
-  async function onRejectedResponseHandler(error) {
-    // enhance and log error
-    logResponseError(error)
-
-    // always resolve error with enhanced response
-    return Promise.reject(error.response)
-  }
-
-  /**
-   * Log errors of error response
-   * @param error response errors
-   */
-  function logResponseError(error) {
-    const config4log = getConfig4log(error.config || {})
-    if (error.response?.data && typeof error.response?.data !== 'string') {
-      const requestId = `[${error.response.data.errors[0]?.requestId}]`
-
-      logger.error(
-        'Error during shop request',
-        requestId,
-        `HTTP Status ${error.response.status}`,
-        config4log
-      )
-      logger.error(
-        error.response.data.errors
-          .filter((e) => e.stackTrace)
-          .map((e) => e.stackTrace)
-          .join('\n\n')
-      )
-
-      return
-    }
-    logger.error('Shop connection error:', error, config4log)
-  }
-
-  /**
-   * Returns reduced config object for erro logging
-   * @param config object of error response
-   */
-  function getConfig4log(config) {
-    const configLog = { ...config } // copy
-
-    // remove irrelevant objects for error logging
-    delete configLog.adapter
-    delete configLog.httpsAgent
-    delete configLog.validateStatus
-    delete configLog.transformRequest
-    delete configLog.transformResponse
-    delete configLog.xsrfCookieName
-    delete configLog.xsrfHeaderName
-
-    return configLog
-  }
-
   return {
     fulfilledRequest: onFulfilledRequestHandler,
     rejectedRequest: onRejectedRequestHandler,
     fulfilledResponse: onFulfilledResponseHandler,
-    rejectedResponse: onRejectedResponseHandler,
   }
 }

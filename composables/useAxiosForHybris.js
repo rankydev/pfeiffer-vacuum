@@ -23,18 +23,15 @@ export const useAxiosForHybris = () => {
     instance.setBaseURL(basePath)
     instance.setHeader('Content-Type', 'application/json')
 
-    const {
-      fulfilledRequest,
-      rejectedRequest,
-      fulfilledResponse,
-      // rejectedResponse,
-    } = useAxiosInterceptors()
+    const { fulfilledRequest, rejectedRequest, fulfilledResponse } =
+      useAxiosInterceptors()
 
     instance.interceptors.request.use(fulfilledRequest, rejectedRequest)
     // do not use rejectedResponse interceptor because we are using refreshAuthLogic now to try to fix token
-    // For some reason "refreshAuthLogic" is not called when we intercept here with "rejectedResponse"
+    // "refreshAuthLogic" would not be called when we intercept here with "rejectedResponse" because it uses the same "interceptors.response.use()"
     instance.interceptors.response.use(fulfilledResponse)
 
+    // intercept failed requests with 401 with our refresh logic to try to fix missing or old accessToken
     const refreshAuthLogic = async () => {
       const userStore = useUserStore()
       await userStore.forceTokenRefreshAndUpdate()
