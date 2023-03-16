@@ -1,7 +1,7 @@
 import { useUserStore } from '~/stores/user'
 import { storeToRefs } from 'pinia'
 
-export default (context) => {
+export default () => {
   return {
     httpEndpoint: 'https://dev2.pvac.diva-e.com',
     browserHttpEndpoint: '/api/vacuumCalc/graphql',
