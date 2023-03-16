@@ -6,6 +6,7 @@
       style="height: 800px"
     >
       <div>Calculations</div>
+      <div v-if="calculationList">{{ calculationList }}</div>
     </div>
   </div>
 </template>
@@ -27,11 +28,13 @@ export default defineComponent({
       prefetch: true,
       variables() {
         return {
+          // TODO in PVWEB-535: get pagination and page size selection values
           start: 0,
           limit: 9,
         }
       },
       error(e) {
+        // TODO in PVWEB-535: show error message
         console.error(e)
       },
     },

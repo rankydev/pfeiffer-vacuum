@@ -3,11 +3,12 @@ import { storeToRefs } from 'pinia'
 
 export default () => {
   return {
+    // TODO: FIX ENDPOINT
     httpEndpoint: 'https://dev2.pvac.diva-e.com',
     browserHttpEndpoint: '/api/vacuumCalc/graphql',
     httpLinkOptions: {
       headers: {
-        // TODO LANG
+        // TODO DYNAMIC CURRENT LANG
         'Accept-Language': 'en',
       },
     },
