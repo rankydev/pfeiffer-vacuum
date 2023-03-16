@@ -19,7 +19,12 @@ export function useStoryblokProvider({ $img }) {
   const configScreensArr = Object.entries(theme.screens)
 
   const buildImage = (props) => {
-    const src = computed(() => props.image.originalFilenameRelative || '')
+    const src = computed(
+      () =>
+        props.image.originalFilenameRelative ||
+        props.image.originalFilename ||
+        ''
+    )
     const alt = computed(() => props.image.alt || '')
     const title = computed(() => props.image.title || '')
 

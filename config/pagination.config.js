@@ -1,2 +1,5 @@
 export const PAGE_SIZE_DEFAULT = 9
 export const PAGE_SIZE_OPTIONS = [9, 30, 90, 120]
+
+export const KNOWLEDGE_PAGE_SIZE_DEFAULT = 12
+export const KNOWLEDGE_PAGE_SIZE_OPTIONS = [12, 36, 96, 120]

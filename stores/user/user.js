@@ -396,7 +396,15 @@ export const useUserStore = defineStore('user', () => {
         loginForOci(username, password, hookUrl, returnTarget, customerId)
       }
 
-      if (!isLoggedIn.value && process.client) {
+      // This is the easiest way to make sure the user only enters OCI in logged in state.
+      // Also, this makes sure that you don't get redirected if you're in Storyblok preview.
+      // There might be better/safer ways and at some point we should globally provide the information if we are in preview.
+      // We need to research if TXP-CMS provides this somehow or implement this: https://www.storyblok.com/faq/how-to-verify-the-preview-query-parameters-of-the-visual-editor
+      if (
+        !isLoggedIn.value &&
+        process.client &&
+        !route.value.query?._storyblok
+      ) {
         window.location.href = window.location.href.replace('/oci/', '/global/')
       }
     } else {

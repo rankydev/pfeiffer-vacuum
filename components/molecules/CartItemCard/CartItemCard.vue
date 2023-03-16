@@ -11,7 +11,8 @@
         <ResponsiveImage
           :image="productImage"
           provider="hybris"
-          aspect-ratio="1:1"
+          :mode-full="true"
+          :contain-image="true"
         />
       </Link>
     </div>
@@ -120,9 +121,9 @@ import { useDebounceFn } from '@vueuse/core'
 import Button from '~/components/atoms/Button/Button'
 import Link from '~/components/atoms/Link/Link'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Tag from '~/components/atoms/Tag/Tag'
 
 export default defineComponent({
@@ -130,11 +131,11 @@ export default defineComponent({
   components: {
     Button,
     Link,
-    ResponsiveImage,
     PvInput,
     Tag,
     PromotionLabel,
     LoginToSeePricesLabel,
+    ResponsiveImage,
   },
   props: {
     product: {
@@ -305,8 +306,9 @@ export default defineComponent({
 
   &-image {
     @apply tw-row-start-1 tw-row-end-2;
-    @apply tw-col-start-1 tw-col-end-3;
+    @apply tw-col-start-1 tw-col-end-4;
     @apply tw-flex;
+    height: 80px;
   }
 
   &-title {

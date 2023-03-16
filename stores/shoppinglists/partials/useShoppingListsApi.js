@@ -1,14 +1,10 @@
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useLogger } from '~/composables/useLogger'
 import config from '~/config/hybris.config'
-import { useToast } from '~/composables/useToast'
-import { useContext } from '@nuxtjs/composition-api'
 
 export const useShoppingListsApi = () => {
   const { axios } = useAxiosForHybris()
   const { logger } = useLogger('shoppingList')
-  const toast = useToast()
-  const { i18n } = useContext()
 
   /**
    * Gets all current shopping lists
@@ -84,12 +80,6 @@ export const useShoppingListsApi = () => {
     )
 
     if (result.status === 201) {
-      toast.success(
-        {
-          description: i18n.t('myaccount.shoppingList.addSuccessful'),
-        },
-        { timeout: 3000 }
-      )
       return result
     }
 
@@ -97,12 +87,23 @@ export const useShoppingListsApi = () => {
       'Error when adding to shopping list. Returning false.',
       result.error ? result.error : ''
     )
-    toast.error(
-      {
-        description: i18n.t('myaccount.shoppingList.addError'),
-      },
-      { timeout: 3000 }
-    )
+    return null
+  }
+
+  /**
+   * Delete the specified shopping list
+   * @param {*} id
+   */
+  const deleteShoppingList = async (id) => {
+    const result = await axios.$delete(`${config.SHOPPING_LISTS}/${id}`)
+
+    if (result.error) {
+      logger.error(
+        'Error when deleting shopping list.',
+        result.error ? result.error : ''
+      )
+    }
+
     return null
   }
 
@@ -111,5 +112,6 @@ export const useShoppingListsApi = () => {
     getShoppingList,
     createNewList,
     addToShoppingList,
+    deleteShoppingList,
   }
 }

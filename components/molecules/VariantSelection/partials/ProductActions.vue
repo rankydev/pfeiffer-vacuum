@@ -146,7 +146,9 @@ export default defineComponent({
 
     const productPrice = computed(() =>
       price.value
-        ? price.value?.formattedValue || ''
+        ? price.value?.value === 0
+          ? i18n.t('product.priceOnRequest')
+          : price.value?.formattedValue || ''
         : i18n.t('product.priceOnRequest')
     )
 

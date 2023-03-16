@@ -115,19 +115,19 @@ import CartTable from '../CartTable/CartTable.vue'
 import { useCartStore } from '~/stores/cart'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
-import Button from '~/components/atoms/Button/Button'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 import GenericSidebar from '~/components/molecules/GenericSidebar/GenericSidebar'
 import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel'
+import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
   name: 'CartOverlay',
   components: {
-    Button,
     PromotionLabel,
     CartTable,
     GenericSidebar,
     LoginToSeePricesLabel,
+    Button,
   },
   props: {
     isOpen: {
