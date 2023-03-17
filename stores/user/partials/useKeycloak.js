@@ -91,13 +91,7 @@ export const useKeycloak = () => {
     //keycloakInitOptions, how to check the SSO and security method for PKCE
     if (isLoggedIn.value) {
       keycloakInitOptions = {
-        onLoad: 'check-sso',
-        silentCheckSsoRedirectUri: `${getCurrentHostUrl()}/silentSsoCheck.html`,
-        pkceMethod: 'S256',
-        enableLogging: true,
-        checkLoginIframe: true,
-        checkLoginIframeInterval: 5,
-        responseMode: 'query',
+        ...keycloakInitOptions,
         idToken: auth.value.id_token,
         refreshToken: auth.value.refresh_token,
         token: auth.value.access_token,
@@ -121,11 +115,10 @@ export const useKeycloak = () => {
         `kcOnReady::authenticated ${authenticated} and keycloakInstance.value.authenticated=${keycloakInstance.value.authenticated}`
       )
 
-    const MIN_TOKEN_VALIDITY_IN_SECONDS = 30
-
     // if within access-token-lifespan no reload happens, this is needed.
     keycloakInstance.value.onTokenExpired = async () => {
       logger.debug('kcOnTokenExpired')
+      const MIN_TOKEN_VALIDITY_IN_SECONDS = 30
       keycloakInstance.value
         .updateToken(MIN_TOKEN_VALIDITY_IN_SECONDS)
         .then((refreshed) =>
@@ -138,28 +131,21 @@ export const useKeycloak = () => {
 
     keycloakInstance.value
       .init(keycloakInitOptions)
+      .then(() => logger.debug('Keycloak initialized'))
       .catch((reason) => logger.warn('init failed. reason: ', reason))
-    logger.debug('Keycloak initialized')
   }
 
   const forceTokenRefreshAndUpdate = async () => {
     try {
       logger.trace('forceTokenRefreshAndUpdate -> triggered by interceptor')
       // first call refresh function. Just to make sure our token was not just expired
-      const refreshed = await keycloakInstance?.value?.updateToken()
+      // -1 will force to update the token always. Does not matter if it was expired or not
+      // this ensures "onAuthRefreshSuccess" runs always after we did this
+      const refreshed = await keycloakInstance?.value?.updateToken(-1)
       logger.trace(
         'forceTokenRefreshAndUpdate -> updateToken call did update token',
         refreshed
       )
-
-      // now insure we have most current token values in store
-      // store might not be up to date if onTokenExpired event was not fired for whatever reason
-      const token = reconstructToken()
-      setCookiesAndSaveAuthData(token)
-      logger.trace(
-        'forceTokenRefreshAndUpdate -> ensured most recent token information was saved in cookies and store'
-      )
-      return token.access_token
     } catch (error) {
       logger.error('forceTokenRefreshAndUpdate -> failed', error)
       throw error
