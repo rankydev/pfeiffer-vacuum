@@ -59,5 +59,14 @@
         "text": "가격을 볼 수 있는 권한이 없습니다."
       }
     }
+  },
+  "errorHandling": {
+    "multiProductHeadline": "제품을 로드할 수 없습니다.",
+    "singleProductHeadline": "이 제품을 로드할 수 없습니다.",
+    "customerSupport": {
+      "text": "나중에 다시 오시거나 연락주세요",
+      "link": "고객 지원."
+    },
+    "noDownloadsAvailable": "다운로드를 로드할 수 없습니다."
   }
 }

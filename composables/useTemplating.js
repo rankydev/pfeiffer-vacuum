@@ -1,5 +1,4 @@
 import { ref, watch } from '@nuxtjs/composition-api'
-
 const useTemplating = (content) => {
   const top = ref(undefined)
   const header = ref(undefined)

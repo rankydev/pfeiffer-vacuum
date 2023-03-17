@@ -101,7 +101,7 @@ export default defineComponent({
 .price {
   @apply tw-w-full;
   @apply tw-border-t-2 tw-border-b-2;
-  @apply tw-border-pv-black;
+  @apply tw-border-pv-grey-16;
   @apply tw-py-6;
 
   &__total,
@@ -113,6 +113,7 @@ export default defineComponent({
   &__total {
     @apply tw-text-2xl;
     @apply tw-justify-between;
+    @apply tw-text-pv-grey-16;
   }
 
   &__discount {

@@ -29,7 +29,9 @@ describe('StoryblokProvider', () => {
           },
         }
 
-        expect(image.src.value).toBe(responsiveImage.image.originalFilename)
+        expect(image.src.value).toBe(
+          responsiveImage.image.originalFilenameRelative
+        )
         expect(image.alt.value).toBe(responsiveImage.image.alt)
         expect(image.title.value).toBe(responsiveImage.image.title)
         expect(image.modifiers.value).toStrictEqual(modifiers)
@@ -37,14 +39,14 @@ describe('StoryblokProvider', () => {
           expect(image.webpSources.value[idx]).toStrictEqual({
             key: key,
             media: `(min-width: ${width}px)`,
-            srcset: `${responsiveImage.image.originalFilename} 1x, ${responsiveImage.image.originalFilename} 2x`,
+            srcset: `${responsiveImage.image.originalFilenameRelative} 1x, ${responsiveImage.image.originalFilenameRelative} 2x`,
           })
         })
         screenSizes.forEach(([key, width], idx) => {
           expect(image.pngSources.value[idx]).toStrictEqual({
             key: key,
             media: `(min-width: ${width}px)`,
-            srcset: `${responsiveImage.image.originalFilename} 1x, ${responsiveImage.image.originalFilename} 2x`,
+            srcset: `${responsiveImage.image.originalFilenameRelative} 1x, ${responsiveImage.image.originalFilenameRelative} 2x`,
           })
         })
       })

@@ -98,6 +98,7 @@ import {
 import { useUserStore } from '~/stores/user'
 import { useAccountDataStore } from '~/stores/myaccount'
 import { useVuelidate } from '@vuelidate/core'
+import { useToast } from '~/composables/useToast'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import MyAccountEditableTextfield from '~/components/organisms/MyAccount/partials/MyAccountEditableTextfield'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
@@ -136,6 +137,7 @@ export default defineComponent({
       isRejectedUser,
     } = storeToRefs(userStore)
     const { updateCurrentUser } = userStore
+    const toast = useToast()
 
     // Get data from accountDataStore
     const accountDataStore = useAccountDataStore()
@@ -200,6 +202,10 @@ export default defineComponent({
 
       if (!hasValidationErrors.value) {
         saveCompanyData()
+      } else {
+        toast.warning({
+          description: i18n.t('form.validationErrorMessages.warning'),
+        })
       }
     }
 
@@ -212,6 +218,10 @@ export default defineComponent({
           ...updatedData.value,
         })
         isEditMode.value = false
+      } else {
+        toast.warning({
+          description: i18n.t('form.validationErrorMessages.warning'),
+        })
       }
     }
 

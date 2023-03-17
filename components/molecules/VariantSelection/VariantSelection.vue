@@ -1,7 +1,9 @@
 <template>
   <LoadingSpinner
     class="variant-selection"
-    :show="loadingMatrix && !variationAttributeEntries.length"
+    :show="
+      (isLoadingProduct || loadingMatrix) && !variationAttributeEntries.length
+    "
     color="red"
   >
     <div v-if="showVariantSelection" class="variant-selection__headline">
@@ -77,7 +79,7 @@ export default defineComponent({
       manualVariantSelectionOptions,
       currentVariantId,
     } = storeToRefs(variationmatrixStore)
-    const { productType } = storeToRefs(productStore)
+    const { productType, isLoadingProduct } = storeToRefs(productStore)
     const { i18n } = useContext()
 
     const showVariantSelection = computed(() =>
@@ -158,6 +160,8 @@ export default defineComponent({
       currentVariantId,
       dropdownItems,
       selectedVariantLabel,
+      isLoadingProduct,
+
       manualVariantSelected,
     }
   },
@@ -168,7 +172,6 @@ export default defineComponent({
   @apply tw-p-6;
   @apply tw-bg-pv-grey-96;
   @apply tw-rounded-lg;
-  min-height: 400px;
 
   &__headline {
     @apply tw-flex;

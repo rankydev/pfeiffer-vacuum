@@ -77,6 +77,11 @@ export default defineComponent({
     @screen md {
       @apply tw-h-16 tw-w-16;
     }
+
+    &.icon--small {
+      @apply tw-w-6;
+      @apply tw-h-6;
+    }
   }
 
   &__material {

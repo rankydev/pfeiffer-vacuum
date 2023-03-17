@@ -9,7 +9,7 @@
         <div class="knowledge-modal__content">
           <div v-if="!isMobile" class="knowledge-modal__registration-form">
             <CreateAccount
-              :headline="$t('registration.registrationModal.basisRegistration')"
+              headline="registration.registrationModal.basisRegistration"
               :description="
                 $t(
                   'registration.registrationModal.basisRegistrationDescription'
@@ -50,6 +50,7 @@
 </template>
 <script>
 import { computed, ref, useContext } from '@nuxtjs/composition-api'
+import Button from '~/components/atoms/Button/Button'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
 import CreateAccount from '~/components/molecules/CreateAccount/CreateAccount'
 import ContentCTABox from '~/components/molecules/ContentCTABox/ContentCTABox'
@@ -57,10 +58,17 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 import { getKnowledgeData } from './KnowledgeModal.data'
 import { useUserStore } from '~/stores/user'
 import { useVuelidate } from '@vuelidate/core'
+import { useToast } from '~/composables/useToast'
 
 export default {
   name: 'KnowledgeModal',
-  components: { GenericModal, CreateAccount, ContentCTABox, ContentWrapper },
+  components: {
+    Button,
+    GenericModal,
+    CreateAccount,
+    ContentCTABox,
+    ContentWrapper,
+  },
   props: {
     isOpen: {
       type: Boolean,
@@ -74,6 +82,7 @@ export default {
     const v = useVuelidate()
     const { ctaBoxContents } = getKnowledgeData()
     const requestData = ref({ personalData: {}, companyData: {} })
+    const toast = useToast()
 
     const selectedCountry = computed(() => {
       const country = requestData.value.personalData.address?.country
@@ -96,6 +105,10 @@ export default {
 
       if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
         await userStore.register(requestData)
+      } else {
+        toast.warning({
+          description: i18n.t('form.validationErrorMessages.warning'),
+        })
       }
     }
 

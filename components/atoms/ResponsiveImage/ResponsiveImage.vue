@@ -2,7 +2,10 @@
   <picture
     v-if="src && !imageLoadingError"
     class="responsive-image"
-    :class="{ 'responsive-image__rounded': rounded }"
+    :class="{
+      'responsive-image__rounded': rounded,
+      'responsive-image__full': modeFull,
+    }"
   >
     <source
       v-for="webpSource in webpSources"
@@ -26,7 +29,10 @@
       :title="title"
       :provider="provider"
       :loading="lazy ? 'lazy' : undefined"
-      :class="`responsive-image__${aspectRatioString}`"
+      :class="[
+        `responsive-image__${aspectRatioString}`,
+        { 'responsive-image__contain': containImage },
+      ]"
       @error="handleImageError"
     />
     <div v-if="withGradient" class="responsive-image__gradient-overlay"></div>
@@ -105,6 +111,14 @@ export default defineComponent({
       default: '1:1',
       validator: (val) =>
         ['1:1', '16:9', '2:3', '3:2', '3:1', '2:1', '21:28'].includes(val),
+    },
+    modeFull: {
+      type: Boolean,
+      default: false,
+    },
+    containImage: {
+      type: Boolean,
+      default: false,
     },
     rounded: {
       type: Boolean,
@@ -187,6 +201,10 @@ export default defineComponent({
     @apply tw-w-full;
   }
 
+  &__contain {
+    @apply tw-object-contain;
+  }
+
   &__1-1 {
     aspect-ratio: 1/1;
     @include calculate-aspect-ratio-properties(1, 1);
@@ -215,6 +233,11 @@ export default defineComponent({
   &__2-1 {
     aspect-ratio: 2/1;
     @include calculate-aspect-ratio-properties(2, 1);
+  }
+
+  &__full {
+    @apply tw-h-full;
+    @apply tw-w-full;
   }
 
   &__gradient-overlay {

@@ -31,10 +31,11 @@
   "saveCartToList": "Save cart to list",
   "getProductHelp": "Get product help",
   "list": {
-    "addArticle": "Add to shopping list"
+    "addArticle": "Add to shopping list",
+    "addToAnotherList": "Add to another shopping list"
   },
   "productPrice": "Price",
-  "totalPrice": "Total Price",
+  "totalPrice": "Total",
   "quantity": "Quantity",
   "priceOnRequest": "Price on request",
   "details": "Details",
@@ -42,7 +43,7 @@
   "addToCartError": "An error occured while adding item to shopping cart",
   "pricePerUnit": "Price / PU",
   "editCart": "Edit cart",
-  "checkout": "Go to Checkout",
+  "checkout": "Request Quote",
   "shoppingCart": "Shopping Cart",
   "deleteFromCartSuccess": "Item successfully removed from cart",
   "deleteFromCartError": "An error occured while deleting product from cart",

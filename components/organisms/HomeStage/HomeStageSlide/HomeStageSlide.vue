@@ -15,8 +15,8 @@
       v-bind="stageContent[0]"
     />
     <NuxtImg
-      v-if="interlay.originalFilename"
-      :src="interlay.originalFilename"
+      v-if="interlay.originalFilenameRelative"
+      :src="interlay.originalFilenameRelative"
       :alt="interlay.alt || ''"
       :title="interlay.title || ''"
       provider="storyblok"

@@ -14,7 +14,7 @@ export default {
     default: false,
   },
   /**
-   * Can be an array of objects or array of strings. When using objects, will look for a label, value, icon and disabled keys. T
+   * Can be an array of objects or array of strings. When using objects, will look for a label, value, icon and disabled keys.
    */
   options: {
     type: Array,

@@ -1,8 +1,8 @@
 <template>
   <div class="shop-navigation">
     <client-only>
-      <Popup>
-        <template v-if="!isOciUser" #activator="{ togglePopup }">
+      <Popup v-if="!isOciUser">
+        <template #activator="{ togglePopup }">
           <LoadingSpinner :show="isLoginProcess">
             <Button
               shape="plain"
@@ -43,11 +43,16 @@
       class="shop-navigation__shopping-cart tw-flex"
     >
       <Icon class="shop-navigation__icon" icon="shopping_cart" />
-      <!-- TODO: Add correct cart item count indicator -->
-      <span>{{ cartItemCount }}</span>
+      <span
+        v-if="cartItemCount"
+        class="shop-navigation__shopping-cart-count-indicator"
+      >
+        {{ cartItemCount }}
+      </span>
     </Link>
 
     <CartOverlay :is-open="isOverlayOpen" @close="closeOverlay" />
+    <ShoppingListOverlay />
   </div>
 </template>
 
@@ -64,19 +69,25 @@ import { useUserStore } from '~/stores/user'
 import { useCartStore } from '~/stores/cart'
 
 import Icon from '~/components/atoms/Icon/Icon.vue'
+import Link from '~/components/atoms/Link/Link.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import MyAccountNavigation from '~/components/organisms/MyAccount/partials/MyAccountNavigation/MyAccountNavigation.vue'
+import CartOverlay from '~/components/molecules/CartOverlay/CartOverlay.vue'
 import Popup from '~/components/atoms/Popup/Popup.vue'
 import { storeToRefs } from 'pinia'
+import ShoppingListOverlay from '~/components/molecules/ShoppingListOverlay/ShoppingListOverlay.vue'
 
 export default defineComponent({
   components: {
     Icon,
+    Link,
     Button,
     LoadingSpinner,
     MyAccountNavigation,
     Popup,
+    CartOverlay,
+    ShoppingListOverlay,
   },
   setup() {
     const router = useRouter()
@@ -192,6 +203,25 @@ export default defineComponent({
     @screen lg {
       @apply tw-ml-6;
     }
+  }
+
+  &__shopping-cart-count-indicator {
+    @apply tw-bg-pv-yellow;
+    @apply tw-text-pv-grey-16;
+    @apply tw-inline-block;
+    @apply tw-relative;
+    @apply tw-w-6;
+    @apply tw-h-6;
+    @apply tw-border-2;
+    @apply tw-rounded-xl;
+    @apply tw-p-0;
+    @apply tw-text-xs;
+    @apply tw-leading-5;
+    @apply tw-font-bold;
+    @apply tw-text-center;
+    top: -16px;
+    left: -12px;
+    border-color: transparent;
   }
 
   &__account,

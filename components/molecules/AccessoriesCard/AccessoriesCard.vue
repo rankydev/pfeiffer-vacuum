@@ -57,14 +57,14 @@
             >
               <template #link>
                 <!-- TODO: add correct route after my-account migration -->
-                <NuxtLink
+                <nuxt-link
                   :to="localePath('shop-my-account-account-data')"
                   class="login-modal-link"
                 >
                   {{
                     $t(`product.userStatus.${userStatusType}.priceInfo.link`)
                   }}
-                </NuxtLink>
+                </nuxt-link>
               </template>
             </i18n>
           </template>
@@ -105,22 +105,25 @@ import {
 import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
-import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
-import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel.vue'
-import Icon from '~/components/atoms/Icon/Icon.vue'
-import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
-import Button from '~/components/atoms/Button/Button.vue'
 import { useImageHelper } from '~/composables/useImageHelper/useImageHelper'
 import { storeToRefs } from 'pinia'
+
+import LoginToSeePricesLabel from '~/components/atoms/LoginToSeePricesLabel/LoginToSeePricesLabel.vue'
+import Icon from '~/components/atoms/Icon/Icon.vue'
+import Button from '~/components/atoms/Button/Button.vue'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
+import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
+import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
 
 export default defineComponent({
   name: 'AccessoriesCard',
   components: {
-    GenericCard,
     Icon,
+    Button,
     PvInput,
     LoginToSeePricesLabel,
-    Button,
+    ResponsiveImage,
+    GenericCard,
   },
   props: {
     product: {
@@ -149,13 +152,12 @@ export default defineComponent({
       isLeadUser,
       isOpenUser,
       isRejectedUser,
+      isOciUser,
     } = storeToRefs(userStore)
     const { addProductToCart } = cartStore
 
     const hasAddToListButton = computed(() => {
-      // TODO: Once OCI is implemented extend this computed again
-      // return isLoggedIn.value && !ociStore.checkForOciUser
-      return isLoggedIn.value
+      return isLoggedIn.value && !isOciUser.value
     })
     const isPriceVisible = computed(() => {
       return product.value?.price?.value && isApprovedUser.value
@@ -226,7 +228,7 @@ export default defineComponent({
 
 .accessories-card {
   &__product-name {
-    @apply tw-text-pv-black;
+    @apply tw-text-pv-grey-16;
     @apply tw-text-base;
     @apply tw-font-bold;
     @apply tw-w-full;
@@ -267,14 +269,14 @@ export default defineComponent({
 
     &-value {
       @apply tw-block;
-      @apply tw-text-pv-black tw-font-bold;
+      @apply tw-text-pv-grey-16 tw-font-bold;
       @apply tw-mt-1 tw-mb-3;
       @apply tw-text-lg;
     }
   }
 
   &__login-link {
-    @apply tw-text-pv-black tw-font-bold;
+    @apply tw-text-pv-grey-16 tw-font-bold;
     @apply tw-text-base;
     @apply tw-text-right;
     @apply tw-mb-2;

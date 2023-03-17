@@ -29,10 +29,11 @@
 
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { useInputValidator } from '~/composables/useValidator'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
-import { useInputValidator } from '~/composables/useValidator'
 
 export default defineComponent({
   name: 'PvTextArea',
@@ -98,10 +99,11 @@ export default defineComponent({
     'input',
   ],
   setup(props, { emit }) {
+    const sanitizer = useSanitizer()
     const internalValue = computed({
       get: () => props.value,
       set: (newVal) => {
-        emit('input', newVal)
+        emit('input', sanitizer.clear(newVal))
       },
     })
 
@@ -125,17 +127,17 @@ export default defineComponent({
     @apply tw-border-2;
     @apply tw-rounded-md;
     @apply tw-border-pv-grey-80;
-    @apply tw-text-pv-black;
+    @apply tw-text-pv-grey-16;
     @apply tw-w-full;
 
     &:focus {
-      @apply tw-border-pv-black;
-      @apply tw-text-pv-black;
+      @apply tw-border-pv-grey-16;
+      @apply tw-text-pv-grey-16;
       outline: 0;
     }
 
     &:focus + .pv-textarea__icon-error {
-      @apply tw-text-pv-black;
+      @apply tw-text-pv-grey-16;
     }
 
     &:disabled {

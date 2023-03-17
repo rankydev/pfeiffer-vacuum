@@ -9,7 +9,7 @@ jest.mock('@nuxtjs/composition-api', () => {
     useRoute: () => ref({ fullPath: '/full/path' }),
     useContext: () => ({
       $config: {
-        baseURL: 'local',
+        baseURL: 'http://localhost:3000',
       },
       $imageService: {
         getResponsiveImageUrl: (val) => val,
@@ -47,7 +47,8 @@ describe('useMeta ', () => {
         twitterTitle: 'twitterTitle',
         twitterDescription: 'twitterDescription',
         twitterImage: {
-          filename: 'twitterImage',
+          originalFilename:
+            '/global/api/cms/assets/f/144293/620x620/f06c366c4c/lithography.jpg',
         },
       }
       const metaData = useMeta(localContent, '', []).getMetaData()
@@ -65,7 +66,8 @@ describe('useMeta ', () => {
       expect(metaData.meta).toContainEqual({
         hid: 'twitter:image',
         name: 'twitter:image',
-        content: 'https:twitterImage',
+        content:
+          'http://localhost:3000/global/api/cms/assets/f/144293/620x620/f06c366c4c/lithography.jpg',
       })
     })
 
@@ -75,7 +77,8 @@ describe('useMeta ', () => {
         ogTitle: 'ogTitle',
         ogDescription: 'ogDescription',
         ogImage: {
-          filename: 'ogImage',
+          originalFilename:
+            '/global/api/cms/assets/f/144293/620x620/f06c366c4c/lithography.jpg',
         },
       }
       const metaData = useMeta(localContent, '', []).getMetaData()
@@ -93,7 +96,8 @@ describe('useMeta ', () => {
       expect(metaData.meta).toContainEqual({
         hid: 'og:image',
         name: 'og:image',
-        content: 'https:ogImage',
+        content:
+          'http://localhost:3000/global/api/cms/assets/f/144293/620x620/f06c366c4c/lithography.jpg',
       })
     })
 
@@ -128,12 +132,12 @@ describe('useMeta ', () => {
       expect(metaData.meta).toContainEqual({
         hid: 'twitter:image',
         name: 'twitter:image',
-        content: 'local/twitter_image.png',
+        content: 'http://localhost:3000/twitter_image.png',
       })
       expect(metaData.meta).toContainEqual({
         hid: 'og:image',
         name: 'og:image',
-        content: 'local/og_image.png',
+        content: 'http://localhost:3000/og_image.png',
       })
     })
 
@@ -172,7 +176,7 @@ describe('useMeta ', () => {
 
       expect(metaData.link).toContainEqual({
         rel: 'canonical',
-        href: 'local/full/path',
+        href: 'http://localhost:3000/full/path',
       })
     })
 
@@ -186,7 +190,7 @@ describe('useMeta ', () => {
 
       expect(metaData.link).toContainEqual({
         rel: 'canonical',
-        href: 'local/internal/path',
+        href: 'http://localhost:3000/internal/path',
       })
     })
 
@@ -211,17 +215,17 @@ describe('useMeta ', () => {
       expect(metaData.link).toContainEqual({
         rel: 'alternate',
         hreflang: 'de',
-        href: 'local/de/slug',
+        href: 'http://localhost:3000/de/slug',
       })
       expect(metaData.link).toContainEqual({
         rel: 'alternate',
         hreflang: 'it',
-        href: 'local/it/slug',
+        href: 'http://localhost:3000/it/slug',
       })
       expect(metaData.link).toContainEqual({
         rel: 'alternate',
         hreflang: 'x-default',
-        href: 'local/default/full/slug',
+        href: 'http://localhost:3000/default/full/slug',
       })
     })
   })

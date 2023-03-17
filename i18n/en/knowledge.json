@@ -6,6 +6,8 @@
   "whitepapers": "Whitepapers",
   "webinars": "Webinars",
   "search": "Search in Knowledge ...",
+  "searchWebinars": "Search in Webinars ...",
+  "searchWhitepapers": "Search in Whitepapers ...",
   "webinar": {
     "heading": "Webinar",
     "about": "  What is the webinar about?",
@@ -17,7 +19,9 @@
     },
     "waitForVod": "A recording of this Webinar will be available to watch within five days after the original date.",
     "registration": {
-      "success": "You have successfully registered for this webinar. You'll receive all further details via mail"
+      "success": "You have successfully registered for this webinar. You'll receive all further details via mail",
+      "alreadyExists": "You have been already registered for this webinar.",
+      "error": "Something went wrong. Please try again later."
     }
   },
   "whitepaper": {
@@ -28,5 +32,9 @@
     "button": {
       "download": "Download"
     }
-  }
+  },
+  "authors": "Authors",
+  "speaker": "Speakers",
+  "details": "Details",
+  "filter": "Filter"
 }

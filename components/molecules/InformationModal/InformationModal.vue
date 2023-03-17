@@ -6,18 +6,36 @@
   >
     <div class="information-modal__content">
       <h2 class="information-modal__headline">{{ headline }}</h2>
-      <div>
+      <div v-if="text">
         <Richtext class="information-modal__text" :richtext="text" />
       </div>
       <div>
-        <NuxtLink :to="localePath('/contact/')">
-          <Button
-            class="information-modal__btn"
-            variant="secondary"
-            :label="$t('product.help')"
-            shape="outlined"
-          />
-        </NuxtLink>
+        <Button
+          :class="
+            confirmText
+              ? 'information-modal__confirm-btn'
+              : 'information-modal__btn'
+          "
+          variant="secondary"
+          :label="confirmText ? confirmText : $t('product.help')"
+          :shape="confirmText ? 'filled' : 'outlined'"
+          :icon="confirmIcon"
+          :href="confirmText ? null : localePath('/contact/')"
+          @click="$emit('confirm')"
+        />
+        <Button
+          v-if="cancelText"
+          :class="
+            cancelText
+              ? 'information-modal__confirm-btn'
+              : 'information-modal__btn'
+          "
+          variant="secondary"
+          :label="cancelText"
+          :icon="cancelIcon"
+          shape="outlined"
+          @click="$emit('cancel')"
+        />
       </div>
     </div>
   </GenericModal>
@@ -48,8 +66,24 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    confirmText: {
+      type: String,
+      default: null,
+    },
+    confirmIcon: {
+      type: String,
+      default: null,
+    },
+    cancelText: {
+      type: String,
+      default: null,
+    },
+    cancelIcon: {
+      type: String,
+      default: null,
+    },
   },
-  emits: ['closeModal'],
+  emits: ['closeModal', 'confirm', 'cancel'],
 })
 </script>
 
@@ -57,19 +91,31 @@ export default defineComponent({
 .information-modal {
   .modal__box {
     @apply tw-max-w-3xl;
+    @apply tw-w-full;
   }
 
   &__content {
     @apply tw-flex;
     @apply tw-flex-col;
+    @apply tw-w-full;
   }
 
   &__headline {
     @apply tw-mb-4;
+    @apply tw-w-4/5;
+
+    @screen md {
+      @apply tw-w-full;
+    }
   }
 
   &__btn {
     @apply tw-mt-4;
+  }
+
+  &__confirm-btn {
+    @apply tw-mb-4;
+    @apply tw-w-[calc(100%-2rem)];
   }
 }
 </style>

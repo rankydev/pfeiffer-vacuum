@@ -31,7 +31,8 @@
   "saveCartToList": "将购物车保存到列表",
   "getProductHelp": "获取产品帮助",
   "list": {
-    "addArticle": "添加到购物清单"
+    "addArticle": "添加到购物清单",
+    "addToAnotherList": "添加到其他购物清单"
   },
   "productPrice": "价格",
   "totalPrice": "总",
@@ -41,7 +42,7 @@
   "addToCartSuccess": "商品已成功添加到购物车",
   "addToCartError": "将产品添加到购物车时发生错误",
   "editCart": "编辑购物车",
-  "checkout": "前往结帐",
+  "checkout": "要求报价",
   "shoppingCart": "购物车",
   "deleteFromCartSuccess": "商品已成功从购物车中移除",
   "deleteFromCartError": "从购物车中删除产品时发生错误",

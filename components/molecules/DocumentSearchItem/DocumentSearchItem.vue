@@ -7,14 +7,14 @@
     >
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <h5 v-html="product.title" />
+        <h5 v-html="sanitizer.inline(product.title)" />
         <div v-if="product.subtitle" class="document-item__data">
           <div v-for="(item, index) in product.subtitle" :key="getKey(index)">
             {{ item }}
           </div>
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <p v-if="product.body" v-html="product.body" />
+        <p v-if="product.body" v-html="sanitizer.inline(product.body)" />
         <Link
           v-if="product.downloadLink"
           v-bind="downloadButtonBaseData"
@@ -28,7 +28,7 @@
     <div class="document-item__container">
       <div class="document-item">
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <h5 v-html="product.title" />
+        <h5 v-html="sanitizer.inline(product.title)" />
         <div v-if="product.subtitle[0]" class="document-item__product">
           {{ product.subtitle[0] }}
         </div>
@@ -44,7 +44,7 @@
           </div>
         </div>
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <p v-if="product.body" v-html="product.body" />
+        <p v-if="product.body" v-html="sanitizer.inline(product.body)" />
         <div class="document-item__links">
           <Link
             v-if="product.downloadLink"
@@ -76,11 +76,12 @@
     </div>
   </article>
 </template>
+
 <script>
 import { defineComponent, toRefs, computed } from '@nuxtjs/composition-api'
-import getKey from '~/composables/useUniqueKey'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import { useEmpolisHelper } from '~/composables/useEmpolisHelper'
-
+import getKey from '~/composables/useUniqueKey'
 import Link from '~/components/atoms/Link/Link'
 import Icon from '~/components/atoms/Icon/Icon'
 
@@ -99,6 +100,7 @@ export default defineComponent({
   emits: ['click'],
   setup(props) {
     const { product } = toRefs(props)
+    const sanitizer = useSanitizer()
     const { getDownloadButtonBaseConfig, getFileInEmpolisUrl } =
       useEmpolisHelper()
 
@@ -113,6 +115,7 @@ export default defineComponent({
     })
 
     return {
+      sanitizer,
       getKey,
       subtitleRemainingelements,
       downloadButtonBaseData,
@@ -143,6 +146,7 @@ export default defineComponent({
   hit {
     @apply tw-bg-pv-red-opacity;
   }
+
   /* stylelint-enable */
   &__link {
     @apply tw-hidden;

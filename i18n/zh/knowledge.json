@@ -6,6 +6,8 @@
   "whitepapers": "白皮书",
   "webinars": "各网络研讨会",
   "search": "搜索知识...",
+  "searchWebinars": "在网络研讨会中搜索 ...",
+  "searchWhitepapers": "在白皮书中搜索 ...",
   "webinar": {
     "heading": "网络研讨会",
     "about": "  网络研讨会是关于什么的？",
@@ -17,7 +19,9 @@
     },
     "waitForVod": "本次网络研讨会的录像将在原定日期后五天内可供观看。",
     "registration": {
-      "success": "您已成功注册此网络研讨会。您将通过邮件收到所有更多详细信息"
+      "success": "您已成功注册此网络研讨会。您将通过邮件收到所有更多详细信息",
+      "alreadyExists": "이 웨비나에 이미 등록되었습니다.",
+      "error": "문제가 발생했습니다. 나중에 다시 시도 해주십시오."
     }
   },
   "whitepaper": {
@@ -28,5 +32,9 @@
     "button": {
       "download": "下载"
     }
-  }
+  },
+  "authors": "作者",
+  "speaker": "扬声器",
+  "details": "细节",
+  "filter": "筛选"
 }

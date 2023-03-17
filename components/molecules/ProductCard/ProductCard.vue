@@ -26,7 +26,7 @@
     <template #additionalInfo>
       <template v-if="product.orderNumber">
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <span v-html="sanitizer.inline(product.orderNumber)"></span>
+        <span v-html="sanitizer.inline(product.orderNumber)" />
       </template>
 
       <template v-else-if="product.numberOfVariants">
@@ -42,8 +42,8 @@
 <script>
 import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
-import Icon from '~/components/atoms/Icon/Icon.vue'
-import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
+import Icon from '~/components/atoms/Icon/Icon'
+import GenericCard from '~/components/molecules/GenericCard/GenericCard'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({

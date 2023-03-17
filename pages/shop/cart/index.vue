@@ -11,6 +11,19 @@
           <ContentWrapper>
             <template v-if="cartEntries">
               <div class="cart-page">
+                <div class="cart-page__request-info">
+                  <GlobalMessage
+                    v-if="checkoutButtonDisabled"
+                    :description="
+                      $t(
+                        `myaccount.userStatus.${userStatusTypeForInfoText}.requestInfo`
+                      )
+                    "
+                    variant="warning"
+                    :prevent-icon-change="true"
+                  />
+                </div>
+
                 <div class="cart-page__header">
                   <ResultHeadline
                     :headline="$t('cart.headline')"
@@ -20,6 +33,7 @@
                   <div class="cart-page__buttons">
                     <!-- TODO: add correct route after shopping list implementation -->
                     <Button
+                      v-if="!isOciUser"
                       class="cart-page__button--save"
                       variant="secondary"
                       :label="$t('cart.saveCartToList')"
@@ -28,27 +42,35 @@
 
                     <Button
                       v-show="!isMobile"
-                      anchor="#help-block"
                       class="cart-page__button"
                       variant="secondary"
                       shape="outlined"
                       :inverted="true"
                       :label="$t('cart.getProductHelp')"
                       icon="help"
+                      :href="localePath('/contact')"
                     />
                   </div>
                 </div>
 
-                <CartTable :cart="cartEntries" />
+                <CartTable />
 
-                <div class="cart-page__info">
-                  <div v-show="!ociBuyer" class="cart-page__information">
+                <div
+                  class="cart-page__info"
+                  :class="{ 'cart-page__info--oci': isOciUser }"
+                >
+                  <div v-show="!isOciUser" class="cart-page__information">
                     <PromotionLabel
                       v-for="(promotion, index) in cartPromotions"
                       :key="index"
                       :subline="promotion.description"
                     />
-                    <PriceInformation information-type="price" />
+                    <client-only>
+                      <PriceInformation
+                        v-if="!isMobile"
+                        information-type="price"
+                      />
+                    </client-only>
                   </div>
 
                   <div class="cart-page__actions">
@@ -57,13 +79,15 @@
                     </div>
 
                     <div class="cart-page__submit">
-                      <!-- TODO: add correct route after implementation -->
                       <Button
-                        :href="localePath('/')"
-                        :label="$t('cart.requestQuote')"
+                        :label="
+                          $t(isOciUser ? 'cart.checkout' : 'cart.requestQuote')
+                        "
                         class="cart-page__button--submit"
                         variant="primary"
                         icon="mail_outline"
+                        :disabled="checkoutButtonDisabled"
+                        @click="handleCheckoutClick"
                       />
                     </div>
                   </div>
@@ -117,9 +141,11 @@ import {
 } from '@nuxtjs/composition-api'
 import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
+import { usePageStore, CMS_PAGE } from '~/stores/page'
+import { storeToRefs } from 'pinia'
+import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
 import Button from '~/components/atoms/Button/Button.vue'
 import PriceInformation from '~/components/molecules/PriceInformation/PriceInformation.vue'
@@ -127,8 +153,7 @@ import TotalNetInformation from '~/components/molecules/TotalNetInformation/Tota
 import CartTable from '~/components/molecules/CartTable/CartTable'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
-
-import { storeToRefs } from 'pinia'
+import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 
 export default defineComponent({
   name: 'Cart',
@@ -142,23 +167,26 @@ export default defineComponent({
     CartTable,
     Icon,
     PromotionLabel,
+    GlobalMessage,
   },
   setup() {
     const route = useRoute()
     const context = useContext()
     const cartStore = useCartStore()
     const userStore = useUserStore()
-
+    const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText, isOciUser } =
+      storeToRefs(userStore)
     const { app } = useContext()
     const { currentCart } = storeToRefs(cartStore)
 
     const isMobile = app.$breakpoints.isMobile
     const cartEntries = computed(() => currentCart.value.entries)
-    const ociBuyer = computed(() => userStore.currentUser?.ociBuyer)
     const cartPromotions = computed(() => {
       return currentCart.value?.appliedOrderPromotions || []
     })
-
+    const checkoutButtonDisabled = computed(() => {
+      return isLoggedIn.value && !isApprovedUser.value
+    })
     /**
      * build the cms slug
      */
@@ -167,13 +195,19 @@ export default defineComponent({
       return buildSlugs(route.value.path)
     })
 
+    const pageStore = usePageStore()
+    pageStore.setPageType(CMS_PAGE)
+
     return {
       cartEntries,
       slugs,
       isMobile,
       currentCart,
-      ociBuyer,
+      isOciUser,
       cartPromotions,
+      checkoutButtonDisabled,
+      userStatusTypeForInfoText,
+      handleCheckoutClick: cartStore.handleCheckoutClick,
     }
   },
 })
@@ -181,8 +215,6 @@ export default defineComponent({
 
 <style lang="scss">
 .cart-page {
-  @apply tw-pt-6;
-
   &__empty {
     @apply tw-text-center;
     @apply tw-pb-12;
@@ -195,6 +227,10 @@ export default defineComponent({
     &-headline {
       @apply tw-mb-4;
     }
+  }
+
+  &__request-info {
+    @apply tw-mb-8;
   }
 
   &__header {
@@ -249,6 +285,10 @@ export default defineComponent({
     @screen md {
       @apply tw-flex tw-justify-between;
       @apply tw-gap-6;
+    }
+
+    &--oci {
+      @apply tw-justify-end;
     }
   }
 

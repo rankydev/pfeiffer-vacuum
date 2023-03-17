@@ -47,7 +47,7 @@ export default defineComponent({
   @apply tw-my-6;
 
   &__content {
-    @apply tw-text-pv-black;
+    @apply tw-text-pv-grey-16;
     @apply tw-p-4;
 
     @screen lg {

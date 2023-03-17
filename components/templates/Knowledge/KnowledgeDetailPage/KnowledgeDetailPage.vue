@@ -9,16 +9,7 @@
       <Page v-if="data" v-bind="data">
         <template #default>
           <ContentWrapper>
-            <nuxt-dynamic
-              v-for="item in stage"
-              :key="item._uid"
-              v-editable="item"
-              v-bind="item"
-              :name="item.uiComponent || item.component"
-            />
-            <div class="knowledge-page">
-              <!-- ToDo: remove placeholder text and insert knowledge data -->
-            </div>
+            <KnowledgeDetails v-bind="{ content }" />
           </ContentWrapper>
         </template>
       </Page>
@@ -32,18 +23,18 @@ import {
   useRoute,
   useContext,
   computed,
-  toRefs,
 } from '@nuxtjs/composition-api'
+import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
-import useTemplating from '~/composables/useTemplating'
+import KnowledgeDetails from '~/components/molecules/KnowledgeDetails/KnowledgeDetails'
 
 export default defineComponent({
-  name: 'KnowledgePage',
+  name: 'KnowledgeDetailPage',
   components: {
     Page,
     ContentWrapper,
+    KnowledgeDetails,
   },
   props: {
     content: {
@@ -51,8 +42,7 @@ export default defineComponent({
       default: /* istanbul ignore next */ () => ({}),
     },
   },
-  setup(props) {
-    const { content } = toRefs(props)
+  setup() {
     const route = useRoute()
     const context = useContext()
 
@@ -64,12 +54,7 @@ export default defineComponent({
       return buildSlugs(route.value.path)
     })
 
-    const { stage } = useTemplating(content)
-
-    return {
-      slugs,
-      stage,
-    }
+    return { slugs }
   },
 })
 </script>

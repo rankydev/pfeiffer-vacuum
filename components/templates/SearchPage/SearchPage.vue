@@ -30,6 +30,7 @@
             />
             <div class="search-page__search-input">
               <SearchInputPage
+                v-if="showDocumentSearchTab"
                 @searchTermChange="(value) => (searchTerm = value)"
               />
             </div>
@@ -47,6 +48,7 @@
               <div class="search-page__search-result">
                 <ContentWrapper v-if="currentTabSelected === 'products'">
                   <SearchResult
+                    v-if="products && !hasError"
                     persist-category-name-as-query-param
                     v-bind="{
                       products,
@@ -56,6 +58,10 @@
                       currentQuery,
                       sorts,
                     }"
+                  />
+                  <ErrorHandling
+                    v-else
+                    :headline="$t('product.errorHandling.multiProductHeadline')"
                   />
                 </ContentWrapper>
                 <ContentWrapper v-else no-padding>
@@ -68,6 +74,7 @@
           <div v-else class="category-page__search-result">
             <ContentWrapper>
               <SearchResult
+                v-if="products && !hasError"
                 v-bind="{
                   products,
                   pagination,
@@ -76,6 +83,10 @@
                   currentQuery,
                   sorts,
                 }"
+              />
+              <ErrorHandling
+                v-else
+                :headline="$t('product.errorHandling.multiProductHeadline')"
               />
             </ContentWrapper>
           </div>
@@ -109,29 +120,29 @@ import {
   useContext,
   ref,
 } from '@nuxtjs/composition-api'
-
-import Page from '~/components/templates/Page/Page'
-import Button from '~/components/atoms/Button/Button'
-import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation'
-import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
-import SearchResult from '~/components/organisms/SearchResult/SearchResult'
-import DocumentSearchResult from '~/components/organisms/DocumentSearchResult/DocumentSearchResult'
-import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
-import SearchInputPage from '~/components/molecules/SearchInputPage/SearchInputPage'
-
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
-import { useErrorHandler } from '~/composables/useErrorHandler'
 import { useStoryblokData } from '~/composables/useStoryblokData'
 import { useCategoryStore } from '~/stores/category/category'
 import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
 import { useEmpolisStore } from '~/stores/empolis'
+
+import Button from '~/components/atoms/Button/Button'
+import ErrorHandling from '~/components/molecules/ErrorHandling/ErrorHandling'
+import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
+import OnPageNavigation from '~/components/molecules/OnPageNavigation/OnPageNavigation'
+import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
+import GenericTabs from '~/components/molecules/GenericTabs/GenericTabs'
+import SearchInputPage from '~/components/molecules/SearchInputPage/SearchInputPage'
+import SearchResult from '~/components/organisms/SearchResult/SearchResult'
+import DocumentSearchResult from '~/components/organisms/DocumentSearchResult/DocumentSearchResult'
+import Page from '~/components/templates/Page/Page'
 
 export default defineComponent({
   name: 'CategoryShopPage',
   components: {
     Page,
     Button,
+    ErrorHandling,
     ContentWrapper,
     OnPageNavigation,
     ResultHeadline,
@@ -151,7 +162,6 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const context = useContext()
-    const { redirectOnError } = useErrorHandler()
 
     /**
      * page type handling
@@ -196,9 +206,16 @@ export default defineComponent({
      */
     const categoryStore = useCategoryStore()
     const empolisStore = useEmpolisStore()
+
+    const hasError = ref(false)
+
     const loadSearchResults = async () => {
       if (currentTabSelected.value === 'products') {
-        await redirectOnError(categoryStore.loadByPath)
+        try {
+          await categoryStore.loadByPath()
+        } catch (e) {
+          hasError.value = true
+        }
       } else if (currentTabSelected.value === 'documents') {
         await empolisStore.loadByPath()
       }
@@ -259,6 +276,7 @@ export default defineComponent({
       metaData,
       currentTabSelected,
       tabNavigationItems,
+      hasError,
       selectTab,
     }
   },
