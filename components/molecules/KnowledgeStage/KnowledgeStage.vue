@@ -31,6 +31,7 @@
                 date
                 :asset-url="assetUrl"
                 :is-detail-page="isDetailPage"
+                class="knowledge-stage__knowledge-asset-button"
                 @openModal="toggleModal(true)"
               />
             </div>
@@ -263,6 +264,11 @@ export default defineComponent({
         }
       }
     }
+  }
+
+  &__knowledge-asset-button {
+    @apply tw-flex;
+    @apply tw-w-full;
   }
 }
 </style>

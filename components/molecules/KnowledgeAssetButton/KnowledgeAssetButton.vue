@@ -145,13 +145,6 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .knowledge-asset-button {
-  @apply tw-flex;
-  @apply tw-w-full;
-
-  &__button {
-    @apply tw-w-full;
-  }
-
   @screen md {
     @apply tw-flex;
     @apply tw-w-auto;

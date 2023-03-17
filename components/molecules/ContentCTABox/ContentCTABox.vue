@@ -56,5 +56,12 @@ export default {
       @apply tw-text-base;
     }
   }
+
+  &__button {
+    .link {
+      @apply tw-flex;
+      @apply tw-gap-x-4;
+    }
+  }
 }
 </style>
