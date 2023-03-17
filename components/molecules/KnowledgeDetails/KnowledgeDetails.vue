@@ -107,8 +107,6 @@ export default {
   }
 
   &__asset-button-bottom {
-    @apply tw-flex;
-    @apply tw-w-full;
     @apply tw-mt-6;
   }
 
