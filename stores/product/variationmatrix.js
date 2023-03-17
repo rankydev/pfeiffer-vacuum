@@ -245,7 +245,6 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
     isSelectionCompleted,
     firstNotSelectedIndex,
     manualVariantSelectionOptions,
-    matrixStillValid,
     loadVariationMatrix,
     addAttribute,
     deleteAttribute,
