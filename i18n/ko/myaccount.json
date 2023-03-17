@@ -68,9 +68,6 @@
     "goToProducts": "Go to products",
     "yourHistory": "Your request history"
   },
-  "serviceHistory": {
-    "serviceRequests": "서비스 요청"
-  },
   "recentRequests": {
     "recentRequests": "최근 요청",
     "allRequests": "모든 요청",
@@ -129,7 +126,7 @@
     },
     "selectAList": "쇼핑 목록 선택",
     "add": "새 목록에 추가",
-    "addSuccessful": "제품이 쇼핑 목록에 성공적으로 추가되었습니다.",
+    "addSuccessful": "귀하의 제품이 {listName} 목록에 추가되었습니다.",
     "addError": "제품을 쇼핑 목록에 추가할 수 없습니다.",
     "back": "목록으로 돌아가기",
     "name": "이름",
@@ -141,6 +138,20 @@
     "close": "닫기",
     "addNewList": "새 쇼핑 목록 추가"
   },
-  "details": "세부 정보"
+  "details": "세부 정보",
+  "serviceHistory": {
+    "serviceRequests": "서비스 요청"
+    },
+  "new": "새로운",
+  "newMobile": "새로운 쇼핑 목록",
+  "newLists": "새로운 쇼핑 목록",
+  "select": "선택",
+  "shoppingListOverviewPage": {
+    "title": "쇼핑 목록",
+    "discard": "버리다",
+    "deleteList": "쇼핑 목록 삭제",
+    "emptyList": "아직 쇼핑 목록을 제출하지 않았습니다!"
+  },
+  "backToDashboard": "대시보드로 돌아가기"
 }
 

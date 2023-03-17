@@ -1,14 +1,16 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { ref, useContext } from '@nuxtjs/composition-api'
+import { ref, computed, useContext } from '@nuxtjs/composition-api'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useMyAccountStore } from '~/stores/myaccount'
 import { useUserStore } from '~/stores/user'
 import config from '~/config/hybris.config'
+import { useLogger } from '~/composables/useLogger'
 
 export const useDashboardStore = defineStore('dashboard', () => {
   const { axios } = useAxiosForHybris()
   const myAccountStore = useMyAccountStore()
   const { i18n, localePath } = useContext()
+  const { logger } = useLogger('dashboard')
   const { orders } = storeToRefs(myAccountStore)
   const userStore = useUserStore()
   const { currentUser, userBillingAddress } = storeToRefs(userStore)
@@ -74,8 +76,10 @@ export const useDashboardStore = defineStore('dashboard', () => {
     'recentRequests.date',
     'recentRequests.total',
   ]
-  const recentRequestsTableHeader = recentRequestHeader.map((value) => {
-    return buildTableHeaderObject(value)
+  const recentRequestsTableHeader = computed(() => {
+    return recentRequestHeader.map((value) => {
+      return buildTableHeaderObject(value)
+    })
   })
 
   const getShoppingLists = async () => {
@@ -90,7 +94,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
         return result.shoppinglists
       }
     } catch (e) {
-      Logger.error('Error when fetching shopping lists. Returning empty list.')
+      logger.error('Error when fetching shopping lists. Returning empty list.')
       return []
     }
   }

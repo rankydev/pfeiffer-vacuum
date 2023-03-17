@@ -17,7 +17,12 @@
             </div>
           </div>
           <div v-if="showDuration" class="knowledge-stage__date-duration">
-            <Icon class="knowledge-stage__date-icon" icon="timer" />
+            <Icon
+              class="knowledge-stage__date-icon"
+              icon="timer_outlined"
+              size="small"
+              type="svg"
+            />
             <p>{{ duration }}</p>
           </div>
         </div>
@@ -28,10 +33,10 @@
               <KnowledgeAssetButton
                 :type="isWhitepaper ? 'WHITEPAPER' : 'WEBINAR'"
                 :webinar-registration-id="webinarRegistrationId"
-                date
+                :date="date"
                 :asset-url="assetUrl"
                 :is-detail-page="isDetailPage"
-                @openModal="toggleModal(true)"
+                :use-loading-spinner="true"
               />
             </div>
           </div>
@@ -117,7 +122,7 @@ export default defineComponent({
     const showDuration = computed(
       () => !!(!props.isWhitepaper || props.duration !== '')
     )
-    const showDate = computed(() => props.fixedDate !== '')
+    const showDate = computed(() => !!(fixedDate.value !== ''))
 
     return {
       fixedDate,
@@ -246,6 +251,7 @@ export default defineComponent({
     &.responsive-image {
       img {
         @apply tw-w-full;
+        @apply tw-h-full;
         @apply tw-rounded-none;
         @apply tw-object-cover;
 
@@ -255,11 +261,6 @@ export default defineComponent({
 
         @screen lg {
           height: 400px;
-        }
-
-        @screen xl {
-          // growing proportionally to width of screen
-          height: 28vw;
         }
       }
     }

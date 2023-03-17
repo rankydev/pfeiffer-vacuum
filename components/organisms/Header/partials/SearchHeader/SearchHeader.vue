@@ -19,7 +19,7 @@
         <h2 class="search-header__headline">
           {{ $t('category.search') }}
         </h2>
-        <SearchInput @submit="closeSearchfield" />
+        <SearchInput @submit="searchInputSubmit" />
         <div
           v-if="currentSuggestions.length"
           class="search-header__suggestions"
@@ -40,7 +40,7 @@
     <SearchInput
       class="search-header__field"
       @focus="toggleSuggestionsOnFocus"
-      @submit="closeSearchfield"
+      @submit="searchInputSubmit"
     />
     <div
       v-if="currentSuggestions.length && (isFocused || suggestionHover)"
@@ -56,7 +56,12 @@
 </template>
 
 <script>
-import { defineComponent, ref, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useContext,
+  useRouter,
+} from '@nuxtjs/composition-api'
 import SearchInput from '~/components/molecules/SearchInput/SearchInput.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
@@ -81,6 +86,7 @@ export default defineComponent({
   },
   setup() {
     const { app } = useContext()
+    const router = useRouter()
     const isDesktop = app.$breakpoints.isDesktop
     const categoryStore = useCategoryStore()
     const isOpen = ref(false)
@@ -89,6 +95,17 @@ export default defineComponent({
 
     const { currentSuggestions } = storeToRefs(categoryStore)
     const { blurSuggestions } = categoryStore
+
+    const pushToRoute = (e) => {
+      router.push({
+        path: app.localePath('shop-search'),
+        query: {
+          searchTerm: e.length ? e : undefined,
+          initialSearchTerm: e.length ? e : undefined,
+          searchType: 'products',
+        },
+      })
+    }
 
     const toggleSearchfield = () => {
       isOpen.value = !isOpen.value
@@ -103,15 +120,22 @@ export default defineComponent({
       isFocused.value = val
     }
 
+    const searchInputSubmit = (e) => {
+      closeSearchfield()
+      pushToRoute(e)
+    }
+
     return {
       isDesktop,
-      toggleSearchfield,
-      closeSearchfield,
-      toggleSuggestionsOnFocus,
       isOpen,
       isFocused,
       currentSuggestions,
       suggestionHover,
+
+      toggleSearchfield,
+      closeSearchfield,
+      toggleSuggestionsOnFocus,
+      searchInputSubmit,
     }
   },
 })
