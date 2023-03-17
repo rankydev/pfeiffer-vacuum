@@ -26,7 +26,7 @@
       />
     </div>
     <AttributeAccordion
-      v-if="showVariantSelection"
+      v-if="showVariantSelection && variationAttributeEntries.length"
       :loading="loadingMatrix"
       :accordion-entries="variationAttributeEntries"
     />
