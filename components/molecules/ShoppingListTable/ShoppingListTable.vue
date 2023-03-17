@@ -16,7 +16,7 @@
     </div>
     <ShoppingListItem
       v-for="list in lists"
-      :key="list.id"
+      :key="getUniqueId(list.id)"
       class="shopping-list-table__items"
       :list="list"
       :select-mode="selectMode"
@@ -28,7 +28,8 @@
 
 <script>
 import ShoppingListItem from '~/components/molecules/ShoppingListItem/ShoppingListItem.vue'
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
+import useUniqueKey from '~/composables/useUniqueKey'
 
 export default defineComponent({
   name: 'ShoppingListTable',
@@ -47,24 +48,16 @@ export default defineComponent({
   },
   emits: ['delete', 'update'],
   setup(props, { emit }) {
-    const deleteList = ref([])
-
+    const getUniqueId = (id) => useUniqueKey('SHOPPING_LIST_TABLE_' + id)
     const deleteListItem = (listItem) => {
       emit('delete', listItem)
     }
 
     const updateDeleteList = (listItem) => {
-      if (listItem.selected) {
-        deleteList.value.push(listItem.list)
-      } else {
-        deleteList.value = deleteList.value.filter(
-          (list) => list?.id !== listItem.list?.id
-        )
-      }
-      emit('update', deleteList.value)
+      emit('update', listItem)
     }
 
-    return { deleteListItem, updateDeleteList }
+    return { deleteListItem, updateDeleteList, getUniqueId }
   },
 })
 </script>
@@ -90,7 +83,7 @@ export default defineComponent({
 
     &--title {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-1 tw-col-end-4;
+      @apply tw-col-start-1 tw-col-end-7;
       @apply tw-ml-4;
 
       @screen lg {
@@ -99,35 +92,36 @@ export default defineComponent({
 
       &-active {
         @screen md {
-          @apply tw-mx-auto;
+          @apply tw-col-start-2 tw-col-end-7;
+          @apply tw-ml-8;
         }
 
         @screen lg {
-          @apply tw-ml-3;
-          @apply tw-mr-0;
+          @apply tw-col-start-1 tw-col-end-7;
+          @apply tw-ml-4;
         }
       }
     }
 
     &--last-edited {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-4 tw-col-end-6;
+      @apply tw-col-start-7 tw-col-end-9;
       @apply tw-ml-8;
     }
 
     &--items {
       @apply tw-row-start-1 tw-row-end-2;
-      @apply tw-col-start-6 tw-col-end-8;
+      @apply tw-col-start-9 tw-col-end-11;
       @apply tw-ml-8;
-
-      @screen lg {
-        @apply tw-ml-6;
-      }
     }
   }
 
   &__items {
     @apply tw-mb-6;
+
+    &:last-child {
+      @apply tw-mb-0;
+    }
 
     @screen md {
       @apply tw-mb-0;

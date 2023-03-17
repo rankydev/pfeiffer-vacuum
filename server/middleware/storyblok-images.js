@@ -5,6 +5,7 @@ import {
   PATH_STORYBLOK_IMAGES_REDIRECT,
 } from '../constants.js'
 import nuxtConfig from '../../nuxt.config'
+import { removeCookie } from './utils/onProxyReq.js'
 
 const agent = new https.Agent({
   keepAlive: true,
@@ -17,9 +18,8 @@ const regionsForRegex = regionCodes.replaceAll(',', '|')
 export default createProxyMiddleware({
   target: PATH_STORYBLOK_IMAGES_REDIRECT,
   changeOrigin: true,
+  followRedirects: true,
   agent,
   pathRewrite: { [`^(/(${regionsForRegex}))?${PATH_STORYBLOK_IMAGES}`]: '/' },
-  onProxyReq: (proxyReq) => {
-    proxyReq.removeHeader('cookie')
-  },
+  onProxyReq: removeCookie,
 })

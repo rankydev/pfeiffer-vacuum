@@ -6,6 +6,8 @@
   "whitepapers": "백서",
   "webinars": "웨비나",
   "search": "지식에서 검색 ...",
+  "searchWebinars": "웨비나에서 검색 ...",
+  "searchWhitepapers": "백서에서 검색 ...",
   "webinar": {
     "heading": "웨비나",
     "about": "  웨비나는 무엇에 관한 것입니까?",
@@ -17,7 +19,9 @@
     },
     "waitForVod": "이 웨비나의 녹화본은 원래 날짜 이후 5일 이내에 시청할 수 있습니다.",
     "registration": {
-      "success": "이 웨비나에 성공적으로 등록되었습니다. 메일을 통해 모든 추가 정보를 받게 됩니다."
+      "success": "이 웨비나에 성공적으로 등록되었습니다. 메일을 통해 모든 추가 정보를 받게 됩니다.",
+      "alreadyExists": "이 웨비나에 이미 등록되었습니다.",
+      "error": "문제가 발생했습니다. 나중에 다시 시도 해주십시오."
     }
   },
   "whitepaper": {
@@ -29,5 +33,8 @@
       "download": "다운로드"
     }
   },
-  "details": "세부"
+  "authors": "저자",
+  "speaker": "스피커",
+  "details": "세부",
+  "filter": "필터"
 }

@@ -9,13 +9,13 @@
       <h2 class="shopping-list-overlay__header--title">
         <span>
           {{
-            isAddMode
-              ? $t('myaccount.shoppingList.addNewList')
-              : $t('myaccount.shoppingList.selectAList')
+            isBasicMode
+              ? $t('myaccount.shoppingList.selectAList')
+              : $t('myaccount.shoppingList.addNewList')
           }}
         </span>
         <span
-          v-if="shoppingLists.length && !isAddMode"
+          v-if="shoppingLists.length && isBasicMode"
           class="shopping-list-overlay__header--title-count"
         >
           ({{ shoppingLists.length }})
@@ -23,7 +23,7 @@
       </h2>
     </div>
     <div
-      v-if="shoppingLists && !isAddMode"
+      v-if="shoppingLists && isBasicMode"
       class="shopping-list-overlay__content"
     >
       <Button
@@ -32,6 +32,7 @@
         :label="name"
         icon="assignment"
         shape="outlined"
+        prepend-icon
         variant="variant-selection-preselected"
         class="shopping-ist-overlay__content--item"
         @click="addToShoppingList(id)"
@@ -60,11 +61,7 @@
     <div class="shopping-list-overlay__footer">
       <Button
         class="shopping-list-overlay__footer--forward"
-        :label="
-          isAddMode
-            ? $t('myaccount.shoppingList.save')
-            : $t('myaccount.shoppingList.add')
-        "
+        :label="forwardButtonText"
         :icon="isAddMode ? 'save' : 'add'"
         shape="filled"
         variant="secondary"
@@ -88,7 +85,12 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  useContext,
+} from '@nuxtjs/composition-api'
 import GenericSidebar from '~/components/molecules/GenericSidebar/GenericSidebar.vue'
 import { useShoppingLists } from '~/stores/shoppinglists'
 import Button from '~/components/atoms/Button/Button.vue'
@@ -106,50 +108,80 @@ export default defineComponent({
     Button,
   },
   setup() {
+    const { i18n } = useContext()
     const nameVar = ref('')
     const descriptionVar = ref('')
-    const isAddMode = ref(false)
     const shoppingListsStore = useShoppingLists()
-    const { shoppingLists, isOverlayOpen } = storeToRefs(shoppingListsStore)
+    const {
+      shoppingLists,
+      isOverlayOpen,
+      isAddMode,
+      isNewListMode,
+      isBasicMode,
+    } = storeToRefs(shoppingListsStore)
+
+    const clearForm = () => {
+      nameVar.value = ''
+      descriptionVar.value = ''
+    }
 
     const closeSidebar = () => {
       shoppingListsStore.toggleOverlay()
+      shoppingListsStore.basicMode()
+      clearForm()
     }
 
-    const toggleAddMode = () => {
-      isAddMode.value = !isAddMode.value
-    }
     const newShoppingList = async () => {
-      if (nameVar.value) {
+      if (!nameVar.value) {
+        return
+      }
+      if (isAddMode.value) {
         await shoppingListsStore.createNewListAndAddProduct(
           nameVar.value,
           descriptionVar.value
         )
-        closeSidebar()
       }
+      if (isNewListMode.value) {
+        await shoppingListsStore.createNewList(
+          nameVar.value,
+          descriptionVar.value
+        )
+      }
+      closeSidebar()
     }
     const addToShoppingList = async (listId) => {
       await shoppingListsStore.addToShoppingList(listId)
       closeSidebar()
     }
     const handleForward = async () => {
-      if (!isAddMode.value) {
-        toggleAddMode()
+      if (isBasicMode.value) {
+        shoppingListsStore.addMode()
       } else {
         await newShoppingList()
       }
     }
+    const forwardButtonText = computed(() => {
+      if (isAddMode.value) {
+        return i18n.t('myaccount.shoppingList.save')
+      }
+      if (isNewListMode.value) {
+        return i18n.t('myaccount.shoppingList.save')
+      }
+      return i18n.t('myaccount.shoppingList.add')
+    })
+
     const handleBack = () => {
       if (isAddMode.value) {
-        toggleAddMode()
+        shoppingListsStore.basicMode()
+        clearForm()
       } else {
         closeSidebar()
       }
     }
+
     return {
       shoppingLists,
       isAddMode,
-      toggleAddMode,
       handleForward,
       handleBack,
       isOverlayOpen,
@@ -157,6 +189,9 @@ export default defineComponent({
       addToShoppingList,
       nameVar,
       descriptionVar,
+      isNewListMode,
+      isBasicMode,
+      forwardButtonText,
     }
   },
 })
@@ -232,6 +267,7 @@ export default defineComponent({
       @apply tw-text-pv-grey-16;
       @apply tw-mb-4;
       @apply tw-max-h-6;
+      @apply tw-justify-start;
 
       .button__label {
         @apply tw-overflow-hidden;
