@@ -18,6 +18,7 @@ import {
   onMounted,
   ref,
 } from '@nuxtjs/composition-api'
+import { useDebounce } from '~/composables/useDebounce'
 
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import { useCategoryStore } from '~/stores/category/category'
@@ -63,9 +64,14 @@ export default defineComponent({
       emit('focus', val)
     }
 
-    const handleInput = () => {
-      if (!props.disableSuggestions) loadSuggestions()
+    const handleInput = (text) => {
+      if (!props.disableSuggestions) loadSearchSuggestions(text)
     }
+
+    const { debounce } = useDebounce()
+    const loadSearchSuggestions = debounce((text) => {
+      loadSuggestions(text)
+    })
 
     onMounted(() => {
       if (isMobile.value) {
