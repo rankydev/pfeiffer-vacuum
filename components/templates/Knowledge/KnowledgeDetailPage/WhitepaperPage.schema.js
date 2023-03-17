@@ -72,6 +72,13 @@ export default {
     pageComponents: {
       type: 'bloks',
       display_name: 'Page Components',
+      restrict_components: true,
+      component_whitelist: [
+        'KnowledgeAuthorsList',
+        'ImageBanner',
+        'ProductCardCarousel',
+        'Richtext',
+      ],
     },
     knowledgeType: {
       type: 'option',
