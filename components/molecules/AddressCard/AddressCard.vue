@@ -85,6 +85,7 @@
         <div>
           <Button
             :label="$t('myaccount.editDeliveryAddress')"
+            class="address-card__edit-button"
             icon="edit"
             variant="secondary"
             shape="plain"
@@ -202,7 +203,7 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .address-card {
   @apply tw-bg-pv-grey-96;
   @apply tw-rounded-md;
@@ -228,8 +229,7 @@ export default defineComponent({
   }
 
   &__contacts {
-    @apply tw-mt-7;
-    @apply tw-mb-7;
+    @apply tw-my-7;
 
     &--item {
       @apply tw-flex;
@@ -238,6 +238,7 @@ export default defineComponent({
 
       p {
         @apply tw-ml-4;
+        @apply tw-text-base;
       }
     }
 
@@ -294,6 +295,13 @@ export default defineComponent({
           -webkit-text-fill-color: var(--pv-grey-16);
         }
       }
+    }
+  }
+
+  &__edit-button {
+    .link {
+      @apply tw-flex;
+      @apply tw-gap-x-4;
     }
   }
 }
