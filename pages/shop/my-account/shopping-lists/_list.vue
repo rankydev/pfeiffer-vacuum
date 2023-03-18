@@ -306,7 +306,7 @@ export default defineComponent({
         @apply tw-row-start-1 tw-row-end-2;
         @apply tw-col-start-11 tw-col-end-13;
         @apply tw-mt-0;
-        @apply tw-ml-auto;
+        @apply tw-justify-end;
       }
 
       &__select {
@@ -406,6 +406,7 @@ export default defineComponent({
 
       @screen md {
         @apply tw-mt-0;
+        @apply tw-border-b-0;
       }
 
       @screen lg {

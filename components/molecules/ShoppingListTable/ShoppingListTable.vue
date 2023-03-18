@@ -59,7 +59,6 @@ export default defineComponent({
     }
 
     const details = (listItem) => {
-      console.log('details', listItem)
       emit('details', listItem)
     }
 
