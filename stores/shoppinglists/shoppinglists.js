@@ -53,8 +53,24 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     const shoppingList = await shoppingListsApi.createNewList(name, description)
     if (shoppingList !== -1) {
       currentShoppingLists.value.push(shoppingList)
+      if (isNewListMode.value) {
+        toast.success(
+          {
+            description: i18n.t('myaccount.shoppingList.newListSuccess', {
+              listName: shoppingList?.name,
+            }),
+          },
+          { timeout: 3000 }
+        )
+      }
+    } else {
+      toast.error(
+        {
+          description: i18n.t('myaccount.shoppingList.newListError'),
+        },
+        { timeout: 3000 }
+      )
     }
-
     return shoppingList
   }
 
@@ -79,22 +95,22 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
           { timeout: 3000 }
         )
         await initialShoppingListsLoad()
+      } else {
+        toast.error(
+          {
+            description: i18n.t('myaccount.shoppingList.addError'),
+          },
+          { timeout: 3000 }
+        )
       }
     }
     setProductAmount(1)
   }
 
   const createNewListAndAddProduct = async (name, description) => {
-    const shoppingList = await shoppingListsApi.createNewList(name, description)
+    const shoppingList = await createNewList(name, description)
     if (shoppingList !== -1) {
       await addToShoppingList(shoppingList.id)
-    } else {
-      toast.error(
-        {
-          description: i18n.t('myaccount.shoppingList.addError'),
-        },
-        { timeout: 3000 }
-      )
     }
   }
 
@@ -190,8 +206,25 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
 
   const saveCartToShoppingList = async (listId) => {
     const cartId = currentCart.value?.code
-    await shoppingListsApi.saveCartAsList(listId, cartId)
-    await initialShoppingListsLoad()
+    const result = await shoppingListsApi.saveCartAsList(listId, cartId)
+    if (result) {
+      toast.success(
+        {
+          description: i18n.t('myaccount.shoppingList.cartToListSuccess', {
+            listName: result?.name,
+          }),
+        },
+        { timeout: 3000 }
+      )
+      await initialShoppingListsLoad()
+    } else {
+      toast.error(
+        {
+          description: i18n.t('myaccount.shoppingList.cartToListError'),
+        },
+        { timeout: 3000 }
+      )
+    }
   }
 
   watch(isLoggedIn, async () => {

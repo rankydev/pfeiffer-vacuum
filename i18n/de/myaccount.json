@@ -120,7 +120,11 @@
     "save": "Speichern und schließen",
     "info": "Ihr ausgewähltes Produkt wird automatisch zu dieser neuen Liste hinzugefügt.",
     "close": "Schließen",
-    "addNewList": "Neue Einkaufsliste hinzufügen"
+    "addNewList": "Neue Einkaufsliste hinzufügen",
+    "cartToListSuccess": "Ihr Einkaufswagen wurde zur Liste {listName} hinzugefügt",
+    "cartToListError": "Ihr Warenkorb konnte nicht zur Einkaufsliste hinzugefügt werden.",
+    "newListSuccess": "Ihre neue Einkaufsliste {listName} wurde erfolgreich erstellt.",
+    "newListError": "Ihre neue Einkaufsliste konnte nicht erstellt werden."
   },
   "details": "Details",
   "serviceHistory": {

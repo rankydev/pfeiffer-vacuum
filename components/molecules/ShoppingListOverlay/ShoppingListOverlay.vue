@@ -129,13 +129,13 @@ export default defineComponent({
     const closeSidebar = () => {
       shoppingListsStore.toggleOverlay()
       shoppingListsStore.basicMode()
-      clearForm()
     }
 
     const newShoppingList = async () => {
       if (!nameVar.value) {
         return
       }
+      closeSidebar()
       if (isAddMode.value && !isAddAllMode.value) {
         await shoppingListsStore.createNewListAndAddProduct(
           nameVar.value,
@@ -156,16 +156,17 @@ export default defineComponent({
           descriptionVar.value
         )
       }
-      closeSidebar()
+      clearForm()
     }
     const addToShoppingList = async (listId) => {
+      closeSidebar()
       if (isAddAllMode.value) {
         await shoppingListsStore.saveCartToShoppingList(listId)
         shoppingListsStore.toggleAddAllMode()
       } else {
         await shoppingListsStore.addToShoppingList(listId)
       }
-      closeSidebar()
+      clearForm()
     }
     const handleForward = async () => {
       if (isBasicMode.value) {
@@ -190,6 +191,7 @@ export default defineComponent({
         clearForm()
       } else {
         closeSidebar()
+        clearForm
       }
     }
 

@@ -136,7 +136,11 @@
     "save": "저장하고 닫기",
     "info": "선택한 제품이 이 새 목록에 자동으로 추가됩니다.",
     "close": "닫기",
-    "addNewList": "새 쇼핑 목록 추가"
+    "addNewList": "새 쇼핑 목록 추가",
+    "cartToListSuccess": "장바구니가 {listName} 목록에 추가되었습니다.",
+    "cartToListError": "장바구니를 쇼핑 목록에 추가할 수 없습니다.",
+    "newListSuccess": "새 쇼핑 목록 {listName}이(가) 성공적으로 생성되었습니다.",
+    "newListError": "새 쇼핑 목록을 만들 수 없습니다."
   },
   "details": "세부 정보",
   "serviceHistory": {

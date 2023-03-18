@@ -120,7 +120,11 @@
     "save": "Save and close",
     "info": "Your selected product will be added to this new list automatically.",
     "close": "Close",
-    "addNewList": "Add new shopping list"
+    "addNewList": "Add new shopping list",
+    "cartToListSuccess": "Your cart has been added to {listName} list",
+    "cartToListError": "Your cart could not be added to shopping list.",
+    "newListSuccess": "Your new shopping list {listName} has been created successfully.",
+    "newListError": "Your new shopping list could not be created."
   },
   "details": "Details",
   "serviceHistory": {

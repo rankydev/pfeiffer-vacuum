@@ -107,7 +107,7 @@ export const useCategoryStore = defineStore('category', () => {
   })
 
   const categoryTreeNavigationEntries = computed(() =>
-    categoryTree.value.map((parent) => ({
+    categoryTree.value?.map((parent) => ({
       component: 'MainNavLinkLevel1',
       level: 1,
       href: joinURL(localePath('shop-categories'), parent.category?.id),
