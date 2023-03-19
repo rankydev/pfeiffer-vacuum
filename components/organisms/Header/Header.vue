@@ -2,7 +2,9 @@
   <header class="header" :class="{ 'header--blur-content': menuIsActive }">
     <ContentWrapper class="header__outer">
       <div class="header__inner">
-        <NuxtLink :to="localePath('/')" class="header__logo"><Logo /></NuxtLink>
+        <NuxtLink :to="localePath('/')" class="header__logo">
+          <Logo />
+        </NuxtLink>
         <SearchHeader :has-opacity="active" class="header__search-input" />
         <TopNavigation
           v-model="active"
@@ -36,6 +38,7 @@ import { useMenuStore } from '~/stores/menu'
 import { useMyAccountStore } from '~/stores/myaccount'
 
 export default defineComponent({
+  name: 'Header',
   components: {
     Logo,
     SearchHeader,
