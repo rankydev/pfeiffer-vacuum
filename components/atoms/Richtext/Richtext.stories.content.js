@@ -7,7 +7,7 @@ export default {
                 <a href="mailto:info@pfeiffer-vacuum.com">eMail links</a> or
                 <a href="tel:+49123456789">telephone</a> or
                 <a href="#anchor">anchor</a>
-                 also styles for several headlines are provide like
+                 also styles for several headlines are provided like
                 <h2>Headline H2</h2>
                 <p><span class="tw-subline-2">Subline H2</span></p>
                 <h3>Headline H3</h3>

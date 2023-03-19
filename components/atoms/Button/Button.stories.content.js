@@ -10,13 +10,13 @@ export const sizes = ['xsmall', 'small', 'normal']
 export const icon = 'arrow_forward'
 export const label = 'Button text'
 
-const prepred = { prependIcon: true, icon: 'arrow_back' }
+const prependVersion = { prependIcon: true, icon: 'arrow_back' }
 
 const generateContent = (variant, shapeArr) => {
   return shapeArr.map((shape) => {
     return sizes.reduce((memo, size) => {
       const basic = { variant, shape, size, icon, label }
-      const prepend = { ...basic, ...prepred }
+      const prepend = { ...basic, ...prependVersion }
       const textOnly = { ...basic, icon: null }
       const iconOnly = { ...basic, label: null }
 
