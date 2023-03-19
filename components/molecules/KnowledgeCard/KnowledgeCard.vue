@@ -7,7 +7,13 @@
       </span>
     </template>
     <template #image>
-      <ResponsiveImage v-if="image" :image="image" />
+      <ResponsiveImage
+        v-if="image"
+        :image="image"
+        aspect-ratio="3:2"
+        :rounded="false"
+        :mode-full="true"
+      />
     </template>
     <template v-if="date" #subheading>
       <Icon icon="date_range" size="xsmall" />
@@ -17,7 +23,9 @@
       {{ name }}
     </template>
     <template #tags>
-      <Tag v-for="(tagItem, idx) in tags" :key="idx" :content="tagItem" />
+      <div class="knowledge-card__tags">
+        <Tag v-for="(tagItem, idx) in tags" :key="idx" :content="tagItem" />
+      </div>
     </template>
     <template #description>
       <!-- eslint-disable-next-line vue/no-v-html -->
@@ -37,8 +45,9 @@
         <KnowledgeAssetButton
           :webinar-registration-id="id"
           :type="type"
-          :date="date"
+          :date="entry.date"
           :asset-url="assetUrl"
+          :prevent-full-width="true"
         />
       </div>
     </template>
@@ -93,7 +102,7 @@ export default defineComponent({
     })
     const image = computed(() => {
       const imageUrl = entry?.value?.imageURL
-      return imageUrl || null
+      return { originalFilename: imageUrl || null }
     })
     const date = computed(() => {
       const dateValue = entry?.value?.date
@@ -178,6 +187,11 @@ export default defineComponent({
     &-label {
       @apply tw-my-auto;
     }
+  }
+
+  &__tags {
+    @apply tw-flex;
+    @apply tw-gap-1;
   }
 
   &__action-items {

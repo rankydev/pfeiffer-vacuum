@@ -89,6 +89,7 @@ export default {
     &.responsive-image {
       img {
         @apply tw-w-full;
+        @apply tw-h-full;
         @apply tw-rounded-none;
         @apply tw-object-cover;
 
@@ -98,11 +99,6 @@ export default {
 
         @screen lg {
           height: 400px;
-        }
-
-        @screen xl {
-          // growing proportionally to width of screen
-          height: 28vw;
         }
       }
     }

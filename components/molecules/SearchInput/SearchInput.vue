@@ -3,10 +3,10 @@
     ref="pvInput"
     v-model="searchTerm"
     icon="search"
-    :placeholder="$t('form.input.search.placeholder')"
+    :placeholder="placeholder || $t('form.input.search.placeholder')"
     @submit="pushSearchTerm"
     @click:icon="pushSearchTerm"
-    @input="loadSuggestions"
+    @input="handleInput"
     @focus="emitFocus"
   />
 </template>
@@ -15,7 +15,6 @@
 import {
   defineComponent,
   useContext,
-  useRouter,
   onMounted,
   ref,
 } from '@nuxtjs/composition-api'
@@ -27,32 +26,45 @@ export default defineComponent({
   components: {
     PvInput,
   },
+  props: {
+    value: {
+      type: String,
+      default: '',
+    },
+    clearAfterSubmit: {
+      type: Boolean,
+      default: true,
+    },
+    disableSuggestions: {
+      type: Boolean,
+      default: false,
+    },
+    placeholder: {
+      type: String,
+      default: undefined,
+    },
+  },
   emits: ['submit', 'focus'],
   setup(props, { emit }) {
-    const router = useRouter()
     const categoryStore = useCategoryStore()
     const { loadSuggestions, blurSuggestions } = categoryStore
     const { app } = useContext()
     const isMobile = ref(app.$breakpoints.isMobile)
 
     const pvInput = ref(null)
-    const searchTerm = ref('')
+    const searchTerm = ref(props.value)
 
     const pushSearchTerm = (e) => {
-      emit('submit')
-      router.push({
-        path: app.localePath('shop-search'),
-        query: {
-          searchTerm: e.length ? e : undefined,
-          initialSearchTerm: e.length ? e : undefined,
-          searchType: 'products',
-        },
-      })
-      searchTerm.value = ''
+      emit('submit', e)
+      if (props.clearAfterSubmit) searchTerm.value = ''
     }
 
     const emitFocus = (val) => {
       emit('focus', val)
+    }
+
+    const handleInput = () => {
+      if (!props.disableSuggestions) loadSuggestions()
     }
 
     onMounted(() => {
@@ -67,7 +79,9 @@ export default defineComponent({
       loadSuggestions,
       blurSuggestions,
       pvInput,
+
       emitFocus,
+      handleInput,
     }
   },
 })
