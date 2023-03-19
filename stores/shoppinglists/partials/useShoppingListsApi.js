@@ -13,7 +13,11 @@ export const useShoppingListsApi = () => {
   const getShoppingLists = async () => {
     try {
       const result = await axios.$get(`${config.SHOPPING_LISTS}`)
-      return result?.shoppinglists
+      return typeof result === 'object' &&
+        !result.error &&
+        Array.isArray(result.shoppinglists)
+        ? result?.shoppinglists
+        : []
     } catch (error) {
       logger.error('Error when fetching shopping lists. Returning empty list.')
       return []
@@ -27,7 +31,7 @@ export const useShoppingListsApi = () => {
   const getShoppingList = async (id) => {
     try {
       const result = await axios.$get(`${config.SHOPPING_LISTS}/${id}`)
-      return result
+      return typeof result === 'object' && !result.error ? result : null
     } catch (error) {
       logger.error('Error getting shopping list. Returning null.')
       return null
@@ -46,7 +50,7 @@ export const useShoppingListsApi = () => {
         name: title,
         description,
       })
-      return result
+      return typeof result === 'object' && !result?.error ? result : -1
     } catch (error) {
       logger.error(
         'Error when creating shopping list. Returning -1.',
@@ -86,7 +90,7 @@ export const useShoppingListsApi = () => {
   const deleteShoppingList = async (id) => {
     try {
       const result = await axios.$delete(`${config.SHOPPING_LISTS}/${id}`)
-      return result
+      return !result?.error ? result : null
     } catch (error) {
       logger.error(
         'Error when deleting shopping list.',
@@ -171,7 +175,7 @@ export const useShoppingListsApi = () => {
       const result = await axios.$delete(
         `${config.SHOPPING_LISTS}/${listId}/entries/${code}`
       )
-      return (typeof result === 'object' && !result?.error)? true : false
+      return typeof result === 'object' && !result?.error ? true : false
     } catch (error) {
       logger.error(
         'Error when deleting shopping list entry. Returning false.',
