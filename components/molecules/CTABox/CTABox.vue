@@ -31,6 +31,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
 export default defineComponent({
+  name: 'CTABox',
   components: {
     ResponsiveImage,
   },

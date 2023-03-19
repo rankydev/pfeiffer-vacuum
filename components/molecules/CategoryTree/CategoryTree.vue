@@ -23,6 +23,7 @@ import { useCategoryStore } from '~/stores/category/category'
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
+  name: 'CategoryTree',
   components: {
     CategoryCollapse,
     GenericHorizontalSlider,

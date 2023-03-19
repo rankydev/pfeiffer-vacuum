@@ -49,6 +49,7 @@ const DEFAULT_DATA = {
 }
 
 export default defineComponent({
+  name: 'VideoPlayer',
   components: {
     Icon,
     Richtext,
