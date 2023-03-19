@@ -67,7 +67,7 @@
     "vue-slick-carousel": "^1.0.6",
     "vue-slider-component": "^3.2.24",
     "vue-toastification": "^1.7.14",
-    "vue-zoom-on-hover": "^1.0.5",
+    "vue-zoom-on-hover": "^1.0.6",
     "vue2-touch-events": "^2.3.2"
   },
   "devDependencies": {
