@@ -128,6 +128,10 @@ export default defineComponent({
 
     const closeSidebar = () => {
       shoppingListsStore.toggleOverlay()
+    }
+
+    const resetStates = () => {
+      clearForm()
       shoppingListsStore.basicMode()
     }
 
@@ -142,7 +146,7 @@ export default defineComponent({
           descriptionVar.value
         )
       }
-      if (isAddAllMode.value && isAddAllMode.value) {
+      if (isAddMode.value && isAddAllMode.value) {
         const list = await shoppingListsStore.createNewList(
           nameVar.value,
           descriptionVar.value
@@ -156,7 +160,7 @@ export default defineComponent({
           descriptionVar.value
         )
       }
-      clearForm()
+      resetStates()
     }
     const addToShoppingList = async (listId) => {
       closeSidebar()
@@ -166,7 +170,7 @@ export default defineComponent({
       } else {
         await shoppingListsStore.addToShoppingList(listId)
       }
-      clearForm()
+      resetStates()
     }
     const handleForward = async () => {
       if (isBasicMode.value) {
@@ -188,10 +192,10 @@ export default defineComponent({
     const handleBack = () => {
       if (isAddMode.value) {
         shoppingListsStore.basicMode()
-        clearForm()
+        resetStates()
       } else {
         closeSidebar()
-        clearForm
+        resetStates()
       }
     }
 

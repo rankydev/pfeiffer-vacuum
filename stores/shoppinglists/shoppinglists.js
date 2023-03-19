@@ -89,7 +89,7 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
         toast.success(
           {
             description: i18n.t('myaccount.shoppingList.addSuccessful', {
-              listName: result?.data?.name,
+              listName: result?.name,
             }),
           },
           { timeout: 3000 }
@@ -110,7 +110,7 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
   const createNewListAndAddProduct = async (name, description) => {
     const shoppingList = await createNewList(name, description)
     if (shoppingList !== -1) {
-      await addToShoppingList(shoppingList.id)
+      await addToShoppingList(shoppingList?.id)
     }
   }
 
@@ -217,6 +217,7 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
         { timeout: 3000 }
       )
       await initialShoppingListsLoad()
+      await cartStore.resetCurrentCart()
     } else {
       toast.error(
         {

@@ -169,7 +169,7 @@ export const useCategoryStore = defineStore('category', () => {
   }
 
   const getCleanedText = (text) => {
-    return text.trim().replace(/\s+/g, ' ')
+    return text?.trim()?.replace(/\s+/g, ' ')
   }
 
   const loadSuggestions = async (text, returnResponse = false) => {

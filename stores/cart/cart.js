@@ -117,7 +117,7 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   const resetCurrentCart = async () => {
-    currentCart.value = null
+    currentCart.value = {}
     removeCookie('cart')
     await loadCart()
   }

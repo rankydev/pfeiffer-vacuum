@@ -50,7 +50,7 @@ export const useShoppingListsApi = () => {
         name: title,
         description,
       })
-      return typeof result === 'object' && !result?.error ? result : -1
+      return result
     } catch (error) {
       logger.error(
         'Error when creating shopping list. Returning -1.',
@@ -73,7 +73,7 @@ export const useShoppingListsApi = () => {
         `${config.SHOPPING_LISTS}/${listId}/entries`,
         { amount, product: { code: productCode } }
       )
-      return result?.status === 201 ? result : null
+      return result
     } catch (error) {
       logger.error(
         'Error when adding to shopping list. Returning false.',

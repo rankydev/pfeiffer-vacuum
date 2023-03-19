@@ -240,6 +240,7 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-mb-4;
+    @apply tw-w-full;
 
     @screen md {
       @apply tw-flex-row;
@@ -253,6 +254,7 @@ export default defineComponent({
 
     &--headline {
       @screen md {
+        @apply tw-min-w-fit;
         @apply tw-my-auto;
       }
     }
@@ -263,8 +265,8 @@ export default defineComponent({
 
       @screen md {
         @apply tw-flex-row;
-        @apply tw-ml-auto;
         @apply tw-my-auto;
+        @apply tw-ml-auto;
       }
 
       &__select {

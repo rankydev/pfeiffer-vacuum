@@ -8,7 +8,7 @@
         v-if="!isEditMode"
         class="shopping-list-detail-page__header--headline"
         :headline="nameVar + countProductsString"
-        :link="localePath('shop-my-account')"
+        :link="localePath('shop-my-account-shopping-lists')"
       />
       <PvInput
         v-if="isEditMode"

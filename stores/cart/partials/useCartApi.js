@@ -20,8 +20,9 @@ export const useCartApi = (currentCart, currentCartGuid) => {
   /**
    * Cart helper functions
    */
-  const loadCart = async (create) =>
-    (currentCart.value = await getOrCreateCart(create))
+  const loadCart = async (create) => {
+    currentCart.value = await getOrCreateCart(create)
+  }
 
   const validateCart = (res) => {
     return res && typeof res === 'object' && !res.error && !res.errors
