@@ -32,7 +32,9 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 
-export default defineComponent({})
+export default defineComponent({
+  name: 'Logo',
+})
 </script>
 
 <style lang="scss">

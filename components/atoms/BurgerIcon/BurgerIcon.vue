@@ -27,6 +27,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  name: 'BurgerIcon',
   props: {
     /**
      * Control the burger icon form

@@ -26,6 +26,8 @@
 <script>
 import { ref, defineComponent } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
+import { useMenuStore } from '~/stores/menu'
+import { useMyAccountStore } from '~/stores/myaccount'
 
 import Logo from '~/components/atoms/Logo/Logo.vue'
 import SearchHeader from './partials/SearchHeader/SearchHeader.vue'
@@ -33,9 +35,6 @@ import TopNavigation from './partials/TopNavigation/TopNavigation.vue'
 import MainNavigation from './partials/MainNavigation/MainNavigation.vue'
 import ShopNavigation from './partials/ShopNavigation/ShopNavigation.vue'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper.vue'
-
-import { useMenuStore } from '~/stores/menu'
-import { useMyAccountStore } from '~/stores/myaccount'
 
 export default defineComponent({
   name: 'Header',
