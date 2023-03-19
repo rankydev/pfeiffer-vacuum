@@ -113,7 +113,7 @@
     "stylelint-config-standard": "^25.0.0",
     "stylelint-junit-formatter": "^0.2.2",
     "stylelint-processor-html": "^1.0.0",
-    "tailwindcss": "^3.0.18"
+    "tailwindcss": "^3.2.7"
   },
   "engines": {
     "npm": ">=7.0.0",
