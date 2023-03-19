@@ -10,15 +10,15 @@
       <path
         d="M0 0H24V2H0V0Z"
         class="burger-icon__path burger-icon__path--top"
-      ></path>
+      />
       <path
         d="M0 7H24V9H0V7Z"
         class="burger-icon__path burger-icon__path--middle"
-      ></path>
+      />
       <path
         d="M0 14H24V16H0V14Z"
         class="burger-icon__path burger-icon__path--bottom"
-      ></path>
+      />
     </g>
   </svg>
 </template>

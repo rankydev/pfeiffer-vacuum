@@ -17,10 +17,10 @@
 <script>
 import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
 import { joinURL } from 'ufo'
+import { storeToRefs } from 'pinia'
+import { useCategoryStore } from '~/stores/category/category'
 import CategoryCollapse from './partials/CategoryCollapse'
 import GenericHorizontalSlider from '~/components/molecules/GenericHorizontalSlider/GenericHorizontalSlider.vue'
-import { useCategoryStore } from '~/stores/category/category'
-import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'CategoryTree',
