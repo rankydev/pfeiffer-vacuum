@@ -72,7 +72,7 @@
     @apply tw-flex-col;
     @apply tw-w-1/2;
     @apply tw-pl-8 tw-pt-4;
-    padding-bottom: 88px;
+    @apply tw-pb-[88px];
 
     &__element {
       @apply tw-border-b-0;
