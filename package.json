@@ -27,7 +27,7 @@
     "cms:sync:ci": "node -r esm ./bin/nuxt-storyblok.js sync"
   },
   "dependencies": {
-    "@jest/globals": "^27.5.1",
+    "@jest/globals": "^29.5.0",
     "@nuxt/image": "^0.6.2",
     "@nuxt/ufo": "^0.5.4",
     "@nuxtjs/axios": "^5.13.6",
