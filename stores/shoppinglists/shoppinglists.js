@@ -3,7 +3,6 @@ import { computed, onMounted, ref, watch } from '@nuxtjs/composition-api'
 import { useShoppingListsApi } from './partials/useShoppingListsApi'
 import { useUserStore } from '~/stores/user'
 import { useCartStore } from '~/stores/cart'
-import { useProductStore } from '~/stores/product'
 import { useToast } from '~/composables/useToast'
 import { useContext } from '@nuxtjs/composition-api'
 
@@ -13,6 +12,8 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
   const { i18n } = useContext()
 
   const currentShoppingLists = ref([])
+  const currrentProduct = ref({})
+  const productAmount = ref(1)
   const overlayState = ref(false)
   const stateMode = ref('basic')
   const addAllMode = ref(false)
@@ -23,20 +24,16 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
   const cartStore = useCartStore()
   const { currentCart } = storeToRefs(cartStore)
 
-  const productStore = useProductStore()
-  const { product } = storeToRefs(productStore)
-  const productAmount = ref(1)
-
   const setProductAmount = (amount) => {
     productAmount.value = amount
   }
 
   const setProduct = (productVar) => {
-    product.value = productVar
+    currrentProduct.value = productVar
   }
 
   const productId = computed(() => {
-    return product.value?.code || -1
+    return currrentProduct.value?.code || -1
   })
 
   const initialShoppingListsLoad = async () => {

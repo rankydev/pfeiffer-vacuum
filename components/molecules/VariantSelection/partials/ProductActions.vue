@@ -196,6 +196,7 @@ export default defineComponent({
 
     const addToProductList = () => {
       shopppingListStore.setProductAmount(userSelectedOrderQuantity.value)
+      shopppingListStore.setProduct(product.value)
       shopppingListStore.toggleOverlay()
     }
 
