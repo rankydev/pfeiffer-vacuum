@@ -99,7 +99,7 @@
     "eslint-plugin-storybook": "^0.6.11",
     "eslint-plugin-unused-imports": "^2.0.0",
     "eslint-plugin-vue": "^9.9.0",
-    "husky": "^7.0.4",
+    "husky": "^8.0.3",
     "jest": "^27.5.1",
     "jest-fail-on-console": "^2.3.0",
     "jest-junit": "^14.0.0",
