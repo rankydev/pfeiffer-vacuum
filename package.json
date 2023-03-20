@@ -41,6 +41,7 @@
     "@vuelidate/core": "^2.0.0",
     "@vuelidate/validators": "^2.0.0",
     "@vueuse/core": "^9.13.0",
+    "axios-auth-refresh": "^3.3.6",
     "consola": "^2.15.3",
     "cookie": "^0.5.0",
     "core-js": "^3.29.1",
