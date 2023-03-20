@@ -138,6 +138,40 @@
 }
 
 .primary-nav-1 {
+  @screen md {
+    @include scrollbar-nav;
+    @apply tw-block;
+    @apply tw-overflow-auto;
+    padding-bottom: 170px; // match height of 2nd level when scrolling
+
+    &::after {
+      @apply tw-absolute;
+      content: '';
+      height: 7rem;
+      width: calc(50% - 2.1rem);
+      bottom: 0rem;
+      /* stylelint-disable */
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.51) 0%,
+        #ffffff 62.5%
+      );
+      /* stylelint-enable */
+    }
+  }
+
+  @screen lg {
+    &::after {
+      width: calc(25% - 2.1rem);
+    }
+  }
+
+  &__buttons {
+    @screen md {
+      z-index: 1;
+    }
+  }
+
   &__wrapper {
     .primary-nav-1__label {
       @apply tw-font-normal;
@@ -155,6 +189,16 @@
   @screen md {
     &--passive {
       @apply tw-bg-pv-grey-96;
+
+      &::after {
+        /* stylelint-disable */
+        background: linear-gradient(
+          180deg,
+          rgba(245, 245, 245, 0.51) 0%,
+          #f5f5f5 10%
+        );
+        /* stylelint-enable */
+      }
 
       .primary-nav-1 {
         &__buttons {
@@ -190,22 +234,10 @@
   }
 
   @screen md {
+    @include scrollbar-nav;
     @apply tw-bg-pv-white;
     @apply tw-w-full tw-h-full;
     @apply tw-overflow-auto;
-
-    &::-webkit-scrollbar-track {
-      @apply tw-bg-pv-white;
-    }
-
-    &::-webkit-scrollbar {
-      @apply tw-bg-pv-white;
-      width: 2px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      @apply tw-bg-pv-red;
-    }
 
     &__wrapper {
       @apply tw-absolute;
