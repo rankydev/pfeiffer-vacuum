@@ -10,6 +10,17 @@
         :headline="nameVar + countProductsString"
         :link="localePath('shop-my-account-shopping-lists')"
       />
+      <div
+        v-if="!isEditMode && descriptionVar"
+        class="shopping-list-detail-page__header--description"
+      >
+        <h3 class="shopping-list-detail-page__header--description__title">
+          {{ $t('myaccount.shoppingList.description') }}
+        </h3>
+        <p class="shopping-list-detail-page__header--description__text">
+          {{ descriptionVar }}
+        </p>
+      </div>
       <PvInput
         v-if="isEditMode"
         v-model="nameVar"
@@ -294,12 +305,49 @@ export default defineComponent({
       }
     }
 
+    &--description {
+      @apply tw-mt-6;
+      @apply tw-p-6;
+      @apply tw-bg-pv-grey-96;
+      @apply tw-rounded-md;
+      @apply tw-col-start-1 tw-col-end-13;
+
+      @screen md {
+        @apply tw-mt-8;
+      }
+
+      &__title {
+        @apply tw-text-xl;
+        @apply tw-leading-8;
+        @apply tw-font-bold;
+
+        @screen md {
+          @apply tw-text-base;
+          @apply tw-leading-6;
+        }
+      }
+
+      &__text {
+        @apply tw-text-base;
+        @apply tw-leading-6;
+        @apply tw-font-normal;
+        @apply tw-mt-2;
+
+        @screen md {
+          @apply tw-text-sm;
+          @apply tw-leading-6;
+        }
+      }
+    }
+
     &--nav {
       @apply tw-flex;
       @apply tw-flex-col;
       @apply tw-row-start-2 tw-row-end-3;
       @apply tw-col-start-1 tw-col-end-13;
       @apply tw-mt-6;
+      @apply tw-min-w-[123px];
+      @apply tw-w-fit;
 
       @screen md {
         @apply tw-flex-row;
@@ -307,12 +355,12 @@ export default defineComponent({
         @apply tw-col-start-11 tw-col-end-13;
         @apply tw-mt-0;
         @apply tw-justify-end;
+        @apply tw-w-fit;
       }
 
       &__select {
         @apply tw-mb-4;
         @apply tw-min-w-fit;
-        @apply tw-w-[123px];
 
         @screen md {
           @apply tw-mb-0;
@@ -326,7 +374,6 @@ export default defineComponent({
 
       &__new {
         @apply tw-min-w-fit;
-        @apply tw-w-[123px];
 
         @screen lg {
           @apply tw-w-fit;
