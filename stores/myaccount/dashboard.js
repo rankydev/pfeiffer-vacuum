@@ -17,12 +17,17 @@ export const useDashboardStore = defineStore('dashboard', () => {
 
   const shoppingLists = ref()
 
+  const isLoading = ref(false)
+
+  const recentRequests = ref()
+  const recentShoppingLists = ref()
+
   const getRecentRequestsTableData = async () => {
     if (!orders?.value?.length) {
       orders.value = await myAccountStore.getOrders()
     }
 
-    return orders.value?.orders?.slice(0, 4).map((order) => {
+    recentRequests.value = orders.value?.orders?.slice(0, 4).map((order) => {
       const orderUrl = `${localePath('shop-my-account-request-history')}/${
         order.code
       }`
@@ -117,7 +122,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
       shoppingLists.value = await getShoppingLists()
     }
 
-    return shoppingLists.value?.slice(0, 4).map((list) => {
+    recentShoppingLists.value = shoppingLists.value?.slice(0, 4).map((list) => {
       const shoppingListUrl = `${localePath(
         'shop-my-account-shopping-lists'
       )}/${list.id}`
@@ -245,6 +250,15 @@ export const useDashboardStore = defineStore('dashboard', () => {
     ],
   }
 
+  const getDashboardData = async () => {
+    isLoading.value = true
+
+    await getRecentRequestsTableData()
+    await getRecentShoppingListsTableData()
+
+    isLoading.value = false
+  }
+
   return {
     // States
     recentRequestsTableHeader,
@@ -253,12 +267,13 @@ export const useDashboardStore = defineStore('dashboard', () => {
     accountDataContent,
     companyDataContent,
     buttons,
+    isLoading,
+    recentRequests,
+    recentShoppingLists,
 
     //Getters
-    getRecentRequestsTableData,
-    getRecentShoppingListsTableData,
-
     // getOrders,
     // Actions
+    getDashboardData,
   }
 })
