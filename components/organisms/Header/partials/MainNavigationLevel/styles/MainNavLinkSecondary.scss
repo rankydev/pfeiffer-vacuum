@@ -146,10 +146,10 @@
 
     &::after {
       @apply tw-absolute;
+      @apply tw-bottom-0;
       content: '';
       height: 7rem;
       width: calc(50% - 2.1rem);
-      bottom: 0rem;
       /* stylelint-disable */
       background: linear-gradient(
         180deg,
