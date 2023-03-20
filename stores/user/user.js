@@ -40,6 +40,7 @@ export const useUserStore = defineStore('user', () => {
     createKeycloakInstance,
     setCookiesAndSaveAuthData,
     removeCookiesAndDeleteAuthData,
+    forceTokenRefreshAndUpdate,
   } = useKeycloak()
 
   const isLoading = ref(false)
@@ -471,5 +472,6 @@ export const useUserStore = defineStore('user', () => {
     getDeliveryAddressByID,
     loadAddressData,
     register,
+    forceTokenRefreshAndUpdate,
   }
 })
