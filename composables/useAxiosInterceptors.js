@@ -85,17 +85,17 @@ export const useAxiosInterceptors = () => {
   function logResponseError(error) {
     const config4log = getConfig4log(error.config || {})
     if (error.response?.data && typeof error.response?.data !== 'string') {
-      const requestId = `[${error.response.data.errors[0]?.requestId}]`
+      const requestId = `[${error.response?.data?.errors[0]?.requestId}]`
 
       logger.error(
         'Error during shop request',
         requestId,
-        `HTTP Status ${error.response.status}`,
+        `HTTP Status ${error.response?.status}`,
         config4log
       )
       logger.error(
-        error.response.data.errors
-          .filter((e) => e.stackTrace)
+        error.response?.data?.errors
+          ?.filter((e) => e.stackTrace)
           .map((e) => e.stackTrace)
           .join('\n\n')
       )
