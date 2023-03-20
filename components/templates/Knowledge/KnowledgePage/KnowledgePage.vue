@@ -5,21 +5,23 @@
     :fallback-slug="slugs.fallbackSlug"
     :language="slugs.language"
   >
-    <template #default="{ result: { data } }">
-      <Page v-if="data" v-bind="data">
-        <template #default>
-          <ContentWrapper>
-            <nuxt-dynamic
-              v-for="item in enrichedStage"
-              :key="item._uid"
-              v-editable="item"
-              v-bind="item"
-              :name="item.uiComponent || item.component"
-            />
-            <KnowledgeContent />
-          </ContentWrapper>
-        </template>
-      </Page>
+    <template #default="{ result: { data, loading } }">
+      <LoadingSpinner :show="loading" container-min-height>
+        <Page v-if="data" v-bind="data">
+          <template #default>
+            <ContentWrapper>
+              <nuxt-dynamic
+                v-for="item in enrichedStage"
+                :key="item._uid"
+                v-editable="item"
+                v-bind="item"
+                :name="item.uiComponent || item.component"
+              />
+              <KnowledgeContent />
+            </ContentWrapper>
+          </template>
+        </Page>
+      </LoadingSpinner>
     </template>
   </CmsQuery>
 </template>
@@ -38,6 +40,7 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import useTemplating from '~/composables/useTemplating'
 import KnowledgeContent from '~/components/molecules/KnowledgeContent/KnowledgeContent'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   name: 'KnowledgePage',
@@ -45,6 +48,7 @@ export default defineComponent({
     Page,
     ContentWrapper,
     KnowledgeContent,
+    LoadingSpinner,
   },
   props: {
     content: {

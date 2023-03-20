@@ -5,14 +5,16 @@
     :fallback-slug="slugs.fallbackSlug"
     :language="slugs.language"
   >
-    <template #default="{ result: { data } }">
-      <Page v-if="data" v-bind="data">
-        <template #default>
-          <ContentWrapper>
-            <KnowledgeDetails v-bind="{ content }" />
-          </ContentWrapper>
-        </template>
-      </Page>
+    <template #default="{ result: { data, loading } }">
+      <LoadingSpinner :show="loading" container-min-height>
+        <Page v-if="data" v-bind="data">
+          <template #default>
+            <ContentWrapper>
+              <KnowledgeDetails v-bind="{ content }" />
+            </ContentWrapper>
+          </template>
+        </Page>
+      </LoadingSpinner>
     </template>
   </CmsQuery>
 </template>
@@ -28,6 +30,7 @@ import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import KnowledgeDetails from '~/components/molecules/KnowledgeDetails/KnowledgeDetails'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   name: 'KnowledgeDetailPage',
@@ -35,6 +38,7 @@ export default defineComponent({
     Page,
     ContentWrapper,
     KnowledgeDetails,
+    LoadingSpinner,
   },
   props: {
     content: {
