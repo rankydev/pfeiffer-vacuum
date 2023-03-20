@@ -111,7 +111,8 @@ export default defineComponent({
     const { product } = useProductStore()
     const empolisStore = useEmpolisStore()
     const { i18n } = useContext()
-    const { getDownloadButtonBaseConfig } = useEmpolisHelper()
+    const { getDownloadButtonBaseConfig, getFileInEmpolisUrl } =
+      useEmpolisHelper()
 
     const categoryFilter = ref([])
     const languageFilter = ref([])
@@ -272,23 +273,35 @@ export default defineComponent({
         })
 
         const actionBaseData = {
-          ...getDownloadButtonBaseConfig(file),
-          icon: 'file_download',
           variant: 'secondary',
           shape: 'outlined',
         }
 
+        const donwloadActionBaseData = {
+          ...actionBaseData,
+          ...getDownloadButtonBaseConfig(file),
+          icon: 'file_download',
+        }
+
         const actions = [
           {
-            ...actionBaseData,
+            ...donwloadActionBaseData,
             desktop: true,
             mobile: false,
           },
           {
-            ...actionBaseData,
+            ...donwloadActionBaseData,
             desktop: false,
             mobile: true,
             label: i18n.t('product.download'),
+          },
+          {
+            ...actionBaseData,
+            target: '_blank',
+            icon: 'open_in_new',
+            href: getFileInEmpolisUrl(file.id),
+            desktop: true,
+            mobile: true,
           },
         ]
 
@@ -338,6 +351,11 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-mb-6;
+    @apply tw-px-4;
+
+    @screen md {
+      @apply tw-px-0;
+    }
   }
 
   &__filter {
