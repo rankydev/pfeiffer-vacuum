@@ -10,6 +10,7 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import Link from '~/components/atoms/Link/Link.vue'
 
 export default defineComponent({
+  name: 'SocialMediaIconLink',
   components: {
     Link,
     Icon,

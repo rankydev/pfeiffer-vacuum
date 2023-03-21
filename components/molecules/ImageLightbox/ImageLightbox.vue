@@ -44,6 +44,7 @@ import { defineComponent, toRefs } from '@nuxtjs/composition-api'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal'
 import ImageThumbnails from '~/components/molecules/ImageThumbnails/ImageThumbnails'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
+import Button from '~/components/atoms/Button/Button.vue'
 
 export default defineComponent({
   name: 'ImageLightbox',
@@ -51,6 +52,7 @@ export default defineComponent({
     GenericModal,
     ImageThumbnails,
     ResponsiveImage,
+    Button,
   },
   props: {
     value: {

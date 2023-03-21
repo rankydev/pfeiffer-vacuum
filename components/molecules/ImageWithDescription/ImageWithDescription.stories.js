@@ -1,8 +1,8 @@
-import ImageWithDescription from '~/components/molecules/ImageWithDescription/ImageWithDescription.vue'
+import ImageWithDescription from './ImageWithDescription.vue'
 import {
   aspectRatioOptions,
   imageWithDescriptionContent,
-} from '/components/molecules/ImageWithDescription/ImageWithDescription.stories.content'
+} from './ImageWithDescription.stories.content'
 
 const argTypes = {
   image: {
@@ -42,7 +42,8 @@ const Template = (args) => ({
   setup() {
     return { args }
   },
-  template: `<ImageWithDescription v-bind="args"/>`,
+  template: `
+    <ImageWithDescription v-bind="args"/>`,
 })
 
 export const Default = Template.bind({})

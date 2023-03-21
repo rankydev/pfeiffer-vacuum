@@ -68,11 +68,11 @@
   </div>
 </template>
 <script>
-import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
-import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
-import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
 import { defineComponent, ref } from '@nuxtjs/composition-api'
 import { required, email, helpers } from '@vuelidate/validators'
+import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
+import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
+import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
 
 export default defineComponent({
   name: 'GeneralRequest',

@@ -36,6 +36,7 @@ import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
+  name: 'HelpContainer',
   components: { Richtext, Icon },
   props: {
     /**

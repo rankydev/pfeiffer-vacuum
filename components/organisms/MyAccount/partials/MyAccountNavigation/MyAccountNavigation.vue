@@ -4,8 +4,8 @@
       <div class="myaccount-navigation__list">
         <NuxtLink
           v-for="(item, index) in menuItems"
-          :key="item.href"
-          :to="item.href"
+          :key="index"
+          :to="localePath(item.href)"
           class="myaccount-navigation__list-item"
           :class="`myaccount-navigation__list-item--${
             index === 0 ? 'heading' : 'subpage'

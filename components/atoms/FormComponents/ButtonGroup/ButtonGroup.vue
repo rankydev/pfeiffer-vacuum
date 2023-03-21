@@ -30,7 +30,9 @@
   </div>
 </template>
 <script>
-export default {
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   name: 'ButtonGroup',
   props: {
     values: {
@@ -48,7 +50,7 @@ export default {
     },
   },
   emits: ['update'],
-}
+})
 </script>
 <style lang="scss">
 .button-group {

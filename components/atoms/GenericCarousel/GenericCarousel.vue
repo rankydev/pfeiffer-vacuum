@@ -60,11 +60,11 @@ import {
   computed,
   useContext,
 } from '@nuxtjs/composition-api'
+import { useResizeObserver } from '@vueuse/core'
+import tailwindconfig from '~/tailwind.config'
 import VueSlickCarousel from 'vue-slick-carousel'
 import Button from '~/components/atoms/Button/Button'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import tailwindconfig from '~/tailwind.config'
-import { useResizeObserver } from '@vueuse/core'
 
 export default defineComponent({
   name: 'GenericCarousel',

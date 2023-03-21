@@ -35,7 +35,7 @@
       ]"
       @error="handleImageError"
     />
-    <div v-if="withGradient" class="responsive-image__gradient-overlay"></div>
+    <div v-if="withGradient" class="responsive-image__gradient-overlay" />
   </picture>
 
   <div
@@ -62,6 +62,7 @@ import {
 import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
+  name: 'ResponsiveImage',
   components: { Icon },
   props: {
     /**
