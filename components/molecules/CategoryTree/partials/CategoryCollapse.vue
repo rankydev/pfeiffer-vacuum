@@ -25,19 +25,20 @@
   </div>
 </template>
 <script>
-import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse'
-import Icon from '~/components/atoms/Icon/Icon'
-import { joinURL } from 'ufo'
 import {
   defineComponent,
   computed,
   ref,
   useRoute,
 } from '@nuxtjs/composition-api'
+import { joinURL } from 'ufo'
 import { useCategoryStore } from '~/stores/category/category'
 import { storeToRefs } from 'pinia'
+import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse'
+import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
+  name: 'CategoryCollapse',
   components: {
     AnimatedCollapse,
     Icon,

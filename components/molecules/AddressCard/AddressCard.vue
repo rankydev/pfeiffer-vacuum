@@ -140,7 +140,7 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import { useCountriesStore } from '~/stores/countries'
 
 export default defineComponent({
-  name: 'AdressDataItem',
+  name: 'AddressCard',
   components: { Button, Icon },
   props: {
     headline: {

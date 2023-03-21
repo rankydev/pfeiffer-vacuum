@@ -50,6 +50,7 @@ import Button from '~/components/atoms/Button/Button.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
+  name: 'CustomContentCard',
   components: { GenericCard, ResponsiveImage, Button, Icon },
   props: {
     /**

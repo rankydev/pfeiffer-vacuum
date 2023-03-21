@@ -85,13 +85,14 @@
 
 <script>
 import { ref, computed, defineComponent } from '@nuxtjs/composition-api'
+import { useInputValidator } from '~/composables/useValidator'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
-import { useInputValidator } from '~/composables/useValidator'
-import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
 export default defineComponent({
+  name: 'Password',
   components: {
     Icon,
     PvLabel,

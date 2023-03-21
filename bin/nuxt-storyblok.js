@@ -63,12 +63,10 @@ async function _run() {
   })
 
   try {
-    switch (mode) {
-      case 'sync':
-        await syncComponents(api, components)
-        return
-      default:
-        logger.error(`Command "${mode}" not found`)
+    if (mode === 'sync') {
+      await syncComponents(api, components)
+    } else {
+      logger.error(`Command "${mode}" not found`)
     }
   } catch (e) {
     logger.error(e)
