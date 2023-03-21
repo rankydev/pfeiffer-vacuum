@@ -12,9 +12,10 @@
   </label>
 </template>
 <script>
+import { defineComponent } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon'
 
-export default {
+export default defineComponent({
   name: 'Checkbox',
   components: {
     Icon,
@@ -35,7 +36,7 @@ export default {
     },
   },
   emits: ['update'],
-}
+})
 </script>
 <style lang="scss">
 .checkbox {

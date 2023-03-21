@@ -64,6 +64,7 @@ import { defineComponent, computed, useRoute } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 
 export default defineComponent({
+  name: 'Pagination',
   components: { Icon },
   props: {
     /**

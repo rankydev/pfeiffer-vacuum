@@ -39,13 +39,18 @@
   </ContentWrapper>
 </template>
 <script>
-import { computed, ref, onBeforeMount } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  computed,
+  ref,
+  onBeforeMount,
+} from '@nuxtjs/composition-api'
+import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 import Button from '~/components/atoms/Button/Button'
 import Icon from '~/components/atoms/Icon/Icon'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
-import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
 
-export default {
+export default defineComponent({
   components: {
     Button,
     Icon,
@@ -111,7 +116,7 @@ export default {
 
     return { sanitizer, icon, isSlim }
   },
-}
+})
 </script>
 <style lang="scss">
 .global-message {

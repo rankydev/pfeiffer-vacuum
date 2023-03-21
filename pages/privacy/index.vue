@@ -32,8 +32,12 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { useRoute, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useRoute,
+  useContext,
+} from '@nuxtjs/composition-api'
 
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'

@@ -42,9 +42,9 @@ import {
   toRef,
   watch,
 } from '@nuxtjs/composition-api'
-import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import { useCountriesStore } from '~/stores/countries'
 import { helpers, required } from '@vuelidate/validators'
+import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 
 export default defineComponent({
   name: 'FormCountrySelection',

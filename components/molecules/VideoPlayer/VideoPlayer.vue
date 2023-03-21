@@ -11,7 +11,7 @@
           <img class="video-player__preview" :src="image" :alt="title" />
         </picture>
 
-        <button class="video-player__button">
+        <button class="video-player__button" aria-label="video-player-button">
           <Icon
             class="video-player__icon"
             :class="`video-player__icon--${icon}`"
@@ -49,6 +49,7 @@ const DEFAULT_DATA = {
 }
 
 export default defineComponent({
+  name: 'VideoPlayer',
   components: {
     Icon,
     Richtext,

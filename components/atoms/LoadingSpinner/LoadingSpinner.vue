@@ -24,6 +24,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  name: 'LoadingSpinner',
   props: {
     show: {
       type: Boolean,

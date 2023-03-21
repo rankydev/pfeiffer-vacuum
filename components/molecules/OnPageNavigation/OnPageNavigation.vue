@@ -30,6 +30,7 @@ import Breadcrumb from '~/components/molecules/Breadcrumb/Breadcrumb.vue'
 import { usePageStore } from '~/stores/page'
 
 export default defineComponent({
+  name: 'OnPageNavigation',
   components: {
     Link,
     ContentWrapper,
