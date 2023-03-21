@@ -3,10 +3,12 @@ export default {
   display_name: 'KnowledgeAuthor',
   schema: {
     image: {
-      type: 'bloks',
-      maximum: 1,
-      restrict_components: true,
-      component_whitelist: ['ResponsiveImage'],
+      type: 'asset',
+      filetypes: ['images'],
+      translatable: true,
+      description: 'Image',
+      display_name: 'Image',
+      required: true,
     },
     name: {
       type: 'text',
