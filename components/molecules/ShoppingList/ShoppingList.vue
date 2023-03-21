@@ -67,8 +67,8 @@ export default defineComponent({
     const sortByPrice = () => {
       return [...products.value].sort((a, b) => {
         return priceSortedDsc.value
-          ? b?.basePrice?.value - a?.basePrice?.value
-          : a?.basePrice?.value - b?.basePrice?.value
+          ? b?.price?.value - a?.price?.value
+          : a?.price?.value - b?.price?.value
       })
     }
 
