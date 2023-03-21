@@ -15,6 +15,7 @@ export default (context) => {
     return {
       headers: {
         ...headers,
+        'Accept-Language': context?.i18n?.locale === 'de' ? 'de' : 'en',
         [authHeader]: `${auth.value?.token_type} ${auth.value?.access_token}`,
       },
     }
@@ -23,12 +24,6 @@ export default (context) => {
   return {
     httpEndpoint: baseURL,
     browserHttpEndpoint: `/${CURRENT_REGION_CODE}${PATH_VACUUM_CALC}/graphql`,
-    httpLinkOptions: {
-      headers: {
-        // TODO this doesn't work right now because somehow i18n is not available at that point
-        'Accept-Language': context.app?.i18n?.locale === 'de' ? 'de' : 'en',
-      },
-    },
     link: authLink,
   }
 }
