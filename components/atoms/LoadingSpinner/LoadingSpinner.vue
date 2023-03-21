@@ -1,5 +1,8 @@
 <template>
-  <div class="loading-spinner">
+  <div
+    class="loading-spinner"
+    :class="{ 'loading-spinner--min-height': containerMinHeight }"
+  >
     <slot>
       <div
         class="loading-spinner__placeholder"
@@ -40,6 +43,10 @@ export default defineComponent({
       default: 'normal',
       validator: (val) => ['small', 'normal'].includes(val),
     },
+    containerMinHeight: {
+      type: Boolean,
+      default: false,
+    },
   },
 })
 </script>
@@ -49,6 +56,10 @@ export default defineComponent({
 
 .loading-spinner {
   @apply tw-relative;
+
+  &--min-height {
+    min-height: 300px;
+  }
 
   &__placeholder {
     &--normal {

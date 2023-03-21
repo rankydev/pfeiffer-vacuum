@@ -15,12 +15,14 @@
             :fallback-slug="slugs.fallbackSlug"
             :language="slugs.language"
           >
-            <template #default="{ result: { data } }">
-              <Page v-if="data" v-bind="data" :min-height-page="false">
-                <template #default>
-                  <NuxtChild />
-                </template>
-              </Page>
+            <template #default="{ result: { data, loading } }">
+              <LoadingSpinner :show="loading" container-min-height>
+                <Page v-if="data" v-bind="data" :min-height-page="false">
+                  <template #default>
+                    <NuxtChild />
+                  </template>
+                </Page>
+              </LoadingSpinner>
             </template>
           </CmsQuery>
         </Transition>
@@ -43,6 +45,7 @@ import MyAccountManager from '~/components/organisms/MyAccount/sidebar/MyAccount
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   name: 'MyAccount',
@@ -51,6 +54,7 @@ export default defineComponent({
     ContentWrapper,
     MyAccountSidebar,
     MyAccountManager,
+    LoadingSpinner,
   },
   middleware: 'my-account-guard',
   setup() {
