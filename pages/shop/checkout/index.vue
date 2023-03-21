@@ -5,8 +5,8 @@
     :fallback-slug="slugs.fallbackSlug"
     :language="slugs.language"
   >
-    <template #default="{ result: { data, loading: storyblokLoadig } }">
-      <LoadingSpinner :show="storyblokLoadig" container-min-height>
+    <template #default="{ result: { data, loading: storyblokLoading } }">
+      <LoadingSpinner :show="storyblokLoading" container-min-height>
         <Page v-if="data" v-bind="data">
           <template #default>
             <ContentWrapper>
