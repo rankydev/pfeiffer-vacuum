@@ -48,7 +48,7 @@ export default defineComponent({
   emits: ['submit', 'focus'],
   setup(props, { emit }) {
     const categoryStore = useCategoryStore()
-    const { loadSuggestions, blurSuggestions } = categoryStore
+    const { loadSuggestions } = categoryStore
     const { app } = useContext()
     const isMobile = ref(app.$breakpoints.isMobile)
 
@@ -82,8 +82,6 @@ export default defineComponent({
     return {
       pushSearchTerm,
       searchTerm,
-      loadSuggestions,
-      blurSuggestions,
       pvInput,
 
       emitFocus,
