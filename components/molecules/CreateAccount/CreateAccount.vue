@@ -93,10 +93,10 @@
 
 <script>
 import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { required, email, helpers } from '@vuelidate/validators'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import Password from '~/components/atoms/FormComponents/Password/Password'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
-import { required, email, helpers } from '@vuelidate/validators'
 
 export default defineComponent({
   name: 'CreateAccount',

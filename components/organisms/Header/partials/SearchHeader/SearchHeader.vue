@@ -71,6 +71,7 @@ import SearchSuggestions from '~/components/molecules/SearchSuggestions/SearchSu
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
+  name: 'SearchHeader',
   components: {
     SearchInput,
     Icon,

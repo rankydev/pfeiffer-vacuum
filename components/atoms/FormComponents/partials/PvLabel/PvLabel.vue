@@ -11,6 +11,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  name: 'PvLabel',
   props: {
     /**
      * The text displayed over the form component on the left

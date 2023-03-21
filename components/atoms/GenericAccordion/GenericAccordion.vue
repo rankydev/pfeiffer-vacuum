@@ -67,10 +67,14 @@
 import { defineComponent, ref, watch } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
+import Icon from '~/components/atoms/Icon/Icon'
+import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse'
 
 export default defineComponent({
   components: {
     LoadingSpinner,
+    Icon,
+    AnimatedCollapse,
   },
   props: {
     /**
@@ -123,29 +127,26 @@ export default defineComponent({
 
     const active = ref(undefined)
     watch(active, (newVal, oldVal) => {
-      // do not emit a change event when the active index value is set initially below (change value from undefined)
+      // 1. do not emit a change event when the active index value is set initially below (change value from undefined)
       // this is not a real change by the user
-      if (oldVal === undefined) return
-      // do not emit a change event when the new value is null (this means the currently active tab was just deselected)
-      if (newVal === null) return
+      // 2. do not emit a change event when the new value is null (this means the currently active tab was just deselected)
+      if (oldVal === undefined || newVal === null) {
+        return
+      }
 
       // inform parent component about new active tab(s)
       if (props.multiple) {
         emit('newActiveTabList', newVal)
-      } else {
-        const accordionEntry = props.accordionEntries[newVal]
-        if (accordionEntry) {
-          emit('newActiveTab', props.accordionEntries[newVal].slotName)
-        }
+      } else if (props.accordionEntries[newVal]) {
+        emit('newActiveTab', props.accordionEntries[newVal].slotName)
       }
     })
 
     if (props.multiple) {
       const filterActives = (memo, ele, idx) =>
-        ele.isActive === true ? [...memo, idx] : memo
-      const initial = props.accordionEntries.reduce(filterActives, [])
+        ele.isActive ? [...memo, idx] : memo
 
-      active.value = [...initial]
+      active.value = [...props.accordionEntries.reduce(filterActives, [])]
       const hasIdx = (idx) => active.value.includes(idx)
       const findIdx = (idx) => active.value.indexOf(idx)
       const removeIdx = (idx) => active.value.splice(findIdx(idx), 1)
@@ -158,9 +159,8 @@ export default defineComponent({
         sanitizer,
       }
     } else {
-      const findIdx = (ele) => ele.isActive === true
-      const initial = props.accordionEntries.findIndex(findIdx)
-      active.value = initial
+      const findIdx = (ele) => ele.isActive
+      active.value = props.accordionEntries.findIndex(findIdx)
       const hasIdx = (idx) => active.value === idx
 
       return {

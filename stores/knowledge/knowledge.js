@@ -136,7 +136,12 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
 
   const getHybrisDetails = async (type = 'whitepaper', id) => {
     const path = joinURL(config.KNOWLEDGE_API, type, id)
-    return await axios.$get(path)
+    let result = {}
+    await axios
+      .$get(path)
+      .then((res) => (result = res))
+      .catch((e) => logger.error('Could not get hybris details', e))
+    return result
   }
 
   return {

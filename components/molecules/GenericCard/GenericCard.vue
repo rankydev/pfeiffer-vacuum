@@ -54,6 +54,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import Link from '~/components/atoms/Link/Link'
 
 export default defineComponent({
+  name: 'GenericCard',
   components: { Link },
   props: {
     /**

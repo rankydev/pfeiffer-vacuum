@@ -20,8 +20,8 @@
   </div>
 </template>
 <script>
-import Icon from '~/components/atoms/Icon/Icon'
 import { defineComponent, toRefs } from '@nuxtjs/composition-api'
+import Icon from '~/components/atoms/Icon/Icon'
 
 export default defineComponent({
   name: 'ContactRequestSubject',

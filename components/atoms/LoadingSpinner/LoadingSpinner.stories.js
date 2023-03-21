@@ -1,4 +1,5 @@
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
+import Button from '~/components/atoms/Button/Button.vue'
 import { ref } from '@nuxtjs/composition-api'
 
 const argTypes = {
@@ -36,14 +37,14 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-  <div class="documentation-preview">
-    <LoadingSpinner v-bind="args" />
-  </div>
-`,
+    <div class="documentation-preview">
+    <LoadingSpinner v-bind="args"/>
+    </div>
+  `,
 })
 
 const Template2 = (args) => ({
-  components: { LoadingSpinner },
+  components: { LoadingSpinner, Button },
   setup() {
     const loading = ref(false)
 
@@ -57,13 +58,13 @@ const Template2 = (args) => ({
     return { loading, showLoading, args }
   },
   template: `
-  <div class="documentation-preview">
-  <LoadingSpinner v-bind="args" :show="loading">
-    <Button label="Klick hier für den Loading Spinner in Action"
-            @click.native="showLoading()"/>
-  </LoadingSpinner>
-  </div>
-`,
+    <div class="documentation-preview">
+    <LoadingSpinner v-bind="args" :show="loading">
+      <Button label="Klick hier für den Loading Spinner in Action"
+              @click.native="showLoading()"/>
+    </LoadingSpinner>
+    </div>
+  `,
 })
 
 export const Default = Template.bind({})
