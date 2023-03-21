@@ -46,7 +46,7 @@
           applyFilter()
           sendUpdate()
         "
-      ></Button>
+      />
     </div>
   </div>
 </template>

@@ -15,10 +15,11 @@
 <script>
 import { defineComponent } from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
+import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
   name: 'FooterNewsletter',
-  components: { Richtext },
+  components: { Richtext, Button },
   props: {
     /**
      * This is a headline

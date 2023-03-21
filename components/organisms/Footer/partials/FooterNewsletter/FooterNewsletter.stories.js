@@ -3,7 +3,7 @@ import {
   newsletterHeadline,
   newsletterRichtext,
   newsletterButton,
-} from '~/components/organisms/Footer/partials/FooterNewsletter/FooterNewsletter.stories.content.js'
+} from './FooterNewsletter.stories.content.js'
 
 const argTypes = {
   headline: {

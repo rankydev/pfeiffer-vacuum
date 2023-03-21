@@ -38,6 +38,7 @@ import { useMenuStore } from '~/stores/menu'
 import { useCategoryStore } from '~/stores/category'
 
 export default defineComponent({
+  name: 'MainNavigation',
   components: {
     BurgerIcon,
     MainNavigationLevel,

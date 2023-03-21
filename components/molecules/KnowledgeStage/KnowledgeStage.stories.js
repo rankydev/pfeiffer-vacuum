@@ -1,8 +1,8 @@
-import KnowledgeStage from '~/components/molecules/KnowledgeStage/KnowledgeStage.vue'
+import KnowledgeStage from './KnowledgeStage.vue'
 import {
   image,
   date,
-  isWhitePaper,
+  isWhitepaper,
   minutes,
   hours,
   headline,
@@ -18,8 +18,8 @@ const argTypes = {
     defaultValue: date,
     control: { type: 'datetime' },
   },
-  isWhitePaper: {
-    defaultValue: isWhitePaper,
+  isWhitepaper: {
+    defaultValue: isWhitepaper,
     control: { type: 'boolean' },
   },
   minutes: {
@@ -71,4 +71,4 @@ const Template = (args) => ({
 export const Default = Template.bind({})
 
 export const Whitepaper = Template.bind({})
-Whitepaper.args = { isWhitePaper: true }
+Whitepaper.args = { isWhitepaper: true }

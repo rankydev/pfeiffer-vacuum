@@ -67,10 +67,7 @@ describe('axiosForHybris', () => {
         'fulfilledRequest',
         'rejectedRequest'
       )
-      expect(mockUseResponeInterceptor).toBeCalledWith(
-        'fulfilledResponse',
-        'rejectedResponse'
-      )
+      expect(mockUseResponeInterceptor).toBeCalledWith('fulfilledResponse')
     })
 
     test('should return axios instance that was already created on client side', () => {

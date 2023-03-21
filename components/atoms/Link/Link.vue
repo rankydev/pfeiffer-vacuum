@@ -26,6 +26,7 @@ import {
 } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  name: 'Link',
   props: {
     /**
      * The relative or absolute link

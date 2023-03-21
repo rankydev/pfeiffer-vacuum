@@ -71,11 +71,13 @@ export default defineComponent({
       useResizeObserver(window.document.body, updateDimensions)
     })
 
-    const calcXOverflow = (left, contentWidth) => {
+    const calcXOverflow = (leftDistance, contentWidth) => {
       const pageWidth = document.documentElement.clientWidth
-      const xOverflow = left + contentWidth - pageWidth
+      const xOverflow = leftDistance + contentWidth - pageWidth
 
-      return xOverflow > 0 ? Math.max(left - xOverflow, 0) : Math.max(left, 0)
+      return xOverflow > 0
+        ? Math.max(leftDistance - xOverflow, 0)
+        : Math.max(leftDistance, 0)
     }
 
     const left = computed(() => {

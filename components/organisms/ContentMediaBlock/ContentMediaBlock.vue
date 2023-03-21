@@ -36,6 +36,7 @@ import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import { renderHeadline, renderSubline } from '~/utils/richtext'
 
 export default defineComponent({
+  name: 'ContentMediaBlock',
   components: { Richtext },
   props: {
     /**
