@@ -51,7 +51,7 @@
           />
           <span
             v-if="typeof cell === 'object' && cell.bold"
-            class="table-view__cell table-view__cell--bold"
+            class="table-view__cell--bold"
           >
             {{ cell.text }}
           </span>
@@ -60,14 +60,16 @@
             {{ cell.marginal }}
           </span>
         </td>
-        <td class="table-view__cell table-view__cell--action">
-          <Button
-            v-for="(btn, k) in row.actions.filter(
-              (e) => !('desktop' in e) || e.desktop
-            )"
-            :key="`row${i}-action-${k}`"
-            v-bind="btn"
-          />
+        <td class="table-view__cell">
+          <div class="table-view__cell--action">
+            <Button
+              v-for="(btn, k) in row.actions.filter(
+                (e) => !('desktop' in e) || e.desktop
+              )"
+              :key="`row${i}-action-${k}`"
+              v-bind="btn"
+            />
+          </div>
         </td>
       </tr>
     </tbody>

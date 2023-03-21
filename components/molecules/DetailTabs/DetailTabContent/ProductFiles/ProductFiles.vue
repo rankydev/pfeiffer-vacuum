@@ -251,6 +251,7 @@ export default defineComponent({
 
         entries.push({
           text: file.title,
+          bold: true,
           marginal: file.downloadLink.substring(
             file.downloadLink.lastIndexOf('/') + 1
           ),
