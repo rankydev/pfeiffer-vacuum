@@ -41,6 +41,8 @@
           v-for="(cell, j) in row.entries"
           :key="`row${i}-${j}`"
           class="table-view__cell"
+          :class="{ 'table-view__cell--clickable': row.clickAction }"
+          @click="() => (row.clickAction ? row.clickAction() : () => {})"
         >
           <Icon
             v-if="cell.icon"
@@ -186,6 +188,10 @@ export default {
   &__cell {
     @apply tw-p-4;
     @apply tw-text-pv-grey-16;
+
+    &--clickable {
+      @apply tw-cursor-pointer;
+    }
 
     &-wrapper {
       @apply tw-flex;

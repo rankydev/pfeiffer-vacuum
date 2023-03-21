@@ -284,6 +284,8 @@ export default defineComponent({
           icon: 'file_download',
         }
 
+        const fileUrl = getFileInEmpolisUrl(file.id)
+
         const actions = [
           {
             ...donwloadActionBaseData,
@@ -301,15 +303,22 @@ export default defineComponent({
             ...actionBaseData,
             target: '_blank',
             icon: 'open_in_new',
-            href: getFileInEmpolisUrl(file.id),
+            href: fileUrl,
             desktop: true,
             mobile: true,
           },
         ]
 
+        const clickAction = () => {
+          if (process.client && window) {
+            window.open(fileUrl, '_blank').focus()
+          }
+        }
+
         result.push({
           entries,
           actions,
+          clickAction,
         })
       }
 
