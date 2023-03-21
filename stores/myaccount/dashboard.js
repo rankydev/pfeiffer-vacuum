@@ -251,12 +251,15 @@ export const useDashboardStore = defineStore('dashboard', () => {
   }
 
   const getDashboardData = async () => {
-    isLoading.value = true
-
-    await getRecentRequestsTableData()
-    await getRecentShoppingListsTableData()
-
-    isLoading.value = false
+    try {
+      isLoading.value = true
+      await getRecentRequestsTableData()
+      await getRecentShoppingListsTableData()
+    } catch (e) {
+      isLoading.value = true
+    } finally {
+      isLoading.value = false
+    }
   }
 
   return {
