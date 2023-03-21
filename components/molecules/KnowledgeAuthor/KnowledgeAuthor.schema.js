@@ -10,7 +10,7 @@ export default {
       display_name: 'Image',
       required: true,
     },
-    name: {
+    authorName: {
       type: 'text',
       translatable: true,
       required: true,

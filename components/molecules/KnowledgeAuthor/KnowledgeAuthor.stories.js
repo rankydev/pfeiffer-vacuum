@@ -1,5 +1,5 @@
 import KnowledgeAuthor from './KnowledgeAuthor.vue'
-import { name, title, image } from './KnowledgeAuthor.stories.content.js'
+import { authorName, title, image } from './KnowledgeAuthor.stories.content.js'
 const argTypes = {
   image: {
     control: { type: 'array' },
@@ -39,6 +39,6 @@ const Template = (args) => ({
 export const Default = Template.bind({})
 Default.args = {
   image,
-  name,
+  authorName,
   title,
 }
