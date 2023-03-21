@@ -205,6 +205,11 @@ export default {
       @apply tw-justify-end tw-items-center;
       @apply tw-gap-2;
       @apply tw-text-right;
+
+      // need this custom breakpoint to prevent table from overflowing x for long texts in table with two buttons
+      @media screen and (max-width: 860px) {
+        @apply tw-flex-wrap;
+      }
     }
 
     &--bold {

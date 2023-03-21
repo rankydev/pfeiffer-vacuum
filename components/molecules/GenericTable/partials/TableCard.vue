@@ -23,6 +23,7 @@
         :key="`action${j}`"
         v-bind="btn"
         class="table-card__action"
+        :class="{ 'table-card__action--grow': btn.grow }"
       />
     </div>
   </div>
@@ -76,11 +77,10 @@ export default {
   },
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import '/assets/scss/mixins';
 
 .table-card {
-  @include box-shadow;
   @apply tw-flex;
   @apply tw-flex-col;
   @apply tw-rounded-lg;
@@ -126,7 +126,11 @@ export default {
   }
 
   &__action {
-    @apply tw-grow;
+    @apply tw-flex-none;
+
+    &--grow {
+      @apply tw-flex-1;
+    }
   }
 }
 </style>

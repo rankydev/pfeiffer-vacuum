@@ -294,6 +294,7 @@ export default defineComponent({
             desktop: false,
             mobile: true,
             label: i18n.t('product.download'),
+            grow: true, // used for mobile button to have flex 1 instead of 0
           },
           {
             ...actionBaseData,
@@ -338,9 +339,12 @@ export default defineComponent({
 .product-files {
   @apply tw-w-full;
   @apply tw-pt-6;
+  @apply tw-px-4;
+  @apply tw-bg-pv-white;
 
   @screen md {
     @apply tw-pt-8;
+    @apply tw-px-0;
   }
 
   @screen lg {
@@ -351,11 +355,6 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-mb-6;
-    @apply tw-px-4;
-
-    @screen md {
-      @apply tw-px-0;
-    }
   }
 
   &__filter {
