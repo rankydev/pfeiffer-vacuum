@@ -25,9 +25,10 @@
 <script>
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import { ref } from '@nuxtjs/composition-api'
+import Button from '~/components/atoms/Button/Button.vue'
 
 export default {
-  components: { PvInput },
+  components: { PvInput, Button },
   props: {
     editable: {
       type: Boolean,

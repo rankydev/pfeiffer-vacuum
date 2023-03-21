@@ -20,10 +20,12 @@
 </template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api'
 import ProductCard from '~/components/molecules/ProductCard/ProductCard.vue'
 import KnowledgeCard from '~/components/molecules/KnowledgeCard/KnowledgeCard'
 
-export default {
+export default defineComponent({
+  name: 'ProductCardGrid',
   components: {
     ProductCard,
     KnowledgeCard,
@@ -38,7 +40,7 @@ export default {
       default: false,
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

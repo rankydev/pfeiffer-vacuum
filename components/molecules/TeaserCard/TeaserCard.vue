@@ -17,6 +17,7 @@ import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  name: 'TeaserCard',
   components: { Link, ResponsiveImage },
   props: {
     /**

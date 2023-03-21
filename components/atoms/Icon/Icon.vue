@@ -20,6 +20,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  name: 'Icon',
   props: {
     /**
      * The icon to display

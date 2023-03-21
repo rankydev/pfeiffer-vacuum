@@ -1,4 +1,5 @@
 import KnowledgeModal from './KnowledgeModal'
+import Button from '~/components/atoms/Button/Button.vue'
 import { ref } from '@nuxtjs/composition-api'
 
 export default {
@@ -15,18 +16,18 @@ export default {
 }
 
 const Template = (args) => ({
-  components: { KnowledgeModal },
+  components: { KnowledgeModal, Button },
   setup() {
     const isOpen = ref(false)
 
     return { args, isOpen }
   },
   template: `
-  <div class="documentation-preview">
-    <KnowledgeModal v-bind="{ isOpen }" @closeModal="isOpen = false" />
-    <Button label="Open Modal" @click="isOpen = true" />
-  </div>
-`,
+    <div class="documentation-preview">
+    <KnowledgeModal v-bind="{ isOpen }" @closeModal="isOpen = false"/>
+    <Button label="Open Modal" @click="isOpen = true"/>
+    </div>
+  `,
 })
 
 export const Default = Template.bind({})

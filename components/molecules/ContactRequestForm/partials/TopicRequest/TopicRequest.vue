@@ -141,11 +141,11 @@
   </div>
 </template>
 <script>
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { required, email, helpers } from '@vuelidate/validators'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea'
 import FormCountrySelection from '~/components/molecules/FormCountrySelection/FormCountrySelection'
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { required, email, helpers } from '@vuelidate/validators'
 
 export default defineComponent({
   name: 'TopicRequest',

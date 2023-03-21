@@ -17,6 +17,7 @@
 import { computed, defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  name: 'AnimatedCollapse',
   props: {
     /**
      * The direction of the collapse animation
