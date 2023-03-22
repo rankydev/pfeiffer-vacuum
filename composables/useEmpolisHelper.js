@@ -76,7 +76,6 @@ export const useEmpolisHelper = () => {
   }
 
   return {
-    empolisPortalUrl,
     empolisSearchUrl,
     getDownloadButtonBaseConfig,
     getFileInEmpolisUrl,

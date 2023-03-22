@@ -111,7 +111,8 @@ export default defineComponent({
     const { product } = useProductStore()
     const empolisStore = useEmpolisStore()
     const { i18n } = useContext()
-    const { getDownloadButtonBaseConfig } = useEmpolisHelper()
+    const { getDownloadButtonBaseConfig, getFileInEmpolisUrl } =
+      useEmpolisHelper()
 
     const categoryFilter = ref([])
     const languageFilter = ref([])
@@ -250,6 +251,7 @@ export default defineComponent({
 
         entries.push({
           text: file.title,
+          bold: true,
           marginal: file.downloadLink.substring(
             file.downloadLink.lastIndexOf('/') + 1
           ),
@@ -272,29 +274,51 @@ export default defineComponent({
         })
 
         const actionBaseData = {
-          ...getDownloadButtonBaseConfig(file),
-          icon: 'file_download',
           variant: 'secondary',
           shape: 'outlined',
         }
 
+        const donwloadActionBaseData = {
+          ...actionBaseData,
+          ...getDownloadButtonBaseConfig(file),
+          icon: 'file_download',
+        }
+
+        const fileUrl = getFileInEmpolisUrl(file.id)
+
         const actions = [
           {
-            ...actionBaseData,
+            ...donwloadActionBaseData,
             desktop: true,
             mobile: false,
           },
           {
-            ...actionBaseData,
+            ...donwloadActionBaseData,
             desktop: false,
             mobile: true,
             label: i18n.t('product.download'),
+            grow: true, // used for mobile button to have flex 1 instead of 0
+          },
+          {
+            ...actionBaseData,
+            target: '_blank',
+            icon: 'open_in_new',
+            href: fileUrl,
+            desktop: true,
+            mobile: true,
           },
         ]
+
+        const clickAction = () => {
+          if (process.client && window) {
+            window.open(fileUrl, '_blank').focus()
+          }
+        }
 
         result.push({
           entries,
           actions,
+          clickAction,
         })
       }
 
@@ -325,9 +349,12 @@ export default defineComponent({
 .product-files {
   @apply tw-w-full;
   @apply tw-pt-6;
+  @apply tw-px-4;
+  @apply tw-bg-pv-white;
 
   @screen md {
     @apply tw-pt-8;
+    @apply tw-px-0;
   }
 
   @screen lg {

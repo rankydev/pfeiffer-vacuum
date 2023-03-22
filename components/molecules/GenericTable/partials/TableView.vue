@@ -41,6 +41,8 @@
           v-for="(cell, j) in row.entries"
           :key="`row${i}-${j}`"
           class="table-view__cell"
+          :class="{ 'table-view__cell--clickable': row.clickAction }"
+          @click="() => (row.clickAction ? row.clickAction() : () => {})"
         >
           <Icon
             v-if="cell.icon"
@@ -51,7 +53,7 @@
           />
           <span
             v-if="typeof cell === 'object' && cell.bold"
-            class="table-view__cell table-view__cell--bold"
+            class="table-view__cell--bold"
           >
             {{ cell.text }}
           </span>
@@ -60,14 +62,16 @@
             {{ cell.marginal }}
           </span>
         </td>
-        <td class="table-view__cell table-view__cell--action">
-          <Button
-            v-for="(btn, k) in row.actions.filter(
-              (e) => !('desktop' in e) || e.desktop
-            )"
-            :key="`row${i}-action-${k}`"
-            v-bind="btn"
-          />
+        <td class="table-view__cell">
+          <div class="table-view__cell--action">
+            <Button
+              v-for="(btn, k) in row.actions.filter(
+                (e) => !('desktop' in e) || e.desktop
+              )"
+              :key="`row${i}-action-${k}`"
+              v-bind="btn"
+            />
+          </div>
         </td>
       </tr>
     </tbody>
@@ -185,6 +189,10 @@ export default {
     @apply tw-p-4;
     @apply tw-text-pv-grey-16;
 
+    &--clickable {
+      @apply tw-cursor-pointer;
+    }
+
     &-wrapper {
       @apply tw-flex;
     }
@@ -205,6 +213,11 @@ export default {
       @apply tw-justify-end tw-items-center;
       @apply tw-gap-2;
       @apply tw-text-right;
+
+      // need this custom breakpoint to prevent table from overflowing x for long texts in table with two buttons
+      @media screen and (max-width: 860px) {
+        @apply tw-flex-wrap;
+      }
     }
 
     &--bold {
