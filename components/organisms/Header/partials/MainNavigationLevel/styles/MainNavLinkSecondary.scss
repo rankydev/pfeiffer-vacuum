@@ -139,10 +139,13 @@
 
 .primary-nav-1 {
   @screen md {
-    @include scrollbar-nav;
     @apply tw-block;
-    @apply tw-overflow-auto;
     padding-bottom: 8rem;
+
+    &:hover {
+      @include scrollbar-nav;
+      @apply tw-overflow-auto;
+    }
 
     &::after {
       @apply tw-absolute;
@@ -234,10 +237,14 @@
   }
 
   @screen md {
-    @include scrollbar-nav;
     @apply tw-bg-pv-white;
     @apply tw-w-full tw-h-full;
-    @apply tw-overflow-auto;
+    @apply tw-overflow-hidden;
+
+    &:hover {
+      @include scrollbar-nav;
+      @apply tw-overflow-auto;
+    }
 
     &__wrapper {
       @apply tw-absolute;
