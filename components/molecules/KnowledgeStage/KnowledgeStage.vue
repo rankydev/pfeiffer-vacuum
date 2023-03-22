@@ -5,22 +5,24 @@
         <div class="knowledge-stage__headline">
           <h1>{{ headline }}</h1>
         </div>
-        <div class="knowledge-stage__date">
-          <div v-if="showDate" class="knowledge-stage__date-day">
-            <Icon class="knowledge-stage__date-icon" icon="date_range" />
-            <p>{{ fixedDate }}</p>
-            <div v-if="!isWhitepaper" class="knowledge-stage__date-time">
-              <p class="knowledge-stage__date-divider">|</p>
-              <p class="knowledge-stage__space">
-                {{ fixedTime }} {{ $t('knowledge.time') }}
-              </p>
+        <client-only>
+          <div class="knowledge-stage__date">
+            <div v-if="showDate" class="knowledge-stage__date-day">
+              <Icon class="knowledge-stage__date-icon" icon="date_range" />
+              <p>{{ fixedDate }}</p>
+              <div v-if="!isWhitepaper" class="knowledge-stage__date-time">
+                <p class="knowledge-stage__date-divider">|</p>
+                <p class="knowledge-stage__space">
+                  {{ fixedTime }} {{ $t('knowledge.time') }}
+                </p>
+              </div>
+            </div>
+            <div v-if="showDuration" class="knowledge-stage__date-duration">
+              <Icon class="knowledge-stage__date-icon" icon="timer" />
+              <p>{{ duration }}</p>
             </div>
           </div>
-          <div v-if="showDuration" class="knowledge-stage__date-duration">
-            <Icon class="knowledge-stage__date-icon" icon="timer" />
-            <p>{{ duration }}</p>
-          </div>
-        </div>
+        </client-only>
         <div class="knowledge-stage__summary">
           <p>{{ summary }}</p>
           <div class="knowledge-stage__button">
