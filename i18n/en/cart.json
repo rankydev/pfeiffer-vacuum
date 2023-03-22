@@ -50,5 +50,6 @@
   "updateCartError": "An error occured while updating cart",
   "cartEmpty": "Please add an item to the shopping cart.",
   "emptyMessage": "Please add an item to the shopping cart.",
-  "showAllProducts": "Show all products"
+  "showAllProducts": "Show all products",
+  "articleList": "Article list"
 }

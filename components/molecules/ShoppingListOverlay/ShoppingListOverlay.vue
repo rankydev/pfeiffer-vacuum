@@ -118,6 +118,7 @@ export default defineComponent({
       isAddMode,
       isNewListMode,
       isBasicMode,
+      isAddAllMode,
     } = storeToRefs(shoppingListsStore)
 
     const clearForm = () => {
@@ -127,19 +128,31 @@ export default defineComponent({
 
     const closeSidebar = () => {
       shoppingListsStore.toggleOverlay()
-      shoppingListsStore.basicMode()
+    }
+
+    const resetStates = () => {
       clearForm()
+      shoppingListsStore.basicMode()
     }
 
     const newShoppingList = async () => {
       if (!nameVar.value) {
         return
       }
-      if (isAddMode.value) {
+      closeSidebar()
+      if (isAddMode.value && !isAddAllMode.value) {
         await shoppingListsStore.createNewListAndAddProduct(
           nameVar.value,
           descriptionVar.value
         )
+      }
+      if (isAddMode.value && isAddAllMode.value) {
+        const list = await shoppingListsStore.createNewList(
+          nameVar.value,
+          descriptionVar.value
+        )
+        const listId = list?.id
+        await shoppingListsStore.saveCartToShoppingList(listId)
       }
       if (isNewListMode.value) {
         await shoppingListsStore.createNewList(
@@ -147,11 +160,17 @@ export default defineComponent({
           descriptionVar.value
         )
       }
-      closeSidebar()
+      resetStates()
     }
     const addToShoppingList = async (listId) => {
-      await shoppingListsStore.addToShoppingList(listId)
       closeSidebar()
+      if (isAddAllMode.value) {
+        await shoppingListsStore.saveCartToShoppingList(listId)
+        shoppingListsStore.toggleAddAllMode()
+      } else {
+        await shoppingListsStore.addToShoppingList(listId)
+      }
+      resetStates()
     }
     const handleForward = async () => {
       if (isBasicMode.value) {
@@ -173,9 +192,10 @@ export default defineComponent({
     const handleBack = () => {
       if (isAddMode.value) {
         shoppingListsStore.basicMode()
-        clearForm()
+        resetStates()
       } else {
         closeSidebar()
+        resetStates()
       }
     }
 

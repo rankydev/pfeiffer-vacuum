@@ -39,6 +39,7 @@
                         variant="secondary"
                         :label="$t('cart.saveCartToList')"
                         icon="assignment"
+                        @click="saveCartToList"
                       />
 
                       <Button
@@ -159,6 +160,7 @@ import Icon from '~/components/atoms/Icon/Icon.vue'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
+import { useShoppingLists } from '~/stores/shoppinglists'
 
 export default defineComponent({
   name: 'Cart',
@@ -180,6 +182,8 @@ export default defineComponent({
     const context = useContext()
     const cartStore = useCartStore()
     const userStore = useUserStore()
+    const shoppingListsStore = useShoppingLists()
+
     const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText, isOciUser } =
       storeToRefs(userStore)
     const { app } = useContext()
@@ -204,6 +208,11 @@ export default defineComponent({
     const pageStore = usePageStore()
     pageStore.setPageType(CMS_PAGE)
 
+    const saveCartToList = () => {
+      shoppingListsStore.toggleAddAllMode()
+      shoppingListsStore.toggleOverlay()
+    }
+
     return {
       cartEntries,
       slugs,
@@ -214,6 +223,7 @@ export default defineComponent({
       checkoutButtonDisabled,
       userStatusTypeForInfoText,
       handleCheckoutClick: cartStore.handleCheckoutClick,
+      saveCartToList,
     }
   },
 })
