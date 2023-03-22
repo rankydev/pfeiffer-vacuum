@@ -64,6 +64,8 @@ services:
       #- VSM_TECHNICAL_USER_TOKEN=10fff01e72e34e4fe33fbc84e5c6aa80017aac08
       # determines whether all service features (VSM) are shown or not
       #- SERVICE_PORTAL_ACTIVE=true
+      # Vacuum Calculator
+      - VACUUM_CALCULATOR_BASE_URL=${VACUUM_CALCULATOR_BASE_URL}
       # logging
       - CONSOLA_LEVEL=${CONSOLA_LEVEL} # { 0: 'error', 1: 'warn', 2: 'log', 3: 'info', 4: 'debug', 5: 'trace', Infinite: silent }
 
