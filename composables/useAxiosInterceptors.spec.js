@@ -23,7 +23,7 @@ jest.mock('qs', () => ({
 
 const mockIsLoggedIn = jest.fn()
 const mockAuth = jest.fn()
-const mockAuthorizationFromCookie = jest.fn(() => {})
+const mockAuthorizationFromCookie = jest.fn()
 
 jest.mock('~/stores/user', () => ({
   useUserStore: () => {
