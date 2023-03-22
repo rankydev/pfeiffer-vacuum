@@ -142,7 +142,7 @@
     @include scrollbar-nav;
     @apply tw-block;
     @apply tw-overflow-auto;
-    padding-bottom: 170px; // match height of 2nd level when scrolling
+    padding-bottom: 8rem;
 
     &::after {
       @apply tw-absolute;
