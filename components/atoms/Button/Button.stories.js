@@ -1,4 +1,4 @@
-import Button from '~/components/atoms/Button/Button.vue'
+import Button from './Button.vue'
 import {
   buttonVariants,
   variants,
@@ -6,8 +6,8 @@ import {
   sizes,
   icon,
   label,
-} from '~/components/atoms/Button/Button.stories.content'
-import { buttonVariantsVariantSelection } from './Button.stories.content'
+  buttonVariantsVariantSelection,
+} from './Button.stories.content'
 
 export default {
   title: 'Atoms/a_100 Button',
@@ -45,12 +45,12 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-  <div class="documentation-preview">
+    <div class="documentation-preview">
     <div style="padding: 20px;" :style="args.variant === 'inverted' && 'background-color: #000;'">
-      <Button v-bind="args" />
+      <Button v-bind="args"/>
     </div>
-  </div>
-`,
+    </div>
+  `,
 })
 
 export const Default = Template.bind({})
@@ -68,25 +68,25 @@ const OverviewTemplate = (args) => ({
     return { args }
   },
   template: `
-  <div class="documentation-preview">
+    <div class="documentation-preview">
     <div style="display: flex;">
       <div
         v-for="(col, index) in args"
         :key="index"
         :style="col[0].variant === 'inverted' && 'background-color: #000;'"
       >
-        <template  v-for="(ele, idx) in col">
+        <template v-for="ele in col">
           <Button
             :key="'button-' + index"
             v-bind="ele"
             style="margin:10px;"
           />
-          <br :key="'linebreak-' + index" />
-      </template>
+          <br :key="'linebreak-' + index"/>
+        </template>
       </div>
     </div>
-  </div>
-`,
+    </div>
+  `,
 })
 
 export const Overview = OverviewTemplate.bind({})

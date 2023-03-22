@@ -1,5 +1,11 @@
-import { onBeforeMount, onServerPrefetch } from '@nuxtjs/composition-api'
-import { ssrRef, computed, useRoute, useContext } from '@nuxtjs/composition-api'
+import {
+  onBeforeMount,
+  onServerPrefetch,
+  ssrRef,
+  computed,
+  useRoute,
+  useContext,
+} from '@nuxtjs/composition-api'
 import categorySchema from '~/components/templates/CategoryContentPage/CategoryContentPage.schema.js'
 import { transformUrl } from '~/resolver/linksTransformer.js'
 import { joinURL } from 'ufo'

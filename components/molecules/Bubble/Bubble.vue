@@ -10,6 +10,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 
 export default defineComponent({
+  name: 'Bubble',
   components: { Richtext },
   props: {
     /**

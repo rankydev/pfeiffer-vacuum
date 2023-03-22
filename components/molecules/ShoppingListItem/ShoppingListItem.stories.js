@@ -1,8 +1,11 @@
 import ShoppingListItem from './ShoppingListItem.vue'
-import { list, selectMode } from './ShoppingListItem.stories.content.js'
+import {
+  lists,
+  selectMode,
+} from '~/components/molecules/ShoppingListTable/ShoppingListTable.stories.content'
 
 const argTypes = {
-  list,
+  list: lists[0],
   selectMode,
 }
 
@@ -30,10 +33,10 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-  <div class="documentation-preview">
-    <ShoppingListItem v-bind="args" />
-  </div>
-`,
+    <div class="documentation-preview">
+    <ShoppingListItem v-bind="args"/>
+    </div>
+  `,
 })
 
 export const Default = Template.bind({})

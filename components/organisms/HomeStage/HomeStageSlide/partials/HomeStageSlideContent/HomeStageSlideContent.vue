@@ -23,10 +23,11 @@
 </template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api'
 import Button from '~/components/atoms/Button/Button.vue'
 import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 
-export default {
+export default defineComponent({
   name: 'HomeStageSlideContent',
   components: { Button, Richtext },
   props: {
@@ -59,7 +60,7 @@ export default {
       default: false,
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

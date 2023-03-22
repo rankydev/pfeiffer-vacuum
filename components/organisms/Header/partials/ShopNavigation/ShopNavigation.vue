@@ -77,6 +77,7 @@ import { storeToRefs } from 'pinia'
 import ShoppingListOverlay from '~/components/molecules/ShoppingListOverlay/ShoppingListOverlay.vue'
 
 export default defineComponent({
+  name: 'ShopNavigation',
   components: {
     Icon,
     Link,

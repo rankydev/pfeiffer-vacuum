@@ -5,105 +5,109 @@
     :fallback-slug="fallbackSlug"
     :language="language"
   >
-    <template #default="{ result: { data } }">
-      <Page v-if="data" v-bind="data" :meta-data="metaData">
-        <template #onPageNavigation>
-          <OnPageNavigation v-bind="(data.quicklinks || [])[0]">
+    <template #default="{ result: { data, loading } }">
+      <LoadingSpinner :show="loading" container-min-height>
+        <Page v-if="data" v-bind="data" :meta-data="metaData">
+          <template #onPageNavigation>
+            <OnPageNavigation v-bind="(data.quicklinks || [])[0]">
+              <Button
+                v-if="hasLink"
+                :label="$t('navigation.button.overview.label')"
+                :href="href"
+                size="small"
+                variant="secondary"
+                shape="outlined"
+              />
+            </OnPageNavigation>
+          </template>
+
+          <template #default>
+            <ContentWrapper>
+              <ResultHeadline
+                v-bind="{ headline, link, searchTerm }"
+                :center="showDocumentSearchTab"
+                :back-button-override-query-params="{ currentPage: 1 }"
+                class="search-page__result-headline"
+              />
+              <div class="search-page__search-input">
+                <SearchInputPage
+                  v-if="showDocumentSearchTab"
+                  @searchTermChange="(value) => (searchTerm = value)"
+                />
+              </div>
+            </ContentWrapper>
+
+            <GenericTabs
+              v-if="showDocumentSearchTab"
+              :tabs="tabNavigationItems"
+              :active-tab="currentTabSelected"
+              :active-tab-initially-open-on-mobile="false"
+              center-mode
+              @selectTab="selectTab"
+            >
+              <template #activeTabContent>
+                <div class="search-page__search-result">
+                  <ContentWrapper v-if="currentTabSelected === 'products'">
+                    <SearchResult
+                      v-if="products && !hasError"
+                      persist-category-name-as-query-param
+                      v-bind="{
+                        products,
+                        pagination,
+                        categories,
+                        facets,
+                        currentQuery,
+                        sorts,
+                      }"
+                    />
+                    <ErrorHandling
+                      v-else
+                      :headline="
+                        $t('product.errorHandling.multiProductHeadline')
+                      "
+                    />
+                  </ContentWrapper>
+                  <ContentWrapper v-else no-padding>
+                    <DocumentSearchResult />
+                  </ContentWrapper>
+                </div>
+              </template>
+            </GenericTabs>
+
+            <div v-else class="category-page__search-result">
+              <ContentWrapper>
+                <SearchResult
+                  v-if="products && !hasError"
+                  v-bind="{
+                    products,
+                    pagination,
+                    categories,
+                    facets,
+                    currentQuery,
+                    sorts,
+                  }"
+                />
+                <ErrorHandling
+                  v-else
+                  :headline="$t('product.errorHandling.multiProductHeadline')"
+                />
+              </ContentWrapper>
+            </div>
+          </template>
+
+          <template #stickyBar>
             <Button
               v-if="hasLink"
+              class="search-page__sticky-btn"
               :label="$t('navigation.button.overview.label')"
               :href="href"
-              size="small"
               variant="secondary"
               shape="outlined"
+              cutaway="bottom"
             />
-          </OnPageNavigation>
-        </template>
-
-        <template #default>
-          <ContentWrapper>
-            <ResultHeadline
-              v-bind="{ headline, link, searchTerm }"
-              :center="showDocumentSearchTab"
-              :back-button-override-query-params="{ currentPage: 1 }"
-              class="search-page__result-headline"
-            />
-            <div class="search-page__search-input">
-              <SearchInputPage
-                v-if="showDocumentSearchTab"
-                @searchTermChange="(value) => (searchTerm = value)"
-              />
-            </div>
-          </ContentWrapper>
-
-          <GenericTabs
-            v-if="showDocumentSearchTab"
-            :tabs="tabNavigationItems"
-            :active-tab="currentTabSelected"
-            :active-tab-initially-open-on-mobile="false"
-            center-mode
-            @selectTab="selectTab"
-          >
-            <template #activeTabContent>
-              <div class="search-page__search-result">
-                <ContentWrapper v-if="currentTabSelected === 'products'">
-                  <SearchResult
-                    v-if="products && !hasError"
-                    persist-category-name-as-query-param
-                    v-bind="{
-                      products,
-                      pagination,
-                      categories,
-                      facets,
-                      currentQuery,
-                      sorts,
-                    }"
-                  />
-                  <ErrorHandling
-                    v-else
-                    :headline="$t('product.errorHandling.multiProductHeadline')"
-                  />
-                </ContentWrapper>
-                <ContentWrapper v-else no-padding>
-                  <DocumentSearchResult />
-                </ContentWrapper>
-              </div>
-            </template>
-          </GenericTabs>
-
-          <div v-else class="category-page__search-result">
-            <ContentWrapper>
-              <SearchResult
-                v-if="products && !hasError"
-                v-bind="{
-                  products,
-                  pagination,
-                  categories,
-                  facets,
-                  currentQuery,
-                  sorts,
-                }"
-              />
-              <ErrorHandling
-                v-else
-                :headline="$t('product.errorHandling.multiProductHeadline')"
-              />
-            </ContentWrapper>
-          </div>
-        </template>
-
-        <template #stickyBar>
-          <Button
-            v-if="hasLink"
-            class="search-page__sticky-btn"
-            :label="$t('navigation.button.overview.label')"
-            :href="href"
-            variant="secondary"
-            shape="outlined"
-            cutaway="bottom"
-          />
-        </template>
-      </Page>
+          </template>
+        </Page>
+      </LoadingSpinner>
     </template>
   </CmsQuery>
 </template>
@@ -136,10 +140,12 @@ import SearchInputPage from '~/components/molecules/SearchInputPage/SearchInputP
 import SearchResult from '~/components/organisms/SearchResult/SearchResult'
 import DocumentSearchResult from '~/components/organisms/DocumentSearchResult/DocumentSearchResult'
 import Page from '~/components/templates/Page/Page'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   name: 'CategoryShopPage',
   components: {
+    LoadingSpinner,
     Page,
     Button,
     ErrorHandling,

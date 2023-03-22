@@ -5,130 +5,134 @@
     :fallback-slug="slugs.fallbackSlug"
     :language="slugs.language"
   >
-    <template #default="{ result: { data } }">
-      <Page v-if="data" v-bind="data">
-        <template #default>
-          <ContentWrapper>
-            <template v-if="cartEntries">
-              <div class="cart-page">
-                <div class="cart-page__request-info">
-                  <GlobalMessage
-                    v-if="checkoutButtonDisabled"
-                    :description="
-                      $t(
-                        `myaccount.userStatus.${userStatusTypeForInfoText}.requestInfo`
-                      )
-                    "
-                    variant="warning"
-                    :prevent-icon-change="true"
-                  />
-                </div>
-
-                <div class="cart-page__header">
-                  <ResultHeadline
-                    :headline="$t('cart.headline')"
-                    :result-count="currentCart.totalItems"
-                  />
-
-                  <div class="cart-page__buttons">
-                    <!-- TODO: add correct route after shopping list implementation -->
-                    <Button
-                      v-if="!isOciUser"
-                      class="cart-page__button--save"
-                      variant="secondary"
-                      :label="$t('cart.saveCartToList')"
-                      icon="assignment"
-                      @click="saveCartToList"
-                    />
-
-                    <Button
-                      v-show="!isMobile"
-                      class="cart-page__button"
-                      variant="secondary"
-                      shape="outlined"
-                      :inverted="true"
-                      :label="$t('cart.getProductHelp')"
-                      icon="help"
-                      :href="localePath('/contact')"
+    <template #default="{ result: { data, loading } }">
+      <LoadingSpinner :show="loading" container-min-height>
+        <Page v-if="data" v-bind="data">
+          <template #default>
+            <ContentWrapper>
+              <template v-if="cartEntries">
+                <div class="cart-page">
+                  <div class="cart-page__request-info">
+                    <GlobalMessage
+                      v-if="checkoutButtonDisabled"
+                      :description="
+                        $t(
+                          `myaccount.userStatus.${userStatusTypeForInfoText}.requestInfo`
+                        )
+                      "
+                      variant="warning"
+                      :prevent-icon-change="true"
                     />
                   </div>
-                </div>
 
-                <CartTable />
-
-                <div
-                  class="cart-page__info"
-                  :class="{ 'cart-page__info--oci': isOciUser }"
-                >
-                  <div v-show="!isOciUser" class="cart-page__information">
-                    <PromotionLabel
-                      v-for="(promotion, index) in cartPromotions"
-                      :key="index"
-                      :subline="promotion.description"
+                  <div class="cart-page__header">
+                    <ResultHeadline
+                      :headline="$t('cart.headline')"
+                      :result-count="currentCart.totalItems"
                     />
-                    <client-only>
-                      <PriceInformation
-                        v-if="!isMobile"
-                        information-type="price"
-                      />
-                    </client-only>
-                  </div>
 
-                  <div class="cart-page__actions">
-                    <div class="cart-page__total">
-                      <TotalNetInformation :current-cart="currentCart" />
-                    </div>
-
-                    <div class="cart-page__submit">
+                    <div class="cart-page__buttons">
+                      <!-- TODO: add correct route after shopping list implementation -->
                       <Button
-                        :label="
-                          $t(isOciUser ? 'cart.checkout' : 'cart.requestQuote')
-                        "
-                        class="cart-page__button--submit"
-                        variant="primary"
-                        icon="mail_outline"
-                        :disabled="checkoutButtonDisabled"
-                        @click="handleCheckoutClick"
+                        v-if="!isOciUser"
+                        class="cart-page__button--save"
+                        variant="secondary"
+                        :label="$t('cart.saveCartToList')"
+                        icon="assignment"
+                        @click="saveCartToList"
+                      />
+
+                      <Button
+                        v-show="!isMobile"
+                        class="cart-page__button"
+                        variant="secondary"
+                        shape="outlined"
+                        :inverted="true"
+                        :label="$t('cart.getProductHelp')"
+                        icon="help"
+                        :href="localePath('/contact')"
                       />
                     </div>
                   </div>
+
+                  <CartTable />
+
+                  <div
+                    class="cart-page__info"
+                    :class="{ 'cart-page__info--oci': isOciUser }"
+                  >
+                    <div v-show="!isOciUser" class="cart-page__information">
+                      <PromotionLabel
+                        v-for="(promotion, index) in cartPromotions"
+                        :key="index"
+                        :subline="promotion.description"
+                      />
+                      <client-only>
+                        <PriceInformation
+                          v-if="!isMobile"
+                          information-type="price"
+                        />
+                      </client-only>
+                    </div>
+
+                    <div class="cart-page__actions">
+                      <div class="cart-page__total">
+                        <TotalNetInformation :current-cart="currentCart" />
+                      </div>
+
+                      <div class="cart-page__submit">
+                        <Button
+                          :label="
+                            $t(
+                              isOciUser ? 'cart.checkout' : 'cart.requestQuote'
+                            )
+                          "
+                          class="cart-page__button--submit"
+                          variant="primary"
+                          icon="mail_outline"
+                          :disabled="checkoutButtonDisabled"
+                          @click="handleCheckoutClick"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cart-page__back-button">
+                    <!-- TODO: add correct route after implementation -->
+                    <Button
+                      :href="localePath('shop-categories')"
+                      class="cart-page__button cart-page__button--back"
+                      variant="secondary"
+                      shape="plain"
+                      :label="$t('cart.continueShopping')"
+                      :prepend-icon="true"
+                      icon="arrow_back"
+                    />
+                  </div>
                 </div>
-                <div class="cart-page__back-button">
-                  <!-- TODO: add correct route after implementation -->
+              </template>
+              <template v-else>
+                <div class="cart-page__empty">
+                  <Icon
+                    icon="shopping_cart"
+                    class="cart-page__empty-icon"
+                    size="xxlarge"
+                  />
+                  <h2 class="cart-page__empty-headline">
+                    {{ $t('cart.emptyMessage') }}
+                  </h2>
                   <Button
                     :href="localePath('shop-categories')"
-                    class="cart-page__button cart-page__button--back"
-                    variant="secondary"
-                    shape="plain"
-                    :label="$t('cart.continueShopping')"
-                    :prepend-icon="true"
-                    icon="arrow_back"
+                    :label="$t('cart.showAllProducts')"
+                    class="cart-page__button"
+                    variant="primary"
+                    icon="arrow_forward"
                   />
                 </div>
-              </div>
-            </template>
-            <template v-else>
-              <div class="cart-page__empty">
-                <Icon
-                  icon="shopping_cart"
-                  class="cart-page__empty-icon"
-                  size="xxlarge"
-                />
-                <h2 class="cart-page__empty-headline">
-                  {{ $t('cart.emptyMessage') }}
-                </h2>
-                <Button
-                  :href="localePath('shop-categories')"
-                  :label="$t('cart.showAllProducts')"
-                  class="cart-page__button"
-                  variant="primary"
-                  icon="arrow_forward"
-                />
-              </div>
-            </template>
-          </ContentWrapper>
-        </template>
-      </Page>
+              </template>
+            </ContentWrapper>
+          </template>
+        </Page>
+      </LoadingSpinner>
     </template>
   </CmsQuery>
 </template>
@@ -155,6 +159,7 @@ import CartTable from '~/components/molecules/CartTable/CartTable'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import { useShoppingLists } from '~/stores/shoppinglists'
 
 export default defineComponent({
@@ -170,6 +175,7 @@ export default defineComponent({
     Icon,
     PromotionLabel,
     GlobalMessage,
+    LoadingSpinner,
   },
   setup() {
     const route = useRoute()

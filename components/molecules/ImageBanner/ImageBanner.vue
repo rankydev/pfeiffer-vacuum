@@ -37,6 +37,7 @@ import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
 export default defineComponent({
+  name: 'ImageBanner',
   components: { Richtext, ResponsiveImage },
   props: {
     /**

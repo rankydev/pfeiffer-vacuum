@@ -5,35 +5,41 @@
     :fallback-slug="fallbackSlug"
     :language="language"
   >
-    <template #default="{ result: { data } }">
-      <Page v-if="data" v-bind="data">
-        <template #default>
-          <ContentWrapper>
-            <section class="privacy">
-              <script type="application/javascript">
-                UC_UI_SUPPRESS_CMP_DISPLAY = true
-              </script>
-              <script
-                :src="privacyScriptUrl(true)"
-                type="text/javascript"
-              ></script>
-              <noscript>
-                <iframe
-                  :src="privacyScriptUrl(false)"
-                  style="width: 100%; height: 100%; min-height: 600px"
-                ></iframe>
-              </noscript>
-            </section>
-          </ContentWrapper>
-        </template>
-      </Page>
+    <template #default="{ result: { data, loading } }">
+      <LoadingSpinner :show="loading" container-min-height>
+        <Page v-if="data" v-bind="data">
+          <template #default>
+            <ContentWrapper>
+              <section class="privacy">
+                <script type="application/javascript">
+                  UC_UI_SUPPRESS_CMP_DISPLAY = true
+                </script>
+                <script
+                  :src="privacyScriptUrl(true)"
+                  type="text/javascript"
+                ></script>
+                <noscript>
+                  <iframe
+                    :src="privacyScriptUrl(false)"
+                    style="width: 100%; height: 100%; min-height: 600px"
+                  ></iframe>
+                </noscript>
+              </section>
+            </ContentWrapper>
+          </template>
+        </Page>
+      </LoadingSpinner>
     </template>
   </CmsQuery>
 </template>
 
 <script>
-import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { useRoute, useContext } from '@nuxtjs/composition-api'
+import {
+  defineComponent,
+  ref,
+  useRoute,
+  useContext,
+} from '@nuxtjs/composition-api'
 
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'

@@ -48,6 +48,7 @@ import Richtext from '~/components/atoms/Richtext/Richtext.vue'
 import GenericModal from '~/components/molecules/GenericModal/GenericModal.vue'
 
 export default defineComponent({
+  name: 'InformationModal',
   components: {
     Button,
     Richtext,

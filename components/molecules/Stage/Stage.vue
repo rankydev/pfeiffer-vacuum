@@ -18,10 +18,11 @@
 </template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api'
 import StageContent from '~/components/molecules/Stage/StageContent/StageContent.vue'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 
-export default {
+export default defineComponent({
   name: 'Stage',
   components: {
     StageContent,
@@ -44,7 +45,7 @@ export default {
       default: () => [],
     },
   },
-}
+})
 </script>
 
 <style lang="scss">
