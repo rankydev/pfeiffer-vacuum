@@ -15,12 +15,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
   const userStore = useUserStore()
   const { currentUser, userBillingAddress } = storeToRefs(userStore)
 
-  const shoppingLists = ref()
-
+  const shoppingLists = ref(null)
   const isLoading = ref(false)
-
-  const recentRequests = ref()
-  const recentShoppingLists = ref()
 
   const recentRequestsTableData = computed(() => {
     return orders.value?.orders?.slice(0, 4).map((order) => {
@@ -91,12 +87,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
         !result.error &&
         Array.isArray(result.shoppinglists)
       ) {
-        shoppingLists.value = result.shoppingLists
-        return result.shoppinglists
+        shoppingLists.value = result.shoppinglists
+      } else {
+        throw result?.error
       }
     } catch (e) {
       logger.error('Error when fetching shopping lists. Returning empty list.')
-      return []
     }
   }
 
@@ -113,11 +109,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
     buildTableHeaderObject(title)
   )
 
-  const getRecentShoppingListsTableData = computed(() => {
-    // if (!shoppingLists?.value?.length) {
-    //   shoppingLists.value = getShoppingLists()
-    // }
-
+  const recentShoppingListsTableData = computed(() => {
     return shoppingLists.value?.slice(0, 4).map((list) => {
       const shoppingListUrl = `${localePath(
         'shop-my-account-shopping-lists'
@@ -251,11 +243,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
       isLoading.value = true
       await myAccountStore.getOrders()
       await getShoppingLists()
-      // await recentRequestsTableData()
-      // await getRecentShoppingListsTableData()
     } catch (e) {
-      // Toastmessage oder logger
-      // isLoading.value = true
+      logger.error('Error when fetching dashboard data.', e)
     } finally {
       isLoading.value = false
     }
@@ -270,14 +259,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
     companyDataContent,
     buttons,
     isLoading,
-    recentRequests,
-    recentShoppingLists,
-    getRecentShoppingListsTableData,
+
+    // computed
+    recentShoppingListsTableData,
     recentRequestsTableData,
 
-    //Getters
-    // getOrders,
-    // Actions
+    // functions
     getDashboardData,
   }
 })

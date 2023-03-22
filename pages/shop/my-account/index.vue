@@ -8,9 +8,9 @@
           </SectionHeadline>
 
           <GenericTable
-            v-if="recentRequests"
+            v-if="recentRequestsTableData"
             :header="recentRequestsTableHeader"
-            :table-data="recentRequests"
+            :table-data="recentRequestsTableData"
             :carousel="true"
             :secondary="{
               position: 3,
@@ -19,7 +19,7 @@
           />
           <EmptyWrapper
             v-else
-            :button="buttons.emptyWrapper.recentRequests"
+            :button="buttons.emptyWrapper.recentRequestsTableData"
             :label="$t('myaccount.recentRequests.lastRequestNotFound')"
           />
         </section>
@@ -29,9 +29,9 @@
             $t('myaccount.shoppingList.recentShoppingLists')
           }}</SectionHeadline>
           <GenericTable
-            v-if="recentShoppingLists"
+            v-if="recentShoppingListsTableData"
             :header="recentShoppingListTableHeader"
-            :table-data="recentShoppingLists"
+            :table-data="recentShoppingListsTableData"
             :carousel="true"
             :secondary="{
               position: 2,
@@ -82,9 +82,10 @@ export default defineComponent({
     LoadingSpinner,
   },
   setup() {
-    const dashBoardStore = useDashboardStore()
     const userStore = useUserStore()
+    const { isApprovedUser } = storeToRefs(userStore)
 
+    const dashBoardStore = useDashboardStore()
     const {
       recentRequestsTableHeader,
       recentShoppingListTableHeader,
@@ -93,23 +94,18 @@ export default defineComponent({
       companyDataContent,
       buttons,
       isLoading,
-      recentRequests,
-      recentShoppingLists,
-      getRecentShoppingListsTableData,
+      recentShoppingListsTableData,
       recentRequestsTableData,
     } = storeToRefs(dashBoardStore)
-
-    const { isApprovedUser } = storeToRefs(userStore)
-
     const { getDashboardData } = dashBoardStore
 
     onServerPrefetch(getDashboardData)
     onBeforeMount(getDashboardData)
 
     return {
-      recentRequests,
+      recentRequestsTableData,
       recentRequestsTableHeader,
-      recentShoppingLists,
+      recentShoppingListsTableData,
       recentShoppingListTableHeader,
       buttons,
       recentShoppingListHeader,

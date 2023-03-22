@@ -39,6 +39,8 @@ export const useMyAccountStore = defineStore('myaccount', () => {
       if (result && Array.isArray(result.orders) && !result.error) {
         orders.value = result
         return result
+      } else {
+        throw result?.error
       }
     } catch (e) {
       logger.error(
