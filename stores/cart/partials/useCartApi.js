@@ -125,7 +125,7 @@ export const useCartApi = (currentCart, currentCartGuid) => {
       // Return when existing cart is valid
       if (validateCart(existingCart)) return existingCart
     } catch (error) {
-      if (error?.status === 400 || error?.status === 404) {
+      if (error?.response?.status === 400 || error?.response?.status === 404) {
         // in this case there is probably an old cart (cart after placeOrder f.e.) which is no longer valid or does not exist
         // do not exit the function but create a fresh cart below which will replace the invalid current one
         logger.warn(
