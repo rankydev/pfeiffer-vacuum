@@ -8,7 +8,7 @@ export default {
       translatable: true,
       description: 'Image',
       display_name: 'Image',
-      required: true,
+      required: false,
     },
     authorName: {
       type: 'text',
@@ -19,7 +19,7 @@ export default {
     title: {
       type: 'text',
       translatable: true,
-      required: true,
+      required: false,
       display_name: 'Title',
     },
   },

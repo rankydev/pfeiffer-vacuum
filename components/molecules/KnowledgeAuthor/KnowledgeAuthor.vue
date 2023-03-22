@@ -1,6 +1,7 @@
 <template>
   <div class="knowledge-author">
     <ResponsiveImage
+      v-if="image"
       class="knowledge-author__image"
       :image="image"
       aspect-ratio="1:1"
@@ -8,7 +9,7 @@
     />
     <p class="knowledge-author__description">
       <span class="knowledge-author__name">{{ authorName }}</span>
-      <span class="knowledge-author__title">{{ title }}</span>
+      <span v-if="title" class="knowledge-author__title">{{ title }}</span>
     </p>
   </div>
 </template>
@@ -32,7 +33,7 @@ export default defineComponent({
     },
     title: {
       type: String,
-      required: true,
+      default: '',
     },
   },
 })
