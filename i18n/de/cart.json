@@ -50,5 +50,6 @@
   "updateCartError": "Beim Aktualisieren des Warenkorbs ist ein Fehler aufgetreten",
   "cartEmpty": "Bitte legen Sie einen Artikel in den Warenkorb.",
   "emptyMessage": "Bitte legen Sie einen Artikel in den Warenkorb.",
-  "showAllProducts": "Alle Produkte anzeigen"
+  "showAllProducts": "Alle Produkte anzeigen",
+  "articleList": "Artikelliste"
 }

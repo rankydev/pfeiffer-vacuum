@@ -2,7 +2,7 @@ import { defineStore, storeToRefs } from 'pinia'
 import { computed, onMounted, ref, watch } from '@nuxtjs/composition-api'
 import { useShoppingListsApi } from './partials/useShoppingListsApi'
 import { useUserStore } from '~/stores/user'
-import { useProductStore } from '~/stores/product'
+import { useCartStore } from '~/stores/cart'
 import { useToast } from '~/composables/useToast'
 import { useContext } from '@nuxtjs/composition-api'
 
@@ -12,26 +12,28 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
   const { i18n } = useContext()
 
   const currentShoppingLists = ref([])
+  const currrentProduct = ref({})
+  const productAmount = ref(1)
   const overlayState = ref(false)
   const stateMode = ref('basic')
+  const addAllMode = ref(false)
 
   const userStore = useUserStore()
   const { isLoggedIn } = storeToRefs(userStore)
 
-  const productStore = useProductStore()
-  const { product } = storeToRefs(productStore)
-  const productAmount = ref(1)
+  const cartStore = useCartStore()
+  const { currentCart } = storeToRefs(cartStore)
 
   const setProductAmount = (amount) => {
     productAmount.value = amount
   }
 
   const setProduct = (productVar) => {
-    product.value = productVar
+    currrentProduct.value = productVar
   }
 
   const productId = computed(() => {
-    return product.value?.code || -1
+    return currrentProduct.value?.code || -1
   })
 
   const initialShoppingListsLoad = async () => {
@@ -48,7 +50,25 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     const shoppingList = await shoppingListsApi.createNewList(name, description)
     if (shoppingList !== -1) {
       currentShoppingLists.value.push(shoppingList)
+      if (isNewListMode.value) {
+        toast.success(
+          {
+            description: i18n.t('myaccount.shoppingList.newListSuccess', {
+              listName: shoppingList?.name,
+            }),
+          },
+          { timeout: 3000 }
+        )
+      }
+    } else {
+      toast.error(
+        {
+          description: i18n.t('myaccount.shoppingList.newListError'),
+        },
+        { timeout: 3000 }
+      )
     }
+    return shoppingList
   }
 
   const addToShoppingList = async (
@@ -66,29 +86,46 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
         toast.success(
           {
             description: i18n.t('myaccount.shoppingList.addSuccessful', {
-              listName: result?.data?.name,
+              listName: result?.name,
             }),
           },
           { timeout: 3000 }
         )
         await initialShoppingListsLoad()
+      } else {
+        toast.error(
+          {
+            description: i18n.t('myaccount.shoppingList.addError'),
+          },
+          { timeout: 3000 }
+        )
       }
     }
     setProductAmount(1)
   }
 
   const createNewListAndAddProduct = async (name, description) => {
-    const shoppingList = await shoppingListsApi.createNewList(name, description)
+    const shoppingList = await createNewList(name, description)
     if (shoppingList !== -1) {
-      await addToShoppingList(shoppingList.id)
-    } else {
-      toast.error(
-        {
-          description: i18n.t('myaccount.shoppingList.addError'),
-        },
-        { timeout: 3000 }
-      )
+      await addToShoppingList(shoppingList?.id)
     }
+  }
+
+  const updateQuantity = async (listId, entryId, amount) => {
+    const result = await shoppingListsApi.updateQuantity(
+      listId,
+      entryId,
+      amount
+    )
+    if (result) {
+      await initialShoppingListsLoad()
+    }
+  }
+
+  const addListToCart = async (listId) => {
+    const cartId = currentCart.value?.code
+    await shoppingListsApi.addListToCart(listId, cartId)
+    await cartStore.resetCurrentCart()
   }
 
   const shoppingLists = computed(() => {
@@ -115,6 +152,10 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     stateMode.value = 'newList'
   }
 
+  const toggleAddAllMode = () => {
+    addAllMode.value = !addAllMode.value
+  }
+
   const isAddMode = computed(() => {
     return stateMode.value === 'add'
   })
@@ -127,11 +168,61 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     return stateMode.value === 'basic'
   })
 
+  const isAddAllMode = computed(() => {
+    return addAllMode.value
+  })
+
   const deleteShoppingList = async (listId) => {
     await shoppingListsApi.deleteShoppingList(listId)
     currentShoppingLists.value = currentShoppingLists.value.filter(
       (list) => list?.id !== listId
     )
+  }
+
+  const getShoppingListById = (listId) => {
+    return currentShoppingLists.value.find((list) => list?.id === listId)
+  }
+
+  const updateShoppingList = async (listId, name, description) => {
+    await shoppingListsApi.updateShoppingList(listId, name, description)
+    currentShoppingLists.value = currentShoppingLists.value.map((list) => {
+      if (list?.id === listId) {
+        return {
+          ...list,
+          name,
+          description,
+        }
+      }
+      return list
+    })
+  }
+
+  const deleteEntry = async (listId, entryId) => {
+    await shoppingListsApi.deleteEntry(listId, entryId)
+  }
+
+  const saveCartToShoppingList = async (listId) => {
+    const cartId = currentCart.value?.code
+    const result = await shoppingListsApi.saveCartAsList(listId, cartId)
+    if (result) {
+      toast.success(
+        {
+          description: i18n.t('myaccount.shoppingList.cartToListSuccess', {
+            listName: result?.name,
+          }),
+        },
+        { timeout: 3000 }
+      )
+      await initialShoppingListsLoad()
+      await cartStore.resetCurrentCart()
+    } else {
+      toast.error(
+        {
+          description: i18n.t('myaccount.shoppingList.cartToListError'),
+        },
+        { timeout: 3000 }
+      )
+    }
   }
 
   watch(isLoggedIn, async () => {
@@ -159,5 +250,13 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     isAddMode,
     isNewListMode,
     isBasicMode,
+    getShoppingListById,
+    updateShoppingList,
+    updateQuantity,
+    addListToCart,
+    deleteEntry,
+    saveCartToShoppingList,
+    isAddAllMode,
+    toggleAddAllMode,
   }
 })
