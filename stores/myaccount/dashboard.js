@@ -22,12 +22,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
   const recentRequests = ref()
   const recentShoppingLists = ref()
 
-  const getRecentRequestsTableData = async () => {
-    if (!orders?.value?.length) {
-      orders.value = await myAccountStore.getOrders()
-    }
-
-    recentRequests.value = orders.value?.orders?.slice(0, 4).map((order) => {
+  const recentRequestsTableData = computed(() => {
+    return orders.value?.orders?.slice(0, 4).map((order) => {
       const orderUrl = `${localePath('shop-my-account-request-history')}/${
         order.code
       }`
@@ -59,7 +55,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
         ],
       }
     })
-  }
+  })
 
   const buildTableHeaderObject = (value) => {
     const object = {
@@ -117,12 +113,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
     buildTableHeaderObject(title)
   )
 
-  const getRecentShoppingListsTableData = async () => {
-    if (!shoppingLists?.value?.length) {
-      shoppingLists.value = await getShoppingLists()
-    }
+  const getRecentShoppingListsTableData = computed(() => {
+    // if (!shoppingLists?.value?.length) {
+    //   shoppingLists.value = getShoppingLists()
+    // }
 
-    recentShoppingLists.value = shoppingLists.value?.slice(0, 4).map((list) => {
+    return shoppingLists.value?.slice(0, 4).map((list) => {
       const shoppingListUrl = `${localePath(
         'shop-my-account-shopping-lists'
       )}/${list.id}`
@@ -154,7 +150,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
         ],
       }
     })
-  }
+  })
 
   const buttons = {
     emptyWrapper: {
@@ -253,10 +249,13 @@ export const useDashboardStore = defineStore('dashboard', () => {
   const getDashboardData = async () => {
     try {
       isLoading.value = true
-      await getRecentRequestsTableData()
-      await getRecentShoppingListsTableData()
+      await myAccountStore.getOrders()
+      await getShoppingLists()
+      // await recentRequestsTableData()
+      // await getRecentShoppingListsTableData()
     } catch (e) {
-      isLoading.value = true
+      // Toastmessage oder logger
+      // isLoading.value = true
     } finally {
       isLoading.value = false
     }
@@ -273,6 +272,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
     isLoading,
     recentRequests,
     recentShoppingLists,
+    getRecentShoppingListsTableData,
+    recentRequestsTableData,
 
     //Getters
     // getOrders,

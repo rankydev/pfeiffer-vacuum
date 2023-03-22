@@ -95,6 +95,8 @@ export default defineComponent({
       isLoading,
       recentRequests,
       recentShoppingLists,
+      getRecentShoppingListsTableData,
+      recentRequestsTableData,
     } = storeToRefs(dashBoardStore)
 
     const { isApprovedUser } = storeToRefs(userStore)
