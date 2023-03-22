@@ -22,8 +22,7 @@ export default (context) => {
   })
 
   return {
-    httpEndpoint: baseURL,
-    browserHttpEndpoint: `/${CURRENT_REGION_CODE}${PATH_VACUUM_CALC}/graphql`,
+    httpEndpoint: `${baseURL}/${CURRENT_REGION_CODE}${PATH_VACUUM_CALC}/graphql`,
     link: authLink,
   }
 }
