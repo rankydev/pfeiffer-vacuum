@@ -8,7 +8,7 @@
       :rounded="false"
     />
     <p class="knowledge-author__description">
-      <span class="knowledge-author__name">{{ authorName }}</span>
+      <span class="knowledge-author__name">{{ name }}</span>
       <span v-if="title" class="knowledge-author__title">{{ title }}</span>
     </p>
   </div>
@@ -27,7 +27,7 @@ export default defineComponent({
       required: true,
       default: () => ({}),
     },
-    authorName: {
+    name: {
       type: String,
       required: true,
     },
