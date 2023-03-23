@@ -191,6 +191,7 @@ export default defineComponent({
 
   &__tags {
     @apply tw-flex;
+    @apply tw-flex-wrap;
     @apply tw-gap-1;
   }
 
