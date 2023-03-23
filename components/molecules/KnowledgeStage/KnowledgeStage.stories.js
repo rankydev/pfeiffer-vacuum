@@ -2,7 +2,7 @@ import KnowledgeStage from './KnowledgeStage.vue'
 import {
   image,
   date,
-  isWhitePaper,
+  isWhitepaper,
   minutes,
   hours,
   headline,
@@ -19,7 +19,7 @@ const argTypes = {
     control: { type: 'datetime' },
   },
   isWhitepaper: {
-    defaultValue: isWhitePaper,
+    defaultValue: isWhitepaper,
     control: { type: 'boolean' },
   },
   minutes: {
