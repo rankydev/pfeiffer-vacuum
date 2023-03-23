@@ -135,6 +135,43 @@
 }
 
 .primary-nav-1 {
+  @screen md {
+    @apply tw-block;
+    padding-bottom: 8rem;
+
+    &:hover {
+      @include scrollbar-nav;
+      @apply tw-overflow-auto;
+    }
+
+    &::after {
+      @apply tw-absolute;
+      @apply tw-bottom-0;
+      content: '';
+      height: 7rem;
+      width: calc(50% - 2.1rem);
+      /* stylelint-disable */
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.51) 0%,
+        #ffffff 62.5%
+      );
+      /* stylelint-enable */
+    }
+  }
+
+  @screen lg {
+    &::after {
+      width: calc(25% - 2.1rem);
+    }
+  }
+
+  &__buttons {
+    @screen md {
+      z-index: 1;
+    }
+  }
+
   &__wrapper {
     .primary-nav-1__label {
       @apply tw-font-normal;
@@ -152,6 +189,16 @@
   @screen md {
     &--passive {
       @apply tw-bg-pv-grey-96;
+
+      &::after {
+        /* stylelint-disable */
+        background: linear-gradient(
+          180deg,
+          rgba(245, 245, 245, 0.51) 0%,
+          #f5f5f5 10%
+        );
+        /* stylelint-enable */
+      }
 
       .primary-nav-1 {
         &__buttons {
@@ -189,19 +236,11 @@
   @screen md {
     @apply tw-bg-pv-white;
     @apply tw-w-full tw-h-full;
-    @apply tw-overflow-auto;
+    @apply tw-overflow-hidden;
 
-    &::-webkit-scrollbar-track {
-      @apply tw-bg-pv-white;
-    }
-
-    &::-webkit-scrollbar {
-      @apply tw-bg-pv-white;
-      width: 2px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      @apply tw-bg-pv-red;
+    &:hover {
+      @include scrollbar-nav;
+      @apply tw-overflow-auto;
     }
 
     &__wrapper {
