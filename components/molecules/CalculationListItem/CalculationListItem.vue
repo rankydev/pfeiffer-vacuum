@@ -30,8 +30,9 @@
         variant="secondary"
         gap="narrow"
         :shape="getShapeType"
-        :href="itemUrl"
+        :href="item.calculationResult.link"
         :label="$t('myaccount.calculations.detailPageLink')"
+        target="_blank"
       />
       <Button
         class="calculation-list-item__buttons--delete"
