@@ -36,13 +36,19 @@ export const useFacetActions = (selectedFacets, emit) => {
       })
     }
 
+    cleanupUnitsFor(newFacets)
     emit('updateFacets', newFacets)
   }
 
   // Removes clicked
   const removeFacet = (facet) => {
-    const newFacetsArr = unref(selectedFacets).filter((e) => e !== facet)
-    newFacetsArr.forEach((el) => {
+    const newFacets = unref(selectedFacets).filter((e) => e !== facet)
+    cleanupUnitsFor(newFacets)
+    emit('updateFacets', newFacets)
+  }
+
+  const cleanupUnitsFor = (facets) => {
+    facets.forEach((el) => {
       if (['3982', '3983'].includes(el.key)) {
         el.value = el.value.replace(suctionSpeedUnit, '')
       }
@@ -50,7 +56,6 @@ export const useFacetActions = (selectedFacets, emit) => {
         el.value = el.value.replace(vacuumRangeUnit, '')
       }
     })
-    emit('updateFacets', newFacetsArr)
   }
 
   return { updateFacets, removeFacet }
