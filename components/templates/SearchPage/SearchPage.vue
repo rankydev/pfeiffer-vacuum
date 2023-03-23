@@ -32,7 +32,7 @@
               <div class="search-page__search-input">
                 <SearchInputPage
                   v-if="showDocumentSearchTab"
-                  @searchTermChange="(value) => (searchTerm = value)"
+                  :active-tab="currentTabSelected"
                 />
               </div>
             </ContentWrapper>

@@ -41,6 +41,7 @@ export default defineComponent({
         path: localePath('shop-search'),
         query: {
           searchTerm: e?.length ? e : undefined,
+          initialSearchTerm: e.length ? e : undefined,
           ...(props.searchType && { searchType: props.searchType }),
         },
       })
