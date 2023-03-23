@@ -23,12 +23,14 @@ jest.mock('qs', () => ({
 
 const mockIsLoggedIn = jest.fn()
 const mockAuth = jest.fn()
+const mockAuthorizationFromCookie = jest.fn()
 
 jest.mock('~/stores/user', () => ({
   useUserStore: () => {
     return {
       isLoggedIn: mockIsLoggedIn(),
       auth: mockAuth(),
+      authorizationFromCookie: mockAuthorizationFromCookie(),
     }
   },
 }))
@@ -77,17 +79,11 @@ describe('axiosInterceptors', () => {
 
       test('should return full config given empty config while user is logged in', () => {
         mockIsLoggedIn.mockReturnValue(true)
-        mockAuth.mockReturnValue({
-          token_type: 'Bearer',
-          access_token: 'test_token',
-        })
+        mockAuthorizationFromCookie.mockReturnValue(() => 'Bearer test_token')
         const { fulfilledRequest } = useAxiosInterceptors()
 
         fulfilledRequest({ headers: {} })
         expect(mockDebug).toBeCalledWith('addAuthHeader', true)
-        expect(mockTrace).toBeCalledWith(
-          'Authorization Header set from cookie values'
-        )
         expect(mockTrace).toBeCalledWith('Headers: ', {
           Authorization: 'Bearer test_token',
         })

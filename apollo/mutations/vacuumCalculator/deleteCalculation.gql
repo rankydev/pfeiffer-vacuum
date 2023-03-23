@@ -1,0 +1,6 @@
+mutation deleteCalculation ($ids: [ID]!){
+  deleteCalculation (ids: $ids) {
+    success
+    message
+  }
+}

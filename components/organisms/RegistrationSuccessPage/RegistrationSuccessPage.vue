@@ -129,6 +129,11 @@ export default defineComponent({
     @screen md {
       @apply tw-self-center;
     }
+
+    .link {
+      @apply tw-flex;
+      @apply tw-gap-x-4;
+    }
   }
 }
 </style>

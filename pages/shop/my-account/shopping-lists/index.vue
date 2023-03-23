@@ -63,6 +63,7 @@
       :select-mode="isSelectMode"
       @delete="deleteShoppingList"
       @update="updateSelectedLists"
+      @details="details"
     />
     <Pagination
       v-if="!isShoppingListEmpty"
@@ -104,7 +105,8 @@ import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline
 export default defineComponent({
   name: 'ShoppingListOverviewPage',
   components: { Button, ShoppingListTable, Pagination, Icon, ResultHeadline },
-  setup() {
+  emits: ['details'],
+  setup(props, { emit }) {
     const { app, i18n } = useContext()
     const router = useRouter()
     const route = useRoute()
@@ -197,6 +199,10 @@ export default defineComponent({
       }
     }
 
+    const details = (listItem) => {
+      emit('details', listItem)
+    }
+
     watch(route, () => {
       setCurrentPage()
     })
@@ -219,6 +225,7 @@ export default defineComponent({
       goToMyAccount,
       totalPages,
       shoppingListsByPage,
+      details,
     }
   },
 })
@@ -233,6 +240,7 @@ export default defineComponent({
     @apply tw-flex;
     @apply tw-flex-col;
     @apply tw-mb-4;
+    @apply tw-w-full;
 
     @screen md {
       @apply tw-flex-row;
@@ -246,6 +254,7 @@ export default defineComponent({
 
     &--headline {
       @screen md {
+        @apply tw-min-w-fit;
         @apply tw-my-auto;
       }
     }
@@ -256,8 +265,8 @@ export default defineComponent({
 
       @screen md {
         @apply tw-flex-row;
-        @apply tw-ml-auto;
         @apply tw-my-auto;
+        @apply tw-ml-auto;
       }
 
       &__select {

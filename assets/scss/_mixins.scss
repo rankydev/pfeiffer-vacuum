@@ -6,6 +6,21 @@
   scrollbar-width: none;
 }
 
+@mixin scrollbar-nav {
+  &::-webkit-scrollbar-track {
+    @apply tw-bg-pv-white;
+  }
+
+  &::-webkit-scrollbar {
+    @apply tw-bg-pv-white;
+    width: 2px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply tw-bg-pv-red;
+  }
+}
+
 @mixin box-shadow {
   box-shadow: 0 40px 40px -40px #ccc;
 }

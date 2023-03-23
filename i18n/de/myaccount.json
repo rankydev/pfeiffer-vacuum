@@ -120,7 +120,11 @@
     "save": "Speichern und schließen",
     "info": "Ihr ausgewähltes Produkt wird automatisch zu dieser neuen Liste hinzugefügt.",
     "close": "Schließen",
-    "addNewList": "Neue Einkaufsliste hinzufügen"
+    "addNewList": "Neue Einkaufsliste hinzufügen",
+    "cartToListSuccess": "Ihr Einkaufswagen wurde zur Liste {listName} hinzugefügt",
+    "cartToListError": "Ihr Warenkorb konnte nicht zur Einkaufsliste hinzugefügt werden.",
+    "newListSuccess": "Ihre neue Einkaufsliste {listName} wurde erfolgreich erstellt.",
+    "newListError": "Ihre neue Einkaufsliste konnte nicht erstellt werden."
   },
   "details": "Details",
   "serviceHistory": {
@@ -157,7 +161,13 @@
     "title": "Einkaufslisten",
     "discard": "Abbrechen",
     "deleteList": "Liste löschen",
-    "emptyList": "Sie haben noch keine Einkaufslisten erstellt!"
+    "emptyList": "Sie haben noch keine Einkaufslisten erstellt!",
+    "emptyShoppingList": "You don't have any products in your shopping list yet!"
   },
-  "backToDashboard": "Zurück zum Dashboard"
+  "backToDashboard": "Zurück zum Dashboard",
+  "editList": "Liste bearbeiten",
+  "saveChanges": "Änderungen speichern",
+  "backToOverview": "Zurück zur Übersicht",
+  "addAllToCart": "Alle Produkte in den Warenkorb legen",
+  "descriptionOptional": "Diese Beschreibung ist optional."
 }

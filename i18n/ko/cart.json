@@ -50,5 +50,6 @@
   "pricePerUnit": "가격 / 우레탄",
   "cartEmpty": "장바구니에 항목을 추가해주세요.",
   "emptyMessage": "쇼핑 카트에 항목을 추가하십시오.",
-  "showAllProducts": "모든 제품 보기"
+  "showAllProducts": "모든 제품 보기",
+  "articleList": "기사 목록"
 }

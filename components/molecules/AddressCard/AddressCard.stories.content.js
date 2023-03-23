@@ -8,6 +8,7 @@ export const addressData = {
   postalCode: '81541',
   town: 'München',
   country: {
+    name: 'Germany',
     isocode: 'DE',
   },
   phone: '+49123456789',

@@ -5,8 +5,10 @@
     :fallback-slug="fallbackSlug"
     :language="language"
   >
-    <template #default="{ result: { data } }">
-      <CmsRootComponent v-if="data" v-bind="data" />
+    <template #default="{ result: { data, loading } }">
+      <LoadingSpinner :show="loading" container-min-height>
+        <CmsRootComponent v-if="data" v-bind="data" />
+      </LoadingSpinner>
     </template>
   </CmsQuery>
 </template>
@@ -15,9 +17,13 @@
 import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   name: 'Default',
+  components: {
+    LoadingSpinner,
+  },
   layout: 'default',
   setup(_, context) {
     const pageStore = usePageStore()

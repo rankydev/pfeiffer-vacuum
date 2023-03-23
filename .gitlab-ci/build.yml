@@ -202,6 +202,7 @@ sonar-qube:
       --build-arg EMPOLIS_CLIENT_ID="${EMPOLIS_CLIENT_ID}"
       --build-arg EMPOLIS_CLIENT_SECRET="${EMPOLIS_CLIENT_SECRET}"
       --build-arg DISABLE_SECURITY_POLICY_FORM_ACTION_SELF="${DISABLE_SECURITY_POLICY_FORM_ACTION_SELF}"
+      --build-arg VACUUM_CALCULATOR_BASE_URL="${VACUUM_CALCULATOR_BASE_URL}"
       -f docker/Dockerfile .
   after_script:
     - # here we will push ALL created tags of an image
