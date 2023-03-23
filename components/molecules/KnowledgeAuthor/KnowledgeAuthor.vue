@@ -24,7 +24,6 @@ export default defineComponent({
   props: {
     image: {
       type: Object,
-      required: true,
       default: () => ({}),
     },
     name: {
