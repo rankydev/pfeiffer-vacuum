@@ -9,6 +9,7 @@
       :link="backLink"
     />
     <ContentWrapper breakout>
+      <!-- TODO: Maybe find better solution to fix hydration -->
       <client-only>
         <LoadingSpinner :show="isLoading">
           <div class="knowledge-content__results">

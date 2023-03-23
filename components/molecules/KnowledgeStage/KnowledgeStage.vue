@@ -5,6 +5,7 @@
         <div class="knowledge-stage__headline">
           <h1>{{ headline }}</h1>
         </div>
+        <!-- TODO: Maybe find better solution to fix hydration -->
         <client-only>
           <div class="knowledge-stage__date">
             <div v-if="showDate" class="knowledge-stage__date-day">

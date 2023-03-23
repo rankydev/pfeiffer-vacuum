@@ -3,6 +3,7 @@
     class="knowledge-asset-button"
     :class="{ 'knowledge-asset-button--full': !preventFullWidth }"
   >
+    <!-- TODO: Maybe find better solution to fix hydration -->
     <client-only>
       <LoadingSpinner :show="isLoading && useLoadingSpinner">
         <!-- register for webinar button -->
