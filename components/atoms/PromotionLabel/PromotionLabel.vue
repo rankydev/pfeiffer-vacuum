@@ -1,11 +1,13 @@
 <template>
-  <div v-if="subline" class="promotion-label">
+  <div v-if="subline && showPromotion" class="promotion-label">
     <span class="promotion-label--subline"> {{ subline }}</span>
   </div>
 </template>
 
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, computed } from '@nuxtjs/composition-api'
+import { useUserStore } from '~/stores/user'
+import { storeToRefs } from 'pinia'
 
 export default defineComponent({
   name: 'PromotionLabel',
@@ -15,6 +17,21 @@ export default defineComponent({
       default: '',
       required: true,
     },
+  },
+  setup() {
+    const userStore = useUserStore()
+
+    const { isApprovedUser, isLoggedIn } = storeToRefs(userStore)
+
+    const showPromotion = computed(
+      () => isApprovedUser.value && isLoggedIn.value
+    )
+
+    return {
+      isApprovedUser,
+      isLoggedIn,
+      showPromotion,
+    }
   },
 })
 </script>
