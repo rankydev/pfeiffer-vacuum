@@ -247,7 +247,7 @@ export default defineComponent({
     /**
      * category data
      */
-    const searchTerm = ref(route.value.query.searchTerm || '')
+    const searchTerm = computed(() => route.value.query.searchTerm || '')
     const link = computed(() => categoryStore.parentCategoryPath)
     const count = computed(() => categoryStore.result?.pagination?.totalResults)
     const products = computed(() => categoryStore.result?.products)
