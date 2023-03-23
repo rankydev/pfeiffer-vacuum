@@ -58,7 +58,11 @@ export default defineComponent({
 
     const pushSearchTerm = (e) => {
       emit('submit', e)
-      if (props.clearAfterSubmit) searchTerm.value = ''
+      if (props.clearAfterSubmit) clearSearchTerm()
+    }
+
+    const clearSearchTerm = () => {
+      searchTerm.value = ''
     }
 
     const emitFocus = (val) => {
@@ -82,6 +86,7 @@ export default defineComponent({
 
     return {
       pushSearchTerm,
+      clearSearchTerm,
       searchTerm,
       pvInput,
 
