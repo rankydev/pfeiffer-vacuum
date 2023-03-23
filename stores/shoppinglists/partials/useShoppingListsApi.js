@@ -11,18 +11,17 @@ export const useShoppingListsApi = () => {
    * @return {Promise<Array>}
    */
   const getShoppingLists = async () => {
-    const result = await axios.$get(`${config.SHOPPING_LISTS}`)
-
-    if (
-      typeof result === 'object' &&
-      !result.error &&
-      Array.isArray(result.shoppinglists)
-    ) {
-      return result?.shoppinglists
+    try {
+      const result = await axios.$get(`${config.SHOPPING_LISTS}`)
+      return typeof result === 'object' &&
+        !result.error &&
+        Array.isArray(result.shoppinglists)
+        ? result?.shoppinglists
+        : []
+    } catch (error) {
+      logger.error('Error when fetching shopping lists. Returning empty list.')
+      return []
     }
-
-    logger.error('Error when fetching shopping lists. Returning empty list.')
-    return []
   }
 
   /**
@@ -30,17 +29,13 @@ export const useShoppingListsApi = () => {
    * @param {*} id
    */
   const getShoppingList = async (id) => {
-    const result = await axios.$get(`${config.SHOPPING_LISTS}/${id}`)
-
-    if (typeof result === 'object' && !result.error) {
-      return result
+    try {
+      const result = await axios.$get(`${config.SHOPPING_LISTS}/${id}`)
+      return typeof result === 'object' && !result.error ? result : null
+    } catch (error) {
+      logger.error('Error getting shopping list. Returning null.')
+      return null
     }
-
-    logger.error(
-      'Error getting shopping list. Returning null.',
-      result.error ? result.error : ''
-    )
-    return null
   }
 
   /**
@@ -50,20 +45,19 @@ export const useShoppingListsApi = () => {
    * @return Returns the ID of the new list
    */
   const createNewList = async (title, description) => {
-    const result = await axios.$post(`${config.SHOPPING_LISTS}`, {
-      name: title,
-      description,
-    })
-
-    if (typeof result === 'object' && !result.error) {
+    try {
+      const result = await axios.$post(`${config.SHOPPING_LISTS}`, {
+        name: title,
+        description,
+      })
       return result
+    } catch (error) {
+      logger.error(
+        'Error when creating shopping list. Returning -1.',
+        result?.error ? result.error : ''
+      )
+      return -1
     }
-
-    logger.error(
-      'Error when creating shopping list. Returning -1.',
-      result.error ? result.error : ''
-    )
-    return -1
   }
 
   /**
@@ -74,20 +68,19 @@ export const useShoppingListsApi = () => {
    * @return {Promise<Object>}
    */
   const addToShoppingList = async (listId, productCode, amount = 1) => {
-    const result = await axios.post(
-      `${config.SHOPPING_LISTS}/${listId}/entries`,
-      { amount, product: { code: productCode } }
-    )
-
-    if (result.status === 201) {
+    try {
+      const result = await axios.$post(
+        `${config.SHOPPING_LISTS}/${listId}/entries`,
+        { amount, product: { code: productCode } }
+      )
       return result
+    } catch (error) {
+      logger.error(
+        'Error when adding to shopping list. Returning false.',
+        result.error ? result.error : ''
+      )
+      return null
     }
-
-    logger.error(
-      'Error when adding to shopping list. Returning false.',
-      result.error ? result.error : ''
-    )
-    return null
   }
 
   /**
@@ -95,16 +88,117 @@ export const useShoppingListsApi = () => {
    * @param {*} id
    */
   const deleteShoppingList = async (id) => {
-    const result = await axios.$delete(`${config.SHOPPING_LISTS}/${id}`)
-
-    if (result.error) {
+    try {
+      const result = await axios.$delete(`${config.SHOPPING_LISTS}/${id}`)
+      return !result?.error ? result : null
+    } catch (error) {
       logger.error(
         'Error when deleting shopping list.',
-        result.error ? result.error : ''
+        result?.error ? result.error : ''
       )
+      return null
     }
+  }
 
-    return null
+  /**
+   * Updates the information for a shopping list
+   * @param {*} id
+   * @param {*} title
+   * @param {*} description
+   */
+  const updateShoppingList = async (id, title, description) => {
+    try {
+      const result = await axios.$put(`${config.SHOPPING_LISTS}/${id}`, {
+        name: title,
+        description,
+      })
+      return typeof result === 'object' && !result.error ? true : false
+    } catch (error) {
+      logger.error(
+        'Error when updating shopping list. Returning false.',
+        result?.error ? result.error : ''
+      )
+      return false
+    }
+  }
+
+  /**
+   * Update quantity for entry
+   * @param {*} listId
+   * @param {*} code
+   * @param {*} amount
+   */
+  const updateQuantity = async (listId, code, amount) => {
+    try {
+      const result = await axios.$put(
+        `${config.SHOPPING_LISTS}/${listId}/entries/${code}`,
+        { amount }
+      )
+      return !result?.error ? true : false
+    } catch (error) {
+      logger.error(
+        'Error when updating shopping list entry. Returning false.',
+        result?.error ? result.error : ''
+      )
+      return false
+    }
+  }
+
+  /**
+   * Adds all entries of the shopping list to the cart
+   * @param {*} listId
+   * @param {*} code
+   */
+  const addListToCart = async (listId, code) => {
+    try {
+      const result = await axios.$post(
+        `${config.SHOPPING_LISTS}/${listId}/add2cart/${code}`,
+        null
+      )
+      return !result?.error ? true : false
+    } catch (error) {
+      logger.error(
+        'Error when adding shopping list to cart. Returning false.',
+        result?.error ? result.error : ''
+      )
+      return false
+    }
+  }
+
+  /**
+   * Delete entry from shopping list
+   * @param {*} listId
+   * @param {*} code
+   */
+  const deleteEntry = async (listId, code) => {
+    try {
+      const result = await axios.$delete(
+        `${config.SHOPPING_LISTS}/${listId}/entries/${code}`
+      )
+      return typeof result === 'object' && !result?.error ? true : false
+    } catch (error) {
+      logger.error(
+        'Error when deleting shopping list entry. Returning false.',
+        result?.error ? result.error : ''
+      )
+      return false
+    }
+  }
+
+  const saveCartAsList = async (listId, cartId) => {
+    try {
+      const result = await axios.$post(
+        `${config.CARTS_CURRENT_USER_API}/${cartId}/add2list/${listId}`,
+        null
+      )
+      return !result?.error ? result : null
+    } catch (error) {
+      logger.error(
+        'Error when saving cart to shopping lists Returning false.',
+        result?.error ? result.error : ''
+      )
+      return null
+    }
   }
 
   return {
@@ -113,5 +207,10 @@ export const useShoppingListsApi = () => {
     createNewList,
     addToShoppingList,
     deleteShoppingList,
+    updateShoppingList,
+    updateQuantity,
+    addListToCart,
+    deleteEntry,
+    saveCartAsList,
   }
 }

@@ -107,7 +107,7 @@ export const useCategoryStore = defineStore('category', () => {
   })
 
   const categoryTreeNavigationEntries = computed(() =>
-    categoryTree.value.map((parent) => ({
+    categoryTree.value?.map((parent) => ({
       component: 'MainNavLinkLevel1',
       level: 1,
       href: joinURL(localePath('shop-categories'), parent.category?.id),
@@ -169,7 +169,7 @@ export const useCategoryStore = defineStore('category', () => {
   }
 
   const getCleanedText = (text) => {
-    return text.trim().replace(/\s+/g, ' ')
+    return text?.trim()?.replace(/\s+/g, ' ')
   }
 
   const loadSuggestions = async (text, returnResponse = false) => {

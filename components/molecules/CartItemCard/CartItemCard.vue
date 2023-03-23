@@ -409,6 +409,7 @@ export default defineComponent({
 
     @screen lg {
       @apply tw-row-start-6 tw-row-end-7;
+      @apply tw-mt-4;
       @apply tw-mx-0;
     }
 

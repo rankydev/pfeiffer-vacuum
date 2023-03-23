@@ -3,6 +3,7 @@ import {
   PATH_SHOP,
   PATH_SHOP_IMAGES,
   PATH_DATASOURCES,
+  PATH_VACUUM_CALC,
   PATH_STORYBLOK_API,
   PATH_STORYBLOK_ASSETS,
   PATH_STORYBLOK_IMAGES,
@@ -134,6 +135,7 @@ export default {
     'vue-toastification/nuxt',
     // Link to prometheus module:  https://www.npmjs.com/package/nuxt-prometheus-module
     'nuxt-prometheus-module',
+    '@nuxtjs/apollo',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -273,6 +275,8 @@ export default {
     // SAP Commerce Cloud
     SHOP_BASE_URL: process.env.SHOP_BASE_URL,
     SHOP_IMAGE_URL: process.env.SHOP_IMAGE_URL,
+    // Vacuum Calculator
+    VACUUM_CALCULATOR_BASE_URL: process.env.VACUUM_CALCULATOR_BASE_URL,
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img
@@ -331,6 +335,10 @@ export default {
       path: PATH_DATASOURCES,
       handler: '~/server/middleware/datasources.js',
     },
+    {
+      path: PATH_VACUUM_CALC,
+      handler: '~/server/middleware/shop-vacuum-calc.js',
+    },
   ],
   watchers: {
     // Temporary fix: https://github.com/nuxt-community/tailwindcss-module/issues/359
@@ -384,5 +392,14 @@ export default {
   },
   helmet: {
     frameguard: false,
+  },
+  apollo: {
+    clientConfigs: {
+      default: '~/apollo/vacuumCalculator.config.js',
+      vacuumCalculator: '~/apollo/vacuumCalculator.config.js',
+    },
+    watchLoading: '~/apollo/loadingHandler.js',
+    errorHandler: '~/apollo/errorHandler.js',
+    includeNodeModules: true,
   },
 }

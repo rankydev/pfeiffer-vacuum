@@ -23,3 +23,6 @@ export const OCI_HOOK_URL = 'HOOK_URL'
 export const OCI_RETURN_TARGET = 'RETURNTARGET'
 export const OCI_CUSTOMER_ID = 'customerId'
 export const OCI_BUYERCOOKIE = 'buyercookie'
+
+//graphQL api endpoints
+export const PATH_VACUUM_CALC = '/api/vacuumCalc'
