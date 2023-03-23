@@ -1,6 +1,6 @@
 <template>
   <GenericSidebar
-    :is-open="isOpen"
+    :is-open="isCartOverlayOpen"
     position="right"
     @closeSidebar="closeOverlay"
   >
@@ -129,20 +129,12 @@ export default defineComponent({
     LoginToSeePricesLabel,
     Button,
   },
-  props: {
-    isOpen: {
-      type: Boolean,
-      default: false,
-      required: true,
-    },
-  },
-  emits: ['close'],
-  setup(props, { emit }) {
+  setup() {
     const router = useRouter()
     const { localePath } = useContext()
     const isMiniCart = ref(true)
     const cartStore = useCartStore()
-    const { currentCart } = storeToRefs(cartStore)
+    const { currentCart, isCartOverlayOpen } = storeToRefs(cartStore)
     const userStore = useUserStore()
     const { isLoggedIn, isOciUser } = storeToRefs(userStore)
     const showInfo = ref(false)
@@ -170,7 +162,7 @@ export default defineComponent({
     })
 
     const closeOverlay = () => {
-      emit('close')
+      cartStore.toggleCartOverlay()
     }
 
     const goToCart = () => {
@@ -210,6 +202,7 @@ export default defineComponent({
       showInfo,
       isAddedToCart,
       handleCheckoutClick: cartStore.handleCheckoutClick,
+      isCartOverlayOpen,
     }
   },
 })

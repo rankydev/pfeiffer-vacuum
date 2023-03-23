@@ -26,7 +26,7 @@
       />
     </div>
     <AttributeAccordion
-      v-if="showVariantSelection"
+      v-if="showVariantSelection && variationAttributeEntries.length"
       :loading="loadingMatrix"
       :accordion-entries="variationAttributeEntries"
     />
@@ -50,6 +50,7 @@ import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import AttributeAccordion from './partials/AttributeAccordion'
 import ProductActions from './partials/ProductActions'
+import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
   name: 'VariantSelection',
@@ -58,6 +59,7 @@ export default defineComponent({
     ProductActions,
     LoadingSpinner,
     PvSelect,
+    Button,
   },
   props: {
     loading: {

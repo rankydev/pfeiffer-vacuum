@@ -275,6 +275,7 @@ export default {
     // SAP Commerce Cloud
     SHOP_BASE_URL: process.env.SHOP_BASE_URL,
     SHOP_IMAGE_URL: process.env.SHOP_IMAGE_URL,
+    // Vacuum Calculator
     VACUUM_CALCULATOR_BASE_URL: process.env.VACUUM_CALCULATOR_BASE_URL,
   },
 

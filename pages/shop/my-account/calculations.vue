@@ -19,8 +19,6 @@
 
 <script>
 import {
-  computed,
-  watch,
   defineComponent,
   useContext,
   ref,
@@ -28,6 +26,7 @@ import {
   onServerPrefetch,
 } from '@nuxtjs/composition-api'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
+import { useLogger } from '~/composables/useLogger'
 import calculationList from '~/apollo/queries/vacuumCalculator/calculationList.gql'
 import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper.vue'
 import CalculationList from '~/components/organisms/CalculationList/CalculationList.vue'
@@ -42,6 +41,7 @@ export default defineComponent({
   setup() {
     const { i18n, app } = useContext()
     const calculations = ref(null)
+    const { logger } = useLogger()
     const vacuumCalculator = app.apolloProvider?.clients?.vacuumCalculator
 
     const fetchCalculations = async () => {
@@ -55,6 +55,8 @@ export default defineComponent({
         })
       } catch (error) {
         console.error(error)
+        // TODO in PVWEB-535: show error message
+        logger.error(error)
       }
     }
 
@@ -128,7 +130,7 @@ export default defineComponent({
       )
     })
 
-    return { emptyWrapperButton, tableHeader, tableData, calculationItems }
+    return { emptyWrapperButton, calculationItems }
   },
 })
 </script>

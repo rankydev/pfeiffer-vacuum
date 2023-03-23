@@ -50,5 +50,6 @@
   "pricePerUnit": "价格 / 聚氨酯",
   "cartEmpty": "请将商品添加到购物车。",
   "emptyMessage": "请将一个商品添加到购物车。",
-  "showAllProducts": "显示所有产品"
+  "showAllProducts": "显示所有产品",
+  "articleList": "기사 목록"
 }

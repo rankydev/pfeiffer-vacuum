@@ -39,12 +39,13 @@
 <script>
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 import { useSanitizer } from '~/composables/sanitizer/useSanitizer'
+import { useInputValidator } from '~/composables/useValidator'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ErrorMessage from '~/components/atoms/FormComponents/partials/ErrorMessage/ErrorMessage'
 import PvLabel from '~/components/atoms/FormComponents/partials/PvLabel/PvLabel'
-import { useInputValidator } from '~/composables/useValidator'
 
 export default defineComponent({
+  name: 'PvInput',
   components: {
     PvLabel,
     ErrorMessage,

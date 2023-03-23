@@ -72,10 +72,7 @@
     @apply tw-flex-col;
     @apply tw-w-1/2;
     @apply tw-pl-8 tw-pt-4;
-    padding-bottom: 88px;
-    max-height: calc(
-      100vh - 200px
-    ); // subtract 200px for header height and 48px for the space under the nav
+    @apply tw-pb-[88px];
 
     &__element {
       @apply tw-border-b-0;

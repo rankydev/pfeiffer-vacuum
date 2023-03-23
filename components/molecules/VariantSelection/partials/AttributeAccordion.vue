@@ -61,10 +61,19 @@ import GenericAccordion from '~/components/atoms/GenericAccordion/GenericAccordi
 import AttributeButtons from './AttributeButtons'
 import { storeToRefs } from 'pinia'
 import { useVariationmatrixStore } from '~/stores/product'
+import Button from '~/components/atoms/Button/Button'
+import Icon from '~/components/atoms/Icon/Icon'
+import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollapse.vue'
 
 export default {
   name: 'AttributeAccordion',
-  components: { GenericAccordion, AttributeButtons },
+  components: {
+    GenericAccordion,
+    AttributeButtons,
+    Button,
+    Icon,
+    AnimatedCollapse,
+  },
   props: {
     accordionEntries: {
       type: Array,

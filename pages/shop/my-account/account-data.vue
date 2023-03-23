@@ -98,6 +98,7 @@ import {
 import { useUserStore } from '~/stores/user'
 import { useAccountDataStore } from '~/stores/myaccount'
 import { useVuelidate } from '@vuelidate/core'
+import { useToast } from '~/composables/useToast'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
 import MyAccountEditableTextfield from '~/components/organisms/MyAccount/partials/MyAccountEditableTextfield'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
@@ -105,7 +106,7 @@ import RegistrationCompanyDataForm from '~/components/molecules/RegistrationComp
 import RegistrationPageDataProtection from '~/components/organisms/RegistrationPage/RegistrationPageDataProtection/RegistrationPageDataProtection'
 import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
-import { useToast } from '~/composables/useToast'
+import Button from '~/components/atoms/Button/Button.vue'
 
 export default defineComponent({
   name: 'AccountData',
@@ -117,6 +118,7 @@ export default defineComponent({
     RegistrationPageDataProtection,
     GlobalMessage,
     ResultHeadline,
+    Button,
   },
   setup() {
     const { app, i18n } = useContext()

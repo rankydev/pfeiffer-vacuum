@@ -50,6 +50,7 @@ import { useDatasourcesStore } from '~/stores/datasources'
 import { storeToRefs } from 'pinia'
 
 export default defineComponent({
+  name: 'ContactRequestForm',
   components: {
     LoadingSpinner,
     GeneralRequest,

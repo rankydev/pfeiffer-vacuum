@@ -7,7 +7,7 @@ export default {
                 <a href="mailto:info@pfeiffer-vacuum.com">eMail links</a> or
                 <a href="tel:+49123456789">telephone</a> or
                 <a href="#anchor">anchor</a>
-                 also styles for several headlines are provide like
+                 also styles for several headlines are provided like
                 <h2>Headline H2</h2>
                 <p><span class="tw-subline-2">Subline H2</span></p>
                 <h3>Headline H3</h3>
@@ -58,18 +58,18 @@ export const styleOptions = `
 `
 
 export const linksTargetSelf = `
-<a class="link-external" href="https://google.com/" target="_self" linktype="url">External</a>
-<a class="link-internal" href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" anchor="" linktype="story">Internal</a>
-<a class="link-anchor" href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" anchor="testAnchor" linktype="story">Anchor</a>
-<a class="link-mail" href="mailto:test@test.com" linktype="email">Mail</a>
-<a class="link-asset" href="https://a.storyblok.com/f/144293/329x153/4c312abe67/asset.png" target="_self" linktype="asset">Asset</a>`
+<a class="link-external" href="https://google.com/" target="_self" >External</a>
+<a class="link-internal" href="/default/"   >Internal</a>
+<a class="link-anchor" href="/default/"   >Anchor</a>
+<a class="link-mail" href="mailto:test@test.com" >Mail</a>
+<a class="link-asset" href="https://a.storyblok.com/f/144293/329x153/4c312abe67/asset.png" target="_self" >Asset</a>`
 
 export const linksTargetBlank = `
-<a class="link-external" href="https://google.com/" target="_blank" linktype="url">External</a>
-<a class="link-internal" href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" target="_blank" anchor="" linktype="story">Internal</a>
-<a class="link-anchor" href="/default/" uuid="c0b766d9-bf1d-4a06-a3cb-b9f0e8d39125" target="_blank" anchor="testAnchor" linktype="story">Anchor</a>
-<a class="link-mail" href="mailto:test@test.com" linktype="email" target="_blank">Mail</a>
-<a class="link-asset" href="https://a.storyblok.com/f/144293/329x153/4c312abe67/asset.png" target="_blank" linktype="asset">Asset</a>`
+<a class="link-external" href="https://google.com/" target="_blank" >External</a>
+<a class="link-internal" href="/default/"  target="_blank"  >Internal</a>
+<a class="link-anchor" href="/default/"  target="_blank"  >Anchor</a>
+<a class="link-mail" href="mailto:test@test.com"  target="_blank">Mail</a>
+<a class="link-asset" href="https://a.storyblok.com/f/144293/329x153/4c312abe67/asset.png" target="_blank" >Asset</a>`
 
 export const unorderedList = `
 <ul>

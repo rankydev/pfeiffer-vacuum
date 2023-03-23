@@ -39,10 +39,11 @@
 </template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api'
 import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.vue'
 import Bubble from '~/components/molecules/Bubble/Bubble'
 
-export default {
+export default defineComponent({
   name: 'HomeStageSlide',
   components: {
     HomeStageSlideContent,
@@ -78,7 +79,7 @@ export default {
       default: () => [],
     },
   },
-}
+})
 </script>
 
 <style lang="scss">
