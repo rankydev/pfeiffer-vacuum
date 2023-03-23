@@ -13,11 +13,11 @@
       :webinar-registration-id="isWhitepaper ? null : hybrisContent.id"
     />
     <nuxt-dynamic
+      v-bind="item"
+      :is="item.uiComponent || item.component"
       v-for="item in content.pageComponents"
       :key="item._uid"
       v-editable="item"
-      v-bind="item"
-      :name="item.uiComponent || item.component"
     />
     <KnowledgeAssetButton
       class="knowledge-details__asset-button-bottom"
