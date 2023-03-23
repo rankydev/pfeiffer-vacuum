@@ -57,24 +57,24 @@
 
                   <CartTable />
 
-                <div
+                  <div
                     class="cart-page__info"
                     :class="{ 'cart-page__info--oci': isOciUser }"
-                >
-                  <div v-show="!isOciUser" class="cart-page__information">
-                    <PromotionLabel
+                  >
+                    <div v-show="!isOciUser" class="cart-page__information">
+                      <PromotionLabel
                         v-for="(promotion, index) in cartPromotions"
                         :key="index"
                         :subline="promotion.description"
-                    />
-                    <!-- TODO: Maybe find better solution to fix hydration -->
-                    <client-only>
-                      <PriceInformation
+                      />
+                      <!-- TODO: Maybe find better solution to fix hydration -->
+                      <client-only>
+                        <PriceInformation
                           v-if="!isMobile"
                           information-type="price"
-                      />
-                    </client-only>
-                  </div>
+                        />
+                      </client-only>
+                    </div>
 
                     <div class="cart-page__actions">
                       <div class="cart-page__total">
