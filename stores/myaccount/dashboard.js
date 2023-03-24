@@ -15,13 +15,10 @@ export const useDashboardStore = defineStore('dashboard', () => {
   const userStore = useUserStore()
   const { currentUser, userBillingAddress } = storeToRefs(userStore)
 
-  const shoppingLists = ref()
+  const shoppingLists = ref(null)
+  const isLoading = ref(false)
 
-  const getRecentRequestsTableData = async () => {
-    if (!orders?.value?.length) {
-      orders.value = await myAccountStore.getOrders()
-    }
-
+  const recentRequestsTableData = computed(() => {
     return orders.value?.orders?.slice(0, 4).map((order) => {
       const orderUrl = `${localePath('shop-my-account-request-history')}/${
         order.code
@@ -54,7 +51,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
         ],
       }
     })
-  }
+  })
 
   const buildTableHeaderObject = (value) => {
     const object = {
@@ -90,12 +87,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
         !result.error &&
         Array.isArray(result.shoppinglists)
       ) {
-        shoppingLists.value = result.shoppingLists
-        return result.shoppinglists
+        shoppingLists.value = result.shoppinglists
+      } else {
+        throw result?.error
       }
     } catch (e) {
       logger.error('Error when fetching shopping lists. Returning empty list.')
-      return []
     }
   }
 
@@ -112,11 +109,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
     buildTableHeaderObject(title)
   )
 
-  const getRecentShoppingListsTableData = async () => {
-    if (!shoppingLists?.value?.length) {
-      shoppingLists.value = await getShoppingLists()
-    }
-
+  const recentShoppingListsTableData = computed(() => {
     return shoppingLists.value?.slice(0, 4).map((list) => {
       const shoppingListUrl = `${localePath(
         'shop-my-account-shopping-lists'
@@ -149,7 +142,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
         ],
       }
     })
-  }
+  })
 
   const buttons = {
     emptyWrapper: {
@@ -245,6 +238,18 @@ export const useDashboardStore = defineStore('dashboard', () => {
     ],
   }
 
+  const getDashboardData = async () => {
+    try {
+      isLoading.value = true
+      await myAccountStore.getOrders()
+      await getShoppingLists()
+    } catch (e) {
+      logger.error('Error when fetching dashboard data.', e)
+    } finally {
+      isLoading.value = false
+    }
+  }
+
   return {
     // States
     recentRequestsTableHeader,
@@ -253,12 +258,13 @@ export const useDashboardStore = defineStore('dashboard', () => {
     accountDataContent,
     companyDataContent,
     buttons,
+    isLoading,
 
-    //Getters
-    getRecentRequestsTableData,
-    getRecentShoppingListsTableData,
+    // computed
+    recentShoppingListsTableData,
+    recentRequestsTableData,
 
-    // getOrders,
-    // Actions
+    // functions
+    getDashboardData,
   }
 })
