@@ -28,6 +28,7 @@ import LanguageSwitcher from '~/components/molecules/LanguageSwitcher/LanguageSw
 import FlyoutEntry from '~/components/molecules/FlyoutEntry/FlyoutEntry.vue'
 
 export default defineComponent({
+  name: 'TopNavigation',
   components: {
     LanguageSwitcher,
     FlyoutEntry,

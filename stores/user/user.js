@@ -10,12 +10,13 @@ import {
   watch,
 } from '@nuxtjs/composition-api'
 import { defineStore } from 'pinia'
+import { joinURL } from 'ufo'
 import { useKeycloak } from './partials/useKeycloak'
 import { useUserApi } from './partials/useUserApi'
-import { useLogger } from '~/composables/useLogger'
 import { useOciStore } from '~/stores/oci'
-import { joinURL } from 'ufo'
+import { useLogger } from '~/composables/useLogger'
 import { useToast } from '~/composables/useToast'
+import { useCookieHelper } from '~/composables/useCookieHelper'
 import {
   OCI_USERNAME,
   OCI_PASSWORD,
@@ -40,7 +41,9 @@ export const useUserStore = defineStore('user', () => {
     createKeycloakInstance,
     setCookiesAndSaveAuthData,
     removeCookiesAndDeleteAuthData,
+    forceTokenRefreshAndUpdate,
   } = useKeycloak()
+  const { getCookie } = useCookieHelper()
 
   const isLoading = ref(false)
   const currentUser = ref(null)
@@ -417,6 +420,14 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const authorizationFromCookie = () => {
+    const authorization = `${getCookie('auth.tokenType')} ${getCookie(
+      'auth.accessToken'
+    )}`
+    logger.trace('Authorization Header set from cookie values')
+    return authorization
+  }
+
   // the initial store initialization
   /* istanbul ignore else  */
   if (!currentUser.value) {
@@ -471,5 +482,7 @@ export const useUserStore = defineStore('user', () => {
     getDeliveryAddressByID,
     loadAddressData,
     register,
+    forceTokenRefreshAndUpdate,
+    authorizationFromCookie,
   }
 })

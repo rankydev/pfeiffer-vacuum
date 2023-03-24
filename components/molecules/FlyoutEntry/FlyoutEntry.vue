@@ -14,6 +14,7 @@ import AnimatedCollapse from '~/components/atoms/AnimatedCollapse/AnimatedCollap
 import Link from '~/components/atoms/Link/Link.vue'
 
 export default defineComponent({
+  name: 'FlyoutEntry',
   components: {
     Icon,
     AnimatedCollapse,

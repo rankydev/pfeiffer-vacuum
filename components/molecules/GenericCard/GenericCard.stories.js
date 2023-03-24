@@ -24,7 +24,7 @@ const argTypes = {
 
   image: {
     control: { type: 'text' },
-    defaultValue: `<img src="${image}" />`,
+    defaultValue: `<img src="${image}" alt="example" />`,
     table: { type: { summary: null } },
   },
 
@@ -97,7 +97,7 @@ const Template = (args) => ({
     return { args }
   },
   template: `
-  <div class="documentation-preview card-wrapper" >
+    <div class="documentation-preview card-wrapper">
     <GenericCard v-bind="args">
       <template v-if="'tag' in args" v-slot:tag>${args.tag}</template>
       <template v-if="'image' in args" v-slot:image>${args.image}</template>
@@ -108,8 +108,8 @@ const Template = (args) => ({
       <template v-if="'additionalInfo' in args" v-slot:additionalInfo>${args.additionalInfo}</template>
       <template v-if="'actionItems' in args" v-slot:actionItems>${args.actionItems}</template>
     </GenericCard>
-  </div>
-`,
+    </div>
+  `,
 })
 
 export const Default = Template.bind({})

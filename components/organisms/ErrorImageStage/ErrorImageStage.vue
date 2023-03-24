@@ -31,9 +31,10 @@
 </template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api'
 import HomeStageSlideContent from '~/components/organisms/HomeStage/HomeStageSlide/partials/HomeStageSlideContent/HomeStageSlideContent.vue'
 
-export default {
+export default defineComponent({
   name: 'ErrorImageStage',
   components: {
     HomeStageSlideContent,
@@ -68,7 +69,7 @@ export default {
       starsAmount,
     }
   },
-}
+})
 </script>
 
 <style lang="scss">

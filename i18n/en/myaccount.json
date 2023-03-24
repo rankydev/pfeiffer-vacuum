@@ -120,7 +120,11 @@
     "save": "Save and close",
     "info": "Your selected product will be added to this new list automatically.",
     "close": "Close",
-    "addNewList": "Add new shopping list"
+    "addNewList": "Add new shopping list",
+    "cartToListSuccess": "Your cart has been added to {listName} list",
+    "cartToListError": "Your cart could not be added to shopping list.",
+    "newListSuccess": "Your new shopping list {listName} has been created successfully.",
+    "newListError": "Your new shopping list could not be created."
   },
   "details": "Details",
   "serviceHistory": {
@@ -157,7 +161,13 @@
     "title": "Shopping Lists",
     "discard": "Discard",
     "deleteList": "Delete list",
-    "emptyList": "You have not created any shopping lists yet!"
+    "emptyList": "You have not created any shopping lists yet!",
+    "emptyShoppingList": "You don't have any products in your shopping list yet!"
   },
-  "backToDashboard": "Back to dashboard"
+  "backToDashboard": "Back to dashboard",
+  "editList": "Edit list",
+  "saveChanges": "Save changes",
+  "backToOverview": "Back to overview",
+  "addAllToCart": "Add all products to cart",
+  "descriptionOptional": "This description is optional."
 }

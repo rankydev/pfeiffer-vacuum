@@ -22,6 +22,7 @@
       :select-mode="selectMode"
       @delete="deleteListItem"
       @update="updateDeleteList"
+      @details="details"
     />
   </div>
 </template>
@@ -46,7 +47,7 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ['delete', 'update'],
+  emits: ['delete', 'update', 'details'],
   setup(props, { emit }) {
     const getUniqueId = (id) => useUniqueKey('SHOPPING_LIST_TABLE_' + id)
     const deleteListItem = (listItem) => {
@@ -57,7 +58,11 @@ export default defineComponent({
       emit('update', listItem)
     }
 
-    return { deleteListItem, updateDeleteList, getUniqueId }
+    const details = (listItem) => {
+      emit('details', listItem)
+    }
+
+    return { deleteListItem, updateDeleteList, getUniqueId, details }
   },
 })
 </script>

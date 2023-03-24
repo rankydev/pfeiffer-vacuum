@@ -1,0 +1,17 @@
+query calculationList ($start: Int, $limit: Int) {
+  calculationList (start: $start, limit: $limit) {
+    total
+    calculations {
+      id
+      insert
+      update
+      title
+      calculationType
+      calculationMode
+      calculationResult {
+        id
+        link
+      }
+    }
+  }
+}

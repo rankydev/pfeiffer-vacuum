@@ -9,7 +9,7 @@
     v-bind="bindings"
     custom
   >
-    <a :href="link" @click="($e) => clickHandler($e, navigate)">
+    <a :href="link" class="link" @click="($e) => clickHandler($e, navigate)">
       <slot :isActive="isActive" :isExactActive="isExactActive"
         >{{ label }}
       </slot>
@@ -26,6 +26,7 @@ import {
 } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  name: 'Link',
   props: {
     /**
      * The relative or absolute link

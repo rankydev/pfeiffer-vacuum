@@ -17,20 +17,14 @@
       </span>
     </div>
     <ShoppingListItemCard
-      v-for="{
-        product,
-        quantity,
-        basePrice,
-        totalPrice,
-        code,
-      } in getSortedProducts"
+      v-for="{ product, amount, price, totalPrice, code } in getSortedProducts"
       :key="getUniqueId(code)"
       :product="product"
-      :quantity="quantity"
-      :base-price="basePrice"
+      :quantity="amount"
+      :base-price="price"
       :price-total="totalPrice"
       :is-read-only="!isSortable"
-      @add-to-shopping-list="addToShoppingList"
+      @addToShoppingList="addToShoppingList"
       @delete="deleteFromCart"
       @update="updateCartQuantity"
     />
@@ -73,8 +67,8 @@ export default defineComponent({
     const sortByPrice = () => {
       return [...products.value].sort((a, b) => {
         return priceSortedDsc.value
-          ? b?.basePrice?.value - a?.basePrice?.value
-          : a?.basePrice?.value - b?.basePrice?.value
+          ? b?.price?.value - a?.price?.value
+          : a?.price?.value - b?.price?.value
       })
     }
 
@@ -125,7 +119,7 @@ export default defineComponent({
       @apply tw-text-pv-grey-32;
 
       @screen lg {
-        @apply tw-col-start-10 tw-col-end-11;
+        @apply tw-col-start-8 tw-col-end-10;
         @apply tw-my-auto;
         @apply tw-ml-auto;
         @apply tw-mr-8;
@@ -146,7 +140,7 @@ export default defineComponent({
 
     &--price {
       @apply tw-row-start-1 tw-row-end-1;
-      @apply tw-col-start-11 tw-col-end-12;
+      @apply tw-col-start-10 tw-col-end-12;
       @apply tw-flex;
       @apply tw-m-auto;
       @apply tw-w-fit;

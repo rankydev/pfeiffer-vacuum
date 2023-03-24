@@ -94,7 +94,13 @@ export const useVariationmatrixStore = defineStore('variationmatrix', () => {
 
       // Write result into store
       variationMatrix.value = result
-      matrixStillValid.value = true
+
+      // when we are on server side we want to put this as still valid to prevent unneeded intial client side reload
+      // but we do not want to do this on client side since we need to refresh matrix f.e. after language switch [PVWEB-1008]
+      // when its needed to keep matrix valid manually it needs to be done explicit. Like in "redirectToId"
+      if (process.server) {
+        matrixStillValid.value = true
+      }
     } catch (error) {
       console.error(error)
     } finally {

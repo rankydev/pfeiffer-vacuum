@@ -2,7 +2,7 @@
   <div class="knowledge-content">
     <KnowledgeNav v-if="isOverviewPage" />
     <ResultHeadline
-      id="knowledge-results"
+      identifier="knowledge-results"
       class="knowledge-content__headline"
       :headline="resultHeadline"
       :result-count="totalResults"

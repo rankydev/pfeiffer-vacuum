@@ -5,65 +5,67 @@
     :fallback-slug="fallbackSlug"
     :language="language"
   >
-    <template #default="{ result: { data } }">
-      <Page v-if="data" v-bind="data" :meta-data="productStore.metaData">
-        <ContentWrapper>
-          <div v-if="productStore.product && !hasError" class="product-page">
-            <div class="product-page__headline-wrapper">
-              <h1 class="product-page__headline">
-                {{ (productStore.product || {}).name }}
-              </h1>
-              <Button
-                :label="$t('cart.getProductHelp')"
-                :href="localePath('/contact')"
-                variant="secondary"
-                shape="outlined"
-                icon="help"
-              />
-            </div>
-
-            <div class="product-page__upper-section">
-              <div class="product-page__image-gallery">
-                <ImageGallery
-                  v-if="sortedImages.length"
-                  :images="sortedImages"
-                />
-                <ResponsiveImage
-                  v-else
-                  aspect-ratio="3:2"
-                  fallback-image-icon-size="xxlarge"
+    <template #default="{ result: { data, loading } }">
+      <LoadingSpinner :show="loading || isLoadingProduct" container-min-height>
+        <Page v-if="data" v-bind="data" :meta-data="productStore.metaData">
+          <ContentWrapper>
+            <div v-if="productStore.product && !hasError" class="product-page">
+              <div class="product-page__headline-wrapper">
+                <h1 class="product-page__headline">
+                  {{ (productStore.product || {}).name }}
+                </h1>
+                <Button
+                  :label="$t('cart.getProductHelp')"
+                  :href="localePath('/contact')"
+                  variant="secondary"
+                  shape="outlined"
+                  icon="help"
                 />
               </div>
+
+              <div class="product-page__upper-section">
+                <div class="product-page__image-gallery">
+                  <ImageGallery
+                    v-if="sortedImages.length"
+                    :images="sortedImages"
+                  />
+                  <ResponsiveImage
+                    v-else
+                    aspect-ratio="3:2"
+                    fallback-image-icon-size="xxlarge"
+                  />
+                </div>
+                <div
+                  id="variantselection"
+                  class="product-page__variant-selection"
+                >
+                  <VariantSelection />
+                </div>
+              </div>
+
               <div
-                id="variantselection"
-                class="product-page__variant-selection"
+                v-if="productReferencesRecommendedAccessories.length"
+                class="tw-w-full"
               >
-                <VariantSelection />
+                <RecommendedAccessories
+                  :headline="
+                    $t('product.recommended.title') + productStore.product.name
+                  "
+                />
               </div>
             </div>
-
-            <div
-              v-if="productReferencesRecommendedAccessories.length"
-              class="tw-w-full"
-            >
-              <RecommendedAccessories
-                :headline="
-                  $t('product.recommended.title') + productStore.product.name
-                "
-              />
-            </div>
-          </div>
-          <ErrorHandling
-            v-else
-            :headline="$t('product.errorHandling.singleProductHeadline')"
-            :grey-background="false"
+            <ErrorHandling
+              v-else-if="!isLoadingProduct"
+              :headline="$t('product.errorHandling.singleProductHeadline')"
+              :grey-background="false"
+            />
+          </ContentWrapper>
+          <DetailTabs
+            v-if="productStore.product && !hasError"
+            class="product-page__detail-tabs"
           />
-        </ContentWrapper>
-        <DetailTabs
-          v-if="productStore.product && !hasError"
-          class="product-page__detail-tabs"
-        />
-      </Page>
+        </Page>
+      </LoadingSpinner>
     </template>
   </CmsQuery>
 </template>
@@ -94,12 +96,14 @@ import VariantSelection from '~/components/molecules/VariantSelection/VariantSel
 import ImageGallery from '~/components/organisms/ImageGallery/ImageGallery'
 import RecommendedAccessories from '~/components/organisms/RecommendedAccessories/RecommendedAccessories'
 import Page from '~/components/templates/Page/Page'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   name: 'ProductShopPage',
   components: {
     Button,
     Page,
+    LoadingSpinner,
     DetailTabs,
     ImageGallery,
     RecommendedAccessories,
@@ -124,7 +128,7 @@ export default defineComponent({
      */
     const productStore = useProductStore()
     const variationmatrixStore = useVariationmatrixStore()
-    const { productReferencesRecommendedAccessories } =
+    const { productReferencesRecommendedAccessories, isLoadingProduct } =
       storeToRefs(productStore)
 
     const hasError = ref(false)
@@ -205,6 +209,7 @@ export default defineComponent({
       sortedImages,
       productReferencesRecommendedAccessories,
       hasError,
+      isLoadingProduct,
     }
   },
 })

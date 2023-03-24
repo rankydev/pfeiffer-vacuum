@@ -79,14 +79,14 @@
         <div class="accessories-card__add-to-cart">
           <PvInput v-model="quantity" input-type="number" min="1" required />
           <div class="accessories-card__add-to-cart-buttons">
-            <Button icon="shopping_cart" @click="addToCart()" />
+            <Button icon="shopping_cart" @click="addToCart" />
             <Button
               v-if="hasAddToListButton"
               class="accessories-card__add-to-cart-buttons__add-to-list"
               variant="secondary"
               shape="outlined"
               icon="assignment"
-              @click="addToList()"
+              @click="addToList"
             />
           </div>
         </div>
@@ -115,6 +115,7 @@ import Button from '~/components/atoms/Button/Button.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage.vue'
 import GenericCard from '~/components/molecules/GenericCard/GenericCard.vue'
+import { useShoppingLists } from '@/stores/shoppinglists'
 
 export default defineComponent({
   name: 'AccessoriesCard',
@@ -142,6 +143,7 @@ export default defineComponent({
     const context = useContext()
     const userStore = useUserStore()
     const cartStore = useCartStore()
+    const shopppingListStore = useShoppingLists()
     const sanitizer = useSanitizer()
     const { product } = toRefs(props)
     const { imageUrl } = useImageHelper()
@@ -190,11 +192,13 @@ export default defineComponent({
 
     const addToCart = async () => {
       await addProductToCart(product.value?.code, quantity.value)
+      cartStore.toggleCartOverlay()
     }
 
     const addToList = () => {
-      // ToDo:
-      // still has to be done
+      shopppingListStore.setProduct(product.value)
+      shopppingListStore.setProductAmount(quantity.value)
+      shopppingListStore.toggleOverlay()
     }
 
     return {

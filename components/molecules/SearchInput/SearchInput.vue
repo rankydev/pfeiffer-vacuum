@@ -23,6 +23,7 @@ import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import { useCategoryStore } from '~/stores/category/category'
 
 export default defineComponent({
+  name: 'SearchInput',
   components: {
     PvInput,
   },

@@ -1,7 +1,9 @@
 <template>
   <LoadingSpinner
     class="variant-selection"
-    :show="loadingMatrix && !variationAttributeEntries.length"
+    :show="
+      (isLoadingProduct || loadingMatrix) && !variationAttributeEntries.length
+    "
     color="red"
   >
     <div v-if="showVariantSelection" class="variant-selection__headline">
@@ -24,7 +26,7 @@
       />
     </div>
     <AttributeAccordion
-      v-if="showVariantSelection"
+      v-if="showVariantSelection && variationAttributeEntries.length"
       :loading="loadingMatrix"
       :accordion-entries="variationAttributeEntries"
     />
@@ -48,6 +50,7 @@ import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import PvSelect from '~/components/atoms/FormComponents/PvSelect/PvSelect'
 import AttributeAccordion from './partials/AttributeAccordion'
 import ProductActions from './partials/ProductActions'
+import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
   name: 'VariantSelection',
@@ -56,6 +59,7 @@ export default defineComponent({
     ProductActions,
     LoadingSpinner,
     PvSelect,
+    Button,
   },
   props: {
     loading: {
@@ -75,7 +79,7 @@ export default defineComponent({
       manualVariantSelectionOptions,
       currentVariantId,
     } = storeToRefs(variationmatrixStore)
-    const { productType } = storeToRefs(productStore)
+    const { productType, isLoadingProduct } = storeToRefs(productStore)
     const { i18n } = useContext()
 
     const showVariantSelection = computed(() =>
@@ -156,6 +160,8 @@ export default defineComponent({
       currentVariantId,
       dropdownItems,
       selectedVariantLabel,
+      isLoadingProduct,
+
       manualVariantSelected,
     }
   },

@@ -72,6 +72,22 @@ export default {
     pageComponents: {
       type: 'bloks',
       display_name: 'Page Components',
+      component_whitelist: [
+        'Accordion',
+        'AnchorWrapper',
+        'ContentMediaBlock',
+        'ContentTextBlock',
+        'CustomContentCardCarousel',
+        'DocumentCardCarousel',
+        'GeneralTeaserCarousel',
+        'ImageWithDescription',
+        'ProductCardCarousel',
+        'TeaserCardCarousel',
+        'HelpContainer',
+        'ImageBanner',
+        'ColumnView',
+        'KnowledgeAuthorsList',
+      ],
     },
     knowledgeType: {
       type: 'option',

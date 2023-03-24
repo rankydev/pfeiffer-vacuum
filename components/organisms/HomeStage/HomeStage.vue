@@ -30,9 +30,9 @@
 </template>
 
 <script>
+import { defineComponent } from '@nuxtjs/composition-api'
 import GenericCarousel from '~/components/atoms/GenericCarousel/GenericCarousel.vue'
 import HomeStageSlide from '~/components/organisms/HomeStage/HomeStageSlide/HomeStageSlide'
-import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   name: 'HomeStage',

@@ -5,148 +5,150 @@
     :fallback-slug="slugs.fallbackSlug"
     :language="slugs.language"
   >
-    <template #default="{ result: { data } }">
-      <Page v-if="data" v-bind="data">
-        <template #default>
-          <ContentWrapper>
-            <LoadingSpinner :show="loading || cartLoading">
-              <Confirmation
-                v-if="placedOrder"
-                :order="placedOrder"
-                confirmation-type="CHECKOUT"
-                class="checkout__confirmation"
-              />
-              <template v-else-if="cartEntries">
-                <div class="checkout">
-                  <div class="checkout__header">
-                    <ResultHeadline :headline="$t('checkout.summary')" />
-                  </div>
+    <template #default="{ result: { data, loading: storyblokLoading } }">
+      <LoadingSpinner :show="storyblokLoading" container-min-height>
+        <Page v-if="data" v-bind="data">
+          <template #default>
+            <ContentWrapper>
+              <LoadingSpinner :show="loading || cartLoading">
+                <Confirmation
+                  v-if="placedOrder"
+                  :order="placedOrder"
+                  confirmation-type="CHECKOUT"
+                  class="checkout__confirmation"
+                />
+                <template v-else-if="cartEntries">
+                  <div class="checkout">
+                    <div class="checkout__header">
+                      <ResultHeadline :headline="$t('checkout.summary')" />
+                    </div>
 
-                  <div class="checkout__check-details">
-                    {{ $t('checkout.checkDetails') }}
-                  </div>
+                    <div class="checkout__check-details">
+                      {{ $t('checkout.checkDetails') }}
+                    </div>
 
-                  <div v-if="!isOciUser" class="checkout__addresses">
-                    <AddressCard
-                      :address="deliveryAddress || {}"
-                      :headline="$t('checkout.deliveryAddress')"
-                      :editable="false"
-                      class="checkout__address-item"
-                    />
-                    <AddressCard
-                      :address="billingAddress || {}"
-                      :headline="$t('checkout.billingAddress')"
-                      :is-billing-address="true"
-                      :editable="false"
-                      class="checkout__address-item"
-                    />
-                  </div>
-
-                  <div v-if="!isOciUser" class="checkout__text-fields">
-                    <PvInput
-                      v-model="customerReference"
-                      :label="$t('checkout.reference')"
-                      class="checkout__text-field-item"
-                      @focus="saveCustomerReference"
-                    />
-                    <PvTextArea
-                      v-model="commentOnRequest"
-                      :label="$t('checkout.comment')"
-                      class="checkout__text-field-item checkout__textarea"
-                      @focus="saveCommentOnRequest"
-                    />
-                  </div>
-
-                  <div class="checkout__article-list-heading">
-                    <h3>{{ $t('checkout.articleList') }}</h3>
-                  </div>
-
-                  <CartTable :edit-mode="false" />
-
-                  <div
-                    class="checkout__info"
-                    :class="{ 'checkout__info--oci': isOciUser }"
-                  >
-                    <div v-if="!isOciUser" class="checkout__information">
-                      <PromotionLabel
-                        v-for="(promotion, index) in cartPromotions"
-                        :key="index"
-                        :subline="promotion.description"
+                    <div v-if="!isOciUser" class="checkout__addresses">
+                      <AddressCard
+                        :address="deliveryAddress || {}"
+                        :headline="$t('checkout.deliveryAddress')"
+                        :editable="false"
+                        class="checkout__address-item"
                       />
-                      <PriceInformation information-type="price" />
-                      <PriceInformation information-type="delivery" />
+                      <AddressCard
+                        :address="billingAddress || {}"
+                        :headline="$t('checkout.billingAddress')"
+                        :is-billing-address="true"
+                        :editable="false"
+                        class="checkout__address-item"
+                      />
                     </div>
 
-                    <div class="checkout__actions">
-                      <div class="checkout__total">
-                        <TotalNetInformation :current-cart="currentCart" />
+                    <div v-if="!isOciUser" class="checkout__text-fields">
+                      <PvInput
+                        v-model="customerReference"
+                        :label="$t('checkout.reference')"
+                        class="checkout__text-field-item"
+                        @focus="saveCustomerReference"
+                      />
+                      <PvTextArea
+                        v-model="commentOnRequest"
+                        :label="$t('checkout.comment')"
+                        class="checkout__text-field-item checkout__textarea"
+                        @focus="saveCommentOnRequest"
+                      />
+                    </div>
+
+                    <div class="checkout__article-list-heading">
+                      <h3>{{ $t('checkout.articleList') }}</h3>
+                    </div>
+
+                    <CartTable :edit-mode="false" />
+
+                    <div
+                      class="checkout__info"
+                      :class="{ 'checkout__info--oci': isOciUser }"
+                    >
+                      <div v-if="!isOciUser" class="checkout__information">
+                        <PromotionLabel
+                          v-for="(promotion, index) in cartPromotions"
+                          :key="index"
+                          :subline="promotion.description"
+                        />
+                        <PriceInformation information-type="price" />
+                        <PriceInformation information-type="delivery" />
                       </div>
 
-                      <div class="checkout__privacy-policy">
-                        <Button
-                          :href="personalPrivacyLink"
-                          :label="$t('checkout.privacyPolicyLink')"
-                          variant="secondary"
-                          prepend-icon
-                          shape="plain"
-                          icon="file_open"
-                          target="_blank"
-                        />
-                      </div>
+                      <div class="checkout__actions">
+                        <div class="checkout__total">
+                          <TotalNetInformation :current-cart="currentCart" />
+                        </div>
 
-                      <div class="checkout__submit">
-                        <Button
-                          :label="
-                            $t(
-                              isOciUser
-                                ? 'checkout.transmitCart'
-                                : 'checkout.completeRequest'
-                            )
-                          "
-                          class="checkout__button--submit"
-                          variant="primary"
-                          icon="mail_outline"
-                          @click="placeOrder"
-                        />
+                        <div class="checkout__privacy-policy">
+                          <Button
+                            :href="personalPrivacyLink"
+                            :label="$t('checkout.privacyPolicyLink')"
+                            variant="secondary"
+                            prepend-icon
+                            shape="plain"
+                            icon="file_open"
+                            target="_blank"
+                          />
+                        </div>
+
+                        <div class="checkout__submit">
+                          <Button
+                            :label="
+                              $t(
+                                isOciUser
+                                  ? 'checkout.transmitCart'
+                                  : 'checkout.completeRequest'
+                              )
+                            "
+                            class="checkout__button--submit"
+                            variant="primary"
+                            icon="mail_outline"
+                            @click="placeOrder"
+                          />
+                        </div>
                       </div>
+                    </div>
+                    <div class="checkout__back-button">
+                      <Button
+                        :href="localePath('shop-cart')"
+                        class="checkout__button checkout__button--back"
+                        variant="secondary"
+                        shape="plain"
+                        :label="$t('checkout.backToCart')"
+                        :prepend-icon="true"
+                        icon="arrow_back"
+                      />
                     </div>
                   </div>
-                  <div class="checkout__back-button">
+                </template>
+                <template v-else>
+                  <div class="checkout__empty">
+                    <Icon
+                      icon="shopping_cart"
+                      class="checkout__empty-icon"
+                      size="xxlarge"
+                    />
+                    <h2 class="checkout__empty-headline">
+                      {{ $t('cart.emptyMessage') }}
+                    </h2>
                     <Button
-                      :href="localePath('shop-cart')"
-                      class="checkout__button checkout__button--back"
-                      variant="secondary"
-                      shape="plain"
-                      :label="$t('checkout.backToCart')"
-                      :prepend-icon="true"
-                      icon="arrow_back"
+                      :href="localePath('shop-categories')"
+                      :label="$t('cart.showAllProducts')"
+                      class="checkout__button"
+                      variant="primary"
+                      icon="arrow_forward"
                     />
                   </div>
-                </div>
-              </template>
-              <template v-else>
-                <div class="checkout__empty">
-                  <Icon
-                    icon="shopping_cart"
-                    class="checkout__empty-icon"
-                    size="xxlarge"
-                  />
-                  <h2 class="checkout__empty-headline">
-                    {{ $t('cart.emptyMessage') }}
-                  </h2>
-                  <Button
-                    :href="localePath('shop-categories')"
-                    :label="$t('cart.showAllProducts')"
-                    class="checkout__button"
-                    variant="primary"
-                    icon="arrow_forward"
-                  />
-                </div>
-              </template>
-            </LoadingSpinner>
-          </ContentWrapper>
-        </template>
-      </Page>
+                </template>
+              </LoadingSpinner>
+            </ContentWrapper>
+          </template>
+        </Page>
+      </LoadingSpinner>
     </template>
   </CmsQuery>
 </template>

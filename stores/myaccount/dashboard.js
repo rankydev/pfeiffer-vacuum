@@ -1,25 +1,24 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { ref, useContext } from '@nuxtjs/composition-api'
+import { ref, computed, useContext } from '@nuxtjs/composition-api'
 import { useAxiosForHybris } from '~/composables/useAxiosForHybris'
 import { useMyAccountStore } from '~/stores/myaccount'
 import { useUserStore } from '~/stores/user'
 import config from '~/config/hybris.config'
+import { useLogger } from '~/composables/useLogger'
 
 export const useDashboardStore = defineStore('dashboard', () => {
   const { axios } = useAxiosForHybris()
   const myAccountStore = useMyAccountStore()
   const { i18n, localePath } = useContext()
+  const { logger } = useLogger('dashboard')
   const { orders } = storeToRefs(myAccountStore)
   const userStore = useUserStore()
   const { currentUser, userBillingAddress } = storeToRefs(userStore)
 
-  const shoppingLists = ref()
+  const shoppingLists = ref(null)
+  const isLoading = ref(false)
 
-  const getRecentRequestsTableData = async () => {
-    if (!orders?.value?.length) {
-      orders.value = await myAccountStore.getOrders()
-    }
-
+  const recentRequestsTableData = computed(() => {
     return orders.value?.orders?.slice(0, 4).map((order) => {
       const orderUrl = `${localePath('shop-my-account-request-history')}/${
         order.code
@@ -52,7 +51,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
         ],
       }
     })
-  }
+  })
 
   const buildTableHeaderObject = (value) => {
     const object = {
@@ -74,8 +73,10 @@ export const useDashboardStore = defineStore('dashboard', () => {
     'recentRequests.date',
     'recentRequests.total',
   ]
-  const recentRequestsTableHeader = recentRequestHeader.map((value) => {
-    return buildTableHeaderObject(value)
+  const recentRequestsTableHeader = computed(() => {
+    return recentRequestHeader.map((value) => {
+      return buildTableHeaderObject(value)
+    })
   })
 
   const getShoppingLists = async () => {
@@ -86,12 +87,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
         !result.error &&
         Array.isArray(result.shoppinglists)
       ) {
-        shoppingLists.value = result.shoppingLists
-        return result.shoppinglists
+        shoppingLists.value = result.shoppinglists
+      } else {
+        throw result?.error
       }
     } catch (e) {
-      Logger.error('Error when fetching shopping lists. Returning empty list.')
-      return []
+      logger.error('Error when fetching shopping lists. Returning empty list.')
     }
   }
 
@@ -108,11 +109,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
     buildTableHeaderObject(title)
   )
 
-  const getRecentShoppingListsTableData = async () => {
-    if (!shoppingLists?.value?.length) {
-      shoppingLists.value = await getShoppingLists()
-    }
-
+  const recentShoppingListsTableData = computed(() => {
     return shoppingLists.value?.slice(0, 4).map((list) => {
       const shoppingListUrl = `${localePath(
         'shop-my-account-shopping-lists'
@@ -145,7 +142,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
         ],
       }
     })
-  }
+  })
 
   const buttons = {
     emptyWrapper: {
@@ -241,6 +238,18 @@ export const useDashboardStore = defineStore('dashboard', () => {
     ],
   }
 
+  const getDashboardData = async () => {
+    try {
+      isLoading.value = true
+      await myAccountStore.getOrders()
+      await getShoppingLists()
+    } catch (e) {
+      logger.error('Error when fetching dashboard data.', e)
+    } finally {
+      isLoading.value = false
+    }
+  }
+
   return {
     // States
     recentRequestsTableHeader,
@@ -249,12 +258,13 @@ export const useDashboardStore = defineStore('dashboard', () => {
     accountDataContent,
     companyDataContent,
     buttons,
+    isLoading,
 
-    //Getters
-    getRecentRequestsTableData,
-    getRecentShoppingListsTableData,
+    // computed
+    recentShoppingListsTableData,
+    recentRequestsTableData,
 
-    // getOrders,
-    // Actions
+    // functions
+    getDashboardData,
   }
 })

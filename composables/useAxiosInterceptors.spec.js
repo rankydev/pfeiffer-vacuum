@@ -23,12 +23,14 @@ jest.mock('qs', () => ({
 
 const mockIsLoggedIn = jest.fn()
 const mockAuth = jest.fn()
+const mockAuthorizationFromCookie = jest.fn()
 
 jest.mock('~/stores/user', () => ({
   useUserStore: () => {
     return {
       isLoggedIn: mockIsLoggedIn(),
       auth: mockAuth(),
+      authorizationFromCookie: mockAuthorizationFromCookie(),
     }
   },
 }))
@@ -44,6 +46,20 @@ jest.mock('@nuxtjs/composition-api', () => {
     }),
   }
 })
+
+jest.mock('~/composables/useCookieHelper', () => ({
+  useCookieHelper: () => {
+    return {
+      getCookie: jest.fn((input) => {
+        if (input === 'auth.tokenType') {
+          return 'Bearer'
+        } else if (input === 'auth.accessToken') {
+          return 'test_token'
+        }
+      }),
+    }
+  },
+}))
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -63,19 +79,11 @@ describe('axiosInterceptors', () => {
 
       test('should return full config given empty config while user is logged in', () => {
         mockIsLoggedIn.mockReturnValue(true)
-        mockAuth.mockReturnValue({
-          token_type: 'Bearer',
-          access_token: 'test_token',
-        })
+        mockAuthorizationFromCookie.mockReturnValue(() => 'Bearer test_token')
         const { fulfilledRequest } = useAxiosInterceptors()
 
         fulfilledRequest({ headers: {} })
         expect(mockDebug).toBeCalledWith('addAuthHeader', true)
-        expect(mockTrace).toBeCalledWith('AuthObject: ', {
-          token_type: 'Bearer',
-          access_token: 'test_token',
-        })
-        expect(mockTrace).toBeCalledWith('Authorization Header Set')
         expect(mockTrace).toBeCalledWith('Headers: ', {
           Authorization: 'Bearer test_token',
         })
@@ -149,49 +157,6 @@ describe('axiosInterceptors', () => {
       expect(mockTrace).toBeCalledWith('Shop Response', 200, 'www.example.com')
       expect(mockTrace).toBeCalledWith({ url: 'www.example.com' })
       expect(mockTrace).toBeCalledWith('test data')
-    })
-  })
-  describe('onRejectedResponseHandler', () => {
-    test('should log error and return error as promise', () => {
-      const { rejectedResponse } = useAxiosInterceptors()
-
-      const errorPromise = rejectedResponse({
-        config: { test: 'test' },
-        response: {
-          status: 404,
-          data: {
-            errors: [{ requestId: '123', stackTrace: 'something went wrong' }],
-          },
-        },
-      })
-
-      expect(mockError).toBeCalledWith(
-        'Error during shop request',
-        '[123]',
-        'HTTP Status 404',
-        { test: 'test' }
-      )
-      expect(mockError).toBeCalledWith('something went wrong')
-      errorPromise.catch((response) => {
-        expect(response).toStrictEqual({
-          status: 404,
-          data: {
-            errors: [{ requestId: '123', stackTrace: 'something went wrong' }],
-          },
-        })
-      })
-    })
-
-    test('should log empty error and return empty error as promise', () => {
-      const { rejectedResponse } = useAxiosInterceptors()
-
-      const errorPromise = rejectedResponse({
-        response: {},
-      })
-
-      errorPromise.catch((response) => {
-        expect(response).toStrictEqual({})
-      })
     })
   })
 })

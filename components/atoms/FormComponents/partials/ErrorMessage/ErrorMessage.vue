@@ -8,6 +8,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  name: 'ErrorMessage',
   props: {
     /**
      * The error message displayed under the form component

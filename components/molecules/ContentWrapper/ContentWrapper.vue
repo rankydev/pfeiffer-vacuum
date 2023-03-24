@@ -8,6 +8,7 @@
 import { defineComponent, computed } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  name: 'ContentWrapper',
   props: {
     breakout: {
       type: Boolean,

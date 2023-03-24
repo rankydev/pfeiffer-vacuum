@@ -1,28 +1,35 @@
 <template>
-  <!-- NOTE: we could use :key="slugs.slug" on CmsQuery to force CmsQuery to re-evaluate. this way we could get subpage meta page information (f.e. page title) -->
-  <CmsQuery
-    :handle-preview-events="true"
-    :slug="slugs.slug"
-    :fallback-slug="slugs.fallbackSlug"
-    :language="slugs.language"
-  >
-    <template #default="{ result: { data } }">
-      <Page v-if="data" v-bind="data">
-        <template #default>
-          <ContentWrapper>
-            <div class="myaccount-page">
-              <MyAccountSidebar class="myaccount-page__sidebar" />
+  <ContentWrapper>
+    <div class="myaccount-page">
+      <MyAccountSidebar class="myaccount-page__sidebar" />
 
-              <div class="myaccount-page__content">
-                <NuxtChild />
-              </div>
-              <MyAccountManager class="myaccount-page__account-manager" />
-            </div>
-          </ContentWrapper>
-        </template>
-      </Page>
-    </template>
-  </CmsQuery>
+      <div class="myaccount-page__content">
+        <Transition name="page">
+          <!--
+            Could add :key="slugs.slug" to force meta info refetch on onpage navigation
+            For now not in use until we need this to save requests to backend and enable smooth page transitions
+          -->
+          <CmsQuery
+            :handle-preview-events="true"
+            :slug="slugs.slug"
+            :fallback-slug="slugs.fallbackSlug"
+            :language="slugs.language"
+          >
+            <template #default="{ result: { data, loading } }">
+              <LoadingSpinner :show="loading" container-min-height>
+                <Page v-if="data" v-bind="data" :min-height-page="false">
+                  <template #default>
+                    <NuxtChild />
+                  </template>
+                </Page>
+              </LoadingSpinner>
+            </template>
+          </CmsQuery>
+        </Transition>
+      </div>
+      <MyAccountManager class="myaccount-page__account-manager" />
+    </div>
+  </ContentWrapper>
 </template>
 
 <script>
@@ -38,6 +45,7 @@ import MyAccountManager from '~/components/organisms/MyAccount/sidebar/MyAccount
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   name: 'MyAccount',
@@ -46,6 +54,7 @@ export default defineComponent({
     ContentWrapper,
     MyAccountSidebar,
     MyAccountManager,
+    LoadingSpinner,
   },
   middleware: 'my-account-guard',
   setup() {
@@ -63,17 +72,20 @@ export default defineComponent({
     const requestHistoryBasePath = context.app.localePath(
       'shop-my-account-request-history'
     )
-    let path = route.value.path
-    if (path.startsWith(addressDataBasePath)) {
-      path = addressDataBasePath
-    }
-    if (path.startsWith(requestHistoryBasePath)) {
-      path = requestHistoryBasePath
-    }
+
+    const path = computed(() => {
+      let currentPath = route.value.path
+      if (currentPath.startsWith(addressDataBasePath)) {
+        currentPath = addressDataBasePath
+      } else if (currentPath.startsWith(requestHistoryBasePath)) {
+        currentPath = requestHistoryBasePath
+      }
+      return currentPath
+    })
 
     const { buildSlugs } = useStoryblokSlugBuilder({ root: context })
     const slugs = computed(() => {
-      return buildSlugs(path)
+      return buildSlugs(path.value)
     })
 
     return {

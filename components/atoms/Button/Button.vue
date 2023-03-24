@@ -39,6 +39,7 @@ import Link from '~/components/atoms/Link/Link.vue'
 import propsData from './partials/props.js'
 
 export default defineComponent({
+  name: 'Button',
   components: {
     Icon,
     Link,
@@ -63,7 +64,6 @@ export default defineComponent({
 <style lang="scss">
 .button {
   all: unset;
-
   @apply tw-rounded-md;
   @apply tw-inline-flex;
   @apply tw-items-center;
