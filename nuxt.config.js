@@ -249,6 +249,8 @@ export default {
       NODE_ENV: process.env.NODE_ENV,
     }),
     CONSOLA_LEVEL: process.env.CONSOLA_LEVEL,
+    // Vacuum Calculator
+    VACUUM_CALCULATOR_BASE_URL: process.env.VACUUM_CALCULATOR_BASE_URL,
   },
 
   privateRuntimeConfig: {
@@ -275,8 +277,6 @@ export default {
     // SAP Commerce Cloud
     SHOP_BASE_URL: process.env.SHOP_BASE_URL,
     SHOP_IMAGE_URL: process.env.SHOP_IMAGE_URL,
-    // Vacuum Calculator
-    VACUUM_CALCULATOR_BASE_URL: process.env.VACUUM_CALCULATOR_BASE_URL,
   },
 
   //nuxt-img configuration, see: https://image.nuxtjs.org/components/nuxt-img

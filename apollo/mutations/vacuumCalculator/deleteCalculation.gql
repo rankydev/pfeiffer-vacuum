@@ -1,5 +1,5 @@
-mutation deleteCalculation ($ids: [ID]!){
-  deleteCalculation (ids: $ids) {
+mutation deleteCalculation($ids: [ID]!) {
+  deleteCalculation(calculationIds: $ids) {
     success
     message
   }

@@ -36,23 +36,23 @@
       </div>
     </div>
 
+    <!-- 80/20 TODO: debug hydration issues -->
     <client-only>
       <CalculationList
-        v-if="calculations"
-        :lists="calculations.data.calculationList.calculations"
+        v-if="calculationItems"
+        :lists="calculationItems"
         :select-mode="isSelectMode"
         @update="updateSelectedList"
         @delete="deleteSelectedList"
       />
 
       <Pagination
-        v-if="calculationItemsByPage.length"
+        v-if="calculations"
         class="calculation-dashboard__pagination"
         :total-pages="totalPages"
       />
 
       <EmptyWrapper
-        v-else
         :button="emptyWrapperButton"
         icon="calculate"
         :label="$t('myaccount.calculations.noCalculations')"
@@ -90,7 +90,7 @@ export default defineComponent({
     Pagination,
   },
   setup() {
-    const { i18n, app } = useContext()
+    const { i18n, app, $config } = useContext()
     const calculations = ref(null)
     const { logger } = useLogger()
     const vacuumCalculator = app.apolloProvider?.clients?.vacuumCalculator
@@ -107,12 +107,13 @@ export default defineComponent({
         calculations.value = await vacuumCalculator.query({
           query: calculationList,
           variables: {
-            start: 0,
-            limit: 8,
+            start: currentPage.value
+              ? (currentPage.value - 1) * ITEMS_PER_PAGE
+              : 0,
+            limit: 2,
           },
         })
         totalItems.value = calculations.value?.data?.calculationList?.total
-        console.log('totalitems', totalItems.value)
       } catch (error) {
         // TODO: check why toast is undefined
         // toast.error({
@@ -125,14 +126,10 @@ export default defineComponent({
     onBeforeMount(fetchCalculations)
     onServerPrefetch(fetchCalculations)
 
-    const vacuumCalculatorLink = computed(
-      () => `${process.env.VACUUM_CALCULATOR_BASE_URL}`
-    )
-
     const emptyWrapperButton = {
       size: 'normal',
       label: i18n.t('myaccount.calculations.new'),
-      href: process.env.VACUUM_CALCULATOR_BASE_URL,
+      href: `${$config.VACUUM_CALCULATOR_BASE_URL}/${i18n.locale}`,
       shape: 'outlined',
       variant: 'secondary',
       target: '_blank',
@@ -162,13 +159,6 @@ export default defineComponent({
       return Math.ceil(totalItems.value / ITEMS_PER_PAGE)
     })
 
-    const calculationItemsByPage = computed(() => {
-      return calculationItems.value.slice(
-        (currentPage.value - 1) * ITEMS_PER_PAGE,
-        currentPage.value * ITEMS_PER_PAGE
-      )
-    })
-
     const setCurrentPage = () => {
       const queryPage = route.value?.query?.currentPage
 
@@ -182,10 +172,13 @@ export default defineComponent({
 
     watch(route, () => {
       setCurrentPage()
+      fetchCalculations()
     })
 
     const updateSelectedList = (selectedItems) => {
-      selectedList.value = selectedItems
+      const selectedItemIds = selectedItems.map((item) => item.id)
+
+      selectedList.value = selectedItemIds
     }
 
     const deleteSelectedList = async () => {
@@ -193,69 +186,24 @@ export default defineComponent({
         await vacuumCalculator.mutate({
           mutation: deleteCalculation,
           variables: {
-            ids: ['cee8a83d-bce5-4cb4-a894-070b103d0094'],
+            ids: selectedList.value,
           },
         })
       } catch (error) {
+        toast.error({
+          description: i18n.t('myaccount.calculations.networkError'),
+        })
         logger.error(error)
       }
     }
-
-    // const tableData = computed(() => {
-    //   return (
-    //     calculations.value?.data?.calculationList?.calculations.map((item) => {
-    //       return {
-    //         entries: [
-    //           { icon: 'calculate', text: item.title, bold: true },
-    //           i18n.d(new Date(item.insert), 'date'),
-    //           i18n.t(`myaccount.calculations.modes.${item.calculationMode}`) ||
-    //             '',
-    //           i18n.t(`myaccount.calculations.types.${item.calculationType}`) ||
-    //             '',
-    //         ],
-    //         actions: [
-    //           {
-    //             label: i18n.t('myaccount.calculations.detailPageLink'),
-    //             icon: 'arrow_forward',
-    //             variant: 'secondary',
-    //             shape: 'plain',
-    //             href: item.calculationResult.link,
-    //             target: '_blank',
-    //             mobile: false,
-    //           },
-    //           {
-    //             icon: 'arrow_forward',
-    //             variant: 'secondary',
-    //             shape: 'outlined',
-    //             href: item.calculationResult.link,
-    //             label: i18n.t('myaccount.calculations.detailPageLink'),
-    //             target: '_blank',
-    //             desktop: false,
-    //           },
-    //           {
-    //             icon: 'arrow_forward',
-    //             variant: 'secondary',
-    //             shape: 'outlined',
-    //             href: item.calculationResult.link,
-    //             label: i18n.t('myaccount.calculations.detailPageLink'),
-    //             target: '_blank',
-    //             desktop: false,
-    //           },
-    //         ],
-    //       }
-    //     }) || {}
-    //   )
-    // })
 
     return {
       emptyWrapperButton,
       calculationItems,
       totalPages,
-      calculationItemsByPage,
       isSelectedListEmpty,
       toggleSelectMode,
       isSelectMode,
-      vacuumCalculatorLink,
       updateSelectedList,
       deleteSelectedList,
       calculations,
@@ -321,7 +269,7 @@ export default defineComponent({
         }
 
         @screen lg {
-          @apply tw-w-[86px];
+          @apply tw-w-[115px];
         }
       }
     }
