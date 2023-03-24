@@ -49,7 +49,7 @@
                 <div class="search-page__search-result">
                   <ContentWrapper v-if="currentTabSelected === 'products'">
                     <SearchResult
-                      v-if="products && !hasError"
+                      v-if="!hasError"
                       persist-category-name-as-query-param
                       v-bind="{
                         products,
@@ -77,7 +77,7 @@
             <div v-else class="category-page__search-result">
               <ContentWrapper>
                 <SearchResult
-                  v-if="products && !hasError"
+                  v-if="!hasError"
                   v-bind="{
                     products,
                     pagination,
