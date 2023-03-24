@@ -1,5 +1,5 @@
 import KnowledgeCard from './KnowledgeCard'
-import content from './KnowledgeCard.stories.content.js'
+import { content } from './KnowledgeCard.stories.content.js'
 
 const argTypes = {
   entry: {

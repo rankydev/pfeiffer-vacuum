@@ -3,47 +3,52 @@
     class="knowledge-asset-button"
     :class="{ 'knowledge-asset-button--full': !preventFullWidth }"
   >
-    <LoadingSpinner :show="isLoading && useLoadingSpinner">
-      <!-- register for webinar button -->
-      <Button
-        v-if="isFutureEvent && isWebinar"
-        class="knowledge-asset-button__button"
-        :label="isDetailPage ? $t('knowledge.webinar.button.join') : ''"
-        variant="primary"
-        icon="person_add"
-        @click="
-          () =>
-            isLoggedIn
-              ? registerForWebinar(webinarRegistrationId)
-              : showLoginModal()
-        "
-      />
-
-      <!-- watch webinar button -->
-      <template v-else-if="isWebinar">
+    <!-- TODO: Maybe find better solution to fix hydration -->
+    <client-only>
+      <LoadingSpinner :show="isLoading && useLoadingSpinner">
+        <!-- register for webinar button -->
         <Button
+          v-if="isFutureEvent && isWebinar"
           class="knowledge-asset-button__button"
-          :label="isDetailPage ? $t('knowledge.webinar.button.watch') : ''"
-          :disabled="!hasAsset"
+          :label="isDetailPage ? $t('knowledge.webinar.button.join') : ''"
           variant="primary"
-          icon="play_circle_outline"
+          icon="person_add"
+          @click="
+            () =>
+              isLoggedIn
+                ? registerForWebinar(webinarRegistrationId)
+                : showLoginModal()
+          "
+        />
+
+        <!-- watch webinar button -->
+        <template v-else-if="isWebinar">
+          <Button
+            class="knowledge-asset-button__button"
+            :label="isDetailPage ? $t('knowledge.webinar.button.watch') : ''"
+            :disabled="!hasAsset"
+            variant="primary"
+            icon="play_circle_outline"
+            @click="() => (isLoggedIn ? openAsset() : showLoginModal())"
+          />
+          <div v-if="!hasAsset && isDetailPage">
+            {{ $t('knowledge.webinar.waitForVod') }}
+          </div>
+        </template>
+
+        <!-- download whitepaper button -->
+        <Button
+          v-else-if="isWhitepaper && hasAsset"
+          class="knowledge-asset-button__button"
+          :label="
+            isDetailPage ? $t('knowledge.whitepaper.button.download') : ''
+          "
+          variant="primary"
+          icon="get_app"
           @click="() => (isLoggedIn ? openAsset() : showLoginModal())"
         />
-        <div v-if="!hasAsset && isDetailPage">
-          {{ $t('knowledge.webinar.waitForVod') }}
-        </div>
-      </template>
-
-      <!-- download whitepaper button -->
-      <Button
-        v-else-if="isWhitepaper && hasAsset"
-        class="knowledge-asset-button__button"
-        :label="isDetailPage ? $t('knowledge.whitepaper.button.download') : ''"
-        variant="primary"
-        icon="get_app"
-        @click="() => (isLoggedIn ? openAsset() : showLoginModal())"
-      />
-    </LoadingSpinner>
+      </LoadingSpinner>
+    </client-only>
   </div>
 </template>
 <script>

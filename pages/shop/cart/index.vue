@@ -67,6 +67,7 @@
                         :key="index"
                         :subline="promotion.description"
                       />
+                      <!-- TODO: Maybe find better solution to fix hydration -->
                       <client-only>
                         <PriceInformation
                           v-if="!isMobile"
