@@ -9,35 +9,10 @@
       <template #default="{ result: { data, loading } }">
         <div>
           <LoadingSpinner :show="loading" container-min-height>
-            <div v-if="data && data.content">
-              <nuxt-dynamic
-                v-for="item in data.content.top"
-                :key="item._uid"
-                v-editable="item"
-                v-bind="item"
-                :name="item.uiComponent || item.component"
-              />
-
-              <nuxt-dynamic
-                v-for="item in data.content.header"
-                :key="item._uid"
-                v-bind="item"
-                :name="item.uiComponent || item.component"
-              />
-
-              <Nuxt class="default-layout__content" />
-
-              <nuxt-dynamic
-                v-for="item in data.content.footer"
-                :key="item._uid"
-                v-bind="item"
-                :name="item.uiComponent || item.component"
-              />
-              <StickyBar v-bind="data.content.stickyBar">
-                <!-- TODO This doesn't make sense -->
-                <slot name="stickyBar" />
-              </StickyBar>
-            </div>
+            <PageConfiguration
+              v-if="data && data.content"
+              :content="data.content"
+            />
           </LoadingSpinner>
         </div>
       </template>
@@ -47,10 +22,12 @@
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
+import PageConfiguration from '~/components/templates/PageConfiguration/PageConfiguration.vue'
 
 export default defineComponent({
   components: {
     LoadingSpinner,
+    PageConfiguration,
   },
   scrollToTop: true,
   setup() {
