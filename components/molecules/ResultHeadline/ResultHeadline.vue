@@ -137,10 +137,6 @@ export default defineComponent({
     @apply tw-text-pv-red;
     @apply tw-mr-2;
 
-    @screen lg {
-      @apply tw-hidden;
-    }
-
     &:hover {
       @apply tw-text-pv-red-darker;
     }
