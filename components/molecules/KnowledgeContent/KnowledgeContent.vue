@@ -9,47 +9,53 @@
       :link="backLink"
     />
     <ContentWrapper breakout>
-      <LoadingSpinner :show="isLoading">
-        <div class="knowledge-content__results">
-          <ContentWrapper>
-            <div class="knowledge-content__top-actions">
-              <FilterModal :label="$t('knowledge.filter')">
-                <div class="knowledge-content__filters">
-                  <PvSelect
-                    v-for="filter in filterEntries"
-                    :key="filter.code"
-                    :value="(filter.values || []).filter((e) => e.selected)"
-                    option-label="name"
-                    :placeholder="filter.name"
-                    :multiple="true"
-                    :options="filter.values || []"
-                    class="knowledge-content__multiselect"
-                    @input="handleFilterInput(filter.code, $event)"
+      <!-- TODO: Maybe find better solution to fix hydration -->
+      <client-only>
+        <LoadingSpinner :show="isLoading">
+          <div class="knowledge-content__results">
+            <ContentWrapper>
+              <div class="knowledge-content__top-actions">
+                <FilterModal :label="$t('knowledge.filter')">
+                  <div class="knowledge-content__filters">
+                    <PvSelect
+                      v-for="filter in filterEntries"
+                      :key="filter.code"
+                      :value="(filter.values || []).filter((e) => e.selected)"
+                      option-label="name"
+                      :placeholder="filter.name"
+                      :multiple="true"
+                      :options="filter.values || []"
+                      class="knowledge-content__multiselect"
+                      @input="handleFilterInput(filter.code, $event)"
+                    />
+                  </div>
+                </FilterModal>
+                <div class="knowledge-content__search-input">
+                  <SearchInput
+                    :value="searchTerm"
+                    :clear-after-submit="false"
+                    :placeholder="searchPlaceholder"
+                    :disable-suggestions="true"
+                    @submit="handleTermChange"
                   />
                 </div>
-              </FilterModal>
-              <div class="knowledge-content__search-input">
-                <SearchInput
-                  :value="searchTerm"
-                  :clear-after-submit="false"
-                  :placeholder="searchPlaceholder"
-                  :disable-suggestions="true"
-                  @submit="handleTermChange"
-                />
               </div>
-            </div>
-            <ProductCardGrid :use-knowledge-card="true" :products="documents" />
-            <div class="knowledge-content__bottom-actions">
-              <CategoryPageSizeSelection
-                :active="activePageSize"
-                :knowledge-mode="true"
-                @change="handlePageSizeChange"
+              <ProductCardGrid
+                :use-knowledge-card="true"
+                :products="documents"
               />
-              <Pagination :total-pages="totalPages" />
-            </div>
-          </ContentWrapper>
-        </div>
-      </LoadingSpinner>
+              <div class="knowledge-content__bottom-actions">
+                <CategoryPageSizeSelection
+                  :active="activePageSize"
+                  :knowledge-mode="true"
+                  @change="handlePageSizeChange"
+                />
+                <Pagination :total-pages="totalPages" />
+              </div>
+            </ContentWrapper>
+          </div>
+        </LoadingSpinner>
+      </client-only>
     </ContentWrapper>
     <KnowledgeModal :is-open="isModalOpen" @closeModal="toggleModal(false)" />
   </div>

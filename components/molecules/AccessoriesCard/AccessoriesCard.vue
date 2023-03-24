@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: Maybe find better solution to fix hydration -->
   <client-only>
     <GenericCard
       v-if="product"

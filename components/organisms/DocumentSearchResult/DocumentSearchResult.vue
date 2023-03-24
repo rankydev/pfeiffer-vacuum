@@ -26,6 +26,7 @@
       </Link>
     </div>
     <div class="document-search-result__documents">
+      <!-- TODO: Maybe find better solution to fix hydration -->
       <client-only>
         <LoadingSpinner :show="searchResultsLoading">
           <div v-if="totalResults" class="document-search-result__total-count">

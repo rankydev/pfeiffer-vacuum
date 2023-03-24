@@ -12,7 +12,7 @@
     "heading": "网络研讨会",
     "about": "  网络研讨会是关于什么的？",
     "tragetAudience": "谁该参加？",
-    "authors": "发言者，演讲者",
+    "authors": "讲师",
     "button": {
       "join": "加入网络研讨会",
       "watch": "观看网络研讨会"
@@ -34,7 +34,7 @@
     }
   },
   "authors": "作者",
-  "speaker": "扬声器",
+  "speaker": "讲师",
   "details": "细节",
   "filter": "筛选"
 }
