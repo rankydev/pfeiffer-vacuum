@@ -59,7 +59,6 @@ export const usePageStore = defineStore('page', () => {
       stage: getContentByName('stage'),
       body: getContentByName('body'),
       bottom: getContentByName('bottom'),
-      footer: getContentByName('footer'),
       stickyBar: getContentByName('stickyBar'),
     }
   })
