@@ -87,7 +87,7 @@ export default {
         'HelpContainer',
         'ImageBanner',
         'ColumnView',
-        'KnowledgeAuthorList',
+        'KnowledgeAuthorsList',
       ],
     },
     knowledgeType: {

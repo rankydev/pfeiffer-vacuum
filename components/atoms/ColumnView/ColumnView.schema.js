@@ -31,7 +31,7 @@ export default {
         'ImageWithDescription',
         'Richtext',
         'Button',
-        'KnowledgeAuthorList',
+        'KnowledgeAuthorsList',
       ],
     },
     column2: {
@@ -43,7 +43,7 @@ export default {
         'ImageWithDescription',
         'Richtext',
         'Button',
-        'KnowledgeAuthorList',
+        'KnowledgeAuthorsList',
       ],
     },
     column3: {
@@ -55,7 +55,7 @@ export default {
         'ImageWithDescription',
         'Richtext',
         'Button',
-        'KnowledgeAuthorList',
+        'KnowledgeAuthorsList',
       ],
     },
   },
