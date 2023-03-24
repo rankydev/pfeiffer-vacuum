@@ -46,34 +46,58 @@
               :subline="promotion.description"
             />
           </template>
-          <div class="cart-overlay-content__total">
-            <div v-if="hasPromotion" class="cart-overlay-content__total--row">
-              <span class="cart-overlay-content__total-discount">
-                {{ $t('cart.orderDiscount') }}
-              </span>
-              <span class="cart-overlay-content__total-discount">{{
-                totalDiscounts
-              }}</span>
-            </div>
-            <div class="cart-overlay-content__total--row">
-              <div>
-                <span class="cart-overlay-content__total-label">
-                  {{ $t('cart.overall1') }}
+          <template v-if="isLoggedIn && isApprovedUser">
+            <div class="cart-overlay-content__total">
+              <div v-if="hasPromotion" class="cart-overlay-content__total--row">
+                <span class="cart-overlay-content__total-discount">
+                  {{ $t('cart.orderDiscount') }}
                 </span>
-                <span class="cart-overlay-content__total-tax">
-                  {{ $t('cart.overall2') }}
+                <span class="cart-overlay-content__total-discount">{{
+                  totalDiscounts
+                }}</span>
+              </div>
+              <div class="cart-overlay-content__total--row">
+                <div>
+                  <span class="cart-overlay-content__total-label">
+                    {{ $t('cart.overall1') }}
+                  </span>
+                  <span class="cart-overlay-content__total-tax">
+                    {{ $t('cart.overall2') }}
+                  </span>
+                </div>
+                <span class="cart-overlay-content__total-value">
+                  {{ getTotalCartPrice }}
                 </span>
               </div>
-              <span class="cart-overlay-content__total-value">
-                {{ getTotalCartPrice }}
-              </span>
             </div>
-          </div>
+          </template>
+          <template v-else-if="isLoggedIn">
+            <div class="cart-overlay-content__price-info-wrapper">
+              <i18n
+                :path="`cart.userStatus.${userStatusType}.priceInfo.text`"
+                class="cart-overlay-content__price-info"
+                tag="div"
+              >
+                <template #link>
+                  <nuxt-link
+                    :to="localePath('shop-my-account-account-data')"
+                    class="tw-text-pv-red"
+                  >
+                    {{ $t(`cart.userStatus.${userStatusType}.priceInfo.link`) }}
+                  </nuxt-link>
+                </template>
+              </i18n>
+            </div>
+          </template>
+          <template v-else-if="!isLoggedIn">
+            <LoginToSeePricesLabel class="cart-overlay-content__hide-price" />
+          </template>
         </div>
         <div class="cart-overlay-content__navigation">
           <Button
             class="cart-overlay-content__navigation-checkout"
             :label="$t(isOciUser ? 'cart.checkout' : 'cart.requestQuote')"
+            :disabled="!isApprovedUser"
             icon="arrow_forward"
             @click="handleCheckoutClick"
           />
@@ -136,7 +160,22 @@ export default defineComponent({
     const cartStore = useCartStore()
     const { currentCart, isCartOverlayOpen } = storeToRefs(cartStore)
     const userStore = useUserStore()
-    const { isLoggedIn, isOciUser } = storeToRefs(userStore)
+    // const { isLoggedIn, isOciUser } = storeToRefs(userStore)
+    const {
+      isLoggedIn,
+      isOciUser,
+      isApprovedUser,
+      isLeadUser,
+      isOpenUser,
+      isRejectedUser,
+    } = storeToRefs(userStore)
+
+    const userStatusType = computed(() => {
+      if (isLeadUser.value) return 'lead'
+      if (isOpenUser.value) return 'open'
+      if (isRejectedUser.value) return 'rejected'
+    })
+
     const showInfo = ref(false)
     const isAddedToCart = ref(false)
 
@@ -199,6 +238,8 @@ export default defineComponent({
       goToShop,
       isLoggedIn,
       isOciUser,
+      isApprovedUser,
+      userStatusType,
       showInfo,
       isAddedToCart,
       handleCheckoutClick: cartStore.handleCheckoutClick,
@@ -272,6 +313,18 @@ export default defineComponent({
     &__sticky-bar {
       @apply tw-h-fit;
       @apply tw-pt-4;
+    }
+
+    &__price-info-wrapper {
+      @apply tw-w-full;
+      @apply tw-border-b-2;
+      @apply tw-border-pv-grey-16;
+      @apply tw-py-6;
+    }
+
+    &__price-info {
+      @apply tw-font-bold;
+      @apply tw-justify-center;
     }
 
     &__total {
