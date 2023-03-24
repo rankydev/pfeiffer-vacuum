@@ -36,9 +36,11 @@
         :name="item.uiComponent || item.component"
       />
     </ContentWrapper>
-    <StickyBar v-bind="mergedPageContent.stickyBar">
-      <slot name="stickyBar" />
-    </StickyBar>
+    <client-only>
+      <StickyBar v-bind="mergedPageContent.stickyBar">
+        <slot name="stickyBar" />
+      </StickyBar>
+    </client-only>
   </div>
 </template>
 
