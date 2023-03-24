@@ -3,7 +3,6 @@
     class="page-template"
     :class="{ 'page-template--min-height': minHeightPage }"
   >
-    <!-- TODO this works, but somehow creates errors on the search page -->
     <slot name="onPageNavigation">
       <OnPageNavigation v-bind="(mergedPageContent.quicklinks || [])[0]" />
     </slot>
