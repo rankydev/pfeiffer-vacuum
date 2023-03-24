@@ -55,6 +55,7 @@ export const usePageStore = defineStore('page', () => {
 
   const mergedPageContent = computed(() => {
     return {
+      quicklinks: getContentByName('quicklinks'),
       stage: getContentByName('stage'),
       body: getContentByName('body'),
       bottom: getContentByName('bottom'),
