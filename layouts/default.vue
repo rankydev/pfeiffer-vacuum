@@ -10,48 +10,31 @@
         <div>
           <LoadingSpinner :show="loading" container-min-height>
             <div v-if="data && data.content">
-              <slot name="header">
-                <nuxt-dynamic
-                  v-for="item in data.content.top"
-                  :key="item._uid"
-                  v-editable="item"
-                  v-bind="item"
-                  :name="item.uiComponent || item.component"
-                />
+              <nuxt-dynamic
+                v-for="item in data.content.top"
+                :key="item._uid"
+                v-editable="item"
+                v-bind="item"
+                :name="item.uiComponent || item.component"
+              />
 
-                <nuxt-dynamic
-                  v-for="item in data.content.header"
-                  :key="item._uid"
-                  v-bind="item"
-                  :name="item.uiComponent || item.component"
-                />
-              </slot>
-
-              <slot name="onPageNavigation">
-                <OnPageNavigation v-bind="(data.content.quicklinks || [])[0]" />
-              </slot>
+              <nuxt-dynamic
+                v-for="item in data.content.header"
+                :key="item._uid"
+                v-bind="item"
+                :name="item.uiComponent || item.component"
+              />
 
               <Nuxt class="default-layout__content" />
 
-              <slot name="footer">
-                <ContentWrapper>
-                  <nuxt-dynamic
-                    v-for="item in data.content.bottom"
-                    :key="item._uid"
-                    v-editable="item"
-                    v-bind="item"
-                    :name="item.uiComponent || item.component"
-                  />
-                </ContentWrapper>
-
-                <nuxt-dynamic
-                  v-for="item in data.content.footer"
-                  :key="item._uid"
-                  v-bind="item"
-                  :name="item.uiComponent || item.component"
-                />
-              </slot>
+              <nuxt-dynamic
+                v-for="item in data.content.footer"
+                :key="item._uid"
+                v-bind="item"
+                :name="item.uiComponent || item.component"
+              />
               <StickyBar v-bind="data.content.stickyBar">
+                <!-- TODO This doesn't make sense -->
                 <slot name="stickyBar" />
               </StickyBar>
             </div>

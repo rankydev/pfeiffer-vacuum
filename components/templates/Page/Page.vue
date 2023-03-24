@@ -3,6 +3,10 @@
     class="page-template"
     :class="{ 'page-template--min-height': minHeightPage }"
   >
+    <!-- TODO this works, but somehow creates errors on the search page -->
+    <slot name="onPageNavigation">
+      <OnPageNavigation v-bind="(content.quicklinks || [])[0]" />
+    </slot>
     <slot>
       <main>
         <nuxt-dynamic
@@ -23,6 +27,15 @@
         </ContentWrapper>
       </main>
     </slot>
+    <ContentWrapper>
+      <nuxt-dynamic
+        v-for="item in content.bottom"
+        :key="item._uid"
+        v-editable="item"
+        v-bind="item"
+        :name="item.uiComponent || item.component"
+      />
+    </ContentWrapper>
   </div>
 </template>
 
