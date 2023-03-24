@@ -71,6 +71,7 @@
     "delete": "删除",
     "done": "完毕",
     "name": "名称",
+    "networkSuccess": "计算已被删除。",
     "networkError": "出了点问题。 请稍后再试。",
     "new": "新的计算",
     "noCalculations": "您还没有创建任何计算！",

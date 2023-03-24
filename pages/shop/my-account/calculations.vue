@@ -7,7 +7,10 @@
         :link="localePath('shop-my-account')"
       />
 
-      <div class="calculation-dashboard__header-nav">
+      <div
+        v-if="calculationItems && calculationItems.length"
+        class="calculation-dashboard__header-nav"
+      >
         <Button
           class="calculation-dashboard__header-nav--select"
           :icon="isSelectedListEmpty ? 'list' : 'close'"
@@ -22,16 +25,23 @@
           @click="toggleSelectMode"
         />
         <Button
+          v-if="!isSelectedListEmpty"
           class="calculation-dashboard__header-nav--new"
-          :icon="isSelectedListEmpty ? 'add' : 'delete'"
+          icon="delete"
           gap="narrow"
-          :label="
-            isSelectedListEmpty
-              ? $t('myaccount.new')
-              : $t('myaccount.calculations.delete')
-          "
+          :label="$t('myaccount.calculations.delete')"
           variant="secondary"
           @click="deleteSelectedList"
+        />
+        <Button
+          v-else
+          class="calculation-dashboard__header-nav--new"
+          icon="add"
+          gap="narrow"
+          :label="$t('myaccount.new')"
+          variant="secondary"
+          :href="vacuumCalculatorLink"
+          target="_blank"
         />
       </div>
     </div>
@@ -39,15 +49,22 @@
     <!-- 80/20 TODO: debug hydration issues -->
     <client-only>
       <CalculationList
-        v-if="calculationItems"
-        :lists="calculationItems"
+        v-if="calculationItems && calculationItems.length"
+        :lists="calculations.data.calculationList.calculations"
         :select-mode="isSelectMode"
         @update="updateSelectedList"
         @delete="deleteSelectedList"
       />
+      <!-- <CalculationList
+        v-if="calculationItems && calculationItems.length"
+        :lists="calculationItems"
+        :select-mode="isSelectMode"
+        @update="updateSelectedList"
+        @delete="deleteSelectedList"
+      /> -->
 
       <Pagination
-        v-if="calculations"
+        v-if="calculationItems && calculationItems.length"
         class="calculation-dashboard__pagination"
         :total-pages="totalPages"
       />
@@ -94,25 +111,31 @@ export default defineComponent({
     const calculations = ref(null)
     const { logger } = useLogger()
     const vacuumCalculator = app.apolloProvider?.clients?.vacuumCalculator
-    const ITEMS_PER_PAGE = 2
+    const ITEMS_PER_PAGE = 5
     const currentPage = ref(1)
     const route = useRoute()
     const totalItems = ref(0)
     const selectedList = ref([])
     const isSelectMode = ref(false)
     const toast = useToast()
+    const vacuumCalculatorLink = `${$config.VACUUM_CALCULATOR_BASE_URL}/${i18n.locale}`
+    const listsDeleted = ref(false)
+
+    const fetchCalculationsQuery = async () => {
+      return vacuumCalculator.query({
+        query: calculationList,
+        variables: {
+          start: currentPage.value
+            ? (currentPage.value - 1) * ITEMS_PER_PAGE
+            : 0,
+          limit: ITEMS_PER_PAGE,
+        },
+      })
+    }
 
     const fetchCalculations = async () => {
       try {
-        calculations.value = await vacuumCalculator.query({
-          query: calculationList,
-          variables: {
-            start: currentPage.value
-              ? (currentPage.value - 1) * ITEMS_PER_PAGE
-              : 0,
-            limit: 2,
-          },
-        })
+        calculations.value = await fetchCalculationsQuery()
         totalItems.value = calculations.value?.data?.calculationList?.total
       } catch (error) {
         // TODO: check why toast is undefined
@@ -129,7 +152,7 @@ export default defineComponent({
     const emptyWrapperButton = {
       size: 'normal',
       label: i18n.t('myaccount.calculations.new'),
-      href: `${$config.VACUUM_CALCULATOR_BASE_URL}/${i18n.locale}`,
+      href: vacuumCalculatorLink,
       shape: 'outlined',
       variant: 'secondary',
       target: '_blank',
@@ -143,16 +166,36 @@ export default defineComponent({
     const toggleSelectMode = () => {
       isSelectMode.value = !isSelectMode.value
       if (!isSelectMode.value) {
-        clearSelectedLists()
+        clearSelectedList()
       }
     }
 
-    const clearSelectedLists = () => {
+    // watch(isSelectMode, (isSelectModeValue) => {
+    //   if (!isSelectModeValue) {
+    //     clearSelectedList()
+    //   }
+    // })
+
+    const clearSelectedList = () => {
       selectedList.value = []
     }
 
-    const calculationItems = computed(
-      () => calculations.value?.data?.calculationList?.calculations || []
+    // const calculationItems = computed(
+    //   () => calculations.value?.data?.calculationList?.calculations || []
+    // )
+    const calculationItems = ref(
+      calculations.value?.data?.calculationList?.calculations || []
+    )
+
+    watch(
+      calculations,
+      (calculationsValue) => {
+        if (calculationsValue) {
+          calculationItems.value =
+            calculations.value?.data?.calculationList?.calculations
+        }
+      },
+      { immediate: true }
     )
 
     const totalPages = computed(() => {
@@ -183,12 +226,26 @@ export default defineComponent({
 
     const deleteSelectedList = async () => {
       try {
-        await vacuumCalculator.mutate({
+        const result = await vacuumCalculator.mutate({
           mutation: deleteCalculation,
           variables: {
             ids: selectedList.value,
           },
         })
+        if (result) {
+          console.log('result', result)
+          if (result.data?.deleteCalculation?.success) {
+            isSelectMode.value = false
+            calculationList.value = []
+            toast.success(
+              {
+                description: i18n.t('myaccount.calculations.networkSuccess'),
+              },
+              { timeout: 3000 }
+            )
+            listsDeleted.value = true
+          }
+        }
       } catch (error) {
         toast.error({
           description: i18n.t('myaccount.calculations.networkError'),
@@ -196,6 +253,13 @@ export default defineComponent({
         logger.error(error)
       }
     }
+
+    watch(listsDeleted, async (listsDeletedValue) => {
+      if (listsDeletedValue === true) {
+        calculations.value = await fetchCalculationsQuery()
+        listsDeleted.value = false
+      }
+    })
 
     return {
       emptyWrapperButton,
@@ -207,6 +271,7 @@ export default defineComponent({
       updateSelectedList,
       deleteSelectedList,
       calculations,
+      vacuumCalculatorLink,
     }
   },
 })

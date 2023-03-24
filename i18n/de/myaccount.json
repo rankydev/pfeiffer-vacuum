@@ -74,6 +74,7 @@
     "delete": "Löschen",
     "done": "Fertig",
     "name": "Name",
+    "networkSuccess": "Berechnung wurde gelöscht.",
     "networkError": "Etwas ist schiefgelaufen. Bitte versuche es später erneut.",
     "new": "Neue Berechnung",
     "noCalculations": "Bisher wurden keine Berechnungen durchgeführt!",

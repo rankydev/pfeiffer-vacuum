@@ -74,6 +74,7 @@
     "delete": "Delete",
     "done": "Done",
     "name": "Name",
+    "networkSuccess": "Calculation has been deleted.",
     "networkError": "Something went wrong. Please try again later.",
     "new": "New calculation",
     "noCalculations": "You have not created any calculations yet!",
