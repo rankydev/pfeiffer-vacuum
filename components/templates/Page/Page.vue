@@ -36,6 +36,7 @@
         :name="item.uiComponent || item.component"
       />
     </ContentWrapper>
+    <!-- TODO: Maybe find better solution to fix hydration -->
     <client-only>
       <StickyBar v-bind="mergedPageContent.stickyBar">
         <slot name="stickyBar" />
