@@ -69,7 +69,6 @@
   "calculations": {
     "date": "日期",
     "delete": "删除",
-    "deleteConfirmation": "您真的要删除此计算吗？",
     "done": "完毕",
     "name": "名称",
     "networkError": "出了点问题。 请稍后再试。",
@@ -88,7 +87,12 @@
       "chamberEvacuation": "抽真空"
     },
     "detailPageLink": "详情",
-    "deleteSuccess": "计算方式被删除。"
+    "deleteSuccess": "计算方式被删除。",
+    "confirmationModal": {
+      "headline": "您真的要删除此计算吗？",
+      "cancel": "不",
+      "confirm": "是的"
+    }
   },
   "shoppingList": {
     "new": "新的购物清单",

@@ -42,16 +42,28 @@
         @click="toggleInformationModal"
       />
     </div>
+    <InformationModal
+      :is-open="isInformationModalOpen"
+      :headline="$t('myaccount.calculations.confirmationModal.headline')"
+      :cancel-text="$t('myaccount.calculations.confirmationModal.cancel')"
+      :confirm-text="$t('myaccount.calculations.confirmationModal.confirm')"
+      cancel-icon="close"
+      confirm-icon="check"
+      @confirm="acceptDelete"
+      @cancel="toggleInformationModal"
+      @closeModal="toggleInformationModal"
+    />
   </div>
 </template>
 
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import { ref, computed, watch, toRefs } from '@vue/composition-api'
+import { useToast } from '~/composables/useToast'
 import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Button from '~/components/atoms/Button/Button.vue'
-import { useToast } from '~/composables/useToast'
+import InformationModal from '~/components/molecules/InformationModal/InformationModal.vue'
 
 export default defineComponent({
   name: 'CalculationListItem',
@@ -59,6 +71,7 @@ export default defineComponent({
     Checkbox,
     Icon,
     Button,
+    InformationModal,
   },
   props: {
     item: {

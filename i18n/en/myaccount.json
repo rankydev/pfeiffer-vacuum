@@ -72,7 +72,6 @@
     "headline": "Calculations",
     "date": "Date",
     "delete": "Delete",
-    "deleteConfirmation": "Do you really want to delete this calculation?",
     "done": "Done",
     "name": "Name",
     "networkError": "Something went wrong. Please try again later.",
@@ -91,7 +90,12 @@
       "chamberEvacuation": "Evacuation"
     },
     "detailPageLink": "Details",
-    "deleteSuccess": "Calculation was deleted."
+    "deleteSuccess": "Calculation was deleted.",
+    "confirmationModal": {
+      "headline": "Do you really want to delete this calculation?",
+      "cancel": "No",
+      "confirm": "Yes"
+    }
   },
   "shoppingList": {
     "new": "New shopping list",
