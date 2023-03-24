@@ -1,3 +1,8 @@
+.node-image:
+  image: node:16-alpine
+  tags:
+    - docker_runner
+
 variables:
   DOCKER_SERVICE_NAME: pvac-web-app-server
   DOCKER_IMAGE_NAME: ${CI_REGISTRY}/${CI_PROJECT_PATH}
@@ -6,13 +11,16 @@ stages:
   - build
   - test
   - analysis
-  - build-docker-image
+  - package
   - audit
   - deployment
   - cms-sync
 
 include:
-  - local: '/.gitlab-ci/container_structure_test.yml'
   - local: '/.gitlab-ci/build.yml'
-  - local: '/.gitlab-ci/cms.yml'
+  - local: '/.gitlab-ci/test.yml'
+  - local: '/.gitlab-ci/analysis.yml'
+  - local: '/.gitlab-ci/package.yml'
+  - local: '/.gitlab-ci/audit.yml'
   - local: '/.gitlab-ci/deploy.yml'
+  - local: '/.gitlab-ci/cms.yml'
