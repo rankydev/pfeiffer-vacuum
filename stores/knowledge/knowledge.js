@@ -74,7 +74,7 @@ export const useKnowledgeStore = defineStore('knowledge', () => {
         const error = new Error('GoToWebinar registration failed')
         logger.error(error, e)
 
-        if (e.data?.errors?.[0]?.type === 'AlreadyExistsError') {
+        if (e?.response?.data?.errors?.[0]?.type === 'AlreadyExistsError') {
           toast.warning(
             {
               description: i18n.t(
