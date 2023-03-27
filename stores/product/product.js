@@ -169,13 +169,11 @@ export const useProductStore = defineStore('product', () => {
   }
 
   const loadProduct = async (id) => {
-    isLoadingProduct.value = true
     const url = joinURL(config.PRODUCTS_API, id)
     const result = await axios.$get(url, {
       params: { fields: 'FULL' },
     })
     product.value = result
-    isLoadingProduct.value = false
   }
 
   const loadProductReferences = async (id) => {
@@ -227,8 +225,6 @@ export const useProductStore = defineStore('product', () => {
   }
 
   const hydrateVariationMatrix = async () => {
-    isLoadingProduct.value = true
-
     // When product is type master or variant, save master id for matrix
     if (
       ['MASTERPRODUCT', 'VARIANTPRODUCT'].includes(product.value?.productType)
@@ -253,30 +249,37 @@ export const useProductStore = defineStore('product', () => {
       throw new Error('No valid id given in route object.')
     }
 
-    // if we not already loaded the path we pull all required data
-    // using path instead of fullpath to allow page caching for same product page but with anchor tags f.e. for "#variantselection"
-    if (route.value.path !== reqId.value) {
-      reqId.value = route.value.path
+    try {
+      isLoadingProduct.value = true
 
-      // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
-      product.value = null
+      // if we not already loaded the path we pull all required data
+      // using path instead of fullpath to allow page caching for same product page but with anchor tags f.e. for "#variantselection"
+      if (route.value.path !== reqId.value) {
+        reqId.value = route.value.path
+
+        // Resetting the product before we start to load a new product to make sure old data won't be shown during loading
+        product.value = null
+
+        await Promise.all([
+          loadProduct(id),
+          loadProductReferences(id),
+          loadProductAccessories(),
+        ])
+      }
 
       await Promise.all([
-        loadProduct(id),
-        loadProductReferences(id),
-        loadProductAccessories(),
+        // we need to wait until loadProduct is done before we can load the matrix
+        // load every time even if product is cached. Because matrix gets cleared after each product page leave
+        hydrateVariationMatrix(),
+        // needs to be called even if product data was already loaded (SSR) because prices can only be loaded client side
+        pricesStore.loadAllPrices(),
       ])
+    } catch (error) {
+      logger.error('error loading product data by path', error)
+      throw error
+    } finally {
+      isLoadingProduct.value = false
     }
-
-    await Promise.all([
-      // we need to wait until loadProduct is done before we can load the matrix
-      // load every time even if product is cached. Because matrix gets cleared after each product page leave
-      hydrateVariationMatrix(),
-      // needs to be called even if product data was already loaded (SSR) because prices can only be loaded client side
-      pricesStore.loadAllPrices(),
-    ])
-
-    isLoadingProduct.value = false
   }
 
   return {
