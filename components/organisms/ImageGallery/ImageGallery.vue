@@ -13,14 +13,14 @@
           :img-normal="(renderableImages[currentImage] || {}).src"
           :scale="2"
           :disabled="!isDesktop"
-          @click.native="showLightBox"
+          @click.native="showLightBox = true"
         />
         <Button
           icon="zoom_out_map"
           variant="secondary"
           shape="outlined"
           class="image-gallery__zoom-indicator"
-          @click.native="showLightBox"
+          @click.native="showLightBox = true"
         />
       </client-only>
     </div>
