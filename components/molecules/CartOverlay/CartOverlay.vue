@@ -160,7 +160,7 @@ export default defineComponent({
     const cartStore = useCartStore()
     const { currentCart, isCartOverlayOpen } = storeToRefs(cartStore)
     const userStore = useUserStore()
-    // const { isLoggedIn, isOciUser } = storeToRefs(userStore)
+
     const {
       isLoggedIn,
       isOciUser,
