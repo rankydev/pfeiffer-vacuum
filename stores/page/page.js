@@ -12,9 +12,7 @@ export const usePageStore = defineStore('page', () => {
   const categoryStore = useCategoryStore()
   const productStore = useProductStore()
   const cmsStore = useCmsStore()
-
   const pageType = ref(CMS_PAGE)
-
   const setPageType = (type) => (pageType.value = type)
 
   const breadcrumb = computed(() => {
@@ -23,14 +21,56 @@ export const usePageStore = defineStore('page', () => {
     } else if (pageType.value === PRODUCT_PAGE) {
       return productStore.breadcrumb
     }
-    {
-      return cmsStore.breadcrumb
+    return cmsStore.breadcrumb
+  })
+
+  // page content handling
+  const pageContent = ref(null)
+  const pageConfigurationContent = ref(null)
+  const setPageConfigurationContent = (content) => {
+    pageConfigurationContent.value = content
+  }
+  const setPageContent = (content) => {
+    pageContent.value = content
+  }
+
+  // forked from useTemplating for now
+  const getTemplateContentByName = (name) => {
+    return pageConfigurationContent?.value?.[name]
+  }
+
+  const getCustomContentByName = (name) => {
+    const customContent = pageContent.value?.[name]
+    const hasCustomContent = customContent?.length > 0
+
+    return hasCustomContent && customContent
+  }
+
+  const getContentByName = (name) => {
+    const templateContent = getTemplateContentByName(name)
+    const customContent = getCustomContentByName(name)
+
+    return customContent || templateContent
+  }
+
+  const mergedPageContent = computed(() => {
+    return {
+      quicklinks: getContentByName('quicklinks'),
+      stage: getContentByName('stage'),
+      body: getContentByName('body'),
+      bottom: getContentByName('bottom'),
+      stickyBar: getContentByName('stickyBar'),
     }
   })
 
   return {
     pageType: readonly(pageType),
     breadcrumb,
+    pageContent,
+    pageConfigurationContent,
+    mergedPageContent,
     setPageType,
+    setPageConfigurationContent,
+    setPageContent,
   }
 })
