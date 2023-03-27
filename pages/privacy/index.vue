@@ -4,6 +4,7 @@
     :slug="slug"
     :fallback-slug="fallbackSlug"
     :language="language"
+    :options="{ version }"
   >
     <template #default="{ result: { data, loading } }">
       <LoadingSpinner :show="loading" container-min-height>
@@ -39,7 +40,9 @@ import {
   ref,
   useRoute,
   useContext,
+  toRefs,
 } from '@nuxtjs/composition-api'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
@@ -56,6 +59,7 @@ export default defineComponent({
   setup: function () {
     const route = useRoute()
     const context = useContext()
+    const { version } = toRefs(useStoryblokVersion())
 
     /**
      * build the cms slug
@@ -76,6 +80,7 @@ export default defineComponent({
       slug,
       fallbackSlug,
       language,
+      version,
       privacyScriptUrl,
     }
   },

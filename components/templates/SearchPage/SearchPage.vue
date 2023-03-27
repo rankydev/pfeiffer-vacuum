@@ -4,6 +4,7 @@
     :slug="slug"
     :fallback-slug="fallbackSlug"
     :language="language"
+    :options="{ version }"
   >
     <template #default="{ result: { data, loading } }">
       <LoadingSpinner :show="loading" container-min-height>
@@ -123,12 +124,14 @@ import {
   useRoute,
   useContext,
   ref,
+  toRefs,
 } from '@nuxtjs/composition-api'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { useStoryblokData } from '~/composables/useStoryblokData'
 import { useCategoryStore } from '~/stores/category/category'
 import { usePageStore, CATEGORY_PAGE } from '~/stores/page'
 import { useEmpolisStore } from '~/stores/empolis'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 import Button from '~/components/atoms/Button/Button'
 import ErrorHandling from '~/components/molecules/ErrorHandling/ErrorHandling'
@@ -168,6 +171,7 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const context = useContext()
+    const { version } = toRefs(useStoryblokVersion())
 
     /**
      * page type handling
@@ -283,6 +287,7 @@ export default defineComponent({
       currentTabSelected,
       tabNavigationItems,
       hasError,
+      version,
       selectTab,
     }
   },

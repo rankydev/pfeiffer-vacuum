@@ -4,6 +4,7 @@
     :slug="slug"
     :fallback-slug="fallbackSlug"
     :language="language"
+    :options="{ version }"
   >
     <template #default="{ result: { data, loading } }">
       <LoadingSpinner :show="loading" container-min-height>
@@ -14,9 +15,10 @@
 </template>
 
 <script>
-import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, ref, toRefs, useRoute } from '@nuxtjs/composition-api'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
@@ -29,6 +31,7 @@ export default defineComponent({
     const pageStore = usePageStore()
     const route = useRoute()
     const { buildSlugs } = useStoryblokSlugBuilder(context)
+    const { version } = toRefs(useStoryblokVersion())
 
     pageStore.setPageType(CMS_PAGE)
     const currentPath = ref(route.value.path)
@@ -38,6 +41,7 @@ export default defineComponent({
       slug,
       fallbackSlug,
       language,
+      version,
     }
   },
 })

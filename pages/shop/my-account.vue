@@ -14,6 +14,7 @@
             :slug="slugs.slug"
             :fallback-slug="slugs.fallbackSlug"
             :language="slugs.language"
+            :options="{ version }"
           >
             <template #default="{ result: { data, loading } }">
               <LoadingSpinner :show="loading" container-min-height>
@@ -38,6 +39,7 @@ import {
   useRoute,
   useContext,
   computed,
+  toRefs,
 } from '@nuxtjs/composition-api'
 import Page from '~/components/templates/Page/Page'
 import MyAccountSidebar from '~/components/organisms/MyAccount/sidebar/MyAccountSidebar'
@@ -46,6 +48,7 @@ import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 export default defineComponent({
   name: 'MyAccount',
@@ -60,6 +63,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const context = useContext()
+    const { version } = toRefs(useStoryblokVersion())
 
     const pageStore = usePageStore()
     pageStore.setPageType(CMS_PAGE)
@@ -90,6 +94,7 @@ export default defineComponent({
 
     return {
       slugs,
+      version,
     }
   },
 })
