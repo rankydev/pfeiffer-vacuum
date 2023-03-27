@@ -30,7 +30,7 @@
     />
     <Button
       class="knowledge-details__back-to-overview"
-      label="Back to overview"
+      :label="$t('knowledge.backToOverview')"
       :prepend-icon="true"
       icon="arrow_back"
       variant="secondary"

@@ -36,5 +36,6 @@
   "authors": "作者",
   "speaker": "讲师",
   "details": "细节",
-  "filter": "筛选"
+  "filter": "筛选",
+  "backToOverview": "返回概览"
 }
