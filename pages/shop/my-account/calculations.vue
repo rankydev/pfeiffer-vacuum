@@ -1,73 +1,78 @@
 <template>
   <div class="calculation-dashboard">
-    <div class="calculation-dashboard__header">
-      <ResultHeadline
-        class="calculation-dashboard__header-headline"
-        :headline="$t('myaccount.calculations.title')"
-        :link="localePath('shop-my-account')"
-      />
-
-      <div
-        v-if="calculationItems && calculationItems.length"
-        class="calculation-dashboard__header-nav"
-      >
-        <Button
-          class="calculation-dashboard__header-nav--select"
-          :icon="isSelectedListEmpty ? 'list' : 'close'"
-          shape="outlined"
-          gap="narrow"
-          :label="
-            isSelectedListEmpty
-              ? $t('myaccount.select')
-              : $t('myaccount.discard')
-          "
-          variant="secondary"
-          @click="toggleSelectMode"
-        />
-        <Button
-          v-if="!isSelectedListEmpty"
-          class="calculation-dashboard__header-nav--new"
-          icon="delete"
-          gap="narrow"
-          :label="$t('myaccount.calculations.delete')"
-          variant="secondary"
-          @click="deleteSelectedList"
-        />
-        <Button
-          v-else
-          class="calculation-dashboard__header-nav--new"
-          icon="add"
-          gap="narrow"
-          :label="$t('myaccount.new')"
-          variant="secondary"
-          :href="vacuumCalculatorLink"
-          target="_blank"
-        />
-      </div>
-    </div>
-
     <!-- 80/20 TODO: debug hydration issues -->
     <client-only>
-      <CalculationList
-        v-if="calculationItems && calculationItems.length"
-        :lists="calculations.data.calculationList.calculations"
-        :select-mode="isSelectMode"
-        @update="updateSelectedList"
-        @delete="deleteSelectedList"
-      />
+      <LoadingSpinner :show="isLoading">
+        <div class="calculation-dashboard__header">
+          <ResultHeadline
+            class="calculation-dashboard__header-headline"
+            :headline="$t('myaccount.calculations.title')"
+            :link="localePath('shop-my-account')"
+          />
 
-      <Pagination
-        v-if="calculationItems && calculationItems.length"
-        class="calculation-dashboard__pagination"
-        :total-pages="totalPages"
-      />
+          <div
+            v-if="calculationItems && calculationItems.length"
+            class="calculation-dashboard__header-nav"
+          >
+            <Button
+              class="calculation-dashboard__header-nav--select"
+              :icon="isSelectedListEmpty ? 'list' : 'close'"
+              shape="outlined"
+              gap="narrow"
+              :label="
+                isSelectedListEmpty
+                  ? $t('myaccount.select')
+                  : $t('myaccount.discard')
+              "
+              variant="secondary"
+              @click="toggleSelectMode(isSelectedListEmpty)"
+            />
 
-      <EmptyWrapper
-        v-else
-        :button="emptyWrapperButton"
-        icon="calculate"
-        :label="$t('myaccount.calculations.noCalculations')"
-      />
+            <Button
+              v-if="!isSelectedListEmpty"
+              class="calculation-dashboard__header-nav--new"
+              icon="delete"
+              gap="narrow"
+              :label="$t('myaccount.calculations.delete')"
+              variant="secondary"
+              @click="deleteSelectedList"
+            />
+
+            <Button
+              v-else
+              class="calculation-dashboard__header-nav--new"
+              icon="add"
+              gap="narrow"
+              :label="$t('myaccount.new')"
+              variant="secondary"
+              :href="vacuumCalculatorLink"
+              target="_blank"
+            />
+          </div>
+        </div>
+
+        <CalculationList
+          v-if="calculationItems && calculationItems.length"
+          :lists="calculationItems"
+          :select-mode="isSelectMode"
+          :deselect-all="deselectAll"
+          @update="updateSelectedList"
+          @delete="deleteSelectedList"
+        />
+
+        <Pagination
+          v-if="calculationItems && calculationItems.length"
+          class="calculation-dashboard__pagination"
+          :total-pages="totalPages"
+        />
+
+        <EmptyWrapper
+          v-if="!calculationItems.length && !isLoading"
+          :button="emptyWrapperButton"
+          icon="calculate"
+          :label="$t('myaccount.calculations.noCalculations')"
+        />
+      </LoadingSpinner>
     </client-only>
   </div>
 </template>
@@ -91,6 +96,7 @@ import deleteCalculation from '~/apollo/mutations/vacuumCalculator/deleteCalcula
 import EmptyWrapper from '~/components/molecules/EmptyWrapper/EmptyWrapper.vue'
 import CalculationList from '~/components/organisms/CalculationList/CalculationList.vue'
 import Pagination from '~/components/molecules/Pagination/Pagination.vue'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   name: 'Calculations',
@@ -99,13 +105,14 @@ export default defineComponent({
     EmptyWrapper,
     CalculationList,
     Pagination,
+    LoadingSpinner,
   },
   setup() {
     const { i18n, app, $config } = useContext()
     const calculations = ref(null)
     const { logger } = useLogger()
     const vacuumCalculator = app.apolloProvider?.clients?.vacuumCalculator
-    const ITEMS_PER_PAGE = 5
+    const ITEMS_PER_PAGE = 10
     const currentPage = ref(1)
     const route = useRoute()
     const totalItems = ref(0)
@@ -113,26 +120,27 @@ export default defineComponent({
     const isSelectMode = ref(false)
     const toast = useToast()
     const vacuumCalculatorLink = `${$config.VACUUM_CALCULATOR_BASE_URL}/${i18n.locale}`
-    const listsDeleted = ref(false)
-
-    const fetchCalculationsQuery = async () => {
-      return vacuumCalculator.query({
-        query: calculationList,
-        variables: {
-          start: currentPage.value
-            ? (currentPage.value - 1) * ITEMS_PER_PAGE
-            : 0,
-          limit: ITEMS_PER_PAGE,
-        },
-      })
-    }
+    const deselectAll = ref(false)
+    const isLoading = ref(false)
 
     const fetchCalculations = async () => {
       try {
-        calculations.value = await fetchCalculationsQuery()
+        isLoading.value = true
+        calculations.value = await vacuumCalculator.query({
+          query: calculationList,
+          variables: {
+            start: currentPage.value
+              ? (currentPage.value - 1) * ITEMS_PER_PAGE
+              : 0,
+            limit: ITEMS_PER_PAGE,
+          },
+          fetchPolicy: 'no-cache',
+        })
         totalItems.value = calculations.value?.data?.calculationList?.total
       } catch (error) {
         logger.error(error)
+      } finally {
+        isLoading.value = false
       }
     }
 
@@ -153,39 +161,24 @@ export default defineComponent({
       return selectedList.value.length === 0
     })
 
-    const toggleSelectMode = () => {
+    const toggleSelectMode = (deselect = false) => {
       isSelectMode.value = !isSelectMode.value
+
       if (!isSelectMode.value) {
         clearSelectedList()
       }
-    }
 
-    // watch(isSelectMode, (isSelectModeValue) => {
-    //   if (!isSelectModeValue) {
-    //     clearSelectedList()
-    //   }
-    // })
+      if (deselect) {
+        deselectAll.value = true
+      }
+    }
 
     const clearSelectedList = () => {
       selectedList.value = []
     }
 
-    // const calculationItems = computed(
-    //   () => calculations.value?.data?.calculationList?.calculations || []
-    // )
-    const calculationItems = ref(
-      calculations.value?.data?.calculationList?.calculations || []
-    )
-
-    watch(
-      calculations,
-      (calculationsValue) => {
-        if (calculationsValue) {
-          calculationItems.value =
-            calculations.value?.data?.calculationList?.calculations
-        }
-      },
-      { immediate: true }
+    const calculationItems = computed(
+      () => calculations.value?.data?.calculationList?.calculations || []
     )
 
     const totalPages = computed(() => {
@@ -216,6 +209,7 @@ export default defineComponent({
 
     const deleteSelectedList = async () => {
       try {
+        isLoading.value = true
         const result = await vacuumCalculator.mutate({
           mutation: deleteCalculation,
           variables: {
@@ -223,33 +217,24 @@ export default defineComponent({
           },
         })
         if (result) {
-          console.log('result', result)
           if (result.data?.deleteCalculation?.success) {
-            isSelectMode.value = false
-            calculationList.value = []
+            fetchCalculations()
+            toggleSelectMode()
+
             toast.success(
               {
                 description: i18n.t('myaccount.calculations.networkSuccess'),
               },
               { timeout: 3000 }
             )
-            listsDeleted.value = true
           }
         }
       } catch (error) {
-        toast.error({
-          description: i18n.t('myaccount.calculations.networkError'),
-        })
         logger.error(error)
+      } finally {
+        isLoading.value = false
       }
     }
-
-    watch(listsDeleted, async (listsDeletedValue) => {
-      if (listsDeletedValue === true) {
-        calculations.value = await fetchCalculationsQuery()
-        listsDeleted.value = false
-      }
-    })
 
     return {
       emptyWrapperButton,
@@ -262,6 +247,8 @@ export default defineComponent({
       deleteSelectedList,
       calculations,
       vacuumCalculatorLink,
+      deselectAll,
+      isLoading,
     }
   },
 })

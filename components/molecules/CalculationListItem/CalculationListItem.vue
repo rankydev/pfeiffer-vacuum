@@ -82,6 +82,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    deselectAll: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update', 'delete'],
   setup(props, { emit }) {
@@ -127,6 +131,10 @@ export default defineComponent({
 
     watch(props, (newVal, oldVal) => {
       if (newVal?.selectMode !== oldVal?.selectMode) {
+        selected.value = false
+      }
+
+      if (newVal.deselectAll) {
         selected.value = false
       }
     })

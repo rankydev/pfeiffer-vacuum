@@ -25,6 +25,7 @@
       :select-mode="selectMode"
       @delete="deleteListItem"
       @update="updateDeleteList"
+      :deselect-all="deselectAll"
     />
   </div>
 </template>
@@ -44,6 +45,10 @@ export default defineComponent({
       required: true,
     },
     selectMode: {
+      type: Boolean,
+      default: false,
+    },
+    deselectAll: {
       type: Boolean,
       default: false,
     },
