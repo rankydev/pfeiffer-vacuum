@@ -207,13 +207,13 @@ export default defineComponent({
       selectedList.value = selectedItemIds
     }
 
-    const deleteSelectedList = async () => {
+    const deleteSelectedList = async (item = {}) => {
       try {
         isLoading.value = true
         const result = await vacuumCalculator.mutate({
           mutation: deleteCalculation,
           variables: {
-            ids: selectedList.value,
+            ids: Object.keys(item).length ? [item.id] : selectedList.value,
           },
         })
         if (result) {
@@ -256,6 +256,8 @@ export default defineComponent({
 
 <style lang="scss">
 .calculation-dashboard {
+  @apply tw-mb-4;
+
   &__header {
     @apply tw-flex;
     @apply tw-flex-col;

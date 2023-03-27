@@ -59,7 +59,6 @@
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import { ref, computed, watch, toRefs } from '@vue/composition-api'
-import { useToast } from '~/composables/useToast'
 import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Button from '~/components/atoms/Button/Button.vue'
@@ -89,8 +88,7 @@ export default defineComponent({
   },
   emits: ['update', 'delete'],
   setup(props, { emit }) {
-    const { app, i18n } = useContext()
-    const toast = useToast()
+    const { app } = useContext()
     const selected = ref(false)
     const isInformationModalOpen = ref(false)
     const { item } = toRefs(props)
@@ -120,12 +118,6 @@ export default defineComponent({
 
     const acceptDelete = () => {
       toggleInformationModal()
-      toast.success(
-        {
-          description: i18n.t('myaccount.calculations.deleteSuccess'),
-        },
-        { timeout: 3000 }
-      )
       emit('delete', item.value)
     }
 
