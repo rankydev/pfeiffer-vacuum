@@ -1,0 +1,26 @@
+sonar-qube:
+  image: sonarsource/sonar-scanner-cli
+  stage: analysis
+  needs: ["test", "lint"]
+  cache:
+    - key: "${CI_PIPELINE_ID}-build-frontend"
+      paths:
+        - .npm/
+        - .nuxt/
+        - node_modules/
+      policy: pull
+    - key: "${CI_PIPELINE_ID}-report"
+      paths:
+        - report/
+      policy: pull
+    - key: "${CI_PIPELINE_ID}-coverage"
+      paths:
+        - coverage/
+      policy: pull
+  script:
+    - sonar-scanner -Dsonar.login=${SONARQUBE_ACCESS_TOKEN}
+  tags:
+    - docker_runner
+    - shared
+  only:
+    - develop
