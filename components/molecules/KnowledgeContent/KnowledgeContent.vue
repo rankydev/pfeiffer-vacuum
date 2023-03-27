@@ -48,9 +48,13 @@
                 <CategoryPageSizeSelection
                   :active="activePageSize"
                   :knowledge-mode="true"
+                  class="knowledge-content__bottom-actions--selection"
                   @change="handlePageSizeChange"
                 />
-                <Pagination :total-pages="totalPages" />
+                <Pagination
+                  :total-pages="totalPages"
+                  class="knowledge-content__bottom-actions--pagination"
+                />
               </div>
             </ContentWrapper>
           </div>
@@ -217,8 +221,17 @@ export default {
   }
 
   &__results {
-    @apply tw-py-12;
+    @apply tw-py-6;
     @apply tw-bg-pv-grey-96;
+
+    @screen md {
+      @apply tw-pb-8;
+    }
+
+    @screen lg {
+      @apply tw-pt-8;
+      @apply tw-pb-12;
+    }
   }
 
   &__top-actions {
@@ -251,8 +264,34 @@ export default {
   }
 
   &__bottom-actions {
-    @apply tw-flex tw-justify-between tw-items-center;
     @apply tw-mt-4;
+    @apply tw-flex;
+    @apply tw-flex-col-reverse;
+
+    @screen md {
+      @apply tw-flex-row;
+      @apply tw-justify-between;
+      @apply tw-items-center;
+    }
+
+    &--selection {
+      @apply tw-mt-4;
+
+      @screen md {
+        @apply tw-mt-0;
+      }
+    }
+
+    &--pagination {
+      .pagination__icon {
+        @apply tw-h-12;
+        @apply tw-w-12;
+      }
+
+      .pagination--mobile {
+        @apply tw-h-12;
+      }
+    }
   }
 
   &__multiselect {
