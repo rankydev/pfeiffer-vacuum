@@ -1,73 +1,37 @@
 <template>
-  <div v-editable="content">
-    <slot name="header">
-      <NuxtDynamic
-        v-for="item in top"
-        :key="item._uid"
-        v-editable="item"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      />
+  <div>
+    <!-- <nuxt-dynamic
+      v-for="item in data.content.top"
+      :key="item._uid"
+      v-editable="item"
+      v-bind="item"
+      :name="item.uiComponent || item.component"
+    /> -->
 
-      <NuxtDynamic
-        v-for="item in header"
-        :key="item._uid"
-        v-editable="item"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      />
-    </slot>
+    <nuxt-dynamic
+      v-for="item in content.header"
+      :key="item._uid"
+      v-bind="item"
+      :name="item.uiComponent || item.component"
+    />
 
-    <slot>
-      <main>
-        <NuxtDynamic
-          v-for="item in stage"
-          :key="item._uid"
-          v-editable="item"
-          v-bind="item"
-          :name="item.uiComponent || item.component"
-        />
-        <NuxtDynamic
-          v-for="item in body"
-          :key="item._uid"
-          v-editable="item"
-          v-bind="item"
-          :name="item.uiComponent || item.component"
-        />
-      </main>
-    </slot>
+    <Nuxt class="default-layout__content" />
 
-    <slot name="footer">
-      <NuxtDynamic
-        v-for="item in bottom"
-        :key="item._uid"
-        v-editable="item"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      />
-
-      <NuxtDynamic
-        v-for="item in footer"
-        :key="item._uid"
-        v-editable="item"
-        v-bind="item"
-        :name="item.uiComponent || item.component"
-      />
-    </slot>
-    <StickyBar v-bind="stickyBar">
-      <slot name="stickyBar" />
-    </StickyBar>
+    <nuxt-dynamic
+      v-for="item in content.footer"
+      :key="item._uid"
+      v-bind="item"
+      :name="item.uiComponent || item.component"
+    />
   </div>
 </template>
 
 <script>
-import { defineComponent, toRefs } from '@nuxtjs/composition-api'
-import StickyBar from '~/components/atoms/StickyBar/StickyBar.vue'
+import { defineComponent, onMounted, toRefs } from '@nuxtjs/composition-api'
+import { usePageStore } from '~/stores/page'
+
 export default defineComponent({
   name: 'PageConfiguration',
-  components: {
-    StickyBar,
-  },
   props: {
     content: {
       type: Object,
@@ -76,17 +40,11 @@ export default defineComponent({
   },
   setup(props) {
     const { content } = toRefs(props)
-    const { top, header, stage, body, bottom, footer, stickyBar } =
-      content.value
-    return {
-      top,
-      header,
-      stage,
-      body,
-      bottom,
-      footer,
-      stickyBar,
-    }
+    const pageStore = usePageStore()
+
+    onMounted(() => {
+      pageStore.setPageConfigurationContent(content.value)
+    })
   },
 })
 </script>

@@ -1,4 +1,4 @@
-const content = {
+export const content = {
   assetURL: '/api/cms/assets/f/76705/x/28b995f101/medical-certificate.pdf',
   date: '2021-11-03T23:00:00+0000',
   fileURL: '/api/cms/assets/f/76705/x/28b995f101/medical-certificate.pdf',
@@ -20,4 +20,5 @@ const content = {
   tags: ['Leak'],
   type: 'WHITEPAPER',
 }
-export default content
+
+export default {}

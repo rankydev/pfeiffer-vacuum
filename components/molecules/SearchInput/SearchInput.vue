@@ -18,6 +18,7 @@ import {
   onMounted,
   ref,
 } from '@nuxtjs/composition-api'
+import { useDebounce } from '~/composables/useDebounce'
 
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import { useCategoryStore } from '~/stores/category/category'
@@ -48,7 +49,7 @@ export default defineComponent({
   emits: ['submit', 'focus'],
   setup(props, { emit }) {
     const categoryStore = useCategoryStore()
-    const { loadSuggestions, blurSuggestions } = categoryStore
+    const { loadSuggestions } = categoryStore
     const { app } = useContext()
     const isMobile = ref(app.$breakpoints.isMobile)
 
@@ -57,16 +58,25 @@ export default defineComponent({
 
     const pushSearchTerm = (e) => {
       emit('submit', e)
-      if (props.clearAfterSubmit) searchTerm.value = ''
+      if (props.clearAfterSubmit) clearSearchTerm()
+    }
+
+    const clearSearchTerm = () => {
+      searchTerm.value = ''
     }
 
     const emitFocus = (val) => {
       emit('focus', val)
     }
 
-    const handleInput = () => {
-      if (!props.disableSuggestions) loadSuggestions()
+    const handleInput = (text) => {
+      if (!props.disableSuggestions) loadSearchSuggestions(text)
     }
+
+    const { debounce } = useDebounce()
+    const loadSearchSuggestions = debounce((text) => {
+      loadSuggestions(text)
+    })
 
     onMounted(() => {
       if (isMobile.value) {
@@ -76,9 +86,8 @@ export default defineComponent({
 
     return {
       pushSearchTerm,
+      clearSearchTerm,
       searchTerm,
-      loadSuggestions,
-      blurSuggestions,
       pvInput,
 
       emitFocus,

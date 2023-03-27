@@ -35,6 +35,7 @@ import {
   useRouter,
   ref,
   watch,
+  toRefs,
 } from '@nuxtjs/composition-api'
 
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
@@ -48,8 +49,14 @@ export default defineComponent({
     PvInput,
     SearchSuggestions,
   },
-  emits: ['searchTermChange'],
-  setup(props, { emit }) {
+  props: {
+    activeTab: {
+      type: String,
+      default: 'products',
+      validator: (val) => ['products', 'documents'].includes(val),
+    },
+  },
+  setup(props) {
     const route = useRoute()
     const router = useRouter()
     const empolisStore = useEmpolisStore()
@@ -60,6 +67,7 @@ export default defineComponent({
     const { fetchDocumentSuggestions } = empolisStore
     const { loadSuggestions } = categoryStore
     const isDesktop = app.$breakpoints.isDesktop
+    const { activeTab } = toRefs(props)
 
     const pvInput = ref(null)
     const currentSuggestions = ref([])
@@ -67,7 +75,6 @@ export default defineComponent({
     const isOpen = ref(false)
     const suggestionHover = ref(true)
 
-    const activeTab = computed(() => route.value.query.searchType)
     const objectKey = computed(() =>
       route.value.query.searchType === 'documents' ? 'label' : 'value'
     )
@@ -88,7 +95,6 @@ export default defineComponent({
     }
 
     const pushSearchTerm = (term) => {
-      emit('searchTermChange', term)
       const encodedTerm = encodeURIComponent(term)
       const searchType = activeTab.value ? `&searchType=${activeTab.value}` : ''
       router.push(`search?searchTerm=${encodedTerm}${searchType}`)
@@ -127,7 +133,6 @@ export default defineComponent({
       getSearchSuggestionsResult,
       closeSearchfield,
       currentSuggestions,
-      activeTab,
       searchTerm,
       isOpen,
       clearInput,

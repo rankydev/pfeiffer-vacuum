@@ -27,6 +27,7 @@
           :price-total="product.totalPrice"
           :is-read-only="true"
           variant="requestHistory"
+          @addToShoppingList="addToShoppingList"
         />
       </div>
     </div>
@@ -85,6 +86,7 @@ import { useRequestHistoryStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
 import ShoppingListItemCard from '~/components/molecules/ShoppingListItemCard/ShoppingListItemCard'
 import TotalNetInformation from '~/components/molecules/TotalNetInformation/TotalNetInformation.vue'
+import { useShoppingLists } from '@/stores/shoppinglists'
 
 export default defineComponent({
   components: {
@@ -94,6 +96,8 @@ export default defineComponent({
   setup() {
     const { i18n } = useContext()
     const route = useRoute()
+
+    const shoppingListsStore = useShoppingLists()
 
     const requestHistoryStore = useRequestHistoryStore()
     const { loadOrderContent } = requestHistoryStore
@@ -141,6 +145,12 @@ export default defineComponent({
       return promotions.value?.length
     })
 
+    const addToShoppingList = (cartItem) => {
+      shoppingListsStore.setProductAmount(cartItem?.quantity)
+      shoppingListsStore.setProduct(cartItem)
+      shoppingListsStore.toggleOverlay()
+    }
+
     return {
       requestId,
       currentOrder,
@@ -150,6 +160,7 @@ export default defineComponent({
       promotions,
       hasPromotion,
       getProductPromotions,
+      addToShoppingList,
     }
   },
 })

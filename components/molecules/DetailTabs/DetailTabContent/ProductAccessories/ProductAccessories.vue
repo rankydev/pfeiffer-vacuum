@@ -93,6 +93,7 @@
         />
       </div>
     </div>
+    <!-- TODO: Maybe find better solution to fix hydration -->
     <client-only>
       <div
         v-if="filteredAccessories.length"

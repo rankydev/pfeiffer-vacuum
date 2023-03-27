@@ -37,6 +37,7 @@ import {
   computed,
   useRoute,
   useContext,
+  toRefs,
 } from '@nuxtjs/composition-api'
 
 export default defineComponent({
@@ -76,15 +77,18 @@ export default defineComponent({
   setup(props) {
     const route = useRoute()
     const { i18n } = useContext()
+    const { searchTerm, link, backButtonOverrideQueryParams, headline } =
+      toRefs(props)
+
     const headlineText = computed(() =>
-      props.searchTerm
-        ? `${i18n.t('category.searchResult')} "${props.searchTerm}"`
-        : props.headline
+      searchTerm.value
+        ? `${i18n.t('category.searchResult')} "${searchTerm.value}"`
+        : headline.value
     )
 
     const url = computed(() => ({
-      path: props.link,
-      query: { ...route.value.query, ...props.backButtonOverrideQueryParams },
+      path: link.value,
+      query: { ...route.value.query, ...backButtonOverrideQueryParams.value },
     }))
 
     return { headlineText, url }
@@ -136,10 +140,6 @@ export default defineComponent({
   &__icon {
     @apply tw-text-pv-red;
     @apply tw-mr-2;
-
-    @screen lg {
-      @apply tw-hidden;
-    }
 
     &:hover {
       @apply tw-text-pv-red-darker;
