@@ -55,13 +55,6 @@
         @update="updateSelectedList"
         @delete="deleteSelectedList"
       />
-      <!-- <CalculationList
-        v-if="calculationItems && calculationItems.length"
-        :lists="calculationItems"
-        :select-mode="isSelectMode"
-        @update="updateSelectedList"
-        @delete="deleteSelectedList"
-      /> -->
 
       <Pagination
         v-if="calculationItems && calculationItems.length"
@@ -70,6 +63,7 @@
       />
 
       <EmptyWrapper
+        v-else
         :button="emptyWrapperButton"
         icon="calculate"
         :label="$t('myaccount.calculations.noCalculations')"
@@ -138,10 +132,6 @@ export default defineComponent({
         calculations.value = await fetchCalculationsQuery()
         totalItems.value = calculations.value?.data?.calculationList?.total
       } catch (error) {
-        // TODO: check why toast is undefined
-        // toast.error({
-        //   description: i18n.t('myaccount.calculations.networkError'),
-        // })
         logger.error(error)
       }
     }
