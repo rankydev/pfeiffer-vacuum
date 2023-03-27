@@ -23,9 +23,9 @@
       class="calculation-list-table__item"
       :item="item"
       :select-mode="selectMode"
+      :deselect-all="deselectAll"
       @delete="deleteListItem"
       @update="updateDeleteList"
-      :deselect-all="deselectAll"
     />
   </div>
 </template>
