@@ -72,6 +72,7 @@ export default {
     pageComponents: {
       type: 'bloks',
       display_name: 'Page Components',
+      restrict_components: true,
       component_whitelist: [
         'Accordion',
         'AnchorWrapper',

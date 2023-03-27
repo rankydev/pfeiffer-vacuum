@@ -1,5 +1,6 @@
 <template>
   <div :class="`${prefix}__wrapper`">
+    <!-- TODO: Maybe find better solution to fix hydration -->
     <client-only>
       <ul
         ref="menu"

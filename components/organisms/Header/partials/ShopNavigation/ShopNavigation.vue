@@ -1,5 +1,6 @@
 <template>
   <div class="shop-navigation">
+    <!-- TODO: Maybe find better solution to fix hydration -->
     <client-only>
       <Popup v-if="!isOciUser">
         <template #activator="{ togglePopup }">
