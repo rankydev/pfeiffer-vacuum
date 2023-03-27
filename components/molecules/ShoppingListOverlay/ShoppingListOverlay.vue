@@ -3,7 +3,7 @@
     :is-open="isOverlayOpen"
     position="right"
     class="shopping-list-overlay"
-    @closeSidebar="closeSidebar"
+    @closeSidebar="clickAway"
   >
     <div class="shopping-list-overlay__header">
       <h2 class="shopping-list-overlay__header--title">
@@ -22,42 +22,59 @@
         </span>
       </h2>
     </div>
-    <div
-      v-if="shoppingLists && isBasicMode"
-      class="shopping-list-overlay__content"
+    <LoadingSpinner
+      :show="isInitialLoad"
+      class="shopping-list-overlay__loading"
     >
-      <Button
-        v-for="{ name, id } in shoppingLists"
-        :key="id"
-        :label="name"
-        icon="assignment"
-        shape="outlined"
-        prepend-icon
-        variant="variant-selection-preselected"
-        class="shopping-ist-overlay__content--item"
-        @click="addToShoppingList(id)"
-      />
-    </div>
-    <div v-else class="shopping-list-overlay__content-add">
-      <p class="shopping-list-overlay__content-add--inforamtion">
-        {{ $t('myaccount.shoppingList.info') }}
-      </p>
-      <PvInput
-        v-model="nameVar"
-        class="shopping-list-overlay__content-add--name"
-        :label="$t('myaccount.shoppingList.name')"
-        :required="true"
-        :placeholder="$t('myaccount.shoppingList.namePlaceholder')"
-      />
-      <PvTextArea
-        v-model="descriptionVar"
-        class="shopping-list-overlay__content-add--description"
-        :label="$t('myaccount.shoppingList.description')"
-        :placeholder="$t('myaccount.shoppingList.descriptionPlaceholder')"
-        :is-textarea="true"
-      />
-    </div>
-
+      <div
+        v-if="shoppingLists.length && isBasicMode"
+        class="shopping-list-overlay__content"
+      >
+        <Button
+          v-for="{ name, id } in shoppingLists"
+          :key="id"
+          :label="name"
+          icon="assignment"
+          shape="outlined"
+          prepend-icon
+          variant="variant-selection-preselected"
+          class="shopping-ist-overlay__content--item"
+          @click="addToShoppingList(id)"
+        />
+      </div>
+      <div
+        v-if="!shoppingLists.length && isBasicMode"
+        class="shopping-list-overlay__content-empty"
+      >
+        <Icon
+          class="shopping-list-overview-page__empty--icon"
+          icon="assignment"
+          size="xlarge"
+        />
+        <p class="shopping-list-overview-page__empty--text">
+          {{ $t('myaccount.shoppingListOverviewPage.emptyList') }}
+        </p>
+      </div>
+      <div v-if="!isBasicMode" class="shopping-list-overlay__content-add">
+        <p class="shopping-list-overlay__content-add--inforamtion">
+          {{ $t('myaccount.shoppingList.info') }}
+        </p>
+        <PvInput
+          v-model="nameVar"
+          class="shopping-list-overlay__content-add--name"
+          :label="$t('myaccount.shoppingList.name')"
+          :required="true"
+          :placeholder="$t('myaccount.shoppingList.namePlaceholder')"
+        />
+        <PvTextArea
+          v-model="descriptionVar"
+          class="shopping-list-overlay__content-add--description"
+          :label="$t('myaccount.shoppingList.description')"
+          :placeholder="$t('myaccount.shoppingList.descriptionPlaceholder')"
+          :is-textarea="true"
+        />
+      </div>
+    </LoadingSpinner>
     <div class="shopping-list-overlay__footer">
       <Button
         class="shopping-list-overlay__footer--forward"
@@ -119,6 +136,7 @@ export default defineComponent({
       isNewListMode,
       isBasicMode,
       isAddAllMode,
+      isInitialLoad,
     } = storeToRefs(shoppingListsStore)
 
     const clearForm = () => {
@@ -128,6 +146,11 @@ export default defineComponent({
 
     const closeSidebar = () => {
       shoppingListsStore.toggleOverlay()
+    }
+
+    const clickAway = () => {
+      shoppingListsStore.toggleOverlay()
+      resetStates()
     }
 
     const resetStates = () => {
@@ -212,6 +235,8 @@ export default defineComponent({
       isNewListMode,
       isBasicMode,
       forwardButtonText,
+      isInitialLoad,
+      clickAway,
     }
   },
 })
@@ -267,6 +292,12 @@ export default defineComponent({
     }
   }
 
+  &__loading {
+    @apply tw-bg-pv-grey-96;
+    @apply tw-h-full;
+    @apply tw-w-full;
+  }
+
   &__content {
     @apply tw-bg-pv-grey-96;
     @apply tw-h-full;
@@ -293,6 +324,16 @@ export default defineComponent({
         @apply tw-overflow-hidden;
       }
     }
+  }
+
+  &__content-empty {
+    @apply tw-bg-pv-white;
+    @apply tw-my-4;
+    @apply tw-mx-8;
+    @apply tw-p-6;
+    @apply tw-flex;
+    @apply tw-flex-col;
+    @apply tw-items-center;
   }
 
   &__content-add {

@@ -281,7 +281,8 @@ export default defineComponent({
         }
 
         @screen lg {
-          @apply tw-w-[86px];
+          @apply tw-min-w-[86px];
+          @apply tw-w-fit;
         }
       }
 
@@ -293,7 +294,8 @@ export default defineComponent({
         }
 
         @screen lg {
-          @apply tw-w-[86px];
+          @apply tw-min-w-[86px];
+          @apply tw-w-fit;
         }
       }
     }
