@@ -90,6 +90,7 @@ import {
 } from '@nuxtjs/composition-api'
 import { useLogger } from '~/composables/useLogger'
 import { useToast } from '~/composables/useToast'
+import { useUserStore } from '~/stores/user'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
 import calculationList from '~/apollo/queries/vacuumCalculator/calculationList.gql'
 import deleteCalculation from '~/apollo/mutations/vacuumCalculator/deleteCalculation.gql'
@@ -123,7 +124,12 @@ export default defineComponent({
     const deselectAll = ref(false)
     const isLoading = ref(false)
 
-    const fetchCalculations = async () => {
+    const refreshAuthLogic = async () => {
+      const userStore = useUserStore()
+      await userStore.forceTokenRefreshAndUpdate()
+    }
+
+    const fetchCalculations = async (retry = true) => {
       setCurrentPage()
       try {
         isLoading.value = true
@@ -139,9 +145,11 @@ export default defineComponent({
         })
         totalItems.value = calculations.value?.data?.calculationList?.total
       } catch (error) {
-        if (error.graphQLErrors[0].httpStatus === 401) {
+        logger.error(error)
+        if (retry) {
           // TODO: add stable graphQL error handling
-          fetchCalculations()
+          await refreshAuthLogic()
+          await fetchCalculations(false)
         }
       } finally {
         isLoading.value = false
@@ -204,7 +212,7 @@ export default defineComponent({
       selectedList.value = selectedItemIds
     }
 
-    const deleteSelectedList = async (item = {}) => {
+    const deleteSelectedList = async (item = {}, retry = true) => {
       try {
         isLoading.value = true
         const result = await vacuumCalculator.mutate({
@@ -228,9 +236,10 @@ export default defineComponent({
         }
       } catch (error) {
         logger.error(error)
-        if (error.graphQLErrors[0].httpStatus === 401) {
+        if (retry) {
           // TODO: add stable graphQL error handling
-          deleteSelectedList()
+          await refreshAuthLogic()
+          await deleteSelectedList(item, false)
         } else {
           toast.error(
             {

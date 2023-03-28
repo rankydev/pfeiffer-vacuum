@@ -1,6 +1,8 @@
 <template>
   <nav role="navigation" aria-label="Pagination Navigation" class="pagination">
-    <span class="pagination__prefix pagination--desktop">Page:</span>
+    <span class="pagination__prefix pagination--desktop"
+      >{{ $t('navigation.pagination.screenreader.page') }}:</span
+    >
     <ul class="pagination__list">
       <li>
         <component
