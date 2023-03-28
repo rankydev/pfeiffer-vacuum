@@ -214,6 +214,10 @@ export default {
 .knowledge-content {
   &__headline {
     @apply tw-mt-12;
+
+    .result-headline__content {
+      @apply tw-flex;
+    }
   }
 
   &__results {
