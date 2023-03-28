@@ -98,15 +98,6 @@ export default defineComponent({
       emit('update', { selected: selected.value, list: item.value })
     }
 
-    const itemUrl = computed(() => {
-      return app.localePath({
-        name: 'shop-my-account-calculation-lists-list',
-        params: {
-          item: item.value.id,
-        },
-      })
-    })
-
     const getShapeType = computed(() => {
       const isTabletOrMore = isTablet.value || isDesktop.value
       return isTabletOrMore ? 'plain' : 'outlined'
@@ -133,7 +124,6 @@ export default defineComponent({
 
     return {
       selected,
-      itemUrl,
       toggleSelected,
       getShapeType,
       isInformationModalOpen,

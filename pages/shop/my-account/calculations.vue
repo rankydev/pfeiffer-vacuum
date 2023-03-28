@@ -124,6 +124,7 @@ export default defineComponent({
     const isLoading = ref(false)
 
     const fetchCalculations = async () => {
+      setCurrentPage()
       try {
         isLoading.value = true
         calculations.value = await vacuumCalculator.query({
@@ -186,14 +187,7 @@ export default defineComponent({
     })
 
     const setCurrentPage = () => {
-      const queryPage = route.value?.query?.currentPage
-
-      if (queryPage && queryPage <= totalPages.value) {
-        currentPage.value = queryPage
-      }
-      if (queryPage && queryPage > totalPages.value) {
-        currentPage.value = totalPages.value - 1
-      }
+      currentPage.value = route.value?.query?.currentPage || 1
     }
 
     watch(route, () => {
@@ -231,6 +225,12 @@ export default defineComponent({
         }
       } catch (error) {
         logger.error(error)
+        toast.error(
+          {
+            description: i18n.t('myaccount.calculations.networkError'),
+          },
+          { timeout: 3000 }
+        )
       } finally {
         isLoading.value = false
       }
