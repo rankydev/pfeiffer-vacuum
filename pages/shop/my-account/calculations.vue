@@ -139,7 +139,10 @@ export default defineComponent({
         })
         totalItems.value = calculations.value?.data?.calculationList?.total
       } catch (error) {
-        logger.error(error)
+        if (error.graphQLErrors[0].httpStatus === 401) {
+          // TODO: add stable graphQL error handling
+          fetchCalculations()
+        }
       } finally {
         isLoading.value = false
       }
@@ -225,12 +228,17 @@ export default defineComponent({
         }
       } catch (error) {
         logger.error(error)
-        toast.error(
-          {
-            description: i18n.t('myaccount.calculations.networkError'),
-          },
-          { timeout: 3000 }
-        )
+        if (error.graphQLErrors[0].httpStatus === 401) {
+          // TODO: add stable graphQL error handling
+          deleteSelectedList()
+        } else {
+          toast.error(
+            {
+              description: i18n.t('myaccount.calculations.networkError'),
+            },
+            { timeout: 3000 }
+          )
+        }
       } finally {
         isLoading.value = false
       }
