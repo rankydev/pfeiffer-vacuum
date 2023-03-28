@@ -10,52 +10,10 @@
       <template #default="{ result: { data, loading } }">
         <div>
           <LoadingSpinner :show="loading" container-min-height>
-            <div v-if="data && data.content">
-              <slot name="header">
-                <nuxt-dynamic
-                  v-for="item in data.content.top"
-                  :key="item._uid"
-                  v-editable="item"
-                  v-bind="item"
-                  :name="item.uiComponent || item.component"
-                />
-
-                <nuxt-dynamic
-                  v-for="item in data.content.header"
-                  :key="item._uid"
-                  v-bind="item"
-                  :name="item.uiComponent || item.component"
-                />
-              </slot>
-
-              <slot name="onPageNavigation">
-                <OnPageNavigation v-bind="(data.content.quicklinks || [])[0]" />
-              </slot>
-
-              <Nuxt class="default-layout__content" />
-
-              <slot name="footer">
-                <ContentWrapper>
-                  <nuxt-dynamic
-                    v-for="item in data.content.bottom"
-                    :key="item._uid"
-                    v-editable="item"
-                    v-bind="item"
-                    :name="item.uiComponent || item.component"
-                  />
-                </ContentWrapper>
-
-                <nuxt-dynamic
-                  v-for="item in data.content.footer"
-                  :key="item._uid"
-                  v-bind="item"
-                  :name="item.uiComponent || item.component"
-                />
-              </slot>
-              <StickyBar v-bind="data.content.stickyBar">
-                <slot name="stickyBar" />
-              </StickyBar>
-            </div>
+            <PageConfiguration
+              v-if="data && data.content"
+              :content="data.content"
+            />
           </LoadingSpinner>
         </div>
       </template>
@@ -65,11 +23,13 @@
 <script>
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
+import PageConfiguration from '~/components/templates/PageConfiguration/PageConfiguration.vue'
 import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 export default defineComponent({
   components: {
     LoadingSpinner,
+    PageConfiguration,
   },
   scrollToTop: true,
   setup() {

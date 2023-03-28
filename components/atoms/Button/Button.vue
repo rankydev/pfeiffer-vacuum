@@ -73,6 +73,10 @@ export default defineComponent({
   @apply tw-justify-between;
   @apply tw-text-left;
 
+  &__label {
+    word-break: break-word;
+  }
+
   @screen md {
     flex-basis: auto;
   }

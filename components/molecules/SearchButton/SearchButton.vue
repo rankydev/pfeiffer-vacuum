@@ -20,11 +20,11 @@ export default defineComponent({
      */
     title: {
       type: String,
-      default: null,
+      default: '',
     },
     searchType: {
       type: String,
-      default: null,
+      default: '',
     },
   },
   emits: ['click', 'closeModal'],
@@ -40,8 +40,9 @@ export default defineComponent({
       router.push({
         path: localePath('shop-search'),
         query: {
-          searchTerm: e.length ? e : undefined,
-          searchType: props.searchType.value || '',
+          searchTerm: e?.length ? e : undefined,
+          initialSearchTerm: e.length ? e : undefined,
+          ...(props.searchType && { searchType: props.searchType }),
         },
       })
     }

@@ -211,6 +211,7 @@ export default {
       multilink: './resolver/linkResolver',
       asset: './resolver/assetResolver',
     },
+    updateLinkInterval: process.env.STORYBLOK_UPDATE_LINK_INTERVAL,
   },
 
   server: {

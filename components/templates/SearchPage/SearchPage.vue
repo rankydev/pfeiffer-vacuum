@@ -33,7 +33,7 @@
               <div class="search-page__search-input">
                 <SearchInputPage
                   v-if="showDocumentSearchTab"
-                  @searchTermChange="(value) => (searchTerm = value)"
+                  :active-tab="currentTabSelected"
                 />
               </div>
             </ContentWrapper>
@@ -250,7 +250,7 @@ export default defineComponent({
     /**
      * category data
      */
-    const searchTerm = ref(route.value.query.searchTerm || '')
+    const searchTerm = computed(() => route.value.query.searchTerm || '')
     const link = computed(() => categoryStore.parentCategoryPath)
     const count = computed(() => categoryStore.result?.pagination?.totalResults)
     const products = computed(() => categoryStore.result?.products)

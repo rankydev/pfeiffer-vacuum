@@ -17,6 +17,7 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
   const overlayState = ref(false)
   const stateMode = ref('basic')
   const addAllMode = ref(false)
+  const initialLoad = ref(true)
 
   const userStore = useUserStore()
   const { isLoggedIn } = storeToRefs(userStore)
@@ -225,12 +226,17 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     }
   }
 
+  const isInitialLoad = computed(() => {
+    return initialLoad.value
+  })
+
   watch(isLoggedIn, async () => {
     await initialShoppingListsLoad()
   })
 
   onMounted(async () => {
     await initialShoppingListsLoad()
+    initialLoad.value = false
   })
 
   return {
@@ -258,5 +264,6 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
     saveCartToShoppingList,
     isAddAllMode,
     toggleAddAllMode,
+    isInitialLoad,
   }
 })
