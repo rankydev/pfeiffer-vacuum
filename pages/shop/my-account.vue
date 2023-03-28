@@ -39,7 +39,6 @@ import {
   useRoute,
   useContext,
   computed,
-  toRefs,
 } from '@nuxtjs/composition-api'
 import Page from '~/components/templates/Page/Page'
 import MyAccountSidebar from '~/components/organisms/MyAccount/sidebar/MyAccountSidebar'
@@ -63,7 +62,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const context = useContext()
-    const { version } = toRefs(useStoryblokVersion())
+    const { version } = useStoryblokVersion()
 
     const pageStore = usePageStore()
     pageStore.setPageType(CMS_PAGE)

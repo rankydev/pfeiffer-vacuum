@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, toRefs, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, ref, useRoute } from '@nuxtjs/composition-api'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { usePageStore, CMS_PAGE } from '~/stores/page'
 import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
@@ -31,7 +31,7 @@ export default defineComponent({
     const pageStore = usePageStore()
     const route = useRoute()
     const { buildSlugs } = useStoryblokSlugBuilder(context)
-    const { version } = toRefs(useStoryblokVersion())
+    const { version } = useStoryblokVersion()
 
     pageStore.setPageType(CMS_PAGE)
     const currentPath = ref(route.value.path)

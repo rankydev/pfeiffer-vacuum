@@ -164,7 +164,6 @@ import {
   onBeforeMount,
   ref,
   useRouter,
-  toRefs,
 } from '@nuxtjs/composition-api'
 
 import { useCartStore } from '~/stores/cart'
@@ -223,7 +222,7 @@ export default defineComponent({
     const toast = useToast()
     const ociStore = useOciStore()
     const { savelyEncodedHookUrl, returnTarget } = storeToRefs(ociStore)
-    const { version } = toRefs(useStoryblokVersion())
+    const { version } = useStoryblokVersion()
 
     const datasourcesStore = useDatasourcesStore()
     const { personalPrivacyLink } = storeToRefs(datasourcesStore)

@@ -124,7 +124,6 @@ import {
   useRoute,
   useContext,
   ref,
-  toRefs,
 } from '@nuxtjs/composition-api'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { useStoryblokData } from '~/composables/useStoryblokData'
@@ -171,7 +170,7 @@ export default defineComponent({
     const route = useRoute()
     const router = useRouter()
     const context = useContext()
-    const { version } = toRefs(useStoryblokVersion())
+    const { version } = useStoryblokVersion()
 
     /**
      * page type handling

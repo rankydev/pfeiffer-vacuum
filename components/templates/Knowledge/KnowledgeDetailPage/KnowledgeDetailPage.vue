@@ -26,7 +26,6 @@ import {
   useRoute,
   useContext,
   computed,
-  toRefs,
 } from '@nuxtjs/composition-api'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import Page from '~/components/templates/Page/Page'
@@ -52,7 +51,9 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const context = useContext()
-    const { version } = toRefs(useStoryblokVersion())
+    const { version } = useStoryblokVersion()
+
+    console.log('*** version ***', version)
 
     /**
      * build the cms slug

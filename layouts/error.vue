@@ -31,7 +31,7 @@ export default defineComponent({
   setup(props, context) {
     const { app } = useContext()
     const locale = app?.i18n.locale
-    const { version } = toRefs(useStoryblokVersion())
+    const { version } = useStoryblokVersion()
 
     const { error } = toRefs(props)
     const statusCode = error?.value?.statusCode || 404

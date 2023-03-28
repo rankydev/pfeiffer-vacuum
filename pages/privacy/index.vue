@@ -59,7 +59,7 @@ export default defineComponent({
   setup: function () {
     const route = useRoute()
     const context = useContext()
-    const { version } = toRefs(useStoryblokVersion())
+    const { version } = useStoryblokVersion())
 
     /**
      * build the cms slug

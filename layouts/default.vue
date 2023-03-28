@@ -63,7 +63,7 @@
   </Transition>
 </template>
 <script>
-import { defineComponent, toRefs, useContext } from '@nuxtjs/composition-api'
+import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
@@ -79,7 +79,7 @@ export default defineComponent({
     const { $config } = useContext()
     const { CURRENT_REGION_CODE } = $config
     const slug = `/${CURRENT_REGION_CODE}/templates/defaultpageconfiguration`
-    const { version } = toRefs(useStoryblokVersion())
+    const { version } = useStoryblokVersion()
 
     return {
       slug,

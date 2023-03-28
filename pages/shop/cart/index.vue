@@ -145,7 +145,6 @@ import {
   useRoute,
   useContext,
   computed,
-  toRefs,
 } from '@nuxtjs/composition-api'
 import { useCartStore } from '~/stores/cart'
 import { useUserStore } from '~/stores/user'
@@ -187,7 +186,7 @@ export default defineComponent({
     const cartStore = useCartStore()
     const userStore = useUserStore()
     const shoppingListsStore = useShoppingLists()
-    const { version } = toRefs(useStoryblokVersion())
+    const { version } = useStoryblokVersion()
 
     const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText, isOciUser } =
       storeToRefs(userStore)

@@ -82,7 +82,6 @@ import {
   useContext,
   computed,
   ref,
-  toRefs,
 } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import { useProductStore, useVariationmatrixStore } from '~/stores/product'
@@ -117,7 +116,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const context = useContext()
-    const { version } = toRefs(useStoryblokVersion())
+    const { version } = useStoryblokVersion()
 
     /**
      * Set the type of the pages, enabling components
