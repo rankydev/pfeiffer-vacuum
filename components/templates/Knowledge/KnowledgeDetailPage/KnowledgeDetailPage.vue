@@ -53,8 +53,6 @@ export default defineComponent({
     const context = useContext()
     const { version } = useStoryblokVersion()
 
-    console.log('*** version ***', version)
-
     /**
      * build the cms slug
      */
