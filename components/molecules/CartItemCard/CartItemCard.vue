@@ -190,10 +190,10 @@ export default defineComponent({
 
     const noPriceReason = computed(() => {
       const path = 'product.login.loginToSeePrices.'
-      if (!basePrice.value) return i18n.t('product.priceOnRequest')
       if (isLeadUser.value) return i18n.t(path + 'lead')
       if (isOpenUser.value) return i18n.t(path + 'open')
       if (isRejectedUser.value) return i18n.t(path + 'rejected')
+      if (!basePrice.value) return i18n.t('product.priceOnRequest')
       return i18n.t('product.noPriceAvailable')
     })
 
