@@ -40,7 +40,6 @@ import {
   ref,
   useRoute,
   useContext,
-  toRefs,
 } from '@nuxtjs/composition-api'
 import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
@@ -59,7 +58,7 @@ export default defineComponent({
   setup: function () {
     const route = useRoute()
     const context = useContext()
-    const { version } = useStoryblokVersion())
+    const { version } = useStoryblokVersion()
 
     /**
      * build the cms slug
