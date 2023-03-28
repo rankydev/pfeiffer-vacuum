@@ -267,6 +267,7 @@ export default {
     @apply tw-mt-4;
     @apply tw-flex;
     @apply tw-flex-col-reverse;
+    @apply tw-items-center;
 
     @screen md {
       @apply tw-flex-row;
@@ -279,17 +280,6 @@ export default {
 
       @screen md {
         @apply tw-mt-0;
-      }
-    }
-
-    &--pagination {
-      .pagination__icon {
-        @apply tw-h-12;
-        @apply tw-w-12;
-      }
-
-      .pagination--mobile {
-        @apply tw-h-12;
       }
     }
   }
