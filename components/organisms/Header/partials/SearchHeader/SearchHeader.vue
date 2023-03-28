@@ -38,6 +38,7 @@
       </div>
     </GenericModal>
     <SearchInput
+      ref="searchInputHeader"
       class="search-header__field"
       @focus="toggleSuggestionsOnFocus"
       @submit="searchInputSubmit"
@@ -93,6 +94,7 @@ export default defineComponent({
     const isOpen = ref(false)
     const isFocused = ref(true)
     const suggestionHover = ref(true)
+    const searchInputHeader = ref(null)
 
     const { currentSuggestions } = storeToRefs(categoryStore)
     const { blurSuggestions } = categoryStore
@@ -114,6 +116,7 @@ export default defineComponent({
 
     const closeSearchfield = () => {
       blurSuggestions(false)
+      searchInputHeader.value?.clearSearchTerm()
       isOpen.value = false
     }
 
@@ -132,6 +135,7 @@ export default defineComponent({
       isFocused,
       currentSuggestions,
       suggestionHover,
+      searchInputHeader,
 
       toggleSearchfield,
       closeSearchfield,
