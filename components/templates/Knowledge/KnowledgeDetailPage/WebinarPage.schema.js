@@ -1,13 +1,21 @@
 import Seo from '~/components/templates/Page/PageSeo.schema.partial.js'
 import Social from '~/components/templates/Page/PageSocial.schema.partial.js'
-import Page from '~/components/templates/Page/Page.schema.js'
 import Template from '~/components/templates/Knowledge/KnowledgeDetailPage/KnowledgeDetailPageTemplate.schema.partial'
 
 export default {
   name: 'webinarKnowledgeDocument',
   display_name: 'Webinar',
   schema: {
-    title: Page.schema.title,
+    title: {
+      type: 'text',
+      translatable: true,
+      max_length: '255',
+      required: true,
+      description: 'Webinar Title',
+      display_name: 'Title',
+      default_value: '',
+      pos: 0,
+    },
     image: {
       type: 'asset',
       pos: 1,
