@@ -48,6 +48,8 @@ metadataTest:
       value: "${STORYBLOK_RESOLVE_ASSETS}"
     - key: STORYBLOK_CONTENT_TYPES
       value: "${STORYBLOK_CONTENT_TYPES}"
+    - key: STORYBLOK_UPDATE_LINK_INTERVAL
+      value: "${STORYBLOK_UPDATE_LINK_INTERVAL}"
     - key: CI_COMMIT_SHORT_SHA
       value: "${CI_COMMIT_SHORT_SHA}"
     - key: CI_COMMIT_REF_NAME
