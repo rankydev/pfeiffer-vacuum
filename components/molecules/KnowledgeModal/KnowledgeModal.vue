@@ -76,7 +76,7 @@ export default {
     },
   },
   emits: ['closeModal'],
-  setup() {
+  setup(props, { emit }) {
     const { app } = useContext()
     const userStore = useUserStore()
     const v = useVuelidate()
@@ -105,6 +105,7 @@ export default {
 
       if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
         await userStore.register(requestData)
+        emit('closeModal')
       } else {
         toast.warning({
           description: i18n.t('form.validationErrorMessages.warning'),
