@@ -43,7 +43,7 @@
         />
       </div>
       <div
-        v-if="!shoppingLists.length && isBasicMode"
+        v-if="!shoppingLists.length && isBasicMode && !isInitialLoad"
         class="shopping-list-overlay__content-empty"
       >
         <Icon
@@ -113,6 +113,7 @@ import { useShoppingLists } from '~/stores/shoppinglists'
 import Button from '~/components/atoms/Button/Button.vue'
 import PvInput from '~/components/atoms/FormComponents/PvInput/PvInput.vue'
 import PvTextArea from '~/components/atoms/FormComponents/PvTextArea/PvTextArea.vue'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 import { storeToRefs } from 'pinia'
 
@@ -123,6 +124,7 @@ export default defineComponent({
     PvInput,
     GenericSidebar,
     Button,
+    LoadingSpinner,
   },
   setup() {
     const { i18n } = useContext()

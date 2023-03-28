@@ -20,7 +20,7 @@ export const useShoppingListsApi = () => {
         : []
     } catch (error) {
       logger.error('Error when fetching shopping lists. Returning empty list.')
-      return []
+      return null
     }
   }
 

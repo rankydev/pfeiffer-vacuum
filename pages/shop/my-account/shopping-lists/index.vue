@@ -37,7 +37,10 @@
         />
       </div>
     </div>
-    <div v-if="isShoppingListEmpty" class="shopping-list-overview-page__empty">
+    <div
+      v-if="isShoppingListEmpty && !isInitialLoad"
+      class="shopping-list-overview-page__empty"
+    >
       <Icon
         class="shopping-list-overview-page__empty--icon"
         icon="assignment"
@@ -56,20 +59,22 @@
         @click="createDeleteLists"
       />
     </div>
-    <ShoppingListTable
-      v-if="!isShoppingListEmpty"
-      class="shopping-list-overview-page__table"
-      :lists="shoppingListsByPage"
-      :select-mode="isSelectMode"
-      @delete="deleteShoppingList"
-      @update="updateSelectedLists"
-      @details="details"
-    />
-    <Pagination
-      v-if="!isShoppingListEmpty"
-      class="shopping-list-overview-page__pagination"
-      :total-pages="totalPages"
-    />
+    <LoadingSpinner :show="isInitialLoad">
+      <ShoppingListTable
+        v-if="!isShoppingListEmpty"
+        class="shopping-list-overview-page__table"
+        :lists="shoppingListsByPage"
+        :select-mode="isSelectMode"
+        @delete="deleteShoppingList"
+        @update="updateSelectedLists"
+        @details="details"
+      />
+      <Pagination
+        v-if="!isShoppingListEmpty"
+        class="shopping-list-overview-page__pagination"
+        :total-pages="totalPages"
+      />
+    </LoadingSpinner>
     <Button
       shape="plain"
       variant="secondary"
@@ -101,10 +106,18 @@ import { storeToRefs } from 'pinia'
 import Pagination from '~/components/molecules/Pagination/Pagination.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline.vue'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 
 export default defineComponent({
   name: 'ShoppingListOverviewPage',
-  components: { Button, ShoppingListTable, Pagination, Icon, ResultHeadline },
+  components: {
+    Button,
+    ShoppingListTable,
+    Pagination,
+    Icon,
+    ResultHeadline,
+    LoadingSpinner,
+  },
   emits: ['details'],
   setup(props, { emit }) {
     const { app, i18n } = useContext()
@@ -113,7 +126,7 @@ export default defineComponent({
     const { isMobile } = app.$breakpoints
     const isSelectMode = ref(false)
     const shoppingListsStore = useShoppingLists()
-    const { shoppingLists } = storeToRefs(shoppingListsStore)
+    const { shoppingLists, isInitialLoad } = storeToRefs(shoppingListsStore)
     const selectedList = ref([])
     const currentPage = ref(1)
     const ITEMS_PER_PAGE = 7
@@ -226,6 +239,7 @@ export default defineComponent({
       totalPages,
       shoppingListsByPage,
       details,
+      isInitialLoad,
     }
   },
 })

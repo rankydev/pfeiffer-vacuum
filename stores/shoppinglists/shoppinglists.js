@@ -39,12 +39,14 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
 
   const initialShoppingListsLoad = async () => {
     if (!isLoggedIn.value) {
-      return
+      return true
     }
     const shoppingLists = await shoppingListsApi.getShoppingLists()
-    if (shoppingLists && shoppingLists.length > 0) {
+    if (shoppingLists) {
       currentShoppingLists.value = shoppingLists
+      return true
     }
+    return false
   }
 
   const createNewList = async (name, description) => {
@@ -236,6 +238,7 @@ export const useShoppingLists = defineStore('shoppinglists', () => {
 
   onMounted(async () => {
     await initialShoppingListsLoad()
+
     initialLoad.value = false
   })
 
