@@ -74,7 +74,8 @@ export default defineComponent({
   @apply tw-text-left;
 
   &__label {
-    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   @screen md {
