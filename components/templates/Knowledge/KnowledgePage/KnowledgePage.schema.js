@@ -1,12 +1,16 @@
 import Seo from '~/components/templates/Page/PageSeo.schema.partial.js'
 import Social from '~/components/templates/Page/PageSocial.schema.partial.js'
-import Page from '~/components/templates/Page/Page.schema.js'
 
 export default {
   name: 'KnowledgePage',
   display_name: 'Knowledge Page',
   schema: {
-    title: Page.schema.title,
+    title: {
+      type: 'text',
+      required: true,
+      max_length: '255',
+      translatable: true,
+    },
     stage: {
       type: 'bloks',
       display_name: 'Stage',

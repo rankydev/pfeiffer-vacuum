@@ -4,6 +4,7 @@
     :slug="slugs.slug"
     :fallback-slug="slugs.fallbackSlug"
     :language="slugs.language"
+    :options="{ version }"
   >
     <template #default="{ result: { data, loading } }">
       <LoadingSpinner :show="loading" container-min-height>
@@ -162,6 +163,7 @@ import PromotionLabel from '~/components/atoms/PromotionLabel/PromotionLabel'
 import GlobalMessage from '~/components/organisms/GlobalMessage/GlobalMessage'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import { useShoppingLists } from '~/stores/shoppinglists'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 export default defineComponent({
   name: 'Cart',
@@ -184,6 +186,7 @@ export default defineComponent({
     const cartStore = useCartStore()
     const userStore = useUserStore()
     const shoppingListsStore = useShoppingLists()
+    const { version } = useStoryblokVersion()
 
     const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText, isOciUser } =
       storeToRefs(userStore)
@@ -224,6 +227,7 @@ export default defineComponent({
       checkoutButtonDisabled,
       userStatusTypeForInfoText,
       handleCheckoutClick: cartStore.handleCheckoutClick,
+      version,
       saveCartToList,
     }
   },

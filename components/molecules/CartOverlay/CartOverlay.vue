@@ -206,6 +206,11 @@ export default defineComponent({
       closeOverlay()
     }
 
+    const handleCheckoutClick = () => {
+      cartStore.handleCheckoutClick()
+      closeOverlay()
+    }
+
     watch(currentCart, (newValue, oldValue) => {
       if (newValue?.totalUnitCount > oldValue?.totalUnitCount) {
         showInfo.value = true
@@ -234,7 +239,7 @@ export default defineComponent({
       userStatusTypeForInfoText,
       showInfo,
       isAddedToCart,
-      handleCheckoutClick: cartStore.handleCheckoutClick,
+      handleCheckoutClick,
       isCartOverlayOpen,
     }
   },

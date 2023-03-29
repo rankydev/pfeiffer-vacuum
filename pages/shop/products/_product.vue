@@ -4,6 +4,7 @@
     :slug="slug"
     :fallback-slug="fallbackSlug"
     :language="language"
+    :options="{ version }"
   >
     <template #default="{ result: { data, loading } }">
       <LoadingSpinner :show="loading || isLoadingProduct" container-min-height>
@@ -15,6 +16,7 @@
                   {{ (productStore.product || {}).name }}
                 </h1>
                 <Button
+                  class="product-page__headline-wrapper--btn-desktop"
                   :label="$t('cart.getProductHelp')"
                   :href="localePath('/contact')"
                   variant="secondary"
@@ -41,6 +43,15 @@
                 >
                   <VariantSelection />
                 </div>
+
+                <Button
+                  class="product-page__headline-wrapper--btn-mobile"
+                  :label="$t('cart.getProductHelp')"
+                  :href="localePath('/contact')"
+                  variant="secondary"
+                  shape="outlined"
+                  icon="help"
+                />
               </div>
 
               <div
@@ -87,6 +98,7 @@ import { useProductStore, useVariationmatrixStore } from '~/stores/product'
 import { useUserStore } from '~/stores/user'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Button from '~/components/atoms/Button/Button'
@@ -114,6 +126,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const context = useContext()
+    const { version } = useStoryblokVersion()
 
     /**
      * Set the type of the pages, enabling components
@@ -210,6 +223,7 @@ export default defineComponent({
       productReferencesRecommendedAccessories,
       hasError,
       isLoadingProduct,
+      version,
     }
   },
 })
@@ -230,8 +244,30 @@ export default defineComponent({
 
   &__headline-wrapper {
     @apply tw-flex;
+    @apply tw-flex-col;
     @apply tw-w-full;
-    @apply tw-justify-between tw-items-center;
+
+    @screen md {
+      @apply tw-flex-row;
+      @apply tw-justify-between tw-items-center;
+    }
+
+    &--btn-desktop {
+      @apply tw-hidden;
+
+      @screen md {
+        @apply tw-flex;
+        @apply tw-ml-4;
+      }
+    }
+
+    &--btn-mobile {
+      @apply tw-mt-4;
+
+      @screen md {
+        @apply tw-hidden;
+      }
+    }
   }
 
   &__headline {

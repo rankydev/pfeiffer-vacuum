@@ -36,5 +36,6 @@
   "authors": "Authors",
   "speaker": "Speakers",
   "details": "Details",
-  "filter": "Filter"
+  "filter": "Filter",
+  "backToOverview": "Back to overview"
 }

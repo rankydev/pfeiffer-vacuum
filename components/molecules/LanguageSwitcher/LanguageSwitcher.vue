@@ -32,14 +32,10 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  useRoute,
-  computed,
-  ref,
-} from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import InternalBtnWrapper from '~/components/molecules/InternalBtnWrapper/InternalBtnWrapper'
 import { onClickOutside } from '@vueuse/core'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
@@ -47,11 +43,7 @@ export default defineComponent({
     InternalBtnWrapper,
   },
   setup(_, { refs }) {
-    const route = useRoute()
-
-    const isStoryblokPreview = computed(() => {
-      return route.value.query._storyblok
-    })
+    const { isStoryblokPreview } = useStoryblokVersion()
 
     let stopFunction = null
     const isActive = ref(false)

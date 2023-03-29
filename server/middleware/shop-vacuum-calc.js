@@ -13,7 +13,7 @@ const regionCodes = nuxtConfig.publicRuntimeConfig.REGION_CODES
 const regionsForRegex = regionCodes.replaceAll(',', '|')
 
 export default createProxyMiddleware({
-  target: nuxtConfig.privateRuntimeConfig.VACUUM_CALCULATOR_BASE_URL,
+  target: nuxtConfig.publicRuntimeConfig.VACUUM_CALCULATOR_BASE_URL,
   changeOrigin: true,
   followRedirects: true,
   agent,

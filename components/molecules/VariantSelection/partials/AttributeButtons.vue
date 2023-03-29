@@ -5,6 +5,7 @@
       'attribute-buttons--three-cols': items.length > 4 || items.length === 3,
       'attribute-buttons--one-col': items.length === 1,
     }"
+    v-bind="lang"
   >
     <Button
       v-for="item in items"
@@ -28,9 +29,9 @@
   </div>
 </template>
 <script>
-import { defineComponent } from '@nuxtjs/composition-api'
-import Button from '~/components/atoms/Button/Button'
+import { defineComponent, computed, useContext } from '@nuxtjs/composition-api'
 import { useVariationmatrixStore } from '~/stores/product'
+import Button from '~/components/atoms/Button/Button'
 
 export default defineComponent({
   components: {
@@ -48,6 +49,7 @@ export default defineComponent({
   },
   emits: ['selected'],
   setup(props, { emit }) {
+    const { app } = useContext()
     const variationmatrixStore = useVariationmatrixStore()
 
     const itemClicked = async (item) => {
@@ -63,7 +65,16 @@ export default defineComponent({
     const isItemPreselected = (item) =>
       item.automaticallySelected && !item.selected
 
-    return { itemClicked, isItemPreselected }
+    const lang = computed(() => app.i18n?.locale || 'en')
+
+    return {
+      // Getters
+      lang,
+
+      // Actions
+      itemClicked,
+      isItemPreselected,
+    }
   },
 })
 </script>

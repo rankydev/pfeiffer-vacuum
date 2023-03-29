@@ -5,6 +5,7 @@
       :handle-preview-events="false"
       :slug="slug"
       :language="$i18n.locale"
+      :options="{ version }"
     >
       <template #default="{ result: { data, loading } }">
         <div>
@@ -23,6 +24,7 @@
 import { defineComponent, useContext } from '@nuxtjs/composition-api'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
 import PageConfiguration from '~/components/templates/PageConfiguration/PageConfiguration.vue'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 export default defineComponent({
   components: {
@@ -37,9 +39,11 @@ export default defineComponent({
     const { $config } = useContext()
     const { CURRENT_REGION_CODE } = $config
     const slug = `/${CURRENT_REGION_CODE}/templates/defaultpageconfiguration`
+    const { version } = useStoryblokVersion()
 
     return {
       slug,
+      version,
     }
   },
 })

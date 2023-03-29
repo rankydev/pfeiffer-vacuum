@@ -87,9 +87,9 @@
   "calculations": {
     "date": "날짜",
     "delete": "삭제",
-    "deleteConfirmation": "이 계산을 삭제하시겠습니까?",
     "done": "완료",
     "name": "이름",
+    "networkSuccess": "계산이 삭제되었습니다.",
     "networkError": "문제가 발생했습니다. 나중에 다시 시도하십시오.",
     "new": "새 계산",
     "noCalculations": "어떠한 계산도 아직 만들지 않았습니다!",
@@ -106,7 +106,12 @@
       "chamberEvacuation": "배기"
     },
     "detailPageLink": "세부 정보",
-    "deleteSuccess": "계산이 삭제되었습니다."
+    "deleteSuccess": "계산이 삭제되었습니다.",
+    "confirmationModal": {
+      "headline": "이 계산을 삭제하시겠습니까?",
+      "cancel": "아니요",
+      "confirm": "예"
+    }
   },
   "lastEdited": "마지막으로 수정한 날짜",
   "shoppingList": {
@@ -145,7 +150,7 @@
   "details": "세부 정보",
   "serviceHistory": {
     "serviceRequests": "서비스 요청"
-    },
+  },
   "new": "새로운",
   "newMobile": "새로운 쇼핑 목록",
   "newLists": "새로운 쇼핑 목록",
@@ -164,4 +169,3 @@
   "addAllToCart": "장바구니에 모든 제품 추가",
   "descriptionOptional": "이 설명은 선택 사항입니다."
 }
-

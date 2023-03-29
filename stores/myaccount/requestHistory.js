@@ -11,6 +11,8 @@ export const useRequestHistoryStore = defineStore('requestHistory', () => {
   const requestHistory = ref([])
   const currentOrder = ref({})
 
+  const isLoadingContent = ref(false)
+
   const loadRequestHistory = async (page, size = 5, sortCode) => {
     try {
       const result = await axios.$get(config.ORDER_API, {
@@ -38,26 +40,37 @@ export const useRequestHistoryStore = defineStore('requestHistory', () => {
   }
 
   const loadOrderContent = async (orderGuid) => {
-    try {
-      const order = await axios.$get(config.ORDER_API + '/' + orderGuid, {
+    isLoadingContent.value = true
+
+    await axios
+      .$get(config.ORDER_API + '/' + orderGuid, {
         params: {
           fields: 'FULL',
         },
       })
-      currentOrder.value = order
-    } catch (e) {
-      logger.error(
-        'Error when getting content of order. Returning empty array.',
-        e ? e : ''
-      )
-      currentOrder.value = {}
-    }
+      .then((val) => {
+        currentOrder.value = val
+      })
+      .catch((e) => {
+        logger.error(
+          'Error when getting content of order. Returning empty array.',
+          e ? e : ''
+        )
+        currentOrder.value = {}
+      })
+      .finally(() => {
+        isLoadingContent.value = false
+      })
   }
 
   return {
     // States
     requestHistory,
     currentOrder,
+
+    // Getters
+    isLoadingContent,
+
     // Actions
     loadRequestHistory,
     loadOrderContent,

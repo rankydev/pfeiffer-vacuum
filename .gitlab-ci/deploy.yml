@@ -125,10 +125,10 @@ deploy-main-or-tag-to-uat-manually:
   environment:
     name: uat2
     url: "https://uat2.pvac.diva-e.com"
-  when: manual
+  #when: manual - temporarily set to automatic deployment
   only:
     - tags
-    - main
+    #- main - temporarily set to automatic deployment only tags, sinve main has its own job there.
   tags:
     - pvweb-uat-deployment
 
@@ -140,7 +140,7 @@ deploy-tag-to-prd-manually:
   environment:
     name: prd
     url: "https://prd.pvac.diva-e.com"
-  when: manual
+  #when: manual - temporarily set to automatic deployment
   only:
     - tags
   tags:

@@ -23,6 +23,7 @@
       class="calculation-list-table__item"
       :item="item"
       :select-mode="selectMode"
+      :deselect-all="deselectAll"
       @delete="deleteListItem"
       @update="updateDeleteList"
     />
@@ -44,6 +45,10 @@ export default defineComponent({
       required: true,
     },
     selectMode: {
+      type: Boolean,
+      default: false,
+    },
+    deselectAll: {
       type: Boolean,
       default: false,
     },

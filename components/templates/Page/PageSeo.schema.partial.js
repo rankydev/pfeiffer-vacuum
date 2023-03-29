@@ -13,7 +13,7 @@ export default {
   },
   seoTitle: {
     type: 'text',
-    max_length: '55',
+    max_length: '255',
     description: 'Overrides the title.',
     translatable: true,
   },

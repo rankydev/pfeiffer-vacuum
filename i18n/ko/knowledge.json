@@ -36,5 +36,6 @@
   "authors": "저자",
   "speaker": "발언자",
   "details": "세부",
-  "filter": "필터"
+  "filter": "필터",
+  "backToOverview": "개요로 돌아가기"
 }
