@@ -74,7 +74,7 @@
           <template v-else-if="isLoggedIn">
             <div class="cart-overlay-content__price-info-wrapper">
               <i18n
-                :path="`cart.userStatus.${userStatusType}.priceInfo.text`"
+                :path="`cart.userStatus.${userStatusTypeForInfoText}.priceInfo.text`"
                 class="cart-overlay-content__price-info"
                 tag="div"
               >
@@ -83,7 +83,11 @@
                     :to="localePath('shop-my-account-account-data')"
                     class="tw-text-pv-red"
                   >
-                    {{ $t(`cart.userStatus.${userStatusType}.priceInfo.link`) }}
+                    {{
+                      $t(
+                        `cart.userStatus.${userStatusTypeForInfoText}.priceInfo.link`
+                      )
+                    }}
                   </nuxt-link>
                 </template>
               </i18n>
@@ -161,20 +165,8 @@ export default defineComponent({
     const { currentCart, isCartOverlayOpen } = storeToRefs(cartStore)
     const userStore = useUserStore()
 
-    const {
-      isLoggedIn,
-      isOciUser,
-      isApprovedUser,
-      isLeadUser,
-      isOpenUser,
-      isRejectedUser,
-    } = storeToRefs(userStore)
-
-    const userStatusType = computed(() => {
-      if (isLeadUser.value) return 'lead'
-      if (isOpenUser.value) return 'open'
-      if (isRejectedUser.value) return 'rejected'
-    })
+    const { isLoggedIn, isOciUser, isApprovedUser, userStatusTypeForInfoText } =
+      storeToRefs(userStore)
 
     const showInfo = ref(false)
     const isAddedToCart = ref(false)
@@ -239,7 +231,7 @@ export default defineComponent({
       isLoggedIn,
       isOciUser,
       isApprovedUser,
-      userStatusType,
+      userStatusTypeForInfoText,
       showInfo,
       isAddedToCart,
       handleCheckoutClick: cartStore.handleCheckoutClick,

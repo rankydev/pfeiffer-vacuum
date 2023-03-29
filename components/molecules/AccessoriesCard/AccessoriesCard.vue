@@ -52,7 +52,7 @@
         <div>
           <template v-if="isLoggedIn && !isApprovedUser">
             <i18n
-              :path="`product.userStatus.${userStatusType}.priceInfo.text`"
+              :path="`product.userStatus.${userStatusTypeForInfoText}.priceInfo.text`"
               class="accessories-card__login-link"
               tag="div"
             >
@@ -63,7 +63,9 @@
                   class="login-modal-link"
                 >
                   {{
-                    $t(`product.userStatus.${userStatusType}.priceInfo.link`)
+                    $t(
+                      `product.userStatus.${userStatusTypeForInfoText}.priceInfo.link`
+                    )
                   }}
                 </nuxt-link>
               </template>
@@ -149,14 +151,8 @@ export default defineComponent({
     const { imageUrl } = useImageHelper()
 
     const quantity = ref(1)
-    const {
-      isLoggedIn,
-      isApprovedUser,
-      isLeadUser,
-      isOpenUser,
-      isRejectedUser,
-      isOciUser,
-    } = storeToRefs(userStore)
+    const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText, isOciUser } =
+      storeToRefs(userStore)
     const { addProductToCart } = cartStore
 
     const hasAddToListButton = computed(() => {
@@ -172,11 +168,6 @@ export default defineComponent({
       if (product.value.price && product.value.price.value)
         return product.value?.price?.formattedValue || ''
       return i18n.t('product.priceOnRequest')
-    })
-    const userStatusType = computed(() => {
-      if (isLeadUser.value) return 'lead'
-      if (isOpenUser.value) return 'open'
-      if (isRejectedUser.value) return 'rejected'
     })
 
     const productName = computed(() => {
@@ -211,7 +202,7 @@ export default defineComponent({
       productName,
       productPrice,
       productUrl,
-      userStatusType,
+      userStatusTypeForInfoText,
       addToCart,
       addToList,
       isLoggedIn,
