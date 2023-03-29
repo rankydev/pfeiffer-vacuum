@@ -4,6 +4,7 @@
     :slug="slugs.slug"
     :fallback-slug="slugs.fallbackSlug"
     :language="slugs.language"
+    :options="{ version }"
   >
     <template #default="{ result: { data, loading } }">
       <LoadingSpinner :show="loading" container-min-height>
@@ -41,6 +42,7 @@ import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import useTemplating from '~/composables/useTemplating'
 import KnowledgeContent from '~/components/molecules/KnowledgeContent/KnowledgeContent'
 import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner.vue'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 export default defineComponent({
   name: 'KnowledgePage',
@@ -61,6 +63,7 @@ export default defineComponent({
     const route = useRoute()
     const context = useContext()
     const { i18n } = context
+    const { version } = useStoryblokVersion()
 
     /**
      * build the cms slug
@@ -90,6 +93,7 @@ export default defineComponent({
       slugs,
       stage,
       enrichedStage,
+      version,
     }
   },
 })

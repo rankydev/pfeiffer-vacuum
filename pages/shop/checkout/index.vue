@@ -4,6 +4,7 @@
     :slug="slugs.slug"
     :fallback-slug="slugs.fallbackSlug"
     :language="slugs.language"
+    :options="{ version }"
   >
     <template #default="{ result: { data, loading: storyblokLoading } }">
       <LoadingSpinner :show="storyblokLoading" container-min-height>
@@ -176,6 +177,7 @@ import { storeToRefs } from 'pinia'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
 import { useLogger } from '~/composables/useLogger'
 import { useToast } from '~/composables/useToast'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 import Page from '~/components/templates/Page/Page'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
@@ -220,6 +222,7 @@ export default defineComponent({
     const toast = useToast()
     const ociStore = useOciStore()
     const { savelyEncodedHookUrl, returnTarget } = storeToRefs(ociStore)
+    const { version } = useStoryblokVersion()
 
     const datasourcesStore = useDatasourcesStore()
     const { personalPrivacyLink } = storeToRefs(datasourcesStore)
@@ -407,6 +410,7 @@ export default defineComponent({
       saveCommentOnRequest,
       saveCustomerReference,
 
+      version,
       loading,
       cartLoading,
       cartEntries,

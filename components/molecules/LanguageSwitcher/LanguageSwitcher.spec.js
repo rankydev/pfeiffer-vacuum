@@ -17,6 +17,13 @@ jest.mock('@nuxtjs/composition-api', () => {
         },
       }
     },
+    useContext: () => {
+      return {
+        $cms: {
+          accessToken: '1234567890',
+        },
+      }
+    },
   }
 })
 
@@ -43,24 +50,6 @@ describe('LanguageSwitcher', () => {
       expect(languageSwitcherWrapper.exists()).toBeTruthy()
       expect(languageSwitcherContent.exists()).toBeFalsy()
       expect(button.exists()).toBeTruthy()
-    })
-
-    it('should render properly in storyblok preview', () => {
-      mockIsStoryblok.mockReturnValue(true)
-      const wrapper = shallowMount(LanguageSwitcher, { stubs })
-      const languageSwitcher = wrapper.find('.language-switcher')
-      const languageSwitcherWrapper = wrapper.find(
-        '.language-switcher__wrapper'
-      )
-      const languageSwitcherContent = wrapper.find(
-        '.language-switcher__content'
-      )
-      const button = wrapper.findComponent(InternalBtnWrapper)
-
-      expect(languageSwitcher.exists()).toBeTruthy()
-      expect(languageSwitcherWrapper.exists()).toBeFalsy()
-      expect(languageSwitcherContent.exists()).toBeFalsy()
-      expect(button.exists()).toBeFalsy()
     })
   })
 

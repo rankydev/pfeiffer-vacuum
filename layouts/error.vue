@@ -5,6 +5,7 @@
       :slug="slug"
       :fallback-slug="fallbackSlug"
       :language="language"
+      :options="{ version }"
     >
       <template #default="{ result: { data } }">
         <CmsRootComponent v-if="data" v-bind="data" />
@@ -16,6 +17,7 @@
 <script>
 import { defineComponent, toRefs, useContext } from '@nuxtjs/composition-api'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 export default defineComponent({
   layout: 'default',
@@ -29,6 +31,7 @@ export default defineComponent({
   setup(props, context) {
     const { app } = useContext()
     const locale = app?.i18n.locale
+    const { version } = useStoryblokVersion()
 
     const { error } = toRefs(props)
     const statusCode = error?.value?.statusCode || 404
@@ -43,6 +46,7 @@ export default defineComponent({
       slug,
       fallbackSlug,
       language,
+      version,
     }
   },
 })

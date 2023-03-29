@@ -4,6 +4,7 @@
     :slug="slug"
     :fallback-slug="fallbackSlug"
     :language="language"
+    :options="{ version }"
   >
     <template #default="{ result: { data, loading } }">
       <LoadingSpinner :show="loading || isLoadingProduct" container-min-height>
@@ -97,6 +98,7 @@ import { useProductStore, useVariationmatrixStore } from '~/stores/product'
 import { useUserStore } from '~/stores/user'
 import { usePageStore, PRODUCT_PAGE } from '~/stores/page'
 import useStoryblokSlugBuilder from '~/composables/useStoryblokSlugBuilder'
+import { useStoryblokVersion } from '~/composables/useStoryblokVersion'
 
 import ResponsiveImage from '~/components/atoms/ResponsiveImage/ResponsiveImage'
 import Button from '~/components/atoms/Button/Button'
@@ -124,6 +126,7 @@ export default defineComponent({
   setup() {
     const route = useRoute()
     const context = useContext()
+    const { version } = useStoryblokVersion()
 
     /**
      * Set the type of the pages, enabling components
@@ -220,6 +223,7 @@ export default defineComponent({
       productReferencesRecommendedAccessories,
       hasError,
       isLoadingProduct,
+      version,
     }
   },
 })
