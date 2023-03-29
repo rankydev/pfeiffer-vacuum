@@ -15,6 +15,7 @@
                   {{ (productStore.product || {}).name }}
                 </h1>
                 <Button
+                  class="product-page__headline-wrapper--btn-desktop"
                   :label="$t('cart.getProductHelp')"
                   :href="localePath('/contact')"
                   variant="secondary"
@@ -41,6 +42,15 @@
                 >
                   <VariantSelection />
                 </div>
+
+                <Button
+                  class="product-page__headline-wrapper--btn-mobile"
+                  :label="$t('cart.getProductHelp')"
+                  :href="localePath('/contact')"
+                  variant="secondary"
+                  shape="outlined"
+                  icon="help"
+                />
               </div>
 
               <div
@@ -230,8 +240,30 @@ export default defineComponent({
 
   &__headline-wrapper {
     @apply tw-flex;
+    @apply tw-flex-col;
     @apply tw-w-full;
-    @apply tw-justify-between tw-items-center;
+
+    @screen md {
+      @apply tw-flex-row;
+      @apply tw-justify-between tw-items-center;
+    }
+
+    &--btn-desktop {
+      @apply tw-hidden;
+
+      @screen md {
+        @apply tw-flex;
+        @apply tw-ml-4;
+      }
+    }
+
+    &--btn-mobile {
+      @apply tw-mt-4;
+
+      @screen md {
+        @apply tw-hidden;
+      }
+    }
   }
 
   &__headline {
