@@ -37,5 +37,6 @@
   "speaker": "Sprecher",
   "details": "Details",
   "clock" : "Uhr",
-  "filter": "Filter"
+  "filter": "Filter",
+  "backToOverview": "Zurück zur Übersicht"
 }
