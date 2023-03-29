@@ -4,72 +4,79 @@
       :headline="headline"
       :link="localePath('shop-my-account-request-history')"
     />
-    <span>{{ $t('myaccount.requestHistory.table.requestDate') }}</span>
-    <span class="request-history-detail-page__date">{{
-      $d(orderDate, 'date')
-    }}</span>
-    <div>
-      <div class="request-history-detail-page-table-header">
-        <div class="request-history-detail-page-table-header__quantity">
-          <span>{{ $t('myaccount.requestHistory.table.quantity') }}</span>
+    <LoadingSpinner :show="isLoadingContent">
+      <template v-if="Object.keys(currentOrder).length">
+        <span>{{ $t('myaccount.requestHistory.table.requestDate') }}</span>
+        <span class="request-history-detail-page__date">{{
+          $d(orderDate, 'date')
+        }}</span>
+        <div>
+          <div class="request-history-detail-page-table-header">
+            <div class="request-history-detail-page-table-header__quantity">
+              <span>{{ $t('myaccount.requestHistory.table.quantity') }}</span>
+            </div>
+            <span class="request-history-detail-page-table-header__price">
+              {{ $t('myaccount.requestHistory.table.pricePerUnit') }}
+            </span>
+            <span class="request-history-detail-page-table-header__totalPrice">
+              {{ $t('myaccount.requestHistory.table.totalPrice') }}
+            </span>
+          </div>
+          <div
+            v-for="(product, index) in productList"
+            :key="product.entryNumber"
+          >
+            <ShoppingListItemCard
+              v-bind="product"
+              :promotion="getProductPromotions(index)"
+              :price-total="product.totalPrice"
+              :is-read-only="true"
+              variant="requestHistory"
+              @addToShoppingList="addToShoppingList"
+            />
+          </div>
         </div>
-        <span class="request-history-detail-page-table-header__price">
-          {{ $t('myaccount.requestHistory.table.pricePerUnit') }}
-        </span>
-        <span class="request-history-detail-page-table-header__totalPrice">
-          {{ $t('myaccount.requestHistory.table.totalPrice') }}
-        </span>
-      </div>
-      <div v-for="(product, index) in productList" :key="product.entryNumber">
-        <ShoppingListItemCard
-          v-bind="product"
-          :promotion="getProductPromotions(index)"
-          :price-total="product.totalPrice"
-          :is-read-only="true"
-          variant="requestHistory"
-          @addToShoppingList="addToShoppingList"
-        />
-      </div>
-    </div>
-    <div class="request-history-detail-page-total">
-      <div class="request-history-detail-page-total__promotion-wrapper">
-        <PromotionLabel
-          v-for="promotion in promotions"
-          :key="promotion.promotion.code"
-          class="request-history-detail-page-total__promotion request-history-detail-page-total__promotion--desktop"
-          :subline="promotion.description"
-        />
-        <Button
-          class="request-history-detail-page-total__back-btn"
-          :href="localePath('shop-my-account-request-history')"
-          :label="$t('myaccount.addressDataAddPageLinkBtn')"
-          variant="secondary"
-          shape="plain"
-          icon="arrow_back"
-          :prepend-icon="true"
-        />
-      </div>
-      <div class="request-history-detail-page-total__wrapper-total-net">
-        <div class="request-history-detail-page-total__total-net">
-          <PromotionLabel
-            v-for="promotion in promotions"
-            :key="promotion.promotion.code"
-            class="request-history-detail-page-total__promotion--mobile"
-            :subline="promotion.description"
-          />
-          <TotalNetInformation :current-cart="currentOrder" />
+        <div class="request-history-detail-page-total">
+          <div class="request-history-detail-page-total__promotion-wrapper">
+            <PromotionLabel
+              v-for="promotion in promotions"
+              :key="promotion.promotion.code"
+              class="request-history-detail-page-total__promotion request-history-detail-page-total__promotion--desktop"
+              :subline="promotion.description"
+            />
+            <Button
+              class="request-history-detail-page-total__back-btn"
+              :href="localePath('shop-my-account-request-history')"
+              :label="$t('myaccount.addressDataAddPageLinkBtn')"
+              variant="secondary"
+              shape="plain"
+              icon="arrow_back"
+              :prepend-icon="true"
+            />
+          </div>
+          <div class="request-history-detail-page-total__wrapper-total-net">
+            <div class="request-history-detail-page-total__total-net">
+              <PromotionLabel
+                v-for="promotion in promotions"
+                :key="promotion.promotion.code"
+                class="request-history-detail-page-total__promotion--mobile"
+                :subline="promotion.description"
+              />
+              <TotalNetInformation :current-cart="currentOrder" />
+            </div>
+            <!-- TODO: implement Button in PVWEB-981 here  -->
+            <!-- <div class="request-history-detail-page-total__total-net-btn">
+              <Button
+                :label="$t('myaccount.requestHistory.addToCartBtn')"
+                variant="primary"
+                icon="mail_outline"
+                @click="addToCart"
+              />
+            </div> -->
+          </div>
         </div>
-        <!-- TODO: implement Button in PVWEB-981 here  -->
-        <!-- <div class="request-history-detail-page-total__total-net-btn">
-          <Button
-            :label="$t('myaccount.requestHistory.addToCartBtn')"
-            variant="primary"
-            icon="mail_outline"
-            @click="addToCart"
-          />
-        </div> -->
-      </div>
-    </div>
+      </template>
+    </LoadingSpinner>
   </div>
 </template>
 
@@ -81,17 +88,20 @@ import {
   ref,
   computed,
   onMounted,
+  onUnmounted,
 } from '@nuxtjs/composition-api'
 import { useRequestHistoryStore } from '~/stores/myaccount'
 import { storeToRefs } from 'pinia'
 import ShoppingListItemCard from '~/components/molecules/ShoppingListItemCard/ShoppingListItemCard'
 import TotalNetInformation from '~/components/molecules/TotalNetInformation/TotalNetInformation.vue'
+import LoadingSpinner from '~/components/atoms/LoadingSpinner/LoadingSpinner'
 import { useShoppingLists } from '@/stores/shoppinglists'
 
 export default defineComponent({
   components: {
     ShoppingListItemCard,
     TotalNetInformation,
+    LoadingSpinner,
   },
   setup() {
     const { i18n } = useContext()
@@ -101,7 +111,7 @@ export default defineComponent({
 
     const requestHistoryStore = useRequestHistoryStore()
     const { loadOrderContent } = requestHistoryStore
-    const { currentOrder } = storeToRefs(requestHistoryStore)
+    const { currentOrder, isLoadingContent } = storeToRefs(requestHistoryStore)
 
     const requestId = ref(route.value.params.request)
 
@@ -112,6 +122,10 @@ export default defineComponent({
 
     onMounted(async () => {
       await loadOrderContent(requestId.value)
+    })
+
+    onUnmounted(() => {
+      currentOrder.value = {}
     })
 
     const productList = computed(() => {
@@ -152,6 +166,7 @@ export default defineComponent({
     }
 
     return {
+      isLoadingContent,
       requestId,
       currentOrder,
       productList,
