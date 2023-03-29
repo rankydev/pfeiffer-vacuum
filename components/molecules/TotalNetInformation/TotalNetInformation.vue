@@ -105,8 +105,7 @@ export default defineComponent({
   @apply tw-py-6;
 
   &__total,
-  &__discount,
-  &__wrapper {
+  &__discount {
     @apply tw-flex tw-items-center;
   }
 
@@ -132,7 +131,7 @@ export default defineComponent({
 
   &__wrapper {
     @apply tw-font-bold;
-    @apply tw-justify-center;
+    @apply tw-text-center;
   }
 
   &__login-link {
