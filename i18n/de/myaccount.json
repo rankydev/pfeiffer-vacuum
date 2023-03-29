@@ -72,9 +72,9 @@
     "headline": "Berechnung",
     "date": "Datum",
     "delete": "Löschen",
-    "deleteConfirmation": "Möchten Sie diese Berechnung wirklich löschen?",
     "done": "Fertig",
     "name": "Name",
+    "networkSuccess": "Berechnung wurde gelöscht.",
     "networkError": "Etwas ist schiefgelaufen. Bitte versuche es später erneut.",
     "new": "Neue Berechnung",
     "noCalculations": "Bisher wurden keine Berechnungen durchgeführt!",
@@ -91,7 +91,12 @@
       "chamberEvacuation": "Evakuierung"
     },
     "detailPageLink": "Details",
-    "deleteSuccess": "Berechnung wurde gelöscht"
+    "deleteSuccess": "Berechnung wurde gelöscht",
+    "confirmationModal": {
+      "headline": "Möchten Sie diese Berechnung wirklich löschen?",
+      "cancel": "Nein",
+      "confirm": "Ja"
+    }
   },
   "shoppingList": {
     "new": "Neue Einkaufsliste",

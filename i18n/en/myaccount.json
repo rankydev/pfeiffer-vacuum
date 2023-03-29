@@ -72,9 +72,9 @@
     "headline": "Calculations",
     "date": "Date",
     "delete": "Delete",
-    "deleteConfirmation": "Do you really want to delete this calculation?",
     "done": "Done",
     "name": "Name",
+    "networkSuccess": "Calculation has been deleted.",
     "networkError": "Something went wrong. Please try again later.",
     "new": "New calculation",
     "noCalculations": "You have not created any calculations yet!",
@@ -91,7 +91,12 @@
       "chamberEvacuation": "Evacuation"
     },
     "detailPageLink": "Details",
-    "deleteSuccess": "Calculation was deleted."
+    "deleteSuccess": "Calculation was deleted.",
+    "confirmationModal": {
+      "headline": "Do you really want to delete this calculation?",
+      "cancel": "No",
+      "confirm": "Yes"
+    }
   },
   "shoppingList": {
     "new": "New shopping list",

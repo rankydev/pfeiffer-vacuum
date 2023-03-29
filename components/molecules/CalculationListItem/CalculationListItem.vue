@@ -30,8 +30,9 @@
         variant="secondary"
         gap="narrow"
         :shape="getShapeType"
-        :href="itemUrl"
+        :href="item.calculationResult.link"
         :label="$t('myaccount.calculations.detailPageLink')"
+        target="_blank"
       />
       <Button
         class="calculation-list-item__buttons--delete"
@@ -41,6 +42,17 @@
         @click="toggleInformationModal"
       />
     </div>
+    <InformationModal
+      :is-open="isInformationModalOpen"
+      :headline="$t('myaccount.calculations.confirmationModal.headline')"
+      :cancel-text="$t('myaccount.calculations.confirmationModal.cancel')"
+      :confirm-text="$t('myaccount.calculations.confirmationModal.confirm')"
+      cancel-icon="close"
+      confirm-icon="check"
+      @confirm="acceptDelete"
+      @cancel="toggleInformationModal"
+      @closeModal="toggleInformationModal"
+    />
   </div>
 </template>
 
@@ -50,7 +62,7 @@ import { ref, computed, watch, toRefs } from '@vue/composition-api'
 import Checkbox from '~/components/atoms/FormComponents/Checkbox/Checkbox.vue'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import Button from '~/components/atoms/Button/Button.vue'
-import { useToast } from '~/composables/useToast'
+import InformationModal from '~/components/molecules/InformationModal/InformationModal.vue'
 
 export default defineComponent({
   name: 'CalculationListItem',
@@ -58,6 +70,7 @@ export default defineComponent({
     Checkbox,
     Icon,
     Button,
+    InformationModal,
   },
   props: {
     item: {
@@ -68,11 +81,14 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    deselectAll: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update', 'delete'],
   setup(props, { emit }) {
-    const { app, i18n } = useContext()
-    const toast = useToast()
+    const { app } = useContext()
     const selected = ref(false)
     const isInformationModalOpen = ref(false)
     const { item } = toRefs(props)
@@ -81,15 +97,6 @@ export default defineComponent({
       selected.value = !selected.value
       emit('update', { selected: selected.value, list: item.value })
     }
-
-    const itemUrl = computed(() => {
-      return app.localePath({
-        name: 'shop-my-account-calculation-lists-list',
-        params: {
-          item: item.value.id,
-        },
-      })
-    })
 
     const getShapeType = computed(() => {
       const isTabletOrMore = isTablet.value || isDesktop.value
@@ -102,12 +109,6 @@ export default defineComponent({
 
     const acceptDelete = () => {
       toggleInformationModal()
-      toast.success(
-        {
-          description: i18n.t('myaccount.calculations.deleteSuccess'),
-        },
-        { timeout: 3000 }
-      )
       emit('delete', item.value)
     }
 
@@ -115,11 +116,14 @@ export default defineComponent({
       if (newVal?.selectMode !== oldVal?.selectMode) {
         selected.value = false
       }
+
+      if (newVal.deselectAll) {
+        selected.value = false
+      }
     })
 
     return {
       selected,
-      itemUrl,
       toggleSelected,
       getShapeType,
       isInformationModalOpen,
