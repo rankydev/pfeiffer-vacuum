@@ -50,7 +50,7 @@ cms-sync-uat-space-for-main-and-tags-after-manual-deployment:
     name: uat2
   only:
     - tags
-    - main
+    # - main # temporarily disabled
 
 cms-sync-production-space-after-manual-deploymen:
   extends: .cms-sync
