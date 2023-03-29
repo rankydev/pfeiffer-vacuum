@@ -17,7 +17,12 @@ export default {
     items: {
       type: 'bloks',
       restrict_components: true,
-      component_whitelist: ['Richtext', 'ImageWithDescription', 'Button'],
+      component_whitelist: [
+        'Richtext',
+        'ImageWithDescription',
+        'Button',
+        'ButtonWithPermissionCheck',
+      ],
       display_name: 'Content',
     },
   },

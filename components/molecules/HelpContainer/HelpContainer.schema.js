@@ -22,7 +22,7 @@ export default {
       type: 'bloks',
       maximum: 2,
       restrict_components: true,
-      component_whitelist: ['Button'],
+      component_whitelist: ['Button', 'ButtonWithPermissionCheck'],
     },
     icon: {
       type: 'text',

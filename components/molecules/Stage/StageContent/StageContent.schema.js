@@ -29,7 +29,7 @@ export default {
       type: 'bloks',
       restrict_components: true,
       maximum: 2,
-      component_whitelist: ['Button'],
+      component_whitelist: ['Button', 'ButtonWithPermissionCheck'],
       display_name: 'Buttons',
     },
   },

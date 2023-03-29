@@ -34,7 +34,7 @@ export default {
       type: 'bloks',
       maximum: 1,
       restrict_components: true,
-      component_whitelist: ['Button'],
+      component_whitelist: ['Button', 'ButtonWithPermissionCheck'],
       display_name: 'Button',
       required: true,
       pos: 5,
