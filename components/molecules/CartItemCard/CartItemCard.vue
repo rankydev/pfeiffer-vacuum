@@ -77,12 +77,12 @@
         class="cart-item-card-price-error__link"
       >
         <template #link>
-          <nuxt-link
-            :to="localePath('shop-my-account-account-data')"
+          <span
             class="cart-item-card-price-error__link--red"
+            @click="closeOverlay"
           >
             {{ $t(`cart.userStatus.${userStatusType}.priceInfo.link`) }}
-          </nuxt-link>
+          </span>
         </template>
       </i18n>
       <span v-else class="cart-item-card-price-error__request">
@@ -136,9 +136,11 @@ import {
   ref,
   toRefs,
   useContext,
+  useRouter,
 } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useCartStore } from '~/stores/cart'
 import { useDebounceFn } from '@vueuse/core'
 
 import Button from '~/components/atoms/Button/Button'
@@ -197,7 +199,7 @@ export default defineComponent({
   },
   emits: ['addToShoppingList', 'update', 'delete'],
   setup(props, { emit }) {
-    const { app } = useContext()
+    const { app, localePath } = useContext()
     const userStore = useUserStore()
     const { basePrice, isMiniCart, quantity, product, promotion } =
       toRefs(props)
@@ -210,6 +212,9 @@ export default defineComponent({
       isLoggedIn,
       isOciUser,
     } = storeToRefs(userStore)
+    const cartStore = useCartStore()
+    const { isCartOverlayOpen } = storeToRefs(cartStore)
+    const router = useRouter()
 
     const userStatusType = computed(() => {
       if (isLeadUser.value) return 'lead'
@@ -292,6 +297,13 @@ export default defineComponent({
       updateCartQuantity()
     }
 
+    const closeOverlay = () => {
+      if (isCartOverlayOpen.value) {
+        cartStore.toggleCartOverlay()
+      }
+      router.push(localePath('shop-my-account-account-data'))
+    }
+
     return {
       quantityModel,
       isInactive,
@@ -312,6 +324,7 @@ export default defineComponent({
       getPromotion,
       isOciUser,
       userStatusType,
+      closeOverlay,
     }
   },
 })
@@ -375,6 +388,7 @@ export default defineComponent({
 
       &--red {
         @apply tw-text-pv-red;
+        @apply tw-cursor-pointer;
       }
     }
   }
