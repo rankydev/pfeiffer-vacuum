@@ -62,8 +62,7 @@ export default defineComponent({
     const route = useRoute()
     const userStore = useUserStore()
 
-    const { isApprovedUser, isLeadUser, isOpenUser, isRejectedUser } =
-      storeToRefs(userStore)
+    const { isApprovedUser, userStatusTypeForInfoText } = storeToRefs(userStore)
 
     const requestHistoryStore = useRequestHistoryStore()
     const { loadRequestHistory } = requestHistoryStore
@@ -73,20 +72,9 @@ export default defineComponent({
     onServerPrefetch(loadRequestHistory)
 
     const infoMessage = computed(() => {
-      if (isOpenUser.value) {
-        return i18n.t('myaccount.userStatus.open.functionalityInfo')
-      }
-      if (isLeadUser.value) {
-        return i18n.t('myaccount.userStatus.lead.functionalityInfo')
-      }
-      if (isRejectedUser.value) {
-        return i18n.t('myaccount.userStatus.rejected.functionalityInfo')
-      }
-      // Fallback for any case of not approved user that isn't covert by the cases above
-      if (!isApprovedUser.value) {
-        return i18n.t('myaccount.userStatus.rejected.functionalityInfo')
-      }
-      return null
+      return i18n.t(
+        `myaccount.userStatus.${userStatusTypeForInfoText.value}.functionalityInfo`
+      )
     })
 
     const button = ref({

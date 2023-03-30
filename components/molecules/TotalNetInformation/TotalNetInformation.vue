@@ -24,7 +24,7 @@
 
     <template v-else-if="isLoggedIn">
       <i18n
-        :path="`cart.userStatus.${userStatusType}.priceInfo.text`"
+        :path="`cart.userStatus.${userStatusTypeForInfoText}.priceInfo.text`"
         class="price__wrapper"
         tag="div"
       >
@@ -33,7 +33,9 @@
             :to="localePath('shop-my-account-account-data')"
             class="tw-text-pv-red"
           >
-            {{ $t(`cart.userStatus.${userStatusType}.priceInfo.link`) }}
+            {{
+              $t(`cart.userStatus.${userStatusTypeForInfoText}.priceInfo.link`)
+            }}
           </nuxt-link>
         </template>
       </i18n>
@@ -72,26 +74,15 @@ export default defineComponent({
     )
 
     const userStore = useUserStore()
-    const {
-      isLoggedIn,
-      isApprovedUser,
-      isLeadUser,
-      isOpenUser,
-      isRejectedUser,
-    } = storeToRefs(userStore)
-
-    const userStatusType = computed(() => {
-      if (isLeadUser.value) return 'lead'
-      if (isOpenUser.value) return 'open'
-      if (isRejectedUser.value) return 'rejected'
-    })
+    const { isLoggedIn, isApprovedUser, userStatusTypeForInfoText } =
+      storeToRefs(userStore)
 
     return {
       totalDiscounts,
       hasPromotion,
       isApprovedUser,
       isLoggedIn,
-      userStatusType,
+      userStatusTypeForInfoText,
     }
   },
 })

@@ -5,9 +5,11 @@
       :link="localePath('shop-my-account')"
     />
     <GlobalMessage
-      v-if="!billingAddress && userStatusType"
+      v-if="!billingAddress && userStatusTypeForInfoText"
       :description="
-        $t(`myaccount.userStatus.${userStatusType}.functionalityInfo`)
+        $t(
+          `myaccount.userStatus.${userStatusTypeForInfoText}.functionalityInfo`
+        )
       "
       variant="warning"
       :prevent-icon-change="true"
@@ -72,7 +74,6 @@ import {
   onBeforeMount,
   onServerPrefetch,
   useContext,
-  computed,
 } from '@nuxtjs/composition-api'
 import ResultHeadline from '~/components/molecules/ResultHeadline/ResultHeadline'
 import SectionHeadline from '~/components/molecules/SectionHeadline/SectionHeadline'
@@ -94,22 +95,10 @@ export default defineComponent({
   },
   setup() {
     const userStore = useUserStore()
-    const {
-      billingAddress,
-      deliveryAddresses,
-      isLeadUser,
-      isOpenUser,
-      isRejectedUser,
-    } = storeToRefs(userStore)
+    const { billingAddress, deliveryAddresses, userStatusTypeForInfoText } =
+      storeToRefs(userStore)
     const { i18n } = useContext()
     const toast = useToast()
-
-    const userStatusType = computed(() => {
-      if (isLeadUser.value) return 'lead'
-      if (isOpenUser.value) return 'open'
-      if (isRejectedUser.value) return 'rejected'
-      return undefined
-    })
 
     const handleDelete = async (e) => {
       try {
@@ -153,7 +142,7 @@ export default defineComponent({
     return {
       billingAddress,
       deliveryAddresses,
-      userStatusType,
+      userStatusTypeForInfoText,
       handleDelete,
       handleSetDefault,
     }
