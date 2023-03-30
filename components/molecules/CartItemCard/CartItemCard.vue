@@ -70,15 +70,38 @@
       class="cart-item-card-price-error"
     >
       <LoginToSeePricesLabel v-if="!isLoggedIn" />
-      <span v-else>{{ noPriceReason }}</span>
+      <i18n
+        v-else-if="userStatusType !== 'request'"
+        :path="`cart.userStatus.${userStatusType}.priceInfo.text`"
+        tag="span"
+        class="cart-item-card-price-error__link"
+      >
+        <template #link>
+          <nuxt-link
+            :to="localePath('shop-my-account-account-data')"
+            class="cart-item-card-price-error__link--red"
+          >
+            {{ $t(`cart.userStatus.${userStatusType}.priceInfo.link`) }}
+          </nuxt-link>
+        </template>
+      </i18n>
+      <span v-else>
+        {{ $t('product.priceOnRequest') }}
+      </span>
     </div>
-    <div v-if="isLoggedIn && isPriceVisible" class="cart-item-card-price">
+    <div
+      v-if="isLoggedIn && isPriceVisible && basePrice > 0"
+      class="cart-item-card-price"
+    >
       <span class="cart-item-card-price__label">
         {{ $t('cart.productPrice') }}
       </span>
       <span class="cart-item-card-price__price">{{ productPrice }}</span>
     </div>
-    <div v-if="isLoggedIn && isPriceVisible" class="cart-item-card-total-price">
+    <div
+      v-if="isLoggedIn && isPriceVisible && basePrice > 0"
+      class="cart-item-card-total-price"
+    >
       <span class="cart-item-card-total-price__label">
         {{ $t('cart.totalPrice') }}
       </span>
@@ -174,7 +197,7 @@ export default defineComponent({
   },
   emits: ['addToShoppingList', 'update', 'delete'],
   setup(props, { emit }) {
-    const { app, i18n } = useContext()
+    const { app } = useContext()
     const userStore = useUserStore()
     const { basePrice, isMiniCart, quantity, product, promotion } =
       toRefs(props)
@@ -188,13 +211,11 @@ export default defineComponent({
       isOciUser,
     } = storeToRefs(userStore)
 
-    const noPriceReason = computed(() => {
-      const path = 'product.login.loginToSeePrices.'
-      if (isLeadUser.value) return i18n.t(path + 'lead')
-      if (isOpenUser.value) return i18n.t(path + 'open')
-      if (isRejectedUser.value) return i18n.t(path + 'rejected')
-      if (!basePrice.value) return i18n.t('product.priceOnRequest')
-      return i18n.t('product.noPriceAvailable')
+    const userStatusType = computed(() => {
+      if (isLeadUser.value) return 'lead'
+      if (isOpenUser.value) return 'open'
+      if (isRejectedUser.value) return 'rejected'
+      return 'request'
     })
 
     const isPriceVisible = computed(
@@ -205,6 +226,7 @@ export default defineComponent({
       if (basePrice.value === null || !priceValue) {
         return '-'
       }
+
       return priceValue
     }
 
@@ -287,9 +309,9 @@ export default defineComponent({
       orderNumber,
       isLoggedIn,
       isPriceVisible,
-      noPriceReason,
       getPromotion,
       isOciUser,
+      userStatusType,
     }
   },
 })
@@ -338,6 +360,14 @@ export default defineComponent({
       text-align: end;
       @apply tw-my-auto;
       @apply tw-ml-auto;
+    }
+
+    &__link {
+      @apply tw-font-bold;
+
+      &--red {
+        @apply tw-text-pv-red;
+      }
     }
   }
 

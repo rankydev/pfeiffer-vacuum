@@ -34,9 +34,21 @@
           </span>
           <span class="product-actions__price-value">{{ productPrice }}</span>
         </template>
-        <template v-else>
-          <span>{{ noPriceReason }}</span>
-        </template>
+        <i18n
+          v-else-if="!isPriceVisible"
+          :path="`cart.userStatus.${userStatusType}.priceInfo.text`"
+          tag="span"
+          class="product-actions__price-error"
+        >
+          <template #link>
+            <nuxt-link
+              :to="localePath('shop-my-account-account-data')"
+              class="product-actions__price-error--red"
+            >
+              {{ $t(`cart.userStatus.${userStatusType}.priceInfo.link`) }}
+            </nuxt-link>
+          </template>
+        </i18n>
       </div>
     </div>
     <div class="product-actions__action-wrapper">
@@ -134,12 +146,10 @@ export default defineComponent({
 
     const orderNumber = computed(() => product?.value?.orderNumber || '')
 
-    const noPriceReason = computed(() => {
-      const path = 'product.login.loginToSeePrices.'
-      if (isLeadUser.value) return i18n.t(path + 'lead')
-      if (isOpenUser.value) return i18n.t(path + 'open')
-      if (isRejectedUser.value) return i18n.t(path + 'rejected')
-      return i18n.t('product.noPriceAvailable')
+    const userStatusType = computed(() => {
+      if (isLeadUser.value) return 'lead'
+      if (isOpenUser.value) return 'open'
+      if (isRejectedUser.value) return 'rejected'
     })
 
     const hasCustomerPrice = computed(() => !!price.value?.customerPrice)
@@ -212,7 +222,7 @@ export default defineComponent({
       isMaster,
       price,
       hasCustomerPrice,
-      noPriceReason,
+      userStatusType,
       infoModalVisible,
       informationModalHeadline,
       informationModalText,
@@ -284,6 +294,12 @@ export default defineComponent({
     &-value {
       @apply tw-font-bold;
       @apply tw-text-pv-grey-16;
+    }
+
+    &-error {
+      &--red {
+        @apply tw-text-pv-red;
+      }
     }
   }
 
