@@ -66,19 +66,42 @@
       {{ quantity }}
     </div>
     <div
-      v-if="!isLoggedIn || !isPriceVisible"
+      v-if="!isLoggedIn || !isPriceVisible || basePrice.value === 0"
       class="cart-item-card-price-error"
     >
       <LoginToSeePricesLabel v-if="!isLoggedIn" />
-      <span v-else>{{ noPriceReason }}</span>
+      <i18n
+        v-else-if="userStatusType !== 'request'"
+        :path="`cart.userStatus.${userStatusType}.priceInfo.text`"
+        tag="span"
+        class="cart-item-card-price-error__link"
+      >
+        <template #link>
+          <span
+            class="cart-item-card-price-error__link--red"
+            @click="closeOverlay"
+          >
+            {{ $t(`cart.userStatus.${userStatusType}.priceInfo.link`) }}
+          </span>
+        </template>
+      </i18n>
+      <span v-else class="cart-item-card-price-error__request">
+        {{ $t('product.priceOnRequest') }}
+      </span>
     </div>
-    <div v-if="isLoggedIn && isPriceVisible" class="cart-item-card-price">
+    <div
+      v-if="isLoggedIn && isPriceVisible && basePrice.value > 0"
+      class="cart-item-card-price"
+    >
       <span class="cart-item-card-price__label">
         {{ $t('cart.productPrice') }}
       </span>
       <span class="cart-item-card-price__price">{{ productPrice }}</span>
     </div>
-    <div v-if="isLoggedIn && isPriceVisible" class="cart-item-card-total-price">
+    <div
+      v-if="isLoggedIn && isPriceVisible && basePrice.value > 0"
+      class="cart-item-card-total-price"
+    >
       <span class="cart-item-card-total-price__label">
         {{ $t('cart.totalPrice') }}
       </span>
@@ -113,9 +136,11 @@ import {
   ref,
   toRefs,
   useContext,
+  useRouter,
 } from '@nuxtjs/composition-api'
 import { storeToRefs } from 'pinia'
 import { useUserStore } from '~/stores/user'
+import { useCartStore } from '~/stores/cart'
 import { useDebounceFn } from '@vueuse/core'
 
 import Button from '~/components/atoms/Button/Button'
@@ -174,7 +199,7 @@ export default defineComponent({
   },
   emits: ['addToShoppingList', 'update', 'delete'],
   setup(props, { emit }) {
-    const { app, i18n } = useContext()
+    const { app, localePath } = useContext()
     const userStore = useUserStore()
     const { basePrice, isMiniCart, quantity, product, promotion } =
       toRefs(props)
@@ -187,14 +212,15 @@ export default defineComponent({
       isLoggedIn,
       isOciUser,
     } = storeToRefs(userStore)
+    const cartStore = useCartStore()
+    const { isCartOverlayOpen } = storeToRefs(cartStore)
+    const router = useRouter()
 
-    const noPriceReason = computed(() => {
-      const path = 'product.login.loginToSeePrices.'
-      if (!basePrice.value) return i18n.t('product.priceOnRequest')
-      if (isLeadUser.value) return i18n.t(path + 'lead')
-      if (isOpenUser.value) return i18n.t(path + 'open')
-      if (isRejectedUser.value) return i18n.t(path + 'rejected')
-      return i18n.t('product.noPriceAvailable')
+    const userStatusType = computed(() => {
+      if (isLeadUser.value) return 'lead'
+      if (isOpenUser.value) return 'open'
+      if (isRejectedUser.value) return 'rejected'
+      return 'request'
     })
 
     const isPriceVisible = computed(
@@ -205,6 +231,7 @@ export default defineComponent({
       if (basePrice.value === null || !priceValue) {
         return '-'
       }
+
       return priceValue
     }
 
@@ -270,6 +297,13 @@ export default defineComponent({
       updateCartQuantity()
     }
 
+    const closeOverlay = () => {
+      if (isCartOverlayOpen.value) {
+        cartStore.toggleCartOverlay()
+      }
+      router.push(localePath('shop-my-account-account-data'))
+    }
+
     return {
       quantityModel,
       isInactive,
@@ -287,9 +321,10 @@ export default defineComponent({
       orderNumber,
       isLoggedIn,
       isPriceVisible,
-      noPriceReason,
       getPromotion,
       isOciUser,
+      userStatusType,
+      closeOverlay,
     }
   },
 })
@@ -338,6 +373,23 @@ export default defineComponent({
       text-align: end;
       @apply tw-my-auto;
       @apply tw-ml-auto;
+    }
+
+    &__request {
+      @apply tw-font-bold;
+
+      @screen lg {
+        @apply tw-text-lg;
+      }
+    }
+
+    &__link {
+      @apply tw-font-bold;
+
+      &--red {
+        @apply tw-text-pv-red;
+        @apply tw-cursor-pointer;
+      }
     }
   }
 
