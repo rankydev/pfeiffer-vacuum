@@ -23,77 +23,80 @@
           </template>
 
           <template #default>
-            <ContentWrapper>
-              <ResultHeadline
-                v-bind="{ headline, link, searchTerm }"
-                :center="showDocumentSearchTab"
-                :back-button-override-query-params="{ currentPage: 1 }"
-                class="search-page__result-headline"
-              />
-              <div class="search-page__search-input">
-                <SearchInputPage
-                  v-if="showDocumentSearchTab"
-                  :active-tab="currentTabSelected"
-                />
-              </div>
-            </ContentWrapper>
-
-            <GenericTabs
-              v-if="showDocumentSearchTab"
-              :tabs="tabNavigationItems"
-              :active-tab="currentTabSelected"
-              :active-tab-initially-open-on-mobile="false"
-              center-mode
-              @selectTab="selectTab"
-            >
-              <template #activeTabContent>
-                <div class="search-page__search-result">
-                  <ContentWrapper v-if="currentTabSelected === 'products'">
-                    <SearchResult
-                      v-if="!hasError"
-                      persist-category-name-as-query-param
-                      v-bind="{
-                        products,
-                        pagination,
-                        categories,
-                        facets,
-                        currentQuery,
-                        sorts,
-                      }"
-                    />
-                    <ErrorHandling
-                      v-else
-                      :headline="
-                        $t('product.errorHandling.multiProductHeadline')
-                      "
-                    />
-                  </ContentWrapper>
-                  <ContentWrapper v-else no-padding>
-                    <DocumentSearchResult />
-                  </ContentWrapper>
-                </div>
-              </template>
-            </GenericTabs>
-
-            <div v-else class="category-page__search-result">
+            <!-- TODO: Fix hydration issues when trying to login on the search page -->
+            <client-only>
               <ContentWrapper>
-                <SearchResult
-                  v-if="!hasError"
-                  v-bind="{
-                    products,
-                    pagination,
-                    categories,
-                    facets,
-                    currentQuery,
-                    sorts,
-                  }"
+                <ResultHeadline
+                  v-bind="{ headline, link, searchTerm }"
+                  :center="showDocumentSearchTab"
+                  :back-button-override-query-params="{ currentPage: 1 }"
+                  class="search-page__result-headline"
                 />
-                <ErrorHandling
-                  v-else
-                  :headline="$t('product.errorHandling.multiProductHeadline')"
-                />
+                <div class="search-page__search-input">
+                  <SearchInputPage
+                    v-if="showDocumentSearchTab"
+                    :active-tab="currentTabSelected"
+                  />
+                </div>
               </ContentWrapper>
-            </div>
+
+              <GenericTabs
+                v-if="showDocumentSearchTab"
+                :tabs="tabNavigationItems"
+                :active-tab="currentTabSelected"
+                :active-tab-initially-open-on-mobile="false"
+                center-mode
+                @selectTab="selectTab"
+              >
+                <template #activeTabContent>
+                  <div class="search-page__search-result">
+                    <ContentWrapper v-if="currentTabSelected === 'products'">
+                      <SearchResult
+                        v-if="!hasError"
+                        persist-category-name-as-query-param
+                        v-bind="{
+                          products,
+                          pagination,
+                          categories,
+                          facets,
+                          currentQuery,
+                          sorts,
+                        }"
+                      />
+                      <ErrorHandling
+                        v-else
+                        :headline="
+                          $t('product.errorHandling.multiProductHeadline')
+                        "
+                      />
+                    </ContentWrapper>
+                    <ContentWrapper v-else no-padding>
+                      <DocumentSearchResult />
+                    </ContentWrapper>
+                  </div>
+                </template>
+              </GenericTabs>
+
+              <div v-else class="category-page__search-result">
+                <ContentWrapper>
+                  <SearchResult
+                    v-if="!hasError"
+                    v-bind="{
+                      products,
+                      pagination,
+                      categories,
+                      facets,
+                      currentQuery,
+                      sorts,
+                    }"
+                  />
+                  <ErrorHandling
+                    v-else
+                    :headline="$t('product.errorHandling.multiProductHeadline')"
+                  />
+                </ContentWrapper>
+              </div>
+            </client-only>
           </template>
 
           <template #stickyBar>
