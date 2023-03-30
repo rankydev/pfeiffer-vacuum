@@ -62,7 +62,6 @@ import { getKnowledgeData } from './KnowledgeModal.data'
 import { useUserStore } from '~/stores/user'
 import { useVuelidate } from '@vuelidate/core'
 import { useToast } from '~/composables/useToast'
-import createAccount from '~/components/molecules/CreateAccount/CreateAccount.vue'
 
 export default {
   name: 'KnowledgeModal',
