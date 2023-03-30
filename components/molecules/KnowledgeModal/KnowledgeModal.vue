@@ -143,11 +143,6 @@ export default {
       closeModal,
     }
   },
-  computed: {
-    createAccount() {
-      return createAccount
-    },
-  },
 }
 </script>
 <style lang="scss">
