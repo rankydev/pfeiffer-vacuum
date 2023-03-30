@@ -1,7 +1,10 @@
 <template>
-  <div class="product-card-carousel">
+  <div
+    class="product-card-carousel"
+    :class="{ 'product-card-carousel-error': isError }"
+  >
     <ContentCarousel
-      v-if="(enrichedSlides || []).length"
+      v-if="!isError"
       :headline="headline"
       :button="button"
       :autoplay="autoplay"
@@ -9,14 +12,14 @@
       :infinite="infinite"
       :slides="enrichedSlides"
     />
-    <div v-else>
-      <div class="product-card-carousel__error-wrapper">
+    <div v-else class="product-card-carousel-error__error-section">
+      <div class="product-card-carousel-error__error-section--header">
         <h2>{{ headline }}</h2>
         <Button v-if="button.length" v-bind="button" />
       </div>
       <ErrorHandling
         :headline="$t('product.errorHandling.multiProductHeadline')"
-        class="product-card-carousel__error-handling"
+        class="product-card-carousel-error__error-section--handling"
       />
     </div>
   </div>
@@ -30,6 +33,7 @@ import {
   onBeforeMount,
   watch,
   useRoute,
+  computed,
 } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/product'
 import Button from '~/components/atoms/Button/Button'
@@ -88,23 +92,27 @@ export default defineComponent({
     const route = useRoute()
     const productStore = useProductStore()
 
-    const slides = ref(props.slides.slice(0, 16))
+    const slides = ref(props.slides?.slice(0, 16))
 
     // Extracted codes from slides
-    const productCodes = slides.value.map((e) => e.product?.code)
+    const productCodes = slides.value?.map((e) => e.product?.code)
 
     let enrichedSlides = ref([])
 
     const fetchProducts = async () => {
       const tempProducts = await productStore.getProducts(productCodes)
 
-      enrichedSlides.value = slides.value.map((e) => ({
+      enrichedSlides.value = slides.value?.map((e) => ({
         ...e,
         product: {
-          ...tempProducts?.find((i) => i.code === e.product.code),
+          ...tempProducts?.find((i) => i?.code === e?.product?.code),
         },
       }))
     }
+
+    const isError = computed(() => {
+      return enrichedSlides.value?.length === 0
+    })
 
     onServerPrefetch(fetchProducts)
     onBeforeMount(fetchProducts)
@@ -112,24 +120,64 @@ export default defineComponent({
       fetchProducts()
     })
 
-    return { enrichedSlides }
+    return { enrichedSlides, isError }
   },
 })
 </script>
 
 <style lang="scss">
 .product-card-carousel {
-  &__error-wrapper {
-    @apply tw-flex tw-justify-between;
-    @apply tw-mt-8;
-    @apply tw-mb-6;
-  }
+  &-error {
+    @apply tw-relative;
+    @apply tw-w-screen;
+    @apply tw-left-1/2;
+    @apply tw-ml-[-50vw];
+    @apply tw-bg-pv-grey-96;
+    @apply tw-px-4;
+    @apply tw-py-6;
 
-  &__error-handling {
-    @apply tw-mb-8;
+    @screen md {
+      @apply tw-py-10;
+      @apply tw-px-6;
+    }
 
-    &.error-handling {
-      @apply tw-py-[204px];
+    @screen lg {
+      @apply tw-py-[52px];
+      padding-left: max((100vw - 1440px) / 2 + 2rem, 2rem);
+      @apply tw-pr-8;
+    }
+
+    &__error-section {
+      @apply tw-flex;
+      @apply tw-flex-col;
+
+      &--header {
+        @apply tw-flex;
+        @apply tw-flex-col;
+        @apply tw-mb-4;
+
+        @screen md {
+          @apply tw-flex-row;
+          @apply tw-items-center;
+        }
+
+        .button {
+          @apply tw-mt-4;
+
+          @screen md {
+            @apply tw-mt-0;
+            @apply tw-ml-auto;
+          }
+        }
+      }
+
+      &--handling {
+        @apply tw-bg-pv-white;
+        @apply tw-rounded;
+        @apply tw-w-full;
+        @apply tw-p-4;
+        @apply tw-m-auto;
+      }
     }
   }
 }
