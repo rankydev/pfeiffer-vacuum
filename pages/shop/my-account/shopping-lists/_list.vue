@@ -298,9 +298,10 @@ export default defineComponent({
       @apply tw-row-start-1 tw-row-end-2;
       @apply tw-col-start-1 tw-col-end-13;
       @apply tw-mb-0;
+      @apply tw-break-all;
 
       @screen md {
-        @apply tw-col-start-1 tw-col-end-11;
+        @apply tw-col-start-1 tw-col-end-10;
         @apply tw-my-auto;
       }
     }
@@ -347,12 +348,11 @@ export default defineComponent({
       @apply tw-col-start-1 tw-col-end-13;
       @apply tw-mt-6;
       @apply tw-min-w-[123px];
-      @apply tw-w-fit;
 
       @screen md {
         @apply tw-flex-row;
         @apply tw-row-start-1 tw-row-end-2;
-        @apply tw-col-start-11 tw-col-end-13;
+        @apply tw-col-start-10 tw-col-end-13;
         @apply tw-mt-0;
         @apply tw-justify-end;
         @apply tw-w-fit;
