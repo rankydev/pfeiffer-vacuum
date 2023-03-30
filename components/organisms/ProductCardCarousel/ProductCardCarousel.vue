@@ -111,7 +111,7 @@ export default defineComponent({
     }
 
     const isError = computed(() => {
-      return enrichedSlides.value?.length === 0
+      return enrichedSlides.value?.length !== 0
     })
 
     onServerPrefetch(fetchProducts)
@@ -177,6 +177,7 @@ export default defineComponent({
         @apply tw-w-full;
         @apply tw-p-4;
         @apply tw-m-auto;
+        @apply tw-min-h-[400px];
       }
     }
   }
