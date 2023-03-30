@@ -87,6 +87,7 @@
       }"
       :show-validation-criterias="true"
       @input="$emit('update', requestData)"
+      @error="requestData.errors.password = $event"
     />
   </div>
 </template>
@@ -140,6 +141,9 @@ export default defineComponent({
         lastName: '',
         email: '',
         password: '',
+      },
+      errors: {
+        password: false,
       },
     })
 

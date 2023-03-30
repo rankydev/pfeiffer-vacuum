@@ -192,31 +192,51 @@ export const useUserStore = defineStore('user', () => {
         router.push(ctx.app.localePath(successPagePath))
       })
       .catch((err) => {
-        err?.data?.errors.forEach((error) => {
+        err?.response?.data?.errors.forEach((error) => {
           switch (error.type) {
             case 'CustomerAlreadyExistsError':
-              toast.error({
-                description: ctx.i18n.t(
-                  'form.message.error.customerAlreadyExists'
-                ),
-              })
+              toast.error(
+                {
+                  description: ctx.i18n.t(
+                    'form.message.error.customerAlreadyExists'
+                  ),
+                },
+                {
+                  timeout: 8000,
+                }
+              )
               break
             case 'CustomerInconsistentError':
-              toast.error({
-                description: ctx.i18n.t(
-                  'form.message.error.customerInconsistentError'
-                ),
-              })
+              toast.error(
+                {
+                  description: ctx.i18n.t(
+                    'form.message.error.customerInconsistentError'
+                  ),
+                },
+                {
+                  timeout: 8000,
+                }
+              )
               break
             case 'B2bRegistrationFailedError':
-              toast.error({
-                description: ctx.i18n.t('form.message.error.technicalError'),
-              })
+              toast.error(
+                {
+                  description: ctx.i18n.t('form.message.error.technicalError'),
+                },
+                {
+                  timeout: 8000,
+                }
+              )
               break
             default:
-              toast.error({
-                description: ctx.i18n.t('form.message.error.defaultError'),
-              })
+              toast.error(
+                {
+                  description: ctx.i18n.t('form.message.error.defaultError'),
+                },
+                {
+                  timeout: 8000,
+                }
+              )
               break
           }
         })

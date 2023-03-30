@@ -1,6 +1,6 @@
 <template>
   <ContentWrapper>
-    <GenericModal v-bind="{ isOpen }" @closeModal="$emit('closeModal')">
+    <GenericModal :is-open="isOpen" @closeModal="closeModal">
       <div class="knowledge-modal">
         <h2>{{ $t('registration.registrationModal.pleaseLogIn') }}</h2>
         <span class="tw-subline-3">
@@ -17,7 +17,10 @@
               "
               :selected-country="selectedCountry"
               :selected-region="selectedRegion"
-              @update="requestData.personalData = $event.registration"
+              @update="
+                requestData.personalData = $event.registration
+                createAccountErrors = $event.errors
+              "
             />
             <div class="knowledge-modal__actions">
               <Button
@@ -25,7 +28,7 @@
                 variant="secondary"
                 shape="outlined"
                 icon="close"
-                @click="$emit('closeModal')"
+                @click="closeModal"
               />
               <Button
                 :label="$t('registration.registrationModal.submit')"
@@ -59,6 +62,7 @@ import { getKnowledgeData } from './KnowledgeModal.data'
 import { useUserStore } from '~/stores/user'
 import { useVuelidate } from '@vuelidate/core'
 import { useToast } from '~/composables/useToast'
+import createAccount from '~/components/molecules/CreateAccount/CreateAccount.vue'
 
 export default {
   name: 'KnowledgeModal',
@@ -77,12 +81,22 @@ export default {
   },
   emits: ['closeModal'],
   setup(props, { emit }) {
-    const { app } = useContext()
+    const { app, i18n } = useContext()
     const userStore = useUserStore()
     const v = useVuelidate()
     const { ctaBoxContents } = getKnowledgeData()
-    const requestData = ref({ personalData: {}, companyData: {} })
+    const requestData = ref({ personalData: {}, companyData: {}, errors: {} })
     const toast = useToast()
+    const createAccountErrors = ref({ password: false })
+
+    const clearRequestData = () => {
+      requestData.value = { personalData: {}, companyData: {} }
+    }
+
+    const closeModal = () => {
+      emit('closeModal')
+      clearRequestData()
+    }
 
     const selectedCountry = computed(() => {
       const country = requestData.value.personalData.address?.country
@@ -101,15 +115,20 @@ export default {
     })
 
     const submit = async () => {
-      v.value.$validate()
-
-      if (v.value.$errors.length + v.value.$silentErrors.length === 0) {
+      const hasValidationError = !(await v.value.$validate())
+      const passwordError = createAccountErrors.value?.password
+      if (!hasValidationError && !passwordError) {
         await userStore.register(requestData)
-        emit('closeModal')
+        closeModal()
       } else {
-        toast.warning({
-          description: i18n.t('form.validationErrorMessages.warning'),
-        })
+        toast.warning(
+          {
+            description: i18n.t('form.validationErrorMessages.warning'),
+          },
+          {
+            timeout: 8000,
+          }
+        )
       }
     }
 
@@ -119,9 +138,16 @@ export default {
       selectedCountry,
       selectedRegion,
       isMobile: app.$breakpoints.isMobile,
+      createAccountErrors,
 
       submit,
+      closeModal,
     }
+  },
+  computed: {
+    createAccount() {
+      return createAccount
+    },
   },
 }
 </script>

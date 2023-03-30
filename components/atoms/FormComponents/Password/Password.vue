@@ -19,10 +19,7 @@
         @keypress.enter="$emit('submit', internalValue)"
         @focus="$emit('focus', true)"
         @blur="$emit('focus', false)"
-        @input="
-          $emit('input', $event.target.value)
-          validation.validateInput()
-        "
+        @input="emitInputAndError"
       />
       <Icon
         v-if="validation.getError()"
@@ -193,6 +190,13 @@ export default defineComponent({
      * @property {string} value
      */
     'submit',
+    /**
+     * Fired on keystroke.
+     *
+     * @event change
+     * @property {string} value
+     */
+    'error',
   ],
   setup(props, { emit }) {
     const sanitizer = useSanitizer()
@@ -204,10 +208,10 @@ export default defineComponent({
     })
     const inputType = ref(props.visibility ? 'text' : 'password')
 
-    const validation = ref(useInputValidator(props.rules, internalValue))
+    const validation = useInputValidator(props.rules, internalValue)
 
     const inputStylings = ref([
-      props.showValidationCriterias || !!validation.value.getError()
+      props.showValidationCriterias || !!validation.getError()
         ? 'pv-password__element--validated'
         : 'pv-password__element--NotValidated',
     ]).value
@@ -252,6 +256,17 @@ export default defineComponent({
       () => indicatorWidth.value.toString() === '100%'
     )
 
+    const emitInputAndError = async () => {
+      await validation.validateInput()
+      const hasError =
+        !minLength.value ||
+        !hasCapitalAndLowercase.value ||
+        !hasDigit.value ||
+        maxLengthReached.value
+      emit('error', hasError)
+      emit('input', internalValue.value)
+    }
+
     return {
       internalValue,
       inputType,
@@ -264,6 +279,7 @@ export default defineComponent({
       indicatorWidth,
       indicatorWidthFull,
       validation,
+      emitInputAndError,
     }
   },
 })
