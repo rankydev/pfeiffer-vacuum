@@ -4,7 +4,7 @@
     :class="{ 'product-card-carousel-error': isError }"
   >
     <ContentCarousel
-      v-if="!isError"
+      v-if="!isError && enrichedSlides.length"
       :headline="headline"
       :button="button"
       :autoplay="autoplay"
@@ -101,8 +101,8 @@ export default defineComponent({
     const isError = ref(false)
 
     const fetchProducts = async () => {
+      isError.value = false
       const tempProducts = await productStore.getProducts(productCodes)
-
       if (tempProducts?.length < 1) {
         isError.value = true
       } else {
