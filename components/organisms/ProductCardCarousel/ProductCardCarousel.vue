@@ -111,7 +111,7 @@ export default defineComponent({
     }
 
     const isError = computed(() => {
-      return enrichedSlides.value?.length !== 0
+      return !enrichedSlides.value || enrichedSlides.value?.length < 1
     })
 
     onServerPrefetch(fetchProducts)
