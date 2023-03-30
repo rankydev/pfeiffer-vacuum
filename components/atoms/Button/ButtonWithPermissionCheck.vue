@@ -35,7 +35,7 @@ export default defineComponent({
       storeToRefs(userStore)
 
     const openUrl = () => {
-      if (onlyApproved && isLoggedIn.value && !isApprovedUser.value) {
+      if (onlyApproved.value && isLoggedIn.value && !isApprovedUser.value) {
         toast.error({
           description: i18n.t(
             `myaccount.userStatus.${userStatusTypeForInfoText.value}.functionalityInfo`
