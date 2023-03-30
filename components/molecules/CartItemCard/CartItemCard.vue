@@ -66,7 +66,7 @@
       {{ quantity }}
     </div>
     <div
-      v-if="!isLoggedIn || !isPriceVisible"
+      v-if="!isLoggedIn || !isPriceVisible || basePrice.value === 0"
       class="cart-item-card-price-error"
     >
       <LoginToSeePricesLabel v-if="!isLoggedIn" />
@@ -85,12 +85,12 @@
           </nuxt-link>
         </template>
       </i18n>
-      <span v-else>
+      <span v-else class="cart-item-card-price-error__request">
         {{ $t('product.priceOnRequest') }}
       </span>
     </div>
     <div
-      v-if="isLoggedIn && isPriceVisible && basePrice > 0"
+      v-if="isLoggedIn && isPriceVisible && basePrice.value > 0"
       class="cart-item-card-price"
     >
       <span class="cart-item-card-price__label">
@@ -99,7 +99,7 @@
       <span class="cart-item-card-price__price">{{ productPrice }}</span>
     </div>
     <div
-      v-if="isLoggedIn && isPriceVisible && basePrice > 0"
+      v-if="isLoggedIn && isPriceVisible && basePrice.value > 0"
       class="cart-item-card-total-price"
     >
       <span class="cart-item-card-total-price__label">
@@ -360,6 +360,14 @@ export default defineComponent({
       text-align: end;
       @apply tw-my-auto;
       @apply tw-ml-auto;
+    }
+
+    &__request {
+      @apply tw-font-bold;
+
+      @screen lg {
+        @apply tw-text-lg;
+      }
     }
 
     &__link {
