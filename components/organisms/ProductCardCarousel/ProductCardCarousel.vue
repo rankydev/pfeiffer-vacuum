@@ -12,7 +12,10 @@
       :infinite="infinite"
       :slides="enrichedSlides"
     />
-    <div v-else class="product-card-carousel-error__error-section">
+    <div
+      v-if="isError && isFetchingDone"
+      class="product-card-carousel-error__error-section"
+    >
       <div class="product-card-carousel-error__error-section--header">
         <h2>{{ headline }}</h2>
         <Button v-if="button.length" v-bind="button" />
@@ -99,6 +102,8 @@ export default defineComponent({
 
     let enrichedSlides = ref([])
 
+    const isFetchingDone = ref(false)
+
     const fetchProducts = async () => {
       const tempProducts = await productStore.getProducts(productCodes)
 
@@ -108,6 +113,8 @@ export default defineComponent({
           ...tempProducts?.find((i) => i?.code === e?.product?.code),
         },
       }))
+
+      isFetchingDone.value = true
     }
 
     const isError = computed(() => {
@@ -120,7 +127,7 @@ export default defineComponent({
       fetchProducts()
     })
 
-    return { enrichedSlides, isError }
+    return { enrichedSlides, isError, isFetchingDone }
   },
 })
 </script>
