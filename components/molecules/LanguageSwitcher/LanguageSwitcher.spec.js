@@ -22,6 +22,9 @@ jest.mock('@nuxtjs/composition-api', () => {
         $cms: {
           accessToken: '1234567890',
         },
+        $config: {
+          NODE_ENV: 'production',
+        },
       }
     },
   }
