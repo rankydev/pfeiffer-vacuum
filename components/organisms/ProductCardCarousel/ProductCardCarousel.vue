@@ -12,10 +12,7 @@
       :infinite="infinite"
       :slides="enrichedSlides"
     />
-    <div
-      v-if="isError && isFetchingDone"
-      class="product-card-carousel-error__error-section"
-    >
+    <div v-else class="product-card-carousel-error__error-section">
       <div class="product-card-carousel-error__error-section--header">
         <h2>{{ headline }}</h2>
         <Button v-if="button.length" v-bind="button" />
@@ -36,7 +33,6 @@ import {
   onBeforeMount,
   watch,
   useRoute,
-  computed,
 } from '@nuxtjs/composition-api'
 import { useProductStore } from '~/stores/product'
 import Button from '~/components/atoms/Button/Button'
@@ -102,24 +98,22 @@ export default defineComponent({
 
     let enrichedSlides = ref([])
 
-    const isFetchingDone = ref(false)
+    const isError = ref(false)
 
     const fetchProducts = async () => {
       const tempProducts = await productStore.getProducts(productCodes)
 
-      enrichedSlides.value = slides.value?.map((e) => ({
-        ...e,
-        product: {
-          ...tempProducts?.find((i) => i?.code === e?.product?.code),
-        },
-      }))
-
-      isFetchingDone.value = true
+      if (tempProducts?.length < 1) {
+        isError.value = true
+      } else {
+        enrichedSlides.value = slides.value?.map((e) => ({
+          ...e,
+          product: {
+            ...tempProducts?.find((i) => i?.code === e?.product?.code),
+          },
+        }))
+      }
     }
-
-    const isError = computed(() => {
-      return !enrichedSlides.value || enrichedSlides.value?.length < 1
-    })
 
     onServerPrefetch(fetchProducts)
     onBeforeMount(fetchProducts)
@@ -127,7 +121,7 @@ export default defineComponent({
       fetchProducts()
     })
 
-    return { enrichedSlides, isError, isFetchingDone }
+    return { enrichedSlides, isError }
   },
 })
 </script>
