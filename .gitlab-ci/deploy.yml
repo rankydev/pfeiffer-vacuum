@@ -140,7 +140,7 @@ deploy-tag-to-prd-manually:
   environment:
     name: prd
     url: "https://prd.pvac.diva-e.com"
-  when: manual - temporarily set to automatic deployment
+  when: manual
   only:
     - tags
   tags:
