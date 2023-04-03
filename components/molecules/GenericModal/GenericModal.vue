@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { defineComponent, watch } from '@nuxtjs/composition-api'
+import { defineComponent, onUnmounted, watch } from '@nuxtjs/composition-api'
 import Icon from '~/components/atoms/Icon/Icon.vue'
 import ContentWrapper from '~/components/molecules/ContentWrapper/ContentWrapper'
 
@@ -56,20 +56,32 @@ export default defineComponent({
       }
     }
 
+    const handleModalOpen = () => {
+      document.querySelector('body').style.overflow = 'hidden'
+      window.addEventListener('keyup', toggleModal)
+      window.addEventListener('click', handleBgClick)
+    }
+
+    const handleModalClose = () => {
+      document.querySelector('body').style.overflow = 'visible'
+      window.removeEventListener('keyup', toggleModal)
+      window.removeEventListener('click', handleBgClick)
+    }
+
     watch(
       () => props.isOpen,
       (val) => {
         if (val) {
-          document.querySelector('body').style.overflow = 'hidden'
-          window.addEventListener('keyup', toggleModal)
-          window.addEventListener('click', handleBgClick)
+          handleModalOpen()
         } else {
-          document.querySelector('body').style.overflow = 'visible'
-          window.removeEventListener('keyup', toggleModal)
-          window.removeEventListener('click', handleBgClick)
+          handleModalClose()
         }
       }
     )
+
+    onUnmounted(() => {
+      handleModalClose()
+    })
   },
 })
 </script>
